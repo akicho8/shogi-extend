@@ -15,18 +15,6 @@ module Swars
         ]
       end
 
-      ################################################################################ win, lose
-
-      # def wl_scope
-      #   @wl_scope ||= Membership.where(id: ids_scope.joins(:battle).merge(Battle.win_lose_only).ids)
-      # end
-      #
-      # def wl_count
-      #   @wl_count ||= wl_scope.count
-      # end
-
-      ################################################################################ win
-
       def win_only
         @win_only ||= ids_scope.win_only
       end

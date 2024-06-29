@@ -40,7 +40,6 @@ module Swars
         end
       end
 
-      # Swars::User["bsplive"].stat.style_stat_mod.ratios_hash     # => {:rarity_key_SSR=>0.14035087719298245, :rarity_key_SR=>0.2807017543859649, :rarity_key_R=>0.2807017543859649, :rarity_key_N=>0.2982456140350877}
       def ratios_hash
         @ratios_hash ||= yield_self do
           if denominator.positive?
@@ -51,12 +50,11 @@ module Swars
         end
       end
 
-      # Swars::User["bsplive"].stat.style_stat_mod.denominator     # => 57
       def denominator
         @denominator ||= counts_hash.values.sum
       end
 
-      # Swars::User["bsplive"].stat.style_stat_mod.counts_hash     # => {:rarity_key_SSR=>8, :rarity_key_SR=>16, :rarity_key_R=>16, :rarity_key_N=>17}
+      # 必要なのはこのメソッドだけ
       def counts_hash
         raise NotImplementedError, "#{__method__} is not implemented"
       end

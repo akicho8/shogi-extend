@@ -1,5 +1,5 @@
 module Swars
-  module Battle
+  class Battle
     class Rebuilder
       def initialize(record)
         @record = record

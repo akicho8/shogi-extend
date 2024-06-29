@@ -4,7 +4,6 @@ module Swars
   module User::Stat
     class ScopeExt < Base
       DELEGATE_METHODS = [
-        :filtered_battle_ids,
         :scope_ids,
         :ids_scope,
         :ids_count,
@@ -24,29 +23,6 @@ module Swars
       def initialize(stat, scope)
         super(stat)
         @scope = scope
-      end
-
-      # 最優先の必須スコープ
-      # 直近 50 件が最優先でそのなかから win, lose を抽出する
-      # これがまざってしまうと win, lose のみのものが 50 件となってしまう
-      #
-      # Swars::Membership Ids (40.7ms)  SELECT swars_memberships.id FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.user_id = 17413 ORDER BY swars_battles.battled_at DESC LIMIT 50
-      #
-      def base_scope
-        s = @scope.joins(:battle).merge(Battle.newest_order)
-        if ids = filtered_battle_ids
-          s = s.where(battle: ids)
-        end
-        s = s.limit(sample_max)
-      end
-
-      # さらに絞り込む対局IDs
-      def filtered_battle_ids
-        @filtered_battle_ids ||= yield_self do
-          if query = params[:query]
-            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids # FIXME: Battle.unscoped にしないといけない？
-          end
-        end
       end
 
       # この IDs は直近順に並んでいる
@@ -73,6 +49,31 @@ module Swars
         @sample_max ||= yield_self do
           max = (params[:sample_max].presence || default_params[:sample_max]).to_i
           [max, max_of_sample_max].min
+        end
+      end
+
+      private
+
+      # 最優先の必須スコープ
+      # 直近 50 件が最優先でそのなかから win, lose を抽出する
+      # これがまざってしまうと win, lose のみのものが 50 件となってしまう
+      #
+      # Swars::Membership Ids (40.7ms)  SELECT swars_memberships.id FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.user_id = 17413 ORDER BY swars_battles.battled_at DESC LIMIT 50
+      #
+      def base_scope
+        s = @scope.joins(:battle).merge(Battle.newest_order)
+        if ids = selected_battle_ids
+          s = s.where(battle: ids)
+        end
+        s = s.limit(sample_max)
+      end
+
+      # さらに絞り込む対局IDs
+      def selected_battle_ids
+        @selected_battle_ids ||= yield_self do
+          if query = params[:query]
+            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids
+          end
         end
       end
     end

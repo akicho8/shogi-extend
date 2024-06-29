@@ -1,5 +1,5 @@
 module Swars
-  module Battle
+  class Battle
     concern :RebuilderMethods do
       def rebuild
         Rebuilder.new(self).call

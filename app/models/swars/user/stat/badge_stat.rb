@@ -34,8 +34,8 @@ module Swars
       def to_debug_hash
         {
           "対象サンプル数"       => stat.ids_count,
-          "勝ち数"               => stat.win_count,
-          "負け数"               => stat.lose_count,
+          "勝ち数"               => stat.ids_scope.win_only.count,
+          "負け数"               => stat.ids_scope.lose_only.count,
           "居飛車率"             => stat.win_stat.to_h[:"居飛車"],
           "振り飛車率"           => stat.win_stat.to_h[:"振り飛車"],
           "居玉勝率"             => stat.win_stat.to_h[:"居玉"],

@@ -5,7 +5,7 @@ module Swars
     class PenaltyInfo
       include ApplicationMemoryRecord
       memory_record [
-        { weight:  20.0, key: "友達対局で無双した",               short_name: "友達対局無双",   x_count: proc { xmode_judge_stat.friend_kill_ratio                           }, },
+        { weight:  20.0, key: "友達対局で無双した",               short_name: "友達無双",       x_count: proc { xmode_judge_stat.friend_kill_ratio                           }, },
         { weight:   0.4, key: "時間切れで負けた回数",             short_name: "切れ負け",       x_count: proc { judge_final_stat.count_by(:lose, :TIMEOUT)                   }, },
         { weight:   0.2, key: "詰まされて負けた回数",             short_name: "詰み負け",       x_count: proc { judge_final_stat.count_by(:lose, :CHECKMATE)                 }, },
         { weight:   0.8, key: "敗勢になると諦める度合い",         short_name: "敗勢諦め",       x_count: proc { mental_stat.heart_weak_level                                 }, },
@@ -28,7 +28,7 @@ module Swars
         { weight:  10.0, key: "切断逃亡",                         short_name: "切断逃亡",       x_count: proc { judge_final_stat.count_by(:lose, :DISCONNECT)                }, },
         { weight:  15.0, key: "放置",                             short_name: "放置",           x_count: proc { leave_alone_stat.count                                       }, },
         { weight:  20.0, key: "退席待ち狙いをした回数",           short_name: "退席待ち狙い",   x_count: proc { waiting_to_leave_stat.count                                  }, },
-        { weight:   5.0, key: "通信環境が不安定なのに対局",       short_name: "悪環境",         x_count: proc { unstable_network_stat.count                              }, },
+        { weight:   5.0, key: "通信環境が不安定なのに対局",       short_name: "悪環境",         x_count: proc { unstable_network_stat.count                                  }, },
       ]
     end
   end
