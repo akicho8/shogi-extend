@@ -65,14 +65,9 @@
 
     hr
     | {{attributes}}
-    hr
-    | {{attributes.lhv}}
-    hr
-    | body_layout_guess = {{body_layout_guess}}
-    | {{params.body}}
 
-    //- DebugBox.is-hidden-mobile(v-if="development_p")
-    //-   | {{params}}
+    DebugBox.is-hidden-mobile(v-if="development_p")
+      | body_layout_guess: {{body_layout_guess}}
 
     //- pre attributes = {{attributes}}
 
