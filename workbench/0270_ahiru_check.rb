@@ -4,7 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # tono447-Shinshu-20191013_145945
 
 r = Swars::Battle.find(192482)
-r.remake
+r.rebuild
 
 r = Swars::Battle.find(192482)
 r.memberships.last.attack_tag_list # => ["一間飛車", "裏アヒル戦法"]

@@ -1,8 +1,8 @@
 require "./setup"
 # Swars::User["abacus10"].battles.in_batches.each_record { |e| p e.id }
-# Swars::User["abacus10"].battles.limit(10).each(&:remake)
+# Swars::User["abacus10"].battles.limit(10).each(&:rebuild)
 battle = Swars::User["abacus10"].battles.order(id: :desc).take(14).last
-battle.remake                   # => true
+battle.rebuild                   # => true
 
 
 

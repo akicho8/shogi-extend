@@ -35,7 +35,7 @@ class Fix42 < ActiveRecord::Migration[6.0]
     #         s = user.battles.limit(200).order(id: :desc)
     #         s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/05/31 12:00")))
     #         s.in_batches.each_record do |e|
-    #           e.remake rescue nil
+    #           e.rebuild rescue nil
     #         end
     #       end
     #       AppLog.important("#{user_key} done")

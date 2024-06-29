@@ -16,7 +16,7 @@ module BackendScript
 
     def script_body
       if params[:swars_id]
-        Swars::User.find_by(key: params[:swars_id]).battles.each(&:remake)
+        Swars::User.find_by(key: params[:swars_id]).battles.each(&:rebuild)
         "OK"
       end
     end

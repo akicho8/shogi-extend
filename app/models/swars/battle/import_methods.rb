@@ -15,17 +15,12 @@ module Swars
               puts Crawler::RegularCrawler.new.run.rows.to_t
               puts Crawler::ExpertCrawler.new.run.rows.to_t
             end
-            find_each(&:remake)
+            find_each(&:rebuild)
           end
 
           if Rails.env.development?
             InitialImportForPaper.new.perform
           end
-        end
-
-        # rails r 'Swars::Battle.remake'
-        def remake(params = {})
-          Rebuilder.new(params).perform
         end
       end
     end

@@ -7,7 +7,7 @@ class Fix43 < ActiveRecord::Migration[6.0]
       #     if user = Swars::User.find_by(key: user_key)
       #       s = user.battles.limit(200).order(battled_at: :desc)
       #       s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/05/31 18:00")))
-      #       s.in_batches.each_record(&:remake)
+      #       s.in_batches.each_record(&:rebuild)
       #     end
       #     AppLog.important("#{user_key} done")
       #   end

@@ -31,7 +31,7 @@ module Swars
 
     it "membership_extraを持っていないレコードもremakeで生やせる" do
       membership.membership_extra.destroy! # わざと消す
-      Battle.find(battle.id).remake        # 作り直す
+      Battle.find(battle.id).rebuild        # 作り直す
       assert { Battle.find(battle.id).memberships[0].membership_extra }
       assert { Battle.find(battle.id).memberships[0].membership_extra.used_piece_counts.present? }
     end

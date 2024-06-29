@@ -6,7 +6,7 @@ Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
 # Swars::Battle.destroy_all
 # Swars::Battle.destroy_all
 # 
-# Swars::Battle.import(:remake)
+# Swars::Battle.import(:rebuild)
 
 tp Swars::Battle.all.last(10).collect(&:attributes)
 

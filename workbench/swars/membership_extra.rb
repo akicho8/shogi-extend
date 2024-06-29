@@ -8,7 +8,7 @@ tp Swars.info
 
 # # remakeで回復する
 # Swars::MembershipExtra.first.update!(used_piece_counts: {})
-# Swars::Battle.all.each(&:remake)
+# Swars::Battle.all.each(&:rebuild)
 # tp Swars::MembershipExtra
 #
 # # MembershipExtra が欠けてる場合に修復

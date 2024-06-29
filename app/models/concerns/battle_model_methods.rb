@@ -5,6 +5,7 @@ module BattleModelMethods
     include BoardImageMethods
     include TagMethods
     include TimeChartMethods
+    include Swars::Battle::RebuilderMethods
 
     cattr_accessor(:fixed_defaut_time) { Time.zone.parse("0001/01/01") }
 
@@ -87,39 +88,6 @@ module BattleModelMethods
   def parser_exec_after(info)
   end
 
-  def remake(options = {})
-    retryable_options = {
-      :on           => StandardError,
-      :tries        => 5,
-      :sleep        => 1,
-      :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
-      :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
-      :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
-    }
-    begin
-      Retryable.retryable(retryable_options) do
-        remake_fast(options)
-      end
-    rescue => error
-      puts error
-    end
-  end
-
-  def remake_without_retry(options = {})
-    tag_names = -> { memberships.collect { |e| e.taggings.collect { |e| e.tag.name } } }
-    before = tag_names.call
-    remake_fast(options)
-    after = tag_names.call
-    updated = before != after
-    print updated ? "U" : "."
-    updated
-  end
-
-  def remake_fast(options = {})
-    parser_exec
-    memberships.each(&:save!)
-    save!
-  end
 
   # def header_detail(h)
   #   meta_info[:header]
