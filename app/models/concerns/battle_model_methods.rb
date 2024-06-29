@@ -9,8 +9,6 @@ module BattleModelMethods
 
     cattr_accessor(:fixed_defaut_time) { Time.zone.parse("0001/01/01") }
 
-    acts_as_ordered_taggable_on :other_tags
-
     serialize :meta_info
 
     before_validation do
@@ -115,7 +113,6 @@ module BattleModelMethods
       *defense_tag_list,
       *technique_tag_list,
       *note_tag_list,
-      *other_tag_list,
     ]
   end
 

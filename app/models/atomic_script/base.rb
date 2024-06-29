@@ -11,9 +11,9 @@
 #
 # ▼script_bodyの中から他のクラスに委譲するには？
 #
-#   FooScript.new(:current_user => current_user, :view_context => view_context, :controller => controller).script_body
+#   CalcScript.new(:current_user => current_user, :view_context => view_context, :controller => controller).script_body
 #   または
-#   FooScript.new(@org_params).script_body
+#   CalcScript.new(@org_params).script_body
 #
 module AtomicScript
   class Base

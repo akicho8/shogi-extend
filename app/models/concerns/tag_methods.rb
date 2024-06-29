@@ -27,7 +27,6 @@ module TagMethods
     acts_as_ordered_taggable_on :attack_tags
     acts_as_ordered_taggable_on :technique_tags
     acts_as_ordered_taggable_on :note_tags
-    acts_as_ordered_taggable_on :other_tags
   end
 
   # includes(taggings: tag) としたときは taggings.loaded? になるので一覧ではかなり速くなる

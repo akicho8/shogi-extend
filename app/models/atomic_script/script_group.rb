@@ -9,7 +9,7 @@
 module AtomicScript
   concern :ScriptGroup do
     # 保持しているスクリプトクラスたちを返す
-    # [Frontend::FooScript, Frontend::BarScript, ...]
+    # [Frontend::CalcScript, Frontend::BarScript, ...]
     def bundle_scripts
       @bundle_scripts ||= keys.collect(&method(:find)).sort_by { |e|
         [
