@@ -2,79 +2,93 @@
 .QuickScriptShow
   b-loading(:active="$fetchState.pending")
   template(v-if="params")
-    .title(v-if="params.meta.title")
-      | {{params.meta.title}}
-    .section
-      template(v-for="form_part in params.form_parts")
-        b-field(:label="form_part.label")
-          template(v-if="false")
-          template(v-else-if="form_part.type === 'string'")
-            b-input(
-              size="is-small"
-              :value="attr_value(form_part)"
-              @input="value => attr_update(form_part, value)"
-              )
-          template(v-else-if="form_part.type === 'integer'")
-            b-numberinput(
-              size="is-small"
-              :value="attr_value(form_part)"
-              @input="value => attr_update(form_part, value)"
-              controls-position="compact"
-              :exponential="true"
-              )
-          template(v-else-if="form_part.type === 'select'")
-            b-select(
-              size="is-small"
-              :value="attr_value(form_part)"
-              @input="value => attr_update(form_part, value)"
-              )
-              template(v-for="elem in form_part.elems")
-                option(:value="elem") {{elem}}
-          template(v-else)
-            pre unknown: {{form_part.type}}
+    MainNavbar(wrapper-class="container is-fluid")
+      template(slot="brand")
+        NavbarItemHome
+        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="params.meta.title")
+          h1.has-text-weight-bold {{params.meta.title}}
 
-    div(v-if="params.get_button")
-      b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
+      template(slot="end")
+        NavbarItemLogin
+        NavbarItemProfileLink
+        //- NavbarItemSidebarOpen(@click="sidebar_toggle")
 
-    template(v-if="false")
-    template(v-else-if="body_layout_guess === 'raw_html'")
-      div(v-html="params.body")
-    template(v-else-if="body_layout_guess === 'pre_string'")
-      pre {{params.body}}
-    template(v-else-if="body_layout_guess === 'escaped_string'")
-      | {{params.body}}
-    template(v-else-if="body_layout_guess === 'hash_array_table'")
-      b-table(
-        :data="params.body"
-        )
-        template(v-for="column_name in column_names")
-          b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
-            //- nuxt-link(to="/share-board") foo1
-            //- nuxt-link(to="http://localhost:4000/share-board") foo2
-            //- nuxt-link(to="https://example.com/") foo3
+    MainSection
+      .container.is-fluid
+        .columns
+          .column
+            template(v-for="form_part in params.form_parts")
+              b-field(:label="form_part.label")
+                template(v-if="false")
+                template(v-else-if="form_part.type === 'string'")
+                  b-input(
+                    size="is-small"
+                    :value="attr_value(form_part)"
+                    @input="value => attr_update(form_part, value)"
+                    )
+                template(v-else-if="form_part.type === 'integer'")
+                  b-numberinput(
+                    size="is-small"
+                    :value="attr_value(form_part)"
+                    @input="value => attr_update(form_part, value)"
+                    controls-position="compact"
+                    :exponential="true"
+                    )
+                template(v-else-if="form_part.type === 'select'")
+                  b-select(
+                    size="is-small"
+                    :value="attr_value(form_part)"
+                    @input="value => attr_update(form_part, value)"
+                    )
+                    template(v-for="elem in form_part.elems")
+                      option(:value="elem") {{elem}}
+                template(v-else)
+                  pre unknown: {{form_part.type}}
+
+            div(v-if="params.get_button_show_p")
+              b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
+
             template(v-if="false")
-            template(v-else-if="value_type(row[column_name]) === 'outside_full_url'")
-              div(v-html="$gs.auto_link(row[column_name])")
-            template(v-else-if="value_type(row[column_name]) === 'inside_url'")
-              nuxt-link(:to="row[column_name]['_nuxt_link'].to") {{row[column_name]['_nuxt_link'].name}}
+            template(v-else-if="body_layout_guess === 'raw_html'")
+              div(v-html="params.body")
+            template(v-else-if="body_layout_guess === 'pre_string'")
+              pre {{params.body}}
+            template(v-else-if="body_layout_guess === 'escaped_string'")
+              | {{params.body}}
+            template(v-else-if="body_layout_guess === 'hash_array_table'")
+              b-table(
+                :data="params.body"
+                )
+                template(v-for="column_name in column_names")
+                  b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
+                    //- nuxt-link(to="/share-board") foo1
+                    //- nuxt-link(to="http://localhost:4000/share-board") foo2
+                    //- nuxt-link(to="https://example.com/") foo3
+                    template(v-if="false")
+                    template(v-else-if="value_type(row[column_name]) === 'outside_full_url'")
+                      div(v-html="$gs.auto_link(row[column_name])")
+                    template(v-else-if="value_type(row[column_name]) === 'inside_url'")
+                      nuxt-link(:to="row[column_name]['_nuxt_link'].to") {{row[column_name]['_nuxt_link'].name}}
+                    template(v-else)
+                      | {{row[column_name]}}
             template(v-else)
-              | {{row[column_name]}}
-    template(v-else)
-      pre {{params.body}}
+              pre {{params.body}}
 
-    hr
-    | {{attributes}}
+        .columns
+          .column
+            pre(v-if="development_p")
+              | {{attributes}}
 
-    DebugBox.is-hidden-mobile(v-if="development_p")
-      | body_layout_guess: {{body_layout_guess}}
+            DebugBox.is-hidden-mobile(v-if="development_p")
+              | body_layout_guess: {{body_layout_guess}}
 
-    //- pre attributes = {{attributes}}
+            //- pre attributes = {{attributes}}
 
-    //- pre posts = {{posts}}
+            //- pre posts = {{posts}}
 
-    //- pre(v-if="development_p")
-    //-   | params: {{params}}
-    //-   | $data: {{$data}}
+            //- pre(v-if="development_p")
+            //-   | params: {{params}}
+            //-   | $data: {{$data}}
 </template>
 
 <script>
@@ -92,8 +106,8 @@ export default {
   },
   data() {
     return {
-      attributes: {},
-      params: null,
+      attributes: {},           // form 入力値
+      params: null,             // サーバーから受け取った値(フリーズしたい)
     }
   },
   watch: {
@@ -102,7 +116,7 @@ export default {
   fetchOnServer: false,
   fetch() {
     const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
-    const api_path = `/api/script/${this.$route.params.scategory}/${skey}`
+    const api_path = `/api/script/${this.$route.params.sgroup}/${skey}`
     return this.$axios.$get(api_path, {params: this.$route.query}).then(params => {
       // ここはさらに server か client かで分けないといけない？
 
@@ -162,6 +176,9 @@ export default {
   mounted() {
   },
   methods: {
+    reset_handle() {
+    },
+
     attr_value(form_part) {
       return this.attributes[form_part.key]
     },
@@ -169,7 +186,7 @@ export default {
       this.$set(this.attributes, form_part.key, value)
     },
     submit_handle() {
-      // const router_options = {name: "script-scategory-skey", params: {scategory: this.params["scategory"], skey: this.params["skey"]}, query: this.attributes}
+      // const router_options = {name: "script-sgroup-skey", params: {sgroup: this.params["sgroup"], skey: this.params["skey"]}, query: this.attributes}
       const router_options = {query: this.attributes} // 現在のURLに飛ぶのであれば query だけでよい
       this.$router.push(router_options, () => {
         this.$sound.play_click()
@@ -227,5 +244,24 @@ export default {
 
 <style lang="sass">
 .QuickScriptShow
-  __css_keep__: 0
+  .MainSection.section
+    +tablet
+      padding: 1.75rem 0rem
+
+  .container
+    +mobile
+      padding: 0
+
+  .b-table
+    margin-top: 0rem
+    // margin-bottom: 2rem
+    +mobile
+      margin-top: 1rem
+    td
+      vertical-align: middle
+
+.STAGE-development
+  .QuickScriptShow
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

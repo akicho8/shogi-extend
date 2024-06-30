@@ -1,6 +1,6 @@
 module Api
   class QuickScriptsController < ::Api::ApplicationController
-    before_action :admin_login_required, :if => proc { QuickScript::ScategoryInfo.lookup(params[:scategory])&.admin_required }
+    before_action :admin_login_required, :if => proc { QuickScript::SgroupInfo.lookup(params[:sgroup])&.admin_only }
 
     # http://localhost:4000/script/foo?bar=baz
     # http://localhost:3000/api/quick_scripts/foo?bar=baz

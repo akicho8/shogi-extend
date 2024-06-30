@@ -34,7 +34,7 @@ module QuickScript
         ]
       end
 
-      def get_button
+      def get_button_show_p
         true
       end
 

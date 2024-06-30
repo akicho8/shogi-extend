@@ -12,12 +12,12 @@ module QuickScript
           {
             :name        => { _nuxt_link: { name: e.title, to: { path: e.link_path }, }, },
             :description => e.description,
-            :scategory   => { _nuxt_link: { name: e.scategory_info.name, to: { path: e.scategory_info.link_path }, }, },
+            :sgroup   => { _nuxt_link: { name: e.sgroup_info.name, to: { path: e.sgroup_info.link_path }, }, },
           }
         end
 
-        if scategory_infos.one?
-          rows = rows.collect { |e| e.except(:scategory) }
+        if sgroup_infos.one?
+          rows = rows.collect { |e| e.except(:sgroup) }
         end
 
         rows
@@ -28,30 +28,30 @@ module QuickScript
       def all
         @all ||= yield_self do
           all = Main.all
-          if params[:scategory_only]
-            all = all.find_all { |e| e.scategory == params[:scategory_only] }
+          if params[:sgroup_only]
+            all = all.find_all { |e| e.sgroup == params[:sgroup_only] }
           end
           if Rails.env.local?
           else
-            all = all.reject { |e| e.scategory_info.admin_required && !admin_user }
+            all = all.reject { |e| e.sgroup_info.admin_only && !admin_user }
           end
           all
         end
       end
 
-      def scategory_infos
-        @scategory_infos ||= all.collect(&:scategory_info).uniq
+      def sgroup_infos
+        @sgroup_infos ||= all.collect(&:sgroup_info).uniq
       end
 
-      def primary_scategory
-        if scategory_infos.one?
-          scategory_infos.first
+      def primary_sgroup
+        if sgroup_infos.one?
+          sgroup_infos.first
         end
       end
 
       def title
-        if primary_scategory
-          primary_scategory.name
+        if primary_sgroup
+          primary_sgroup.name
         else
           super
         end

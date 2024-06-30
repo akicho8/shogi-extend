@@ -8,15 +8,15 @@ module QuickScript
 
     class << self
       def link_path
-        @link_path ||= "/script/#{scategory}/#{skey}"
+        @link_path ||= "/script/#{sgroup}/#{skey}"
       end
 
-      def scategory
-        @scategory ||= full_parts.first
+      def sgroup
+        @sgroup ||= full_parts.first
       end
 
-      def scategory_info
-        ScategoryInfo.fetch(scategory)
+      def sgroup_info
+        SgroupInfo.fetch(sgroup)
       end
 
       def skey
@@ -50,7 +50,7 @@ module QuickScript
         :skey                => params[:skey],
         :body                => call,
         :body_layout         => :auto,
-        :get_button          => get_button,
+        :get_button_show_p          => get_button_show_p,
         :button_label        => button_label,
         :meta                => meta,
         :form_parts          => form_parts,
@@ -67,7 +67,7 @@ module QuickScript
       []
     end
 
-    def get_button
+    def get_button_show_p
       false
     end
 
