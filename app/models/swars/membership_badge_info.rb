@@ -179,7 +179,7 @@ module Swars
         if_cond: -> m {
           if m.judge_key == "draw"
             if m.location.key == "black"
-              if m.battle.turn_max > Config.sennitite_eq
+              if m.battle.turn_max > Config.penalty_sennitite_gt
                 true
               end
             end
