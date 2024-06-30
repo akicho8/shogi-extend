@@ -6,7 +6,7 @@ module QuickScript
       { key: :admin,  name: "管理者用",     admin_only: true,  },
       { key: :chore,  name: "雑用",         admin_only: false, },
       { key: :group1, name: "GROUP1",       admin_only: false, },
-      { key: :swars,  name: "将棋ウォーズ", admin_only: false, },
+      { key: :swars,  name: "将棋ウォーズ", admin_only: true,  },
     ]
 
     def link_path
