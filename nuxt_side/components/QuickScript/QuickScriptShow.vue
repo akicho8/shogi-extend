@@ -15,8 +15,8 @@
 
     MainSection
       .container.is-fluid
-        .columns
-          .column
+        .columns.is-multiline
+          .column.is-12
             template(v-for="form_part in params.form_parts")
               b-field(:label="form_part.label")
                 template(v-if="false")
@@ -58,6 +58,14 @@
             template(v-else-if="body_layout_guess === 'hash_array_table'")
               b-table(
                 :data="params.body"
+                scrollable
+                pagination-simple
+                backend-pagination
+                :paginated    = "params.page_params.paginated"
+                :total        = "params.page_params.total"
+                :current-page = "params.page_params.current_page"
+                :per-page     = "params.page_params.per_page"
+                @page-change="(page) => page_change_or_sort_handle({page})"
                 )
                 template(v-for="column_name in column_names")
                   b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
@@ -74,7 +82,7 @@
             template(v-else)
               pre {{params.body}}
 
-        .columns
+        .columns.is-multiline
           .column
             pre(v-if="development_p")
               | {{attributes}}
@@ -154,7 +162,7 @@ export default {
     //     // サーバーからのレスポンスがある場合
     //     const status = error.response.status
     //     const data = error.response.data
-    // 
+    //
     //     if (status === 400) {
     //       console.error('Bad Request:', data)
     //     } else if (status === 401) {
@@ -191,15 +199,24 @@ export default {
     attr_update(form_part, value) {
       this.$set(this.attributes, form_part.key, value)
     },
+
+    // b-table の @sort と @page-change に反応
+    page_change_or_sort_handle(params) {
+      this.page_update(params)
+    },
+
     submit_handle() {
-      // const router_options = {name: "script-sgroup-skey", params: {sgroup: this.params["sgroup"], skey: this.params["skey"]}, query: this.attributes}
-      const router_options = {query: this.attributes} // 現在のURLに飛ぶのであれば query だけでよい
-      this.$router.push(router_options, () => {
+      this.page_update()
+    },
+
+    page_update(append_params = {}) {
+      const new_params = {...this.attributes, ...append_params}
+      this.$router.push({query: new_params}, () => {
         this.$sound.play_click()
         console.log("Navigation succeeded")
       }, () => {
         console.log("Navigation failed")
-        // window.location.href = this.$router.resolve(router_options).href
+        // window.location.href = this.$router.resolve(new_params).href
       })
     },
 

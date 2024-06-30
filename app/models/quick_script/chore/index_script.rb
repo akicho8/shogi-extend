@@ -8,7 +8,9 @@ module QuickScript
           return "ここにはなんもありません"
         end
 
-        rows = all.collect do |e|
+        rows = all.sort_by { |e|
+          [e.sgroup_info, e.title]
+        }.collect do |e|
           {
             :name        => { _nuxt_link: { name: e.title, to: { path: e.link_path }, }, },
             :description => e.description,
@@ -19,8 +21,6 @@ module QuickScript
         if sgroup_infos.one?
           rows = rows.collect { |e| e.except(:sgroup) }
         end
-
-        rows.shuffle!
 
         rows
       end

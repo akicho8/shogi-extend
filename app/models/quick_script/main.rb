@@ -19,7 +19,7 @@ module QuickScript
     end
 
     def name_prefix
-      :script
+      :bin
     end
 
     def root_dir

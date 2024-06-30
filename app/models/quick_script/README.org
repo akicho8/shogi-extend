@@ -1,4 +1,4 @@
-~/src/shogi-extend/nuxt_side/pages/script
+~/src/shogi-extend/nuxt_side/pages/bin
 nuxt_side/components/QuickScript/QuickScriptShow.vue
-http://localhost:4000/script?a=1 は http://localhost:4000/script/chore/index?a=1 にリダイレクトする
-http://localhost:4000/script/foo?a=1 は http://localhost:4000/script/chore/index?a=1 にリダイレクトする
+http://localhost:4000/bin?a=1 は http://localhost:4000/bin/chore/index?a=1 にリダイレクトする
+http://localhost:4000/bin/prison?a=1 は http://localhost:4000/bin/chore/index?a=1 にリダイレクトする

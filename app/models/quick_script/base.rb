@@ -8,7 +8,7 @@ module QuickScript
 
     class << self
       def link_path
-        @link_path ||= "/script/#{sgroup}/#{skey}"
+        @link_path ||= "/bin/#{sgroup}/#{skey}"
       end
 
       def sgroup
@@ -29,20 +29,21 @@ module QuickScript
           path.remove("quick_script/", "_script").split("/") # => ["chore", "calc"]
         end
       end
-
-      # def meta
-      #   {
-      #     :title        => title,
-      #     :description  => description,
-      #     :og_image_key => og_image_key,
-      #   }
-      # end
     end
+
+    attr_accessor :page_params
 
     def initialize(params = {}, options = {})
       @params = params
       @options = {
       }.merge(options)
+
+      @page_params = {
+        :paginated    => false,
+        :total        => 0,
+        :current_page => 1,
+        :per_page     => 100,
+      }
     end
 
     def as_json(*)
@@ -50,10 +51,11 @@ module QuickScript
         :skey                => params[:skey],
         :body                => call,
         :body_layout         => :auto,
-        :get_button_show_p          => get_button_show_p,
+        :get_button_show_p   => get_button_show_p,
         :button_label        => button_label,
         :meta                => meta,
         :form_parts          => form_parts,
+        :page_params     => page_params,
         :__received_params__ => params,
       }
     end
