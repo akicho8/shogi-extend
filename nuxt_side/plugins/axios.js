@@ -11,7 +11,9 @@
 // })
 
 // https://axios.nuxtjs.org/helpers
-export default function ({ $axios, error: nuxtError }) {
+export default function ({ $axios, redirect, error: nuxtError }) {
+  // console.log('Axios maxRedirects:', $axios.defaults.maxRedirects) ← 見れない
+
   $axios.onRequest(config => {
     // $axios.setHeader を使うと server のときしか値が入らない(謎)
     // ヘッダーキーにアンダースコアを使うと何も言わずに削除されてめちゃくちゃはまる(怒)
@@ -30,9 +32,25 @@ export default function ({ $axios, error: nuxtError }) {
       statusCode: error.response.status,
       message: error.response.data.message ?? error.message,
     })
+
     // これを返すと $get が false を返して処理が継続してしまい、めちゃくちゃになる
     // return Promise.resolve(false)
   })
+
+  // ↓まったく動かない。そもそも自動でリダイレクトしてくれるはず。
+  // $axios.onResponse(response => {
+  //   console.log(response)
+  //   // 302 ステータスコードの場合
+  //   if (response.status === 302) {
+  //     // リダイレクト先URLを取得
+  //     const redirectUrl = response.headers.location
+  //     // リダイレクト
+  //     if (redirectUrl) {
+  //       redirect(redirectUrl)
+  //     }
+  //   }
+  //   return response
+  // })
 }
 
 // export default function ({$axios, error}) {

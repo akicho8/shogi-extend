@@ -104,19 +104,54 @@ export default {
     const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
     const api_path = `/api/script/${this.$route.params.scategory}/${skey}`
     return this.$axios.$get(api_path, {params: this.$route.query}).then(params => {
-      // 受けとる
-      this.params = params
+      // ここはさらに server か client かで分けないといけない？
 
       // 最優先でリダイレクトする
-      if (Gs.present_p(params.body["redirect_to"])) {
-        window.location.href = params.body["redirect_to"]
+      // 外部
+      if (Gs.present_p(params.body["href_redirect_to"])) {
+        window.location.href = params.body["href_redirect_to"]
+        // redirect(params.body["href_redirect_to"])
+        // this.$router.push(params.body["href_redirect_to"]) // ← 動かない
         return
       }
+
+      // サイト内
+      if (Gs.present_p(params.body["router_redirect_to"])) {
+        this.$router.push(params.body["router_redirect_to"])
+        return
+      }
+
+      // 受けとる
+      this.params = params
 
       // 初期値を埋める
       this.params.form_parts.forEach(form_part => {
         this.$set(this.attributes, form_part["key"], form_part["default"])
       })
+    }).catch(error => {
+      // エラーレスポンスの処理
+      if (error.response) {
+        // サーバーからのレスポンスがある場合
+        const status = error.response.status
+        const data = error.response.data
+
+        if (status === 400) {
+          console.error('Bad Request:', data)
+        } else if (status === 401) {
+          console.error('Unauthorized:', data)
+          this.$router.push('/login') // ログインページにリダイレクト
+        } else if (status === 404) {
+          console.error('Not Found:', data)
+          this.$router.push('/not-found') // カスタム404ページにリダイレクト
+        } else if (status === 500) {
+          console.error('Internal Server Error:', data)
+        } else {
+          console.error('Error:', data)
+        }
+      } else {
+        // サーバーからのレスポンスがない場合（ネットワークエラーなど）
+        console.error('Network Error:', error.message)
+      }
     })
   },
   created() {
