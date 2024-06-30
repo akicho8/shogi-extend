@@ -25,7 +25,7 @@ module Swars
     describe "先手の千日手" do
       def case1(location_key)
         black = User.create!
-        Battle.create!(csa_seq: KifuGenerator.generate_n(13)) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(37 + 1)) do |e|
           e.memberships.build(user: black, judge_key: :draw, location_key: location_key)
         end
         black.stat.draw_stat.black_sennichi_count

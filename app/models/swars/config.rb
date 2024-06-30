@@ -3,6 +3,7 @@ module Swars
     # turn_max
     mattr_accessor(:establish_gteq) {  2 } # N手以上で双方の通信が正常と見なす
     mattr_accessor(:sennitite_eq)   { 12 } # N手で開幕千日手と見なす
+    mattr_accessor(:penalty_sennitite_gt)  { 37 } # N手を越えた千日手で先手にペナルティとする(角換わり腰掛け銀は37手で同型になる)
     mattr_accessor(:seiritsu_gteq)  { 14 } # N手以上で対局が成立としていると見なす(N手未満で負けなら棋力調整と見なす)
     mattr_accessor(:mukiryoku_lteq) { 44 } # N手以下で無気力な対局と見なす
     # 対局数

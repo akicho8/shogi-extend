@@ -36,7 +36,7 @@ module Swars
         @black_sennichi_count ||= yield_self do
           if draw_count.positive?
             s = draw_only
-            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(Config.sennitite_eq))
+            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(Config.penalty_sennitite_gt))
             s = s.joins(:location).where(Location.arel_table[:key].eq(:black))
             s.count
           end
