@@ -8,10 +8,10 @@
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="params.meta.title")
           h1.has-text-weight-bold {{params.meta.title}}
 
-      template(slot="end")
-        NavbarItemLogin
-        NavbarItemProfileLink
-        //- NavbarItemSidebarOpen(@click="sidebar_toggle")
+      //- template(slot="end")
+      //-   NavbarItemLogin
+      //-   NavbarItemProfileLink
+      //-   NavbarItemSidebarOpen(@click="sidebar_toggle")
 
     MainSection
       .container.is-fluid
@@ -146,31 +146,33 @@ export default {
       this.params.form_parts.forEach(form_part => {
         this.$set(this.attributes, form_part["key"], form_part["default"])
       })
-    }).catch(error => {
-      // エラーレスポンスの処理
-      if (error.response) {
-        // サーバーからのレスポンスがある場合
-        const status = error.response.status
-        const data = error.response.data
-
-        if (status === 400) {
-          console.error('Bad Request:', data)
-        } else if (status === 401) {
-          console.error('Unauthorized:', data)
-          this.$router.push('/login') // ログインページにリダイレクト
-        } else if (status === 404) {
-          console.error('Not Found:', data)
-          this.$router.push('/not-found') // カスタム404ページにリダイレクト
-        } else if (status === 500) {
-          console.error('Internal Server Error:', data)
-        } else {
-          console.error('Error:', data)
-        }
-      } else {
-        // サーバーからのレスポンスがない場合（ネットワークエラーなど）
-        console.error('Network Error:', error.message)
-      }
     })
+
+    // }).catch(error => {
+    //   // エラーレスポンスの処理
+    //   if (error.response) {
+    //     // サーバーからのレスポンスがある場合
+    //     const status = error.response.status
+    //     const data = error.response.data
+    // 
+    //     if (status === 400) {
+    //       console.error('Bad Request:', data)
+    //     } else if (status === 401) {
+    //       console.error('Unauthorized:', data)
+    //       this.$router.push('/login') // ログインページにリダイレクト
+    //     } else if (status === 404) {
+    //       console.error('Not Found:', data)
+    //       this.$router.push('/not-found') // カスタム404ページにリダイレクト
+    //     } else if (status === 500) {
+    //       console.error('Internal Server Error:', data)
+    //     } else {
+    //       console.error('Error:', data)
+    //     }
+    //   } else {
+    //     // サーバーからのレスポンスがない場合（ネットワークエラーなど）
+    //     console.error('Network Error:', error.message)
+    //   }
+    // })
   },
   created() {
     console.debug(this.$route)

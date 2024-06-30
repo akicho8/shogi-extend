@@ -20,6 +20,8 @@ module QuickScript
           rows = rows.collect { |e| e.except(:sgroup) }
         end
 
+        rows.shuffle!
+
         rows
       end
 

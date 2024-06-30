@@ -1,6 +1,6 @@
 module QuickScript
   module Dev
-    class LinkScript < Base
+    class LinkInTableScript < Base
       self.title = "テーブル内リンクのテスト"
 
       def call
