@@ -1,5 +1,5 @@
 module QuickScript
-  module Chore
+  module Dev
     class RouterRedirectScript < Base
       self.title = "内部リダイレクトのテスト"
 

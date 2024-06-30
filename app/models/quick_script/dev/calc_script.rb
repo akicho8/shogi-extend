@@ -1,5 +1,5 @@
 module QuickScript
-  module Chore
+  module Dev
     class CalcScript < Base
       self.title = "計算機"
 

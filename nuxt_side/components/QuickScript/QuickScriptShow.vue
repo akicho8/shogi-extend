@@ -108,12 +108,13 @@ export default {
     return {
       attributes: {},           // form 入力値
       params: null,             // サーバーから受け取った値(フリーズしたい)
+      meta: null,
     }
   },
   watch: {
     "$route.query": "$fetch",
   },
-  fetchOnServer: false,
+  fetchOnServer: true, // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
   fetch() {
     const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
     const api_path = `/api/script/${this.$route.params.sgroup}/${skey}`
@@ -136,6 +137,7 @@ export default {
       }
 
       // 受けとる
+      this.meta = params["meta"] // ページタイトルを更新するため
       this.params = params
 
       // 初期値を埋める

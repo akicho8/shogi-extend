@@ -12,7 +12,7 @@ module QuickScript
           {
             :name        => { _nuxt_link: { name: e.title, to: { path: e.link_path }, }, },
             :description => e.description,
-            :sgroup   => { _nuxt_link: { name: e.sgroup_info.name, to: { path: e.sgroup_info.link_path }, }, },
+            :sgroup      => { _nuxt_link: { name: e.sgroup_info.name, to: { path: e.sgroup_info.link_path }, }, },
           }
         end
 

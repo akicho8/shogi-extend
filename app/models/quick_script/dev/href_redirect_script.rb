@@ -1,5 +1,5 @@
 module QuickScript
-  module Chore
+  module Dev
     class HrefRedirectScript < Base
       self.title = "外部リダイレクトのテスト"
 
