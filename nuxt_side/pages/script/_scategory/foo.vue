@@ -1,3 +1,7 @@
+<template lang="pug">
+QuickScriptShow
+</template>
+
 <script>
 export default {
   async asyncData(c) {

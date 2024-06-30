@@ -36,7 +36,6 @@
     div(v-if="params.get_button")
       b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
 
-    | Response:
     template(v-if="false")
     template(v-else-if="body_layout_guess === 'raw_html'")
       div(v-html="params.body")
@@ -102,7 +101,9 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get(`/api/quick_scripts/${this.$route.params.id}`, {params: this.$route.query}).then(params => {
+    const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
+    const api_path = `/api/script/${this.$route.params.scategory}/${skey}`
+    return this.$axios.$get(api_path, {params: this.$route.query}).then(params => {
       // 受けとる
       this.params = params
 
@@ -119,6 +120,7 @@ export default {
     })
   },
   created() {
+    console.debug(this.$route)
   },
   beforeMount() {
   },
@@ -132,7 +134,8 @@ export default {
       this.$set(this.attributes, form_part.key, value)
     },
     submit_handle() {
-      const router_options = {name: "script-id", params: {id: this.params["id"]}, query: this.attributes}
+      // const router_options = {name: "script-scategory-skey", params: {scategory: this.params["scategory"], skey: this.params["skey"]}, query: this.attributes}
+      const router_options = {query: this.attributes} // 現在のURLに飛ぶのであれば query だけでよい
       this.$router.push(router_options, () => {
         this.$sound.play_click()
         console.log("Navigation succeeded")

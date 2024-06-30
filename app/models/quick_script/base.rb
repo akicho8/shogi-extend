@@ -1,0 +1,99 @@
+module QuickScript
+  class Base
+    attr_reader :params
+
+    class_attribute :title, default: nil
+    class_attribute :description, default: nil
+    class_attribute :og_image_key, default: nil
+
+    class << self
+      def link_path
+        @link_path ||= "/script/#{scategory}/#{skey}"
+      end
+
+      def scategory
+        @scategory ||= full_parts.first
+      end
+
+      def scategory_info
+        ScategoryInfo.fetch(scategory)
+      end
+
+      def skey
+        @skey ||= full_parts.last
+      end
+
+      def full_parts
+        @path_parts ||= yield_self do
+          path = name.underscore                             # => "quick_script/chore/calc_script"
+          path.remove("quick_script/", "_script").split("/") # => ["chore", "calc"]
+        end
+      end
+
+      # def meta
+      #   {
+      #     :title        => title,
+      #     :description  => description,
+      #     :og_image_key => og_image_key,
+      #   }
+      # end
+    end
+
+    def initialize(params = {}, options = {})
+      @params = params
+      @options = {
+      }.merge(options)
+    end
+
+    def as_json(*)
+      {
+        :skey                => params[:skey],
+        :body                => call,
+        :body_layout         => :auto,
+        :get_button          => get_button,
+        :button_label        => button_label,
+        :meta                => meta,
+        :form_parts          => form_parts,
+        :__received_params__ => params,
+      }
+    end
+
+    def call
+    end
+
+    private
+
+    def form_parts
+      []
+    end
+
+    def get_button
+      false
+    end
+
+    def button_label
+      "実行"
+    end
+
+    # auto, raw_html, pre_string, escaped_string, hash_array_table
+    def body_layout
+      :auto
+    end
+
+    def meta
+      {
+        :title        => title,
+        :description  => description,
+        :og_image_key => og_image_key,
+      }
+    end
+
+    def admin_user
+      @options[:admin_user]
+    end
+
+    def current_user
+      @options[:current_user]
+    end
+  end
+end
