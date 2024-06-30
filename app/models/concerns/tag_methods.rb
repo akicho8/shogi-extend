@@ -43,7 +43,7 @@ module TagMethods
   end
 
   def all_tag_names
-    [:defense, :attack, :technique, :note, :other].flat_map do |e|
+    [:defense, :attack, :technique, :note].flat_map do |e|
       tag_names_for(e)
     end
   end
