@@ -114,7 +114,9 @@ export default {
   watch: {
     "$route.query": "$fetch",
   },
-  fetchOnServer: true, // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
+  // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
+  // しかし http://localhost:4000/script/dev に SSR でアクセスできなくなる
+  fetchOnServer: false,
   fetch() {
     const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
     const api_path = `/api/script/${this.$route.params.sgroup}/${skey}`

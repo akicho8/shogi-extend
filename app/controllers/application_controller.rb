@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include AxiosMethods
 
   # BASIC認証のキャッシュを消すとき用
+  # http://localhost:3000/admin?request_http_basic_authentication=1
   before_action :request_http_basic_authentication, :if => proc { params[:request_http_basic_authentication] }
 
   skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
