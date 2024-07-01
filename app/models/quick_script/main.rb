@@ -3,7 +3,7 @@ module QuickScript
     extend self
 
     def fetch(params, options = {})
-      if params[:skey] == "__skey_is_blank_then_index_show__"
+      if params[:skey] == "__skey_is_blank__"
         return Chore::IndexScript.new(params.merge(sgroup_only: params[:sgroup]), options)
       end
       "quick_script/#{params[:sgroup]}/#{params[:skey]}_script".classify.constantize.new(params, options)

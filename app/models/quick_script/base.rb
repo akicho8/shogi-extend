@@ -1,5 +1,8 @@
 module QuickScript
   class Base
+    prepend PaginationMod
+    prepend SessionMod
+
     attr_reader :params
 
     class_attribute :title, default: nil
@@ -31,19 +34,10 @@ module QuickScript
       end
     end
 
-    attr_accessor :page_params
-
     def initialize(params = {}, options = {})
       @params = params
       @options = {
       }.merge(options)
-
-      @page_params = {
-        :paginated    => false,
-        :total        => 0,
-        :current_page => 1,
-        :per_page     => 100,
-      }
     end
 
     def as_json(*)
@@ -55,7 +49,6 @@ module QuickScript
         :button_label        => button_label,
         :meta                => meta,
         :form_parts          => form_parts,
-        :page_params     => page_params,
         :__received_params__ => params,
       }
     end
@@ -88,14 +81,6 @@ module QuickScript
         :description  => description,
         :og_image_key => og_image_key,
       }
-    end
-
-    def admin_user
-      @options[:admin_user]
-    end
-
-    def current_user
-      @options[:current_user]
     end
   end
 end

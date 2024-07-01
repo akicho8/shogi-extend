@@ -1,17 +1,23 @@
 <template lang="pug">
 .QuickScriptShow
-  b-loading(:active="$fetchState.pending")
+  template(v-if="development_p && false")
+    b-loading(:active="$fetchState.pending")
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid")
       template(slot="brand")
-        NavbarItemHome
-        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="params.meta.title")
-          h1.has-text-weight-bold {{params.meta.title}}
+        template(v-if="$route.path === '/bin'")
+          NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
+        template(v-else-if="current_skey == null")
+          NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
+        template(v-else)
+          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-sgroup-skey', params: {sgroup: current_sgroup}}")
+        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="meta.title")
+          h1.has-text-weight-bold {{meta.title}}
 
-      //- template(slot="end")
-      //-   NavbarItemLogin
-      //-   NavbarItemProfileLink
-      //-   NavbarItemSidebarOpen(@click="sidebar_toggle")
+      template(slot="end")
+        NavbarItemLogin
+        NavbarItemProfileLink
+        //- NavbarItemSidebarOpen(@click="sidebar_toggle")
 
     MainSection
       .container.is-fluid
@@ -106,17 +112,21 @@ import Vue from 'vue'
 
 export default {
   name: "QuickScriptShow",
-  mixins: [],
-  provide() {
-    return {
-      TheQS: this,
-    }
+  // provide() {
+  //   return {
+  //     TheQS: this,
+  //   }
+  // },
+  props: {
+    // 呼び出す側で $route.params を上書きすればいいのでこれはいらないかもしれない。
+    sgroup: { type: String },
+    skey:   { type: String },
   },
   data() {
     return {
       attributes: {},           // form 入力値
       params: null,             // サーバーから受け取った値(フリーズしたい)
-      meta: null,
+      // meta: null,
     }
   },
   watch: {
@@ -126,9 +136,7 @@ export default {
   // しかし http://localhost:4000/script/dev に SSR でアクセスできなくなる
   fetchOnServer: false,
   fetch() {
-    const skey = this.$route.params.skey ?? "__skey_is_blank_then_index_show__"
-    const api_path = `/api/script/${this.$route.params.sgroup}/${skey}`
-    return this.$axios.$get(api_path, {params: this.$route.query}).then(params => {
+    return this.$axios.$get(this.current_api_path, {params: this.$route.query}).then(params => {
       // ここはさらに server か client かで分けないといけない？
 
       // 最優先でリダイレクトする
@@ -147,7 +155,6 @@ export default {
       }
 
       // 受けとる
-      this.meta = params["meta"] // ページタイトルを更新するため
       this.params = params
 
       // 初期値を埋める
@@ -238,6 +245,11 @@ export default {
     },
   },
   computed: {
+    current_sgroup()   { return this.sgroup ?? this.$route.params.sgroup                                                               },
+    current_skey()     { return this.skey   ?? this.$route.params.skey                                                                 },
+    current_api_path() { return `/api/bin/${this.current_sgroup ?? '__sgroup_is_blank__'}/${this.current_skey ?? '__skey_is_blank__'}` },
+    meta()             { return this.params ? this.params.meta : null                                                                  },
+
     body_layout_guess() {
       if (this.params) {
         if (this.params.body_layout === "auto") {

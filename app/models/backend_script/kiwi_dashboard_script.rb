@@ -12,7 +12,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{MysqlUtil.column_tokyo_timezone_cast(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlToolkit.column_tokyo_timezone_cast(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク人数
             "COUNT(*)                              AS count_all",            # 件数
             "COUNT(errored_at is not null or NULL) AS errored_count",        # x

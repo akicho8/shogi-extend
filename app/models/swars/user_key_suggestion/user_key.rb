@@ -28,11 +28,7 @@ module Swars
 
       # "ALICE_BOB" なら "alice\_bob" (MySQL依存)
       def like_value
-        mysql_underscore_escape(downcase)
-      end
-
-      def mysql_underscore_escape(str)
-        str.gsub(/_/, "\\_")
+        MysqlToolkit.escape_for_like(downcase)
       end
 
       # 部分一致した回数

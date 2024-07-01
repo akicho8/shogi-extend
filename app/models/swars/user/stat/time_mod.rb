@@ -12,7 +12,7 @@ module Swars
       end
 
       def zero_adjusted_battled_at
-        MysqlUtil.column_tokyo_timezone_cast(:battled_at)
+        MysqlToolkit.column_tokyo_timezone_cast(:battled_at)
       end
 
       def day_hours

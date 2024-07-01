@@ -1,4 +1,4 @@
-module MysqlUtil
+module MysqlToolkit
   extend self
 
   def mysql_convert_tz_with_time_zone_validate!
@@ -9,5 +9,9 @@ module MysqlUtil
 
   def column_tokyo_timezone_cast(column)
     "CONVERT_TZ(#{column}, 'UTC', 'Asia/Tokyo')"
+  end
+
+  def escape_for_like(str)
+    str.gsub(/_/, "\\_")
   end
 end

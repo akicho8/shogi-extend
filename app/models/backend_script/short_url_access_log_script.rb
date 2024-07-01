@@ -11,7 +11,7 @@ module BackendScript
       s = model.all
       s = s.where(model.arel_table[:created_at].gteq(time_begin))
       records = s.select([
-                           "DATE(#{MysqlUtil.column_tokyo_timezone_cast(:created_at)}) AS created_on",
+                           "DATE(#{MysqlToolkit.column_tokyo_timezone_cast(:created_at)}) AS created_on",
                            "COUNT(*)                              AS count_all",
                          ].join(", ")).group("created_on")
       access_log_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
