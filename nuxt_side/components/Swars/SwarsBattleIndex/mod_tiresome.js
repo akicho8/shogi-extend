@@ -65,7 +65,7 @@ export const mod_tiresome = {
 
       this.$gs.delay_block(1, () => {
         this.$sound.stop_all()
-        this.talk("ところでウォーズID毎回入力するの不便じゃない？")
+        this.talk("ところで毎回ウォーズID入力するの不便じゃない？")
       })
 
       const subject = "ウォーズID記憶案内"
@@ -73,7 +73,7 @@ export const mod_tiresome = {
         canCancel: ["button"],
         // hasIcon: true,
         type: "is-info",
-        title: "😐 ところでウォーズID毎回入力するの不便じゃない？",
+        title: "ところで毎回ウォーズID入力するの不便じゃない？",
         message: `
           <div class="">
             <ul class="mt-0">
