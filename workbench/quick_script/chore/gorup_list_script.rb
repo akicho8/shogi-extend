@@ -1,2 +1,0 @@
-require "./setup"
-QuickScript::Chore::GorupListScript.new.call # => [{:name=>{:_nuxt_link=>{:name=>"開発用", :to=>{:path=>"/bin/dev"}}}}, {:name=>{:_nuxt_link=>{:name=>"管理者用", :to=>{:path=>"/bin/admin"}}}}, {:name=>{:_nuxt_link=>{:name=>"雑用", :to=>{:path=>"/bin/chore"}}}}, {:name=>{:_nuxt_link=>{:name=>"GROUP1", :to=>{:path=>"/bin/group1"}}}}, {:name=>{:_nuxt_link=>{:name=>"将棋ウォーズ", :to=>{:path=>"/bin/swars"}}}}]

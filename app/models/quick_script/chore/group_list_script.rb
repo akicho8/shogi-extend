@@ -1,6 +1,6 @@
 module QuickScript
   module Chore
-    class GorupListScript < Base
+    class GroupListScript < Base
       self.title = "簡易ツール"
       self.description = "グループ一覧を表示する"
 
