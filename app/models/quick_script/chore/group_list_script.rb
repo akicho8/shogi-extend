@@ -16,7 +16,7 @@ module QuickScript
 
       def all
         @all ||= yield_self do
-          all = SgroupInfo.values
+          all = QsGroupInfo.values
           if Rails.env.local?
           else
             all = all.reject { |e| e.admin_only && !admin_user }

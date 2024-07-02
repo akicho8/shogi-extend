@@ -43,5 +43,11 @@ module Swars
     def inspect
       "<#{self}>"
     end
+
+    ################################################################################
+
+    def mypage_url
+      "https://shogiwars.heroz.jp/users/mypage/#{key}"
+    end
   end
 end

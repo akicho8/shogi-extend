@@ -124,7 +124,7 @@ Rails.application.routes.draw do
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 
-    match "bin/:qs_group/:qs_key", to: "quick_scripts#show", via: :all
+    match "bin/:qs_group_key/:qs_key", to: "quick_scripts#show", via: :all
 
     namespace :wkbk, format: :json do
       namespace :tops do

@@ -11,19 +11,19 @@ module QuickScript
 
     class << self
       def link_path
-        @link_path ||= "/bin/#{qs_group}/#{qs_key}"
+        @link_path ||= "/bin/#{qs_group_key}/#{qs_key}"
       end
 
-      def qs_group
-        @qs_group ||= full_parts.first
+      def qs_group_key
+        @qs_group_key ||= full_parts.first.dasherize
       end
 
-      def sgroup_info
-        SgroupInfo.fetch(qs_group)
+      def qs_group_info
+        QsGroupInfo.fetch(qs_group_key)
       end
 
       def qs_key
-        @qs_key ||= full_parts.last
+        @qs_key ||= full_parts.last.dasherize
       end
 
       def full_parts
@@ -44,7 +44,7 @@ module QuickScript
       {
         :qs_key                => params[:qs_key],
         :body                => call,
-        :body_layout         => :auto,
+        :body_guess         => body_guess,
         :get_button_show_p   => get_button_show_p,
         :button_label        => button_label,
         :meta                => meta,
@@ -70,9 +70,8 @@ module QuickScript
       "実行"
     end
 
-    # auto, raw_html, pre_string, escaped_string, hash_array_table
-    def body_layout
-      :auto
+    # auto, raw_html, pre_string, escaped_string, value_type_is_hash_array
+    def body_guess
     end
 
     def meta

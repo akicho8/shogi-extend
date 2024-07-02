@@ -4,9 +4,9 @@ module QuickScript
 
     def fetch(params, options = {})
       if params[:qs_key] == "__skey_is_blank__"
-        return Chore::IndexScript.new(params.merge(sgroup_only: params[:qs_group]), options)
+        return Chore::IndexScript.new(params.merge(qs_group_only: params[:qs_group_key]), options)
       end
-      "quick_script/#{params[:qs_group]}/#{params[:qs_key]}_script".classify.constantize.new(params, options)
+      "quick_script/#{params[:qs_group_key]}/#{params[:qs_key]}_script".underscore.classify.constantize.new(params, options)
     end
 
     def all

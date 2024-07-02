@@ -11,9 +11,9 @@ export default {
 
   // 置き換える場合
   created() {
-    this.$route.params.qs_group = "chore"
+    this.$route.params.qs_group_key = "chore"
     this.$route.params.qs_key   = "group_list"
-    // this.$route.query.sgroup_index = true
+    // this.$route.query.qs_group_index = true
   },
 }
 </script>

@@ -86,6 +86,10 @@ module Swars
       key
     end
 
+    def key_object
+      @key_object ||= UserKey[key]
+    end
+
     def stat(params = {})
       User::Stat::Main.new(self, params)
     end

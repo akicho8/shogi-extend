@@ -53,6 +53,10 @@ module Swars
       assert { User.fetch("alice") }
     end
 
+    it "key_object" do
+      assert { User.create!(key: "alice").key_object }
+    end
+
     describe "垢BAN" do
       it "ban!: 垢BANすると二箇所の user.ban_at と profile.ban_at をセットする" do
         user = User.create!

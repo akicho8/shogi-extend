@@ -1,8 +1,8 @@
 module QuickScript
   module Swars
-    class PrisonScript < Base
-      self.title = "将棋ウォーズ囚人検索"
-      self.description = "検察結果を直近順に表示する"
+    class GradeScript < Base
+      self.title = "横断的棋力一覧"
+      self.description = "指定ウォーズIDsの棋力を表示する"
       self.per_page_default = 1000
 
       def form_parts

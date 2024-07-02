@@ -10,7 +10,7 @@
         template(v-else-if="current_qs_key == null")
           NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
         template(v-else)
-          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group-qs_key', params: {qs_group: current_qs_group}}")
+          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group_key-qs_key', params: {qs_group_key: current_qs_group}}")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="meta.title")
           h1.has-text-weight-bold {{meta.title}}
 
@@ -23,45 +23,40 @@
       .container.is-fluid
         .columns.is-multiline
           .column.is-12
-            template(v-for="form_part in params.form_parts")
-              b-field(:label="form_part.label")
-                template(v-if="false")
-                template(v-else-if="form_part.type === 'string'")
-                  b-input(
-                    size="is-small"
-                    :value="attr_value(form_part)"
-                    @input="value => attr_update(form_part, value)"
-                    )
-                template(v-else-if="form_part.type === 'integer'")
-                  b-numberinput(
-                    size="is-small"
-                    :value="attr_value(form_part)"
-                    @input="value => attr_update(form_part, value)"
-                    controls-position="compact"
-                    :exponential="true"
-                    )
-                template(v-else-if="form_part.type === 'select'")
-                  b-select(
-                    size="is-small"
-                    :value="attr_value(form_part)"
-                    @input="value => attr_update(form_part, value)"
-                    )
-                    template(v-for="elem in form_part.elems")
-                      option(:value="elem") {{elem}}
-                template(v-else)
-                  pre unknown: {{form_part.type}}
+            template(v-if="params.form_parts")
+              template(v-for="form_part in params.form_parts")
+                b-field(:label="form_part.label")
+                  template(v-if="false")
+                  template(v-else-if="form_part.type === 'string'")
+                    b-input(
+                      size="is-small"
+                      :value="attr_value(form_part)"
+                      @input="value => attr_update(form_part, value)"
+                      )
+                  template(v-else-if="form_part.type === 'integer'")
+                    b-numberinput(
+                      size="is-small"
+                      :value="attr_value(form_part)"
+                      @input="value => attr_update(form_part, value)"
+                      controls-position="compact"
+                      :exponential="true"
+                      )
+                  template(v-else-if="form_part.type === 'select'")
+                    b-select(
+                      size="is-small"
+                      :value="attr_value(form_part)"
+                      @input="value => attr_update(form_part, value)"
+                      )
+                      template(v-for="elem in form_part.elems")
+                        option(:value="elem") {{elem}}
+                  template(v-else)
+                    pre unknown: {{form_part.type}}
 
             div(v-if="params.get_button_show_p")
               b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
 
             template(v-if="false")
-            template(v-else-if="body_layout_guess === 'raw_html'")
-              div(v-html="params.body")
-            template(v-else-if="body_layout_guess === 'pre_string'")
-              pre {{params.body}}
-            template(v-else-if="body_layout_guess === 'escaped_string'")
-              | {{params.body}}
-            template(v-else-if="body_layout_guess === 'hash_array_table'")
+            template(v-else-if="body_layout_guess === 'value_type_is_hash_array'")
               b-table(
                 :data="params.body"
                 scrollable
@@ -75,18 +70,9 @@
                 )
                 template(v-for="column_name in column_names")
                   b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
-                    //- nuxt-link(to="/share-board") foo1
-                    //- nuxt-link(to="http://localhost:4000/share-board") foo2
-                    //- nuxt-link(to="https://example.com/") foo3
-                    template(v-if="false")
-                    template(v-else-if="value_type(row[column_name]) === 'outside_full_url'")
-                      div(v-html="$gs.auto_link(row[column_name])")
-                    template(v-else-if="value_type(row[column_name]) === 'inside_url'")
-                      nuxt-link(:to="row[column_name]['_nuxt_link'].to") {{row[column_name]['_nuxt_link'].name}}
-                    template(v-else)
-                      | {{row[column_name]}}
+                    QuickScriptShowValue(:value="row[column_name]")
             template(v-else)
-              pre {{params.body}}
+              QuickScriptShowValue(:value="params.body")
 
         .columns.is-multiline
           .column
@@ -112,14 +98,14 @@ import Vue from 'vue'
 
 export default {
   name: "QuickScriptShow",
-  // provide() {
-  //   return {
-  //     TheQS: this,
-  //   }
-  // },
+  provide() {
+    return {
+      TheQS: this,
+    }
+  },
   props: {
     // 呼び出す側で $route.params を上書きすればいいのでこれはいらないかもしれない。
-    qs_group: { type: String },
+    qs_group_key: { type: String },
     qs_key:   { type: String },
   },
   data() {
@@ -139,28 +125,39 @@ export default {
     return this.$axios.$get(this.current_api_path, {params: this.$route.query}).then(params => {
       // ここはさらに server か client かで分けないといけない？
 
-      // 最優先でリダイレクトする
-      // 外部
-      if (Gs.present_p(params.body["href_redirect_to"])) {
-        window.location.href = params.body["href_redirect_to"]
-        // redirect(params.body["href_redirect_to"])
-        // this.$router.push(params.body["href_redirect_to"]) // ← 動かない
-        return
-      }
+      if (_.isPlainObject(params.body)) { // params.body が nil の場合があるため
+        // 最優先でリダイレクトする
 
-      // サイト内
-      if (Gs.present_p(params.body["router_redirect_to"])) {
-        this.$router.push(params.body["router_redirect_to"])
-        return
+        // 外部
+        {
+          const value = params.body["href_redirect_to"]
+          if (Gs.present_p(value)) {
+            window.location.href = value
+            // redirect(params.body["href_redirect_to"])
+            // this.$router.push(params.body["href_redirect_to"]) // ← 動かない
+            return
+          }
+        }
+
+        // サイト内
+        {
+          const value = params.body["router_redirect_to"]
+          if (Gs.present_p(value)) {
+            this.$router.push(value)
+            return
+          }
+        }
       }
 
       // 受けとる
       this.params = params
 
       // 初期値を埋める
-      this.params.form_parts.forEach(form_part => {
-        this.$set(this.attributes, form_part["key"], form_part["default"])
-      })
+      if (this.params.form_parts) {
+        this.params.form_parts.forEach(form_part => {
+          this.$set(this.attributes, form_part["key"], form_part["default"])
+        })
+      }
     })
 
     // }).catch(error => {
@@ -227,16 +224,29 @@ export default {
       })
     },
 
-    value_type(value) {
+    value_type_guess(value) {
+      if (Array.isArray(value)) {
+        if (_.isPlainObject(value[0])) {
+          return "value_type_is_hash_array"
+        }
+        return "value_type_is_string_array"
+      }
       if (typeof(value) === "string") {
-        if (value.match(/^http/)) {
-          return "outside_full_url"
+        if (value.startsWith("<")) {
+          return "value_type_is_beginning_html_tag"
         }
       }
       if (_.isPlainObject(value)) {
-        if (Gs.present_p(value["_nuxt_link"])) {
-          return "inside_url"
+        if (value["_nuxt_link"]) {
+          return "value_type_is_nuxt_link"
         }
+        if (value["_link_to"]) {
+          return "value_type_is_link_to"
+        }
+        if (value["_v_text"]) {
+          return "value_type_is_v_text"
+        }
+        return "value_type_is_any_hash"
       }
     },
 
@@ -245,27 +255,22 @@ export default {
     },
   },
   computed: {
-    current_qs_group()   { return this.qs_group ?? this.$route.params.qs_group                                                               },
+    current_qs_group()   { return this.qs_group_key ?? this.$route.params.qs_group_key                                                               },
     current_qs_key()     { return this.qs_key   ?? this.$route.params.qs_key                                                                 },
-    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__sgroup_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}` },
+    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
 
     body_layout_guess() {
       if (this.params) {
-        if (this.params.body_layout === "auto") {
-          if (Array.isArray(this.params.body)) {
-            if (_.isPlainObject(this.params.body[0])) {
-              return "hash_array_table"
-            }
-          }
-        } else {
-          return this.params.body_layout
+        if (this.params.body_guess == null) {
+          return this.value_type_guess(this.params.body)
         }
+        return this.params.body_guess
       }
     },
 
     column_names() {
-      if (this.body_layout_guess === "hash_array_table") {
+      if (this.body_layout_guess === "value_type_is_hash_array") {
         const hv = {}
         this.params.body.forEach(e => {
           _.each(e, (v, k) => { hv[k] = true })
