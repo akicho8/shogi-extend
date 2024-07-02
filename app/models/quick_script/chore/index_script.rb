@@ -18,12 +18,12 @@ module QuickScript
             {
               :name        => { _nuxt_link: { name: e.title, to: { path: e.link_path }, }, },
               :description => e.description,
-              :sgroup      => { _nuxt_link: { name: e.sgroup_info.name, to: { path: e.sgroup_info.link_path }, }, },
+              :qs_group      => { _nuxt_link: { name: e.sgroup_info.name, to: { path: e.sgroup_info.link_path }, }, },
             }
           end
 
           if sgroup_infos.one?
-            rows = rows.collect { |e| e.except(:sgroup) }
+            rows = rows.collect { |e| e.except(:qs_group) }
           end
 
           rows
@@ -36,7 +36,7 @@ module QuickScript
         @all ||= yield_self do
           all = Main.all
           if params[:sgroup_only]
-            all = all.find_all { |e| e.sgroup == params[:sgroup_only] }
+            all = all.find_all { |e| e.qs_group == params[:sgroup_only] }
           end
           if Rails.env.local?
           else
@@ -50,15 +50,15 @@ module QuickScript
         @sgroup_infos ||= all.collect(&:sgroup_info).uniq
       end
 
-      def primary_sgroup
+      def primary_qs_group
         if sgroup_infos.one?
           sgroup_infos.first
         end
       end
 
       def title
-        if primary_sgroup
-          primary_sgroup.name
+        if primary_qs_group
+          primary_qs_group.name
         else
           super
         end

@@ -7,10 +7,10 @@
       template(slot="brand")
         template(v-if="$route.path === '/bin'")
           NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
-        template(v-else-if="current_skey == null")
+        template(v-else-if="current_qs_key == null")
           NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
         template(v-else)
-          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-sgroup-skey', params: {sgroup: current_sgroup}}")
+          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group-qs_key', params: {qs_group: current_qs_group}}")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="meta.title")
           h1.has-text-weight-bold {{meta.title}}
 
@@ -119,8 +119,8 @@ export default {
   // },
   props: {
     // 呼び出す側で $route.params を上書きすればいいのでこれはいらないかもしれない。
-    sgroup: { type: String },
-    skey:   { type: String },
+    qs_group: { type: String },
+    qs_key:   { type: String },
   },
   data() {
     return {
@@ -245,9 +245,9 @@ export default {
     },
   },
   computed: {
-    current_sgroup()   { return this.sgroup ?? this.$route.params.sgroup                                                               },
-    current_skey()     { return this.skey   ?? this.$route.params.skey                                                                 },
-    current_api_path() { return `/api/bin/${this.current_sgroup ?? '__sgroup_is_blank__'}/${this.current_skey ?? '__skey_is_blank__'}` },
+    current_qs_group()   { return this.qs_group ?? this.$route.params.qs_group                                                               },
+    current_qs_key()     { return this.qs_key   ?? this.$route.params.qs_key                                                                 },
+    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__sgroup_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
 
     body_layout_guess() {

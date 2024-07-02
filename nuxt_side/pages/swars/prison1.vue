@@ -5,8 +5,8 @@ QuickScriptShow
 <script>
 export default {
   created() {
-    this.$route.params.sgroup = "swars"
-    this.$route.params.skey   = "prison"
+    this.$route.params.qs_group = "swars"
+    this.$route.params.qs_key   = "prison"
   },
 }
 </script>

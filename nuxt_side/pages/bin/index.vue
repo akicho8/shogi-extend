@@ -11,8 +11,8 @@ export default {
 
   // 置き換える場合
   created() {
-    this.$route.params.sgroup = "chore"
-    this.$route.params.skey   = "group_list"
+    this.$route.params.qs_group = "chore"
+    this.$route.params.qs_key   = "group_list"
     // this.$route.query.sgroup_index = true
   },
 }

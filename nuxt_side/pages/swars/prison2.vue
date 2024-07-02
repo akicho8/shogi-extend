@@ -1,3 +1,3 @@
 <template lang="pug">
-QuickScriptShow(sgroup="swars" skey="prison")
+QuickScriptShow(qs_group="swars" qs_key="prison")
 </template>

@@ -11,19 +11,19 @@ module QuickScript
 
     class << self
       def link_path
-        @link_path ||= "/bin/#{sgroup}/#{skey}"
+        @link_path ||= "/bin/#{qs_group}/#{qs_key}"
       end
 
-      def sgroup
-        @sgroup ||= full_parts.first
+      def qs_group
+        @qs_group ||= full_parts.first
       end
 
       def sgroup_info
-        SgroupInfo.fetch(sgroup)
+        SgroupInfo.fetch(qs_group)
       end
 
-      def skey
-        @skey ||= full_parts.last
+      def qs_key
+        @qs_key ||= full_parts.last
       end
 
       def full_parts
@@ -42,7 +42,7 @@ module QuickScript
 
     def as_json(*)
       {
-        :skey                => params[:skey],
+        :qs_key                => params[:qs_key],
         :body                => call,
         :body_layout         => :auto,
         :get_button_show_p   => get_button_show_p,
