@@ -27,15 +27,33 @@ module QuickScript
           c2 = ::Swars::User.where(::Swars::Grade.arel_table[:key].eq(query))
           scope = scope.and(c1.or(c2))
         end
-        scope = with_paginate(scope)
-        scope.collect do |e|
-          {
-            "ID"         => { _link_to: { name: e.user_key, url: e.key_object.mypage_url }, },
-            "棋力"       => e.grade.name,
-            "収監観測日" => e.ban_at.to_fs(:ymd),
-            ""           => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
-          }
+        pagination_for(scope) do |scope|
+          scope.collect do |e|
+            {
+              "ID"         => { _link_to: { name: e.user_key, url: e.key_object.mypage_url }, },
+              "棋力"       => e.grade.name,
+              "収監観測日" => e.ban_at.to_fs(:ymd),
+              ""           => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+            }
+          end
         end
+      end
+
+      def pagination_for(scope, &block)
+        scope = scope.page(current_page).per(current_per)
+        if block
+          rows = block.call(scope)
+        else
+          rows = scope
+        end
+        {
+          :_component   => "QuickScriptShowValueAsTable",
+          :paginated    => true,
+          :total        => scope.total_count,
+          :current_page => scope.current_page,
+          :per_page     => current_per,
+          :rows         => rows,
+        }
       end
 
       def get_button_show_p

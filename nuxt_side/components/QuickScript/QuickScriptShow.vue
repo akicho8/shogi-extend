@@ -56,21 +56,6 @@
               b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
 
             template(v-if="false")
-            template(v-else-if="body_layout_guess === 'value_type_is_hash_array'")
-              b-table(
-                :data="params.body"
-                scrollable
-                pagination-simple
-                backend-pagination
-                :paginated    = "params.page_params.paginated"
-                :total        = "params.page_params.total"
-                :current-page = "params.page_params.current_page"
-                :per-page     = "params.page_params.per_page"
-                @page-change="(page) => page_change_or_sort_handle({page})"
-                )
-                template(v-for="column_name in column_names")
-                  b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
-                    QuickScriptShowValue(:value="row[column_name]")
             template(v-else)
               QuickScriptShowValue(:value="params.body")
 
@@ -80,7 +65,7 @@
               | {{attributes}}
 
             DebugBox.is-hidden-mobile(v-if="development_p")
-              | body_layout_guess: {{body_layout_guess}}
+              | OK
 
             //- pre attributes = {{attributes}}
 
@@ -97,6 +82,7 @@ import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
 
 export default {
+  // scrollToTop: true,
   name: "QuickScriptShow",
   provide() {
     return {
@@ -237,6 +223,9 @@ export default {
         }
       }
       if (_.isPlainObject(value)) {
+        if (value["_component"]) {
+          return "value_type_is_component"
+        }
         if (value["_nuxt_link"]) {
           return "value_type_is_nuxt_link"
         }
@@ -259,25 +248,6 @@ export default {
     current_qs_key()     { return this.qs_key   ?? this.$route.params.qs_key                                                                 },
     current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
-
-    body_layout_guess() {
-      if (this.params) {
-        if (this.params.body_guess == null) {
-          return this.value_type_guess(this.params.body)
-        }
-        return this.params.body_guess
-      }
-    },
-
-    column_names() {
-      if (this.body_layout_guess === "value_type_is_hash_array") {
-        const hv = {}
-        this.params.body.forEach(e => {
-          _.each(e, (v, k) => { hv[k] = true })
-        })
-        return Object.keys(hv)
-      }
-    },
   },
 }
 </script>
@@ -291,14 +261,6 @@ export default {
   .container
     +mobile
       padding: 0
-
-  .b-table
-    margin-top: 0rem
-    // margin-bottom: 2rem
-    +mobile
-      margin-top: 1rem
-    td
-      vertical-align: middle
 
 .STAGE-development
   .QuickScriptShow

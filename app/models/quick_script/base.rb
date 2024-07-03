@@ -42,14 +42,13 @@ module QuickScript
 
     def as_json(*)
       {
-        :qs_key                => params[:qs_key],
-        :body                => call,
-        :body_guess         => body_guess,
+        :qs_key              => params[:qs_key],
         :get_button_show_p   => get_button_show_p,
         :button_label        => button_label,
         :meta                => meta,
         :form_parts          => form_parts,
         :__received_params__ => params,
+        :body                => safe_call,
       }
     end
 
@@ -70,16 +69,31 @@ module QuickScript
       "実行"
     end
 
-    # auto, raw_html, pre_string, escaped_string, value_type_is_hash_array
-    def body_guess
-    end
-
     def meta
       {
         :title        => title,
         :description  => description,
         :og_image_key => og_image_key,
       }
+    end
+
+    def safe_call
+      begin
+        call
+      rescue => error
+        {
+          _component: "QuickScriptShowValueAsPre",
+          body: error_to_text(error),
+        }
+      end
+    end
+
+    def error_to_text(error)
+      text = []
+      text << "#{error.message} (#{error.class.name})"
+      text << ""
+      text += error.backtrace
+      text.join("\n")
     end
   end
 end

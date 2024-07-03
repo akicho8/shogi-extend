@@ -53,6 +53,11 @@ module QuickScript
       end
 
       def title
+        # if v = params[:qs_group_only]
+        #   "Index for #{v}"
+        # else
+        #   super
+        # end
         if primary_qs_group
           primary_qs_group.name
         else
