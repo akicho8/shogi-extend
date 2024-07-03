@@ -11,7 +11,7 @@
     QuickScriptShowValueAsTable(:value="{rows: value}")
 
   //- ["foo", "bar"]
-  template(v-else-if="value_type_guess === 'value_type_is_string_array'")
+  template(v-else-if="value_type_guess === 'value_type_is_text_array'")
     template(v-for="value in value")
       QuickScriptShowValue(:value="value")
 
@@ -24,7 +24,7 @@
     a(:href="value['_link_to'].url" target="_blank") {{value['_link_to'].name}}
 
   //- "<b>foo</b>"
-  template(v-else-if="value_type_guess === 'value_type_is_beginning_html_tag'")
+  template(v-else-if="value_type_guess === 'value_type_is_html'")
     div(v-html="value")
 
   //- "エスケープされたくない文字列"
@@ -35,9 +35,13 @@
   template(v-else-if="value_type_guess === 'value_type_is_any_hash'")
     pre {{value}}
 
-  //- "エスケープされてもよい文字列 https://example.com/"
-  template(v-else)
+  //- 普通のテキスト
+  template(v-else-if="value_type_guess === 'value_type_is_text'")
     div(v-html="$gs.auto_link(value)")
+
+  //- 数字や nil
+  template(v-else)
+    | {{value}}
 </template>
 
 <script>

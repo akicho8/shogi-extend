@@ -215,12 +215,13 @@ export default {
         if (_.isPlainObject(value[0])) {
           return "value_type_is_hash_array"
         }
-        return "value_type_is_string_array"
+        return "value_type_is_text_array"
       }
       if (typeof(value) === "string") {
         if (value.startsWith("<")) {
-          return "value_type_is_beginning_html_tag"
+          return "value_type_is_html"
         }
+        return "value_type_is_text"
       }
       if (_.isPlainObject(value)) {
         if (value["_component"]) {
@@ -237,6 +238,7 @@ export default {
         }
         return "value_type_is_any_hash"
       }
+      return "value_type_is_unknown"
     },
 
     value_wrap(value) {

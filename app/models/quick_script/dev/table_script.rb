@@ -5,10 +5,9 @@ module QuickScript
 
       def call
         [
-          { name: "自動リンク", "種類": "value_type_is_text_direct_url",    :value =>  "http://example.com/", },
-          { name: "Aタグ",      "種類": "value_type_is_link_to",             :value =>  { _link_to:   { name: "(name)", url: "http://example.com/" }, }, },
-          { name: "nuxt-link",  "種類": "value_type_is_nuxt_link",             :value =>  { _nuxt_link: { name: "(name)", to: {name: "bin-qs_group_key-qs_key", params: {qs_group_key: "dev", qs_key: "calc"}, query: {lhv: 100}}, }, }, },
-          { name: "HTML",       "種類": "value_type_is_beginning_html_tag", :value =>  "<b>foo</b>", },
+          { "名前": "alice", "読み": "ありす",     },
+          { "名前": "bob",   "読み": "ぼぶ",       },
+          { "名前": "carol", "読み": "きゃろる",   },
         ]
       end
     end

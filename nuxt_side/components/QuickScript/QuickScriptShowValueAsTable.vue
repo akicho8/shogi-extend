@@ -26,9 +26,7 @@ export default {
   computed: {
     column_names() {
       const hv = {}
-      this.value.rows.forEach(e => {
-        _.each(e, (v, k) => { hv[k] = true })
-      })
+      this.value.rows.forEach(e => { _.each(e, (v, k) => { hv[k] = true })})
       return Object.keys(hv)
     },
   },
