@@ -1,5 +1,5 @@
 module QuickScript
-  concern :SessionMod do
+  concern :LoginUserMod do
     def admin_user
       @options[:admin_user]
     end

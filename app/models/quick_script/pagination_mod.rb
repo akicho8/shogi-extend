@@ -6,32 +6,49 @@ module QuickScript
       # class_attribute :pagination_p, default: false
     end
 
-    attr_accessor :page_params
+    # attr_accessor :page_params
+    #
+    # def initialize(...)
+    #   super
+    #
+    #   @page_params = {
+    #     :paginated    => false,
+    #     :total        => 0,
+    #     :current_page => 1,
+    #     :per_page     => 100,
+    #   }
+    # end
 
-    def initialize(...)
-      super
+    # def as_json(*)
+    #   super.merge(page_params: @page_params)
+    # end
 
-      @page_params = {
-        :paginated    => false,
-        :total        => 0,
-        :current_page => 1,
-        :per_page     => 100,
-      }
-    end
+    # def with_paginate(scope)
+    #   if scope.respond_to?(:page)
+    #     scope = scope.page(current_page).per(current_per)
+    #     @page_params[:paginated]    = true
+    #     @page_params[:total]        = scope.total_count
+    #     @page_params[:current_page] = scope.current_page
+    #     @page_params[:per_page]     = current_per
+    #   end
+    #   scope
+    # end
 
-    def as_json(*)
-      super.merge(page_params: @page_params)
-    end
-
-    def with_paginate(scope)
-      if scope.respond_to?(:page)
-        scope = scope.page(current_page).per(current_per)
-        @page_params[:paginated]    = true
-        @page_params[:total]        = scope.total_count
-        @page_params[:current_page] = scope.current_page
-        @page_params[:per_page]     = current_per
+    def pagination_for(scope, &block)
+      scope = scope.page(current_page).per(current_per)
+      if block
+        rows = block.call(scope)
+      else
+        rows = scope
       end
-      scope
+      {
+        :_component   => "QuickScriptShowValueAsTable",
+        :paginated    => true,
+        :total        => scope.total_count,
+        :current_page => scope.current_page,
+        :per_page     => current_per,
+        :rows         => rows,
+      }
     end
 
     def current_page

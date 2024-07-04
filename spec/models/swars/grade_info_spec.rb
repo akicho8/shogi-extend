@@ -21,5 +21,9 @@ module Swars
     it "垢BANは10000級" do
       assert { GradeInfo.ban.key == :"10000級" }
     end
+
+    it "9999級も元は10000級" do
+      assert { GradeInfo.fetch("9999級").ban? }
+    end
   end
 end

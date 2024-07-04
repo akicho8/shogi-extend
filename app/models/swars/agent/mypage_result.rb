@@ -6,8 +6,8 @@ module Swars
       def initialize(list)
         @list = list.collect do |rule, grade|
           {
-            rule: Swars::RuleInfo.fetch(rule),
-            grade: Swars::GradeInfo.fetch(grade),
+            :rule  => Swars::RuleInfo.fetch(rule),
+            :grade => Swars::GradeInfo.fetch(grade),
           }
         end
 
@@ -15,7 +15,7 @@ module Swars
       end
 
       def ban?
-        @list.any? { |e| e[:grade] == GradeInfo.ban }
+        @list.any? { |e| e[:grade].ban? }
       end
 
       def inspect

@@ -2,6 +2,7 @@ module QuickScript
   module Dev
     class TableScript < Base
       self.title = "テーブル表示"
+      self.description = "ハッシュの配列を返したときの表示を行う"
 
       def call
         [

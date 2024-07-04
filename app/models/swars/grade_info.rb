@@ -46,7 +46,7 @@ module Swars
     ]
 
     BEGINNER = 30               # 違反していない範囲での最低級位
-    BAN_KEY  = "10000級"        # 垢BANしたとみなす表示上の級位表記
+    BAN_KEY  = :"10000級"        # 垢BANしたとみなす表示上の級位表記
 
     class << self
       def ban
@@ -76,6 +76,10 @@ module Swars
           a
         end
       end
+    end
+
+    def ban?
+      key == BAN_KEY
     end
 
     def priority

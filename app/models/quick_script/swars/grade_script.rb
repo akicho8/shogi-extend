@@ -38,7 +38,7 @@ module QuickScript
         end
       end
 
-      def get_button_show_p
+      def form_method
         true
       end
 

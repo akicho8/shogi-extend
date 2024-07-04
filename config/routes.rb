@@ -104,9 +104,11 @@ Rails.application.routes.draw do
   match "ping(.:format)", to: "api/etc#ping", via: :all, format: nil
 
   namespace :api, format: "json" do
-    match "ping(.:format)",  to: "etc#ping",  via: :all, format: nil
-    match "echo(.:format)",  to: "etc#echo",  via: :all, format: nil
-    match "sleep(.:format)", to: "etc#sleep", via: :all, format: nil
+    match "ping(.:format)",                      to: "etc#ping",               via: :all, format: nil
+    match "echo(.:format)",                      to: "etc#echo",               via: :all, format: nil
+    match "sleep(.:format)",                     to: "etc#sleep",              via: :all, format: nil
+    match "general/any_source_to(.:format)",     to: "generals#any_source_to", via: :all, format: nil
+    match "bin/:qs_group_key/:qs_page_key(.:format)", to: "quick_scripts#show",     via: :all, format: nil
 
     post "app_log(.:format)", to: "etc#app_log"
 
@@ -121,10 +123,6 @@ Rails.application.routes.draw do
     get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
     get "swars/tag_frequency(.:format)",    to: "swars#tag_frequency"
     get "swars/user_stat(.:format)",             to: "swars#user_stat"
-
-    match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
-
-    match "bin/:qs_group_key/:qs_key", to: "quick_scripts#show", via: :all
 
     namespace :wkbk, format: :json do
       namespace :tops do

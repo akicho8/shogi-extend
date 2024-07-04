@@ -1,17 +1,21 @@
 module QuickScript
   class Base
     prepend PaginationMod
-    prepend SessionMod
+    prepend LoginUserMod
+    prepend ControllerMod
+    prepend RescueMod
+    prepend FlashMod
+    prepend MetaMod
+    prepend RedirectMod
 
     attr_reader :params
 
-    class_attribute :title, default: nil
-    class_attribute :description, default: nil
-    class_attribute :og_image_key, default: nil
+    class_attribute :button_label, default: "実行"
+    class_attribute :get_submit_key, default: "exec"
 
     class << self
       def link_path
-        @link_path ||= "/bin/#{qs_group_key}/#{qs_key}"
+        @link_path ||= "/bin/#{qs_group_key}/#{qs_page_key}"
       end
 
       def qs_group_key
@@ -22,8 +26,8 @@ module QuickScript
         QsGroupInfo.fetch(qs_group_key)
       end
 
-      def qs_key
-        @qs_key ||= full_parts.last.dasherize
+      def qs_page_key
+        @qs_page_key ||= full_parts.last.dasherize
       end
 
       def full_parts
@@ -42,58 +46,26 @@ module QuickScript
 
     def as_json(*)
       {
-        :qs_key              => params[:qs_key],
-        :get_button_show_p   => get_button_show_p,
+        :body                => safe_call, # form_parts よりも前で実行すること
+        :qs_page_key              => params[:qs_page_key],
         :button_label        => button_label,
-        :meta                => meta,
+        :get_submit_key      => get_submit_key,
         :form_parts          => form_parts,
         :__received_params__ => params,
-        :body                => safe_call,
       }
     end
 
     def call
     end
 
+    def safe_call
+      call
+    end
+
     private
 
     def form_parts
       []
-    end
-
-    def get_button_show_p
-      false
-    end
-
-    def button_label
-      "実行"
-    end
-
-    def meta
-      {
-        :title        => title,
-        :description  => description,
-        :og_image_key => og_image_key,
-      }
-    end
-
-    def safe_call
-      begin
-        call
-      rescue => error
-        {
-          _component: "QuickScriptShowValueAsPre",
-          body: error_to_text(error),
-        }
-      end
-    end
-
-    def error_to_text(error)
-      text = []
-      text << "#{error.message} (#{error.class.name})"
-      text << ""
-      text += error.backtrace
-      text.join("\n")
     end
   end
 end

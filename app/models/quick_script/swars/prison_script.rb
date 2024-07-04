@@ -3,6 +3,8 @@ module QuickScript
     class PrisonScript < Base
       self.title = "将棋ウォーズ囚人検索"
       self.description = "検察結果を直近順に表示する"
+      self.form_method = :get
+      self.button_label = "検索"
       self.per_page_default = 1000
 
       def form_parts
@@ -37,31 +39,6 @@ module QuickScript
             }
           end
         end
-      end
-
-      def pagination_for(scope, &block)
-        scope = scope.page(current_page).per(current_per)
-        if block
-          rows = block.call(scope)
-        else
-          rows = scope
-        end
-        {
-          :_component   => "QuickScriptShowValueAsTable",
-          :paginated    => true,
-          :total        => scope.total_count,
-          :current_page => scope.current_page,
-          :per_page     => current_per,
-          :rows         => rows,
-        }
-      end
-
-      def get_button_show_p
-        true
-      end
-
-      def button_label
-        "検索"
       end
 
       def current_queries

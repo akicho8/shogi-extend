@@ -2,6 +2,7 @@ module QuickScript
   module Dev
     class ValueScript < Base
       self.title = "値の表示"
+      self.description = "すべての表示形式のテスト"
 
       def call
         [
@@ -9,7 +10,7 @@ module QuickScript
           { name: "リンクなしテキスト",     type: "value_type_is_v_text",       value: { _v_text: "URL は http://example.com/ です" }, },
           { name: "HTML",                   type: "value_type_is_html",         value: "<b>foo</b>", },
           { name: "Aタグ",                  type: "value_type_is_link_to",      value: { _link_to:   { name: "(name)", url: "http://example.com/" }, }, },
-          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "bin-qs_group_key-qs_key", params: {qs_group_key: "dev", qs_key: "calc"}, query: {lhv: 100}}, }, }, },
+          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "bin-qs_group_key-qs_page_key", params: {qs_group_key: "dev", qs_page_key: "calc"}, query: {lhv: 100}}, }, }, },
           { name: "数字",                   type: "value_type_is_unknown",      value: 1,   },
           { name: "nil",                    type: "value_type_is_unknown",      value: nil, },
           { name: "ハッシュ",               type: "value_type_is_any_hash",     value: { id: 1, name: "alice" }, },

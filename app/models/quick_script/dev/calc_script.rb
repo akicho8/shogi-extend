@@ -2,6 +2,8 @@ module QuickScript
   module Dev
     class CalcScript < Base
       self.title = "計算機"
+      self.description = "足し算を行う"
+      self.form_method = :get
 
       def call
         current_lhv.public_send(current_operator, current_rhv)
@@ -32,14 +34,6 @@ module QuickScript
             :default => params[:rhv].presence.try { to_i } || 2,
           },
         ]
-      end
-
-      def get_button_show_p
-        true
-      end
-
-      def button_label
-        "実行"
       end
 
       def current_lhv

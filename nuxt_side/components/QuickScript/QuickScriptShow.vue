@@ -10,7 +10,7 @@
         template(v-else-if="current_qs_key == null")
           NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
         template(v-else)
-          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group_key-qs_key', params: {qs_group_key: current_qs_group}}")
+          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="meta.title")
           h1.has-text-weight-bold {{meta.title}}
 
@@ -21,11 +21,11 @@
 
     MainSection
       .container.is-fluid
-        .columns.is-multiline
+        .columns.is-multiline(v-if="params.form_method")
           .column.is-12
             template(v-if="params.form_parts")
               template(v-for="form_part in params.form_parts")
-                b-field(:label="form_part.label")
+                b-field(:label="form_part.label" custom-class="is-small")
                   template(v-if="false")
                   template(v-else-if="form_part.type === 'string'")
                     b-input(
@@ -52,28 +52,28 @@
                   template(v-else)
                     pre unknown: {{form_part.type}}
 
-            div(v-if="params.get_button_show_p")
-              b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
+            b-field(v-if="params.form_method === 'get'")
+              .control
+                b-button.get_handle(@click="get_handle" type="is-primary")
+                  | {{params.button_label}}
 
-            template(v-if="false")
-            template(v-else)
-              QuickScriptShowValue(:value="params.body")
+            b-field(v-if="params.form_method === 'post'")
+              .control
+                form(method="POST" @submit.prevent="post_handle")
+                  b-button.post_handle(native-type="submit" type="is-danger")
+                    | {{params.button_label}}
 
-        .columns.is-multiline
+        .columns.is-multiline(v-if="params.body")
           .column
-            pre(v-if="development_p")
+            QuickScriptShowValue(:value="params.body")
+
+        .columns.is-multiline(v-if="development_p")
+          .column
+            pre
               | {{attributes}}
 
-            DebugBox.is-hidden-mobile(v-if="development_p")
-              | OK
-
-            //- pre attributes = {{attributes}}
-
-            //- pre posts = {{posts}}
-
-            //- pre(v-if="development_p")
-            //-   | params: {{params}}
-            //-   | $data: {{$data}}
+    DebugBox.is-hidden-mobile(v-if="development_p")
+      | {{value_type_guess(params.body)}}
 </template>
 
 <script>
@@ -92,7 +92,7 @@ export default {
   props: {
     // 呼び出す側で $route.params を上書きすればいいのでこれはいらないかもしれない。
     qs_group_key: { type: String },
-    qs_key:   { type: String },
+    qs_page_key:   { type: String },
   },
   data() {
     return {
@@ -102,49 +102,13 @@ export default {
     }
   },
   watch: {
-    "$route.query": "$fetch",
+    "$route.query": "$fetch",   // クエリ部分(例えば page=1 など)が $router.push で変化したとき $fetch を呼ぶ
   },
   // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
   // しかし http://localhost:4000/script/dev に SSR でアクセスできなくなる
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get(this.current_api_path, {params: this.$route.query}).then(params => {
-      // ここはさらに server か client かで分けないといけない？
-
-      if (_.isPlainObject(params.body)) { // params.body が nil の場合があるため
-        // 最優先でリダイレクトする
-
-        // 外部
-        {
-          const value = params.body["href_redirect_to"]
-          if (Gs.present_p(value)) {
-            window.location.href = value
-            // redirect(params.body["href_redirect_to"])
-            // this.$router.push(params.body["href_redirect_to"]) // ← 動かない
-            return
-          }
-        }
-
-        // サイト内
-        {
-          const value = params.body["router_redirect_to"]
-          if (Gs.present_p(value)) {
-            this.$router.push(value)
-            return
-          }
-        }
-      }
-
-      // 受けとる
-      this.params = params
-
-      // 初期値を埋める
-      if (this.params.form_parts) {
-        this.params.form_parts.forEach(form_part => {
-          this.$set(this.attributes, form_part["key"], form_part["default"])
-        })
-      }
-    })
+    return this.$axios.$get(this.current_api_path, {params: {...this.$route.query, _setup: true}}).then(params => this.params_receive(params))
 
     // }).catch(error => {
     //   // エラーレスポンスの処理
@@ -180,6 +144,38 @@ export default {
   mounted() {
   },
   methods: {
+    params_receive(params) {
+      // ここはさらに server か client かで分けないといけない？
+
+      // メッセージ
+      if (_.isPlainObject(params.flash)) {
+        this.toast_ok(params.flash["notice"])
+        this.toast_ng(params.flash["alert"])
+      }
+
+      // リダイレクト
+      // CSV にリダイレクトした場合などは現在のページが更新されないため redirect_to が入っているからといって return してはいけない。
+      const redirect_to = params["redirect_to"]
+      if (redirect_to) {
+        if (redirect_to["allow_other_host"]) {
+          window.location.href = redirect_to["to"]
+        } else {
+          this.$router.push(redirect_to["to"])
+        }
+        // ここで return するべからず
+      }
+
+      // 受けとる
+      this.params = params
+
+      // フォームの初期値を埋める
+      if (this.params.form_parts) {
+        this.params.form_parts.forEach(form_part => {
+          this.$set(this.attributes, form_part["key"], form_part["default"])
+        })
+      }
+    },
+
     reset_handle() {
     },
 
@@ -192,21 +188,33 @@ export default {
 
     // b-table の @sort と @page-change に反応
     page_change_or_sort_handle(params) {
-      this.page_update(params)
+      this.router_push(params)
     },
 
-    submit_handle() {
-      this.page_update()
+    get_handle() {
+      // window.location.href = "/api/bin/dev/download.csv"
+      const params = {}
+      if (this.params.get_submit_key) {
+        params[this.params.get_submit_key] = true
+      }
+      this.router_push(params)
     },
 
-    page_update(append_params = {}) {
-      const new_params = {...this.attributes, ...append_params}
+    post_handle() {
+      this.$axios.$post(this.current_api_path, this.attributes).then(params => this.params_receive(params))
+    },
+
+    router_push(params = {}) {
+      const new_params = {...this.attributes, ...params}
       this.$router.push({query: new_params}, () => {
+        this.debug_alert("Navigation succeeded")
         this.$sound.play_click()
-        console.log("Navigation succeeded")
       }, () => {
-        console.log("Navigation failed")
-        // window.location.href = this.$router.resolve(new_params).href
+        this.debug_alert("Navigation failed")
+        if (false) {
+          this.$sound.play_click()
+          this.$fetch()
+        }
       })
     },
 
@@ -247,8 +255,8 @@ export default {
   },
   computed: {
     current_qs_group()   { return this.qs_group_key ?? this.$route.params.qs_group_key                                                               },
-    current_qs_key()     { return this.qs_key   ?? this.$route.params.qs_key                                                                 },
-    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}` },
+    current_qs_key()     { return this.qs_page_key   ?? this.$route.params.qs_page_key                                                                 },
+    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
   },
 }
