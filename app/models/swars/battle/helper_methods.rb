@@ -3,15 +3,15 @@ module Swars
     concern :HelperMethods do
       class_methods do
         # continuity_run_counter("xxx_api")
-        def continuity_run_counter(key, options = {})
-          options = {
-            interval: 1.seconds,
-          }.merge(options)
-
-          counter = (Rails.cache.read(key) || 0).next
-          Rails.cache.write(key, counter, expires_in: options[:interval])
-          counter
-        end
+        # def continuity_run_counter(key, options = {})
+        #   options = {
+        #     interval: 1.seconds,
+        #   }.merge(options)
+        #
+        #   counter = (Rails.cache.read(key) || 0).next
+        #   Rails.cache.write(key, counter, expires_in: options[:interval])
+        #   counter
+        # end
       end
 
       # def header_detail(h)

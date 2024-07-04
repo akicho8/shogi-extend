@@ -5,7 +5,7 @@ module QuickScript
       self.description = "タグで始まると HTML として表示する"
 
       def call
-        "<b>bold</b>"
+        tag.details { "本文" }
       end
     end
   end

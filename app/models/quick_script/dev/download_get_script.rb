@@ -4,12 +4,13 @@ module QuickScript
       self.title = "CSVダウンロード(GET)"
       self.description = "CSVダウンロードを行う"
       self.form_method = :get
+      self.params_add_submit_key = :exec
 
       # http://localhost:4000/bin/dev/download_get
       # http://localhost:3000/api/bin/dev/download_get
       # http://localhost:3000/api/bin/dev/download_get.csv
       def call
-        if !params[:exec]
+        if !submitted?
           self.button_label = "ダウンロード"
           "(ダウンロード開始前の文言)"
         else

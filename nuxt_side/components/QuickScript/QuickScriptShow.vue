@@ -32,6 +32,7 @@
                       size="is-small"
                       :value="attr_value(form_part)"
                       @input="value => attr_update(form_part, value)"
+                      :placeholder="form_part.placeholder"
                       )
                   template(v-else-if="form_part.type === 'integer'")
                     b-numberinput(
@@ -192,26 +193,32 @@ export default {
     },
 
     get_handle() {
-      // window.location.href = "/api/bin/dev/download.csv"
       const params = {}
-      if (this.params.get_submit_key) {
-        params[this.params.get_submit_key] = true
+      if (this.params.params_add_submit_key) {
+        params[this.params.params_add_submit_key] = true
       }
-      this.router_push(params)
+      if (this.params.get_then_router_push) {
+        this.router_push(params)
+      } else {
+        this.$sound.play_click()
+        const new_params = {...this.$route.query, ...this.attributes, ...params}
+        this.$axios.$get(this.current_api_path, {params: params}).then(params => this.params_receive(params))
+      }
     },
 
     post_handle() {
-      this.$axios.$post(this.current_api_path, this.attributes).then(params => this.params_receive(params))
+      const new_params = {...this.$route.query, ...this.attributes}
+      this.$axios.$post(this.current_api_path, new_params).then(params => this.params_receive(params))
     },
 
     router_push(params = {}) {
-      const new_params = {...this.attributes, ...params}
+      const new_params = {...this.$route.query, ...this.attributes, ...params}
       this.$router.push({query: new_params}, () => {
         this.debug_alert("Navigation succeeded")
         this.$sound.play_click()
       }, () => {
         this.debug_alert("Navigation failed")
-        if (false) {
+        if (this.params.router_push_failed_then_fetch) {
           this.$sound.play_click()
           this.$fetch()
         }
@@ -244,6 +251,12 @@ export default {
         if (value["_v_text"]) {
           return "value_type_is_v_text"
         }
+        if (value["_pre"]) {
+          return "value_type_is_pre"
+        }
+        if (value["_autolink"]) {
+          return "value_type_is_autolink"
+        }
         return "value_type_is_any_hash"
       }
       return "value_type_is_unknown"
@@ -256,7 +269,7 @@ export default {
   computed: {
     current_qs_group()   { return this.qs_group_key ?? this.$route.params.qs_group_key                                                               },
     current_qs_key()     { return this.qs_page_key   ?? this.$route.params.qs_page_key                                                                 },
-    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__skey_is_blank__'}.json` },
+    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
   },
 }

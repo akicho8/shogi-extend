@@ -6,15 +6,11 @@ module QuickScript
       self.form_method = :post
 
       def call
-        @session = {}
-        if controller
-          @session = controller.session
-        end
-        @session[:my_counter] = @session[:my_counter].to_i
+        session[:my_count] ||= 0
         if request_post?
-          @session[:my_counter] += 1
+          session[:my_count] += 1
         end
-        @session[:my_counter]
+        session[:my_count]
       end
     end
   end

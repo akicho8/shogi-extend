@@ -31,13 +31,21 @@
   template(v-else-if="value_type_guess === 'value_type_is_v_text'")
     | {{value["_v_text"]}}
 
+  //- { _pre: "..." }
+  template(v-else-if="value_type_guess === 'value_type_is_pre'")
+    pre {{value["_pre"]}}
+
+  //- { _autolink: "..." }
+  template(v-else-if="value_type_guess === 'value_type_is_autolink'")
+    div(v-html="$gs.auto_link(value['_autolink'])")
+
   //- 謎のハッシュ (auto_link するとエラーになるため)
   template(v-else-if="value_type_guess === 'value_type_is_any_hash'")
     pre {{value}}
 
   //- 普通のテキスト
   template(v-else-if="value_type_guess === 'value_type_is_text'")
-    div(v-html="$gs.auto_link(value)")
+    | {{value}}
 
   //- 数字や nil
   template(v-else)

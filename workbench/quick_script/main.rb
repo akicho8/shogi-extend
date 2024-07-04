@@ -19,8 +19,8 @@ tp QuickScript::Main.info
 # >> |----------------------------------------+--------------------------+--------------------------|
 # >> | model                                  | title                    | path                     |
 # >> |----------------------------------------+--------------------------+--------------------------|
-# >> | QuickScript::Swars::PrisonScript       | 将棋ウォーズ囚人検索     | /bin/swars/prison        |
-# >> | QuickScript::Swars::PrisonAllScript    | 将棋ウォーズ囚人検索     | /bin/swars/prison_all    |
+# >> | QuickScript::Swars::PrisonSearchScript       | 将棋ウォーズ囚人検索     | /bin/swars/prison-search        |
+# >> | QuickScript::Swars::PrisonAllScript    | 将棋ウォーズ囚人検索     | /bin/swars/prison-search_all    |
 # >> | QuickScript::Group1::HelloScript       | こんにちは表示           | /bin/group1/hello        |
 # >> | QuickScript::Dev::TableScript          | テーブル表示             | /bin/dev/table           |
 # >> | QuickScript::Dev::RouterRedirectScript | 内部リダイレクトのテスト | /bin/dev/router_redirect |

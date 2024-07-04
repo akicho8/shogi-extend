@@ -29,15 +29,17 @@ module Swars
         save!
       end
 
-      # 保存しない
+      # 保存する
       def ban_set(state)
         time = Time.current
-        value = nil
         if state
-          value = time
+          # 上書きしてはいけない
+          self.ban_at ||= time
+          profile.ban_at ||= time
+        else
+          self.ban_at = nil
+          profile.ban_at = nil
         end
-        self.ban_at = value
-        profile.ban_at = value
         profile.ban_crawled_at = time
         profile.ban_crawled_count += 1
         save!

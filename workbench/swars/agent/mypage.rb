@@ -1,0 +1,23 @@
+require "./setup"
+
+# mypage_grade = Swars::Agent::Mypage.new(remote_run: false, user_key: "testarossa00").mypage_grade
+# tp mypage_grade.list
+
+# mypage_grade = Swars::Agent::Mypage.new(remote_run: true, user_key: "testarossa00").mypage_grade
+# mypage_grade.valid?                  # => true
+# mypage_grade.ban?                    # => true
+# tp mypage_grade.list                 # => [{:rule=>#<Swars::RuleInfo:0x0000000108002e28 @attributes={:key=>:ten_min, :name=>"10分", :long_name=>"10分切れ負け", :swars_magic_key=>"", :csa_time_limit=>"00:10+00", :life_time=>10 minutes, :real_life_time=>nil, :ittezume_jirasi_sec=>1.0 minute, :kangaesugi_sec=>2.5 minutes, :kangaesugi_like_houti_sec=>3 minutes, :toryo_houti_sec=>1 minute, :taisekimati_sec=>5 minutes, :related_time_p=>true, :resignation_limit=>3 minutes, :most_min_turn_max_limit=>35, :code=>0}>, :grade=>#<Swars::GradeInfo:0x00000001095d96e8 @attributes={:key=>:"10000級", :visualize=>false, :select_option=>false, :show_in_search_script=>false, :teacher=>false, :code=>40}>}, {:rule=>#<Swars::RuleInfo:0x0000000108002b08 @attributes={:key=>:three_min, :name=>"3分", :long_name=>"3分切れ負け", :swars_magic_key=>"sb", :csa_time_limit=>"00:03+00", :life_time=>3 minutes, :real_life_time=>nil, :ittezume_jirasi_sec=>45 seconds, :kangaesugi_sec=>30 seconds, :kangaesugi_like_houti_sec=>1 minute, :toryo_houti_sec=>1 minute, :taisekimati_sec=>2 minutes, :related_time_p=>true, :resignation_limit=>1 minute, :most_min_turn_max_limit=>35, :code=>1}>, :grade=>#<Swars::GradeInfo:0x00000001095d96e8 @attributes={:key=>:"10000級", :visualize=>false, :select_option=>false, :show_in_search_script=>false, :teacher=>false, :code=>40}>}, {:rule=>#<Swars::RuleInfo:0x0000000108002680 @attributes={:key=>:ten_sec, :name=>"10秒", :long_name=>"1手10秒", :swars_magic_key=>"s1", :csa_time_limit=>"00:00+10", :life_time=>1 hour, :real_life_time=>0, :ittezume_jirasi_sec=>nil, :kangaesugi_sec=>nil, :kangaesugi_like_houti_sec=>nil, :toryo_houti_sec=>nil, :taisekimati_sec=>nil, :related_time_p=>false, :resignation_limit=>1 minute, :most_min_turn_max_limit=>35, :code=>2}>, :grade=>#<Swars::GradeInfo:0x00000001095d96e8 @attributes={:key=>:"10000級", :visualize=>false, :select_option=>false, :show_in_search_script=>false, :teacher=>false, :code=>40}>}]
+
+mypage = Swars::Agent::Mypage.new(remote_run: true, user_key: "kinakom0chi_")
+mypage.doc                      # => #<Nokogiri::HTML4::Document:0x57a8 name="document" children=[#<Nokogiri::XML::DTD:0x5794 name="html">]>
+mypage.user_missing?            # => true
+
+# mypage_grade = Swars::Agent::Mypage.new(remote_run: true, user_key: "kinakom0chI").mypage_grade
+# mypage_grade.
+# mypage_grade.valid?                  # => true
+# mypage_grade.ban?                    # => false
+# tp mypage_grade.list                 # => [{:rule=>#<Swars::RuleInfo:0x0000000108002e28 @attributes={:key=>:ten_min, :name=>"10分", :long_name=>"10分切れ負け", :swars_magic_key=>"", :csa_time_limit=>"00:10+00", :life_time=>10 minutes, :real_life_time=>nil, :ittezume_jirasi_sec=>1.0 minute, :kangaesugi_sec=>2.5 minutes, :kangaesugi_like_houti_sec=>3 minutes, :toryo_houti_sec=>1 minute, :taisekimati_sec=>5 minutes, :related_time_p=>true, :resignation_limit=>3 minutes, :most_min_turn_max_limit=>35, :code=>0}>, :grade=>#<Swars::GradeInfo:0x00000001095de1c0 @attributes={:key=>:"1級", :visualize=>true, :select_option=>true, :show_in_search_script=>true, :teacher=>false, :code=>10}>}, {:rule=>#<Swars::RuleInfo:0x0000000108002b08 @attributes={:key=>:three_min, :name=>"3分", :long_name=>"3分切れ負け", :swars_magic_key=>"sb", :csa_time_limit=>"00:03+00", :life_time=>3 minutes, :real_life_time=>nil, :ittezume_jirasi_sec=>45 seconds, :kangaesugi_sec=>30 seconds, :kangaesugi_like_houti_sec=>1 minute, :toryo_houti_sec=>1 minute, :taisekimati_sec=>2 minutes, :related_time_p=>true, :resignation_limit=>1 minute, :most_min_turn_max_limit=>35, :code=>1}>, :grade=>#<Swars::GradeInfo:0x00000001095de1c0 @attributes={:key=>:"1級", :visualize=>true, :select_option=>true, :show_in_search_script=>true, :teacher=>false, :code=>10}>}, {:rule=>#<Swars::RuleInfo:0x0000000108002680 @attributes={:key=>:ten_sec, :name=>"10秒", :long_name=>"1手10秒", :swars_magic_key=>"s1", :csa_time_limit=>"00:00+10", :life_time=>1 hour, :real_life_time=>0, :ittezume_jirasi_sec=>nil, :kangaesugi_sec=>nil, :kangaesugi_like_houti_sec=>nil, :toryo_houti_sec=>nil, :taisekimati_sec=>nil, :related_time_p=>false, :resignation_limit=>1 minute, :most_min_turn_max_limit=>35, :code=>2}>, :grade=>#<Swars::GradeInfo:0x00000001095de1c0 @attributes={:key=>:"1級", :visualize=>true, :select_option=>true, :show_in_search_script=>true, :teacher=>false, :code=>10}>}]
+
+
+# tp Swars::User.all
+

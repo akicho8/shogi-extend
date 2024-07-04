@@ -1,13 +1,5 @@
 module QuickScript
   concern :ControllerMod do
-    prepended do
-      class_attribute :form_method, default: nil
-    end
-
-    def as_json(*)
-      super.merge(form_method: form_method)
-    end
-
     def controller
       @options[:controller]
     end
@@ -38,6 +30,10 @@ module QuickScript
       if controller
         controller.request.post?
       end
+    end
+
+    def request_get?
+      !request_post?
     end
 
     def render_all

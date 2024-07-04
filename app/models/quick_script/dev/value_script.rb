@@ -6,8 +6,10 @@ module QuickScript
 
       def call
         [
-          { name: "自動リンク対応テキスト", type: "value_type_is_text",         value: "URL は http://example.com/ です", },
-          { name: "リンクなしテキスト",     type: "value_type_is_v_text",       value: { _v_text: "URL は http://example.com/ です" }, },
+          { name: "テキスト(そのまま)",     type: "value_type_is_text",         value: "URL は http://example.com/ です", },
+          { name: "テキスト(v-text相当)",   type: "value_type_is_v_text",       value: { _v_text: "URL は http://example.com/ です" }, },
+          { name: "テキスト(preで囲む)",    type: "value_type_is_pre",          value: { _pre: "URL は http://example.com/ です" }, },
+          { name: "テキスト(自動リンク)",   type: "value_type_is_autolink",     value: { _autolink: "URL は http://example.com/ です" }, },
           { name: "HTML",                   type: "value_type_is_html",         value: "<b>foo</b>", },
           { name: "Aタグ",                  type: "value_type_is_link_to",      value: { _link_to:   { name: "(name)", url: "http://example.com/" }, }, },
           { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "bin-qs_group_key-qs_page_key", params: {qs_group_key: "dev", qs_page_key: "calc"}, query: {lhv: 100}}, }, }, },

@@ -1,0 +1,2 @@
+module QuickScript
+end

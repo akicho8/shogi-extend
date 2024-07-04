@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    class PrisonScript < Base
+    class PrisonSearchScript < Base
       self.title = "将棋ウォーズ囚人検索"
       self.description = "検察結果を直近順に表示する"
       self.form_method = :get

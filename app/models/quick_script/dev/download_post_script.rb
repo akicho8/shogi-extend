@@ -9,7 +9,7 @@ module QuickScript
       # http://localhost:3000/api/bin/dev/download_post
       # http://localhost:3000/api/bin/dev/download_post.csv
       def call
-        if !request_post?
+        if request_get?
           self.button_label = "ダウンロード"
           "(ダウンロード開始前の文言)"
         else

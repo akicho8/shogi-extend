@@ -1,6 +1,6 @@
 module Swars
   module Agent
-    class MypageResult
+    class MypageGrade
       attr_accessor :list
 
       def initialize(list)
@@ -14,12 +14,16 @@ module Swars
         freeze
       end
 
-      def ban?
-        @list.any? { |e| e[:grade].ban? }
+      def valid?
+        @list.any?
       end
 
-      def inspect
-        @list.to_t
+      def invalid?
+        @list.blank?
+      end
+
+      def ban?
+        @list.any? { |e| e[:grade].ban? }
       end
 
       def oneline

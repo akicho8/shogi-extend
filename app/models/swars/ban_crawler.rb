@@ -50,11 +50,11 @@ module Swars
 
     def one_process(user)
       if true
-        r = Agent::Mypage.new(@options.merge(user_key: user.key)).fetch
-        user.ban_set(r.ban?)
-        if r.ban?
+        mypage = Agent::Mypage.new(@options.merge(user_key: user.key))
+        user.ban_set(mypage.ban?)
+        if mypage.ban?
           @found_count += 1
-          @rows = (@rows + [user.to_h.merge("マイページ" => r.oneline)]).take(@options[:log_limit])
+          @rows = (@rows + [user.to_h.merge("マイページ" => mypage.mypage_grade.oneline)]).take(@options[:log_limit])
           AppLog.important(subject: "[BAN] #{user.key}", body: user.to_h.to_t)
         end
       end
