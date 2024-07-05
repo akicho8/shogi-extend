@@ -1,7 +1,7 @@
 module QuickScript
   module Dev
     class Redirect1Script < Base
-      self.title = "リダイレクト1"
+      self.title = "リダイレクト1 (内部)"
       self.description = "$router.push で移動する"
 
       def call

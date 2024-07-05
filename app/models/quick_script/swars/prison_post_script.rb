@@ -4,6 +4,7 @@ module QuickScript
       self.title = "将棋ウォーズ囚人登録"
       self.description = "指定のウォーズIDが牢獄に入っていたら囚人とする"
       self.form_method = :post
+      self.throttle_expires_in = Rails.env.local? ? 1.seconds : 10.seconds
 
       def form_parts
         super + [
@@ -22,10 +23,11 @@ module QuickScript
           if current_swars_user_key.blank?
             return "ウォーズIDを入力してください"
           end
-          throttle
-
+          unless throttle.run
+            return "あと #{throttle.ttl_sec} 秒待ってから実行してください"
+          end
           mypage = ::Swars::Agent::Mypage.new(user_key: current_swars_user_key)
-          if mypage.user_missing?
+          if mypage.page_not_found?
             return "#{current_swars_user_key} が見つかりません"
           end
           user_key = mypage.real_user_key
@@ -34,10 +36,10 @@ module QuickScript
             return "#{user_key} はBANされていません"
           end
           if user.ban?
-            return "#{user_key} はBANを確認済みです"
+            return "#{user_key} は登録済みです"
           end
           user.ban!
-          flash[:notice] = "一覧に追加しました"
+          flash[:notice] = "#{user_key} を一覧に追加しました"
           redirect_to "/bin/swars/prison-search?query=#{user_key}"
           nil
         end

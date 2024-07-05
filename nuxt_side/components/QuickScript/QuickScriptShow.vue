@@ -175,6 +175,18 @@ export default {
           this.$set(this.attributes, form_part["key"], form_part["default"])
         })
       }
+
+      // 特定のアクションを実行する
+      // const action2 = params["action2"]
+      // if (action2) {
+      //   this.debug_alert(action2)
+      // }
+
+      // 最後に特定のメソッドを実行する
+      const fetch_then_auto_exec_action = params["fetch_then_auto_exec_action"]
+      if (fetch_then_auto_exec_action) {
+        this[fetch_then_auto_exec_action]()
+      }
     },
 
     reset_handle() {
@@ -193,6 +205,7 @@ export default {
     },
 
     get_handle() {
+      if (this.action_then_nuxt_login_required()) { return }
       const params = {}
       if (this.params.params_add_submit_key) {
         params[this.params.params_add_submit_key] = true
@@ -207,6 +220,7 @@ export default {
     },
 
     post_handle() {
+      if (this.action_then_nuxt_login_required()) { return }
       const new_params = {...this.$route.query, ...this.attributes}
       this.$axios.$post(this.current_api_path, new_params).then(params => this.params_receive(params))
     },
@@ -223,6 +237,12 @@ export default {
           this.$fetch()
         }
       })
+    },
+
+    action_then_nuxt_login_required() {
+      if (this.params["button_with_nuxt_login_required"]) {
+        if (this.nuxt_login_required()) { return true }
+      }
     },
 
     value_type_guess(value) {

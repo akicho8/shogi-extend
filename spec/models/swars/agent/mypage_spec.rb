@@ -16,8 +16,8 @@ module Swars
         assert { av == [["10分", "10000級"], ["3分", "10000級"], ["10秒", "10000級"]] }
       end
 
-      it "user_missing?" do
-        assert { Mypage.new(user_key: "_UNKNOWN_USER_", remote_run: true).user_missing? }
+      it "page_not_found?" do
+        assert { Mypage.new(user_key: "_UNKNOWN_USER_", remote_run: true).page_not_found? }
       end
     end
   end

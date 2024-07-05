@@ -10,6 +10,7 @@ module QuickScript
     prepend MetaMod
     prepend RedirectMod
     prepend HelperMod
+    prepend AutoexecMod
 
     attr_reader :params
 

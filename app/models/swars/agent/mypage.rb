@@ -19,7 +19,7 @@ module Swars
         end
       end
 
-      def user_missing?
+      def page_not_found?
         html.blank?
       end
 

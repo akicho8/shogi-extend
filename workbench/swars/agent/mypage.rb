@@ -10,7 +10,7 @@ require "./setup"
 
 mypage = Swars::Agent::Mypage.new(remote_run: true, user_key: "kinakom0chi_")
 mypage.doc                      # => #<Nokogiri::HTML4::Document:0x57a8 name="document" children=[#<Nokogiri::XML::DTD:0x5794 name="html">]>
-mypage.user_missing?            # => true
+mypage.page_not_found?            # => true
 
 # mypage_grade = Swars::Agent::Mypage.new(remote_run: true, user_key: "kinakom0chI").mypage_grade
 # mypage_grade.
