@@ -5,7 +5,7 @@ module QuickScript
       self.description = "session.id.to_s"
 
       def call
-        { _pre: controller.session.id.to_s }
+        controller.session.id.to_s
       end
     end
   end

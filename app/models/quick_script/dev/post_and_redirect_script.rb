@@ -8,7 +8,7 @@ module QuickScript
       def call
         if request_post?
           flash[:notice] = "投稿しました"
-          redirect_to "/bin/dev/blank"
+          redirect_to "/bin/dev/null"
         end
       end
     end

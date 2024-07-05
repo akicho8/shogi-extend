@@ -5,7 +5,7 @@ module QuickScript
       self.description = "$router.push で移動する"
 
       def call
-        redirect_to "/bin/dev/blank"
+        redirect_to "/bin/dev/null"
       end
     end
   end
