@@ -1,6 +1,14 @@
 module Swars
   module Agent
-    class MypageGrade
+    class RuleGradeList
+      GRADES_REGEXP = /(#{RuleInfo.collect(&:name).join("|")})\s*(\S+[級段])/o
+
+      class << self
+        def parse(text)
+          new(text.scan(GRADES_REGEXP))
+        end
+      end
+
       attr_accessor :list
 
       def initialize(list)
@@ -28,6 +36,10 @@ module Swars
 
       def oneline
         @list.collect { |e| e[:grade].name }.join(" ")
+      end
+
+      def to_s
+        oneline
       end
     end
   end

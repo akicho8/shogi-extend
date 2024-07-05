@@ -1,13 +1,10 @@
 module Swars
   module Agent
-    class Mypage < Base
-      delegate :ban?, to: :mypage_grade
+    class MyPage < Base
+      delegate :ban?, to: :rule_grade_list
 
-      def mypage_grade
-        @mypage_grade ||= yield_self do
-          text = doc.search("#user_dankyu tr").text
-          MypageGrade.new(text.scan(regexp))
-        end
+      def rule_grade_list
+        @rule_grade_list ||= RuleGradeList.parse(doc.search("#user_dankyu tr").text)
       end
 
       # ここで採取したものはアルファベットの大小文字が正しい
@@ -34,15 +31,11 @@ module Swars
       end
 
       def html
-        @html ||= fetcher.fetch(:mypage, mypage_url) || ""
+        @html ||= fetcher.fetch(:my_page, my_page_url) || ""
       end
 
-      def mypage_url
-        "https://shogiwars.heroz.jp/users/mypage/#{params.fetch(:user_key)}"
-      end
-
-      def regexp
-        /(#{Swars::RuleInfo.collect(&:name).join("|")})\s*(\S+[級段])/o
+      def my_page_url
+        UserKey.new(params.fetch(:user_key)).my_page_url
       end
     end
   end

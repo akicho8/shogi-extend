@@ -46,7 +46,7 @@ module Swars
 
     ################################################################################
 
-    def mypage_url
+    def my_page_url
       "https://shogiwars.heroz.jp/users/mypage/#{key}"
     end
   end

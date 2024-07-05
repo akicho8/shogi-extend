@@ -30,7 +30,7 @@ module QuickScript
         scope = with_paginate(scope)
         scope.collect do |e|
           {
-            "ID"         => { _link_to: { name: e.user_key, url: e.key_object.mypage_url }, },
+            "ID"         => { _link_to: { name: e.user_key, url: e.key_object.my_page_url }, },
             "棋力"       => e.grade.name,
             "収監観測日" => e.ban_at.to_fs(:ymd),
             ""           => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },

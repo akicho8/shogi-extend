@@ -1,7 +1,7 @@
 require "./setup"
 s { Swars::User["SugarHuuko"] }       # => #<Swars::User id: 17413, user_key: "SugarHuuko", grade_id: 2, last_reception_at: "2024-06-25 21:10:52.000000000 +0900", search_logs_count: 9913, created_at: "2019-02-12 21:04:46.000000000 +0900", updated_at: "2024-06-28 13:58:55.000000000 +0900", ban_at: nil, latest_battled_at: "2024-06-28 13:58:55.000000000 +0900">
 _ { Swars::User["SugarHuuko"] }       # => "0.77 ms"
-Swars::User["SugarHuuko"].key_object.mypage_url # => "https://shogiwars.heroz.jp/users/mypage/SugarHuuko"
+Swars::User["SugarHuuko"].key_object.my_page_url # => "https://shogiwars.heroz.jp/users/mypage/SugarHuuko"
 
 # user = Swars::User.find_by(key: "YamadaTaro") # => #<Swars::User id: 59, user_key: "YamadaTaro", grade_id: 7, last_reception_at: nil, search_logs_count: 0, created_at: "2023-11-24 18:45:09.000000000 +0900", updated_at: "2023-11-24 18:45:10.000000000 +0900", ban_at: nil>
 # user.ban!

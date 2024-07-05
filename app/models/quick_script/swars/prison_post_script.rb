@@ -26,13 +26,13 @@ module QuickScript
           unless throttle.run
             return "あと #{throttle.ttl_sec} 秒待ってから実行してください"
           end
-          mypage = ::Swars::Agent::Mypage.new(user_key: current_swars_user_key)
-          if mypage.page_not_found?
+          my_page = ::Swars::Agent::MyPage.new(user_key: current_swars_user_key)
+          if my_page.page_not_found?
             return "#{current_swars_user_key} が見つかりません"
           end
-          user_key = mypage.real_user_key
+          user_key = my_page.real_user_key
           user = ::Swars::User.find_or_create_by!(user_key: user_key)
-          if !mypage.ban?
+          if !my_page.ban?
             return "#{user_key} はBANされていません"
           end
           if user.ban?
