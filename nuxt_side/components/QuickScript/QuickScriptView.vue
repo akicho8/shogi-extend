@@ -30,7 +30,7 @@
           .column.is-12
             template(v-if="params.form_parts")
               template(v-for="form_part in params.form_parts")
-                b-field(:label="form_part.label" custom-class="is-small")
+                b-field(:label="form_part.label" custom-class="is-small" :message="form_part.bottom_message")
                   template(v-if="false")
                   template(v-else-if="form_part.type === 'string'")
                     b-input(
@@ -38,6 +38,7 @@
                       :value="attr_value(form_part)"
                       @input="value => attr_update(form_part, value)"
                       :placeholder="form_part.placeholder"
+                      spellcheck="false"
                       )
                   template(v-else-if="form_part.type === 'integer'")
                     b-numberinput(
@@ -60,13 +61,13 @@
 
             b-field(v-if="params.form_method === 'get'")
               .control
-                b-button.get_handle(@click="get_handle" type="is-primary")
+                b-button.get_handle(@click="get_handle" type="is-primary" size="is-small")
                   | {{params.button_label}}
 
             b-field(v-if="params.form_method === 'post'")
               .control
                 form(method="POST" @submit.prevent="post_handle")
-                  b-button.post_handle(native-type="submit" type="is-danger")
+                  b-button.post_handle(native-type="submit" type="is-danger" size="is-small")
                     | {{params.button_label}}
 
         .columns.is-multiline(v-if="params.body")
@@ -198,6 +199,10 @@ export default {
       this.$set(this.attributes, form_part.key, value)
     },
 
+    new_params_create(params = {}) {
+      return {...this.$route.query, ...this.attributes, ...params}
+    },
+
     // b-table の @sort と @page-change に反応
     page_change_or_sort_handle(params) {
       this.router_push(params)
@@ -209,23 +214,23 @@ export default {
       if (this.params.params_add_submit_key) {
         params[this.params.params_add_submit_key] = true
       }
-      if (this.params.get_then_router_push) {
-        this.router_push(params)
-      } else {
+      if (this.params.get_then_axios_get) {
         this.$sound.play_click()
-        const new_params = {...this.$route.query, ...this.attributes, ...params}
-        this.$axios.$get(this.current_api_path, {params: params}).then(params => this.params_receive(params))
+        const new_params = this.new_params_create(params)
+        this.$axios.$get(this.current_api_path, {params: new_params}).then(params => this.params_receive(params))
+      } else {
+        this.router_push(params)
       }
     },
 
     post_handle() {
       if (this.action_then_nuxt_login_required()) { return }
-      const new_params = {...this.$route.query, ...this.attributes}
+      const new_params = this.new_params_create()
       this.$axios.$post(this.current_api_path, new_params).then(params => this.params_receive(params))
     },
 
     router_push(params = {}) {
-      const new_params = {...this.$route.query, ...this.attributes, ...params}
+      const new_params = this.new_params_create(params)
       this.$router.push({query: new_params}, () => {
         this.debug_alert("Navigation succeeded")
         this.$sound.play_click()

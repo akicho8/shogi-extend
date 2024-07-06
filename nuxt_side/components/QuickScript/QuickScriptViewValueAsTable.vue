@@ -4,6 +4,9 @@ b-table.QuickScriptViewValueAsTable(
   scrollable
   pagination-simple
   backend-pagination
+  hoverable
+  :show-header  = "!value.header_hide"
+  :mobile-cards = "!value.always_table"
   :paginated    = "value.paginated"
   :total        = "value.total"
   :current-page = "value.current_page"
@@ -11,7 +14,7 @@ b-table.QuickScriptViewValueAsTable(
   @page-change="page => TheQS.page_change_or_sort_handle({page: page})"
   )
   template(v-for="column_name in column_names")
-    b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
+    b-table-column(v-slot="{row}" :field="column_name" :label="column_name" :sortable="false")
       QuickScriptViewValue(:value="row[column_name]")
 </template>
 

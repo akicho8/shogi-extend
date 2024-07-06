@@ -23,17 +23,18 @@ module QuickScript
         scope = scope.ban_only
         scope = scope.order(ban_at: :desc)
         scope = scope.joins(:grade)
+        scope = scope.includes(:grade)
         current_queries.each do |query|
           query = MysqlToolkit.escape_for_like(query.downcase)
           c1 = ::Swars::User.where(["LOWER(user_key) LIKE ?", "%#{query}%"])
           c2 = ::Swars::User.where(::Swars::Grade.arel_table[:key].eq(query))
           scope = scope.and(c1.or(c2))
         end
-        pagination_for(scope) do |scope|
+        pagination_for(scope, always_table: true, header_hide: false) do |scope|
           scope.collect do |e|
             {
               "ID"         => { _link_to: { name: e.user_key, url: e.key_object.my_page_url }, },
-              "棋力"       => e.grade.name,
+              "段位"       => e.grade.name,
               "収監観測日" => e.ban_at.to_fs(:ymd),
               ""           => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
             }

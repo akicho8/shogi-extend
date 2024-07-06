@@ -6,6 +6,7 @@ module QuickScript
       self.form_method = :get
       self.params_add_submit_key = :exec
       self.router_push_failed_then_fetch = true
+      self.get_then_axios_get = true
 
       def call
         self.button_label = count

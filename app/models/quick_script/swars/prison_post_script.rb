@@ -32,15 +32,19 @@ module QuickScript
           end
           user_key = my_page.real_user_key
           user = ::Swars::User.find_or_create_by!(user_key: user_key)
-          if !my_page.ban?
-            return "#{user_key} はBANされていません"
+          if params[:fake]
+          else
+            if !my_page.ban?
+              return "#{user_key} はBANされていません"
+            end
+            if user.ban?
+              return "#{user_key} は登録済みです"
+            end
+            user.ban!
           end
-          if user.ban?
-            return "#{user_key} は登録済みです"
-          end
-          user.ban!
           flash[:notice] = "#{user_key} を一覧に追加しました"
-          redirect_to "/bin/swars/prison-search?query=#{user_key}"
+          query = { query: user_key }.to_query
+          redirect_to "/bin/swars/prison-search?#{query}"
           nil
         end
       end

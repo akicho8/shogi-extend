@@ -5,7 +5,7 @@ module QuickScript
       class_attribute :per_page_max, default: 1000
     end
 
-    def pagination_for(scope, &block)
+    def pagination_for(scope, options = {}, &block)
       scope = scope.page(current_page).per(current_per)
       if block
         rows = block.call(scope)
@@ -14,11 +14,14 @@ module QuickScript
       end
       {
         :_component   => "QuickScriptViewValueAsTable",
+        :rows         => rows,
         :paginated    => true,
         :total        => scope.total_count,
         :current_page => scope.current_page,
         :per_page     => current_per,
-        :rows         => rows,
+        :always_table => false,
+        :header_hide  => false,
+        **options,
       }
     end
 

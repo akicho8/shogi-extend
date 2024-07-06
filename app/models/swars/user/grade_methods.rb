@@ -2,7 +2,9 @@ module Swars
   class User
     concern :GradeMethods do
       included do
-        custom_belongs_to :grade, ar_model: Grade, st_model: GradeInfo, default: "30級" # すべてのモードのなかで一番よい段級位
+        GRADE_DEFAULT = "30級"
+
+        custom_belongs_to :grade, ar_model: Grade, st_model: GradeInfo, default: GRADE_DEFAULT # すべてのモードのなかで一番よい段級位
 
         if Rails.env.local?
           before_validation do
