@@ -1,5 +1,5 @@
 <template lang="pug">
-QuickScriptShow
+QuickScriptView
 </template>
 
 <script>

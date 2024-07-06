@@ -13,7 +13,7 @@ module QuickScript
         rows = scope
       end
       {
-        :_component   => "QuickScriptShowValueAsTable",
+        :_component   => "QuickScriptViewValueAsTable",
         :paginated    => true,
         :total        => scope.total_count,
         :current_page => scope.current_page,

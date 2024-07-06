@@ -9,7 +9,7 @@ module QuickScript
         ::Swars::User.ban_only.in_batches do |group|
           av += group.pluck(:user_key)
         end
-        { _v_text: av.sort.join(" ") }
+        { _v_text: av.sort.join(" "), class: "is_word_break_off" }
       end
     end
   end

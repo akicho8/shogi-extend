@@ -18,9 +18,9 @@ module QuickScript
           { name: "ハッシュ",               type: "value_type_is_any_hash",     value: { id: 1, name: "alice" }, },
           { name: "文字列配列",             type: "value_type_is_string_array", value: ["alice", "bob"], },
           { name: "テーブル",               type: "value_type_is_hash_array",   value: [{ id: 1, name: "alice" }], },
-          { name: "コンポーネント指定",     type: "value_type_is_component",    value: { _component: "QuickScriptShowValueAsPre",  body: "(body)" }, },
-          { name: "縦並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptShowValueAsV", body: ["a", "b"] }, },
-          { name: "横並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptShowValueAsH", body: ["a", "b"] }, },
+          { name: "コンポーネント指定",     type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsPre",  body: "(body)" }, },
+          { name: "縦並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsV", body: ["a", "b"] }, },
+          { name: "横並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsH", body: ["a", "b"] }, },
         ].collect do |e|
           {
             :name  => e[:name],

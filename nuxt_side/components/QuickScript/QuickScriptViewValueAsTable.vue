@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.QuickScriptShowValueAsTable(
+b-table.QuickScriptViewValueAsTable(
   :data="value.rows"
   scrollable
   pagination-simple
@@ -12,7 +12,7 @@ b-table.QuickScriptShowValueAsTable(
   )
   template(v-for="column_name in column_names")
     b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
-      QuickScriptShowValue(:value="row[column_name]")
+      QuickScriptViewValue(:value="row[column_name]")
 </template>
 
 <script>
@@ -20,7 +20,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
 export default {
-  name: "QuickScriptShowValueAsTable",
+  name: "QuickScriptViewValueAsTable",
   inject: ["TheQS"],
   props: ["value"],
   computed: {
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="sass">
-.QuickScriptShowValueAsTable.b-table
+.QuickScriptViewValueAsTable.b-table
   margin-top: 0rem
   // margin-bottom: 2rem
   +mobile

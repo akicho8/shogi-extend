@@ -11,7 +11,7 @@ module QuickScript
 
       private
 
-      # ~/src/shogi-extend/nuxt_side/components/QuickScript/QuickScriptShow.vue
+      # ~/src/shogi-extend/nuxt_side/components/QuickScript/QuickScriptView.vue
       def form_parts
         super + [
           {

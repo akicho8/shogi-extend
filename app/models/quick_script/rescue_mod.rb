@@ -6,7 +6,7 @@ module QuickScript
           call
         rescue => error
           {
-            _component: "QuickScriptShowValueAsPre",
+            _component: "QuickScriptViewValueAsPre",
             body: error_to_text(error),
           }
         end

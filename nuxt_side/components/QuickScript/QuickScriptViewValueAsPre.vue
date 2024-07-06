@@ -1,5 +1,5 @@
 <template lang="pug">
-pre.QuickScriptShowValueAsPre
+pre.QuickScriptViewValueAsPre
   | {{value.body}}
 </template>
 
@@ -8,13 +8,13 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
 export default {
-  name: "QuickScriptShowValueAsPre",
+  name: "QuickScriptViewValueAsPre",
   inject: ["TheQS"],
   props: ["value"],
 }
 </script>
 
 <style lang="sass">
-pre.QuickScriptShowValueAsPre
+pre.QuickScriptViewValueAsPre
   __css_keep__: 0
 </style>

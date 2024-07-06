@@ -1,19 +1,39 @@
 <template lang="pug">
-.QuickScriptShowValue
+.QuickScriptViewValue(:class="value_type_guess")
   template(v-if="false")
 
   //- { _component: "xxx", ... }
   template(v-else-if="value_type_guess === 'value_type_is_component'")
     component(:is="value['_component']" :value="value")
 
+  // -------------------------------------------------------------------------------- ちゃんとしたハッシュ形式はコンポーネント指定できる
+
+  //- { _v_text: "<b>bold</b>" }
+  template(v-else-if="value_type_guess === 'value_type_is_v_text'")
+    component(v-text="value['_v_text']" :is="value['is'] ?? 'div'" :class="value['class']")
+
+  //- { _v_html: "<b>bold</b>" }
+  template(v-else-if="value_type_guess === 'value_type_is_v_html'")
+    component(v-html="value['_v_html']" :is="value['is'] ?? 'div'" :class="value['class']")
+
+  //- { _pre: "..." }
+  template(v-else-if="value_type_guess === 'value_type_is_pre'")
+    component(v-text="value['_pre']" :is="value['is'] ?? 'pre'" :class="value['class']")
+
+  //- { _autolink: "..." }
+  template(v-else-if="value_type_guess === 'value_type_is_autolink'")
+    component(v-html="$gs.auto_link(value['_autolink'])" :is="value['is'] ?? 'div'" :class="value['class']")
+
+  // --------------------------------------------------------------------------------
+
   //- //- [ {...}, {...}, ... ]
   template(v-else-if="value_type_guess === 'value_type_is_hash_array'")
-    QuickScriptShowValueAsTable(:value="{rows: value}")
+    QuickScriptViewValueAsTable(:value="{rows: value}")
 
   //- ["foo", "bar"]
   template(v-else-if="value_type_guess === 'value_type_is_text_array'")
     template(v-for="value in value")
-      QuickScriptShowValue(:value="value")
+      QuickScriptViewValue(:value="value")
 
   //- { _nuxt_link: {...} }
   template(v-else-if="value_type_guess === 'value_type_is_nuxt_link'")
@@ -26,18 +46,6 @@
   //- "<b>foo</b>"
   template(v-else-if="value_type_guess === 'value_type_is_html'")
     div(v-html="value")
-
-  //- "エスケープされたくない文字列"
-  template(v-else-if="value_type_guess === 'value_type_is_v_text'")
-    | {{value["_v_text"]}}
-
-  //- { _pre: "..." }
-  template(v-else-if="value_type_guess === 'value_type_is_pre'")
-    pre {{value["_pre"]}}
-
-  //- { _autolink: "..." }
-  template(v-else-if="value_type_guess === 'value_type_is_autolink'")
-    div(v-html="$gs.auto_link(value['_autolink'])")
 
   //- 謎のハッシュ (auto_link するとエラーになるため)
   template(v-else-if="value_type_guess === 'value_type_is_any_hash'")
@@ -57,7 +65,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
 export default {
-  name: "QuickScriptShowValue",
+  name: "QuickScriptViewValue",
   inject: ["TheQS"],
   props: ["value"],
   computed: {
@@ -67,8 +75,8 @@ export default {
 </script>
 
 <style lang="sass">
-.QuickScriptShowValue
-  __css_keep__: 0
+.QuickScriptViewValue
+  @extend %is_line_break_on
   pre
     white-space: pre-wrap
     word-break: break-all

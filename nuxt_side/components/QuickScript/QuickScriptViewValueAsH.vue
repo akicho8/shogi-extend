@@ -1,7 +1,7 @@
 <template lang="pug">
-.QuickScriptShowValueAsH
+.QuickScriptViewValueAsH
   template(v-for="value in value.body")
-    QuickScriptShowValue(:value="value")
+    QuickScriptViewValue(:value="value")
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="sass">
-.QuickScriptShowValueAsH
+.QuickScriptViewValueAsH
   display: flex
   gap: 0.5rem
 </style>

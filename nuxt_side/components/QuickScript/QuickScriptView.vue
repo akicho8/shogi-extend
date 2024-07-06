@@ -1,17 +1,22 @@
 <template lang="pug">
-.QuickScriptShow
-  template(v-if="development_p && false")
+.QuickScriptView
+  template(v-if="development_p || true")
     b-loading(:active="$fetchState.pending")
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid")
       template(slot="brand")
         template(v-if="$route.path === '/bin'")
+          // レベル1: サイトトップまで上がる
           NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
         template(v-else-if="current_qs_key == null")
+          // レベル2: グループ一覧を表示する
           NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
         template(v-else)
+          // レベル3: グループ内を表示する
           NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
-        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle" v-if="meta.title")
+
+        // タイトルをクリックしたときは query を外す
+        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="title_click_handle" v-if="meta.title")
           h1.has-text-weight-bold {{meta.title}}
 
       template(slot="end")
@@ -66,7 +71,7 @@
 
         .columns.is-multiline(v-if="params.body")
           .column
-            QuickScriptShowValue(:value="params.body")
+            QuickScriptViewValue(:value="params.body")
 
         .columns.is-multiline(v-if="development_p")
           .column
@@ -84,26 +89,27 @@ import Vue from 'vue'
 
 export default {
   // scrollToTop: true,
-  name: "QuickScriptShow",
+  name: "QuickScriptView",
   provide() {
     return {
       TheQS: this,
     }
   },
   props: {
-    // 呼び出す側で $route.params を上書きすればいいのでこれはいらないかもしれない。
+    // 呼び出す側で $route.params を上書きすればいいのでこれはいらない。
+    // が、一つのページで QuickScriptView を二つ呼ぶ場合には使えないので一応用意しておく。
     qs_group_key: { type: String },
-    qs_page_key:   { type: String },
+    qs_page_key:  { type: String },
   },
   data() {
     return {
-      attributes: {},           // form 入力値
-      params: null,             // サーバーから受け取った値(フリーズしたい)
-      // meta: null,
+      attributes: {},      // form 入力値
+      params: null,        // サーバーから受け取った値(更新禁止)
     }
   },
   watch: {
-    "$route.query": "$fetch",   // クエリ部分(例えば page=1 など)が $router.push で変化したとき $fetch を呼ぶ
+    // クエリ部分(例えば page=1 など)が $router.push で変化したとき $fetch を呼ぶ。
+    "$route.query": "$fetch",
   },
   // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
   // しかし http://localhost:4000/script/dev に SSR でアクセスできなくなる
@@ -138,24 +144,21 @@ export default {
     // })
   },
   created() {
-    console.debug(this.$route)
-  },
-  beforeMount() {
-  },
-  mounted() {
+    this.clog(this.$route)
   },
   methods: {
     params_receive(params) {
       // ここはさらに server か client かで分けないといけない？
 
       // メッセージ
+      // リダイレクトの前に設定すること
       if (_.isPlainObject(params.flash)) {
         this.toast_ok(params.flash["notice"])
         this.toast_ng(params.flash["alert"])
       }
 
       // リダイレクト
-      // CSV にリダイレクトした場合などは現在のページが更新されないため redirect_to が入っているからといって return してはいけない。
+      // CSV にリダイレクトした場合などは現在のページから遷移しないため redirect_to が入っているからといって return してはいけない。
       const redirect_to = params["redirect_to"]
       if (redirect_to) {
         if (redirect_to["allow_other_host"]) {
@@ -166,7 +169,7 @@ export default {
         // ここで return するべからず
       }
 
-      // 受けとる
+      // 受けとる (と、このタイミングでユーザーは画面の更新に気づく)
       this.params = params
 
       // フォームの初期値を埋める
@@ -176,20 +179,16 @@ export default {
         })
       }
 
-      // 特定のアクションを実行する
-      // const action2 = params["action2"]
-      // if (action2) {
-      //   this.debug_alert(action2)
-      // }
-
       // 最後に特定のメソッドを実行する
+      // これは主に nuxt_login_required を呼ぶために用意してある
       const fetch_then_auto_exec_action = params["fetch_then_auto_exec_action"]
       if (fetch_then_auto_exec_action) {
         this[fetch_then_auto_exec_action]()
       }
     },
 
-    reset_handle() {
+    title_click_handle() {
+      //
     },
 
     attr_value(form_part) {
@@ -245,6 +244,7 @@ export default {
       }
     },
 
+    // API側で判定した方がいい？ → テーブル内のTDなど最適に判定する → ビューで判定であっている
     value_type_guess(value) {
       if (Array.isArray(value)) {
         if (_.isPlainObject(value[0])) {
@@ -296,7 +296,7 @@ export default {
 </script>
 
 <style lang="sass">
-.QuickScriptShow
+.QuickScriptView
   .MainSection.section
     +tablet
       padding: 1.75rem 0rem
@@ -306,7 +306,7 @@ export default {
       padding: 0
 
 .STAGE-development
-  .QuickScriptShow
+  .QuickScriptView
     .column
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
