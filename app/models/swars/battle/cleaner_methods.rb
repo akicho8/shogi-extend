@@ -9,13 +9,13 @@ module Swars
       included do
         scope :old_only, -> expires_in { where(arel_table[:accessed_at].lteq(expires_in.seconds.ago)) }        # 古いもの
 
-        scope :pro_only,    -> { eager_load(:memberships).merge(Membership.pro_only)   }                       # PROの対局のみ
+        scope :pro_only,    -> { joins(:memberships).merge(Membership.pro_only).distinct   }                       # PROの対局のみ
         scope :pro_except,  -> { where.not(id: Membership.pro_only.select(:battle_id)) }                       # PROの対局を除外する
 
-        scope :ban_only,    -> { eager_load(:memberships).merge(Membership.ban_only)   }                       # 垢BANになった人との対局のみ
+        scope :ban_only,    -> { joins(:memberships).merge(Membership.ban_only).distinct   }                       # 垢BANになった人との対局のみ
         scope :ban_except,  -> { where.not(id: Membership.ban_only.select(:battle_id)) }                       # 垢BANになった人との対局を除外する
 
-        scope :user_only,   -> user_keys { eager_load(:memberships).merge(Membership.user_only(user_keys))   } # ユーザーを絞る
+        scope :user_only,   -> user_keys { joins(:memberships).merge(Membership.user_only(user_keys)).distinct } # ユーザーを絞る
         scope :user_except, -> user_keys { where.not(id: Membership.user_only(user_keys).select(:battle_id)) } # ユーザーを省く
 
         scope :xmode_only,   -> xmode_keys {     where(xmode: Xmode.where(key: xmode_keys)) }                  # 特定の対局モードのみ

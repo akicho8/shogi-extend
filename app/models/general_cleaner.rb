@@ -63,15 +63,15 @@ class GeneralCleaner
     begin
       Retryable.retryable(on: ActiveRecord::Deadlocked) do
         if @options[:execute]
-          # reload しないと memberships.size が 1 のため、片方の membership が残り、
+          # eager_load で抽出した場合は reload しないと memberships.size が 1 のため、片方の membership が残り、
           # ActiveRecord::InvalidForeignKey:
           #   Mysql2::Error: Cannot delete or update a parent row: a foreign key constraint fails (`shogi_web_test`.`swars_memberships`, CONSTRAINT `fk_rails_d0aeb0e4e3` FOREIGN KEY (`battle_id`) REFERENCES `swars_battles` (`id`))
           # のエラーになる
-          record.reload.destroy!
+          record.destroy!
         end
       end
       @group["成功"] += 1
-    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => error
+    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked, ActiveRecord::InvalidForeignKey => error
       @group["失敗"] += 1
       errors["#{error.message} (#{error.class.name})"] += 1
     end
