@@ -3,6 +3,7 @@ if defined?(Kaminari)
     config.default_per_page     = 10
 
     # ../../nuxt_side/components/Swars/SwarsBattleIndex/models/per_info.js と合わせること
+    # ../../app/models/quick_script/swars/prison_search_script.rb では 1000 を指定している
     config.max_per_page         = 200
 
     config.window               = 1 # 左右1個

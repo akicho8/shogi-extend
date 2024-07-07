@@ -1,8 +1,8 @@
 module QuickScript
   module Dev
     class PostAndRedirectScript < Base
-      self.title = "POSTしてメッセージ付きリダイレクト"
-      self.description = "POST で送信したときだけフォームのカウンタを更新する"
+      self.title = "POSTしてリダイレクト"
+      self.description = "flash[:notice] 付き"
       self.form_method = :post
 
       def call

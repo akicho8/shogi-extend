@@ -1,9 +1,10 @@
 module QuickScript
   module Swars
-    class PrisonPostScript < Base
+    class PrisonNewScript < Base
       self.title = "将棋ウォーズ囚人登録"
-      self.description = "指定のウォーズIDが牢獄に入っていたら囚人とする"
+      self.description = "指定のユーザーを囚人とする"
       self.form_method = :post
+      self.button_label = "登録"
       self.throttle_expires_in = Rails.env.local? ? 1.seconds : 10.seconds
 
       def form_parts
@@ -21,36 +22,45 @@ module QuickScript
       def call
         if request_post?
           if current_swars_user_key.blank?
-            return "ウォーズIDを入力してください"
+            flash[:notice] = "ウォーズIDを入力してください"
+            return
           end
-          unless throttle.run
-            return "あと #{throttle.ttl_sec} 秒待ってから実行してください"
+          unless throttle.call
+            flash[:notice] = "あと #{throttle.ttl_sec} 秒待ってから実行してください"
+            return
           end
           my_page = ::Swars::Agent::MyPage.new(user_key: current_swars_user_key)
           if my_page.page_not_found?
-            return "#{current_swars_user_key} が見つかりません"
+            flash[:notice] = "#{current_swars_user_key} が見つかりません"
+            return
           end
           user_key = my_page.real_user_key
           user = ::Swars::User.find_or_create_by!(user_key: user_key)
           if params[:fake]
           else
             if !my_page.ban?
-              return "#{user_key} はBANされていません"
+              flash[:notice] = "#{user_key} はBANされていません"
+              return
             end
             if user.ban?
-              return "#{user_key} は登録済みです"
+              flash[:notice] = "#{user_key} は登録済みです"
+              return
             end
             user.ban!
           end
           flash[:notice] = "#{user_key} を一覧に追加しました"
-          query = { query: user_key }.to_query
-          redirect_to "/bin/swars/prison-search?#{query}"
+          redirect_to index_url_for(user_key)
           nil
         end
       end
 
       def current_swars_user_key
         params[:swars_user_key].to_s.strip.presence
+      end
+
+      def index_url_for(user_key)
+        query = { query: user_key }.to_query
+        "/bin/swars/prison-search?#{query}"
       end
     end
   end

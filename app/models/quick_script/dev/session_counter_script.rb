@@ -11,7 +11,7 @@ module QuickScript
       def call
         self.button_label = count
         if submitted?
-          unless throttle.run
+          unless throttle.call
             return "あと #{throttle.ttl_sec} 秒待ってから実行してください (あと #{throttle.ttl_ms} ms)"
           end
           self.count += 1

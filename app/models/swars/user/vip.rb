@@ -5,18 +5,16 @@ module Swars
     extend self
 
     def auto_crawl_user_keys
-      group(:honwaka, :pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other, :heroz)
+      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other, :heroz)
     end
 
     def long_time_keep_user_keys
-      group(:honwaka, :pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other)
+      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other)
     end
 
     def protected_user_keys
-      group(:pro, :protected)
+      group(:pro, :semi_pro, :protected)
     end
-
-    private
 
     def group(*keys)
       keys.flat_map { |e| fetch(e) }

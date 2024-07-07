@@ -2,15 +2,15 @@
 #
 #   throttle = Throttle.new(expires_in: 0.1)
 #   throttle.reset
-#   throttle.run { true }             # => true
-#   throttle.run { true }             # => nil
+#   throttle.call { true }             # => true
+#   throttle.call { true }             # => nil
 #   sleep(0.1)
-#   throttle.run { true }             # => true
-#   throttle.run { true }             # => nil
+#   throttle.call { true }             # => true
+#   throttle.call { true }             # => nil
 #
 # 実行できるブロックよりも、実行できない状態を先に判定したい場合
 #
-#   unless throttle.run
+#   unless throttle.call
 #     return "あと #{throttle.ttl_sec} 秒待ってから実行してください (あと #{throttle.ttl_ms} ms)"
 #   end
 #   self.count += 1
@@ -33,17 +33,17 @@ class Throttle
   #  end
   #
   # allowed? と stop! の間に割り込まれる場合がある。
-  def run(&block)
+  def call(&block)
     if block
-      if run
+      if call
         yield
         return true
       end
       return false
     end
 
-    # nx: true: すでにあれば書き込まない
-    # px: TTL を ms の整数で指定する
+    # nx -> true: すでにあれば書き込まない
+    # px -> TTL を ms の整数で指定する
     redis.set(key, true, nx: true, px: (@options[:expires_in] * 1000.0).to_i)
   end
 

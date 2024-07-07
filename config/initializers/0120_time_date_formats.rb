@@ -24,6 +24,15 @@ Time::DATE_FORMATS.update({
       end
     },
 
+    :date_short => proc { |time|
+      case
+      when time.year == Time.current.year
+        time.strftime("%-m/%-d")
+      else
+        time.strftime("%y/%m/%d")
+      end
+    },
+
     :battle_time_today => proc { |time|
     },
 

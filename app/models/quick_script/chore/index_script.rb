@@ -9,21 +9,19 @@ module QuickScript
           return "ここにはなんもありません"
         end
 
-        rows = all.sort_by { |e|
-          [e.qs_group_info, e.title]
-        }.collect do |e|
+        rows = all_sort(all).collect do |e|
           {
-            :name        => { _nuxt_link: { name: e.title, to: { path: e.link_path }, }, },
-            :description => e.description,
-            :qs_group_key    => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
+            "名前" => { _nuxt_link: { name: e.short_title, to: { path: e.link_path }, }, },
+            "詳細" => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
+            "種類" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
           }
         end
 
         if qs_group_infos.one?
-          rows = rows.collect { |e| e.except(:qs_group_key) }
+          rows = rows.collect { |e| e.except("種類") }
         end
 
-        rows
+        simple_table(rows)
       end
 
       private
@@ -39,6 +37,12 @@ module QuickScript
             all = all.reject { |e| e.qs_group_info.admin_only && !admin_user }
           end
           all
+        end
+      end
+
+      def all_sort(all)
+        all.sort_by do |e|
+          [e.qs_group_info, e.ordered_index, e.title]
         end
       end
 

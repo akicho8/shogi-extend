@@ -2,11 +2,11 @@ module QuickScript
   concern :PaginationMod do
     prepended do
       class_attribute :per_page_default, default: 100
-      class_attribute :per_page_max, default: 1000
+      class_attribute :per_page_max, default: 500
     end
 
     def pagination_for(scope, options = {}, &block)
-      scope = scope.page(current_page).per(current_per)
+      scope = scope.page(current_page).per(current_per, max_per_page: per_page_max)
       if block
         rows = block.call(scope)
       else
@@ -21,6 +21,16 @@ module QuickScript
         :per_page     => current_per,
         :always_table => false,
         :header_hide  => false,
+        **options,
+      }
+    end
+
+    def simple_table(rows, options = {})
+      {
+        :_component   => "QuickScriptViewValueAsTable",
+        :rows         => rows,
+        :always_table => true,
+        :header_hide  => true,
         **options,
       }
     end

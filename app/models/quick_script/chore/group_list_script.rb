@@ -5,11 +5,12 @@ module QuickScript
       self.description = "グループ一覧を表示する"
 
       def call
-        all.collect do |e|
+        rows = all.collect do |e|
           {
-            :name => { _nuxt_link: { name: e.name, to: { path: e.link_path }, }, },
+            "種類" => { _nuxt_link: { name: e.name, to: { path: e.link_path }, }, },
           }
         end
+        simple_table(rows)
       end
 
       private

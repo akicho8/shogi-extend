@@ -1,33 +1,33 @@
 module QuickScript
   module Swars
     class GradeScript < Base
-      self.title = "横断"
-      self.description = "検察結果を直近順に表示する"
+      self.title = "将棋ウォーズ棋力一覧"
+      self.description = "ユーザー毎の棋力をまとめて表示する"
       self.form_method = :get
-      self.button_label = "検索"
+      self.button_label = "実行"
       self.per_page_default = 1000
 
-      if Rails.env.local?
-        SAMPLE = ::Swars::User::Vip.auto_crawl_user_keys.join(" ")
+      if Rails.env.local? && false
+        INPUT_DEFAULT = ::Swars::User::Vip.auto_crawl_user_keys.join(" ")
       else
-        SAMPLE = "BOUYATETSU5 itoshinTV pagagm"
+        INPUT_DEFAULT = ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"].shuffle * " "
       end
 
       def form_parts
         super + [
           {
-            :label          => "将棋ウォーズID(s)",
-            :key            => :swars_user_keys,
+            # :label          => "将棋ウォーズID(s)",
+            :key            => :user_keys,
             :type           => :string,
-            :default        => params[:swars_user_keys].to_s.presence,
-            :placeholder    => SAMPLE,
-            :bottom_message => "ウォーズIDを複数入力してください",
+            :default        => params[:user_keys].to_s.presence,
+            :placeholder    => INPUT_DEFAULT,
+            # :bottom_message => "ウォーズIDを複数入力してください",
           },
         ]
       end
 
       def call
-        user_scope = ::Swars::User.where(key: current_swars_user_keys)
+        user_scope = ::Swars::User.where(key: current_user_keys)
         unless user_scope.exists?
           return "一人も見つかりません"
         end
@@ -66,23 +66,18 @@ module QuickScript
         s = s.includes(:grade)
         rows = s.collect do |e|
           row = {}
-          row["ID"]   = { _link_to: { name: e.user_key, url: e.key_object.my_page_url }, }
-          row["最高"] = e.grade.name
+          row["名前"] = { _nuxt_link: { name: e.name_with_grade, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
           ::Swars::RuleInfo.each do |rule_info|
             row[rule_info.name] = hv.dig(e.user_key, rule_info.key) || "?"
           end
-          row[""] = { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, }
           row
         end
-        {
-          :_component   => "QuickScriptViewValueAsTable",
-          :rows         => rows,
-          :always_table => true,
-        }
+
+        simple_table(rows, header_hide: false)
       end
 
-      def current_swars_user_keys
-        (params[:swars_user_keys] || SAMPLE).to_s.scan(/\w+/)
+      def current_user_keys
+        (params[:user_keys] || INPUT_DEFAULT).to_s.scan(/\w+/)
       end
     end
   end

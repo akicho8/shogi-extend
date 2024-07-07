@@ -19,14 +19,14 @@
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="title_click_handle" v-if="meta.title")
           h1.has-text-weight-bold {{meta.title}}
 
-      template(slot="end")
-        NavbarItemLogin
-        NavbarItemProfileLink
-        //- NavbarItemSidebarOpen(@click="sidebar_toggle")
+      //- template(slot="end")
+      //-   NavbarItemLogin
+      //-   NavbarItemProfileLink
+      //-   //- NavbarItemSidebarOpen(@click="sidebar_toggle")
 
     MainSection
       .container.is-fluid
-        .columns.is-multiline(v-if="params.form_method")
+        .columns.is-mobile.is-multiline(v-if="params.form_method")
           .column.is-12
             template(v-if="params.form_parts")
               template(v-for="form_part in params.form_parts")
@@ -70,11 +70,11 @@
                   b-button.post_handle(native-type="submit" type="is-danger" size="is-small")
                     | {{params.button_label}}
 
-        .columns.is-multiline(v-if="params.body")
+        .columns.is-mobile.is-multiline(v-if="params.body")
           .column
             QuickScriptViewValue(:value="params.body")
 
-        .columns.is-multiline(v-if="development_p")
+        .columns.is-mobile.is-multiline(v-if="development_p")
           .column
             pre
               | {{attributes}}
@@ -264,22 +264,22 @@ export default {
         return "value_type_is_text"
       }
       if (_.isPlainObject(value)) {
-        if (value["_component"]) {
+        if ("_component" in value) {
           return "value_type_is_component"
         }
-        if (value["_nuxt_link"]) {
+        if ("_nuxt_link" in value) {
           return "value_type_is_nuxt_link"
         }
-        if (value["_link_to"]) {
+        if ("_link_to" in value) {
           return "value_type_is_link_to"
         }
-        if (value["_v_text"]) {
+        if ("_v_text" in value) {
           return "value_type_is_v_text"
         }
-        if (value["_pre"]) {
+        if ("_pre" in value) {
           return "value_type_is_pre"
         }
-        if (value["_autolink"]) {
+        if ("_autolink" in value) {
           return "value_type_is_autolink"
         }
         return "value_type_is_any_hash"
@@ -303,6 +303,8 @@ export default {
 <style lang="sass">
 .QuickScriptView
   .MainSection.section
+    +mobile
+      padding: 0.75rem 0.75rem
     +tablet
       padding: 1.75rem 0rem
 

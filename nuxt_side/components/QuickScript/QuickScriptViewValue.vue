@@ -76,7 +76,7 @@ export default {
 
 <style lang="sass">
 .QuickScriptViewValue
-  @extend %is_line_break_on
+  // @extend %is_line_break_on
   pre
     white-space: pre-wrap
     word-break: break-all
