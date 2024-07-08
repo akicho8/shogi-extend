@@ -73,7 +73,10 @@ export default {
     message_default() {
       if (this.error) {
         if (this.error.statusCode) {
-          if (this.error.statusCode === 404) {
+          if (false) {
+          // } else if (this.error.statusCode === 401) {
+          //   return `BASIC認証を促されています`
+          } else if (this.error.statusCode === 404) {
             return `ページが見つからないか権限がありません`
           } else if (this.error.statusCode === 403) {
             return `権限がありません`

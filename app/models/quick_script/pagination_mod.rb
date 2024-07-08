@@ -29,8 +29,8 @@ module QuickScript
       {
         :_component   => "QuickScriptViewValueAsTable",
         :rows         => rows,
-        :always_table => true,
-        :header_hide  => true,
+        # :always_table => true,
+        # :header_hide  => true,
         **options,
       }
     end

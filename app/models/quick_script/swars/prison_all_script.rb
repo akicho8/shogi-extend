@@ -2,7 +2,7 @@ module QuickScript
   module Swars
     class PrisonAllScript < Base
       self.title = "将棋ウォーズ囚人一覧"
-      self.description = "すべてのIDをアルファベット順で表示する"
+      self.description = "すべてのユーザーをアルファベット順で表示する"
 
       def call
         av = []

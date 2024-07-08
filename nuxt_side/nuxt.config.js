@@ -4,6 +4,11 @@ const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 const PRODUCTION_P = process.env.NODE_ENV === "production"
 const DEVELOPMENT_P = !PRODUCTION_P
 
+console.log("BASIC_AUTH_USERNAME")
+console.log(process.env.BASIC_AUTH_USERNAME)
+console.log("BASIC_AUTH_PASSWORD")
+console.log(process.env.BASIC_AUTH_PASSWORD)
+
 const SITE_DESC = "将棋のいろんなツールを提供するサイト。" + [
   "将棋ウォーズ棋譜検索・統計",
   "リレー将棋・ネット対戦・詰将棋作成",
@@ -89,6 +94,14 @@ const config = {
   target: "server", // なにこれ？
 
   router: {
+    // // ↓ぜんぜん効いてない
+    // extendRoutes(routes) {
+    //   routes.push({
+    //     path: '/bin/dev',
+    //     fetchOnServer: false, // /bin/dev パスではクライアントサイドで fetch を実行する
+    //   });
+    // },
+
     // https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-router/#linkactiveclass
     linkActiveClass: "is-active",
 
@@ -309,7 +322,18 @@ const config = {
 
     "@nuxtjs/style-resources",  // これを書かないと styleResources が反応しない
     "@nuxtjs/sitemap",
+
+    "nuxt-basic-auth-module", // BASIC認証
   ],
+
+  // BASIC_認証
+  basic: {
+    name: process.env.BASIC_AUTH_USERNAME,
+    pass: process.env.BASIC_AUTH_PASSWORD,
+    enabled: true, // PRODUCTION_P,
+    match: /^\/bin\/(dev|dev2)(\/.*)?$/,
+    // match: (req) => req.originalUrl === '/bin/dev',
+  },
 
   sitemap,
 

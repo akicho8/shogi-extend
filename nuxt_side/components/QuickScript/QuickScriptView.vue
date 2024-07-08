@@ -26,56 +26,69 @@
 
     MainSection
       .container.is-fluid
+        .columns.is-mobile.is-multiline(v-if="params.form_parts.length >= 1")
+          .column.is-12
+            template(v-for="form_part in params.form_parts")
+              b-field(:label="form_part.label" custom-class="is-small" :message="form_part.bottom_message")
+                template(v-if="false")
+                template(v-else-if="form_part.type === 'string'")
+                  b-input(
+                    v-model="attributes[form_part.key]"
+                    :placeholder="form_part.placeholder"
+                    spellcheck="false"
+                    )
+                template(v-else-if="form_part.type === 'text'")
+                  b-input(
+                    type="textarea"
+                    v-model="attributes[form_part.key]"
+                    :placeholder="form_part.placeholder"
+                    spellcheck="false"
+                    )
+                template(v-else-if="form_part.type === 'integer'")
+                  b-numberinput(
+                    v-model="attributes[form_part.key]"
+                    controls-position="compact"
+                    :exponential="true"
+                    )
+                template(v-else-if="form_part.type === 'select'")
+                  b-select(
+                    v-model="attributes[form_part.key]"
+                    )
+                    template(v-for="[label, value] in label_value_array(form_part.elems)")
+                      option(:value="value") {{label}}
+                template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
+                  b-field
+                    template(v-for="[label, value] in label_value_array(form_part.elems)")
+                      component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
+                        span {{label}}
+                template(v-else)
+                  pre unknown: {{form_part.type}}
+
+            //- template(v-if="visible_form_parts_exist_p")
+            //-   hr
         .columns.is-mobile.is-multiline(v-if="params.form_method")
           .column.is-12
-            template(v-if="params.form_parts")
-              template(v-for="form_part in params.form_parts")
-                b-field(:label="form_part.label" custom-class="is-small" :message="form_part.bottom_message")
-                  template(v-if="false")
-                  template(v-else-if="form_part.type === 'string'")
-                    b-input(
-                      size="is-small"
-                      :value="attr_value(form_part)"
-                      @input="value => attr_update(form_part, value)"
-                      :placeholder="form_part.placeholder"
-                      spellcheck="false"
-                      )
-                  template(v-else-if="form_part.type === 'integer'")
-                    b-numberinput(
-                      size="is-small"
-                      :value="attr_value(form_part)"
-                      @input="value => attr_update(form_part, value)"
-                      controls-position="compact"
-                      :exponential="true"
-                      )
-                  template(v-else-if="form_part.type === 'select'")
-                    b-select(
-                      size="is-small"
-                      :value="attr_value(form_part)"
-                      @input="value => attr_update(form_part, value)"
-                      )
-                      template(v-for="elem in form_part.elems")
-                        option(:value="elem") {{elem}}
-                  template(v-else)
-                    pre unknown: {{form_part.type}}
-
             b-field(v-if="params.form_method === 'get'")
               .control
-                b-button.get_handle(@click="get_handle" type="is-primary" size="is-small")
-                  | {{params.button_label}}
+                form(method="GET" @submit.prevent="get_handle")
+                  b-button.get_handle(native-type="submit" type="is-primary")
+                    | {{params.button_label}}
+              //- .control
+              //-   b-button.get_handle(@click="get_handle" type="is-primary")
+              //-     | {{params.button_label}}
 
             b-field(v-if="params.form_method === 'post'")
               .control
                 form(method="POST" @submit.prevent="post_handle")
-                  b-button.post_handle(native-type="submit" type="is-danger" size="is-small")
+                  b-button.post_handle(native-type="submit" type="is-danger")
                     | {{params.button_label}}
 
         .columns.is-mobile.is-multiline(v-if="params.body")
-          .column
+          .column.is-12
             QuickScriptViewValue(:value="params.body")
 
         .columns.is-mobile.is-multiline(v-if="development_p")
-          .column
+          .column.is-12
             pre
               | {{attributes}}
 
@@ -112,62 +125,93 @@ export default {
     // クエリ部分(例えば page=1 など)が $router.push で変化したとき $fetch を呼ぶ。
     "$route.query": "$fetch",
   },
-  // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
-  // しかし http://localhost:4000/script/dev に SSR でアクセスできなくなる
-  fetchOnServer: false,
-  fetch() {
-    return this.$axios.$get(this.current_api_path, {params: {...this.$route.query, _setup: true}}).then(params => this.params_receive(params))
 
-    // }).catch(error => {
-    //   // エラーレスポンスの処理
-    //   if (error.response) {
-    //     // サーバーからのレスポンスがある場合
-    //     const status = error.response.status
-    //     const data = error.response.data
-    //
-    //     if (status === 400) {
-    //       console.error('Bad Request:', data)
-    //     } else if (status === 401) {
-    //       console.error('Unauthorized:', data)
-    //       this.$router.push('/login') // ログインページにリダイレクト
-    //     } else if (status === 404) {
-    //       console.error('Not Found:', data)
-    //       this.$router.push('/not-found') // カスタム404ページにリダイレクト
-    //     } else if (status === 500) {
-    //       console.error('Internal Server Error:', data)
-    //     } else {
-    //       console.error('Error:', data)
-    //     }
-    //   } else {
-    //     // サーバーからのレスポンスがない場合（ネットワークエラーなど）
-    //     console.error('Network Error:', error.message)
-    //   }
+  // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
+  // しかし http://localhost:4000/bin/dev に SSR でアクセスできなくなる
+  fetchOnServer: true,
+
+  // async fetch({ $axios, error }) {
+  //   try {
+  //     const response = await $axios.$get(this.current_api_path, {params: {...this.$route.query, _setup: true}})
+  //     console.log(response)
+  //     this.params_receive(response)
+  //   } catch (e) {
+  //     if (e.response && e.response.status === 401) {
+  //       console.log("401 エラーが発生した場合、クライアントサイドで再度 fetch する")
+  //       return { retry: true };
+  //     }
+  //     // その他のエラーを処理
+  //     error({ statusCode: e.response.status, message: e.message });
+  //   }
+  // },
+
+  fetch() {
+    // if (process.server) {
+    //   return { retry: true }
+    // }
+    return this.$axios.$get(this.current_api_path, {params: {...this.$route.query, _setup: true}}).then(params => this.params_receive(params))
+      // .catch(error => {
+      //   console.log("in QuickScriptView start")
+      //
+      //   if (error.response && error.response.status === 401) {
+      //     console.log("401 エラーが発生した場合、クライアントサイドで再度 fetch する")
+      //     return { retry: true }
+      //   }
+      //
+      //   // エラーレスポンスの処理
+      //   if (error.response) {
+      //     // サーバーからのレスポンスがある場合
+      //     const status = error.response.status
+      //     const data = error.response.data
+      //
+      //     if (status === 400) {
+      //       console.error('Bad Request:', data)
+      //     } else if (status === 401) {
+      //       console.error('Unauthorized:', data)
+      //       // this.$router.push('/login') // ログインページにリダイレクト
+      //     } else if (status === 404) {
+      //       console.error('Not Found:', data)
+      //       // this.$router.push('/not-found') // カスタム404ページにリダイレクト
+      //     } else if (status === 500) {
+      //       console.error('Internal Server Error:', data)
+      //     } else {
+      //       console.error('Error:', data)
+      //     }
+      //
+      //     console.log("in QuickScriptView end")
+      //
+      //   } else {
+      //     // サーバーからのレスポンスがない場合（ネットワークエラーなど）
+      //     console.error('Network Error:', error.message)
+      //   }
     // })
   },
+
   created() {
-    this.clog(this.$route)
+    // this.clog(this.$route)
   },
   methods: {
     params_receive(params) {
-      // ここはさらに server か client かで分けないといけない？
-
-      // メッセージ
-      // リダイレクトの前に設定すること
-      if (_.isPlainObject(params.flash)) {
-        this.toast_ok(params.flash["notice"])
-        this.toast_ng(params.flash["alert"])
-      }
-
-      // リダイレクト
-      // CSV にリダイレクトした場合などは現在のページから遷移しないため redirect_to が入っているからといって return してはいけない。
-      const redirect_to = params["redirect_to"]
-      if (redirect_to) {
-        if (redirect_to["allow_other_host"]) {
-          window.location.href = redirect_to["to"]
-        } else {
-          this.$router.push(redirect_to["to"])
+      // fetchOnServer: true のときに実行すると this.toast_ok がないと言われる
+      if (process.client) {
+        // メッセージ
+        // リダイレクトの前に設定すること
+        if (_.isPlainObject(params.flash)) {
+          this.toast_ok(params.flash["notice"])
+          this.toast_ng(params.flash["alert"])
         }
-        // ここで return するべからず
+
+        // リダイレクト
+        // CSV にリダイレクトした場合などは現在のページから遷移しないため redirect_to が入っているからといって return してはいけない。
+        const redirect_to = params["redirect_to"]
+        if (redirect_to) {
+          if (redirect_to["hard_jump"]) {
+            window.location.href = redirect_to["to"]
+          } else {
+            this.$router.push(redirect_to["to"])
+          }
+          // ここで return するべからず
+        }
       }
 
       // 受けとる (と、このタイミングでユーザーは画面の更新に気づく)
@@ -176,6 +220,9 @@ export default {
       // フォームの初期値を埋める
       if (this.params.form_parts) {
         this.params.form_parts.forEach(form_part => {
+          // let value = form_part["default"]
+          // if (form_part.type === "checkbox_button") {
+          // }
           this.$set(this.attributes, form_part["key"], form_part["default"])
         })
       }
@@ -287,15 +334,32 @@ export default {
       return "value_type_is_unknown"
     },
 
-    value_wrap(value) {
-      return value
+    label_value_array(value) {
+      if (Array.isArray(value)) {
+        return value.map(e => [e, e])
+      } else if (_.isPlainObject(value)) {
+        return Object.entries(value)
+      } else {
+        return [[value, value]]
+      }
+    },
+
+    type_to_component(form_part) {
+      if (form_part.type === "radio_button") {
+        return "b-radio-button"
+      } else if (form_part.type === "checkbox_button") {
+        return "b-checkbox-button"
+      } else {
+        throw new Error("must not happen")
+      }
     },
   },
   computed: {
-    current_qs_group()   { return this.qs_group_key ?? this.$route.params.qs_group_key                                                               },
-    current_qs_key()     { return this.qs_page_key   ?? this.$route.params.qs_page_key                                                                 },
+    current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
+    current_qs_key()   { return this.qs_page_key   ?? this.$route.params.qs_page_key },
     current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
+    visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") } // 目に見えるフォームパーツが存在するか？
   },
 }
 </script>

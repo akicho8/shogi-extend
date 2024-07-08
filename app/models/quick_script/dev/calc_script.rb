@@ -5,12 +5,6 @@ module QuickScript
       self.description = "足し算を行う"
       self.form_method = :get
 
-      def call
-        current_lhv.public_send(current_operator, current_rhv)
-      end
-
-      private
-
       # ~/src/shogi-extend/nuxt_side/components/QuickScript/QuickScriptView.vue
       def form_parts
         super + [
@@ -34,6 +28,10 @@ module QuickScript
             :default => params[:rhv].presence.try { to_i } || 2,
           },
         ]
+      end
+
+      def call
+        current_lhv.public_send(current_operator, current_rhv)
       end
 
       def current_lhv

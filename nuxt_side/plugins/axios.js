@@ -21,20 +21,49 @@ export default function ({ $axios, redirect, error: nuxtError }) {
   })
 
   $axios.onError(error => {
-    if (process.env.NODE_ENV === "development") {
-      console.log(JSON.stringify(error, null, 2))
-      console.log(JSON.stringify(error.response, null, 2))
-    }
-
-    // json: {} 内容が error.response.data に入っている
-
+    //   if (process.server) {
+    //     console.log(error.response)
+    //     const code = parseInt(error.response && error.response.status);
+    //     if (code === 401) {
+    //       // オプションでリクエストが発生した元のパスを取得
+    //       const originalRequestPath = error.config && error.config.url;
+    //
+    //       // リファラを取得
+    //       const referrer = error.config && error.config.headers && error.config.headers.referer;
+    //       console.log("referrer", referrer)
+    //
+    //       // // リファラが存在する場合はそのパスにリダイレクトする
+    //       // if (referrer) {
+    //       //   redirect(referrer);
+    //       // } else if (originalRequestPath) {
+    //       //   // 元のパスにリダイレクトする
+    //       //   redirect(originalRequestPath);
+    //       // } else {
+    //       //   // パスが取得できない場合、デフォルトの処理を行う
+    //       //   console.error('Redirect path not found.');
+    //       //   // 例えば、トップページにリダイレクトする場合は以下のようにする
+    //       //   redirect('/');
+    //       // }
+    //     }
+    //     // その他のエラー処理をここに追加する
+    //   }
+    //
+    //   // if (process.env.NODE_ENV === "development") {
+    //   //   console.log(JSON.stringify(error, null, 2))
+    //   //   console.log(JSON.stringify(error.response, null, 2)) ← これで 401 のときまた再帰的なエラーになる場合がある
+    //   // }
+    //
+    //   // json: {} 内容が error.response.data に入っている
+    //
+    //   if (process.client) {
     nuxtError({
       statusCode: error.response.status,
       message: error.response.data.message ?? error.message,
     })
-
-    // これを返すと $get が false を返して処理が継続してしまい、めちゃくちゃになる
-    // return Promise.resolve(false)
+    //   }
+    //
+    //   // これを返すと $get が false を返して処理が継続してしまい、めちゃくちゃになる
+    //   // return Promise.resolve(false)
   })
 
   // ↓まったく動かない。そもそも自動でリダイレクトしてくれるはず。

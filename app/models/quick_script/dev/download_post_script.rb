@@ -15,7 +15,7 @@ module QuickScript
         else
           self.form_method = nil # ボタンを非表示にする
           flash[:notice] = "ダウンロードしました"
-          redirect_to csv_url, allow_other_host: true
+          redirect_to csv_url, hard_jump: true
           "(ダウンロード中または完了時の文言)"
         end
       end

@@ -5,7 +5,7 @@ module QuickScript
       self.description = "外部サイトにリダイレクトする"
 
       def call
-        redirect_to "https://example.com/", allow_other_host: true
+        redirect_to "https://example.com/", hard_jump: true
       end
     end
   end

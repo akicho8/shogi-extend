@@ -2,7 +2,7 @@ module QuickScript
   module Chore
     class IndexScript < Base
       self.title = "Index"
-      self.description = "スクリプトの一覧を表示する"
+      self.description = "スクリプト一覧を表示する"
 
       def call
         if all.empty?
@@ -12,7 +12,7 @@ module QuickScript
         rows = all_sort(all).collect do |e|
           {
             "名前" => { _nuxt_link: { name: e.short_title, to: { path: e.link_path }, }, },
-            "詳細" => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
+            "内容" => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
             "種類" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
           }
         end

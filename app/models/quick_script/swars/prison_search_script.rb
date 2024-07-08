@@ -10,7 +10,7 @@ module QuickScript
       def form_parts
         super + [
           {
-            # :label   => "検索文字列",
+            :label   => "部分一致文字列",
             :key     => :query,
             :type    => :string,
             :default => params[:query].to_s,
@@ -30,12 +30,12 @@ module QuickScript
           c2 = ::Swars::User.where(::Swars::Grade.arel_table[:key].eq(query))
           scope = scope.and(c1.or(c2))
         end
-        pagination_for(scope, always_table: true) do |scope|
+        pagination_for(scope, always_table: false) do |scope|
           scope.collect do |e|
             {
               "名前" => { _link_to: { name: e.name_with_grade, url: e.key_object.my_page_url }, },
-              "発見" => e.ban_at.to_fs(:date_short),
-              ""     => { _nuxt_link: { name: "🔍", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+              "発見" => e.ban_at.to_fs(:ymd),
+              ""     => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
             }
           end
         end

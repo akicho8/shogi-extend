@@ -61,5 +61,8 @@
     "util": "^0.12.5",
     "vue-scrollto": "^2.20.0",
     "vuedraggable": "^2.24.3"
+  },
+  "dependencies": {
+    "nuxt-basic-auth-module": "^1.4.1"
   }
 }
