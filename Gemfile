@@ -207,3 +207,7 @@ gem "psych", "~> 3" # Psych::BadAlias: Unknown alias: default 対策 ← 新し�
 gem "pp"
 gem "nkf"
 gem "matrix"
+
+# Google Sheet / Google Drive
+gem "google-api-client"
+

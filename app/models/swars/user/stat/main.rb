@@ -16,8 +16,10 @@ module Swars
         @user = user
         @params = default_params.merge(params)
 
-        ActiveRecord::Base.logger.silence do
-          AppLog.debug(emoji: ":参照:", subject: "プレイヤー情報参照", body: [user.key, params[:query]])
+        if Rails.env.local?
+          ActiveRecord::Base.logger.silence do
+            AppLog.debug(emoji: ":参照:", subject: "プレイヤー情報参照", body: [user.key, params[:query]])
+          end
         end
 
         prepare
@@ -208,6 +210,10 @@ module Swars
 
       def matrix_stat
         @matrix_stat ||= MatrixStat.new(self)
+      end
+
+      def simple_matrix_stat
+        @simple_matrix_stat ||= SimpleMatrixStat.new(self)
       end
 
       def mental_stat

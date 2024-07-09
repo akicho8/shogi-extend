@@ -36,7 +36,6 @@ yarn-debug.log*
 /db/*.gz
 /*.kif
 .byebug_history
-/SEPC_FAILED.org
 /SPEC_FAILED.org
 
 /public/packs
@@ -47,3 +46,5 @@ yarn-debug.log*
 .yarn-integrity
 
 /app/models/swars/agent/fetched_html/*.html
+
+/config/google_auth_json_files

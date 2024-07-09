@@ -331,7 +331,7 @@ const config = {
     name: process.env.BASIC_AUTH_USERNAME,
     pass: process.env.BASIC_AUTH_PASSWORD,
     enabled: true, // PRODUCTION_P,
-    match: /^\/bin\/(dev|dev2)(\/.*)?$/,
+    match: /^\/bin\/(dev|admin|secret|private)(\/.*)?$/, // [REFS] BASIC_AUTH_MATCH
     // match: (req) => req.originalUrl === '/bin/dev',
   },
 

@@ -91,6 +91,8 @@
           .column.is-12
             pre
               | {{attributes}}
+            //- pre
+            //-   | {{params}}
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       | {{value_type_guess(params.body)}}
@@ -286,6 +288,8 @@ export default {
         if (this.params.router_push_failed_then_fetch) {
           this.$sound.play_click()
           this.$fetch()
+        } else {
+          // this.toast_ok(`もう${this.params.button_label}しました`)
         }
       })
     },

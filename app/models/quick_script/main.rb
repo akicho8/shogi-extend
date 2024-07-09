@@ -10,6 +10,7 @@ module QuickScript
       unless klass
         return Chore::NotFoundScript.new(params, options)
       end
+      AppLog.info(subject: "[#{klass.name}]", body: params.to_t)
       klass.new(params, options)
     end
 

@@ -1,5 +1,9 @@
 require "./setup"
-tp QuickScript::Swars::GradeScript.new.call
+# tp QuickScript::Swars::UserScript.new.call
+
+BOUYATETSU5
+
+
 # >> |-------------+-----------+--------------+----+------------------+-----------------+--------------------+---------------|
 # >> | user_key    | rule_key  | min_priority | id | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list |
 # >> |-------------+-----------+--------------+----+------------------+-----------------+--------------------+---------------|

@@ -33,5 +33,10 @@ module Swars
     it "to_win_lose_h" do
       assert { @black.stat.tag_stat.to_win_lose_h(:"棒銀") == { win: 1, lose: 0 } }
     end
+
+    it "use_rate_for" do
+      assert { @black.stat.tag_stat.use_rate_for(:"居飛車") == 1.0 }
+      assert { @black.stat.tag_stat.use_rate_for(:"振り飛車") == 0.0 }
+    end
   end
 end

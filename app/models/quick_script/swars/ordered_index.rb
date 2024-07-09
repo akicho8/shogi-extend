@@ -4,8 +4,8 @@ module QuickScript
       PrisonSearchScript,
       PrisonAllScript,
       PrisonNewScript,
-      GradeScript,
-      GradeProScript,
+      UserScript,
+      ProScript,
     ]
   end
 end

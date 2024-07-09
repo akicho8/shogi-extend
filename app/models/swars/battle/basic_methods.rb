@@ -85,6 +85,14 @@ module Swars
           validates :key
           validates :battled_at
         end
+
+        # これまでは Membership を更新するたびに user.latest_battled_at を Time.current で更新してしまっていた。
+        # そうではなく Battle を作成したときだけ Battle から battled_at で更新するのが正しい。
+        after_create_commit do
+          memberships.each do |e|
+            e.user.update!(latest_battled_at: battled_at)
+          end
+        end
       end
 
       def to_param

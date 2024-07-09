@@ -165,10 +165,14 @@ module Swars
       assert { Battle.ban_except.count == 0 }
     end
 
-    it "latest_battled_at: Membershipの保存で最終対局日時を更新する" do
-      record = Battle.create!
-      assert { record.memberships[0].user.latest_battled_at }
-      assert { record.memberships[1].user.latest_battled_at }
+    it "最終対局日時をすばやく確認できるように create のタイミングで user.latest_battled_at を更新する" do
+      user = nil
+      Timecop.freeze("1999-01-01") { user = Swars::User.create! }
+      battle = Swars::Battle.create! do |e|
+        e.memberships.build(user: user)
+      end
+      user.reload
+      assert { user.latest_battled_at.to_fs(:ymd) == "2000-01-01" }
     end
   end
 end

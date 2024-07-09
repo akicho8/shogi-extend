@@ -25,13 +25,22 @@ module Swars
       end
 
       delegate *[
-      ], to: :stat
+        :ids_scope,
+        :ids_count,
+      ], to: :scope_ext
 
       attr_reader :scope_ext
 
       def initialize(stat, scope_ext)
         super(stat)
         @scope_ext = scope_ext
+      end
+
+      ################################################################################
+
+      # 使用率
+      def use_rate_for(key)
+        count_by(key).fdiv(ids_count)
       end
 
       ################################################################################
@@ -202,7 +211,7 @@ module Swars
         }.merge(options)
 
         if judge_counts = to_win_lose_h(tag, options)
-          appear_ratio = win_lose_sum(tag).fdiv(@scope_ext.ids_count)
+          appear_ratio = win_lose_sum(tag).fdiv(ids_count)
           {
             :tag          => tag,          # 戦法名
             :appear_ratio => appear_ratio, # 遭遇率 (なくてもいい)
@@ -217,7 +226,7 @@ module Swars
 
       def inside_counts_hash
         @inside_counts_hash ||= yield_self do
-          s = @scope_ext.ids_scope
+          s = ids_scope
           s = s.joins(:taggings => :tag)
           s = s.joins(:judge)
           s = s.group("tags.name")
