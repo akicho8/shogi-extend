@@ -37,8 +37,8 @@ require File.expand_path('../../config/environment', __FILE__)
 
 # puts KifuExtractor.extract("https://lishogi.org/151jxej8juO1")
 # puts KifuExtractor.extract("https://lishogi.org/151jxej8")
-# puts WebAgent.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
-# puts WebAgent.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
+# puts WebAgent2.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
+# puts WebAgent2.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
 
 # p KifuExtractor.extract("https://lishogi.org/editor/ln5nl/2kp3R1/2l4p1/p1pg1+BP1p/9/PPP1PP3/1SN5P/1KG1G2+r1/L8_w_G2Pb3sn4p_1")
 

@@ -15,7 +15,7 @@ module KifuExtractor
             #
             # NOTE: user_agent が "Faraday v1" や通常のであれば kif を埋めない
             # wget や googlebot であれば kif が埋まっている
-            doc = WebAgent.document(extracted_uri.to_s, user_agent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+            doc = WebAgent2.document(extracted_uri.to_s, user_agent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
             if e = doc.at("div[class='kif']")
               @body = e.text
             end
@@ -56,7 +56,7 @@ module KifuExtractor
                 # 良い: 揺らぎがない
                 # 悪い: 盤面が5五将棋の初期値になってない
                 export_url = "https://lishogi.org/game/export/#{key}?csa=1&clocks=0"
-                if v = WebAgent.raw_fetch(export_url)
+                if v = WebAgent2.raw_fetch(export_url)
                   if Bioshogi::Parser::CsaParser.accept?(v)
                     v = v.strip # 無駄な改行があるので取る
                     @body = v
@@ -68,7 +68,7 @@ module KifuExtractor
                 # 悪い: Shift_JIS になっている
                 # 悪い: 5五将棋の表記が "五々将棋" となっている
                 export_url = "https://lishogi.org/game/export/#{key}?csa=0&clocks=0"
-                if v = WebAgent.raw_fetch(export_url)
+                if v = WebAgent2.raw_fetch(export_url)
                   if Bioshogi::Parser::KifParser.accept?(v)
                     v = v.toutf8  # Shift_JIS になっているため
                     v = v.strip   # 無駄な改行があるので取る

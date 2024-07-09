@@ -37,7 +37,7 @@ module KifuExtractor
     def uri_fetched_content
       @uri_fetched_content ||= yield_self do
         if uri = extracted_uri
-          WebAgent.fetch(uri)
+          WebAgent2.fetch(uri)
         end
       end
     end
