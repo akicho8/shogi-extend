@@ -20,7 +20,8 @@
 class AuthInfo < ApplicationRecord
   belongs_to :user
 
-  serialize :meta_info
+  serialize :meta_info          # ← あとで削除する
+  serialize :meta_info2, coder: JSON
 
   attr_accessor :auth
 
@@ -29,6 +30,7 @@ class AuthInfo < ApplicationRecord
       self.provider  ||= auth.provider
       self.uid       ||= auth.uid
       self.meta_info ||= auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
+      self.meta_info2 ||= auth
     end
   end
 
@@ -74,3 +76,4 @@ class AuthInfo < ApplicationRecord
     UserMailer.user_created(user).deliver_later
   end
 end
+# ~> -:20:in `<main>': uninitialized constant ApplicationRecord (NameError)

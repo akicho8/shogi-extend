@@ -211,3 +211,5 @@ gem "matrix"
 # Google Sheet / Google Drive
 gem "google-api-client"
 
+# 一時的に AuthInfo を直すため (User#meta_info を参照するため)
+gem "oauth"

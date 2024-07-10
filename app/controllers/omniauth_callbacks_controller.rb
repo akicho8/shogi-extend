@@ -130,10 +130,15 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # アカウントを作成または復元したのでログイン状態にする
     current_user_set(user)
-    if FLASH_NOTICE_ENABLE
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+
+    if false
+      if FLASH_NOTICE_ENABLE
+        flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: auth.provider.titleize
+      end
+      sign_in_and_redirect user, event: :authentication # or redirect_to after_sign_in_path_for(user)
+    else
+      redirect_to2 user, "ログイン完了です"
     end
-    sign_in_and_redirect user, event: :authentication # or redirect_to after_sign_in_path_for(user)
   end
 
   # 失敗したときの遷移先 (Google+ API を有効にしなかったらこっちにくる)
@@ -167,5 +172,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def image_uri
     URI(auth.info.image)
+  end
+
+  def redirect_to2(user, message)
+    return_to = after_sign_in_path_for(user)
+    url = UrlProxy.url_for(path: "/bin/chore/message", query: { message: message, return_to: return_to })
+    redirect_to url
   end
 end

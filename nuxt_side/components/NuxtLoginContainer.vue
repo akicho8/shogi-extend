@@ -16,8 +16,8 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 class SocialMediaInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "twitter", name: "Twitter", },
       { key: "google",  name: "Google",  },
+      { key: "twitter", name: "Twitter", },
       { key: "github",  name: "GitHub",  },
     ]
   }

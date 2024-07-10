@@ -338,6 +338,12 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
+    oauth (1.1.0)
+      oauth-tty (~> 1.0, >= 1.0.1)
+      snaky_hash (~> 2.0)
+      version_gem (~> 1.1)
+    oauth-tty (1.0.5)
+      version_gem (~> 1.1, >= 1.1.1)
     oauth2 (1.4.9)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
@@ -532,6 +538,9 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (>= 3.0, < 6.0, != 5.0.0)
+    snaky_hash (2.0.1)
+      hashie
+      version_gem (~> 1.1, >= 1.1.1)
     spring (4.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -561,6 +570,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
+    version_gem (1.1.4)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -636,6 +646,7 @@ DEPENDENCIES
   mysql2 (>= 0.5.5)
   nkf
   nokogiri
+  oauth
   omniauth-github
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
