@@ -8,7 +8,7 @@ class UserMailer < ApplicationMailer
       :name           => user.name,
       :email          => user.email,
       :provider_names => user.provider_names,
-      :twitter_url    => user.twitter_url,
+      # :twitter_url    => user.twitter_url,
       :avatar_url     => user.avatar_url,
     }
 

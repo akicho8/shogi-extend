@@ -8,7 +8,7 @@
     template(slot="start")
       b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="cancel_handle") キャンセル
     template(slot="end")
-      b-navbar-item(@click="test_handle" v-if="development_p") 不正入力テスト
+      //- b-navbar-item(@click="test_handle" v-if="development_p") 不正入力テスト
       b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="save_handle") 保存
 
   MainSection
@@ -25,11 +25,11 @@
           b-field(label-position="on-border" label="名前" :type="{'is-danger': name_invalid_message && development_p}")
             b-input(type="text" v-model.trim="base.new_name")
 
-          b-field(label-position="on-border" label="Twitterアカウント")
-            b-input(type="text" v-model.trim="base.new_twitter_key")
-
-          b-field(label-position="on-border" label="自己紹介")
-            b-input(type="textarea" v-model.trim="base.new_description" rows="6")
+          //- b-field(label-position="on-border" label="Twitterアカウント")
+          //-   b-input(type="text" v-model.trim="base.new_twitter_key")
+          //-
+          //- b-field(label-position="on-border" label="自己紹介")
+          //-   b-input(type="textarea" v-model.trim="base.new_description" rows="6")
 </template>
 
 <script>
@@ -56,10 +56,10 @@ export default {
       this.base.current_component = "UserEditProfileImageCrop"
     },
 
-    test_handle() {
-      this.base.new_twitter_key = "1234567890123456"
-      this.save_handle()
-    },
+    // test_handle() {
+    //   // this.base.new_twitter_key = "1234567890123456"
+    //   this.save_handle()
+    // },
 
     // 保存
     async save_handle() {
@@ -72,8 +72,8 @@ export default {
 
       const params = {
         name:                this.base.new_name,
-        profile_description: this.base.new_description,
-        profile_twitter_key: this.base.new_twitter_key,
+        // profile_description: this.base.new_description,
+        // profile_twitter_key: this.base.new_twitter_key,
         croped_image:        this.base.croped_image,
       }
 

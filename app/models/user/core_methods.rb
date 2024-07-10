@@ -28,7 +28,7 @@ class User
         end
 
         self.key ||= SecureRandom.hex
-        self.user_agent ||= ""
+        # self.user_agent ||= ""
         self.name ||= name.to_s.strip
 
         if Rails.env.development?

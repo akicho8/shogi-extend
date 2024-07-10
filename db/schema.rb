@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_10_000000) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_10_300051) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -330,8 +330,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_000000) do
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "description", limit: 512, null: false
-    t.string "twitter_key", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
@@ -708,7 +706,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_000000) do
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "キー"
     t.string "name", null: false, comment: "名前"
-    t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
     t.datetime "name_input_at", precision: nil
     t.datetime "created_at", precision: nil, null: false

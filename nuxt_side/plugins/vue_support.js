@@ -203,11 +203,11 @@ export const vue_support = {
         return true
       }
       // http://localhost:4000/video/new?__nuxt_login_required_force=ban
-      if (this.g_current_user.permit_tag_list.includes("ban") || this.$route.query.__nuxt_login_required_force === "ban") {
-        this.toast_ng("アカウントは利用を制限されています")
-        this.$router.push({name: "index"})
-        return true
-      }
+      // if (this.g_current_user.permit_tag_list.includes("ban") || this.$route.query.__nuxt_login_required_force === "ban") {
+      //   this.toast_ng("アカウントは利用を制限されています")
+      //   this.$router.push({name: "index"})
+      //   return true
+      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////

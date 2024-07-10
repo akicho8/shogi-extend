@@ -27,16 +27,16 @@
       .container
         .columns.is-centered
           .column
-            b-message(type="is-danger" :closable="false" v-if="record.permit_tag_list.includes('ban')")
-              | このアカウントの利用を制限しています
+            //- b-message(type="is-danger" :closable="false" v-if="record.permit_tag_list.includes('ban')")
+            //-   | このアカウントの利用を制限しています
 
             .has-text-centered
               .image
                 img.is-rounded.is-inline-block(:src="record.avatar_path")
-            .mt-4(v-if="twitter_key")
-              .has-text-weight-bold Twitter
-              a(:href="twitter_url" :target="target_default") @{{twitter_key}}
-            .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="record.description" v-html="$gs.auto_link(record.description)")
+            //- .mt-4(v-if="twitter_key")
+            //-   .has-text-weight-bold Twitter
+            //-   a(:href="twitter_url" :target="target_default") @{{twitter_key}}
+            //- .mt-4.box.description.has-background-white-ter.is-shadowless(v-if="record.description" v-html="$gs.auto_link(record.description)")
   DebugPre(v-if="development_p") {{record}}
 </template>
 
@@ -100,16 +100,16 @@ export default {
         return `${this.record.name}`
       }
     },
-    twitter_key() {
-      if (this.record) {
-        return this.record.twitter_key
-      }
-    },
-    twitter_url() {
-      if (this.twitter_key) {
-        return `https://twitter.com/${this.twitter_key}`
-      }
-    },
+    // twitter_key() {
+    //   if (this.record) {
+    //     return this.record.twitter_key
+    //   }
+    // },
+    // twitter_url() {
+    //   if (this.twitter_key) {
+    //     return `https://twitter.com/${this.twitter_key}`
+    //   }
+    // },
   },
 }
 </script>

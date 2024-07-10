@@ -21,8 +21,8 @@ export default {
       upload_file_info: null,   // inputタグでアップロードしたそのもの
       croped_image:     null,   // 切り取った画像
       new_name:         null,   // 変更した名前
-      new_description:  null,   // プロフィール
-      new_twitter_key:  null,   // Twitterアカウント
+      // new_description:  null,   // プロフィール
+      // new_twitter_key:  null,   // Twitterアカウント
     }
   },
   fetch() {
@@ -53,15 +53,15 @@ export default {
       this.croped_image      = null
 
       this.new_name        = this.g_current_user.name
-      this.new_description = this.g_current_user.description
-      this.new_twitter_key = this.g_current_user.twitter_key
+      // this.new_description = this.g_current_user.description
+      // this.new_twitter_key = this.g_current_user.twitter_key
 
       this.unwatch_func = this.$watch(() => [
         this.croped_image,
 
         this.new_name,
-        this.new_description,
-        this.new_twitter_key,
+        // this.new_description,
+        // this.new_twitter_key,
       ], () => this.changed_p = true, {deep: false})
     },
 

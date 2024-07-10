@@ -46,19 +46,20 @@ class AuthInfo < ApplicationRecord
   # 初めてTwitter経由ログインしたとき自己紹介が空だったらコピーする
   after_create do
     if meta_info
-      profile = user.profile
-      if v = meta_info.dig("info", "description")
-        if profile.description.blank?
-          profile.description = v
-        end
-      end
-      if provider == "twitter"
-        if v = meta_info.dig("info", "nickname")
-          if profile.twitter_key.blank?
-            profile.twitter_key = v
-          end
-        end
-      end
+      # profile = user.profile
+      # if v = meta_info.dig("info", "description")
+      #   if profile.description.blank?
+      #     profile.description = v
+      #   end
+      # end
+      # if provider == "twitter"
+      #   if v = meta_info.dig("info", "nickname")
+      #     if profile.twitter_key.blank?
+      #       profile.twitter_key = v
+      #     end
+      #   end
+      # end
+
       #
       # OmniauthCallbacksController で毎回ログイン時に設定するように変更したので不要
       #

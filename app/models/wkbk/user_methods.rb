@@ -128,7 +128,7 @@ module Wkbk
           "名前"               => name,
           "メールアドレス"     => email,
           "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
-          "Twitterアカウント"  => twitter_key,
+          # "Twitterアカウント"  => twitter_key,
           "最終ログイン日時"   => current_sign_in_at&.to_fs(:distance),
           "登録日時"           => created_at&.to_fs(:distance),
           "IP"                 => current_sign_in_ip,

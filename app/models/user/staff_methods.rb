@@ -40,8 +40,8 @@ class User
       permit_tag_list.include?("staff")
     end
 
-    def ban?
-      permit_tag_list.include?("ban")
-    end
+    # def ban?
+    #   permit_tag_list.include?("ban")
+    # end
   end
 end

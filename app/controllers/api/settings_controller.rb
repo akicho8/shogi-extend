@@ -13,8 +13,8 @@ module Api
 
       user.name = params[:name]
       user.name_input_at ||= Time.current
-      user.profile.description = params[:profile_description]
-      user.profile.twitter_key = params[:profile_twitter_key]
+      # user.profile.description = params[:profile_description]
+      # user.profile.twitter_key = params[:profile_twitter_key]
       user_save(user)
       if performed?
         return

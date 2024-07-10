@@ -33,8 +33,8 @@
           :race_key              => "種族",
         },
         profile: {
-          :description => "自己紹介",
-          :twitter_key => "Twitterアカウント",
+          # :description => "自己紹介",
+          # :twitter_key => "Twitterアカウント",
         },
       },
     },

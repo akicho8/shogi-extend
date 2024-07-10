@@ -7,15 +7,15 @@
   .control
     = form.email_field(:email, class: "input", required: true)
 
-= form.fields_for(:profile) do |form|
-  .field
-    = form.label(:twitter_key, class: "label")
-    .control
-      = form.text_field(:twitter_key, class: "input")
-  .field
-    = form.label(:description, class: "label")
-    .control
-      = form.text_area(:description, class: "textarea", rows: [form.object.description.to_s.lines.count, 4].max)
+/ = form.fields_for(:profile) do |form|
+/   .field
+/     = form.label(:twitter_key, class: "label")
+/     .control
+/       = form.text_field(:twitter_key, class: "input")
+/   .field
+/     = form.label(:description, class: "label")
+/     .control
+/       = form.text_area(:description, class: "textarea", rows: [form.object.description.to_s.lines.count, 4].max)
 
 .field
   = form.label(:avatar, class: "label")

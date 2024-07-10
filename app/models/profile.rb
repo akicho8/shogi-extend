@@ -21,18 +21,18 @@
 class Profile < ApplicationRecord
   belongs_to :user
 
-  before_validation do
-    self.description = description.to_s.strip
-    self.twitter_key = twitter_key.to_s.scan(/\w+/).last || ""
-  end
+  # before_validation do
+  #   self.description = description.to_s.strip
+  #   self.twitter_key = twitter_key.to_s.scan(/\w+/).last || ""
+  # end
 
-  with_options allow_blank: true do
-    validates :description, length: { maximum: 512 }
-  end
+  # with_options allow_blank: true do
+  #   validates :description, length: { maximum: 512 }
+  # end
 
-  def twitter_url
-    if v = twitter_key.presence
-      "https://twitter.com/#{v}"
-    end
-  end
+  # def twitter_url
+  #   if v = twitter_key.presence
+  #     "https://twitter.com/#{v}"
+  #   end
+  # end
 end

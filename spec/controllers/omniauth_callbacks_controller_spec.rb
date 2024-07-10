@@ -78,9 +78,9 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       assert { record.email.match?(/@localhost/) }
     end
 
-    it "ツイッターアカウント" do
-      assert { record.twitter_key == "nickname_is_twitter_account" }
-    end
+    # it "ツイッターアカウント" do
+    #   assert { record.twitter_key == "nickname_is_twitter_account" }
+    # end
 
     it "どっかにリダイレクトする" do
       assert { response.status == 302 }
@@ -122,9 +122,9 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       assert { record.email == "alice@localhost" }
     end
 
-    it "ツイッターアカウント" do
-      assert { record.twitter_key.blank? }
-    end
+    # it "ツイッターアカウント" do
+    #   assert { record.twitter_key.blank? }
+    # end
 
     it "どっかにリダイレクトする" do
       assert { response.status == 302 }
