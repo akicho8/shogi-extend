@@ -6,11 +6,11 @@ module QuickScript
 
       def call
         content = []
-        if params[:message]
-          content << h.simple_format(params[:message], :class => "block")
+        if v = params[:message]
+          content << h.simple_format(v, :class => "block")
         end
-        if params[:return_to]
-          content << tag.p(:class => "block") { tag.a("戻る", :href => params[:return_to], :class => "button is-primary") }
+        if v = params[:return_to]
+          content << tag.p(:class => "block") { tag.a("進む", :href => v, :class => "button is-primary") }
         end
         tag.div { content.join.html_safe }
       end
