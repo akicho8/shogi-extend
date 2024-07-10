@@ -5,6 +5,11 @@ class ApplicationRecord < ActiveRecord::Base
     def setup(options = {})
     end
 
+    # rails r 'Swars::SearchLog.old_only(100.days).cleaner.call'
+    def cleaner(options = {})
+      GeneralCleaner.new(options.merge(scope: all))
+    end
+
     def han(*args)
       human_attribute_name(*args)
     end

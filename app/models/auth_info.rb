@@ -3,15 +3,16 @@
 #
 # Auth info (auth_infos as AuthInfo)
 #
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | name      | desc         | type        | opts        | refs       | index |
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | id        | ID           | integer(8)  | NOT NULL PK |            |       |
-# | user_id   | User         | integer(8)  | NOT NULL    | => User#id | B     |
-# | provider  | Provider     | string(255) | NOT NULL    |            | A!    |
-# | uid       | Uid          | string(255) | NOT NULL    |            | A!    |
-# | meta_info | 棋譜ヘッダー | text(65535) |             |            |       |
-# |-----------+--------------+-------------+-------------+------------+-------|
+# |------------+--------------+----------------+-------------+------------+-------|
+# | name       | desc         | type           | opts        | refs       | index |
+# |------------+--------------+----------------+-------------+------------+-------|
+# | id         | ID           | integer(8)     | NOT NULL PK |            |       |
+# | user_id    | User         | integer(8)     | NOT NULL    | => User#id | B     |
+# | provider   | Provider     | string(255)    | NOT NULL    |            | A!    |
+# | uid        | Uid          | string(255)    | NOT NULL    |            | A!    |
+# | meta_info  | 棋譜ヘッダー | text(16777215) |             |            |       |
+# | meta_info2 | Meta info2   | text(65535)    |             |            |       |
+# |------------+--------------+----------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -30,7 +31,7 @@ class AuthInfo < ApplicationRecord
       self.provider  ||= auth.provider
       self.uid       ||= auth.uid
       self.meta_info ||= auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
-      self.meta_info2 ||= auth
+      self.meta_info2 ||= auth # auth.info だけあれば充分だが調査用にとっておく
     end
   end
 
@@ -43,38 +44,38 @@ class AuthInfo < ApplicationRecord
     validates :uid, uniqueness: { scope: :provider, case_sensitive: true, message: "が重複しています。すでに他のアカウントと連携しているようです。いったんログアウトしてそのアカウントを使うか、そのアカウントとの連携を解除してからこちらと連携してみてください" }
   end
 
-  # 初めてTwitter経由ログインしたとき自己紹介が空だったらコピーする
-  after_create do
-    if meta_info
-      # profile = user.profile
-      # if v = meta_info.dig("info", "description")
-      #   if profile.description.blank?
-      #     profile.description = v
-      #   end
-      # end
-      # if provider == "twitter"
-      #   if v = meta_info.dig("info", "nickname")
-      #     if profile.twitter_key.blank?
-      #       profile.twitter_key = v
-      #     end
-      #   end
-      # end
+  # # 初めてTwitter経由ログインしたとき自己紹介が空だったらコピーする
+  # after_create do
+  #   if meta_info
+  #     # profile = user.profile
+  #     # if v = meta_info.dig("info", "description")
+  #     #   if profile.description.blank?
+  #     #     profile.description = v
+  #     #   end
+  #     # end
+  #     # if provider == "twitter"
+  #     #   if v = meta_info.dig("info", "nickname")
+  #     #     if profile.twitter_key.blank?
+  #     #       profile.twitter_key = v
+  #     #     end
+  #     #   end
+  #     # end
+  #
+  #     #
+  #     # OmniauthCallbacksController で毎回ログイン時に設定するように変更したので不要
+  #     #
+  #     # if v = meta_info.dig("info", "email")
+  #     #   if user.email_invalid?
+  #     #     user.email = v
+  #     #     user.skip_reconfirmation! # email に設定した内容が unconfirmed_email に退避されるのを防ぐ
+  #     #     user.save!
+  #     #   end
+  #     # end
+  #   end
+  # end
 
-      #
-      # OmniauthCallbacksController で毎回ログイン時に設定するように変更したので不要
-      #
-      # if v = meta_info.dig("info", "email")
-      #   if user.email_invalid?
-      #     user.email = v
-      #     user.skip_reconfirmation! # email に設定した内容が unconfirmed_email に退避されるのを防ぐ
-      #     user.save!
-      #   end
-      # end
-    end
+  def app_logging
+    AppLog.important(subject: "[SNS経由登録][#{provider}] #{user.name.inspect} (AuthInfo.create!)", body: [user.info.to_t, meta_info2.pretty_inspect].join("\n"))
   end
-
-  after_create_commit do
-    UserMailer.user_created(user).deliver_later
-  end
+  after_create_commit :app_logging
 end
-# ~> -:20:in `<main>': uninitialized constant ApplicationRecord (NameError)

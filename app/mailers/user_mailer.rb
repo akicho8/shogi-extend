@@ -1,34 +1,4 @@
 class UserMailer < ApplicationMailer
-  # 管理者へ通知
-  # UserMailer.user_created(User.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/user_created
-  def user_created(user)
-    attrs = {
-      :id             => user.id,
-      :name           => user.name,
-      :email          => user.email,
-      :provider_names => user.provider_names,
-      # :twitter_url    => user.twitter_url,
-      :avatar_url     => user.avatar_url,
-    }
-
-    body = []
-    body << attrs.to_t(truncate: 40)
-    body << user.info.to_t
-    body = body.join("\n")
-    body = body_normalize(body)
-
-    subject = []
-    subject << "#{user.name}さんが#{user.provider_names.join(" or ")}で登録されました"
-    subject = subject.join
-    subject = app_name_prepend(subject)
-
-    params = { subject: subject, body: body, fixed: true }
-    params = params_normalize_if_fixed(params)
-
-    mail(params)
-  end
-
   # 棋譜取得完了
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify

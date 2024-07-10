@@ -16,10 +16,29 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-module Swars
-  class SearchLog < ApplicationRecord
-    belongs_to :user, counter_cache: true, touch: :last_reception_at
+require "rails_helper"
 
-    scope :old_only, -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) }
+module Swars
+  RSpec.describe SearchLog, type: :model, swars_spec: true do
+    it "古いレコードを削除する" do
+      user = User.create!
+      user.search_logs.create!
+      assert { SearchLog.count == 1 }
+      SearchLog.old_only(0.days).cleaner(execute: true).call
+      assert { SearchLog.count == 0 }
+    end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::SearchLog
+# >> 1999-12-31T15:00:00.000Z pid=97485 tid=1zqd INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >>   .old_only
+# >> 
+# >> Top 1 slowest examples (0.32399 seconds, 13.6% of total time):
+# >>   Swars::SearchLog .old_only
+# >>     0.32399 seconds -:5
+# >> 
+# >> Finished in 2.39 seconds (files took 1.99 seconds to load)
+# >> 1 example, 0 failures
+# >> 

@@ -11,8 +11,8 @@ Swars::Battle.limit(nil).xmode_only("指導").count         # => 17401
 Swars::Battle.limit(nil).xmode_except("指導").count       # => 1780221
 Swars::Battle.limit(nil).coaching_only.count              # => 17401
 Swars::Battle.limit(nil).coaching_except.count            # => 1780221
-Swars::Battle.scope_for_cleaner1.count                    # => 1674442
-Swars::Battle.scope_for_cleaner2.count                    # => 46101
+Swars::Battle.drop_scope1.count                    # => 1674442
+Swars::Battle.drop_scope2.count                    # => 46101
 # >>   Swars::Battle Count (245.9ms)  SELECT COUNT(*) FROM `swars_battles` WHERE `swars_battles`.`accessed_at` <= '2024-05-17 06:36:42'
 # >>   Swars::Grade Load (0.3ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`key` = '十段' ORDER BY `swars_grades`.`priority` ASC LIMIT 1
 # >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'

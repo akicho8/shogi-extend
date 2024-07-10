@@ -6,6 +6,7 @@ class GeneralCleaner
       :execute    => false,
       :time_limit => Rails.env.local? ? nil : 4.hours, # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
       :verbose    => false,
+      :batch_size => 1000,
     }.merge(options)
   end
 
@@ -16,7 +17,7 @@ class GeneralCleaner
 
     @free_changes = FreeSpace.new.call do
       if scope.respond_to?(:find_in_batches)
-        scope.find_in_batches(batch_size: 1000) do |records|
+        scope.find_in_batches(batch_size: @options[:batch_size]) do |records|
           one_group(records)
           rows << @group
         end

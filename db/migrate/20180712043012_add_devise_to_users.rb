@@ -9,7 +9,6 @@
 # | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
 # | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
 # | name_input_at          | Name input at              | datetime    |                     |      |       |
 # | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |

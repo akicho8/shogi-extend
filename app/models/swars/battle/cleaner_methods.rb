@@ -62,7 +62,7 @@ module Swars
         }
 
         # 一般ユーザーの対局は50日後に消す
-        scope :scope_for_cleaner1, -> (options = {}) {
+        scope :drop_scope1, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => true,
@@ -73,7 +73,7 @@ module Swars
         }
 
         # VIPユーザーの対局は100日後に消す
-        scope :scope_for_cleaner2, -> (options = {}) {
+        scope :drop_scope2, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => true,
@@ -86,19 +86,14 @@ module Swars
       end
 
       class_methods do
-        # rails r 'Swars::Battle.cleaner.call'
-        def cleaner(options = {})
-          GeneralCleaner.new(options.merge(scope: all))
-        end
-
         # rails r 'Swars::Battle.cleaner1.call'
         def cleaner1(options = {})
-          scope_for_cleaner1(options).cleaner({subject: "一般"}.merge(options))
+          drop_scope1(options).cleaner({subject: "一般"}.merge(options))
         end
 
         # rails r 'Swars::Battle.cleaner2.call'
         def cleaner2(options = {})
-          scope_for_cleaner2(options).cleaner({subject: "VIP"}.merge(options))
+          drop_scope2(options).cleaner({subject: "VIP"}.merge(options))
         end
       end
     end

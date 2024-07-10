@@ -9,20 +9,20 @@
 # | id                    | ID                    | integer(8) | NOT NULL PK |                   |            |
 # | battle_id             | 対局共通情報          | integer(8) | NOT NULL    |                   | A! B! C! D |
 # | user_id               | ユーザー              | integer(8) | NOT NULL    | => User#id        | A! E       |
-# | op_user_id            | Op user               | integer(8) |             | => Swars::User#id | C! F       |
-# | grade_id              | 棋力                  | integer(8) | NOT NULL    |                   | G          |
-# | position              | 順序                  | integer(4) |             |                   | H          |
-# | grade_diff            | Grade diff            | integer(4) | NOT NULL    |                   |            |
+# | grade_id              | 棋力                  | integer(8) | NOT NULL    |                   | F          |
+# | position              | 順序                  | integer(4) |             |                   | G          |
 # | created_at            | 作成日時              | datetime   | NOT NULL    |                   |            |
 # | updated_at            | 更新日時              | datetime   | NOT NULL    |                   |            |
+# | grade_diff            | Grade diff            | integer(4) | NOT NULL    |                   | H          |
+# | think_max             | Think max             | integer(4) |             |                   |            |
+# | op_user_id            | Op user               | integer(8) |             | => Swars::User#id | C! I       |
+# | think_last            | Think last            | integer(4) |             |                   |            |
 # | think_all_avg         | Think all avg         | integer(4) |             |                   |            |
 # | think_end_avg         | Think end avg         | integer(4) |             |                   |            |
-# | think_last            | Think last            | integer(4) |             |                   |            |
-# | think_max             | Think max             | integer(4) |             |                   |            |
 # | ai_drop_total         | Ai drop total         | integer(4) |             |                   |            |
-# | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | I          |
-# | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! J       |
-# | style_id              | Style                 | integer(8) |             |                   | K          |
+# | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | J          |
+# | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! K       |
+# | style_id              | Style                 | integer(8) |             |                   | L          |
 # | ek_score_without_cond | Ek score without cond | integer(4) |             |                   |            |
 # | ek_score_with_cond    | Ek score with cond    | integer(4) |             |                   |            |
 # | ai_wave_count         | Ai wave count         | integer(4) |             |                   |            |

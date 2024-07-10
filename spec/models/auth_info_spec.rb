@@ -3,15 +3,16 @@
 #
 # Auth info (auth_infos as AuthInfo)
 #
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | name      | desc         | type        | opts        | refs       | index |
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | id        | ID           | integer(8)  | NOT NULL PK |            |       |
-# | user_id   | User         | integer(8)  | NOT NULL    | => User#id | B     |
-# | provider  | Provider     | string(255) | NOT NULL    |            | A!    |
-# | uid       | Uid          | string(255) | NOT NULL    |            | A!    |
-# | meta_info | 棋譜ヘッダー | text(65535) |             |            |       |
-# |-----------+--------------+-------------+-------------+------------+-------|
+# |------------+--------------+----------------+-------------+------------+-------|
+# | name       | desc         | type           | opts        | refs       | index |
+# |------------+--------------+----------------+-------------+------------+-------|
+# | id         | ID           | integer(8)     | NOT NULL PK |            |       |
+# | user_id    | User         | integer(8)     | NOT NULL    | => User#id | B     |
+# | provider   | Provider     | string(255)    | NOT NULL    |            | A!    |
+# | uid        | Uid          | string(255)    | NOT NULL    |            | A!    |
+# | meta_info  | 棋譜ヘッダー | text(16777215) |             |            |       |
+# | meta_info2 | Meta info2   | text(65535)    |             |            |       |
+# |------------+--------------+----------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile

@@ -49,11 +49,14 @@ class User
         validates :name, length: 1..64
       end
 
-      after_create_commit do
-        if Rails.env.production? || Rails.env.staging?
-          AppLog.info(subject: "ユーザー登録", body: attributes.slice("id", "name", "email"))
-        end
+      if Rails.env.local?
+      else
+        after_create_commit :app_logging
       end
+    end
+
+    def app_logging
+      AppLog.important(subject: "[ユーザー新規登録] #{name.inspect} (User.create!)", body: info.to_t)
     end
   end
 end
