@@ -1,5 +1,13 @@
 {
   ja: {
+    # for ActiveSupport
+    support: {
+      array: {
+        words_connector: ", ",       # 配列要素を連結するための区切り文字
+        two_words_connector: " と ", # 配列の最後の2つの要素を連結するための区切り文字
+        last_word_connector: "、",   # 配列の最後の要素を連結するための区切り文字
+      },
+    },
     errors: {
       template: {
         header: {
