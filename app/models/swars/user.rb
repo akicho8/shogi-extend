@@ -90,7 +90,7 @@ module Swars
     end
 
     def stat(params = {})
-      User::Stat::Main.new(self, params)
+      @stat ||= User::Stat::Main.new(self, params)
     end
 
     def to_h
