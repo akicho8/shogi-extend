@@ -83,7 +83,6 @@ group :development, :test do
   gem "capistrano-yarn"
   gem "capistrano-rails-console"
   gem "capistrano-maintenance", require: false
-  gem "slackistrano"            # for cap production slack:deploy:test
 
   gem "rails-controller-testing" # controller で assigns を使うため
 

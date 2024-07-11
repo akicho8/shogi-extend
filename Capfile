@@ -33,7 +33,6 @@ require "capistrano/yarn"
 
 require "whenever/capistrano"
 require "table_format"
-# require "slackistrano/capistrano"
 require "capistrano/maintenance"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
