@@ -1,5 +1,5 @@
 set :slackistrano, -> {
-  deploy_slack_webhook_url = YAML.load(`rails credentials:show`).fetch(fetch(:stage).to_s)["deploy_slack_webhook_url"]
+  deploy_slack_webhook_url = YAML.unsafe_load(`rails credentials:show`).dig("devise_and_slack", fetch(:stage).to_s, "deploy_slack_webhook_url")
   tp({deploy_slack_webhook_url: deploy_slack_webhook_url})
   {
     # channel: "#random",         # ← 効いてない

@@ -268,11 +268,9 @@ Devise.setup do |config|
     # https://medium.com/@salmaeng71/devise-authentication-guide-with-github-omniauth-for-rails-application-220aa52d5b82
     {key: :github,   auth_key: nil,            args: { scope: ["user", "email"] }},
   ].each do |e|
-    if info = Rails.application.credentials[Rails.env.to_sym]
-      if v = info[e[:key]]
-        config.omniauth((e[:auth_key] || e[:key]), v[:key], v[:secret], e[:args])
-      end
-    end
+    info = Rails.application.credentials.config.dig(:devise_and_slack, Rails.env.to_sym)
+    v = info.fetch(e.fetch(:key))
+    config.omniauth((e[:auth_key] || e[:key]), v[:key], v[:secret], e[:args])
   end
 
   # ==> Warden configuration
