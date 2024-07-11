@@ -12,5 +12,12 @@ module QuickScript
     def link_path
       "/bin/#{key}"
     end
+
+    def name
+      if admin_only
+        return "*#{super}*"
+      end
+      super
+    end
   end
 end
