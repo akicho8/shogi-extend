@@ -1,3 +1,11 @@
+# |----------------------------------+----------------------------|
+# | server side                      | client side                |
+# |----------------------------------+----------------------------|
+# | redirect_to url                  | this.$router.push(url)     |
+# | redirect_to url, hard_jump: true | location.href = url        |
+# | redirect_to url, tab_open: true  | window.open(url, "_blank") |
+# |----------------------------------+----------------------------|
+
 module QuickScript
   concern :RedirectMod do
     def as_json(*)

@@ -17,7 +17,7 @@ export default function ({ $axios, redirect, error: nuxtError }) {
   $axios.onRequest(config => {
     // $axios.setHeader を使うと server のときしか値が入らない(謎)
     // ヘッダーキーにアンダースコアを使うと何も言わずに削除されてめちゃくちゃはまる(怒)
-    config.headers.common["AxiosRequestFrom"] = process.client ? "client" : "server"
+    config.headers.common["AxiosProcessType"] = process.client ? "client" : "server"
   })
 
   $axios.onError(error => {

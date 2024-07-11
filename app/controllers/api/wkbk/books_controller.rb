@@ -51,7 +51,7 @@ module Api
         show_can!(book)
         if force_access?
         else
-          if axios_request_from_client? # 2度呼ばれるため仕方なく
+          if axios_process_client? # 2度呼ばれるため仕方なく
             book.access_logs.create!(user: current_user)
           end
         end

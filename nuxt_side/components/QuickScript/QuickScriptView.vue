@@ -1,5 +1,6 @@
 <template lang="pug">
 .QuickScriptView
+  //- | isLoading: {{$nuxt.$loading}}
   template(v-if="development_p || true")
     b-loading(:active="$fetchState.pending")
   template(v-if="params")
@@ -128,9 +129,10 @@ export default {
     "$route.query": "$fetch",
   },
 
+  // https://qiita.com/crml1206/items/24bf29bc36566f4cc68d
   // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
   // しかし http://localhost:4000/bin/dev に SSR でアクセスできなくなる
-  fetchOnServer: true,
+  fetchOnServer: false,
 
   // async fetch({ $axios, error }) {
   //   try {
@@ -207,10 +209,13 @@ export default {
         // CSV にリダイレクトした場合などは現在のページから遷移しないため redirect_to が入っているからといって return してはいけない。
         const redirect_to = params["redirect_to"]
         if (redirect_to) {
+          const to = redirect_to["to"]
           if (redirect_to["hard_jump"]) {
-            window.location.href = redirect_to["to"]
+            window.location.href = to
+          } else if (redirect_to["tab_open"]) {
+            this.other_window_open(to)
           } else {
-            this.$router.push(redirect_to["to"])
+            this.$router.push(to)
           }
           // ここで return するべからず
         }
@@ -264,10 +269,12 @@ export default {
         params[this.params.params_add_submit_key] = true
       }
       if (this.params.get_then_axios_get) {
+        // URL を書き換えずにこっそり GET したい場合
         this.$sound.play_click()
         const new_params = this.new_params_create(params)
         this.$axios.$get(this.current_api_path, {params: new_params}).then(params => this.params_receive(params))
       } else {
+        // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
         this.router_push(params)
       }
     },

@@ -12,6 +12,7 @@ module QuickScript
     prepend HelperMod
     prepend AutoexecMod
     prepend OrderMod            # for index_script.rb
+    prepend ProcessTypeMod
 
     attr_reader :params
 

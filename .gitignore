@@ -47,4 +47,4 @@ yarn-debug.log*
 
 /app/models/swars/agent/fetched_html/*.html
 
-/config/google_auth_json_files
+/config/google_account_json

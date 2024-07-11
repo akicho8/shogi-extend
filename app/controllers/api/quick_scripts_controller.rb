@@ -5,7 +5,12 @@ module Api
     }
 
     def show
-      QuickScript::Main.fetch(params.to_unsafe_h.symbolize_keys, admin_user: admin_user, current_user: current_user, controller: self).render_all
+      QuickScript::Main.fetch(params.to_unsafe_h.symbolize_keys, {
+          :admin_user         => admin_user,
+          :current_user       => current_user,
+          :controller         => self,
+          :axios_process_type => axios_process_type,
+        }).render_all
     end
   end
 end

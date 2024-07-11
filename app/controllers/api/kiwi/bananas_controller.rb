@@ -50,7 +50,7 @@ module Api
         retv[:config] = ::Kiwi::Config
         banana = ::Kiwi::Banana.find_by!(key: params[:banana_key])
         show_can!(banana)
-        if axios_request_from_client? # 2度呼ばれるため仕方なく
+        if axios_process_client? # 2度呼ばれるため仕方なく
           banana.access_logs.create!(user: current_user)
         end
         v = banana.as_json(::Kiwi::Banana.json_struct_for_show)
