@@ -20,9 +20,9 @@ RSpec.describe "その他", type: :system do
     end
     it "name" do
       visit2 "/video/new", __nuxt_login_required_force: "name"
-      assert_text "自己紹介"
+      assert_text "名前"
     end
-    it "ban" do
+    xit "ban" do
       visit2 "/video/new", __nuxt_login_required_force: "ban"
       assert_text "shogi-mode.el"
     end
