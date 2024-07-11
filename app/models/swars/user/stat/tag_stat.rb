@@ -40,7 +40,9 @@ module Swars
 
       # 使用率
       def use_rate_for(key)
-        count_by(key).fdiv(ids_count)
+        if ids_count.positive?
+          count_by(key).fdiv(ids_count)
+        end
       end
 
       ################################################################################

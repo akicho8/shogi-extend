@@ -54,7 +54,7 @@ module Swars
         {
           :user         => { key: user.key, ban_at: user.ban_at }, # 対象者情報
           :rule_items   => grade_by_rules_stat.to_chart,           # ルール別最高段位
-          :judge_counts => total_judge_counts,                     # 勝ち負け数
+          :judge_counts => total_judge_stat.counts_hash,                # 勝ち負け数
           :badge_items  => badge_stat.as_json.shuffle,             # バッジ一覧
           :judge_keys   => recent_outcome_list_stat.to_a,          # 直近勝敗リスト
         }
@@ -79,9 +79,9 @@ module Swars
 
       ################################################################################
 
-      def total_judge_counts
-        @total_judge_counts ||= ids_scope.total_judge_counts
-      end
+      # def total_judge_counts
+      #   @total_judge_counts ||= ids_scope.total_judge_counts
+      # end
 
       ################################################################################
 
@@ -126,6 +126,10 @@ module Swars
 
       def xmode_stat
         @xmode_stat ||= XmodeStat.new(self)
+      end
+
+      def total_judge_stat
+        @total_judge_stat ||= TotalJudgeStat.new(self)
       end
 
       def rarity_stat

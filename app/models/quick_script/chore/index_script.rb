@@ -13,12 +13,12 @@ module QuickScript
           {
             "名前" => { _nuxt_link: { name: e.short_title, to: { path: e.link_path }, }, },
             "内容" => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
-            "種類" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
+            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
           }
         end
 
         if qs_group_infos.one?
-          rows = rows.collect { |e| e.except("種類") }
+          rows = rows.collect { |e| e.except("グループ") }
         end
 
         simple_table(rows)

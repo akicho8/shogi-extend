@@ -52,8 +52,10 @@ module Swars
 
       def final_penalty
         @final_penalty ||= yield_self do
-          PenaltyInfo.sum do |e|
-            e.weight * (@stat.instance_eval(&e.x_count) || 0)
+          Rails.logger.tagged("final_penalty") do
+            PenaltyInfo.sum do |e|
+              e.weight * (@stat.instance_eval(&e.x_count) || 0)
+            end
           end
         end
       end

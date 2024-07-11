@@ -17,7 +17,7 @@ module QuickScript
             :placeholder => default_user_keys,
           },
           {
-            :label       => "並び",
+            :label       => "順番",
             :key         => :order_by,
             :type        => :radio_button,
             :elems       => {"そのまま" => "original", "最高段位" => "grade", "行動規範" => "gentleman"},
@@ -114,48 +114,52 @@ module QuickScript
           end
         else
           s = user_scope
+          s = s.includes(:grade)
 
           case current_order_by
           when "grade"
             s = s.joins(:grade).order(::Swars::Grade.arel_table[:priority].asc)
           when "original"
             s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
+          when "gentleman"
+            s = s.sort_by { |e| -(e.stat.gentleman_stat.final_score || -Float::INFINITY) }
           end
 
-          s = s.includes(:grade)
-
           rows = s.collect do |e|
-            {}.tap do |row|
-              row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
-              row["最高"] = e.grade.name
-              e.stat.grade_by_rules_stat.ruleships.each do |e|
-                row[e[:rule_info].name] = e[:grade_info].try { name } || ""
-              end
+            Rails.logger.tagged(e.key) do
+              {}.tap do |row|
+                row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-search", query: { query: e.user_key } }, }, }
 
-              row["規範"] = e.stat.gentleman_stat.final_score.try { "#{floor} 点" }
+                if Rails.env.local?
+                  row["情報"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+                end
 
-              row["居飛車"]   = e.stat.tag_stat.use_rate_for(:"居飛車").then { |e| "%.0f %%" % [e * 100] }
-              if Rails.env.local?
-                row["振り飛車"] = e.stat.tag_stat.use_rate_for(:"振り飛車").then { |e| "%.0f %%" % [e * 100] }
-              end
+                row["最高"] = e.grade.name
+                e.stat.grade_by_rules_stat.ruleships.each do |e|
+                  row[e[:rule_info].name] = e[:grade_info].try { name } || ""
+                end
 
-              row["主戦法"] = e.stat.simple_matrix_stat.my_attack_tag.try { name }
-              row["主囲い"] = e.stat.simple_matrix_stat.my_defense_tag.try { name }
+                row["勝率"] = e.stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
 
-              row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+                row["規範"] = e.stat.gentleman_stat.final_score.try { "#{floor} 点" }
 
-              if Rails.env.local?
-                row["最高段位(index)"] = e.grade.pure_info.priority
+                row["居飛車"]   = e.stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
+                row["振り飛車"] = e.stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
+
+                row["主戦法"] = e.stat.simple_matrix_stat.my_attack_tag.try { name }
+                row["主囲い"] = e.stat.simple_matrix_stat.my_defense_tag.try { name }
+
+                row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+
+                if Rails.env.local?
+                  row["最高段位(index)"] = e.grade.pure_info.priority
+                end
               end
             end
           end
-
-          if current_order_by == "gentleman"
-            rows = rows.sort_by { |e| -(e["行動規範"] || -Float::INFINITY) }
-          end
         end
 
-        simple_table(rows)
+        simple_table(rows, always_table: true)
       end
 
       def current_user_keys

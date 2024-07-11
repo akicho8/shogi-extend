@@ -5,7 +5,7 @@ module Swars
     class JudgeFinalStat < Base
       delegate *[
         :ids_scope,
-        :total_judge_counts,
+        :total_judge_stat,
       ], to: :stat
 
       # 特定の負け方を究めた率
@@ -28,7 +28,7 @@ module Swars
       # Swars::User["SugarHuuko"].stat.judge_final_stat.ratio_by(:win, :TORYO) # => 0.6923076923076923
       def ratio_by(judge_key, final_key)
         if count = count_by(judge_key, final_key)
-          if denominator = total_judge_counts[judge_key]
+          if denominator = total_judge_stat.counts_hash[judge_key]
             count.fdiv(denominator)
           end
         end

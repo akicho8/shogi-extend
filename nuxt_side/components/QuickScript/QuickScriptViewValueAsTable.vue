@@ -52,9 +52,11 @@ export default {
           _.first(this.value.rows),
           _.last(this.value.rows),
         ]
-        const numeric_like = av.every(row => {
+        const numeric_like = av.every(row => { // every = all?
           const v = row[column_name]
           if (false) {
+          } else if (v === "" || v === null) {
+            return true
           } else if (typeof v === 'number') {
             return true
           } else if (typeof v === 'string') {

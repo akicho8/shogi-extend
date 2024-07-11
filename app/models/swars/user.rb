@@ -89,8 +89,13 @@ module Swars
       @key_object ||= UserKey[key]
     end
 
-    def stat(params = {})
-      @stat ||= User::Stat::Main.new(self, params)
+    # 引数があるけどキャッシュするので注意
+    def stat(...)
+      @stat ||= stat_without_cache(...)
+    end
+
+    def stat_without_cache(params = {})
+      User::Stat::Main.new(self, params)
     end
 
     def to_h

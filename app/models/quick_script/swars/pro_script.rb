@@ -5,7 +5,8 @@ module QuickScript
       self.description = "プロ棋士のウォーズの段位をまとめて表示する"
 
       def call
-        redirect_to UserScript.link_path + "?" + { user_keys: ::Swars::User::Vip.group(:pro).sort * " " }.to_query
+        query = { order_by: :grade, user_keys: ::Swars::User::Vip.group(:pro).sort * " " }
+        redirect_to UserScript.link_path + "?" + query.to_query
       end
     end
   end
