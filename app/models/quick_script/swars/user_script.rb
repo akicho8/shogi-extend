@@ -122,7 +122,7 @@ module QuickScript
           when "original"
             s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
           when "gentleman"
-            s = s.sort_by { |e| -(e.stat.gentleman_stat.final_score || -Float::INFINITY) }
+            s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
           end
 
           rows = s.collect do |e|
@@ -135,19 +135,19 @@ module QuickScript
                 end
 
                 row["最高"] = e.grade.name
-                e.stat.grade_by_rules_stat.ruleships.each do |e|
+                e.cached_stat.grade_by_rules_stat.ruleships.each do |e|
                   row[e[:rule_info].name] = e[:grade_info].try { name } || ""
                 end
 
-                row["勝率"] = e.stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
+                row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
 
-                row["規範"] = e.stat.gentleman_stat.final_score.try { "#{floor} 点" }
+                row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
 
-                row["居飛車"]   = e.stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
-                row["振り飛車"] = e.stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
+                row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
+                row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
 
-                row["主戦法"] = e.stat.simple_matrix_stat.my_attack_tag.try { name }
-                row["主囲い"] = e.stat.simple_matrix_stat.my_defense_tag.try { name }
+                row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
+                row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
 
                 row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
 

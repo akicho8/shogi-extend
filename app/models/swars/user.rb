@@ -90,12 +90,12 @@ module Swars
     end
 
     # 引数があるけどキャッシュするので注意
-    def stat(...)
-      @stat ||= stat_without_cache(...)
+    def cached_stat(...)
+      @cached_stat ||= stat_without_cache(...)
     end
 
-    def stat_without_cache(params = {})
-      User::Stat::Main.new(self, params)
+    def stat(...)
+      User::Stat::Main.new(self, ...)
     end
 
     def to_h
