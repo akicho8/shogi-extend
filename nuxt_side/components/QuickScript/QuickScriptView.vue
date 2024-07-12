@@ -5,10 +5,10 @@
     div standby: {{!$fetchState.pending}}
 
   template(v-if="development_p || true")
-    b-loading(:active="$fetchState.pending || g_loading_p")
+    b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
 
   template(v-if="params")
-    MainNavbar(wrapper-class="container is-fluid")
+    MainNavbar(wrapper-class="container is-fluid" v-if="params.navibar_show")
       template(slot="brand")
         template(v-if="$route.path === '/bin'")
           // レベル1: サイトトップまで上がる

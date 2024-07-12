@@ -1,5 +1,5 @@
 module QuickScript
-  concern :RescueMod do
+  concern :ExceptionRescueMod do
     if Rails.env.local?
       def safe_call
         begin

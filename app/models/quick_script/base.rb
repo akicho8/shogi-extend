@@ -5,14 +5,15 @@ module QuickScript
     prepend LoginUserMod
     prepend ControllerMod
     prepend ThrottleMod
-    prepend RescueMod
+    prepend ExceptionRescueMod  # 例外を捕捉して表示する
     prepend FlashMod
     prepend MetaMod
     prepend RedirectMod
     prepend HelperMod
     prepend AutoexecMod
     prepend OrderMod            # for index_script.rb
-    prepend ProcessTypeMod
+    prepend ProcessTypeMod      # process.client か process.server のどちらで呼ばれたか把握する
+    prepend LayoutMod           # MainNavbar の表示管理など
 
     attr_reader :params
 

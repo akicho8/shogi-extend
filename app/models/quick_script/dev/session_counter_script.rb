@@ -2,7 +2,7 @@ module QuickScript
   module Dev
     class SessionCounterScript < Base
       self.title = "セッションカウンタ"
-      self.description = "連打防止機能付き"
+      self.description = "Redis を使って内部で連打を防止する"
       self.form_method = :get
       self.params_add_submit_key = :exec
       self.router_push_failed_then_fetch = true

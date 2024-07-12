@@ -6,6 +6,7 @@ module QuickScript
       class_attribute :params_add_submit_key,         default: nil    # GETボタンのとき params に追加したいキー
       class_attribute :get_then_axios_get,            default: false  # GETボタンを押したとき axios だけで get するか？  (連打可能になる)
       class_attribute :router_push_failed_then_fetch, default: false  # URL引数に変化がなくてもGETボタンを作動させるか？
+      class_attribute :button_click_loading,          default: false  # axios実行中にクルクル画面で連打を防止するか？
     end
 
     def as_json(*)
@@ -15,6 +16,7 @@ module QuickScript
           :params_add_submit_key         => params_add_submit_key,
           :get_then_axios_get            => get_then_axios_get,
           :router_push_failed_then_fetch => router_push_failed_then_fetch,
+          :button_click_loading          => button_click_loading,
           :form_parts                    => form_parts,
         })
     end
