@@ -50,8 +50,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_300051) do
 
   create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "provider", null: false
-    t.string "uid", null: false
+    t.string "provider", null: false, comment: "何経由でログインしたか"
+    t.string "uid", null: false, comment: "長い内部ID(providerとペアではユニーク)"
     t.text "meta_info", comment: "JSON形式での保存用"
     t.index ["provider", "uid"], name: "index_auth_infos_on_provider_and_uid", unique: true
     t.index ["user_id"], name: "index_auth_infos_on_user_id"
