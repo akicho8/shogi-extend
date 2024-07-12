@@ -1,9 +1,10 @@
 module QuickScript
   concern :MetaMod do
     prepended do
-      class_attribute :title, default: nil
-      class_attribute :description, default: nil
-      class_attribute :og_image_key, default: nil
+      class_attribute :title,                 default: nil
+      class_attribute :description,           default: nil
+      class_attribute :og_image_key,          default: nil
+      class_attribute :twitter_card_is_small, default: true
     end
 
     class_methods do
@@ -28,13 +29,24 @@ module QuickScript
       super.merge(meta: meta)
     end
 
+    def meta_render
+      controller.respond_to do |format|
+        format.json { controller.render json: meta_for_async_data }
+      end
+    end
+
+    def meta_for_async_data
+      meta
+    end
+
     private
 
     def meta
       {
-        :title        => title,
-        :description  => description,
-        :og_image_key => og_image_key,
+        :title                 => title,
+        :description           => description,
+        :og_image_key          => og_image_key,
+        :twitter_card_is_small => twitter_card_is_small,
       }
     end
   end

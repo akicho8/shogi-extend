@@ -126,7 +126,6 @@ export default {
     return {
       attributes: {},      // form 入力値
       params: null,        // サーバーから受け取った値(更新禁止)
-      my_loading: false,
     }
   },
   watch: {
@@ -373,7 +372,7 @@ export default {
   computed: {
     current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
     current_qs_key()   { return this.qs_page_key   ?? this.$route.params.qs_page_key },
-    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
+    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
     visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") } // 目に見えるフォームパーツが存在するか？
   },

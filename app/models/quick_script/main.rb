@@ -2,16 +2,24 @@ module QuickScript
   module Main
     extend self
 
-    def fetch(params, options = {})
+    def dispatch(params, options = {})
+      klass = klass_fetch(params, options)
+      instance = klass.new(params, options)
+      if params[:__FOR_ASYNC_DATA__]
+        AppLog.info(subject: "[#{klass.name}][__FOR_ASYNC_DATA__]", body: params.to_t)
+        instance.meta_render
+        return
+      end
+      AppLog.info(subject: "[#{klass.name}][content]", body: params.to_t)
+      instance.all_content_render
+    end
+
+    def klass_fetch(params, options)
       if params[:qs_page_key] == "__qs_page_key_is_blank__"
-        return Chore::IndexScript.new(params.merge(qs_group_only: params[:qs_group_key]), options)
+        params = params.merge(qs_group_only: params[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
       end
       klass = "quick_script/#{params[:qs_group_key]}/#{params[:qs_page_key]}_script".underscore.classify.safe_constantize
-      unless klass
-        return Chore::NotFoundScript.new(params, options)
-      end
-      AppLog.info(subject: "[#{klass.name}]", body: params.to_t)
-      klass.new(params, options)
+      klass || Chore::NotFoundScript
     end
 
     def all

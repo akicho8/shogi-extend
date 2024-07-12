@@ -36,7 +36,7 @@ module QuickScript
       !request_post?
     end
 
-    def render_all
+    def all_content_render
       controller.respond_to do |format|
         render_format(format)
       end
