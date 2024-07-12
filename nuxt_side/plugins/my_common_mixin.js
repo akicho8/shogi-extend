@@ -40,6 +40,7 @@ Vue.mixin({
       "login_and_email_valid_p",
       "g_current_user_name",
     ]),
+    ...mapGetters(["g_loading_p"]),
     // ...mapState("swars", [
     //   "g_var1",
     // ]),

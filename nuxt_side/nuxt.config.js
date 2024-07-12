@@ -222,7 +222,10 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: "~/plugins/axios.js",                           },
+    // 順番重要
+    { src: "~/plugins/axios_loading.js",                   },
+    { src: "~/plugins/axios_error_handler.js",             },
+    // ここからは重要ではない
     { src: "~/plugins/my_common_plugin.js",                },
     { src: "~/plugins/my_common_mixin.js",                 },
     { src: "~/plugins/my_client_plugin.js", mode: "client" },

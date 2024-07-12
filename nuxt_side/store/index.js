@@ -1,13 +1,22 @@
 // index.js を置くことで vuex が有効になるっぽい
 
 export const state = () => ({
-  g_counter: 0
+  g_counter: 0,
+  g_axios_loading: false,
 })
+
+// ↓ここに定義したらさらに ...mapGetters(["g_loading_p"]) が必要。
+export const getters = {
+  g_loading_p: state => state.g_axios_loading
+}
 
 export const mutations = {
   increment(state) {
     state.g_counter += 1
-  }
+  },
+  g_axios_loading_set(state, status) {
+    state.g_axios_loading = status
+  },
 }
 
 // https://ja.nuxtjs.org/guide/vuex-store/#nuxtserverinit-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3

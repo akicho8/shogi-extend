@@ -1,8 +1,12 @@
 <template lang="pug">
 .QuickScriptView
-  //- | isLoading: {{$nuxt.$loading}}
+  DebugBox(v-if="development_p" position="bottom_right")
+    div axios: {{g_loading_p}}
+    div standby: {{!$fetchState.pending}}
+
   template(v-if="development_p || true")
-    b-loading(:active="$fetchState.pending")
+    b-loading(:active="$fetchState.pending || g_loading_p")
+
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid")
       template(slot="brand")
@@ -122,6 +126,7 @@ export default {
     return {
       attributes: {},      // form 入力値
       params: null,        // サーバーから受け取った値(更新禁止)
+      my_loading: false,
     }
   },
   watch: {
