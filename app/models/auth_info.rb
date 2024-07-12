@@ -3,16 +3,15 @@
 #
 # Auth info (auth_infos as AuthInfo)
 #
-# |------------+--------------+----------------+-------------+------------+-------|
-# | name       | desc         | type           | opts        | refs       | index |
-# |------------+--------------+----------------+-------------+------------+-------|
-# | id         | ID           | integer(8)     | NOT NULL PK |            |       |
-# | user_id    | User         | integer(8)     | NOT NULL    | => User#id | B     |
-# | provider   | Provider     | string(255)    | NOT NULL    |            | A!    |
-# | uid        | Uid          | string(255)    | NOT NULL    |            | A!    |
-# | meta_info  | 棋譜ヘッダー | text(16777215) |             |            |       |
-# | meta_info2 | Meta info2   | text(65535)    |             |            |       |
-# |------------+--------------+----------------+-------------+------------+-------|
+# |-----------+----------------+-------------+-------------+------------+-------|
+# | name      | desc           | type        | opts        | refs       | index |
+# |-----------+----------------+-------------+-------------+------------+-------|
+# | id        | ID             | integer(8)  | NOT NULL PK |            |       |
+# | user_id   | User           | integer(8)  | NOT NULL    | => User#id | B     |
+# | provider  | プロバイダ     | string(255) | NOT NULL    |            | A!    |
+# | uid       | 識別子         | string(255) | NOT NULL    |            | A!    |
+# | meta_info | 認証情報(JSON) | text(65535) |             |            |       |
+# |-----------+----------------+-------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -21,8 +20,7 @@
 class AuthInfo < ApplicationRecord
   belongs_to :user
 
-  serialize :meta_info          # ← あとで削除する
-  serialize :meta_info2, coder: JSON
+  serialize :meta_info, coder: JSON
 
   attr_accessor :auth
 
@@ -30,8 +28,7 @@ class AuthInfo < ApplicationRecord
     if auth
       self.provider  ||= auth.provider
       self.uid       ||= auth.uid
-      self.meta_info ||= auth.as_json # as_json することで Proc オブジェクトを除外する。含まれていると allocator undefined for Proc エラーになる
-      self.meta_info2 ||= auth # auth.info だけあれば充分だが調査用にとっておく
+      self.meta_info ||= auth # auth.info だけあれば充分だが調査用にとっておく
     end
   end
 
@@ -75,7 +72,7 @@ class AuthInfo < ApplicationRecord
   # end
 
   def app_logging
-    AppLog.important(subject: "[SNS経由登録][#{provider}] #{user.name.inspect} (AuthInfo.create!)", body: [user.info.to_t, meta_info2.pretty_inspect].join("\n"))
+    AppLog.important(subject: "[SNS経由登録][#{provider}] #{user.name.inspect} (AuthInfo.create!)", body: [user.info.to_t, meta_info.pretty_inspect].join("\n"))
   end
   after_create_commit :app_logging
 end

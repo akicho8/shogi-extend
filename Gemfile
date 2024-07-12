@@ -211,4 +211,4 @@ gem "matrix"
 gem "google-api-client"
 
 # 一時的に AuthInfo を直すため (User#meta_info を参照するため)
-gem "oauth"
+# gem "oauth"
