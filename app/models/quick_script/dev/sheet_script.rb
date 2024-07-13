@@ -16,8 +16,8 @@ module QuickScript
             { "名前": "carol", "読み": "きゃろる",   },
           ]
           # rows = nil
-          response = SheetHandler::SheetFacade.new(rows: rows).call
-          redirect_to response[:url], tab_open: true
+          url = GoogleApi::Facade.new(source_rows: rows).call
+          redirect_to url, tab_open: true
         end
       end
     end

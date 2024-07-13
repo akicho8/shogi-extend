@@ -54,11 +54,14 @@ every("5 3 * * *") do
     %(Kiwi::Lemon.cleanup(execute: true)),   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     %(XfilesCleanup.new(execute: true).call), # public/system/x-files 以下の古い png と rb を削除する
     %(FreeBattle.cleanup(execute: true)),
+    %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
+
+    # GeneralCleaner シリーズ
     %(Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true).call),  # 30分かかる
     %(Swars::Battle.drop_scope2.cleaner(subject: "特別", execute: true).call),
     %(Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call),
-    %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
-    %(AppLog.cleanup(execute: true)),
+    %(GoogleApi::ExpirationTracker.old_only(1.days).cleaner(subject: "スプレッドシート", execute: true).call),
+    %(AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call),
 
     # チェック
     %(Swars::SystemValidator.new.call),

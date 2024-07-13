@@ -42,10 +42,6 @@ class AppLog < ApplicationRecord
   LEVEL_DEFAULT = :info
 
   class << self
-    def cleanup(...)
-      Cleanup.new(...).call
-    end
-
     # AppLog.call("x")
     # AppLog.call("x", level: "debug")
     # AppLog.call(body: "x", level: "debug")

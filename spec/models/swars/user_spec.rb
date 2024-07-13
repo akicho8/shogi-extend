@@ -52,8 +52,8 @@ module Swars
       assert { User.fetch("alice") }
     end
 
-    it "key_object" do
-      assert { User.create!(key: "alice").key_object }
+    it "key_info" do
+      assert { User.create!(key: "alice").key_info }
     end
 
     describe "垢BAN" do

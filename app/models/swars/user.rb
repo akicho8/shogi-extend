@@ -85,17 +85,17 @@ module Swars
       key
     end
 
-    def key_object
-      @key_object ||= UserKey[key]
+    def key_info
+      @key_info ||= UserKey[key]
     end
 
     # 引数があるけどキャッシュするので注意
     def cached_stat(...)
-      @cached_stat ||= stat_without_cache(...)
+      @cached_stat ||= stat(...)
     end
 
     def stat(...)
-      User::Stat::Main.new(self, ...)
+      Stat::Main.new(self, ...)
     end
 
     def to_h

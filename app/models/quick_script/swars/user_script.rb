@@ -7,6 +7,10 @@ module QuickScript
       self.button_label = "実行"
       self.per_page_default = 1000
 
+      self.params_add_submit_key = :exec
+      # self.get_then_axios_get = true
+      self.button_click_loading = true
+
       def form_parts
         super + [
           {
@@ -23,10 +27,19 @@ module QuickScript
             :elems       => {"そのまま" => "original", "最高段位" => "grade", "行動規範" => "gentleman"},
             :default     => params[:order_by].presence || "original",
           },
+          {
+            :label       => "Google スプレッドシートに出力",
+            :key         => :toolkit,
+            :type        => :radio_button,
+            :elems       => {"しない" => "false", "する" => "true"},
+            :default     => params[:toolkit].presence || "false",
+          },
         ]
       end
 
       def call
+        return params
+
         if current_user_keys.blank?
           return
         end
@@ -50,116 +63,137 @@ module QuickScript
           end
         end
 
-        if false
-          s = ::Swars::Membership.all
-          s = s.joins(:battle => :rule)
-          s = s.joins(:user)
-          s = s.joins(:grade)
-          s = s.merge(user_scope)
-          s = s.group("swars_users.user_key")
-          s = s.group("rule_key")
-          s = s.joins("JOIN swars_grades g ON g.id = swars_users.grade_id") if false # 最高棋力をついでに求める
-          s = s.select("swars_users.user_key")                                       # ウォーズID
-          s = s.select("#{::Swars::Rule.table_name}.key AS rule_key")                # ルール
-          s = s.select("MIN(#{::Swars::Grade.table_name}.priority) AS min_priority") # ルール別の最高棋力
-          s = s.select("g.key AS max_grade_key") if false                            # 最高棋力
+        # s = ::Swars::Membership.all
+        # s = s.joins(:battle => :rule)
+        # s = s.joins(:user)
+        # s = s.joins(:grade)
+        # s = s.merge(user_scope)
+        # s = s.group("swars_users.user_key")
+        # s = s.group("rule_key")
+        # s = s.joins("JOIN swars_grades g ON g.id = swars_users.grade_id") if false # 最高棋力をついでに求める
+        # s = s.select("swars_users.user_key")                                       # ウォーズID
+        # s = s.select("#{::Swars::Rule.table_name}.key AS rule_key")                # ルール
+        # s = s.select("MIN(#{::Swars::Grade.table_name}.priority) AS min_priority") # ルール別の最高棋力
+        # s = s.select("g.key AS max_grade_key") if false                            # 最高棋力
+        #
+        # # >> |-------------+-----------+--------------+
+        # # >> | user_key    | rule_key  | min_priority |
+        # # >> |-------------+-----------+--------------+
+        # # >> | BOUYATETSU5 | ten_min   |            4 |
+        # # >> | BOUYATETSU5 | ten_sec   |            4 |
+        # # >> | BOUYATETSU5 | three_min |            5 |
+        # # >> | TOBE_CHAN   | ten_min   |            5 |
+        # # >> | TOBE_CHAN   | ten_sec   |           38 |
+        # # >> | itoshinTV   | ten_sec   |            4 |
+        # # >> | itoshinTV   | ten_min   |            5 |
+        # # >> | itoshinTV   | three_min |            3 |
+        # # >> |-------------+-----------+--------------+
+        #
+        # if false
+        #   # SQL を使って min_priority を棋力名に変換する
+        #   sql = <<~SQL
+        #   SELECT
+        #      main.user_key,
+        #      main.rule_key,
+        #      g.key as grade_key
+        #   FROM (#{s.to_sql}) main
+        #   JOIN swars_grades g ON g.priority = main.min_priority
+        # SQL
+        #   hv = ActiveRecord::Base.connection.select_all(sql).each_with_object({}) do |e, m|
+        #     e = e.symbolize_keys
+        #     m[e[:user_key]] ||= {}
+        #     m[e[:user_key]][e[:rule_key].to_sym] = e[:grade_key]
+        #   end
+        # else
+        #   # SQL を使わずに棋力名に変換する
+        #   hv = s.each_with_object({}) do |e, m|
+        #     m[e.user_key] ||= {}
+        #     m[e.user_key][e.rule_key.to_sym] = ::Swars::GradeInfo.fetch(e.min_priority).name
+        #   end
+        # end
+        #
+        # s = user_scope
+        # s = s.includes(:grade)
+        # rows = s.collect do |e|
+        #   row = {}
+        #   row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+        #   row["最高"] = e.grade.name
+        #   ::Swars::RuleInfo.each do |rule_info|
+        #     row[rule_info.name] = hv.dig(e.user_key, rule_info.key) || "?"
+        #   end
+        #   row["index"] = e.grade.pure_info.priority
+        #   row
+        # end
 
-          # >> |-------------+-----------+--------------+
-          # >> | user_key    | rule_key  | min_priority |
-          # >> |-------------+-----------+--------------+
-          # >> | BOUYATETSU5 | ten_min   |            4 |
-          # >> | BOUYATETSU5 | ten_sec   |            4 |
-          # >> | BOUYATETSU5 | three_min |            5 |
-          # >> | TOBE_CHAN   | ten_min   |            5 |
-          # >> | TOBE_CHAN   | ten_sec   |           38 |
-          # >> | itoshinTV   | ten_sec   |            4 |
-          # >> | itoshinTV   | ten_min   |            5 |
-          # >> | itoshinTV   | three_min |            3 |
-          # >> |-------------+-----------+--------------+
+        s = user_scope
+        s = s.includes(:grade)
 
-          if false
-            # SQL を使って min_priority を棋力名に変換する
-            sql = <<~SQL
-          SELECT
-             main.user_key,
-             main.rule_key,
-             g.key as grade_key
-          FROM (#{s.to_sql}) main
-          JOIN swars_grades g ON g.priority = main.min_priority
-        SQL
-            hv = ActiveRecord::Base.connection.select_all(sql).each_with_object({}) do |e, m|
-              e = e.symbolize_keys
-              m[e[:user_key]] ||= {}
-              m[e[:user_key]][e[:rule_key].to_sym] = e[:grade_key]
-            end
-          else
-            # SQL を使わずに棋力名に変換する
-            hv = s.each_with_object({}) do |e, m|
-              m[e.user_key] ||= {}
-              m[e.user_key][e.rule_key.to_sym] = ::Swars::GradeInfo.fetch(e.min_priority).name
-            end
-          end
+        case current_order_by
+        when "grade"
+          s = s.joins(:grade).order(::Swars::Grade.arel_table[:priority].asc)
+        when "original"
+          s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
+        when "gentleman"
+          s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
+        end
 
-          s = user_scope
-          s = s.includes(:grade)
-          rows = s.collect do |e|
-            row = {}
-            row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
-            row["最高"] = e.grade.name
-            ::Swars::RuleInfo.each do |rule_info|
-              row[rule_info.name] = hv.dig(e.user_key, rule_info.key) || "?"
-            end
-            row["index"] = e.grade.pure_info.priority
-            row
-          end
-        else
-          s = user_scope
-          s = s.includes(:grade)
-
-          case current_order_by
-          when "grade"
-            s = s.joins(:grade).order(::Swars::Grade.arel_table[:priority].asc)
-          when "original"
-            s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
-          when "gentleman"
-            s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
-          end
-
+        if current_toolkit
           rows = s.collect do |e|
             Rails.logger.tagged(e.key) do
               {}.tap do |row|
-                row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-search", query: { query: e.user_key } }, }, }
-
-                if Rails.env.local?
-                  row["情報"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
-                end
-
-                row["最高"] = e.grade.name
-                e.cached_stat.grade_by_rules_stat.ruleships.each do |e|
-                  row[e[:rule_info].name] = e[:grade_info].try { name } || ""
-                end
-
-                row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
-
-                row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
-
-                row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
-                row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
-
+                row["名前"] = hyper_link(e.user_key, e.key_info.swars_search_url)
+                row["最高段位"] = e.grade.name
+                row["最高段位(index)"] = e.grade.pure_info.priority
+                row.update(grade_per_rule(e))
+                row["勝率"] = e.cached_stat.total_judge_stat.win_ratio
+                row["行動規範"] = e.cached_stat.gentleman_stat.final_score
+                row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車")
+                row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車")
                 row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
                 row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
-
                 row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+                row["リンク1"] = hyper_link("プレイヤー情報", e.key_info.swars_player_url)
+                row["リンク2"] = hyper_link("本家", e.key_info.my_page_url)
+              end
+            end
+          end
 
-                if Rails.env.local?
-                  row["最高段位(index)"] = e.grade.pure_info.priority
-                end
+          url = GoogleApi::Facade.new(title: "将棋ウォーズ棋力一覧", source_rows: rows, columns_hash: columns_hash).call
+          redirect_to url, tab_open: true
+        end
+
+        rows = s.collect do |e|
+          Rails.logger.tagged(e.key) do
+            {}.tap do |row|
+              row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-search", query: { query: e.user_key } }, }, }
+              if Rails.env.local?
+                row["情報"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+              end
+              row["最高"] = e.grade.name
+              row.update(grade_per_rule(e))
+              row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
+              row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
+              row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
+              row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
+              row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
+              row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
+              row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+              if Rails.env.local?
+                row["最高段位(index)"] = e.grade.pure_info.priority
               end
             end
           end
         end
 
         simple_table(rows, always_table: true)
+      end
+
+      def grade_per_rule(user)
+        row = {}
+        user.cached_stat.grade_by_rules_stat.ruleships.each do |e|
+          row[e[:rule_info].name] = e[:grade_info].try { name } || ""
+        end
+        row
       end
 
       def current_user_keys
@@ -174,6 +208,10 @@ module QuickScript
         params[:order_by].presence || "original"
       end
 
+      def current_toolkit
+        params[:toolkit].to_s == "true"
+      end
+
       def default_user_keys
         @default_user_keys ||= yield_self do
           av = nil
@@ -185,6 +223,20 @@ module QuickScript
 
       def process_max
         50
+      end
+
+      def hyper_link(name, url)
+        %(=HYPERLINK("#{url}", "#{name}"))
+      end
+
+      def columns_hash
+        {
+          "勝率"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
+          "居飛車"   => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
+          "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
+          "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
+          "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/mm", }, },
+        }
       end
     end
   end

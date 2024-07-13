@@ -20,6 +20,22 @@ module Swars
       freeze
     end
 
+    ################################################################################
+
+    def my_page_url
+      "https://shogiwars.heroz.jp/users/mypage/#{key}"
+    end
+
+    def swars_search_url
+      UrlProxy.full_url_for("/swars/search?query=#{key}")
+    end
+
+    def swars_player_url
+      UrlProxy.full_url_for("/swars/users/#{key}")
+    end
+
+    ################################################################################
+
     def to_s
       key
     end
@@ -42,12 +58,6 @@ module Swars
 
     def inspect
       "<#{self}>"
-    end
-
-    ################################################################################
-
-    def my_page_url
-      "https://shogiwars.heroz.jp/users/mypage/#{key}"
     end
   end
 end

@@ -2,9 +2,11 @@ require "google/apis/sheets_v4"
 require "google/apis/drive_v3"
 require "googleauth"
 
-module SheetHandler
+module GoogleApi
   # このクラスはただのユーティリティ関数の寄せ集めであって使い安さは考慮されていない
-  class GoogleSheet
+  class Toolkit
+    APPLICATION_NAME = "SHOGI-EXTEND"
+
     SCOPE = [
       Google::Apis::SheetsV4::AUTH_SPREADSHEETS,
       Google::Apis::DriveV3::AUTH_DRIVE_FILE,
@@ -12,11 +14,11 @@ module SheetHandler
 
     def initialize
       @sheets_service = Google::Apis::SheetsV4::SheetsService.new
-      @sheets_service.client_options.application_name = "Your App Name"
+      @sheets_service.client_options.application_name = APPLICATION_NAME
       @sheets_service.authorization = authorize
 
       @drive_service = Google::Apis::DriveV3::DriveService.new
-      @drive_service.client_options.application_name = "Your App Name"
+      @drive_service.client_options.application_name = APPLICATION_NAME
       @drive_service.authorization = authorize
     end
 
@@ -31,9 +33,15 @@ module SheetHandler
       authorizer
     end
 
-    def spreadsheet_create(title)
-      spreadsheet = Google::Apis::SheetsV4::Spreadsheet.new(properties: { title: title })
+    def spreadsheet_create(title = nil)
+      spreadsheet = Google::Apis::SheetsV4::Spreadsheet.new(properties: { title: title || "New Spreadsheet" })
       @sheets_service.create_spreadsheet(spreadsheet)
+    end
+
+    # スプレッドシートを削除するメソッド
+    def spreadsheet_delete(spreadsheet_id)
+      @drive_service.delete_file(spreadsheet_id)
+      puts "Spreadsheet with ID #{spreadsheet_id} deleted successfully."
     end
 
     def spreadsheet_share(spreadsheet_id)
@@ -43,7 +51,7 @@ module SheetHandler
 
     def spreadsheet_update(spreadsheet_id, range, values)
       value_range = Google::Apis::SheetsV4::ValueRange.new(range: range, values: values)
-      @sheets_service.update_spreadsheet_value(spreadsheet_id, range, value_range, value_input_option: "RAW")
+      @sheets_service.update_spreadsheet_value(spreadsheet_id, range, value_range, value_input_option: "USER_ENTERED") # RAW or USER_ENTERED
     end
 
     def cell_update(spreadsheet_id, requests)
