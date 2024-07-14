@@ -6,39 +6,39 @@ module QuickScript
       self.form_method = :get
       self.button_label = "実行"
       self.per_page_default = 1000
-
-      self.params_add_submit_key = :exec
-      # self.get_then_axios_get = true
+      self.router_push_failed_then_fetch = true
       self.button_click_loading = true
 
       def form_parts
         super + [
           {
-            :label       => "将棋ウォーズID(s)",
-            :key         => :user_keys,
-            :type        => :text,
-            :default     => params[:user_keys].to_s.presence,
-            :placeholder => default_user_keys,
+            :label           => "将棋ウォーズID(s)",
+            :key             => :user_keys,
+            :type            => :text,
+            :default         => params[:user_keys].to_s.presence,
+            :placeholder     => default_user_keys,
           },
           {
-            :label       => "順番",
-            :key         => :order_by,
-            :type        => :radio_button,
-            :elems       => {"そのまま" => "original", "最高段位" => "grade", "行動規範" => "gentleman"},
-            :default     => params[:order_by].presence || "original",
+            :label           => "順番",
+            :key             => :order_by,
+            :type            => :radio_button,
+            :elems           => {"最高段位" => "grade", "行動規範" => "gentleman", "勢い" => "vitality", "そのまま" => "original"},
+            :default         => params[:order_by].presence || "grade",
           },
           {
-            :label       => "Google スプレッドシートに出力",
-            :key         => :toolkit,
-            :type        => :radio_button,
-            :elems       => {"しない" => "false", "する" => "true"},
-            :default     => params[:toolkit].presence || "false",
+            :label           => "Google スプレッドシートに出力",
+            :key             => :google_sheet,
+            :type            => :radio_button,
+            :elems           => {"しない" => "false", "する" => "true"},
+            :default         => "false",
+            :hidden_on_query => true,
+            :help_message    => "永続的に参照したり編集する場合は出力後にコピーを作成してください",
           },
         ]
       end
 
       def call
-        return params
+        # return params
 
         if current_user_keys.blank?
           return
@@ -135,49 +135,60 @@ module QuickScript
           s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
         when "gentleman"
           s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
+        when "vitality"
+          s = s.sort_by { |e| -e.cached_stat.vitality_stat.level }
         end
 
-        if current_toolkit
-          rows = s.collect do |e|
-            Rails.logger.tagged(e.key) do
-              {}.tap do |row|
-                row["名前"] = hyper_link(e.user_key, e.key_info.swars_search_url)
-                row["最高段位"] = e.grade.name
-                row["最高段位(index)"] = e.grade.pure_info.priority
-                row.update(grade_per_rule(e))
-                row["勝率"] = e.cached_stat.total_judge_stat.win_ratio
-                row["行動規範"] = e.cached_stat.gentleman_stat.final_score
-                row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車")
-                row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車")
-                row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
-                row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
-                row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
-                row["リンク1"] = hyper_link("プレイヤー情報", e.key_info.swars_player_url)
-                row["リンク2"] = hyper_link("本家", e.key_info.my_page_url)
+        if fetch_index >= 1 || true
+          if current_google_sheet
+            rows = s.collect do |e|
+              Rails.logger.tagged(e.key) do
+                {}.tap do |row|
+                  row["名前"] = hyper_link(e.name_with_ban, e.key_info.swars_search_url)
+                  row["最高段位"] = e.grade.name
+                  row.update(grade_per_rule(e))
+                  row["勝率"] = e.cached_stat.total_judge_stat.win_ratio
+                  row["勢い"] = e.cached_stat.vitality_stat.level
+                  row["行動規範"] = e.cached_stat.gentleman_stat.final_score
+                  row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車")
+                  row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車")
+                  row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
+                  row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
+                  row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+                  row["リンク1"] = hyper_link("棋譜検索",       e.key_info.swars_search_url)
+                  row["リンク2"] = hyper_link("プレイヤー情報", e.key_info.swars_player_url)
+                  row["リンク3"] = hyper_link("本家",           e.key_info.my_page_url)
+                  row["リンク4"] = hyper_link("ぐぐる",         e.key_info.google_search_url)
+                  row["最高段位(index)"] = e.grade.pure_info.priority
+                end
               end
             end
-          end
 
-          url = GoogleApi::Facade.new(title: "将棋ウォーズ棋力一覧", source_rows: rows, columns_hash: columns_hash).call
-          redirect_to url, tab_open: true
+            url = GoogleApi::Facade.new(title: "将棋ウォーズ棋力一覧", source_rows: rows, columns_hash: columns_hash).call
+            redirect_to url, tab_open: true
+          end
         end
 
         rows = s.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-search", query: { query: e.user_key } }, }, }
-              if Rails.env.local?
-                row["情報"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
-              end
+              row["名前"] = { _nuxt_link: { name: e.name_with_ban, to: {name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
+              row["勢い"] = e.cached_stat.vitality_stat.level.try { |e| "%.2f" % e }
               row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
               row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
               row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
               row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
               row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
               row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
+              if Rails.env.local?
+                row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.count})", to: {name: "swars-search", query: { query: e.user_key } }, }, }
+                row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+                row["リンク3"] = tag.a("本家", href: e.key_info.my_page_url, target: "_blank")
+                row["リンク4"] = tag.a("ぐぐる", href: e.key_info.google_search_url, target: "_blank")
+              end
               if Rails.env.local?
                 row["最高段位(index)"] = e.grade.pure_info.priority
               end
@@ -208,8 +219,8 @@ module QuickScript
         params[:order_by].presence || "original"
       end
 
-      def current_toolkit
-        params[:toolkit].to_s == "true"
+      def current_google_sheet
+        params[:google_sheet].to_s == "true"
       end
 
       def default_user_keys
@@ -217,6 +228,7 @@ module QuickScript
           av = nil
           # av ||= ::Swars::User::Vip.auto_crawl_user_keys
           av ||= ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"]
+          av ||= []
           av.shuffle * " "
         end
       end
@@ -236,6 +248,7 @@ module QuickScript
           "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
           "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/mm", }, },
+          "勢い"     => { number_format: { type: "NUMBER",  pattern: "0.00",       }, },
         }
       end
     end

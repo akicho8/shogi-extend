@@ -21,8 +21,8 @@ module GoogleApi
       @requests = []
       header_grey_draw
       # cell_write_sample
-      padding_set
-      column_style_set
+      # cell_padding_set
+      column_display_format_set
       # column_auto_resize # 正しく動作しない
       toolkit.cell_update(spreadsheet_id, @requests)
     end
@@ -47,14 +47,17 @@ module GoogleApi
           },
           cell: {
             user_entered_format: {
+              text_format: {
+                bold: true
+              },
               background_color: {
-                red: 0.8,  # 背景色を灰色に設定
-                green: 0.8,
-                blue: 0.8,
-              }
+                red:   0.9,  # 背景色を灰色に設定
+                green: 0.9,
+                blue:  0.9,
+              },
             }
           },
-          fields: 'userEnteredFormat.backgroundColor',
+          fields: 'userEnteredFormat.backgroundColor,userEnteredFormat.textFormat.bold',
         },
       }
     end
@@ -127,7 +130,7 @@ module GoogleApi
       ]
     end
 
-    def padding_set
+    def cell_padding_set
       @requests << {
         repeat_cell: {
           range: {
@@ -148,7 +151,7 @@ module GoogleApi
       }
     end
 
-    def column_style_set
+    def column_display_format_set
       column_keys.each.with_index do |column_key, index|
         if column = columns_hash[column_key]
           @requests << {

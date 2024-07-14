@@ -35,7 +35,7 @@ module QuickScript
             {
               "名前" => { _link_to: { name: e.name_with_grade, url: e.key_info.my_page_url }, },
               "発見" => e.ban_at.to_fs(:ymd),
-              ""     => { _nuxt_link: { name: "棋譜", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+              ""     => { _nuxt_link: { name: "棋譜(#{e.memberships.count})", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
             }
           end
         end

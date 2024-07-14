@@ -128,6 +128,10 @@ module Swars
         @xmode_stat ||= XmodeStat.new(self)
       end
 
+      def vitality_stat
+        @vitality_stat ||= VitalityStat.new(self)
+      end
+
       def total_judge_stat
         @total_judge_stat ||= TotalJudgeStat.new(self)
       end

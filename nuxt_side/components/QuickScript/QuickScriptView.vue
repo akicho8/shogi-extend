@@ -3,6 +3,7 @@
   DebugBox(v-if="development_p" position="bottom_right")
     div axios: {{g_loading_p}}
     div standby: {{!$fetchState.pending}}
+    div fetch_index: {{fetch_index}}
 
   template(v-if="development_p || true")
     b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
@@ -34,7 +35,7 @@
         .columns.is-mobile.is-multiline(v-if="params.form_parts.length >= 1")
           .column.is-12
             template(v-for="form_part in params.form_parts")
-              b-field(:label="form_part.label" custom-class="is-small" :message="form_part.bottom_message")
+              b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
                 template(v-if="false")
                 template(v-else-if="form_part.type === 'string'")
                   b-input(
@@ -62,10 +63,9 @@
                     template(v-for="[label, value] in label_value_array(form_part.elems)")
                       option(:value="value") {{label}}
                 template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
-                  b-field
-                    template(v-for="[label, value] in label_value_array(form_part.elems)")
-                      component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
-                        span {{label}}
+                  template(v-for="[label, value] in label_value_array(form_part.elems)")
+                    component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
+                      span {{label}}
                 template(v-else)
                   pre unknown: {{form_part.type}}
 
@@ -126,6 +126,7 @@ export default {
     return {
       attributes: {},      // form 入力値
       params: null,        // サーバーから受け取った値(更新禁止)
+      fetch_index: null,
     }
   },
   watch: {
@@ -154,10 +155,14 @@ export default {
   // },
 
   fetch() {
-    // if (process.server) {
-    //   return { retry: true }
-    // }
-    return this.$axios.$get(this.current_api_path, {params: {...this.$route.query, _setup: true}}).then(params => this.params_receive(params))
+    // 初回以降も呼ばれるため attributes をまぜる
+    // $route.query は初回のときに使い、this.attributes は次からのときに使う
+    this.fetch_index ??= 0
+    const new_params = this.new_params_create({fetch_index: this.fetch_index})
+    this.$axios.$get(this.current_api_path, {params: new_params}).then(params => {
+      this.fetch_index += 1
+      this.params_receive(params)
+    })
       // .catch(error => {
       //   console.log("in QuickScriptView start")
       //
@@ -291,6 +296,7 @@ export default {
 
     router_push(params = {}) {
       const new_params = this.new_params_create(params)
+      this.browser_query_delete(new_params) // ブラウザ上で表示させたくないパラメータを削除する(new_params を破壊する)
       this.$router.push({query: new_params}, () => {
         this.debug_alert("Navigation succeeded")
         this.$sound.play_click()
@@ -301,6 +307,19 @@ export default {
           this.$fetch()
         } else {
           // this.toast_ok(`もう${this.params.button_label}しました`)
+        }
+      })
+      // ここで $fetch を呼ぶと $route.query の更新より前に呼ばれてしまう
+      // ブロックの中で呼ぶのが正しい
+    },
+
+    // ブラウザで見える GET パラメータを隠す
+    // params 自体を破壊する
+    // これによって気軽に直リンクされることがなくなる
+    browser_query_delete(params) {
+      this.params.form_parts.forEach(e => {
+        if (e.hidden_on_query) {
+          delete params[e.key]
         }
       })
     },

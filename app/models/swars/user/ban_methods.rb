@@ -52,6 +52,14 @@ module Swars
       def ban?
         ban_at
       end
+
+      def name_with_ban
+        av = [key]
+        if ban?
+          av << "💀️"
+        end
+        av * " "
+      end
     end
   end
 end

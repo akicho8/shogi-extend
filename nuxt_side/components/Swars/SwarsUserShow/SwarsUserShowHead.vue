@@ -4,7 +4,7 @@
   .is-flex.is-justify-content-center.mt-2
     .user_key.has-text-weight-bold.is-clickable(@click="TheApp.name_click_handle")
       | {{TheApp.info.user.key}}
-      span.mx-1(v-if="TheApp.info.user.ban_at") ✝
+      span.mx-1(v-if="TheApp.info.user.ban_at") 💀
 
   // 段級位
   .is-flex.rule_container

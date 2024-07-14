@@ -32,5 +32,12 @@ module QuickScript
         params[params_add_submit_key] == "true"
       end
     end
+
+    # fetch() が呼ばれるときのインデックスで 0 から始まる
+    # GET のときに初回か、フォームからボタンを押して GET したかの判定に使う
+    # 例えばページに飛んだ瞬間にスプレッドシートの出力をさせたくない場合は fetch_index >= 1 で弾けばよい
+    def fetch_index
+      params[:fetch_index].to_i
+    end
   end
 end

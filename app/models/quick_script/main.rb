@@ -3,6 +3,9 @@ module QuickScript
     extend self
 
     def dispatch(params, options = {})
+      if params[:qs_page_key] == "__qs_page_key_is_blank__"
+        params = params.merge(qs_group_only: params[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
+      end
       klass = klass_fetch(params, options)
       instance = klass.new(params, options)
       if params[:__FOR_ASYNC_DATA__]
@@ -15,9 +18,6 @@ module QuickScript
     end
 
     def klass_fetch(params, options)
-      if params[:qs_page_key] == "__qs_page_key_is_blank__"
-        params = params.merge(qs_group_only: params[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
-      end
       klass = "quick_script/#{params[:qs_group_key]}/#{params[:qs_page_key]}_script".underscore.classify.safe_constantize
       klass || Chore::NotFoundScript
     end

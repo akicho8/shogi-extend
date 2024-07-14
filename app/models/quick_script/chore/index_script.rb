@@ -4,6 +4,25 @@ module QuickScript
       self.title = "Index"
       self.description = "スクリプト一覧を表示する"
 
+      self.form_method = :get
+      self.button_label = "検索"
+      self.per_page_default = 500
+
+      # self.per_page_default = 1000
+      # self.router_push_failed_then_fetch = true
+      # self.button_click_loading = true
+
+      def form_parts
+        super + [
+          {
+            # :label   => "部分一致文字列",
+            :key     => :query,
+            :type    => :string,
+            :default => params[:query].to_s,
+          },
+        ]
+      end
+
       def call
         if all.empty?
           return "ここにはなんもありません"
@@ -36,6 +55,24 @@ module QuickScript
           else
             all = all.reject { |e| e.qs_group_info.admin_only && !admin_user }
           end
+
+          if show_all
+          else
+            all = all.reject { |e| e.qs_invisible }
+
+            if current_queries.present?
+              current_queries.each do |query|
+                all = all.find_all do |e|
+                  [
+                    e.title,
+                    e.description,
+                    e.name,
+                  ].join("/").downcase.include?(query.downcase)
+                end
+              end
+            end
+          end
+
           all
         end
       end
@@ -67,6 +104,14 @@ module QuickScript
         else
           super
         end
+      end
+
+      def current_queries
+        params[:query].to_s.scan(/\S+/)
+      end
+
+      def show_all
+        params[:query].to_s == "*"
       end
     end
   end

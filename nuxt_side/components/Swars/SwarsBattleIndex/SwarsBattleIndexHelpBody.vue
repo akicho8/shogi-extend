@@ -252,7 +252,7 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 将棋ウォーズ本家のマイページに飛びたい
     ul
-      li プレイヤー情報→<i :class="dot_vertical_icon" />→ウォーズ本家
+      li プレイヤー情報→<i :class="dot_vertical_icon" />→本家
 
   article
     h2 戦法等の判定がおかしい

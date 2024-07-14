@@ -8,14 +8,13 @@ module QuickScript
     prepend ExceptionRescueMod  # 例外を捕捉して表示する
     prepend FlashMod
     prepend MetaMod
+    prepend InvisibleMod
     prepend RedirectMod
     prepend HelperMod
     prepend AutoexecMod
     prepend OrderMod            # for index_script.rb
     prepend ProcessTypeMod      # process.client か process.server のどちらで呼ばれたか把握する
     prepend LayoutMod           # MainNavbar の表示管理など
-
-    attr_reader :params
 
     class << self
       def link_path
@@ -43,6 +42,8 @@ module QuickScript
         }
       end
     end
+
+    attr_reader :params
 
     def initialize(params = {}, options = {})
       @params = params

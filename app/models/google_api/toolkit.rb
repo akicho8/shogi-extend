@@ -23,14 +23,18 @@ module GoogleApi
     end
 
     def authorize
-      if true
-        json_content = Rails.root.join("config/google_account_json/shogi-web-development-06e32c3bc3b3.json").read
-      else
-        json_content = Rails.application.credentials.dig(:google_api, Rails.env).to_json
-      end
       authorizer = Google::Auth::ServiceAccountCredentials.make_creds({json_key_io: StringIO.new(json_content), scope: SCOPE})
       authorizer.fetch_access_token!
       authorizer
+    end
+
+    def json_content
+      if false
+        Rails.root.join("config/google_account_json/shogi-web-production-93737ceaabf3.json").read
+        Rails.root.join("config/google_account_json/shogi-web-development-2792594c71a6.json").read
+      else
+        Rails.application.credentials.dig(:google_api, Rails.env).to_json
+      end
     end
 
     def spreadsheet_create(title = nil)
@@ -41,7 +45,7 @@ module GoogleApi
     # スプレッドシートを削除するメソッド
     def spreadsheet_delete(spreadsheet_id)
       @drive_service.delete_file(spreadsheet_id)
-      puts "Spreadsheet with ID #{spreadsheet_id} deleted successfully."
+      Rails.logger.info "Spreadsheet with ID #{spreadsheet_id} deleted successfully."
     end
 
     def spreadsheet_share(spreadsheet_id)

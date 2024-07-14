@@ -89,7 +89,8 @@ module Swars
 
         ################################################################################
 
-        { key: "10連勝",                 icon: "🔥",   message: "勢いに乗ってたくさん勝った",  if_cond: proc { win_lose_streak_stat.ten_win? },},
+        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",                  if_cond: proc { vitality_stat.level >= 4 },},
+        { key: "10連勝",                 icon: "🍉",   message: "すげー連勝した",              if_cond: proc { win_lose_streak_stat.ten_win? },},
         { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい",        if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
         ################################################################################
@@ -139,6 +140,10 @@ module Swars
         { key: "詰まされマン",   icon: "Ⓜ️",    message: "Mの傾向がある",      if_cond: proc { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "切れ負けの常連",     if_cond: proc { judge_final_stat.master_ratio(:TIMEOUT).try { self >= 0.25 } },},
         { key: "タイムキーパー", icon: "⏰",   message: "時間の使い方が上手", if_cond: proc { judge_final_stat.master_ratio(:TIMEOUT).try { self == 0 } },},
+
+        ################################################################################ 隠れキャラ
+
+        { key: "ただのサンタ", icon: "🎅",  message: "将棋の戦績が気になる君たちへのクリスマスプレゼントに勝利の秘訣を贈ろうと思ったけど結局は地道な鍛練しかないんじゃ", if_cond: proc { Time.current.then { |t| (t.month == 12 && t.day == 24) || Rails.env.local? } }, },
       ]
     end
   end

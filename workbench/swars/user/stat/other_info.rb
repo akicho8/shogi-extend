@@ -1,5 +1,5 @@
 require "./setup"
-tp Swars::User::Stat::OtherInfo["勝敗別平均手数"].bottom_message # => #<Proc:0x0000000125adb8f0 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:96>
+tp Swars::User::Stat::OtherInfo["勝敗別平均手数"].help_message # => #<Proc:0x0000000125adb8f0 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:96>
 tp Swars::User::Stat::OtherInfo
 # >> |------------------------------------------------------------------------------------------------------|
 # >> | #<Proc:0x0000000125adb8f0 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:96> |

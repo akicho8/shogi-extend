@@ -34,6 +34,11 @@ module Swars
       UrlProxy.full_url_for("/swars/users/#{key}")
     end
 
+    def google_search_url
+      query = { q: [key, "将棋"] * " " }
+      "https://www.google.co.jp/search?#{query.to_query}"
+    end
+
     ################################################################################
 
     def to_s
