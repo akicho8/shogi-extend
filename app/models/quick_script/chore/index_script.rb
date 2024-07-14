@@ -3,19 +3,12 @@ module QuickScript
     class IndexScript < Base
       self.title = "Index"
       self.description = "スクリプト一覧を表示する"
-
       self.form_method = :get
       self.button_label = "検索"
-      self.per_page_default = 500
-
-      # self.per_page_default = 1000
-      # self.router_push_failed_then_fetch = true
-      # self.button_click_loading = true
 
       def form_parts
         super + [
           {
-            # :label   => "部分一致文字列",
             :key     => :query,
             :type    => :string,
             :default => params[:query].to_s,
@@ -40,10 +33,8 @@ module QuickScript
           rows = rows.collect { |e| e.except("グループ") }
         end
 
-        simple_table(rows)
+        rows
       end
-
-      private
 
       def all
         @all ||= yield_self do
@@ -77,6 +68,16 @@ module QuickScript
         end
       end
 
+      def title
+        if primary_qs_group
+          primary_qs_group.name
+        else
+          super
+        end
+      end
+
+      private
+
       def all_sort(all)
         all.sort_by do |e|
           [e.qs_group_info, e.ordered_index, e.title]
@@ -93,25 +94,12 @@ module QuickScript
         end
       end
 
-      def title
-        # if v = params[:qs_group_only]
-        #   "Index for #{v}"
-        # else
-        #   super
-        # end
-        if primary_qs_group
-          primary_qs_group.name
-        else
-          super
-        end
-      end
-
       def current_queries
         params[:query].to_s.scan(/\S+/)
       end
 
       def show_all
-        params[:query].to_s == "*"
+        params[:query].to_s.strip == "*"
       end
     end
   end

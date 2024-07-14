@@ -13,12 +13,10 @@ module QuickScript
         simple_table(rows)
       end
 
-      private
-
       def all
         @all ||= yield_self do
           all = QsGroupInfo.values
-          if Rails.env.local?
+          if Rails.env.development?
           else
             all = all.reject { |e| e.admin_only && !admin_user }
           end

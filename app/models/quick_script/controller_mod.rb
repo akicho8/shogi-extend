@@ -5,7 +5,7 @@ module QuickScript
     end
 
     def session
-      @session ||= controller ? controller.session : {}
+      @session ||= controller.respond_to?(:session) ? controller.session : {}
     end
 
     def request_format
@@ -37,8 +37,10 @@ module QuickScript
     end
 
     def all_content_render
-      controller.respond_to do |format|
-        render_format(format)
+      if controller
+        controller.respond_to do |format|
+          render_format(format)
+        end
       end
     end
 

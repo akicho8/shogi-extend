@@ -11,18 +11,6 @@ module QuickScript
       def short_title
         title.to_s.remove(/\A#{qs_group_info.name}\s*/) # "将棋ウォーズ囚人検索" => "囚人検索"
       end
-
-      def ordered_index
-        @ordered_index ||= yield_self do
-          index = Float::INFINITY
-          if av = "quick_script/#{qs_group_key}/ordered_index".classify.safe_constantize
-            if i = av.index(self)
-              index = i
-            end
-          end
-          index
-        end
-      end
     end
 
     def as_json(*)
@@ -30,8 +18,10 @@ module QuickScript
     end
 
     def meta_render
-      controller.respond_to do |format|
-        format.json { controller.render json: meta_for_async_data }
+      if controller
+        controller.respond_to do |format|
+          format.json { controller.render json: meta_for_async_data }
+        end
       end
     end
 
