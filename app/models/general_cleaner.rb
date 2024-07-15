@@ -76,7 +76,7 @@ class GeneralCleaner
         end
       end
       @group["成功"] += 1
-    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked, ActiveRecord::InvalidForeignKey, Google::Apis::ClientError => error
+    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked, ActiveRecord::InvalidForeignKey, Google::Apis::ClientError, Signet::AuthorizationError => error
       @group["失敗"] += 1
       errors["#{error.message} (#{error.class.name})"] += 1
     end

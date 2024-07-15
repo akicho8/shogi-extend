@@ -9,11 +9,10 @@ module QuickScript
       klass = klass_fetch(params)
       instance = klass.new(params, options)
       if params[:__FOR_ASYNC_DATA__]
-        AppLog.info(subject: "[#{klass.name}][__FOR_ASYNC_DATA__]", body: params.to_t)
         instance.meta_render
         return
       end
-      AppLog.info(subject: "[#{klass.name}][content]", body: params.to_t)
+      AppLog.info(subject: "[#{klass.name}]", body: params.to_t)
       instance.all_content_render
     end
 

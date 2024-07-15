@@ -28,7 +28,7 @@ module Swars
 
       # "ALICE_BOB" なら "alice\_bob" (MySQL依存)
       def like_value
-        MysqlToolkit.escape_for_like(downcase)
+        ActiveRecord::Base.sanitize_sql_like(downcase)
       end
 
       # 部分一致した回数

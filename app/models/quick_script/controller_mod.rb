@@ -45,7 +45,11 @@ module QuickScript
     end
 
     def render_format(format)
-      format.json { controller.render json: self }
+      format.json { controller.render json: self, status: status_code }
+    end
+
+    def status_code
+      params[:status_code].try { to_i }
     end
   end
 end

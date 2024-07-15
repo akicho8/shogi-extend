@@ -22,12 +22,13 @@ module QuickScript
         scope = ::Swars::User.all
         scope = scope.ban_only
         scope = scope.order(ban_at: :desc)
-        scope = scope.joins(:grade)
-        scope = scope.includes(:grade)
+        scope = scope.joins(:grade)          # 1:1 なので join でよい。条件に含まれるため必要。
+        scope = scope.includes(:grade)       # for e.grade.name
+        scope = scope.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
         current_queries.each do |query|
-          query = MysqlToolkit.escape_for_like(query.downcase)
-          c1 = ::Swars::User.where(["LOWER(user_key) LIKE ?", "%#{query}%"])
-          c2 = ::Swars::User.where(::Swars::Grade.arel_table[:key].eq(query))
+          sanitized_query = ActiveRecord::Base.sanitize_sql_like(query.downcase)
+          c1 = ::Swars::User.where("LOWER(swars_users.user_key) LIKE ?", "%#{sanitized_query}%")
+          c2 = ::Swars::Grade.unscoped.where("`swars_grades`.`key` LIKE ?", "%#{sanitized_query}%")
           scope = scope.and(c1.or(c2))
         end
         pagination_for(scope, always_table: false) do |scope|
@@ -36,7 +37,7 @@ module QuickScript
               "名前" => { _link_to: { name: e.key, url: e.key_info.my_page_url }, },
               "段位" => e.grade.name,
               "発見" => e.ban_at.to_fs(:ymd),
-              ""     => { _nuxt_link: { name: "棋譜(#{e.memberships.count})", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+              ""     => { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
             }
           end
         end

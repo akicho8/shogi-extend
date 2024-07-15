@@ -20,7 +20,7 @@ module QuickScript
     def meta_render
       if controller
         controller.respond_to do |format|
-          format.json { controller.render json: meta_for_async_data }
+          format.json { controller.render json: meta_for_async_data, status: status_code }
         end
       end
     end
