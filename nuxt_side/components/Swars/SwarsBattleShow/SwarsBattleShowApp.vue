@@ -309,7 +309,7 @@ export default {
       return {
         title: [this.og_title, "将棋ウォーズ"],
         og_title: this.og_title,
-        og_image: this.og_image,
+        og_image_path: this.og_image_path,
         description: this.record.description,
       }
     },
@@ -322,7 +322,7 @@ export default {
       return this.$route.query.color_theme_key || "is_color_theme_real"
     },
 
-    og_image() {
+    og_image_path() {
       return QueryString.stringifyUrl({
         url: `${this.record.show_path}.png`,
         query: {

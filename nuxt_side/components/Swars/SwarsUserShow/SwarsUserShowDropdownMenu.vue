@@ -37,7 +37,7 @@ DotsMenuButton.SwarsUserShowDropdownMenu
 
   b-dropdown-item(:href="TheApp.google_search_url" :target="target_default")
     b-icon(icon="google" size="is-small")
-    span ぐぐる
+    span ググる
 
   b-dropdown-item(:href="TheApp.swars_player_url" :target="target_default")
     b-icon(icon="link" size="is-small")

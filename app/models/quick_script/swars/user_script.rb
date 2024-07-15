@@ -159,7 +159,7 @@ module QuickScript
                   row["リンク1"] = hyper_link("棋譜検索(#{e.memberships.size})", e.key_info.swars_search_url)
                   row["リンク2"] = hyper_link("プレイヤー情報", e.key_info.swars_player_url)
                   row["リンク3"] = hyper_link("本家",           e.key_info.my_page_url)
-                  row["リンク4"] = hyper_link("ぐぐる",         e.key_info.google_search_url)
+                  row["リンク4"] = hyper_link("ググる",         e.key_info.google_search_url)
                   row["最高段位(index)"] = e.grade.pure_info.priority
                 end
               end
@@ -188,7 +188,7 @@ module QuickScript
                 row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: {name: "swars-search", query: { query: e.user_key } }, }, }
                 row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
                 row["リンク3"] = tag.a("本家", href: e.key_info.my_page_url, target: "_blank")
-                row["リンク4"] = tag.a("ぐぐる", href: e.key_info.google_search_url, target: "_blank")
+                row["リンク4"] = tag.a("ググる", href: e.key_info.google_search_url, target: "_blank")
               end
               if Rails.env.local?
                 row["最高段位(index)"] = e.grade.pure_info.priority

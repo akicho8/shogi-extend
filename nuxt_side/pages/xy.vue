@@ -17,7 +17,7 @@ export default {
         description: "将棋の符号を覚えるツールです",
         og_description: this.config.description,
         og_image_key: "xy",
-        twitter_card_is_small: true,
+        og_card_size: "small",
       }
     },
   },

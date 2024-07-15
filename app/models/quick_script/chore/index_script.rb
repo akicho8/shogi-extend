@@ -22,11 +22,15 @@ module QuickScript
         end
 
         rows = all_sort(all).collect do |e|
-          {
-            "名前" => { _nuxt_link: { name: e.short_title, to: { path: e.link_path }, }, },
-            "内容" => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
-            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.link_path }, }, },
+          row = {
+            "名前"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_link_path }, }, },
+            "内容"     => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
+            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_link_path }, }, },
           }
+          if admin_user || Rails.env.local?
+            row["API"] = tag.a(e.qs_key, href: e.qs_api_url, target: "_blank")
+          end
+          row
         end
 
         if qs_group_infos.one?

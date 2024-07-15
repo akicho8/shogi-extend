@@ -8,6 +8,8 @@ module QuickScript
       @session ||= controller.respond_to?(:session) ? controller.session : {}
     end
 
+    ################################################################################
+
     def request_format
       if Rails.env.local?
         if params[:_format]
@@ -36,7 +38,20 @@ module QuickScript
       !request_post?
     end
 
-    def all_content_render
+    ################################################################################
+
+    def render_all
+      if params[:__FOR_ASYNC_DATA__]
+        render_for_ogp
+      else
+        AppLog.info(subject: "[#{self.class.name}]", body: params.to_t)
+        render_for_content
+      end
+    end
+
+    ################################################################################
+
+    def render_for_content
       if controller
         controller.respond_to do |format|
           render_format(format)
@@ -50,6 +65,16 @@ module QuickScript
 
     def status_code
       params[:status_code].try { to_i }
+    end
+
+    ################################################################################
+
+    def render_for_ogp
+      if controller
+        controller.respond_to do |format|
+          format.json { controller.render json: meta_for_async_data, status: status_code }
+        end
+      end
     end
   end
 end

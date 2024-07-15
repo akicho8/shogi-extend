@@ -1,13 +1,13 @@
 module QuickScript
   module Chore
-    class GroupListScript < Base
-      self.title = "簡易ツール"
+    class GroupScript < Base
+      self.title = "簡易ツールのグループ一覧"
       self.description = "グループ一覧を表示する"
 
       def call
         rows = all.collect do |e|
           {
-            "グループ" => { _nuxt_link: { name: e.name, to: { path: e.link_path }, }, },
+            "グループ" => { _nuxt_link: { name: e.name, to: { path: e.qs_link_path }, }, },
           }
         end
         simple_table(rows)

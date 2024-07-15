@@ -1,24 +1,32 @@
+# frozen-string-literal: true
+
 module QuickScript
   module Main
     extend self
 
     def dispatch(params, options = {})
+      new_from(params, options).tap(&:render_all)
+    end
+
+    def new_from(params, options = {})
+      params = prepare(params)
+      klass_fetch(params).new(params, options)
+    end
+
+    def prepare(params)
+      params = params.merge({
+          :qs_group_key => params[:qs_group_key].to_s.underscore,
+          :qs_page_key  => params[:qs_page_key].to_s.underscore,
+        })
       if params[:qs_page_key] == "__qs_page_key_is_blank__"
         params = params.merge(qs_group_only: params[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
       end
-      klass = klass_fetch(params)
-      instance = klass.new(params, options)
-      if params[:__FOR_ASYNC_DATA__]
-        instance.meta_render
-        return
-      end
-      AppLog.info(subject: "[#{klass.name}]", body: params.to_t)
-      instance.all_content_render
+      params
     end
 
     def klass_fetch(params)
-      klass = "quick_script/#{params[:qs_group_key]}/#{params[:qs_page_key]}_script".underscore.classify.safe_constantize
-      klass || Chore::NotFoundScript
+      str = "quick_script/#{params[:qs_group_key]}/#{params[:qs_page_key]}_script"
+      str.classify.safe_constantize || Chore::NotFoundScript
     end
 
     def all
@@ -27,15 +35,19 @@ module QuickScript
     end
 
     def info
-      all.collect { |e| { model: e, title: e.title, path: e.link_path } }
+      all.collect do |e|
+        {
+          :model       => e,
+          :qs_key      => e.qs_key,
+          "OGP画像"    => e.og_card_path.exist? ? "○" : "",
+          :title       => e.title,
+          :description => e.description,
+        }
+      end
     end
 
-    def name_prefix
+    def path_prefix
       :bin
-    end
-
-    def root_dir
-      Pathname(__dir__)
     end
   end
 end

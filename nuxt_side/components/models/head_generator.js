@@ -37,7 +37,8 @@ export class HeadGenerator {
 
     this.image_set()
 
-    if (this.meta.short_title) {
+    // page_title_only を有効にすると "bbb - aaa" を "bbb" にする
+    if (this.meta.page_title_only) {
       this.h.titleTemplate = ""
     }
 
@@ -69,21 +70,22 @@ export class HeadGenerator {
       this.set("og:image", s)
     }
 
-    s = this.meta.og_image
+    s = this.meta.og_image_path
     if (s) {
       s = this.$config.MY_SITE_URL + s
       this.set("og:image", s)
     }
 
-    s = this.meta.og_video
+    s = this.meta.og_video_path
     if (s) {
       s = this.$config.MY_SITE_URL + s
       this.set("og:video", s)
     }
 
-    s = this.meta.twitter_card_is_small
-    if (s) {
-      this.set("twitter:card", "summary")
+    // nuxt.config.js で初期値を summary_large_image にしている
+    s = this.meta.og_card_size  // small or large
+    if (s === "small") {
+      this.set("twitter:card", "summary") // summary or summary_large_image
     }
   }
 

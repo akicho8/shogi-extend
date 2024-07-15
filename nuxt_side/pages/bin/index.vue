@@ -12,7 +12,7 @@ export default {
   // 置き換える場合
   created() {
     this.$route.params.qs_group_key = "chore"
-    this.$route.params.qs_page_key   = "group_list"
+    this.$route.params.qs_page_key  = "group"
     // this.$route.query.qs_group_index = true
   },
 }

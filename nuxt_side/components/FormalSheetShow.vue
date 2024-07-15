@@ -286,7 +286,7 @@ export default {
     meta() {
       return {
         title: this.info.html_title,
-        short_title: true,
+        page_title_only: true,
         og_title: this.info.html_title,
         og_image_key: "formal-sheet",
         og_description: "",

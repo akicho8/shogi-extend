@@ -54,8 +54,8 @@ end
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/autoexec_mod.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/base.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/base.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/group_list_script.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/group_list_script.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/group_script.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/group_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/index_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/index_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/invisible_script.rb

@@ -68,7 +68,7 @@ module Kiwi
       assert { lemon1.thumbnail_real_path.exist? }
       assert { lemon1.thumbnail_browser_path }
       assert { lemon1.thumbnail_browser_path_if_exist }
-      assert { banana1.og_meta[:og_image] == lemon1.thumbnail_browser_path }
+      assert { banana1.og_meta[:og_image_path] == lemon1.thumbnail_browser_path }
 
       tp banana1 if $0 == "-" # => #<Kiwi::Banana id: 20, key: "FIJOSUQRFOl", user_id: 21, folder_id: 63, lemon_id: 21, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.5, banana_messages_count: 0, access_logs_count: 0, created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
 

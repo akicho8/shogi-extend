@@ -62,10 +62,10 @@ export default {
   computed: {
     meta() {
       return {
-        short_title: true,
+        page_title_only: true,
         title: this.external_app_info.shortcut_name, // アイコン名なので短かく
         og_title: this.long_title,
-        twitter_card_is_small: true,
+        og_card_size: "small",
         og_image_key: "swars-search",
         og_description: "",
         link: [

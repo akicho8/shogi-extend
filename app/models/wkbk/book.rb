@@ -237,7 +237,7 @@ module Wkbk
         {
           :title       => [title, user.name].join(" - "),
           :description => description || "",
-          :og_image    => og_image_path || "/ogp/rack-books.png",
+          :og_image_path    => og_image_path || "/ogp/rack-books.png",
         }
       end
     end

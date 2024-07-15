@@ -58,7 +58,7 @@ export default {
     meta() {
       return {
         title: this.message_default,
-        short_title: true,
+        page_title_only: true,
       }
     },
 

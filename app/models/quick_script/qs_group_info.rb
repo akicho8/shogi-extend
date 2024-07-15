@@ -9,8 +9,8 @@ module QuickScript
       { key: :"group1", name: "GROUP1",       admin_only: true,  },
     ]
 
-    def link_path
-      "/bin/#{key}"
+    def qs_link_path
+      "/bin/#{key}".dasherize
     end
 
     def name

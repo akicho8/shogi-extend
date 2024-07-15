@@ -158,7 +158,7 @@ export default {
     // 初回以降も呼ばれるため attributes をまぜる
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
     this.fetch_index ??= 0
-    const new_params = this.new_params_create({fetch_index: this.fetch_index})
+    const new_params = this.new_params_create({__fetch_index__: this.fetch_index})
     this.$axios.$get(this.current_api_path, {params: new_params}).then(params => {
       this.fetch_index += 1
       this.params_receive(params)

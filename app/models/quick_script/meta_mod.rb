@@ -1,15 +1,21 @@
 module QuickScript
   concern :MetaMod do
     prepended do
-      class_attribute :title,                 default: nil
-      class_attribute :description,           default: nil
-      class_attribute :og_image_key,          default: nil
-      class_attribute :twitter_card_is_small, default: true
+      class_attribute :og_image_key, default: nil
+      class_attribute :og_card_size, default: nil
     end
 
     class_methods do
-      def short_title
-        title.to_s.remove(/\A#{qs_group_info.name}\s*/) # "将棋ウォーズ囚人検索" => "囚人検索"
+      def og_image_key_default
+        @og_image_key_default ||= og_card_path.exist? ? "quick_script/#{qs_key.underscore}" : :application # or :quick_script
+      end
+
+      def og_card_size_default
+        @og_card_size_default ||= og_card_path.exist? ? :large : :small
+      end
+
+      def og_card_path
+        Rails.root.join("nuxt_side/static/ogp/quick_script/#{qs_key.underscore}.png")
       end
     end
 
@@ -17,27 +23,15 @@ module QuickScript
       super.merge(meta: meta)
     end
 
-    def meta_render
-      if controller
-        controller.respond_to do |format|
-          format.json { controller.render json: meta_for_async_data, status: status_code }
-        end
-      end
-    end
-
     def meta_for_async_data
       meta
     end
 
-    private
-
     def meta
-      {
-        :title                 => title,
-        :description           => description,
-        :og_image_key          => og_image_key,
-        :twitter_card_is_small => twitter_card_is_small,
-      }
+      super.merge({
+          :og_image_key => og_image_key || self.class.og_image_key_default,
+          :og_card_size => og_card_size || self.class.og_card_size_default,
+        })
     end
   end
 end

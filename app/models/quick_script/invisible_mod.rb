@@ -5,7 +5,7 @@ module QuickScript
     end
 
     class_methods do
-      def short_title
+      def title_for_index
         if qs_invisible
           return "*#{super}*"
         end

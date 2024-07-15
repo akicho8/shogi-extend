@@ -16,8 +16,14 @@ RSpec.describe Api::QuickScriptsController, type: :controller do
     assert { response.status == 200 }
   end
 
-  it "特定のグループに対してはBASIC認証が出る" do
-    get :show, params: { qs_group_key: "dev", qs_page_key: "null", format: "json" }
-    assert { response.status == 401 }
+  describe "特定のグループに対しては即座にBASIC認証が出る" do
+    it "dev" do
+      get :show, params: { qs_group_key: "dev", qs_page_key: "__qs_page_key_is_blank__" }
+      assert { response.status == 401 }
+    end
+    it "admin" do
+      get :show, params: { qs_group_key: "admin", qs_page_key: "__qs_page_key_is_blank__" }
+      assert { response.status == 401 }
+    end
   end
 end

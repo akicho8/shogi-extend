@@ -111,7 +111,7 @@ export default {
     meta() {
       return {
         title: this.$config.APP_NAME,
-        short_title: true,
+        page_title_only: true,
       }
     },
   },

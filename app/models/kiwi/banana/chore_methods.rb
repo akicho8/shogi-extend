@@ -5,8 +5,8 @@ module Kiwi
         {
           :title       => [title, user.name].compact.join(" - "),
           :description => description.to_s,
-          :og_image    => lemon.og_image_path,
-          :og_video    => lemon.og_video_path,
+          :og_image_path    => lemon.og_image_path,
+          :og_video_path    => lemon.og_video_path,
         }
       end
 

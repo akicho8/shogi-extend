@@ -91,7 +91,7 @@ export default {
         return {
           title: this.page_title,
           description: this.record.description,
-          og_image: this.record.avatar_path,
+          og_image_path: this.record.avatar_path,
         }
       }
     },

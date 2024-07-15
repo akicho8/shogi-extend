@@ -1,3 +1,6 @@
 require "./setup"
-QuickScript::Dev::NullScript.qs_group_key  # => "dev"
-QuickScript::Dev::NullScript.qs_page_key   # => "null"
+QuickScript::Dev::FooBarBazScript.qs_key       # => "dev/foo_bar_baz"
+QuickScript::Dev::FooBarBazScript.qs_link_path # => "/bin/dev/foo-bar-baz"
+QuickScript::Dev::FooBarBazScript.qs_api_url   # => "http://localhost:3000/api/bin/dev/foo_bar_baz.json"
+QuickScript::Dev::FooBarBazScript.qs_group_key # => "dev"
+QuickScript::Dev::FooBarBazScript.qs_page_key  # => "foo_bar_baz"

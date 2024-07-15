@@ -251,7 +251,7 @@ module Wkbk
           :title       => [title, user.name].find_all(&:present?).join(" - "),
           # :description => description || "",
           :description => direction_message,
-          :og_image    => og_image_path || "/ogp/rack-books.png",
+          :og_image_path    => og_image_path || "/ogp/rack-books.png",
         }
       end
     end

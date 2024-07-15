@@ -36,7 +36,8 @@ module QuickScript
       end
 
       def csv_url
-        Rails.application.routes.url_helpers.url_for(:root) + "api/bin/#{params[:qs_group_key]}/#{params[:qs_page_key]}.csv"
+        # Rails.application.routes.url_helpers.url_for(:root) + "api/bin/#{params[:qs_group_key]}/#{params[:qs_page_key]}.csv"
+        self.class.qs_api_url(:csv)
       end
     end
   end

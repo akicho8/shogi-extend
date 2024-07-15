@@ -81,7 +81,7 @@ export default {
     meta() {
       return {
         title: this.page_title,
-        twitter_card_is_small: true,
+        og_card_size: "small",
         og_image_key: "swars-search",
         og_description: "",
       }

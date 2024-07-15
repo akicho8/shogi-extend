@@ -2,41 +2,35 @@ require "rails_helper"
 
 module QuickScript
   RSpec.describe Main, type: :model do
-    it "klass_fetch" do
-      assert { Main.klass_fetch(qs_group_key: "dev", qs_page_key: "null") == Dev::NullScript }
+    describe "dispatch" do
+      it "実行した結果を返す" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "null") }
+      end
+
+      it "OGPの情報のみを返す" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "null", __FOR_ASYNC_DATA__: true) }
+      end
+
+      it "対応するクラスが反応している" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "null").class == Dev::NullScript }
+      end
+
+      it "対応するクラスがない場合" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "xxx").class == Chore::NotFoundScript }
+      end
+
+      it "ページの指定がない場合は一覧に委譲する" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "__qs_page_key_is_blank__").class == Chore::IndexScript }
+      end
+
+      it "ハイフンとアンダーバーの差異を吸収する" do
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "foo-bar-baz").class == Dev::FooBarBazScript }
+        assert { Main.dispatch(qs_group_key: "dev", qs_page_key: "foo_bar_baz").class == Dev::FooBarBazScript }
+      end
     end
 
-    it "グループ内のリストを返す" do
-      Main.dispatch(qs_group_key: "dev", qs_page_key: "__qs_page_key_is_blank__")
-    end
-
-    it "基本形" do
-      Main.dispatch(qs_group_key: "dev", qs_page_key: "null")
-    end
-
-    it "OGP用の情報のみを返す" do
-      Main.dispatch(qs_group_key: "dev", qs_page_key: "null", __FOR_ASYNC_DATA__: true)
+    it "info" do
+      assert { Main.info }
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
-# >> QuickScript::Main
-# >>   klass_fetch
-# >>   グループ内のリストを返す
-# >>   基本形
-# >>   OGP用の情報のみを返す
-# >> 
-# >> Top 4 slowest examples (0.31756 seconds, 13.4% of total time):
-# >>   QuickScript::Main klass_fetch
-# >>     0.14253 seconds -:5
-# >>   QuickScript::Main グループ内のリストを返す
-# >>     0.06815 seconds -:9
-# >>   QuickScript::Main 基本形
-# >>     0.05356 seconds -:13
-# >>   QuickScript::Main OGP用の情報のみを返す
-# >>     0.05333 seconds -:17
-# >> 
-# >> Finished in 2.37 seconds (files took 2.09 seconds to load)
-# >> 4 examples, 0 failures
-# >> 

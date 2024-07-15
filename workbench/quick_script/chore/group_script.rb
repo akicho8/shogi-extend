@@ -1,0 +1,2 @@
+require "./setup"
+QuickScript::Chore::GroupScript.new.call # => {:_component=>"QuickScriptViewValueAsTable", :rows=>[{"種類"=>{:_nuxt_link=>{:name=>"将棋ウォーズ", :to=>{:path=>"/bin/swars"}}}}, {"種類"=>{:_nuxt_link=>{:name=>"開発用", :to=>{:path=>"/bin/dev"}}}}, {"種類"=>{:_nuxt_link=>{:name=>"管理者用", :to=>{:path=>"/bin/admin"}}}}, {"種類"=>{:_nuxt_link=>{:name=>"雑用", :to=>{:path=>"/bin/chore"}}}}, {"種類"=>{:_nuxt_link=>{:name=>"GROUP1", :to=>{:path=>"/bin/group1"}}}}], :always_table=>true, :header_hide=>true}

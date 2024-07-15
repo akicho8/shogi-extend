@@ -50,7 +50,7 @@ module Kiwi
       end
 
       def og_video_path
-        if recipe_info.og_video
+        if recipe_info.og_video_p
           browser_path
         end
       end

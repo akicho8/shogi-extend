@@ -35,11 +35,11 @@ export default {
     meta() {
       if (this.config) {
         return {
-          short_title: true,
+          page_title_only: true,
           title: this.config.twitter_card_options.title,
           description: "リレー将棋・詰将棋の作成や公開・課題局面の作成や公開・対人戦向けオンライン盤共有などが可能です",
           og_description: this.config.twitter_card_options.description,
-          og_image: this.config.twitter_card_options.image,
+          og_image_path: this.config.twitter_card_options.image,
         }
       }
     }
