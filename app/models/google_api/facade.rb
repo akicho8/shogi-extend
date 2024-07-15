@@ -17,6 +17,12 @@ module GoogleApi
       response
     end
 
+    def rows
+      @rows ||= [column_keys] + source_rows.collect(&:values)
+    end
+
+    private
+
     def decoration
       @requests = []
       header_grey_draw
@@ -29,7 +35,7 @@ module GoogleApi
 
     def validate!
       if source_rows.blank?
-        # raise ArgumentError, "params[:source_rows] is blank"
+        raise ArgumentError, "params[:rows] is blank"
       end
     end
 
@@ -69,7 +75,7 @@ module GoogleApi
       #       sheet_id: 0,
       #       dimension: 'COLUMNS',
       #       start_index: 0,
-      #       end_index: row_count,
+      #       end_index: height,
       #     }
       #   }
       # }
@@ -184,7 +190,15 @@ module GoogleApi
     end
 
     def spreadsheet
-      @spreadsheet ||= toolkit.spreadsheet_create(@params[:title] || "New Spreadsheet")
+      @spreadsheet ||= toolkit.spreadsheet_create(title)
+    end
+
+    def title
+      str = [@params[:title] || "New Spreadsheet"]
+      if Rails.env.local?
+        str << "(#{Rails.env})"
+      end
+      str * " "
     end
 
     def spreadsheet_id
@@ -196,11 +210,7 @@ module GoogleApi
     end
 
     def source_rows
-      @params[:source_rows]
-    end
-
-    def rows
-      @rows ||= [column_keys] + source_rows.collect(&:values)
+      Array.wrap(@params[:rows])
     end
 
     def column_keys
@@ -208,14 +218,14 @@ module GoogleApi
     end
 
     def data_range
-      "Sheet1!R1C1:R#{row_count}C#{column_count}"
+      "Sheet1!R1C1:R#{height}C#{width}"
     end
 
-    def row_count
+    def height
       rows.size
     end
 
-    def column_count
+    def width
       if row = rows.first
         row.size
       else

@@ -16,7 +16,7 @@ module QuickScript
             { "名前": "carol", "読み": "きゃろる",   },
           ]
           # rows = nil
-          url = GoogleApi::Facade.new(source_rows: rows).call
+          url = GoogleApi::Facade.new(rows: rows).call
           redirect_to url, tab_open: true
         end
       end

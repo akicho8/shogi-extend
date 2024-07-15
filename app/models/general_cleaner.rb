@@ -68,11 +68,15 @@ class GeneralCleaner
           # ActiveRecord::InvalidForeignKey:
           #   Mysql2::Error: Cannot delete or update a parent row: a foreign key constraint fails (`shogi_web_test`.`swars_memberships`, CONSTRAINT `fk_rails_d0aeb0e4e3` FOREIGN KEY (`battle_id`) REFERENCES `swars_battles` (`id`))
           # のエラーになる
-          record.destroy!
+          method = :destroy!
+          # if record.respond_to?(:destroy_for_general_cleaner)
+          #   method = :destroy_for_general_cleaner
+          # end
+          record.public_send(method)
         end
       end
       @group["成功"] += 1
-    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked, ActiveRecord::InvalidForeignKey => error
+    rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked, ActiveRecord::InvalidForeignKey, Google::Apis::ClientError => error
       @group["失敗"] += 1
       errors["#{error.message} (#{error.class.name})"] += 1
     end

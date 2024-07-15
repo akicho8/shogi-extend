@@ -402,7 +402,7 @@ export default {
 .QuickScriptView
   .MainSection.section
     +mobile
-      padding: 0.75rem 0.75rem
+      padding: 1.5rem 0.75rem
     +tablet
       padding: 1.75rem 0rem
 

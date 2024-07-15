@@ -12,7 +12,9 @@ module QuickScript
         if v = params[:return_to]
           content << tag.p(:class => "block") { tag.a("進む", :href => v, :class => "button is-primary") }
         end
-        tag.div { content.join.html_safe }
+        if content.present?
+          tag.div { content.join.html_safe }
+        end
       end
 
       def title

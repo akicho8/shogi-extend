@@ -3,7 +3,7 @@ require "google/apis/drive_v3"
 require "googleauth"
 
 module GoogleApi
-  # このクラスはただのユーティリティ関数の寄せ集めであって使い安さは考慮されていない
+  # このクラスは抽象度を上げるためにメソッドを寄せ集めただけであって使いやすさはまったく考慮されていない
   class Toolkit
     APPLICATION_NAME = "SHOGI-EXTEND"
 
@@ -20,6 +20,16 @@ module GoogleApi
       @drive_service = Google::Apis::DriveV3::DriveService.new
       @drive_service.client_options.application_name = APPLICATION_NAME
       @drive_service.authorization = authorize
+    end
+
+    def dispatch(method, *args, **kwargs, &block)
+      AppLog.info(subject: "[GoogleApi][Toolkit][START] #{method}")
+      begin
+        send(method, *args, **kwargs, &block)
+      rescue => error
+        AppLog.important(subject: "[GoogleApi][Toolkit][#{error.class.name}] #{method}", body: error)
+        raise error
+      end
     end
 
     def authorize
@@ -39,13 +49,14 @@ module GoogleApi
 
     def spreadsheet_create(title = nil)
       spreadsheet = Google::Apis::SheetsV4::Spreadsheet.new(properties: { title: title || "New Spreadsheet" })
-      @sheets_service.create_spreadsheet(spreadsheet)
+      instance = @sheets_service.create_spreadsheet(spreadsheet)
+      AppLog.important(subject: "[GoogleApi][spreadsheet_create] #{instance.spreadsheet_id}")
+      instance
     end
 
-    # スプレッドシートを削除するメソッド
     def spreadsheet_delete(spreadsheet_id)
       @drive_service.delete_file(spreadsheet_id)
-      Rails.logger.info "Spreadsheet with ID #{spreadsheet_id} deleted successfully."
+      AppLog.important(subject: "[GoogleApi][spreadsheet_delete] #{spreadsheet_id}")
     end
 
     def spreadsheet_share(spreadsheet_id)

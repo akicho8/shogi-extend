@@ -164,7 +164,7 @@ module QuickScript
               end
             end
 
-            url = GoogleApi::Facade.new(title: "将棋ウォーズ棋力一覧", source_rows: rows, columns_hash: columns_hash).call
+            url = GoogleApi::Facade.new(title: "将棋ウォーズ棋力一覧", rows: rows, columns_hash: columns_hash).call
             redirect_to url, tab_open: true
           end
         end
@@ -247,7 +247,7 @@ module QuickScript
           "居飛車"   => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
-          "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/mm", }, },
+          "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd", }, },
           "勢い"     => { number_format: { type: "NUMBER",  pattern: "0.00",       }, },
         }
       end

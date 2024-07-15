@@ -6,10 +6,14 @@ module GoogleApi
       validates :spreadsheet_id
     end
 
-    after_destroy do
-      AppLog.info(subject: "[GoogleApi][spreadsheet_id][削除]", body: spreadsheet_id)
-      toolkit = GoogleApi::Toolkit.new
-      toolkit.spreadsheet_delete(spreadsheet_id)
+    def spreadsheet_delete
+      GoogleApi::Toolkit.new.dispatch(:spreadsheet_delete, spreadsheet_id)
     end
+
+    # def destroy_for_general_cleaner
+    #   spreadsheet_delete and destroy!
+    # end
+
+    after_destroy :spreadsheet_delete
   end
 end
