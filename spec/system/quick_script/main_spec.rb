@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "QuickScript", type: :system do
+RSpec.describe "基本", type: :system do
   it "/bin ならグループ一覧を出す" do
     visit2 "/bin"
     assert_title(/簡易ツール/)
@@ -14,11 +14,6 @@ RSpec.describe "QuickScript", type: :system do
   it "Swars::UserScript" do
     visit2 "/bin/swars/user"
     assert_title(/将棋ウォーズ棋力一覧/)
-  end
-
-  it "ページが見つかりません" do
-    visit2 "/bin/swars/xxx"
-    assert_text("ページが見つかりません")
   end
 
   describe "非表示スクリプト" do

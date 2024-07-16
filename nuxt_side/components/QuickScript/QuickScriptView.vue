@@ -163,46 +163,8 @@ export default {
       this.fetch_index += 1
       this.params_receive(params)
     })
-      // .catch(error => {
-      //   console.log("in QuickScriptView start")
-      //
-      //   if (error.response && error.response.status === 401) {
-      //     console.log("401 エラーが発生した場合、クライアントサイドで再度 fetch する")
-      //     return { retry: true }
-      //   }
-      //
-      //   // エラーレスポンスの処理
-      //   if (error.response) {
-      //     // サーバーからのレスポンスがある場合
-      //     const status = error.response.status
-      //     const data = error.response.data
-      //
-      //     if (status === 400) {
-      //       console.error('Bad Request:', data)
-      //     } else if (status === 401) {
-      //       console.error('Unauthorized:', data)
-      //       // this.$router.push('/login') // ログインページにリダイレクト
-      //     } else if (status === 404) {
-      //       console.error('Not Found:', data)
-      //       // this.$router.push('/not-found') // カスタム404ページにリダイレクト
-      //     } else if (status === 500) {
-      //       console.error('Internal Server Error:', data)
-      //     } else {
-      //       console.error('Error:', data)
-      //     }
-      //
-      //     console.log("in QuickScriptView end")
-      //
-      //   } else {
-      //     // サーバーからのレスポンスがない場合（ネットワークエラーなど）
-      //     console.error('Network Error:', error.message)
-      //   }
-    // })
   },
 
-  created() {
-    // this.clog(this.$route)
-  },
   methods: {
     params_receive(params) {
       // fetchOnServer: true のときに実行すると this.toast_ok がないと言われる

@@ -13,18 +13,18 @@ export default {
   async asyncData({ $axios, params, query, error }) {
     if (process.server) {
       const url = `/api/bin/${params.qs_group_key ?? '__qs_group_key_is_blank__'}/${params.qs_page_key ?? '__qs_page_key_is_blank__'}.json`
-      // try {
-      const meta = await $axios.$get(url, { params: { ...query, __FOR_ASYNC_DATA__: true } })
-      return { meta }
-      // } catch (err) {
-      //   if (err.response && err.response.status === 404) {
-      //     // 404エラーを投げてNuxt.jsのエラーページを表示
-      //     error({ statusCode: 404, message: 'Page not found' })
-      //   } else {
-      //     // その他のエラー処理
-      //     error({ statusCode: err.response ? err.response.status : 500, message: err.message })
-      //   }
-      // }
+      try {
+        const meta = await $axios.$get(url, { params: { ...query, __FOR_ASYNC_DATA__: true } })
+        return { meta }
+      } catch (e) {
+        // console.warn(e)
+        // console.warn(e.response)
+        // console.warn(e.response.status)
+        // console.warn(e.response.statusText)
+        // console.warn(e.message)
+        // SSR で 404 が返ってきたときここの処理がないと 500 エラーの nuxt.js のエラー画面になってしまう
+        error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data})
+      }
     }
   },
 }

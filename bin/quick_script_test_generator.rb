@@ -62,8 +62,8 @@ end
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/invisible_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/message_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/message_script.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/not_found_script.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/not_found_script.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/status_code_script.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/status_code_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/chore/null_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/chore/null_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/controller_mod.rb

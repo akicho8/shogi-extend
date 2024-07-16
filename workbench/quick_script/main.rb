@@ -39,7 +39,7 @@ tp QuickScript::Main.info
 # >> | QuickScript::Dev::DownloadGetScript         | dev/download_get          |         | CSVダウンロード(GET)               | CSVダウンロードを行う                                                                                |
 # >> | QuickScript::Dev::CalcScript                | dev/calc                  |         | 計算機                             | 足し算を行う                                                                                         |
 # >> | QuickScript::Chore::NullScript              | chore/null                | ○      | 何もしない                         | 本当に何もしない                                                                                     |
-# >> | QuickScript::Chore::NotFoundScript          | chore/not_found           |         | Not Found                          | ページが見つかりません                                                                               |
+# >> | QuickScript::Chore::StatusCodeScript          | chore/status_code           |         | Not Found                          | ページが見つかりません                                                                               |
 # >> | QuickScript::Chore::MessageScript           | chore/message             |         | メッセージ表示                     | 引数のメッセージを表示する                                                                           |
 # >> | QuickScript::Chore::InvisibleScript         | chore/invisible           |         | 非表示                             | 見えてはいけないスクリプト                                                                           |
 # >> | QuickScript::Chore::IndexScript             | chore/index               |         | Index                              | スクリプト一覧を表示する                                                                             |

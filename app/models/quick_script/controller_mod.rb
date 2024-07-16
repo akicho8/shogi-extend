@@ -63,10 +63,6 @@ module QuickScript
       format.json { controller.render json: self, status: status_code }
     end
 
-    def status_code
-      params[:status_code].try { to_i }
-    end
-
     ################################################################################
 
     def render_for_ogp

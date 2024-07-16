@@ -1,3 +1,3 @@
-require "./setup"
-_ { QuickScript::Chore::NotFoundScript.new.call } # =>
-s { QuickScript::Chore::NotFoundScript.new.call } # =>
+require "../setup"
+_ { ActiveRecord::Base.connection.tables } # =>
+s { ActiveRecord::Base.connection.tables } # =>

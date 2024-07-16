@@ -11,7 +11,7 @@
 // })
 
 // https://axios.nuxtjs.org/helpers
-export default function ({ $axios, redirect, error: nuxtError }) {
+export default function ({ $axios, redirect, error }) {
   // console.log('Axios maxRedirects:', $axios.defaults.maxRedirects) ← 見れない
 
   $axios.onRequest(config => {
@@ -20,16 +20,16 @@ export default function ({ $axios, redirect, error: nuxtError }) {
     config.headers.common["AxiosProcessType"] = process.client ? "client" : "server"
   })
 
-  $axios.onError(error => {
+  $axios.onError(e => {
     //   if (process.server) {
-    //     console.log(error.response)
-    //     const code = parseInt(error.response && error.response.status);
+    //     console.log(e.response)
+    //     const code = parseInt(e.response && e.response.status);
     //     if (code === 401) {
     //       // オプションでリクエストが発生した元のパスを取得
-    //       const originalRequestPath = error.config && error.config.url;
+    //       const originalRequestPath = e.config && e.config.url;
     //
     //       // リファラを取得
-    //       const referrer = error.config && error.config.headers && error.config.headers.referer;
+    //       const referrer = e.config && e.config.headers && e.config.headers.referer;
     //       console.log("referrer", referrer)
     //
     //       // // リファラが存在する場合はそのパスにリダイレクトする
@@ -49,17 +49,16 @@ export default function ({ $axios, redirect, error: nuxtError }) {
     //   }
     //
     //   // if (process.env.NODE_ENV === "development") {
-    //   //   console.log(JSON.stringify(error, null, 2))
-    //   //   console.log(JSON.stringify(error.response, null, 2)) ← これで 401 のときまた再帰的なエラーになる場合がある
+    //   //   console.log(JSON.stringify(e, null, 2))
+    //   //   console.log(JSON.stringify(e.response, null, 2)) ← これで 401 のときまた再帰的なエラーになる
     //   // }
     //
-    //   // json: {} 内容が error.response.data に入っている
+    //   // json: {} 内容が e.response.data に入っている
     //
     //   if (process.client) {
-    nuxtError({
-      statusCode: error.response.status,
-      message: error.response.data.message ?? error.message,
-    })
+
+    error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data})
+
     //   }
     //
     //   // これを返すと $get が false を返して処理が継続してしまい、めちゃくちゃになる

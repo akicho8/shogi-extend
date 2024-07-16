@@ -83,15 +83,16 @@ module QuickScript
     prepend LoginUserMod
     prepend ControllerMod
     prepend ThrottleMod
-    prepend ExceptionRescueMod  # 例外を捕捉して表示する
+    prepend ExceptionRescueMod     # 例外を捕捉して表示する
+    prepend PrimaryErrorMessageMod # 404 のときなどに表示するメッセージを指定する
     prepend FlashMod
     prepend MetaMod
     prepend InvisibleMod
     prepend RedirectMod
     prepend HelperMod
     prepend AutoexecMod
-    prepend OrderMod            # for index_script.rb
-    prepend ProcessTypeMod      # process.client か process.server のどちらで呼ばれたか把握する
-    prepend LayoutMod           # MainNavbar の表示管理など
+    prepend OrderMod               # for index_script.rb
+    prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
+    prepend LayoutMod              # MainNavbar の表示管理など
   end
 end

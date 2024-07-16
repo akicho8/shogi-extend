@@ -1,6 +1,6 @@
 // 汎用コード
 // import { Gs        } from "@/components/models/gs.js"
-import { AppHelper        } from "@/components/models/app_helper.js"
+import { AppHelper  } from "@/components/models/app_helper.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
 
@@ -91,6 +91,13 @@ export const vue_support = {
         console.log(...args)
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // vue の変数を見ようとするとほぼ setter/getter になってしまう。
+    // safe_inspect(object, options = {}) {
+    //   return this.util.inspect(object, {depth: null, maxArrayLength: null, breakLength: Infinity, showHidden: true, showProxy: true, ...options})
+    // },
 
     // 1つ前に戻れるなら戻る
     // 戻れないならトップに戻る
@@ -300,6 +307,7 @@ export const vue_support = {
     long_url_to_short_url(url) {
       return this.$axios.$post("/api/short_url/components.json", {original_url: url}, {progress: false})
     },
+
   },
 
   // FIXME: plugin にする

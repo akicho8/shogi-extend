@@ -3,10 +3,7 @@ module QuickScript
     class NotFoundScript < Base
       self.title = "Not Found"
       self.description = "ページが見つかりません"
-
-      def call
-        description
-      end
+      self.status_code = 404
     end
   end
 end
