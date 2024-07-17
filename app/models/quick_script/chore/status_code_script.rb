@@ -5,7 +5,7 @@ module QuickScript
       self.description = "指定のステイタスコードをクライアントに返す"
 
       def call
-        description
+        status_code
       end
 
       def status_code
