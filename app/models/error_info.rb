@@ -9,7 +9,7 @@ class ErrorInfo
   def initialize(exception, options = {})
     @exception = exception
     @options = {
-      :backtrace_lines_max => 50,
+      :backtrace_lines_max => 500,
     }.merge(options)
   end
 
