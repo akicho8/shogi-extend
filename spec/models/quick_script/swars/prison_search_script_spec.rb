@@ -10,7 +10,7 @@ module QuickScript
       end
 
       def case1(query)
-        PrisonSearchScript.new(query: query).as_json[:body][:rows].size
+        PrisonSearchScript.new(query: query).as_json[:body][:_v_bind][:value][:rows].size
       end
 
       it "BANされた人だけを引く" do

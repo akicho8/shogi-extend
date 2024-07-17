@@ -7,7 +7,9 @@ module QuickScript
         rescue => error
           {
             _component: "QuickScriptViewValueAsPre",
-            body: error_to_text(error),
+            _v_bind: {
+              value: error_to_text(error),
+            },
           }
         end
       end

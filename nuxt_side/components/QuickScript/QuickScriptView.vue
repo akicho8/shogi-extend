@@ -7,7 +7,9 @@
 
   template(v-if="development_p || true")
     //- b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
-    b-loading(:active="g_loading_p")
+    // SSR 中もローディングを出すには必ず $fetchState.pending が必要になる
+    // ここからがよくわからないが CSR は $fetchState.pending と fetch() のタイミングがずれているので g_loading_p を入れている
+    b-loading(:active="$fetchState.pending || g_loading_p")
 
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid" v-if="params.navibar_show")
@@ -319,6 +321,9 @@ export default {
         }
         if ("_v_text" in value) {
           return "value_type_is_v_text"
+        }
+        if ("_v_html" in value) {
+          return "value_type_is_v_html"
         }
         if ("_pre" in value) {
           return "value_type_is_pre"

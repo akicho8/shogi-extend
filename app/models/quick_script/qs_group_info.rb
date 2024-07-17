@@ -5,8 +5,8 @@ module QuickScript
       { key: :"swars",  name: "将棋ウォーズ", admin_only: false, },
       { key: :"chore",  name: "雑用",         admin_only: false, },
       { key: :"dev",    name: "開発用",       admin_only: true,  }, # [REFS] BASIC_AUTH_MATCH
-      { key: :"admin",  name: "管理者用",     admin_only: true,  },
-      { key: :"group1", name: "GROUP1",       admin_only: true,  },
+      { key: :"admin",  name: "管理者用",     admin_only: true,  }, # [REFS] BASIC_AUTH_MATCH
+      { key: :"group1", name: "GROUP1",       admin_only: true,  }, # [REFS] BASIC_AUTH_MATCH
     ]
 
     def qs_link_path

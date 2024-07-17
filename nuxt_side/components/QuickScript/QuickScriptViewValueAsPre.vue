@@ -1,6 +1,6 @@
 <template lang="pug">
 pre.QuickScriptViewValueAsPre
-  | {{value.body}}
+  | {{value}}
 </template>
 
 <script>

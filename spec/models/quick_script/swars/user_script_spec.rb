@@ -11,7 +11,7 @@ module QuickScript
 
       it "通常の出力" do
         case1
-        assert { UserScript.new(user_keys: "a, b").call[:rows].size == 2 }
+        assert { UserScript.new(user_keys: "a, b").call[:_v_bind][:value][:rows].size == 2 }
       end
 
       it "Google スプレッドシートに出力" do

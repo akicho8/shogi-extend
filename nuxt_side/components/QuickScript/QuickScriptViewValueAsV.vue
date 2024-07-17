@@ -1,6 +1,6 @@
 <template lang="pug">
-.QuickScriptViewValueAsV(:style="value.style")
-  template(v-for="value in value.body")
+.QuickScriptViewValueAsV
+  template(v-for="value in value")
     QuickScriptViewValue(:value="value")
 </template>
 

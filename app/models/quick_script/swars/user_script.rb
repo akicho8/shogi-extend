@@ -32,7 +32,7 @@ module QuickScript
             :elems           => {"しない" => "false", "する" => "true"},
             :default         => "false",
             :hidden_on_query => true,
-            :help_message    => "永続的に参照したり編集する場合は出力後にコピーを作成してください",
+            :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピーしてください",
           },
         ]
       end

@@ -13,25 +13,33 @@ module QuickScript
         rows = scope
       end
       {
-        :_component   => "QuickScriptViewValueAsTable",
-        :rows         => rows,
-        :paginated    => true,
-        :total        => scope.total_count,
-        :current_page => scope.current_page,
-        :per_page     => current_per,
-        :always_table => false,
-        :header_hide  => false,
-        **options,
+        :_component => "QuickScriptViewValueAsTable",
+        :_v_bind => {
+          :value => {
+            :rows         => rows,
+            :paginated    => true,
+            :total        => scope.total_count,
+            :current_page => scope.current_page,
+            :per_page     => current_per,
+            :always_table => false,
+            :header_hide  => false,
+            **options,
+          },
+        }
       }
     end
 
     def simple_table(rows, options = {})
       {
-        :_component   => "QuickScriptViewValueAsTable",
-        :rows         => rows,
-        # :always_table => true,
-        # :header_hide  => true,
-        **options,
+        :_component => "QuickScriptViewValueAsTable",
+        :_v_bind => {
+          :value => {
+            :rows         => rows,
+            # :always_table => true,
+            # :header_hide  => true,
+            **options,
+          },
+        },
       }
     end
 
