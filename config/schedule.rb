@@ -60,7 +60,7 @@ every("5 3 * * *") do
     %(Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true).call),  # 30分かかる
     %(Swars::Battle.drop_scope2.cleaner(subject: "特別", execute: true).call),
     %(Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call),
-    %(GoogleApi::ExpirationTracker.old_only(1.days).cleaner(subject: "スプレッドシート", execute: true).call),
+    %(GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call),
     %(AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call),
 
     # チェック
