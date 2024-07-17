@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 4f747b42ba0b29961273bb9a4818d6be82c5a35b
+  revision: 2c299f1d693b8a28d436cb925623bb5988d11834
   branch: main
   specs:
     bioshogi (0.0.13)
@@ -308,7 +308,7 @@ GEM
       activesupport
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    minitest (5.24.0)
+    minitest (5.24.1)
     minitest-power_assert (0.3.1)
       minitest
       power_assert (>= 1.1)
