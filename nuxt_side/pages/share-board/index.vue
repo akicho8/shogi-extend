@@ -7,28 +7,12 @@ client-only
 <script>
 export default {
   name: "share-board",
-  async asyncData({ $axios, query }) {
-    if (process.env.NODE_ENV === "development") {
-      console.log("SSR {")
-      console.log(query)
-      console.log("SSR }")
-    }
-    const e = await $axios.$get("/api/share_board", {params: query})
-    if (e.bs_error) {
-      return { bs_error: e.bs_error }
-    }
-    return { config: e }
-  },
-  beforeMount() {
-    // bs_error は 200 で来てしまうため自力でエラー画面に飛ばす
-    if (this.bs_error) {
-      this.$nuxt.error({statusCode: 400, message: this.bs_error.message}) // "400 Bad Request"
-      return
-    }
-    if (this.$gs.blank_p(this.$route.query)) {
-      this.ga_click("共有将棋盤")
-    } else {
-      this.ga_click("共有将棋盤●")
+  async asyncData({ $axios, params, query, error }) {
+    try {
+      const config = await $axios.$get("/api/share_board.json", {params: query})
+      return { config: config }
+    } catch (e) {
+      error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data})
     }
   },
   computed: {
@@ -46,6 +30,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass">
-</style>

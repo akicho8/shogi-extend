@@ -349,6 +349,8 @@ export const mod_form = {
     },
     post_params() {
       return {
+        __ERROR_THEN_STATUS_200__: true, // 互換性のため
+
         // for Lemon
         body: this.body,
 

@@ -6,7 +6,7 @@
         nuxt-link(to="/" @click.native="$sound.play_click()")
           b-icon(icon="chevron-left" size="is-large")
       .column.is-12
-        .main_column
+        .main_column.is_line_break_on
           .box
             p(v-html="message" v-if="message")
           .charactor

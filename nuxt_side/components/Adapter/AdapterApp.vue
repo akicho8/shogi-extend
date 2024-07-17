@@ -276,7 +276,7 @@ export default {
       const params = {
         input_text: this.input_text,
         edit_mode: "adapter",
-        __STATUS_200_IF_ERROR__: true, // エラーをthen側で返す(関係なし)
+        __ERROR_THEN_STATUS_200__: true, // エラーをthen側で返す(関係なし)
       }
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/adapter/record_create", params).then(e => {

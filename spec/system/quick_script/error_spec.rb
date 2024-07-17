@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "エラー処理", type: :system do
   it "ページが見つかりません" do
     visit2 "/bin/swars/xxx"
-    assert_text "ページが見つかりません"
+    assert_text "ページが見つからないか権限がありません"
   end
 
   it "指定のメッセージを出す" do
