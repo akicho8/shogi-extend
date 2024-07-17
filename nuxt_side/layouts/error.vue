@@ -1,27 +1,30 @@
 <template lang="pug">
-.error.has-background-primary
-  .px-4.py-4
-    .columns.is-mobile.is-marginless.is-multiline.is-gapless
-      .column.is-12
-        nuxt-link(to="/" @click.native="$sound.play_click()")
-          b-icon(icon="chevron-left" size="is-large")
-      .column.is-12
-        .main_column.is_line_break_on
-          .box
-            p(v-html="message" v-if="message")
-          .charactor(v-if="charactor")
-            XemojiWrap.is-unselectable(:str="charactor")
-          a(@click="nuxt_login_modal_handle" v-if="!g_current_user && status_code === 403") ログインする
-          a(@click="reload_handle" v-if="status_code === 500") ブラウザをリロードする
-      .column.is-12
-        //- (:open="!!error_for_show")
-        details
-          summary(@click.naive="error_show_toggle_handle") 詳細
-          //- ↓エラーになるかもしれない
-          pre {{error_for_show}}
-      .column.is-12(v-if="development_p")
-        DebugPre
-          | g_current_user: {{g_current_user}}
+// 結局 client-only にしておけば変な切り替わり方をしない
+// SSR でこのビューはまったく必要ない
+client-only
+  .error.has-background-primary
+    .px-4.py-4
+      .columns.is-mobile.is-marginless.is-multiline.is-gapless
+        .column.is-12
+          nuxt-link(to="/" @click.native="$sound.play_click()")
+            b-icon(icon="chevron-left" size="is-large")
+        .column.is-12
+          .main_column.is_line_break_on
+            .box
+              p(v-html="message" v-if="message")
+            .charactor(v-if="charactor")
+              XemojiWrap.is-unselectable(:str="charactor")
+            a(@click="nuxt_login_modal_handle" v-if="!g_current_user && status_code === 403") ログインする
+            a(@click="reload_handle" v-if="status_code === 500") ブラウザをリロードする
+        .column.is-12
+          //- (:open="!!error_for_show")
+          details
+            summary(@click.naive="error_show_toggle_handle") 詳細
+            //- ↓エラーになるかもしれない
+            pre {{error_for_show}}
+        .column.is-12(v-if="development_p")
+          DebugPre
+            | g_current_user: {{g_current_user}}
 </template>
 
 <script>
@@ -44,7 +47,7 @@ export default {
   },
 
   beforeMount() {
-    this.charactor = this.charactor_sample() // ここで設定すれば CSR だけで呼ばれるためキャラクタが途中で切り替わらない
+    this.charactor = this.charactor_sample() // ここで設定すれば CSR だけで呼ばれるためキャラクタが途中で切り替わらない ← 結局 client-only をつけたので意味がなくなった。
   },
 
   mounted() {
