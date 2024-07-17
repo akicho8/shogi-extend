@@ -1,12 +1,13 @@
 <template lang="pug">
 .QuickScriptView
   DebugBox(v-if="development_p" position="bottom_right")
-    div axios: {{g_loading_p}}
-    div standby: {{!$fetchState.pending}}
+    div g_loading_p (axios): {{g_loading_p}}
+    div $fetchState.pending: {{$fetchState.pending}}
     div fetch_index: {{fetch_index}}
 
   template(v-if="development_p || true")
-    b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
+    //- b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
+    b-loading(:active="g_loading_p")
 
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid" v-if="params.navibar_show")
