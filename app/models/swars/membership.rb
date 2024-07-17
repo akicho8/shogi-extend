@@ -218,7 +218,7 @@ module Swars
 
       def badge_params(params = {})
         info = badge_info
-        if v = (params[:badge_debug] || ENV["BADGE_DEBUG"]).to_s == "true"
+        if v = params[:badge_debug]
           info = MembershipBadgeInfo[(id + v.to_i).modulo(MembershipBadgeInfo.count)]
         end
         info.badge_params_build(self)
