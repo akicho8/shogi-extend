@@ -47,7 +47,7 @@ module QuickScript
     end
 
     def path_prefix
-      :bin
+      :lab
     end
   end
 end

@@ -6,7 +6,7 @@ QuickScriptView
 export default {
   // リダイレクトする場合
   // async asyncData(c) {
-  //   return c.redirect(303, {path: "/bin/chore/group_list", query: c.query})
+  //   return c.redirect(303, {path: "/lab/chore/group", query: c.query})
   // },
 
   // 置き換える場合

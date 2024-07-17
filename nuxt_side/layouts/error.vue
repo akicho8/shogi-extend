@@ -9,7 +9,7 @@
         .main_column.is_line_break_on
           .box
             p(v-html="message" v-if="message")
-          .charactor
+          .charactor(v-if="charactor")
             XemojiWrap.is-unselectable(:str="charactor")
           a(@click="nuxt_login_modal_handle" v-if="!g_current_user && status_code === 403") ログインする
           a(@click="reload_handle" v-if="status_code === 500") ブラウザをリロードする
@@ -38,9 +38,13 @@ export default {
 
   data() {
     return {
-      charactor: this.charactor_sample(),
+      charactor: null,
       error_for_show: null,
     }
+  },
+
+  beforeMount() {
+    this.charactor = this.charactor_sample() // ここで設定すれば CSR だけで呼ばれるためキャラクタが途中で切り替わらない
   },
 
   mounted() {

@@ -12,15 +12,15 @@
   template(v-if="params")
     MainNavbar(wrapper-class="container is-fluid" v-if="params.navibar_show")
       template(slot="brand")
-        template(v-if="$route.path === '/bin'")
+        template(v-if="$route.path === '/lab'")
           // レベル1: サイトトップまで上がる
           NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
         template(v-else-if="current_qs_key == null")
           // レベル2: グループ一覧を表示する
-          NavbarItemHome(icon="chevron-left" :to="{path: '/bin'}")
+          NavbarItemHome(icon="chevron-left" :to="{path: '/lab'}")
         template(v-else)
           // レベル3: グループ内を表示する
-          NavbarItemHome(icon="chevron-left" :to="{name: 'bin-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
+          NavbarItemHome(icon="chevron-left" :to="{name: 'lab-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
 
         // タイトルをクリックしたときは query を外す
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="title_click_handle" v-if="meta.title")
@@ -137,7 +137,7 @@ export default {
 
   // https://qiita.com/crml1206/items/24bf29bc36566f4cc68d
   // true にするとソースを読むとしたときも fetch() が呼ばれてタイトルが埋め込まれている
-  // しかし http://localhost:4000/bin/dev に SSR でアクセスできなくなる
+  // しかし http://localhost:4000/lab/dev に SSR でアクセスできなくなる
   fetchOnServer: false,
 
   // async fetch({ $axios, error }) {
@@ -354,7 +354,7 @@ export default {
   computed: {
     current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
     current_qs_key()   { return this.qs_page_key   ?? this.$route.params.qs_page_key },
-    current_api_path() { return `/api/bin/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
+    current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
     visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") } // 目に見えるフォームパーツが存在するか？
   },

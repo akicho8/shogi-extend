@@ -170,7 +170,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def redirect_to_url_with_message(return_to, message)
     query = { return_to: return_to, message: message }
-    url = UrlProxy.url_for(path: "/bin/chore/message", query: query)
+    url = UrlProxy.url_for(path: "/lab/chore/message", query: query)
     redirect_to url, allow_other_host: true
   end
 

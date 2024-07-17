@@ -6,9 +6,9 @@ module QuickScript
       self.form_method = :get
       self.params_add_submit_key = :exec
 
-      # http://localhost:4000/bin/dev/download_get
-      # http://localhost:3000/api/bin/dev/download_get
-      # http://localhost:3000/api/bin/dev/download_get.csv
+      # http://localhost:4000/lab/dev/download_get
+      # http://localhost:3000/api/lab/dev/download_get
+      # http://localhost:3000/api/lab/dev/download_get.csv
       def call
         if !submitted?
           self.button_label = "ダウンロード"
@@ -37,7 +37,7 @@ module QuickScript
       end
 
       def csv_url
-        Rails.application.routes.url_helpers.url_for(:root) + "api/bin/#{params[:qs_group_key]}/#{params[:qs_page_key]}.csv"
+        Rails.application.routes.url_helpers.url_for(:root) + "api/lab/#{params[:qs_group_key]}/#{params[:qs_page_key]}.csv"
       end
     end
   end

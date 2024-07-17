@@ -60,7 +60,7 @@ module QuickScript
 
       def index_url_for(user_key)
         query = { query: user_key }.to_query
-        "/bin/swars/prison-search?#{query}"
+        "/lab/swars/prison-search?#{query}"
       end
     end
   end

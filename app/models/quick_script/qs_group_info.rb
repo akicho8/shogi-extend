@@ -10,7 +10,7 @@ module QuickScript
     ]
 
     def qs_link_path
-      "/bin/#{key}".dasherize
+      "/lab/#{key}".dasherize
     end
 
     def name

@@ -12,7 +12,7 @@ module QuickScript
           { name: "テキスト(自動リンク)",   type: "value_type_is_autolink",     value: { _autolink: "URL は http://example.com/ です" }, },
           { name: "HTML",                   type: "value_type_is_html",         value: "<b>foo</b>", },
           { name: "Aタグ",                  type: "value_type_is_link_to",      value: { _link_to:   { name: "(name)", url: "http://example.com/" }, }, },
-          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "bin-qs_group_key-qs_page_key", params: {qs_group_key: "dev", qs_page_key: "calc"}, query: {lhv: 100}}, }, }, },
+          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "dev", qs_page_key: "calc"}, query: {lhv: 100}}, }, }, },
           { name: "数字",                   type: "value_type_is_unknown",      value: 1,   },
           { name: "nil",                    type: "value_type_is_unknown",      value: nil, },
           { name: "ハッシュ",               type: "value_type_is_any_hash",     value: { id: 1, name: "alice" }, },

@@ -1,2 +1,2 @@
 require "../setup"
-Rails.application.routes.url_helpers.url_for(:root) + "bin/"
+Rails.application.routes.url_helpers.url_for(:root) + "lab/"

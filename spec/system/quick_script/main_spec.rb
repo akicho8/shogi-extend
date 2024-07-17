@@ -1,29 +1,29 @@
 require "rails_helper"
 
 RSpec.describe "基本", type: :system do
-  it "/bin ならグループ一覧を出す" do
-    visit2 "/bin"
+  it "/lab ならグループ一覧を出す" do
+    visit2 "/lab"
     assert_title(/簡易ツール/)
   end
 
   it "グループ直下であればそのグループ内ページの一覧を出す" do
-    visit2 "/bin/swars"
+    visit2 "/lab/swars"
     assert_title(/将棋ウォーズ/)
   end
 
   it "Swars::UserScript" do
-    visit2 "/bin/swars/user"
+    visit2 "/lab/swars/user"
     assert_title(/将棋ウォーズ棋力一覧/)
   end
 
   describe "非表示スクリプト" do
     it "見えない" do
-      visit2 "/bin/chore/index"
+      visit2 "/lab/chore/index"
       assert_no_text("見えてはいけないスクリプト")
     end
 
     it "見える" do
-      visit2 "/bin/chore/index", query: "*"
+      visit2 "/lab/chore/index", query: "*"
       assert_text("見えてはいけないスクリプト")
     end
   end

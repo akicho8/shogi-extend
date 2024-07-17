@@ -1,5 +1,5 @@
 module QuickScript
-  # http://localhost:4000/bin/chore/status_code?status_code=404&primary_error_message=hello
+  # http://localhost:4000/lab/chore/status_code?status_code=404&primary_error_message=hello
   concern :PrimaryErrorMessageMod do
     prepended do
       class_attribute :primary_error_message, default: nil

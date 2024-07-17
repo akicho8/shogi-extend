@@ -12,7 +12,7 @@ export default {
   // QuickScriptView は fetchOnServer: false としている。
   async asyncData({ $axios, params, query, error }) {
     if (process.server) {
-      const url = `/api/bin/${params.qs_group_key ?? '__qs_group_key_is_blank__'}/${params.qs_page_key ?? '__qs_page_key_is_blank__'}.json`
+      const url = `/api/lab/${params.qs_group_key ?? '__qs_group_key_is_blank__'}/${params.qs_page_key ?? '__qs_page_key_is_blank__'}.json`
       try {
         const meta = await $axios.$get(url, { params: { ...query, __FOR_ASYNC_DATA__: true } })
         return { meta }

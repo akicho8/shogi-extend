@@ -97,8 +97,8 @@ const config = {
     // // ↓ぜんぜん効いてない
     // extendRoutes(routes) {
     //   routes.push({
-    //     path: '/bin/dev',
-    //     fetchOnServer: false, // /bin/dev パスではクライアントサイドで fetch を実行する
+    //     path: '/lab/dev',
+    //     fetchOnServer: false, // /lab/dev パスではクライアントサイドで fetch を実行する
     //   });
     // },
 
@@ -335,7 +335,7 @@ const config = {
     pass: process.env.BASIC_AUTH_PASSWORD,
     enabled: true, // PRODUCTION_P,
     match: /^\/bin\/(dev|admin|secret|private)(\/.*)?$/, // [REFS] BASIC_AUTH_MATCH
-    // match: (req) => req.originalUrl === '/bin/dev',
+    // match: (req) => req.originalUrl === '/lab/dev',
   },
 
   sitemap,
