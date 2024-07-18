@@ -231,6 +231,19 @@ class AppEntryInfo
         "他の用途にも使えそうなので公開している",
       ],
     },
+    {
+      display_p: false,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab" },
+      title: "実験室",
+      og_image_key: "lab",
+      description: "あとでかく",
+      features: [
+        "a",
+        "b",
+        "c",
+      ],
+    },
   ]
 
   def og_image_key

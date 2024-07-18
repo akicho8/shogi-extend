@@ -1,7 +1,7 @@
 module QuickScript
   module Chore
     class GroupScript < Base
-      self.title = "簡易ツールのグループ一覧"
+      self.title = "実験室"
       self.description = "グループ一覧を表示する"
 
       def call
