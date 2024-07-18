@@ -93,11 +93,11 @@ module QuickScript
         #   # SQL を使って min_priority を棋力名に変換する
         #   sql = <<~SQL
         #   SELECT
-        #      main.user_key,
-        #      main.rule_key,
+        #      dispatcher.user_key,
+        #      dispatcher.rule_key,
         #      g.key as grade_key
-        #   FROM (#{s.to_sql}) main
-        #   JOIN swars_grades g ON g.priority = main.min_priority
+        #   FROM (#{s.to_sql}) dispatcher
+        #   JOIN swars_grades g ON g.priority = dispatcher.min_priority
         # SQL
         #   hv = ActiveRecord::Base.connection.select_all(sql).each_with_object({}) do |e, m|
         #     e = e.symbolize_keys

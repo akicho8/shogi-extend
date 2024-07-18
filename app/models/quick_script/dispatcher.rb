@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module QuickScript
-  module Main
+  module Dispatcher
     extend self
 
     def dispatch(params, options = {})

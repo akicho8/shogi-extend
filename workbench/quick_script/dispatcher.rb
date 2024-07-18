@@ -1,7 +1,7 @@
 require "./setup"
-QuickScript::Main.dispatch(qs_group_key: "dev", qs_page_key: "foo-bar-baz") # => #<QuickScript::Dev::FooBarBazScript:0x000000010c8fe460 @params={:qs_group_key=>"dev", :qs_page_key=>"foo_bar_baz"}, @options={}>
-QuickScript::Main.dispatch(qs_group_key: "dev", qs_page_key: "foo_bar_baz") # => #<QuickScript::Dev::FooBarBazScript:0x000000010cc7e2e8 @params={:qs_group_key=>"dev", :qs_page_key=>"foo_bar_baz"}, @options={}>
-tp QuickScript::Main.info
+QuickScript::Dispatcher.dispatch(qs_group_key: "dev", qs_page_key: "foo-bar-baz") # => #<QuickScript::Dev::FooBarBazScript:0x000000010c8fe460 @params={:qs_group_key=>"dev", :qs_page_key=>"foo_bar_baz"}, @options={}>
+QuickScript::Dispatcher.dispatch(qs_group_key: "dev", qs_page_key: "foo_bar_baz") # => #<QuickScript::Dev::FooBarBazScript:0x000000010cc7e2e8 @params={:qs_group_key=>"dev", :qs_page_key=>"foo_bar_baz"}, @options={}>
+tp QuickScript::Dispatcher.info
 
 # >> |---------------------------------------------+---------------------------+---------+------------------------------------+------------------------------------------------------------------------------------------------------|
 # >> | model                                       | qs_key                    | OGP画像 | title                              | description                                                                                          |

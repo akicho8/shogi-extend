@@ -42,7 +42,7 @@ module QuickScript
 
       def all
         @all ||= yield_self do
-          all = Main.all
+          all = Dispatcher.all
           if params[:qs_group_only]
             all = all.find_all { |e| e.qs_group_key == params[:qs_group_only] }
           end

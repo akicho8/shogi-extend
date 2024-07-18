@@ -14,7 +14,7 @@ module QuickScript
       end
 
       def qs_link_path
-        @qs_link_path ||= "/" + [Main.path_prefix, qs_key].join("/").dasherize
+        @qs_link_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
       end
 
       def qs_api_url(format = :json)

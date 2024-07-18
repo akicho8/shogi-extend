@@ -136,8 +136,8 @@ end
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/layout_mod.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/login_user_mod.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/login_user_mod.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/main.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/main.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dispatcher.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dispatcher.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/meta_mod.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/meta_mod.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/order_mod.rb

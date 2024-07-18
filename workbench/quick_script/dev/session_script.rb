@@ -30,4 +30,4 @@ controller.request.session["session_id"] = session_key
 # ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/actionpack-7.1.3.4/lib/action_dispatch/request/session.rb:270:in `load!'
 # ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/actionpack-7.1.3.4/lib/action_dispatch/request/session.rb:258:in `load_for_write!'
 # ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/actionpack-7.1.3.4/lib/action_dispatch/request/session.rb:153:in `[]='
-# ~> 	from -:17:in `<main>'
+# ~> 	from -:17:in `<dispatcher>'
