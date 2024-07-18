@@ -23,9 +23,9 @@ module QuickScript
 
         rows = all_sort(all).collect do |e|
           row = {
-            "名前"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_link_path }, }, },
+            "名前"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_path }, }, },
             "内容"     => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
-            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_link_path }, }, },
+            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_path }, }, },
           }
           if admin_user || Rails.env.local?
             row["API"] = tag.a(e.qs_key, href: e.qs_api_url, target: "_blank")

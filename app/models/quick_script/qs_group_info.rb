@@ -9,7 +9,7 @@ module QuickScript
       { key: :"group1", name: "GROUP1",       admin_only: true,  }, # [REFS] BASIC_AUTH_MATCH
     ]
 
-    def qs_link_path
+    def qs_path
       "/lab/#{key}".dasherize
     end
 

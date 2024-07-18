@@ -1,6 +1,6 @@
 require "./setup"
 QuickScript::Dev::FooBarBazScript.qs_key       # => "dev/foo_bar_baz"
-QuickScript::Dev::FooBarBazScript.qs_link_path # => "/lab/dev/foo-bar-baz"
+QuickScript::Dev::FooBarBazScript.qs_path # => "/lab/dev/foo-bar-baz"
 QuickScript::Dev::FooBarBazScript.qs_api_url   # => "http://localhost:3000/api/lab/dev/foo_bar_baz.json"
 QuickScript::Dev::FooBarBazScript.qs_group_key # => "dev"
 QuickScript::Dev::FooBarBazScript.qs_page_key  # => "foo_bar_baz"

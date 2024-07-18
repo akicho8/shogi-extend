@@ -13,5 +13,6 @@ export default {
 <style lang="sass">
 .QuickScriptViewValueAsH
   display: flex
+  flex-wrap: wrap
   gap: 0.5rem
 </style>

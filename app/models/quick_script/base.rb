@@ -13,12 +13,12 @@ module QuickScript
         @qs_key ||= [qs_group_key, qs_page_key].join("/")
       end
 
-      def qs_link_path
-        @qs_link_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
+      def qs_path
+        @qs_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
       end
 
       def qs_api_url(format = :json)
-        Rails.application.routes.url_helpers.url_for(:root) + "api" + qs_link_path.underscore + ".#{format}"
+        Rails.application.routes.url_helpers.url_for(:root) + "api" + qs_path.underscore + ".#{format}"
       end
 
       def qs_group_info
@@ -33,7 +33,7 @@ module QuickScript
         {
           :qs_group_key  => qs_group_key,
           :qs_page_key   => qs_page_key,
-          :qs_link_path  => qs_link_path,
+          :qs_path       => qs_path,
           :qs_group_info => qs_group_info,
         }
       end
@@ -94,5 +94,6 @@ module QuickScript
     prepend OrderMod               # for index_script.rb
     prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
     prepend LayoutMod              # MainNavbar の表示管理など
+    prepend CustomStyleMod
   end
 end

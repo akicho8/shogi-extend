@@ -33,6 +33,9 @@
       //-   NavbarItemProfileLink
       //-   //- NavbarItemSidebarOpen(@click="sidebar_toggle")
 
+      template(slot="end")
+        b-navbar-item(tag="a" :href="current_api_url" target="_blank" v-if="development_p") API
+
     MainSection
       .container.is-fluid
         .columns.is-mobile.is-multiline(v-if="params.form_parts.length >= 1")
@@ -97,10 +100,11 @@
 
         .columns.is-mobile.is-multiline(v-if="development_p")
           .column.is-12
-            pre
+            pre.is_line_break_on
               | {{attributes}}
-            //- pre
-            //-   | {{params}}
+          .column.is-12
+            pre.is_line_break_on
+              | {{current_api_url}}
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       | {{value_type_guess(params.body)}}
@@ -110,6 +114,7 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
+const QueryString = require("query-string")
 
 export default {
   // scrollToTop: true,
@@ -161,7 +166,7 @@ export default {
     // 初回以降も呼ばれるため attributes をまぜる
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
     this.fetch_index ??= 0
-    const new_params = this.new_params_create({__fetch_index__: this.fetch_index})
+    const new_params = {...this.new_params, __fetch_index__: this.fetch_index}
     this.$axios.$get(this.current_api_path, {params: new_params}).then(params => {
       this.fetch_index += 1
       this.params_receive(params)
@@ -208,6 +213,13 @@ export default {
         })
       }
 
+      if (this.params.custom_style) {
+        const style = document.createElement("style")
+        style.textContent = this.params.custom_style
+        // document.head.append(style)
+        this.$el.append(style)
+      }
+
       // 最後に特定のメソッドを実行する
       // これは主に nuxt_login_required を呼ぶために用意してある
       const fetch_then_auto_exec_action = params["fetch_then_auto_exec_action"]
@@ -227,10 +239,6 @@ export default {
       this.$set(this.attributes, form_part.key, value)
     },
 
-    new_params_create(params = {}) {
-      return {...this.$route.query, ...this.attributes, ...params}
-    },
-
     // b-table の @sort と @page-change に反応
     page_change_or_sort_handle(params) {
       this.router_push(params)
@@ -238,29 +246,26 @@ export default {
 
     get_handle() {
       if (this.action_then_nuxt_login_required()) { return }
-      const params = {}
-      if (this.params.params_add_submit_key) {
-        params[this.params.params_add_submit_key] = true
-      }
       if (this.params.get_then_axios_get) {
         // URL を書き換えずにこっそり GET したい場合
         this.$sound.play_click()
-        const new_params = this.new_params_create(params)
+        const new_params = {...this.submit_key_params, ...this.new_params}
         this.$axios.$get(this.current_api_path, {params: new_params}).then(params => this.params_receive(params))
       } else {
         // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
-        this.router_push(params)
+        const new_params = {...this.submit_key_params}
+        this.router_push(new_params)
       }
     },
 
     post_handle() {
       if (this.action_then_nuxt_login_required()) { return }
-      const new_params = this.new_params_create()
-      this.$axios.$post(this.current_api_path, new_params).then(params => this.params_receive(params))
+      // TODO: ここでも submit_key_params を加えていいんじゃない？
+      this.$axios.$post(this.current_api_path, this.new_params).then(params => this.params_receive(params))
     },
 
     router_push(params = {}) {
-      const new_params = this.new_params_create(params)
+      const new_params = {...params, ...this.new_params}
       this.browser_query_delete(new_params) // ブラウザ上で表示させたくないパラメータを削除する(new_params を破壊する)
       this.$router.push({query: new_params}, () => {
         this.debug_alert("Navigation succeeded")
@@ -269,7 +274,7 @@ export default {
         this.debug_alert("Navigation failed")
         if (this.params.router_push_failed_then_fetch) {
           this.$sound.play_click()
-          this.$fetch()
+          this.$fetch()         // Googleシートの場合はこの方法で自力で呼ぶ
         } else {
           // this.toast_ok(`もう${this.params.button_label}しました`)
         }
@@ -358,10 +363,28 @@ export default {
   },
   computed: {
     current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
-    current_qs_key()   { return this.qs_page_key   ?? this.$route.params.qs_page_key },
+    current_qs_key()   { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
     current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
-    visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") } // 目に見えるフォームパーツが存在するか？
+    visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") }, // 目に見えるフォームパーツが存在するか？
+
+    new_params() { return {...this.$route.query, ...this.attributes} },
+
+    // GET のときパラメータに付与するキー
+    submit_key_params() {
+      const params = {}
+      if (this.params?.params_add_submit_key) {
+        params[this.params.params_add_submit_key] = true
+      }
+      return params
+    },
+
+    // ブラウザでAPIに直アクセスして戻値を確認するためのURL (フォームの入力値付き)
+    current_api_url()  {
+      const params = {...this.submit_key_params, ...this.new_params}
+      const url = `${this.$config.MY_SITE_URL}${this.current_api_path}`
+      return QueryString.stringifyUrl({url: url, query: params})
+    },
   },
 }
 </script>
