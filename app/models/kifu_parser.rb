@@ -89,8 +89,8 @@ class KifuParser
       })
   end
 
-  def to_share_board_tiny_url
-    @to_share_board_tiny_url ||= TinyUrl.from(to_share_board_url)
+  def to_share_board_short_url
+    @to_share_board_short_url ||= ShortUrl[to_share_board_url]
   end
 
   def to_kento_url
@@ -105,8 +105,8 @@ class KifuParser
     "#{KENTO_URL}/?#{h.to_query}"
   end
 
-  def to_kento_tiny_url
-    @to_kento_tiny_url ||= TinyUrl.from(to_kento_url)
+  def to_kento_short_url
+    @to_kento_short_url ||= ShortUrl[to_kento_url]
   end
 
   # for app/models/battle_decorator/base.rb

@@ -9,7 +9,7 @@ README_kifu_mail.org
 app/mailers/kifu_mailer.rb
 app/models/kifu_mail_adapter.rb
 app/models/kifu_parser.rb
-app/models/tiny_url.rb
+app/models/short_url.rb
 nuxt_side/components/ShareBoard/give_up/app_kifu_mail.js
 spec/mailers/previews/kifu_preview.rb
 spec/models/kifu_mail_adapter_spec.rb

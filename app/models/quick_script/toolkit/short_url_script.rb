@@ -32,7 +32,7 @@ module QuickScript
           return
         end
         flash[:notice] = "変換しました"
-        { _autolink: ShortUrl::Component.from(current_original_url).compact_url }
+        { _autolink: ShortUrl[current_original_url] }
       end
 
       def current_original_url

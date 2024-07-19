@@ -15,12 +15,25 @@
 # |-------------------+-------------------+--------------+---------------------+------+-------|
 
 module ShortUrl
-  class ComponentsController < ApplicationController
-    skip_before_action :user_name_required
-    skip_forgery_protection
+  module Controller
+    extend self
 
-    def show
-      Controller.show_action(self)
+    # コントローラー用
+    # 作成 curl http://localhost:3000/api/short_url/components.json -d "original_url=/"
+    # 移動 curl -I http://localhost:3000/u/UaswCQacfXi.html
+    #
+    # 注意:
+    #   curl -I http://localhost:3000/u/UaswCQacfXi
+    #   とした場合は request.format.json? が有効になるのはなぜ？
+    #
+    def show_action(c)
+      record = Component.fetch(c.params)
+      record.access_logs.create!        # アクセスログは本当にリダイレクトする直前に記録する
+      c.redirect_to record.original_url # allow_other_host: true としていないので外部サイトには飛べない
+    end
+
+    def create_action(c)
+      c.render json: Component[c.params[:original_url]]
     end
   end
 end

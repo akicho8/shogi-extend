@@ -46,17 +46,17 @@ class KifuMailAdapter
 
   def body
     hv = {}
-    hv["再生"] = kifu_parser.to_share_board_tiny_url
+    hv["再生"] = kifu_parser.to_share_board_short_url
     if Rails.env.local?
       hv["*再生URLの元"]     = kifu_parser.to_share_board_url
       hv["*KENTO"]           = kifu_parser.to_kento_url
-      hv["*KENTO (TinyUrl)"] = kifu_parser.to_kento_tiny_url
+      hv["*KENTO (ShortUrl)"] = kifu_parser.to_kento_short_url
     end
     hv["棋譜"] = kifu_parser.to_ki2
     if e = params[:__debug_app_urls__]
       e.each do |k, v|
         hv["*#{k}"] = v
-        hv["*#{k} (TinyUrl)"] = TinyUrl.from(v)
+        hv["*#{k} (ShortUrl)"] = ShortUrl[v]
       end
     end
     hv.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")

@@ -17,26 +17,6 @@
 module ShortUrl
   class Component < ApplicationRecord
     class << self
-      # コントローラー用
-      begin
-        # 作成 curl http://localhost:3000/api/short_url/components.json -d "original_url=/"
-        # 移動 curl -I http://localhost:3000/u/UaswCQacfXi.html
-        #
-        # 注意:
-        #   curl -I http://localhost:3000/u/UaswCQacfXi
-        #   とした場合は request.format.json? が有効になるのはなぜ？
-        #
-        def show_action(c)
-          record = fetch(c.params)
-          record.access_logs.create! # アクセスログは本当にリダイレクトする直前に記録する
-          c.redirect_to record.original_url
-        end
-
-        def create_action(c)
-          c.render json: from(c.params[:original_url]).compact_url
-        end
-      end
-
       # key からレコードを取得する
       def fetch(params)
         fetch_by_id_param(params) || find_by!(key: params[:key])
@@ -56,6 +36,18 @@ module ShortUrl
         key = AlnumHash.call(original_url)
         record = find_by(key: key)
         record ||= create!(key: key, original_url: original_url)
+      end
+
+      def transform(...)
+        from(...).compact_url
+      end
+
+      def [](...)
+        transform(...)
+      end
+
+      def key(...)
+        from(...).key
       end
 
       def root_url
