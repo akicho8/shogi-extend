@@ -1,4 +1,3 @@
-// ../components/models/clock_box/clock_box.js
 import { ClockBox } from "@/components/models/clock_box/clock_box.js"
 
 describe("ClockBox", () => {

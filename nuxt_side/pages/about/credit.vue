@@ -83,11 +83,11 @@
 </template>
 
 <script>
-import { html_background_black_mixin } from "../../components/models/html_background_black_mixin.js"
-import { IntervalCounter } from '@/components/models/interval_counter.js'
-import { AudioThemeInfo } from '../../components/Kiwi/models/audio_theme_info.js'
-import { AudioCreatorInfo } from '../../components/Kiwi/models/audio_creator_info.js'
-import { PhotoSourceInfo } from '../../components/Kiwi/models/photo_source_info.js'
+import { html_background_black_mixin } from "@/components/models/html_background_black_mixin.js"
+import { IntervalCounter             } from '@/components/models/interval_counter.js'
+import { AudioThemeInfo              } from '@/components/Kiwi/models/audio_theme_info.js'
+import { AudioCreatorInfo            } from '@/components/Kiwi/models/audio_creator_info.js'
+import { PhotoSourceInfo             } from '@/components/Kiwi/models/photo_source_info.js'
 import _ from "lodash"
 
 export default {

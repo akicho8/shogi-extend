@@ -2,7 +2,7 @@
 //
 // 使い方
 //
-//   import { html_background_black_mixin } from "../../components/models/html_background_black_mixin.js"
+//   import { html_background_black_mixin } from "@/components/models/html_background_black_mixin.js"
 //
 //   export default {
 //     mixins: [

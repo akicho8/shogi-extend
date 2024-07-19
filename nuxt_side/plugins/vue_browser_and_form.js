@@ -1,4 +1,4 @@
-import { MyMobile } from "../components/models/my_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 import _ from "lodash"
 
 export const vue_browser_and_form = {
