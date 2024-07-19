@@ -26,9 +26,13 @@ module Swars
       key
     end
 
-    def to_battle_url
+    def official_url
       q = { locale: "ja" }
       "https://shogiwars.heroz.jp/games/#{self}?#{q.to_query}"
+    end
+
+    def my_url
+      UrlProxy.full_url_for("/swars/battles/#{self}")
     end
 
     def to_time

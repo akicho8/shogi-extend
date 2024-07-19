@@ -156,6 +156,11 @@ module Swars
       end
     end
 
+    # 遅い
+    def opponent2
+      @opponent2 ||= (battle.memberships - [self]).first
+    end
+
     def name_with_grade
       "#{user.key} #{grade.name}"
     end

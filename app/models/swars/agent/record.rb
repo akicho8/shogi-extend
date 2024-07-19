@@ -3,11 +3,11 @@ module Swars
     class Record < Base
       def fetch
         if params[:verbose]
-          puts "[fetch][record] #{key.to_battle_url}"
+          puts "[fetch][record] #{key.official_url}"
         end
-        html = fetcher.fetch(:record, key.to_battle_url)
+        html = fetcher.fetch(:record, key.official_url)
         if !html || params[:SwarsBattleNotFound]
-          raise SwarsBattleNotFound.new("指定の対局が存在しません<br>URLを間違えていませんか？<br>#{key.to_battle_url}<br>それか将棋ウォーズ本家がメンテナンス中かもしれません")
+          raise SwarsBattleNotFound.new("指定の対局が存在しません<br>URLを間違えていませんか？<br>#{key.official_url}<br>それか将棋ウォーズ本家がメンテナンス中かもしれません")
         end
         md = html.match(/data-react-props="(.*?)"/)
         if !md || params[:SwarsFormatIncompatible]

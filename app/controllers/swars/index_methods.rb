@@ -259,7 +259,7 @@ module Swars
       @import_errors.collect { |e|
         [
           e[:error].message.strip,
-          BattleKey.create(e[:key]).to_battle_url,
+          BattleKey.create(e[:key]).official_url,
         ].collect { |e| "#{e}\n" }.join
       }.join("\n")
     end

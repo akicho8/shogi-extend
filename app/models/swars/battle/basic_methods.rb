@@ -99,6 +99,10 @@ module Swars
         key
       end
 
+      def key_info
+        @key_info ||= BattleKey[key]
+      end
+
       def battle_decorator_class
         BattleDecorator::SwarsBattleDecorator
       end
