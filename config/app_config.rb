@@ -25,6 +25,6 @@ AppConfig.deep_merge!({
     :redis_db_for_sidekiq           => 4,    # sidekiq
     :redis_db_for_actioncable       => 5,    # ActionCable
     :redis_db_for_share_board_room  => 6,    # 共有将棋盤ROOM
-    :redis_db_for_share_board_ai   => 7,    # 共有将棋盤ChatGPT
+    :redis_db_for_share_board_ai    => 7,    # 共有将棋盤ChatGPT
     :redis_db_for_share_board_lobby => 8,    # 共有将棋盤ロビー
   })

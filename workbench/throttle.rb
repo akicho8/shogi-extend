@@ -1,4 +1,5 @@
 require "./setup"
+
 throttle = Throttle.new(expires_in: 0.1)
 throttle.reset
 throttle.call { true }             # => true

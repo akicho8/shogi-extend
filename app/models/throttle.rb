@@ -20,8 +20,8 @@ class Throttle
 
   def initialize(options = {})
     @options = {
-      key: nil,
-      expires_in: 3.seconds,
+      :key        => nil,
+      :expires_in => 3.seconds,
     }.merge(options)
   end
 
@@ -42,9 +42,7 @@ class Throttle
       return false
     end
 
-    # nx -> true: すでにあれば書き込まない
-    # px -> TTL を ms の整数で指定する
-    redis.set(key, true, nx: true, px: (@options[:expires_in] * 1000.0).to_i)
+    stop!
   end
 
   def key
@@ -52,19 +50,22 @@ class Throttle
   end
 
   def allowed?
-    !Rails.cache.exist?(key)
+    !redis.exists?(key)
   end
 
   def throttled?
-    Rails.cache.exist?(key)
+    redis.exists?(key)
   end
 
   def stop!
-    Rails.cache.write(key, true, expires_in: @options[:expires_in])
+    # nx -> true: すでにあれば書き込まない
+    # px -> TTL を ms の整数で指定する
+    # 書き込めたら true で書き込まなかったら false を返す
+    redis.set(key, true, nx: true, px: expires_in_ms)
   end
 
   def reset
-    Rails.cache.delete(key)
+    redis.del(key)
   end
 
   def ttl_sec
@@ -80,7 +81,12 @@ class Throttle
     end
   end
 
+  def expires_in_ms
+    (@options[:expires_in] * 1000.0).to_i
+  end
+
+  # test 環境でも使いたいので Rails.cache 経由しない
   def redis
-    @redis ||= Rails.cache.redis.with(&:itself)
+    @redis ||= Redis.new(db: AppConfig[:redis_db_for_rails_cache])
   end
 end
