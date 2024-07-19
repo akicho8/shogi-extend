@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "基本", type: :system do
   it "/lab ならグループ一覧を出す" do
     visit2 "/lab"
-    assert_title(/簡易ツール/)
+    assert_title(/実験室/)
   end
 
   it "グループ直下であればそのグループ内ページの一覧を出す" do
