@@ -27,10 +27,13 @@ class GeneralCleaner
       end
     end
 
+    @end_time = Time.current
+
     memo["後"]   = scope.count
     memo["差"]   = memo["後"] - memo["前"]
     memo["開始"] = @start_time.to_fs(:ymdhms)
-    memo["終了"] = Time.current.to_fs(:ymdhms)
+    memo["終了"] = @end_time.to_fs(:ymdhms)
+    memo["時間"] = execution_duration.inspect
     memo["空き"] = @free_changes.join(" → ")
 
     AppLog.important(subject: subject, body: body)
@@ -83,12 +86,13 @@ class GeneralCleaner
   end
 
   def subject
-    [
-      "レコード削除",
-      @options[:subject],
-      "#{@count}個",
-      @free_changes.join("→"),
-    ].compact.join(" ")
+    av = []
+    av << "[レコード削除]"
+    if @options[:subject]
+      av << "[#{@options[:subject]}]"
+    end
+    av << "#{memo["前"]} → #{memo["後"]} (#{memo["差"]}) #{execution_duration.inspect}"
+    av * " "
   end
 
   def body
@@ -110,5 +114,9 @@ class GeneralCleaner
 
   def errors
     @errors ||= Hash.new(0)
+  end
+
+  def execution_duration
+    ActiveSupport::Duration.build(@end_time - @start_time)
   end
 end
