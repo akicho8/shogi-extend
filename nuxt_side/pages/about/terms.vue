@@ -8,7 +8,7 @@
   MainSection
     .container
       p
-        | 重いからって連打しちゃだめ
+        | とくにない
 </template>
 
 <script>

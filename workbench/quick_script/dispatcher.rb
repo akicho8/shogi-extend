@@ -42,7 +42,7 @@ tp QuickScript::Dispatcher.info
 # >> | QuickScript::Chore::StatusCodeScript          | chore/status_code           |         | Not Found                          | ページが見つかりません                                                                               |
 # >> | QuickScript::Chore::MessageScript           | chore/message             |         | メッセージ表示                     | 引数のメッセージを表示する                                                                           |
 # >> | QuickScript::Chore::InvisibleScript         | chore/invisible           |         | 非表示                             | 見えてはいけないスクリプト                                                                           |
-# >> | QuickScript::Chore::IndexScript             | chore/index               |         | Index                              | スクリプト一覧を表示する                                                                             |
+# >> | QuickScript::Chore::IndexScript             | chore/index               |         | Index                              | 一覧を表示する                                                                             |
 # >> | QuickScript::Chore::GroupScript             | chore/group               |         | 実験室           | グループ一覧を表示する                                                                               |
 # >> | QuickScript::Admin::SwarsAgentScript        | admin/swars_agent         |         | 指定のウォーズIDのマイページの情報 |                                                                                                      |
 # >> | QuickScript::Admin::LoginScript             | admin/login               |         | ログイン状態の確認                 |                                                                                                      |

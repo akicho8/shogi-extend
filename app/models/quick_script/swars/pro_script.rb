@@ -2,7 +2,7 @@ module QuickScript
   module Swars
     class ProScript < Base
       self.title = "プロの棋力"
-      self.description = "プロ棋士のウォーズの段位をまとめて表示する"
+      self.description = "プロ棋士のウォーズの段位をまとめて表示する (棋力一覧に遷移する)"
 
       def call
         query = { order_by: :grade, user_keys: ::Swars::User::Vip.group(:pro).sort * " " }

@@ -2,7 +2,7 @@ module QuickScript
   module Swars
     class PrisonNewScript < Base
       self.title = "将棋ウォーズ囚人登録"
-      self.description = "指定ユーザーを囚人とする"
+      self.description = "指定のウォーズIDを囚人とする"
       self.form_method = :post
       self.button_label = "登録"
       self.throttle_expires_in = Rails.env.local? ? 1.seconds : 10.seconds

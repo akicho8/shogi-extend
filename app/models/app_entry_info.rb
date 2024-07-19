@@ -237,11 +237,8 @@ class AppEntryInfo
       nuxt_link_to: { path: "/lab" },
       title: "実験室",
       og_image_key: "lab",
-      description: "あとでかく",
+      description: "？",
       features: [
-        "a",
-        "b",
-        "c",
       ],
     },
   ]

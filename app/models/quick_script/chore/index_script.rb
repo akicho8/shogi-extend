@@ -2,7 +2,7 @@ module QuickScript
   module Chore
     class IndexScript < Base
       self.title = "Index"
-      self.description = "スクリプト一覧を表示する"
+      self.description = "一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"
 

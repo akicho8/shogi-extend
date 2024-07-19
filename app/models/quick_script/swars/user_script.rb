@@ -2,7 +2,7 @@ module QuickScript
   module Swars
     class UserScript < Base
       self.title = "将棋ウォーズ棋力一覧"
-      self.description = "指定ユーザー毎の棋力をまとめて表示する (SNSグループのメンバー全員の棋力を把握したいときなどにどうぞ)"
+      self.description = "指定ユーザーたちの棋力をまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいときに使う)"
       self.form_method = :get
       self.button_label = "実行"
       self.per_page_default = 1000

@@ -2,7 +2,7 @@ module QuickScript
   module Swars
     class PrisonSearchScript < Base
       self.title = "将棋ウォーズ囚人検索"
-      self.description = "検察結果を収監発見日の直近順に表示する"
+      self.description = "囚人を収監発見日の直近順に表示する"
       self.form_method = :get
       self.button_label = "検索"
       self.per_page_default = 500
