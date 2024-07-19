@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    class UserScript < Base
+    class UserGroupScript < Base
       self.title = "将棋ウォーズ棋力一覧"
       self.description = "指定ユーザーたちの棋力をまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいときに使う)"
       self.form_method = :get

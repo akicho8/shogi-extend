@@ -6,7 +6,7 @@ module QuickScript
 
       def call
         query = { order_by: :grade, user_keys: ::Swars::User::Vip.group(:pro).sort * " " }
-        redirect_to UserScript.qs_path + "?" + query.to_query
+        redirect_to UserGroupScript.qs_path + "?" + query.to_query
       end
     end
   end

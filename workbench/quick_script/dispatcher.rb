@@ -7,7 +7,7 @@ tp QuickScript::Dispatcher.info
 # >> | model                                       | qs_key                    | OGP画像 | title                              | description                                                                                          |
 # >> |---------------------------------------------+---------------------------+---------+------------------------------------+------------------------------------------------------------------------------------------------------|
 # >> | QuickScript::Swars::ProScript               | swars/pro                 |         | プロの棋力                         | プロ棋士のウォーズの段位をまとめて表示する                                                           |
-# >> | QuickScript::Swars::UserScript              | swars/user                |         | 将棋ウォーズ棋力一覧               | 指定ユーザー毎の棋力をまとめて表示する (SNSグループのメンバー全員の棋力を把握したいときなどにどうぞ) |
+# >> | QuickScript::Swars::UserGroupScript              | swars/user                |         | 将棋ウォーズ棋力一覧               | 指定ユーザー毎の棋力をまとめて表示する (SNSグループのメンバー全員の棋力を把握したいときなどにどうぞ) |
 # >> | QuickScript::Swars::PrisonNewScript         | swars/prison_new          |         | 将棋ウォーズ囚人登録               | 指定ユーザーを囚人とする                                                                             |
 # >> | QuickScript::Swars::PrisonAllScript         | swars/prison_all          |         | 将棋ウォーズ囚人一覧               | すべてのユーザーをアルファベット順で表示する                                                         |
 # >> | QuickScript::Swars::PrisonSearchScript      | swars/prison_search       |         | 将棋ウォーズ囚人検索               | 検察結果を収監発見日の直近順に表示する                                                               |

@@ -1,19 +1,19 @@
 require "./setup"
 sql
-_ { QuickScript::Swars::UserScript.new(user_keys: "SiroChannel, Kato_Hifumi").call[:rows] } # => "245.26 ms"
-s { tp QuickScript::Swars::UserScript.new(user_keys: "SiroChannel, Kato_Hifumi").call[:rows] } # => [{"名前"=>{:_nuxt_link=>{:name=>"SiroChannel", :to=>{:name=>"swars-search", :query=>{:query=>"SiroChannel"}}}}, "最高"=>"十段", "10分"=>"十段", "3分"=>"", "10秒"=>"", "勝率"=>"75 %", "勢い"=>"0.00", "規範"=>"87 点", "居飛車"=>"0 %", "振り飛車"=>"100 %", "主戦法"=>"四間飛車", "主囲い"=>"高美濃囲い", "直近対局"=>"2024-06-28", "リンク1"=>{:_nuxt_link=>{:name=>"棋譜(4)", :to=>{:name=>"swars-search", :query=>{:query=>"SiroChannel"}}}}, "リンク2"=>{:_nuxt_link=>{:name=>"プレイヤー情報", :to=>{:name=>"swars-users-key", :params=>{:key=>"SiroChannel"}}}}, "リンク3"=>"<a href=\"https://shogiwars.heroz.jp/users/mypage/SiroChannel\" target=\"_blank\">本家</a>", "リンク4"=>"<a href=\"https://www.google.co.jp/search?q=SiroChannel+%E5%B0%86%E6%A3%8B\" target=\"_blank\">ググる</a>", "最高段位(index)"=>0}, {"名前"=>{:_nuxt_link=>{:name=>"Kato_Hifumi", :to=>{:name=>"swars-search", :query=>{:query=>"Kato_Hifumi"}}}}, "最高"=>"十段", "10分"=>"十段", "3分"=>"", "10秒"=>"", "勝率"=>"0 %", "勢い"=>"0.00", "規範"=>"99 点", "居飛車"=>"100 %", "振り飛車"=>"0 %", "主戦法"=>"棒銀", "主囲い"=>"ボナンザ囲い", "直近対局"=>"2024-06-28", "リンク1"=>{:_nuxt_link=>{:name=>"棋譜(1)", :to=>{:name=>"swars-search", :query=>{:query=>"Kato_Hifumi"}}}}, "リンク2"=>{:_nuxt_link=>{:name=>"プレイヤー情報", :to=>{:name=>"swars-users-key", :params=>{:key=>"Kato_Hifumi"}}}}, "リンク3"=>"<a href=\"https://shogiwars.heroz.jp/users/mypage/Kato_Hifumi\" target=\"_blank\">本家</a>", "リンク4"=>"<a href=\"https://www.google.co.jp/search?q=Kato_Hifumi+%E5%B0%86%E6%A3%8B\" target=\"_blank\">ググる</a>", "最高段位(index)"=>0}]
+_ { QuickScript::Swars::UserGroupScript.new(user_keys: "SiroChannel, Kato_Hifumi").call[:rows] } # => "245.26 ms"
+s { tp QuickScript::Swars::UserGroupScript.new(user_keys: "SiroChannel, Kato_Hifumi").call[:rows] } # => [{"名前"=>{:_nuxt_link=>{:name=>"SiroChannel", :to=>{:name=>"swars-search", :query=>{:query=>"SiroChannel"}}}}, "最高"=>"十段", "10分"=>"十段", "3分"=>"", "10秒"=>"", "勝率"=>"75 %", "勢い"=>"0.00", "規範"=>"87 点", "居飛車"=>"0 %", "振り飛車"=>"100 %", "主戦法"=>"四間飛車", "主囲い"=>"高美濃囲い", "直近対局"=>"2024-06-28", "リンク1"=>{:_nuxt_link=>{:name=>"棋譜(4)", :to=>{:name=>"swars-search", :query=>{:query=>"SiroChannel"}}}}, "リンク2"=>{:_nuxt_link=>{:name=>"プレイヤー情報", :to=>{:name=>"swars-users-key", :params=>{:key=>"SiroChannel"}}}}, "リンク3"=>"<a href=\"https://shogiwars.heroz.jp/users/mypage/SiroChannel\" target=\"_blank\">本家</a>", "リンク4"=>"<a href=\"https://www.google.co.jp/search?q=SiroChannel+%E5%B0%86%E6%A3%8B\" target=\"_blank\">ググる</a>", "最高段位(index)"=>0}, {"名前"=>{:_nuxt_link=>{:name=>"Kato_Hifumi", :to=>{:name=>"swars-search", :query=>{:query=>"Kato_Hifumi"}}}}, "最高"=>"十段", "10分"=>"十段", "3分"=>"", "10秒"=>"", "勝率"=>"0 %", "勢い"=>"0.00", "規範"=>"99 点", "居飛車"=>"100 %", "振り飛車"=>"0 %", "主戦法"=>"棒銀", "主囲い"=>"ボナンザ囲い", "直近対局"=>"2024-06-28", "リンク1"=>{:_nuxt_link=>{:name=>"棋譜(1)", :to=>{:name=>"swars-search", :query=>{:query=>"Kato_Hifumi"}}}}, "リンク2"=>{:_nuxt_link=>{:name=>"プレイヤー情報", :to=>{:name=>"swars-users-key", :params=>{:key=>"Kato_Hifumi"}}}}, "リンク3"=>"<a href=\"https://shogiwars.heroz.jp/users/mypage/Kato_Hifumi\" target=\"_blank\">本家</a>", "リンク4"=>"<a href=\"https://www.google.co.jp/search?q=Kato_Hifumi+%E5%B0%86%E6%A3%8B\" target=\"_blank\">ググる</a>", "最高段位(index)"=>0}]
 # >>   Swars::User Pluck (0.5ms)  SELECT `swars_users`.`user_key` FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:51:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:51:in `call'
 # >>   Swars::User Exists? (0.3ms)  SELECT 1 AS one FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi') LIMIT 1
-# >>   ↳ app/models/quick_script/swars/user_script.rb:57:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:57:in `call'
 # >>   Swars::User Count (0.3ms)  SELECT COUNT(*) FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:61:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:61:in `call'
 # >>   Swars::User Load (0.4ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi') ORDER BY FIELD(swars_users.user_key, 'SiroChannel','Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Grade Load (0.3ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`id` = 40 ORDER BY `swars_grades`.`priority` ASC
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Membership Load (0.5ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`user_id` IN (23502, 23501)
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Membership Ids (0.5ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 23502 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
 # >>   ↳ app/models/swars/user/stat/scope_ext.rb:30:in `scope_ids'
 # >>   Swars::Membership Load (0.7ms)  SELECT swars_rules.key AS rule_key, MIN(swars_grades.priority) AS min_priority FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_rules` ON `swars_rules`.`id` = `swars_battles`.`rule_id` INNER JOIN `swars_grades` ON `swars_grades`.`id` = `swars_memberships`.`grade_id` WHERE `swars_memberships`.`id` IN (9818693, 8999691, 8999693, 8997060) GROUP BY `rule_key`
@@ -115,17 +115,17 @@ s { tp QuickScript::Swars::UserScript.new(user_keys: "SiroChannel, Kato_Hifumi")
 # >>   ActsAsTaggableOn::Tag Load (0.7ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'defense_tags') AND (taggings.taggable_id IN ('9818692')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id ORDER BY count DESC, tags.id ASC LIMIT 1
 # >>   ↳ app/models/swars/user/stat/simple_matrix_stat.rb:79:in `find_one'
 # >>   Swars::User Pluck (0.3ms)  SELECT `swars_users`.`user_key` FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:51:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:51:in `call'
 # >>   Swars::User Exists? (0.3ms)  SELECT 1 AS one FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi') LIMIT 1
-# >>   ↳ app/models/quick_script/swars/user_script.rb:57:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:57:in `call'
 # >>   Swars::User Count (0.3ms)  SELECT COUNT(*) FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:61:in `call'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:61:in `call'
 # >>   Swars::User Load (0.4ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` IN ('SiroChannel', 'Kato_Hifumi') ORDER BY FIELD(swars_users.user_key, 'SiroChannel','Kato_Hifumi')
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Grade Load (0.3ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`id` = 40 ORDER BY `swars_grades`.`priority` ASC
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Membership Load (0.4ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`user_id` IN (23502, 23501)
-# >>   ↳ app/models/quick_script/swars/user_script.rb:173:in `collect'
+# >>   ↳ app/models/quick_script/swars/user_group_script.rb:173:in `collect'
 # >>   Swars::Membership Ids (0.4ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 23502 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
 # >>   ↳ app/models/swars/user/stat/scope_ext.rb:30:in `scope_ids'
 # >>   Swars::Membership Load (0.5ms)  SELECT swars_rules.key AS rule_key, MIN(swars_grades.priority) AS min_priority FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_rules` ON `swars_rules`.`id` = `swars_battles`.`rule_id` INNER JOIN `swars_grades` ON `swars_grades`.`id` = `swars_memberships`.`grade_id` WHERE `swars_memberships`.`id` IN (9818693, 8999691, 8999693, 8997060) GROUP BY `rule_key`

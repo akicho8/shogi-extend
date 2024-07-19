@@ -4,7 +4,7 @@ module QuickScript
       PrisonSearchScript,
       PrisonAllScript,
       PrisonNewScript,
-      UserScript,
+      UserGroupScript,
       ProScript,
     ]
   end

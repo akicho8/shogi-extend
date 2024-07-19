@@ -2,7 +2,7 @@ require "rails_helper"
 
 module QuickScript
   module Swars
-    RSpec.describe UserScript, type: :model do
+    RSpec.describe UserGroupScript, type: :model do
       def case1
         ::Swars::User.create!(key: "a")
         ::Swars::User.create!(key: "b")
@@ -11,13 +11,13 @@ module QuickScript
 
       it "通常の出力" do
         case1
-        assert { UserScript.new(user_keys: "a, b").call[:_v_bind][:value][:rows].size == 2 }
+        assert { UserGroupScript.new(user_keys: "a, b").call[:_v_bind][:value][:rows].size == 2 }
       end
 
       it "Google スプレッドシートに出力" do
         case1
         Timecop.return do
-          assert { UserScript.new(user_keys: "a, b", google_sheet: "true").as_json[:redirect_to] }
+          assert { UserGroupScript.new(user_keys: "a, b", google_sheet: "true").as_json[:redirect_to] }
           GoogleApi::ExpirationTracker.destroy_all
         end
       end
@@ -25,7 +25,7 @@ module QuickScript
       it "順番" do
         ::Swars::User.create!(key: "alice")
         def case1(order_by)
-          UserScript.new(user_keys: "alice", order_by: order_by).call
+          UserGroupScript.new(user_keys: "alice", order_by: order_by).call
         end
         assert { case1("grade")     }
         assert { case1("gentleman") }

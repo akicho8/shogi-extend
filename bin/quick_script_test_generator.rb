@@ -160,7 +160,7 @@ end
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/swars/prison_search_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/swars/pro_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/swars/pro_script.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/swars/user_script.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/swars/user_script.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/swars/user_group_script.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/swars/user_group_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/throttle_mod.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/throttle_mod.rb

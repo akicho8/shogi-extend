@@ -11,7 +11,7 @@ RSpec.describe "基本", type: :system do
     assert_title(/将棋ウォーズ/)
   end
 
-  it "Swars::UserScript" do
+  it "Swars::UserGroupScript" do
     visit2 "/lab/swars/user"
     assert_title(/将棋ウォーズ棋力一覧/)
   end
