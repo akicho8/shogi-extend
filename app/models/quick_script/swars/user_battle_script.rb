@@ -1,123 +1,123 @@
 module QuickScript
   module Swars
     class UserBattleScript < Base
-      self.title = "将棋ウォーズ対局履歴(WIP)"
-      self.description = ""
-      self.form_method = :get
-      self.button_label = "実行"
-      self.per_page_default = 1000
-      self.router_push_failed_then_fetch = true
-      self.button_click_loading = true
+      self.title = "将棋ウォーズ対局履歴"
+      self.description = "指定ユーザーの対局履歴を Google スプレッドシートに出力する (自分であれこれしたい人向け)"
+      self.form_method = :post
+      self.button_label = "出力"
+
+      DEBUG_MODE = !Rails.env.local?
+      LIMIT_MAX  = Rails.env.local? ? 1000 : Float::INFINITY
 
       def form_parts
         super + [
           {
-            :label           => "将棋ウォーズID",
-            :key             => :user_key,
-            :type            => :string,
-            :default         => params[:user_key].to_s.presence,
-            :placeholder     => current_user_key,
+            :label       => "将棋ウォーズID",
+            :key         => :user_key,
+            :type        => :string,
+            :default     => params[:user_key].to_s.presence,
+            :placeholder => current_sw_user_key,
           },
-        ].yield_self do |e|
-          if Rails.env.local?
-            e += [
-              {
-                :label           => "Google スプレッドシートに出力",
-                :key             => :google_sheet,
-                :type            => :radio_button,
-                :elems           => {"しない" => "false", "する" => "true"},
-                :default         => "false",
-                :hidden_on_query => true,
-                :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピーしてください",
-              },
-            ]
-          end
-          e
-        end
+          {
+            :label       => "Google スプレッドシートに出力",
+            :key         => :google_sheet,
+            :type        => DEBUG_MODE ? :radio_button : :hidden,
+            :elems       => {"しない" => "false", "する" => "true"},
+            :default     => params[:google_sheet].to_s.presence || (DEBUG_MODE ? "false" : "true"),
+          },
+          {
+            :label       => "バックグランド実行する",
+            :key         => :bg_request,
+            :type        => DEBUG_MODE ? :radio_button : :hidden,
+            :elems       => {"しない" => "false", "する" => "true"},
+            :default     => params[:bg_request].to_s.presence || (DEBUG_MODE ? "false" : "true"),
+          },
+        ]
       end
 
       def call
-        if current_user_key.blank?
-          return
-        end
-        user = ::Swars::User[current_user_key]
-        unless user
-          flash[:notice] = "#{current_user_key} は存在しません"
-          return
-        end
-
-        s = user.memberships.all
-        s = s.joins(:battle)
-        s = s.includes(:battle => :memberships)
-        s = s.includes(:user, :op_user, :location)
-        s = s.order(battled_at: :desc)
-        s = s.limit(100)
-
-        # rows = scope.collect do |membership|
-        #   {}.tap do |row|
-        #     row["自分"] = { _nuxt_link: { name: membership.user.key, to: {name: "swars-users-key", params: { key: membership.user.key } }, }, }
-        #     row["相手"] = { _nuxt_link: { name: membership.op_user.key, to: {name: "swars-users-key", params: { key: membership.op_user.key } }, }, }
-        #     row["勝敗"] = membership.judge.name
-        #     row["棋譜"] = { _nuxt_link: { name: membership.battle.key, to: {name: "swars-battles-key", params: { key: membership.battle.key } } } }
-        #   end
-        # end
-
-        rows = s.collect do |e|
-          Rails.logger.tagged(e.battle.key) do
-            {}.tap do |row|
-              row["自分"] = hyper_link(e.user.key, e.user.key_info.swars_player_url)
-              row["相手"] = hyper_link(e.op_user.key, e.op_user.key_info.swars_player_url)
-              row["勝敗"] = e.judge.name
-              row["先後"] = e.location.name
-              row["手数"] = e.battle.turn_max
-              row["自分の戦法"] = e.attack_tag_list.join(" → ")
-              row["自分の囲い"] = e.defense_tag_list.join(" → ")
-              row["相手の戦法"] = e.opponent2.attack_tag_list.join(" → ")
-              row["相手の囲い"] = e.opponent2.defense_tag_list.join(" → ")
-              row["手合割"] = e.battle.preset.name
-
-              # row["棋譜"] = { _nuxt_link: { name: e.battle.key, to: {name: "swars-battles-key", params: { key: e.battle.key } } } }
-
-              # row["名前"] = hyper_link(e.name_with_ban, e.key_info.swars_search_url)
-              # row["最高段位"] = e.grade.name
-              # row.update(grade_per_rule(e))
-              # row["勝率"] = e.cached_stat.total_judge_stat.win_ratio
-              # row["勢い"] = e.cached_stat.vitality_stat.level
-              # row["行動規範"] = e.cached_stat.gentleman_stat.final_score
-              # row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車")
-              # row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車")
-              # row["主戦法"] = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
-              # row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
-              row["対局日時"] = e.battle.battled_at.to_fs(:ymdhms)
-              row["リンク1"] = hyper_link("棋譜", e.battle.key_info.my_url)
-              row["リンク2"] = hyper_link("本家", e.battle.key_info.official_url)
-              # row["リンク1"] = hyper_link("棋譜検索(#{e.memberships.size})", e.key_info.swars_search_url)
-              # row["リンク2"] = hyper_link("プレイヤー情報", e.key_info.swars_player_url)
-              # row["リンク4"] = hyper_link("ググる",         e.key_info.google_search_url)
-              # row["最高段位(index)"] = e.grade.pure_info.priority
+        if foreground_mode
+          if request_get?
+            # 最初に来たとき
+          end
+          if request_post?
+            validate!
+            if flash.present?
+              return
+            end
+            if current_bg_request
+              call_later
+              self.form_method = nil # form をまるごと消す
+              return { _autolink: posted_message }
+            end
+            if current_google_sheet
+              redirect_to google_sheet_url, tab_open: true
+            else
+              simple_table(rows, always_table: true)
             end
           end
         end
 
-        if current_google_sheet
-          url = GoogleApi::Facade.new(title: "将棋ウォーズ対局履歴", rows: rows, columns_hash: columns_hash).call
-          redirect_to url, tab_open: true
+        if background_mode
+          SystemMailer.notify(subject: long_title, to: current_user.email, bcc: AppConfig[:admin_email], body: google_sheet_url).deliver_later
         end
-
-        simple_table(rows, always_table: true)
       end
 
-      def current_user_key
+      def rows
+        @rows ||= [].tap do |rows|
+          s = current_sw_user.memberships.all
+          s = s.joins(:battle)
+          s = s.includes(:battle => :memberships)
+          s = s.includes(:user, :op_user, :location)
+          s = s.order(battled_at: :desc)
+          s = s.limit(LIMIT_MAX)
+          s.each do |e|
+            # Rails.logger.tagged(e.battle.key) do
+            rows << record_to_row(e)
+            # end
+          end
+        end
+      end
+
+      def record_to_row(e)
+        {}.tap do |row|
+          row["自分"]       = hyper_link(e.user.key, e.user.key_info.swars_player_url)
+          row["自分の段位"] = e.grade.name
+          row["相手"]       = hyper_link(e.op_user.key, e.op_user.key_info.swars_player_url)
+          row["相手の段位"] = e.op_user.grade.name
+          row["勝敗"]       = e.judge.name
+          row["先後"]       = e.location.name
+          row["手数"]       = e.battle.turn_max
+          row["自分の戦法"] = e.attack_tag_list.join(" → ")
+          row["自分の囲い"] = e.defense_tag_list.join(" → ")
+          row["相手の戦法"] = e.opponent2.attack_tag_list.join(" → ")
+          row["相手の囲い"] = e.opponent2.defense_tag_list.join(" → ")
+          row["手合割"]     = e.battle.preset.name
+          row["対局日時"]   = e.battle.battled_at.to_fs(:ymdhms)
+          row["リンク1"]    = hyper_link("棋譜", e.battle.key_info.my_url)
+          row["リンク2"]    = hyper_link("本家", e.battle.key_info.official_url)
+        end
+      end
+
+      def current_sw_user_key
         params[:user_key].to_s.strip.presence || user_key_default
+      end
+
+      def current_sw_user
+        @current_sw_user ||= ::Swars::User[current_sw_user_key]
       end
 
       def current_google_sheet
         params[:google_sheet].to_s == "true"
       end
 
+      def current_bg_request
+        params[:bg_request].to_s == "true"
+      end
+
       def user_key_default
         @user_key_default ||= yield_self do
-          if Rails.env.local?
+          if DEBUG_MODE
             ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"].sample
           end
         end
@@ -127,20 +127,56 @@ module QuickScript
         50
       end
 
-      def hyper_link(name, url)
-        %(=HYPERLINK("#{url}", "#{name}"))
-      end
-
       def columns_hash
         {
           # "勝率"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           # "居飛車"   => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           # "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           # "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
-          # "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd", }, },
+          "対局日時" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd HH:MM", }, },
           # "勢い"     => { number_format: { type: "NUMBER",  pattern: "0.00",       }, },
         }
+      end
+
+      def long_title
+        "#{current_sw_user.name_with_grade}の#{title}"
+      end
+
+      def posted_message
+        "終わったら #{current_user.email} あてに Google スプレッドシートの URL を送ります。ずっと残しておきたい場合や編集する場合はそこから自分のところにコピってください。"
+      end
+
+      def google_sheet_url
+        @google_sheet_url ||= GoogleApi::Facade.new(title: long_title, rows: rows, columns_hash: columns_hash).call
+      end
+
+      def validate!
+        if current_sw_user_key.blank?
+          flash[:notice] = "ウォーズIDを入力してください"
+          return
+        end
+        unless current_user
+          flash[:notice] = "完了後の通知を受け取るためにログインしてください"
+          return
+        end
+        unless current_user.email_valid?
+          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+          return
+        end
+        unless current_sw_user
+          flash[:notice] = "#{current_sw_user_key} さんは存在しません"
+          return
+        end
       end
     end
   end
 end
+
+# rows = scope.collect do |membership|
+#   {}.tap do |row|
+#     row["自分"] = { _nuxt_link: { name: membership.user.key, to: {name: "swars-users-key", params: { key: membership.user.key } }, }, }
+#     row["相手"] = { _nuxt_link: { name: membership.op_user.key, to: {name: "swars-users-key", params: { key: membership.op_user.key } }, }, }
+#     row["勝敗"] = membership.judge.name
+#     row["棋譜"] = { _nuxt_link: { name: membership.battle.key, to: {name: "swars-battles-key", params: { key: membership.battle.key } } } }
+#   end
+# end

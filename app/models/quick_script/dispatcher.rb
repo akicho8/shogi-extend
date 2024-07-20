@@ -33,7 +33,7 @@ module QuickScript
           :current_user    => User.find_by(id: options[:current_user_id]),
           :background_mode => true,
         }
-        new(params, options).action.call
+        new(params, options).action.tap(&:call)
       end
     end
 

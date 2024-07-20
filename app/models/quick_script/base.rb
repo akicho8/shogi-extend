@@ -96,5 +96,6 @@ module QuickScript
     prepend LayoutMod              # MainNavbar の表示管理など
     prepend CustomStyleMod
     prepend BackgroundMod          # for QuickScriptJob
+    prepend GoogleApi::Helper      # for hyper_link
   end
 end

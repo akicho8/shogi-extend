@@ -8,6 +8,12 @@ module QuickScript
       def form_parts
         super + [
           {
+            :label   => "hidden",
+            :key     => :hidden1,
+            :type    => :hidden,
+            :default => params[:hidden1].presence || "(hidden)",
+          },
+          {
             :label   => "string",
             :key     => :str1,
             :type    => :string,

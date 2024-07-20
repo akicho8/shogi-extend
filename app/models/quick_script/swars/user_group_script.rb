@@ -32,7 +32,7 @@ module QuickScript
             :elems           => {"しない" => "false", "する" => "true"},
             :default         => "false",
             :hidden_on_query => true,
-            :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピーしてください",
+            :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピってください",
           },
         ]
       end
@@ -236,10 +236,6 @@ module QuickScript
 
       def process_max
         50
-      end
-
-      def hyper_link(name, url)
-        %(=HYPERLINK("#{url}", "#{name}"))
       end
 
       def columns_hash

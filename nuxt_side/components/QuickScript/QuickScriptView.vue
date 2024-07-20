@@ -39,9 +39,9 @@
 
     MainSection
       .container.is-fluid
-        .columns.is-mobile.is-multiline(v-if="params.form_parts.length >= 1")
+        .columns.is-mobile.is-multiline(v-if="params.form_method && showable_form_parts.length >= 1")
           .column.is-12
-            template(v-for="form_part in params.form_parts")
+            template(v-for="form_part in showable_form_parts")
               b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
                 template(v-if="false")
                 template(v-else-if="form_part.type === 'string'")
@@ -74,10 +74,8 @@
                     component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
                       span {{label}}
                 template(v-else)
-                  pre unknown: {{form_part.type}}
+                  pre form_part.type が間違っている : {{form_part.type}}
 
-            //- template(v-if="visible_form_parts_exist_p")
-            //-   hr
         .columns.is-mobile.is-multiline(v-if="params.form_method")
           .column.is-12
             b-field(v-if="params.form_method === 'get'")
@@ -369,7 +367,7 @@ export default {
     current_qs_key()   { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
     current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
-    visible_form_parts_exist_p() { return this.params.form_parts.some(e => e.type !== "hidden") }, // 目に見えるフォームパーツが存在するか？
+    showable_form_parts() { return this.params ? this.params.form_parts.filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
 
     new_params() { return {...this.submit_key_params, ...this.$route.query, ...this.attributes} },
 
