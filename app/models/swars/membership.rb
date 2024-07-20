@@ -69,7 +69,7 @@ module Swars
 
     belongs_to :user    # 対局者 (直近対局日時を更新する)
     belongs_to :op_user, class_name: "Swars::User" # 相手
-    belongs_to :opponent, class_name: "Membership", optional: true
+    belongs_to :opponent, class_name: "Swars::Membership", optional: true
 
     acts_as_list top_of_list: 0, scope: :battle
 

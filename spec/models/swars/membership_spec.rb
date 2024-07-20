@@ -68,12 +68,13 @@ module Swars
         assert { record.memberships[0].op_user == record.memberships[1].user }
         assert { record.memberships[1].op_user == record.memberships[0].user }
       end
-      # it "お互いの対戦情報がわかる" do
-      #   assert { record.memberships[0].opponent }
-      #   assert { record.memberships[1].opponent }
-      #   assert { record.memberships[0].opponent == record.memberships[1] }
-      #   assert { record.memberships[1].opponent == record.memberships[0] }
-      # end
+
+      it "お互いの対戦情報がわかる" do
+        assert { record.memberships[0].opponent }
+        assert { record.memberships[1].opponent }
+        assert { record.memberships[0].opponent == record.memberships[1] }
+        assert { record.memberships[1].opponent == record.memberships[0] }
+      end
     end
   end
 end

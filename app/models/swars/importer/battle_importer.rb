@@ -5,12 +5,15 @@ module Swars
       private_constant :CREATE_TRY_COUNT
 
       attr_accessor :params
+      attr_accessor :battles
 
       def initialize(params = {})
         @params = {
           :verbose       => Rails.env.development?,
           :skip_if_exist => true,
         }.merge(params)
+
+        @battles = []
       end
 
       def run
@@ -57,7 +60,7 @@ module Swars
       def battle_create!
         # raise ActiveRecord::Deadlocked, @info.key.to_s
 
-        Battle.create!({
+        @battles << Battle.create!({
             :key        => @info.key.to_s,
             :rule_key   => @info.rule_info.key,
             :final_key  => @info.final_info.key,
@@ -66,6 +69,7 @@ module Swars
             :xmode_key  => @info.xmode_info.key,
             :battled_at => @info.battled_at,
           }) do |battle|
+          # なかに入れれば Battle.create! の transaction のなかに入る
           @info.memberships.each.with_index do |e, i|
             battle.memberships.build({
                 :user         => User.find_by!(user_key: e[:user_key]),
