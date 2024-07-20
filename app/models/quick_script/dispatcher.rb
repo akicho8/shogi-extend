@@ -27,6 +27,14 @@ module QuickScript
       def dispatch(...)
         new(...).dispatch
       end
+
+      def background_dispatch(params, options)
+        options = {
+          :current_user    => User.find_by(id: options[:current_user_id]),
+          :background_mode => true,
+        }
+        new(params, options).action.call
+      end
     end
 
     def initialize(params, options = {})
@@ -37,14 +45,14 @@ module QuickScript
     end
 
     def dispatch
-      instance.tap(&:render_all)
+      action.tap(&:render_all)
+    end
+
+    def action
+      action_klass.new(@params, @options)
     end
 
     private
-
-    def instance
-      target_klass.new(@params, @options)
-    end
 
     def prepare
       @params = @params.merge({
@@ -57,7 +65,7 @@ module QuickScript
       end
     end
 
-    def target_klass
+    def action_klass
       path = "quick_script/#{@params[:qs_group_key]}/#{@params[:qs_page_key]}_script"
       path.classify.safe_constantize || Chore::NotFoundScript
     end

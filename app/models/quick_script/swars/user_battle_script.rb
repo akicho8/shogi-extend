@@ -74,6 +74,7 @@ module QuickScript
               row["自分の囲い"] = e.defense_tag_list.join(" → ")
               row["相手の戦法"] = e.opponent2.attack_tag_list.join(" → ")
               row["相手の囲い"] = e.opponent2.defense_tag_list.join(" → ")
+              row["手合割"] = e.battle.preset.name
 
               # row["棋譜"] = { _nuxt_link: { name: e.battle.key, to: {name: "swars-battles-key", params: { key: e.battle.key } } } }
 

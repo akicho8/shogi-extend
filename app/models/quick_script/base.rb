@@ -75,7 +75,7 @@ module QuickScript
     # GET のときに初回か、フォームからボタンを押して GET したかの判定に使う
     # 例えばページに飛んだ瞬間にスプレッドシートの出力をさせたくない場合は fetch_index >= 1 で弾けばよい
     def fetch_index
-      params[:__fetch_index__].to_i
+      params[:fetch_index].to_i
     end
 
     prepend FormMod
@@ -95,5 +95,6 @@ module QuickScript
     prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
     prepend LayoutMod              # MainNavbar の表示管理など
     prepend CustomStyleMod
+    prepend BackgroundMod          # for QuickScriptJob
   end
 end

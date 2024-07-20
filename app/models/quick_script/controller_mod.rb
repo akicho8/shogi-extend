@@ -44,7 +44,7 @@ module QuickScript
       if params[:__FOR_ASYNC_DATA__]
         render_for_ogp
       else
-        AppLog.info(subject: "[#{self.class.name}]", body: params.to_t)
+        # AppLog.info(subject: "[#{self.class.name}]", body: params.to_t)
         render_for_content
       end
     end

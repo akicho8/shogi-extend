@@ -4,6 +4,7 @@
     div g_loading_p (axios): {{g_loading_p}}
     div $fetchState.pending: {{$fetchState.pending}}
     div fetch_index: {{fetch_index}}
+    div post_index: {{post_index}}
 
   template(v-if="development_p || true")
     //- b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
@@ -135,6 +136,7 @@ export default {
       attributes: {},      // form 入力値
       params: null,        // サーバーから受け取った値(更新禁止)
       fetch_index: null,
+      post_index: null,
     }
   },
   watch: {
@@ -166,7 +168,7 @@ export default {
     // 初回以降も呼ばれるため attributes をまぜる
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
     this.fetch_index ??= 0
-    const new_params = {...this.new_params, __fetch_index__: this.fetch_index}
+    const new_params = {...this.new_params, fetch_index: this.fetch_index}
     this.$axios.$get(this.current_api_path, {params: new_params}).then(params => {
       this.fetch_index += 1
       this.params_receive(params)
@@ -258,7 +260,11 @@ export default {
 
     post_handle() {
       if (this.action_then_nuxt_login_required()) { return }
-      this.$axios.$post(this.current_api_path, this.new_params).then(params => this.params_receive(params))
+      this.post_index ??= 0
+      this.$axios.$post(this.current_api_path, {...this.new_params, post_index: this.post_index}).then(params => {
+        this.post_index += 1
+        this.params_receive(params)
+      })
     },
 
     router_push(params = {}) {

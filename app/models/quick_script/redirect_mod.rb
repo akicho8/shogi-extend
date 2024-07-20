@@ -14,7 +14,7 @@ module QuickScript
 
     def redirect_to(path, options = {})
       if @redirect_to_options
-        raise AbstractController::DoubleRenderError
+        raise QuickScriptError, "redirect_to を二重に呼ぶべからず"
       end
       @redirect_to_options = { to: path, **options }
       nil
