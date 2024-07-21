@@ -13,114 +13,117 @@
     b-loading(:active="$fetchState.pending || g_loading_p")
 
   template(v-if="params")
-    MainNavbar(:wrapper-class="['container', layout_size_class].join(' ')" v-if="params.navibar_show")
-      template(slot="brand")
-        template(v-if="$route.path === '/lab'")
-          // レベル1: サイトトップまで上がる
-          NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
-        template(v-else-if="current_qs_key == null")
-          // レベル2: グループ一覧を表示する
-          NavbarItemHome(icon="chevron-left" :to="{path: '/lab'}")
-        template(v-else)
-          // レベル3: グループ内を表示する
-          NavbarItemHome(icon="chevron-left" :to="{name: 'lab-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
+    template(v-if="params.__delegate_mode__")
+      QuickScriptViewValue(:value="params.body")
+    template(v-else)
+      MainNavbar(:wrapper-class="['container', layout_size_class].join(' ')" v-if="params.navibar_show")
+        template(slot="brand")
+          template(v-if="$route.path === '/lab'")
+            // レベル1: サイトトップまで上がる
+            NavbarItemHome(icon="chevron-left" :to="{path: '/'}")
+          template(v-else-if="current_qs_key == null")
+            // レベル2: グループ一覧を表示する
+            NavbarItemHome(icon="chevron-left" :to="{path: '/lab'}")
+          template(v-else)
+            // レベル3: グループ内を表示する
+            NavbarItemHome(icon="chevron-left" :to="{name: 'lab-qs_group_key-qs_page_key', params: {qs_group_key: current_qs_group}}")
 
-        // タイトルをクリックしたときは query を外す
-        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="title_click_handle" v-if="meta.title")
-          h1.has-text-weight-bold {{meta.title}}
+          // タイトルをクリックしたときは query を外す
+          b-navbar-item(tag="nuxt-link" :to="{}" @click.native="title_click_handle" v-if="meta.title")
+            h1.has-text-weight-bold {{meta.title}}
 
-      //- template(slot="end")
-      //-   NavbarItemLogin
-      //-   NavbarItemProfileLink
-      //-   //- NavbarItemSidebarOpen(@click="sidebar_toggle")
+        //- template(slot="end")
+        //-   NavbarItemLogin
+        //-   NavbarItemProfileLink
+        //-   //- NavbarItemSidebarOpen(@click="sidebar_toggle")
 
-      template(slot="end")
-        b-navbar-item(tag="a" :href="current_api_url" target="_blank" v-if="development_p") API
-        NavbarItemLogin(      v-if="params.login_link_show")
-        NavbarItemProfileLink(v-if="params.login_link_show")
+        template(slot="end")
+          b-navbar-item(tag="a" :href="current_api_url" target="_blank" v-if="development_p") API
+          NavbarItemLogin(      v-if="params.login_link_show")
+          NavbarItemProfileLink(v-if="params.login_link_show")
 
-    MainSection
-      .container(:class="layout_size_class")
-        .columns.is-mobile.is-multiline(v-if="params.form_method && showable_form_parts.length >= 1")
-          .column.is-12
-            template(v-for="form_part in showable_form_parts")
-              b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
-                template(v-if="false")
-                template(v-else-if="form_part.type === 'file'")
-                  b-field(class="file" :class="{'has-name': !!attributes[form_part.key]}")
-                    b-upload(@input="file => file_upload_handle(form_part, file)" class="file-label")
-                      span(class="file-cta")
-                        b-icon(class="file-icon" icon="upload")
-                        span(class="file-label") アップロード
-                      span(class="file-name" v-if="attributes[form_part.key]")
-                        | {{attributes[form_part.key].name}}
-                  .image_preview.mt-2(v-if="attributes[form_part.key]")
-                    img(:src="attributes[form_part.key].data_uri")
-                    button.delete(size="is-small" @click="file_upload_cancel_handle(form_part)")
+      MainSection
+        .container(:class="layout_size_class")
+          .columns.is-mobile.is-multiline(v-if="params.form_method && showable_form_parts.length >= 1")
+            .column.is-12
+              template(v-for="form_part in showable_form_parts")
+                b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
+                  template(v-if="false")
+                  template(v-else-if="form_part.type === 'file'")
+                    b-field(class="file" :class="{'has-name': !!attributes[form_part.key]}")
+                      b-upload(@input="file => file_upload_handle(form_part, file)" class="file-label")
+                        span(class="file-cta")
+                          b-icon(class="file-icon" icon="upload")
+                          span(class="file-label") アップロード
+                        span(class="file-name" v-if="attributes[form_part.key]")
+                          | {{attributes[form_part.key].name}}
+                    .image_preview.mt-2(v-if="attributes[form_part.key]")
+                      img(:src="attributes[form_part.key].data_uri")
+                      button.delete(size="is-small" @click="file_upload_cancel_handle(form_part)")
 
-                template(v-else-if="form_part.type === 'string'")
-                  b-input(
-                    v-model="attributes[form_part.key]"
-                    :placeholder="form_part.placeholder"
-                    spellcheck="false"
-                    )
-                template(v-else-if="form_part.type === 'text'")
-                  b-input(
-                    type="textarea"
-                    v-model="attributes[form_part.key]"
-                    :placeholder="form_part.placeholder"
-                    spellcheck="false"
-                    )
-                template(v-else-if="form_part.type === 'integer'")
-                  b-numberinput(
-                    v-model="attributes[form_part.key]"
-                    controls-position="compact"
-                    :exponential="true"
-                    )
-                template(v-else-if="form_part.type === 'select'")
-                  b-select(
-                    v-model="attributes[form_part.key]"
-                    )
+                  template(v-else-if="form_part.type === 'string'")
+                    b-input(
+                      v-model="attributes[form_part.key]"
+                      :placeholder="form_part.placeholder"
+                      spellcheck="false"
+                      )
+                  template(v-else-if="form_part.type === 'text'")
+                    b-input(
+                      type="textarea"
+                      v-model="attributes[form_part.key]"
+                      :placeholder="form_part.placeholder"
+                      spellcheck="false"
+                      )
+                  template(v-else-if="form_part.type === 'integer'")
+                    b-numberinput(
+                      v-model="attributes[form_part.key]"
+                      controls-position="compact"
+                      :exponential="true"
+                      )
+                  template(v-else-if="form_part.type === 'select'")
+                    b-select(
+                      v-model="attributes[form_part.key]"
+                      )
+                      template(v-for="[label, value] in label_value_array(form_part.elems)")
+                        option(:value="value") {{label}}
+                  template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
                     template(v-for="[label, value] in label_value_array(form_part.elems)")
-                      option(:value="value") {{label}}
-                template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
-                  template(v-for="[label, value] in label_value_array(form_part.elems)")
-                    component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
-                      span {{label}}
-                template(v-else)
-                  pre form_part.type が間違っている : {{form_part.type}}
+                      component(:is="type_to_component(form_part)" v-model="attributes[form_part.key]" :native-value="value")
+                        span {{label}}
+                  template(v-else)
+                    pre form_part.type が間違っている : {{form_part.type}}
 
-        .columns.is-mobile.is-multiline(v-if="params.form_method")
-          .column.is-12
-            b-field(v-if="params.form_method === 'get'")
-              .control
-                form(method="GET" @submit.prevent="get_handle")
-                  b-button.get_handle(native-type="submit" type="is-primary")
-                    | {{params.button_label}}
-              //- .control
-              //-   b-button.get_handle(@click="get_handle" type="is-primary")
-              //-     | {{params.button_label}}
+          .columns.is-mobile.is-multiline(v-if="params.form_method")
+            .column.is-12
+              b-field(v-if="params.form_method === 'get'")
+                .control
+                  form(method="GET" @submit.prevent="get_handle")
+                    b-button.get_handle(native-type="submit" type="is-primary")
+                      | {{params.button_label}}
+                //- .control
+                //-   b-button.get_handle(@click="get_handle" type="is-primary")
+                //-     | {{params.button_label}}
 
-            b-field(v-if="params.form_method === 'post'")
-              .control
-                form(method="POST" @submit.prevent="post_handle")
-                  b-button.post_handle(native-type="submit" type="is-danger")
-                    | {{params.button_label}}
+              b-field(v-if="params.form_method === 'post'")
+                .control
+                  form(method="POST" @submit.prevent="post_handle")
+                    b-button.post_handle(native-type="submit" type="is-danger")
+                      | {{params.button_label}}
 
-        .columns.is-mobile.is-multiline(v-if="params.body")
-          .column.is-12
-            QuickScriptViewValue(:value="params.body")
+          .columns.is-mobile.is-multiline(v-if="params.body")
+            .column.is-12
+              QuickScriptViewValue(:value="params.body")
 
-        .columns.is-mobile.is-multiline(v-if="development_p")
-          .column.is-12
-            pre.is_line_break_on
-              | {{attributes}}
-          .column.is-12
-            pre.is_line_break_on
-              | {{current_api_url}}
-          //- .column.is-12(v-if="$gs.present_p(attributes)")
-          //-   pre.is_line_break_on
-          //-     | {{attributes}}
+          .columns.is-mobile.is-multiline(v-if="development_p")
+            .column.is-12
+              pre.is_line_break_on
+                | {{attributes}}
+            .column.is-12
+              pre.is_line_break_on
+                | {{current_api_url}}
+            //- .column.is-12(v-if="$gs.present_p(attributes)")
+            //-   pre.is_line_break_on
+            //-     | {{attributes}}
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       | {{value_type_guess(params.body)}}
