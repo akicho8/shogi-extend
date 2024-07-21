@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    class UserBattleScript < Base
+    class BattleHistoryScript < Base
       self.title = "将棋ウォーズ対局履歴"
       self.description = "指定ユーザーの対局履歴を Google スプレッドシートに出力する (自分であれこれしたい人向け)"
       self.form_method = :post

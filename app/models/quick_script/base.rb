@@ -13,6 +13,7 @@ module QuickScript
         @qs_key ||= [qs_group_key, qs_page_key].join("/")
       end
 
+      # ハイフンがつくのはここだけ
       def qs_path
         @qs_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
       end

@@ -3,7 +3,7 @@ module QuickScript
     class LoginRequired1Script < Base
       self.title = "ログインモーダル発動1"
       self.description = "ボタンを押したタイミングでログインモーダルを発動してログインしていないと先に進ませない"
-      self.button_with_nuxt_login_required = :button_with_nuxt_login_required2
+      self.nuxt_login_required_timing = :later
       self.form_method = :get
     end
   end

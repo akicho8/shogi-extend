@@ -15,7 +15,7 @@ module QuickScript
       end
 
       def og_card_path
-        Rails.root.join("nuxt_side/static/ogp/quick_script/#{qs_key.underscore}.png")
+        Rails.root.join("nuxt_side/static/ogp/#{name.underscore}.png")
       end
     end
 

@@ -1,11 +1,11 @@
 module QuickScript
   concern :LoginUserMod do
     prepended do
-      class_attribute :button_with_nuxt_login_required, default: :button_with_nuxt_login_required1 # ボタンを押したタイミングで nuxt_login_required を発動させる？
+      class_attribute :nuxt_login_required_timing, default: nil # 「ログインせよ」をどのタイミングで出すか？ nil | immediately | later
     end
 
     def as_json(*)
-      super.merge(button_with_nuxt_login_required: button_with_nuxt_login_required)
+      super.merge(nuxt_login_required_timing: nuxt_login_required_timing)
     end
 
     def current_user

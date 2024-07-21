@@ -47,7 +47,7 @@
               b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
                 template(v-if="false")
                 template(v-else-if="form_part.type === 'file'")
-                  b-field(class="file is-primary" :class="{'has-name': !!attributes[form_part.key]}")
+                  b-field(class="file" :class="{'has-name': !!attributes[form_part.key]}")
                     b-upload(@input="file => file_upload_handle(form_part, file)" class="file-label")
                       span(class="file-cta")
                         b-icon(class="file-icon" icon="upload")
@@ -235,7 +235,7 @@ export default {
       }
 
       // いきなりログインの選択肢を出す
-      if (this.params["button_with_nuxt_login_required"] === "button_with_nuxt_login_required1") {
+      if (this.params["nuxt_login_required_timing"] === "immediately") {
         if (this.nuxt_login_required()) { return }
       }
 
@@ -318,7 +318,7 @@ export default {
     },
 
     action_then_nuxt_login_required() {
-      if (this.params["button_with_nuxt_login_required"] === "button_with_nuxt_login_required2") {
+      if (this.params["nuxt_login_required_timing"] === "later") {
         if (this.nuxt_login_required()) { return true }
       }
     },

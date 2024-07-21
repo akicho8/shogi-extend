@@ -2,10 +2,10 @@ module QuickScript
   module Toolkit
     class ProfileImageUploadScript < Base
       self.title = "プロフィール画像更新"
-      self.description = "form_parts のテスト"
+      self.description = "プロフィール画像だけ更新する"
       self.form_method = :post
       self.button_label = "更新"
-      self.auto_exec_action = "nuxt_login_required"
+      self.nuxt_login_required_timing = :immediately
 
       def form_parts
         super + [

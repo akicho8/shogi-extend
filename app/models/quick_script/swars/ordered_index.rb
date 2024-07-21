@@ -1,11 +1,12 @@
 module QuickScript
   module Swars
     OrderedIndex = [
+      UserGroupScript,
+      ProScript,
+      BattleHistoryScript,
       PrisonSearchScript,
       PrisonAllScript,
       PrisonNewScript,
-      UserGroupScript,
-      ProScript,
     ]
   end
 end
