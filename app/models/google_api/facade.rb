@@ -10,9 +10,9 @@ module GoogleApi
     end
 
     def call
-      ExpirationTracker.create!(spreadsheet_id: spreadsheet_id)
-      toolkit.spreadsheet_update(spreadsheet_id, data_range, rows) # 書き込み
-      toolkit.spreadsheet_share(spreadsheet_id)                    # 共有権限に変更する
+      ExpirationTracker.create!(spreadsheet_id: id)
+      toolkit.spreadsheet_update(id, data_range, rows) # 書き込み
+      toolkit.spreadsheet_share(id)                    # 共有権限に変更する
       decoration
       response
     end
@@ -30,7 +30,7 @@ module GoogleApi
       # cell_padding_set
       column_display_format_set
       # column_auto_resize # 正しく動作しない
-      toolkit.cell_update(spreadsheet_id, @requests)
+      toolkit.cell_update(id, @requests)
     end
 
     def validate!
@@ -201,12 +201,12 @@ module GoogleApi
       str * " "
     end
 
-    def spreadsheet_id
-      @spreadsheet_id ||= spreadsheet.spreadsheet_id
+    def id
+      spreadsheet.spreadsheet_id
     end
 
     def url
-      "https://docs.google.com/spreadsheets/d/#{spreadsheet_id}/edit"
+      spreadsheet.spreadsheet_url
     end
 
     def source_rows

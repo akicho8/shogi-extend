@@ -145,33 +145,27 @@ class KifuParser
 
   def extra_header
     {
-      "詳細URL"  => show_url,           # たくさん埋めなくてもこれ一つで済む
-      "ぴよ将棋" => show_url("piyo_shogi"),
-      "KENTO"    => show_url("kento"),
+      "詳細URL"  => key_info&.inside_show_url,           # たくさん埋めなくてもこれ一つで済む
+      "ぴよ将棋" => key_info&.piyo_shogi_url,
+      "KENTO"    => key_info&.kento_url,
       # "検索URL" => search_url,
       # "KENTO"      => to_kento_url,
       # "共有将棋盤" => to_share_board_url,
-      # "対局URL"    => swars_battle_url,
+      # "対局URL"    => official_url,
     }.reject { |k, v| v.blank? }
   end
 
-  def show_url(path = nil)
-    if v = swars_battle_key
-      UrlProxy.full_url_for(["/swars/battles/#{v}", path].compact.join("/"))
-    end
-  end
+  # def search_url
+  #   if v = swars_battle_key
+  #     UrlProxy.full_url_for("/swars/search?query=#{v}")
+  #   end
+  # end
 
-  def search_url
-    if v = swars_battle_key
-      UrlProxy.full_url_for("/swars/search?query=#{v}")
-    end
-  end
-
-  def swars_battle_url
-    if v = swars_battle_key
-      "#{SHOGIWARS_URL}/#{v}"
-    end
-  end
+  # def official_url
+  #   if v = swars_battle_key
+  #     "#{SHOGIWARS_URL}/#{v}"
+  #   end
+  # end
 
   def core
     @core ||= Bioshogi::Parser.parse(source, parser_options)
@@ -208,7 +202,7 @@ class KifuParser
 
   def parser_options
     options = {
-      :typical_error_case            => :embed,
+      :typical_error_case => :embed,
     }
     if to_format == :bod
       options[:turn_limit] = turn_limit
@@ -226,6 +220,12 @@ class KifuParser
 
   def swars_battle_key
     params[:swars_battle_key].presence
+  end
+
+  def key_info
+    if swars_battle_key
+      @key_info ||= Swars::BattleKey[swars_battle_key]
+    end
   end
 
   def turn_limit

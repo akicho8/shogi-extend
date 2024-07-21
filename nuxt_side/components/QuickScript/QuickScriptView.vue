@@ -13,7 +13,7 @@
     b-loading(:active="$fetchState.pending || g_loading_p")
 
   template(v-if="params")
-    MainNavbar(wrapper-class="container is-fluid" v-if="params.navibar_show")
+    MainNavbar(:wrapper-class="['container', layout_size_class].join(' ')" v-if="params.navibar_show")
       template(slot="brand")
         template(v-if="$route.path === '/lab'")
           // レベル1: サイトトップまで上がる
@@ -36,9 +36,11 @@
 
       template(slot="end")
         b-navbar-item(tag="a" :href="current_api_url" target="_blank" v-if="development_p") API
+        NavbarItemLogin(v-if="params.layout_size")
+        NavbarItemProfileLink(v-if="params.layout_size")
 
     MainSection
-      .container.is-fluid
+      .container(:class="layout_size_class")
         .columns.is-mobile.is-multiline(v-if="params.form_method && showable_form_parts.length >= 1")
           .column.is-12
             template(v-for="form_part in showable_form_parts")
@@ -385,6 +387,9 @@ export default {
       const url = `${this.$config.MY_SITE_URL}${this.current_api_path}`
       return QueryString.stringifyUrl({url: url, query: this.new_params})
     },
+
+    // レイアウトの CSS class
+    layout_size_class() { return this.params.layout_size == "large" ? "is-fluid" : "is_layout_small" }
   },
 }
 </script>

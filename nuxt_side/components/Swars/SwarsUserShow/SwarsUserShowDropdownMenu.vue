@@ -39,15 +39,15 @@ DotsMenuButton.SwarsUserShowDropdownMenu
     b-icon(icon="google" size="is-small")
     span ググる
 
-  b-dropdown-item(:href="TheApp.swars_player_url" :target="target_default")
+  b-dropdown-item(:href="TheApp.official_mypage_url" :target="target_default")
     b-icon(icon="link" size="is-small")
     span 本家
 
-  b-dropdown-item(:href="TheApp.swars_player_follow_url" :target="target_default" v-if="development_p || true")
+  b-dropdown-item(:href="TheApp.official_follow_url" :target="target_default" v-if="development_p || true")
     b-icon(icon="account-arrow-right" size="is-small")
     span 友達登録している
 
-  b-dropdown-item(:href="TheApp.swars_player_follower_url" :target="target_default" v-if="development_p || true")
+  b-dropdown-item(:href="TheApp.official_follower_url" :target="target_default" v-if="development_p || true")
     b-icon(icon="account-arrow-left" size="is-small")
     span 友達登録されている
 

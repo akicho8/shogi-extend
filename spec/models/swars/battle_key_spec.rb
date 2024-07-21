@@ -21,11 +21,19 @@ module Swars
       end
 
       it "official_url" do
-        assert { object.official_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024?locale=ja" }
+        assert { object.official_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024" }
       end
 
-      it "my_url" do
-        assert { object.my_url == "http://localhost:4000/swars/battles/alice-bob-20130531_010024" }
+      it "inside_show_url" do
+        assert { object.inside_show_url == "http://localhost:4000/swars/battles/alice-bob-20130531_010024" }
+      end
+
+      it "kento_url" do
+        assert { object.kento_url == "http://localhost:4000/swars/battles/alice-bob-20130531_010024/kento" }
+      end
+
+      it "piyo_shogi_url" do
+        assert { object.piyo_shogi_url == "http://localhost:4000/swars/battles/alice-bob-20130531_010024/piyo_shogi" }
       end
 
       it "to_time" do
@@ -37,7 +45,7 @@ module Swars
       end
 
       it "user_key_at" do
-        assert { object.user_key_at(:black) == "alice" }
+        assert { object.user_key_at(:white) == "bob" }
       end
     end
   end

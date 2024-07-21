@@ -16,6 +16,8 @@
 class Location < ApplicationRecord
   include MemoryRecordBind::Basic
 
+  delegate :call_name, to: :pure_info
+
   with_options dependent: :destroy do
     has_many :swars_memberships, class_name: "Swars::Membership"
     has_many :swars_battles, through: :swars_memberships, source: :battle, class_name: "Swars::Battle"

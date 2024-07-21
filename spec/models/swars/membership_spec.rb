@@ -42,39 +42,44 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Membership, type: :model, swars_spec: true do
-    let :record do
-      Battle.create!
-    end
-
     describe "タグ" do
       it "works" do
-        assert { record.memberships[0].attack_tag_list  == ["新嬉野流"]                       }
-        assert { record.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"]              }
-        assert { record.memberships[0].defense_tag_list == []                                 }
-        assert { record.memberships[1].defense_tag_list == []                                 }
-        assert { record.memberships[0].note_tag_list    == ["対振り飛車", "居飛車", "対抗形"] }
-        assert { record.memberships[1].note_tag_list    == ["振り飛車", "対居飛車", "対抗形"] }
+        battle = Battle.create!
+        assert { battle.memberships[0].attack_tag_list  == ["新嬉野流"]                       }
+        assert { battle.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"]              }
+        assert { battle.memberships[0].defense_tag_list == []                                 }
+        assert { battle.memberships[1].defense_tag_list == []                                 }
+        assert { battle.memberships[0].note_tag_list    == ["対振り飛車", "居飛車", "対抗形"] }
+        assert { battle.memberships[1].note_tag_list    == ["振り飛車", "対居飛車", "対抗形"] }
       end
 
       it "タグ検索で LOWER を使う" do
+        battle = Battle.create!
         assert { Membership.tagged_with("居玉").to_sql.include?("LOWER") }
       end
     end
 
     describe "カラム" do
       it "お互いに対戦者がわかる" do
-        assert { record.memberships[0].op_user }
-        assert { record.memberships[1].op_user }
-        assert { record.memberships[0].op_user == record.memberships[1].user }
-        assert { record.memberships[1].op_user == record.memberships[0].user }
+        battle = Battle.create!
+        assert { battle.memberships[0].op_user }
+        assert { battle.memberships[1].op_user }
+        assert { battle.memberships[0].op_user == battle.memberships[1].user }
+        assert { battle.memberships[1].op_user == battle.memberships[0].user }
       end
 
       it "お互いの対戦情報がわかる" do
-        assert { record.memberships[0].opponent }
-        assert { record.memberships[1].opponent }
-        assert { record.memberships[0].opponent == record.memberships[1] }
-        assert { record.memberships[1].opponent == record.memberships[0] }
+        battle = Battle.create!
+        assert { battle.memberships[0].opponent }
+        assert { battle.memberships[1].opponent }
+        assert { battle.memberships[0].opponent == battle.memberships[1] }
+        assert { battle.memberships[1].opponent == battle.memberships[0] }
       end
+    end
+
+    it "location_human_name" do
+      battle = Battle.create!(preset_key: "角落ち")
+      assert { battle.memberships[0].location_human_name == "下手" }
     end
   end
 end

@@ -26,13 +26,29 @@ module Swars
       key
     end
 
+    # 本家
     def official_url
-      q = { locale: "ja" }
-      "https://shogiwars.heroz.jp/games/#{self}?#{q.to_query}"
+      "https://shogiwars.heroz.jp/games/#{self}"
     end
 
-    def my_url
+    # 棋譜検索の詳細
+    def inside_show_url
       UrlProxy.full_url_for("/swars/battles/#{self}")
+    end
+
+    # KENTOへのショートカット
+    def kento_url
+      UrlProxy.full_url_for("/swars/battles/#{self}/kento")
+    end
+
+    # ぴよ将棋へのショートカット
+    def piyo_shogi_url
+      UrlProxy.full_url_for("/swars/battles/#{self}/piyo_shogi")
+    end
+
+    # 棋譜検索
+    def search_url
+      UrlProxy.full_url_for("/swars/search?query=#{official_url}")
     end
 
     def to_time
@@ -40,7 +56,7 @@ module Swars
     end
 
     def user_keys
-      parts.take(2)
+      parts.take(2)             # FIXME: UserKey Value Object を生成する
     end
 
     def user_key_at(location)

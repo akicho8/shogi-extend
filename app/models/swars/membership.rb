@@ -165,6 +165,11 @@ module Swars
       "#{user.key} #{grade.name}"
     end
 
+    # 先手 後手 下手 上手 を返す
+    def location_human_name
+      location.call_name(battle.handicap)
+    end
+
     def think_columns_update
       list = sec_list
 

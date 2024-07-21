@@ -12,7 +12,7 @@ RSpec.describe "基本", type: :system do
   end
 
   it "Swars::UserGroupScript" do
-    visit2 "/lab/swars/user"
+    visit2 "/lab/swars/user-group"
     assert_title(/将棋ウォーズ棋力一覧/)
   end
 

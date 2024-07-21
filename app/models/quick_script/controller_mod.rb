@@ -24,7 +24,7 @@ module QuickScript
 
     def request_post?
       if Rails.env.local?
-        if params[:_method].to_s == "post"
+        if params[:_method].to_s == "post" || @options[:_method].to_s == "post"
           return true
         end
       end

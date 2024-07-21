@@ -34,7 +34,7 @@ module QuickScript
         pagination_for(scope, always_table: false) do |scope|
           scope.collect do |e|
             {
-              "名前" => { _link_to: { name: e.key, url: e.key_info.my_page_url }, },
+              "名前" => { _link_to: { name: e.key, url: e.key_info.official_mypage_url }, },
               "段位" => e.grade.name,
               "発見" => e.ban_at.to_fs(:ymd),
               ""     => { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: {name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },

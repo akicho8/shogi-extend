@@ -22,21 +22,34 @@ module Swars
 
     ################################################################################
 
-    def my_page_url
+    def official_mypage_url
       "https://shogiwars.heroz.jp/users/mypage/#{key}"
+    end
+
+    def official_follow_url
+      "https://shogiwars.heroz.jp/friends?type=follow&user_id=#{key}"
+    end
+
+    def official_follower_url
+      "https://shogiwars.heroz.jp/friends?type=follower&user_id=#{key}"
     end
 
     def swars_search_url
       UrlProxy.full_url_for("/swars/search?query=#{key}")
     end
 
-    def swars_player_url
+    def player_info_url
       UrlProxy.full_url_for("/swars/users/#{key}")
     end
 
     def google_search_url
       query = { q: [key, "将棋"] * " " }
       "https://www.google.co.jp/search?#{query.to_query}"
+    end
+
+    def twitter_search_url
+      query = { q: [key, "将棋"] * " " }
+      "https://twitter.com/search?#{query.to_query}"
     end
 
     ################################################################################

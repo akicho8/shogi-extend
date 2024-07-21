@@ -31,11 +31,11 @@ module Swars
       end
 
       def html
-        @html ||= fetcher.fetch(:my_page, my_page_url) || ""
+        @html ||= fetcher.fetch(:my_page, official_mypage_url) || ""
       end
 
-      def my_page_url
-        UserKey.new(params.fetch(:user_key)).my_page_url
+      def official_mypage_url
+        UserKey.new(params.fetch(:user_key)).official_mypage_url
       end
     end
   end
