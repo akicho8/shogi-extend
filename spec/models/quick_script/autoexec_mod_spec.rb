@@ -4,7 +4,7 @@ module QuickScript
   RSpec.describe AutoexecMod, type: :model do
     it "works" do
       object = QuickScript::Dev::NullScript.new
-      assert { object.as_json.has_key?(:fetch_then_auto_exec_action) }
+      assert { object.as_json.has_key?(:auto_exec_action) }
     end
   end
 end

@@ -14,6 +14,12 @@ module QuickScript
             :default => params[:hidden1].presence || "(hidden)",
           },
           {
+            :label   => "file",
+            :key     => :file1,
+            :type    => :file,
+            :default => nil,
+          },
+          {
             :label   => "string",
             :key     => :str1,
             :type    => :string,

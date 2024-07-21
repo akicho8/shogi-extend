@@ -36,8 +36,8 @@
 
       template(slot="end")
         b-navbar-item(tag="a" :href="current_api_url" target="_blank" v-if="development_p") API
-        NavbarItemLogin(v-if="params.layout_size")
-        NavbarItemProfileLink(v-if="params.layout_size")
+        NavbarItemLogin(      v-if="params.login_link_show")
+        NavbarItemProfileLink(v-if="params.login_link_show")
 
     MainSection
       .container(:class="layout_size_class")
@@ -46,6 +46,18 @@
             template(v-for="form_part in showable_form_parts")
               b-field(:label="form_part.label" custom-class="is-small" :message="form_part.help_message")
                 template(v-if="false")
+                template(v-else-if="form_part.type === 'file'")
+                  b-field(class="file is-primary" :class="{'has-name': !!attributes[form_part.key]}")
+                    b-upload(@input="file => file_upload_handle(form_part, file)" class="file-label")
+                      span(class="file-cta")
+                        b-icon(class="file-icon" icon="upload")
+                        span(class="file-label") アップロード
+                      span(class="file-name" v-if="attributes[form_part.key]")
+                        | {{attributes[form_part.key].name}}
+                  .image_preview.mt-2(v-if="attributes[form_part.key]")
+                    img(:src="attributes[form_part.key].data_uri")
+                    button.delete(size="is-small" @click="file_upload_cancel_handle(form_part)")
+
                 template(v-else-if="form_part.type === 'string'")
                   b-input(
                     v-model="attributes[form_part.key]"
@@ -106,6 +118,9 @@
           .column.is-12
             pre.is_line_break_on
               | {{current_api_url}}
+          //- .column.is-12(v-if="$gs.present_p(attributes)")
+          //-   pre.is_line_break_on
+          //-     | {{attributes}}
 
     DebugBox.is-hidden-mobile(v-if="development_p")
       | {{value_type_guess(params.body)}}
@@ -135,8 +150,8 @@ export default {
     return {
       attributes: {},      // form 入力値
       params: null,        // サーバーから受け取った値(更新禁止)
-      fetch_index: null,
-      post_index: null,
+      fetch_index: null,   // fetch するごとに 0 からインクメントする
+      post_index: null,    // POST するごとに 0 からインクメントする
     }
   },
   watch: {
@@ -202,31 +217,36 @@ export default {
         }
       }
 
-      // 受けとる (と、このタイミングでユーザーは画面の更新に気づく)
+      // 受けとる (と、次のフレームでユーザーは画面の更新に気づく)
       this.params = params
 
       // フォームの初期値を埋める
-      if (this.params.form_parts) {
-        this.params.form_parts.forEach(form_part => {
-          // let value = form_part["default"]
-          // if (form_part.type === "checkbox_button") {
-          // }
+      if (this.params["form_parts"]) {
+        this.params["form_parts"].forEach(form_part => {
           this.$set(this.attributes, form_part["key"], form_part["default"])
         })
       }
 
-      if (this.params.custom_style) {
+      // CSS を付け加える
+      if (this.params["custom_style"]) {
         const style = document.createElement("style")
-        style.textContent = this.params.custom_style
-        // document.head.append(style)
+        style.textContent = this.params["custom_style"]
         this.$el.append(style)
       }
 
+      // いきなりログインの選択肢を出す
+      if (this.params["button_with_nuxt_login_required"] === "button_with_nuxt_login_required1") {
+        if (this.nuxt_login_required()) { return }
+      }
+
       // 最後に特定のメソッドを実行する
-      // これは主に nuxt_login_required を呼ぶために用意してある
-      const fetch_then_auto_exec_action = params["fetch_then_auto_exec_action"]
-      if (fetch_then_auto_exec_action) {
-        this[fetch_then_auto_exec_action]()
+      // もともと nuxt_login_required を呼ぶために用意していたがわかりにくいのでやめた。
+      // いまはとくに使っていない。
+      if (true) {
+        const action = params["auto_exec_action"]
+        if (action) {
+          this[action]()
+        }
       }
     },
 
@@ -290,7 +310,7 @@ export default {
     // params 自体を破壊する
     // これによって気軽に直リンクされることがなくなる
     browser_query_delete(params) {
-      this.params.form_parts.forEach(e => {
+      this.params["form_parts"].forEach(e => {
         if (e.hidden_on_query) {
           delete params[e.key]
         }
@@ -298,7 +318,7 @@ export default {
     },
 
     action_then_nuxt_login_required() {
-      if (this.params["button_with_nuxt_login_required"]) {
+      if (this.params["button_with_nuxt_login_required"] === "button_with_nuxt_login_required2") {
         if (this.nuxt_login_required()) { return true }
       }
     },
@@ -363,13 +383,41 @@ export default {
         throw new Error("must not happen")
       }
     },
+
+    file_upload_handle(form_part, file) {
+      this.clog(form_part, file)
+      if (file == null) {
+        this.debug_alert("なぜかファイル情報が空で呼ばれました")
+        return
+      }
+      this.$sound.play_click()
+
+      const reader = new FileReader()
+      reader.addEventListener("load", () => {
+        this.$set(this.attributes, form_part.key, {
+          name: file.name,         // "ruby-big.png"
+          size: file.size,         // 196597
+          type: file.type,         // "image/png"
+          data_uri: reader.result, // "data:image/png;base64,XXXXXXX=="
+        })
+        this.toast_ok("アップロードしました")
+      }, false)
+
+      reader.readAsDataURL(file) // ここで読み取りを開始すると上の load ブロックがあとで呼ばれる (ややこしい)
+    },
+
+    file_upload_cancel_handle(form_part) {
+      this.$sound.play_click()
+      this.$set(this.attributes, form_part.key, null)
+      this.toast_ok("削除しました")
+    },
   },
   computed: {
     current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
     current_qs_key()   { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
     current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
-    showable_form_parts() { return this.params ? this.params.form_parts.filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
+    showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
 
     new_params() { return {...this.submit_key_params, ...this.$route.query, ...this.attributes} },
 
@@ -405,6 +453,18 @@ export default {
   .container
     +mobile
       padding: 0
+
+  .image_preview
+    height: 8rem
+    display: flex
+    align-items: center
+    img
+      max-height: 100%
+      max-width:  100%
+      // border: 1px solid $grey-lighter
+      // border-radius: 4px
+    button
+      margin-left: 0.5rem
 
 .STAGE-development
   .QuickScriptView

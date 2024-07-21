@@ -5,7 +5,7 @@ module Api
     }
 
     def show
-      QuickScript::Dispatcher.dispatch(params.to_unsafe_h.symbolize_keys, {
+      QuickScript::Dispatcher.dispatch(params.to_unsafe_h.deep_symbolize_keys, {
           :admin_user         => admin_user,
           :current_user       => current_user,
           :controller         => self,

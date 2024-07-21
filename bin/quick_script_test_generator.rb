@@ -70,10 +70,10 @@ end
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/controller_mod.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/calc_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/calc_script.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/download_get_script.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/download_get_script.rb
-# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/download_post_script.rb
-# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/download_post_script.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/csv_download_get_script.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/csv_download_get_script.rb
+# >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/csv_download_post_script.rb
+# >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/csv_download_post_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/error_script.rb
 # >> /Users/ikeda/src/shogi-extend/spec/models/quick_script/dev/error_script.rb
 # >> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/fetch_index_script.rb

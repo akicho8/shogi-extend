@@ -1,6 +1,6 @@
 module QuickScript
   module Dev
-    class DownloadGetScript < Base
+    class CsvDownloadGetScript < Base
       self.title = "CSVダウンロード(GET)"
       self.description = "CSVダウンロードを行う"
       self.form_method = :get
@@ -16,7 +16,7 @@ module QuickScript
         else
           self.form_method = nil # ボタンを非表示にする
           flash[:notice] = "ダウンロードしました"
-          redirect_to csv_url, hard_jump: true
+          redirect_to download_url, hard_jump: true
           "(ダウンロード中または完了時の文言)"
         end
       end
@@ -24,20 +24,20 @@ module QuickScript
       def render_format(format)
         super
         format.csv do
-          controller.send_data(csv_content, filename: csv_filename)
+          controller.send_data(download_content, filename: download_filename)
         end
       end
 
-      def csv_content
+      def download_content
         "a,b,c"
       end
 
-      def csv_filename
+      def download_filename
         "foo.csv"
       end
 
-      def csv_url
-        Rails.application.routes.url_helpers.url_for(:root) + "api/lab/#{params[:qs_group_key]}/#{params[:qs_page_key]}.csv"
+      def download_url
+        self.class.qs_api_url(:csv)
       end
     end
   end

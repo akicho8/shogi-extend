@@ -1,7 +1,7 @@
 module QuickScript
   concern :LoginUserMod do
     prepended do
-      class_attribute :button_with_nuxt_login_required, default: false # ボタンを押したタイミングで nuxt_login_required を発動させる？
+      class_attribute :button_with_nuxt_login_required, default: :button_with_nuxt_login_required1 # ボタンを押したタイミングで nuxt_login_required を発動させる？
     end
 
     def as_json(*)

@@ -35,8 +35,8 @@ tp QuickScript::Dispatcher.info
 # >> | QuickScript::Dev::FlashScript               | dev/flash                 |         | flash                              | 本文には含めない一時的なメッセージを表示する                                                         |
 # >> | QuickScript::Dev::FetchIndexScript          | dev/fetch_index           |         | 重い生成処理対策                   | 特殊な重い処理を実行するパラメータをURLの付与しないようにして直リンクから実行を防ぐ仕組みを検証する  |
 # >> | QuickScript::Dev::ErrorScript               | dev/error                 |         | 例外表示                           | バックトレース付きで表示する                                                                         |
-# >> | QuickScript::Dev::DownloadPostScript        | dev/download_post         |         | CSVダウンロード(POST)              | CSVダウンロードを行う                                                                                |
-# >> | QuickScript::Dev::DownloadGetScript         | dev/download_get          |         | CSVダウンロード(GET)               | CSVダウンロードを行う                                                                                |
+# >> | QuickScript::Dev::CsvDownloadPostScript        | dev/download_post         |         | CSVダウンロード(POST)              | CSVダウンロードを行う                                                                                |
+# >> | QuickScript::Dev::CsvDownloadGetScript         | dev/download_get          |         | CSVダウンロード(GET)               | CSVダウンロードを行う                                                                                |
 # >> | QuickScript::Dev::CalcScript                | dev/calc                  |         | 計算機                             | 足し算を行う                                                                                         |
 # >> | QuickScript::Chore::NullScript              | chore/null                | ○      | 何もしない                         | 本当に何もしない                                                                                     |
 # >> | QuickScript::Chore::StatusCodeScript          | chore/status_code           |         | Not Found                          | ページが見つかりません                                                                               |

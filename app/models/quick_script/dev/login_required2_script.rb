@@ -3,7 +3,7 @@ module QuickScript
     class LoginRequired2Script < Base
       self.title = "ログインモーダル発動2"
       self.description = "読み込みが終わったタイミングで nuxt_login_required を実行する"
-      self.fetch_then_auto_exec_action = "nuxt_login_required"
+      self.auto_exec_action = "nuxt_login_required"
     end
   end
 end
