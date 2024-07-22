@@ -17,7 +17,7 @@ module QuickScript
           ]
           # rows = nil
           url = GoogleApi::Facade.new(rows: rows).call
-          redirect_to url, tab_open: true
+          redirect_to url, type: :tab_open
         end
       end
     end

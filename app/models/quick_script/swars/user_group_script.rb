@@ -50,7 +50,7 @@ module QuickScript
         end
 
         if current_google_sheet
-          redirect_to google_sheet_url, tab_open: true
+          redirect_to google_sheet_url, type: :tab_open
         end
 
         simple_table(rows, always_table: true)

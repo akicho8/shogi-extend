@@ -57,7 +57,7 @@ export default function ({ $axios, redirect, error }) {
     //
     //   if (process.client) {
 
-    error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data})
+    error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data, call_from: "axios_error_handler.js"})
 
     //   }
     //

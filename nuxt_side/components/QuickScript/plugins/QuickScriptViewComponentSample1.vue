@@ -10,7 +10,7 @@ import Terms from "@/pages/about/terms.vue"
 import ShareBoard2 from "@/pages/share-board/index.vue"
 
 export default {
-  inject: ["TheQS"],
+  inject: ["QS"],
   components: {
     Terms,
     ShareBoard2,

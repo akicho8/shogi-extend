@@ -2,8 +2,8 @@
 # | server side                      | client side                |
 # |----------------------------------+----------------------------|
 # | redirect_to url                  | this.$router.push(url)     |
-# | redirect_to url, hard_jump: true | location.href = url        |
-# | redirect_to url, tab_open: true  | window.open(url, "_blank") |
+# | redirect_to url, type: :hard     | location.href = url        |
+# | redirect_to url, type: :tab_open | window.open(url, "_blank") |
 # |----------------------------------+----------------------------|
 
 module QuickScript
@@ -18,6 +18,10 @@ module QuickScript
       end
       @redirect_to_options = { to: path, **options }
       nil
+    end
+
+    def page_reload
+      redirect_to self.class.qs_url, type: :hard
     end
   end
 end

@@ -9,7 +9,7 @@ import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "QuickScriptViewValueAsPre",
-  inject: ["TheQS"],
+  inject: ["QS"],
   props: ["value"],
 }
 </script>

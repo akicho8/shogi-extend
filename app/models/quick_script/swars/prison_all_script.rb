@@ -5,11 +5,19 @@ module QuickScript
       self.description = "囚人をアルファベット順ですべて表示する"
 
       def call
-        av = []
-        ::Swars::User.ban_only.in_batches do |group|
-          av += group.pluck(:user_key)
+        { :_v_text => users.sort.join(" "), :class => "is_word_break_off" }
+      end
+
+      def users
+        @users ||= [].tap do |av|
+          ::Swars::User.ban_only.in_batches do |group|
+            av.concat group.pluck(:user_key)
+          end
         end
-        { _v_text: av.sort.join(" "), class: "is_word_break_off" }
+      end
+
+      def title
+        "#{super}(#{users.size})"
       end
     end
   end

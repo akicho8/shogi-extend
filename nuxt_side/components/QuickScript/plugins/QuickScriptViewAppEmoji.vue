@@ -5,12 +5,9 @@
 </template>
 
 <script>
-import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
-
 export default {
   name: "QuickScriptViewAppEmoji",
-  inject: ["TheQS"],
+  inject: ["QS"],
   props: ["value"],
   data() {
     return {

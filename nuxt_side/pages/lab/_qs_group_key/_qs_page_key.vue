@@ -23,7 +23,7 @@ export default {
         // console.warn(e.response.statusText)
         // console.warn(e.message)
         // SSR で 404 が返ってきたときここの処理がないと 500 エラーの nuxt.js のエラー画面になってしまう
-        error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data})
+        error({statusCode: e.response?.status ?? 500, message: e.message, __RAW_ERROR_OBJECT__: e, __RESPONSE_DATA__: e.response?.data, call_from: "_qs_page_key.vue"})
       }
     }
   },

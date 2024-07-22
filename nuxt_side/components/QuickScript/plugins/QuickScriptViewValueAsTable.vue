@@ -12,7 +12,7 @@ b-table.QuickScriptViewValueAsTable(
   :total        = "value.total"
   :current-page = "value.current_page"
   :per-page     = "value.per_page"
-  @page-change="page => TheQS.page_change_or_sort_handle({page: page})"
+  @page-change="page => QS.page_change_or_sort_handle({page: page})"
   )
   template(v-for="column_name in column_names")
     b-table-column(
@@ -33,7 +33,7 @@ import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "QuickScriptViewValueAsTable",
-  inject: ["TheQS"],
+  inject: ["QS"],
   props: ["value"],
   computed: {
     column_names() {

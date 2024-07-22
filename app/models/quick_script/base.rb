@@ -1,3 +1,16 @@
+# |------------------------------------------------+--------------------------------------------------------------------------|
+# | Method                                         | Result                                                                   |
+# |------------------------------------------------+--------------------------------------------------------------------------|
+# | QuickScript::Dev::FooBarBazScript.qs_group_key | "dev"                                                                    |
+# | QuickScript::Dev::FooBarBazScript.qs_page_key  | "foo_bar_baz"                                                            |
+# | QuickScript::Dev::FooBarBazScript.qs_key       | "dev/foo_bar_baz"                                                        |
+# | QuickScript::Dev::FooBarBazScript.qs_path      | "/lab/dev/foo-bar-baz"                                                   |
+# | QuickScript::Dev::FooBarBazScript.qs_url       | "http://localhost:4000/lab/dev/foo-bar-baz"                              |
+# | QuickScript::Dev::FooBarBazScript.qs_api_url   | "http://localhost:3000/api/lab/dev/foo_bar_baz.json"                     |
+# | QuickScript::Dev::FooBarBazScript.title        | "スクリプト名のテスト"                                                   |
+# | QuickScript::Dev::FooBarBazScript.description  | "スクリプト名にハイフンを含むため URL では foo-bar-baz となるのが正しい" |
+# |------------------------------------------------+--------------------------------------------------------------------------|
+
 module QuickScript
   class Base
     class << self
@@ -16,6 +29,10 @@ module QuickScript
       # ハイフンがつくのはここだけ
       def qs_path
         @qs_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
+      end
+
+      def qs_url
+        @qs_url ||= UrlProxy.full_url_for(qs_path)
       end
 
       def qs_api_url(format = :json)
@@ -40,8 +57,8 @@ module QuickScript
       end
     end
 
-    class_attribute :title,        default: nil
-    class_attribute :description,  default: nil
+    class_attribute :title,       default: nil
+    class_attribute :description, default: nil
 
     attr_reader :params
 

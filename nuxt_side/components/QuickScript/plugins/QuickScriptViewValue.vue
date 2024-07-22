@@ -70,10 +70,10 @@ import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "QuickScriptViewValue",
-  inject: ["TheQS"],
+  inject: ["QS"],
   props: ["value"],
   computed: {
-    value_type_guess() { return this.TheQS.value_type_guess(this.value) },
+    value_type_guess() { return this.QS.value_type_guess(this.value) },
   },
 }
 </script>
