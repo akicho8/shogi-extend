@@ -156,6 +156,12 @@ module Swars
       end
     end
 
+    after_create do
+      if user.latest_battled_at < battle.battled_at
+        user.update_columns(:latest_battled_at => battle.battled_at)
+      end
+    end
+
     # 遅い
     def opponent2
       @opponent2 ||= (battle.memberships - [self]).first
