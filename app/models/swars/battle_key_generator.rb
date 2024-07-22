@@ -8,7 +8,7 @@ module Swars
       base = "2000-01-01".to_time
       time = base.advance(seconds: @seed)
       str = time.strftime("%Y%m%d_%H%M%S")
-      key = [:alice, :bob, str].join("-")
+      key = ["alice", "bob", str].join("-")
       BattleKey.create(key)
     end
   end

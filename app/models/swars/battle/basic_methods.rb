@@ -89,18 +89,9 @@ module Swars
           validates :battled_at
         end
 
-        # FIXME: 本当は before_validation のタイミングでできるはず
         after_create do
-          memberships[0].opponent = memberships[1]
-          memberships[1].opponent = memberships[0]
-        end
-
-        # これまでは Membership を更新するたびに user.latest_battled_at を Time.current で更新してしまっていた。
-        # そうではなく Battle を作成したときだけ Battle から battled_at で更新するのが正しい。
-        after_create do
-          users.each do |user|
-            user.update!(latest_battled_at: battled_at)
-          end
+          memberships[0].update_columns(:opponent_id => memberships[1].id)
+          memberships[1].update_columns(:opponent_id => memberships[0].id)
         end
       end
 

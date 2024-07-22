@@ -64,15 +64,12 @@ module Swars
     scope :regular_only,  -> { order(search_logs_count: :desc)                                   } # 検索回数が多い人たち順
     scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].asc)              } # 段級位が高い人たち順
 
-    before_validation do
+    before_validation on: :create do
       if Rails.env.local?
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.key ||= SecureRandom.hex
       self.latest_battled_at ||= Time.current
-    end
-
-    before_validation on: :create do
       profile || build_profile
     end
 

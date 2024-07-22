@@ -59,17 +59,17 @@ module Swars
       end
     end
 
-    describe "カラム" do
-      it "お互いに対戦者がわかる" do
-        battle = Battle.create!
+    describe "相互参照" do
+      it "対戦者が即参照できる" do
+        battle = Battle.create!.reload
         assert { battle.memberships[0].op_user }
         assert { battle.memberships[1].op_user }
         assert { battle.memberships[0].op_user == battle.memberships[1].user }
         assert { battle.memberships[1].op_user == battle.memberships[0].user }
       end
 
-      it "お互いの対戦情報がわかる" do
-        battle = Battle.create!
+      it "相手のレコードを即参照できる" do
+        battle = Battle.create!.reload
         assert { battle.memberships[0].opponent }
         assert { battle.memberships[1].opponent }
         assert { battle.memberships[0].opponent == battle.memberships[1] }

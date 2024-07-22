@@ -67,7 +67,7 @@ module ShareBoardControllerMethods
     end
 
     # アクセスがあれば「上げて」消さないようにするため
-    current_record.update_columns(accessed_at: Time.current)
+    current_record.update_columns(:accessed_at => Time.current)
 
     if request.format.json?
       render json: config_params

@@ -85,7 +85,6 @@ module Swars
     scope :user_except, -> user_keys { where.not(user: User.user_only(user_keys)) }
 
     before_validation do
-
       # テストを書きやすいようにする
       if Rails.env.local?
 

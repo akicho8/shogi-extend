@@ -150,7 +150,7 @@ module BattleControllerSharedMethods
       if from_crawl_bot?
         return
       end
-      record.update_columns(accessed_at: Time.current)
+      record.update_columns(:accessed_at => Time.current)
     end
 
     def decorator

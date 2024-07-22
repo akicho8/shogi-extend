@@ -80,5 +80,12 @@ module Swars
         assert { user.profile.ban_crawled_at }
       end
     end
+
+    it "対局作成時にその対局の対局日時の方が新しければユーザーが1つ保持している最終対局日時を更新する" do
+      battled_at = "2024-01-01".to_time
+      battle = Battle.create!(battled_at: battled_at).reload
+      assert { battle.memberships[0].user.latest_battled_at == battled_at }
+      assert { battle.memberships[1].user.latest_battled_at == battled_at }
+    end
   end
 end
