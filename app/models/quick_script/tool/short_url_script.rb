@@ -1,5 +1,5 @@
 module QuickScript
-  module Toolkit
+  module Tool
     class ShortUrlScript < Base
       self.title = "短縮URL化"
       self.description = "このサイトのURLを短かくする"

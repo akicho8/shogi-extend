@@ -107,7 +107,8 @@ module QuickScript
     prepend MetaMod
     prepend InvisibleMod
     prepend RedirectMod
-    prepend HelperMod
+    prepend HelperMod              # for h, tag
+    prepend BulmaMod               # for bulma_messsage
     prepend AutoexecMod
     prepend OrderMod               # for index_script.rb
     prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する

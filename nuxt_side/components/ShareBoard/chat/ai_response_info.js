@@ -33,6 +33,9 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
             return `対局が開始されました。盛り上げてください。`
           } else {
             if (true) {
+              return `対局が開始されました。簡潔に短い言葉で盛り上げてください。`
+            }
+            if (false) {
               const teams = Location.values.map(location => {
                 const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
                 const names = members.map(e => context.user_call_name(e.from_user_name))

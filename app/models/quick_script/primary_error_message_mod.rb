@@ -6,12 +6,14 @@ module QuickScript
       class_attribute :status_code, default: nil
     end
 
+    # CSR 用
     def as_json(*)
       super.merge({
           :primary_error_message => primary_error_message,
         })
     end
 
+    # SSR 用
     def meta
       super.merge({
           :primary_error_message => primary_error_message,

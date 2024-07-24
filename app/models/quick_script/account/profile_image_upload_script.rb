@@ -1,7 +1,7 @@
 module QuickScript
-  module Toolkit
+  module Account
     class ProfileImageUploadScript < Base
-      self.title = "プロフィール画像更新"
+      self.title = "画像更新"
       self.description = "プロフィール画像だけ更新する"
       self.form_method = :post
       self.button_label = "更新"

@@ -3,6 +3,7 @@ module QuickScript
     class MessageScript < Base
       self.title = "メッセージ表示"
       self.description = "引数のメッセージを表示する"
+      self.login_link_show = true
 
       def call
         content = []
