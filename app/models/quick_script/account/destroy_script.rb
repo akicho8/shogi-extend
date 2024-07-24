@@ -9,7 +9,7 @@ module QuickScript
 
       def call
         if request_get?
-          return { _autolink: "注意: SHOGI-EXTEND と KENTO はサービスも作者も運営元も異なります。したがって KENTO を解約するつもりで、いま見ているサイト (SHOGI-EXTEND) を退会しても KENTO は解約されません。KENTO を解約する場合は https://www.kento-shogi.com/ に行ってください。" }
+          return { _autolink: "KENTO を解約しようとしている方へ。SHOGI-EXTEND (このサイト) と、最新将棋AIで最善手や評価値を教えてくれるサービス KENTO は作者も運営元もサイトも異なります。したがって KENTO の有料機能 (KENTO Pro) を解約する目的で SHOGI-EXTEND を退会しても KENTO Pro は解約されません。KENTO Pro を解約する場合は https://www.kento-shogi.com/ に向かってください。" }
         end
 
         if request_post?
