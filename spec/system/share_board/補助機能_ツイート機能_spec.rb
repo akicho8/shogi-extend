@@ -14,7 +14,7 @@ RSpec.describe type: :system, share_board_spec: true do
       end
       switch_to_window(window)
       # assert_text("ツイートを共有するにはログインしてください", wait: 10)
-      assert_text("twitter.com", wait: 10) # headless だと英語になってしまう
+      assert_text("x.com", wait: 10) # headless だと英語になってしまう
     end
   end
 end
