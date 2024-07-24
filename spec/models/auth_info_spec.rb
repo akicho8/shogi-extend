@@ -37,7 +37,7 @@ RSpec.describe AuthInfo, type: :model do
     # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
   end
 
-  it "正しいメールアドレスのときはSNS連携しても更新しない" do
+  it "正しいメールアドレスのときはアカウント連携しても更新しない" do
     user = User.create!(email: "alice@example.com")
     user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
     assert { user.email == "alice@example.com" }

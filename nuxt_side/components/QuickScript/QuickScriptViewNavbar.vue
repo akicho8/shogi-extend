@@ -19,6 +19,7 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.layout_size_cl
     b-navbar-item(tag="a" :href="QS.current_api_url" target="_blank" v-if="development_p") API
     NavbarItemLogin(      v-if="QS.params.login_link_show")
     NavbarItemProfileLink(v-if="QS.params.login_link_show")
+    NavbarItemSidebarOpen(@click="QS.sidebar_toggle")
 
 </template>
 

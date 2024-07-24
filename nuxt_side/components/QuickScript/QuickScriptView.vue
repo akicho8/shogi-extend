@@ -26,6 +26,7 @@ const QueryString = require("query-string")
 
 import { mod_value_type } from "./mod_value_type.js"
 import { mod_file_upload } from "./mod_file_upload.js"
+import { mod_sidebar } from "./mod_sidebar.js"
 
 export default {
   // scrollToTop: true,
@@ -34,6 +35,7 @@ export default {
   mixins: [
     mod_value_type,
     mod_file_upload,
+    mod_sidebar,
   ],
 
   provide() {

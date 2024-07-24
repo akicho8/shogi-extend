@@ -3,6 +3,7 @@
   template(v-if="QS.params.__delegate_mode__")
     QuickScriptViewValue(:value="QS.params.body")
   template(v-else)
+    QuickScriptViewSidebar
     QuickScriptViewNavbar
     MainSection
       .container(:class="QS.layout_size_class")

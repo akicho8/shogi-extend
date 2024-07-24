@@ -36,7 +36,7 @@ module QuickScript
       end
 
       def qs_api_url(format = :json)
-        Rails.application.routes.url_helpers.url_for(:root) + "api" + qs_path.underscore + ".#{format}"
+        api_server_root_url + "api" + qs_path.underscore + ".#{format}"
       end
 
       def qs_group_info
@@ -45,6 +45,14 @@ module QuickScript
 
       def title_for_index
         title.to_s.remove(/\A#{qs_group_info.name}\s*/) # "将棋ウォーズ囚人検索" => "囚人検索"
+      end
+
+      def api_server_root_url
+        url_helpers.url_for(:root)
+      end
+
+      def url_helpers
+        Rails.application.routes.url_helpers
       end
 
       def __script_meta__
@@ -61,6 +69,8 @@ module QuickScript
     class_attribute :description, default: nil
 
     attr_reader :params
+
+    delegate :url_helpers, to: :"self.class"
 
     def initialize(params = {}, options = {})
       @params = params
@@ -114,6 +124,7 @@ module QuickScript
     prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
     prepend LayoutMod              # MainNavbar の表示管理など
     prepend CustomStyleMod
+    prepend SidebarMod
     prepend BackgroundMod          # for QuickScriptJob
     prepend GoogleApi::Helper      # for hyper_link
   end

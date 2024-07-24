@@ -5,7 +5,7 @@ module QuickScript
       self.description = "KENTO Pro を解約する"
 
       def call
-        { _autolink: "SHOGI-EXTEND (このサイト) と、KENTO は異なるため、KENTO Pro を解約する場合は https://www.kento-shogi.com/ に向かってください。" }
+        { _autolink: "SHOGI-EXTEND (このサイト) と、KENTO は異なるため、KENTO Pro を解約するには https://www.kento-shogi.com/ に向かってください。" }
       end
     end
   end

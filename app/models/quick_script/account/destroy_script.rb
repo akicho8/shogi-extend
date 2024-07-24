@@ -7,25 +7,47 @@ module QuickScript
       self.button_label = "アカウントを抹殺して本当に退会する"
       self.login_link_show = true
 
+      def form_parts
+        super + [
+          {
+            :label   => "あなたの名前",
+            :key     => :username,
+            :type    => :string,
+            :default => "",
+          },
+        ]
+      end
+
       def call
         if request_get?
-          return { _autolink: "KENTO を解約しようとしている方へ。SHOGI-EXTEND (このサイト) と、最新将棋AIで最善手や評価値を教えてくれるサービス KENTO は作者も運営元もサイトも異なります。したがって KENTO の有料機能 (KENTO Pro) を解約する目的で SHOGI-EXTEND を退会しても KENTO Pro は解約されません。KENTO Pro を解約する場合は https://www.kento-shogi.com/ に向かってください。" }
+          return { _autolink: "解約するために退会しようとしている方へ。SHOGI-EXTEND (このサイト) と、将棋AIによる棋譜解析サービス KENTO は作者も運営元もサイトも異なります。したがって KENTO の有料機能 (KENTO Pro) を解約する目的で SHOGI-EXTEND を退会しても KENTO Pro は解約されません。KENTO Pro を解約するには https://www.kento-shogi.com/ に向かってください。" }
         end
-
         if request_post?
           unless current_user
             flash[:notice] = "ログインしていません"
+            return
+          end
+          if current_username.blank?
+            flash[:notice] = "あなたの名前を入力してください"
+            return
+          end
+          if current_user.name != current_username
+            flash[:notice] = "名前が異なります"
             return
           end
           if true
             controller.current_user.destroy!
             controller.current_user_clear
           end
-          flash[:notice] = "退会しました"
+          flash[:notice] = "アカウントを抹殺して本当に退会しました"
           session_reload!
           redirect_to "/"
           return
         end
+      end
+
+      def current_username
+        params[:username].to_s.strip
       end
     end
   end
