@@ -8,7 +8,7 @@ module QuickScript
     end
 
     it "call_later" do
-      object = QuickScript::Dev::NullScript.new
+      object = QuickScript::Dev::NullScript.new({qs_group_key: "dev", qs_page_key: "null"})
       assert { object.call_later }
     end
   end
