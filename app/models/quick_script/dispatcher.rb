@@ -40,8 +40,6 @@ module QuickScript
     def initialize(params, options = {})
       @params = params
       @options = options
-
-      prepare
     end
 
     def dispatch
@@ -49,25 +47,11 @@ module QuickScript
     end
 
     def action
-      action_klass.new(@params, @options)
+      parameter.receiver_klass.new(parameter.params, @options)
     end
 
-    private
-
-    def prepare
-      @params = @params.merge({
-          :qs_group_key => @params[:qs_group_key].to_s.underscore,
-          :qs_page_key  => @params[:qs_page_key].to_s.underscore,
-        })
-
-      if @params[:qs_page_key] == "__qs_page_key_is_blank__"
-        @params = @params.merge(qs_group_only: @params[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
-      end
-    end
-
-    def action_klass
-      path = "quick_script/#{@params[:qs_group_key]}/#{@params[:qs_page_key]}_script"
-      path.classify.safe_constantize || Chore::NotFoundScript
+    def parameter
+      @parameter ||= Parameter.new(@params)
     end
   end
 end
