@@ -68,11 +68,13 @@ module QuickScript
         @rows ||= [].tap do |rows|
           s = current_sw_user.memberships.all
           s = s.joins(:battle)
-          s = s.includes(battle:[:memberships, :xmode, :final])
+          s = s.includes(battle: [:memberships, :xmode, :final])
           s = s.includes(taggings: :tag)
-          # s = s.includes(:attack_tags, :defense_tags, :technique_tags, :note_tags)
           s = s.includes(:user, :op_user, :location, :style, :grade)
-          # s = s.includes(:opponent) # opponent を入れたら指定する
+          s = s.includes(opponent: { taggings: :tag })
+          if false
+            s = s.includes(:attack_tags, :defense_tags, :technique_tags, :note_tags)
+          end
           s = s.order(battled_at: :desc)
           s = s.limit(LIMIT_MAX)
           s.each do |e|
@@ -88,7 +90,7 @@ module QuickScript
           row["対象"]              = hyper_link(e.user.key, e.user.key_info.player_info_url)
           row["対象の段位"]        = e.grade.name
           row["相手"]              = hyper_link(e.op_user.key, e.op_user.key_info.player_info_url)
-          row["相手の段位"]        = e.opponent2.grade.name
+          row["相手の段位"]        = e.opponent.grade.name
           row["勝敗"]              = e.judge.name
           row["結末"]              = e.battle.final.pure_info.name
           row["手数"]              = e.battle.turn_max
@@ -98,22 +100,26 @@ module QuickScript
           row["最長考"]            = e.think_max
           row["最終手思考"]        = e.think_last
           row["対象の棋風"]        = e.style.try { pure_info.name }
-          row["相手の棋風"]        = e.opponent2.style.try { pure_info.name }
+          row["相手の棋風"]        = e.opponent.style.try { pure_info.name }
           row["ルール"]            = e.battle.rule.pure_info.long_name
           row["先後"]              = e.location_human_name
           row["対局モード"]        = e.battle.xmode.name
           row["対局日時"]          = e.battle.battled_at.to_fs(:ymdhms)
-          row["対象の戦法"]        = e.attack_tag_list.join(SEPARATOR)
-          row["対象の囲い"]        = e.defense_tag_list.join(SEPARATOR)
-          row["対象の手筋"]        = e.technique_tag_list.join(SEPARATOR)
-          row["対象の備考"]        = e.note_tag_list.join(SEPARATOR)
-          # ここで SQL が毎回ひかれている
-          if true
-            row["相手の戦法"]        = e.opponent2.attack_tag_list.join(SEPARATOR)
-            row["相手の囲い"]        = e.opponent2.defense_tag_list.join(SEPARATOR)
-            row["相手の手筋"]        = e.opponent2.technique_tag_list.join(SEPARATOR)
-            row["相手の備考"]        = e.opponent2.note_tag_list.join(SEPARATOR)
+
+          ActiveRecord::Base.logger.tagged("self") do
+            row["対象の戦法"]        = e.attack_tag_list.join(SEPARATOR)
+            row["対象の囲い"]        = e.defense_tag_list.join(SEPARATOR)
+            row["対象の手筋"]        = e.technique_tag_list.join(SEPARATOR)
+            row["対象の備考"]        = e.note_tag_list.join(SEPARATOR)
           end
+
+          ActiveRecord::Base.logger.tagged("opponent") do
+            row["相手の戦法"]        = e.opponent.attack_tag_list.join(SEPARATOR)
+            row["相手の囲い"]        = e.opponent.defense_tag_list.join(SEPARATOR)
+            row["相手の手筋"]        = e.opponent.technique_tag_list.join(SEPARATOR)
+            row["相手の備考"]        = e.opponent.note_tag_list.join(SEPARATOR)
+          end
+
           row["手合割"]            = e.battle.preset.name
           row["棋力差"]            = e.grade_diff
           row["リンク1"]           = hyper_link("本家",     e.battle.key_info.official_url)
@@ -122,7 +128,7 @@ module QuickScript
           row["リンク4"]           = hyper_link("ぴよ将棋", e.battle.key_info.piyo_shogi_url)
           row["リンク5"]           = hyper_link("KENTO",    e.battle.key_info.kento_url)
           row["対象の段位(order)"] = e.grade.priority
-          row["相手の段位(order)"] = e.opponent2.grade.priority
+          row["相手の段位(order)"] = e.opponent.grade.priority
         end
       end
 

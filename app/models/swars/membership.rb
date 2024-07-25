@@ -161,9 +161,9 @@ module Swars
       end
     end
 
-    # 遅い
-    def opponent2
-      @opponent2 ||= (battle.memberships - [self]).first
+    # リレーションを使わない方法
+    def opponent_slow
+      @opponent_slow ||= (battle.memberships - [self]).first
     end
 
     def name_with_grade
