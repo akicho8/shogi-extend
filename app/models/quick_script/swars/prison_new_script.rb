@@ -10,7 +10,7 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label       => "将棋ウォーズID",
+            :label       => "囚人のウォーズID",
             :key         => :swars_user_key,
             :type        => :string,
             :default     => params[:swars_user_key],
@@ -22,7 +22,7 @@ module QuickScript
       def call
         if request_post?
           if current_swars_user_key.blank?
-            flash[:notice] = "ウォーズIDを入力してください"
+            flash[:notice] = "囚人のウォーズIDを入力してください"
             return
           end
           unless throttle.call

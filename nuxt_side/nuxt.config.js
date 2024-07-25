@@ -334,7 +334,7 @@ const config = {
     name: process.env.BASIC_AUTH_USERNAME,
     pass: process.env.BASIC_AUTH_PASSWORD,
     enabled: true, // PRODUCTION_P,
-    match: /^\/lab\/(dev|admin|secret|private)(\/.*)?$/, // [REFS] BASIC_AUTH_MATCH
+    match: /^\/lab\/(dev|admin|secret|private|group1)(\/.*)?$/, // [REFS] BASIC_AUTH_MATCH
     // match: (req) => req.originalUrl === '/lab/dev',
   },
 

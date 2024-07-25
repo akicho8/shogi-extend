@@ -26,7 +26,11 @@ export default {
         this.click_fn(e)
       } else {
         this.$sound.play_click()
-        this.$router.push({name: 'users-id', params: {id: this.new_user.id}})
+        if (true) {
+          this.$router.push({name: 'users-id', params: {id: this.new_user.id}})
+        } else {
+          this.$router.push("/lab/account")
+        }
       }
     },
   },
