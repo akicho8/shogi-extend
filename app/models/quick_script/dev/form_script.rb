@@ -26,6 +26,14 @@ module QuickScript
             :default => params[:str1].presence || "(string)",
           },
           {
+            :label   => "string (localStorage と同期する)",
+            :key     => :str2,
+            :type    => :string,
+            :default => params[:str2].presence || "(string)",
+            :ls_sync => {:ls_key => "(ls_key)"}, # localStorage["(ls_key)"].update(str2: "値")
+            # :ls_sync => true,                  # localStorage["str2"] = "値"
+          },
+          {
             :label   => "text",
             :key     => :text1,
             :type    => :text,

@@ -1,19 +1,16 @@
 <template lang="pug">
-.UserEditPiyoShogi
-  MainNavbar
-    template(slot="start")
-      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="cancel_handle") キャンセル
-    template(slot="end")
-      b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="save_handle") 保存
-
-  MainSection(v-if="new_piyo_shogi_type_key")
-    .container
-      .columns.is-centered
-        .column
-          b-field(label="このブラウザから起動するぴよ将棋の種類" :message="new_piyo_shogi_type_info.message")
-            template(v-for="e in PiyoShogiTypeInfo.values")
-              b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="$sound.play_click()")
-                | {{e.name}}
+.UserEditPiyoShogiMini(v-if="new_piyo_shogi_type_key")
+  .columns.is-mobile.is-multiline
+    .column.is-12
+      b-field(custom-class="is-small" label="ぴよ将棋ボタンの表示" :message="new_piyo_shogi_type_info.message")
+        template(v-for="e in PiyoShogiTypeInfo.values")
+          b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="$sound.play_click()")
+            | {{e.name}}
+  .columns.is-mobile.is-multiline
+    .column.is-12
+      b-field
+        .control
+          b-button(type="is-primary" @click="save_handle") 保存
 </template>
 
 <script>
@@ -21,7 +18,7 @@ import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 import { mod_storage } from "@/components/User/mod_storage.js"
 
 export default {
-  name: "UserEditPiyoShogi",
+  name: "UserEditPiyoShogiMini",
   mixins: [mod_storage],
   data() {
     return {
@@ -31,17 +28,7 @@ export default {
   mounted() {
     this.new_piyo_shogi_type_key = this.piyo_shogi_type_key
   },
-  meta() {
-    return {
-      title: this.page_title,
-    }
-  },
   methods: {
-    cancel_handle() {
-      this.$sound.play_click()
-      this.back_to()
-    },
-
     save_handle() {
       this.$sound.play_click()
       if (this.new_piyo_shogi_type_key != this.piyo_shogi_type_key) {
@@ -51,19 +38,17 @@ export default {
       } else {
         this.toast_ok("変更はありませんでした")
       }
-      this.back_to()
     },
   },
   computed: {
     PiyoShogiTypeInfo()    { return PiyoShogiTypeInfo                                 },
     piyo_shogi_type_info() { return PiyoShogiTypeInfo.fetch(this.piyo_shogi_type_key) },
     new_piyo_shogi_type_info() { return PiyoShogiTypeInfo.fetch(this.new_piyo_shogi_type_key) },
-    page_title()           { return "ぴよ将棋の種類の変更"                            },
   },
 }
 </script>
 
-<style scoped lang="sass">
-.UserEditPiyoShogi
-  min-height: 100vh
+<style lang="sass">
+.UserEditPiyoShogiMini
+  __css_keep__: 0
 </style>

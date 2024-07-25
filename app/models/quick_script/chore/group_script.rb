@@ -10,7 +10,7 @@ module QuickScript
             "グループ" => { _nuxt_link: { name: e.name, to: { path: e.qs_path }, }, },
           }
         end
-        simple_table(rows)
+        simple_table(rows, always_table: true)
       end
 
       def all

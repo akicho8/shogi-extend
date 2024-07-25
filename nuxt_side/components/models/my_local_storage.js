@@ -1,19 +1,35 @@
-// |-----------------+-------------------------------------------|
-// | method          |                                           |
-// |-----------------+-------------------------------------------|
-// | set(key, value) | value はなんでもいいけど undefined はだめ |
-// | lookup(key)     |                                           |
-// | get(key)        | lookup の alias                           |
-// | fetch(key)      |                                           |
-// | remove(key)     |                                           |
-// | remove_all      | 全削除                                    |
-// | keys            | 主にデバッグ用                            |
-// | attributes      | デバッグ用                                |
-// | to_h            | attributes の alias                       |
-// | core            | localStorage を返す                       |
-// |-----------------+-------------------------------------------|
+// |--------------------------------+-------------------------------------------|
+// | method                         |                                           |
+// |--------------------------------+-------------------------------------------|
+// | hash_get(key1, key2)           | ls[key1][key2]                            |
+// | hash_update(key1, key2, value) | ls[key1].update(key2, value)              |
+// | set(key, value)                | value はなんでもいいけど undefined はだめ |
+// | lookup(key)                    |                                           |
+// | get(key)                       | lookup の alias                           |
+// | fetch(key)                     |                                           |
+// | remove(key)                    |                                           |
+// | remove_all                     | 全削除                                    |
+// | keys                           | 主にデバッグ用                            |
+// | attributes                     | デバッグ用                                |
+// | to_h                           | attributes の alias                       |
+// | core                           | localStorage を返す                       |
+// |--------------------------------+-------------------------------------------|
 
 export class MyLocalStorage {
+  //////////////////////////////////////////////////////////////////////////////// 値を Hash とした場合のショートカット
+
+  static hash_get(key1, key2) {
+    return (this.get(key1) ?? {})[key2]
+  }
+
+  static hash_update(key1, key2, value) {
+    const hv = this.get(key1) ?? {}
+    hv[key2] = value
+    this.set(key1, hv)
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+
   static set(key, value) {
     if (this.core) {
       if (this.development_p) {
@@ -26,6 +42,9 @@ export class MyLocalStorage {
   static lookup(key) {
     if (this.core) {
       const json = this.core.getItem(key)
+      if (this.development_p) {
+        console.log(`storage.get('${key}', ${json})`)
+      }
       if (json) {
         try {
           return JSON.parse(json)
@@ -53,6 +72,8 @@ export class MyLocalStorage {
     }
     return v
   }
+
+  ////////////////////////////////////////////////////////////////////////////////
 
   static get keys() {
     const keys = []

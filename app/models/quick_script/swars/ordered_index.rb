@@ -7,6 +7,7 @@ module QuickScript
       PrisonSearchScript,
       PrisonAllScript,
       PrisonNewScript,
+      PiyoShogiConfigScript,
     ]
   end
 end

@@ -10,17 +10,18 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "あなたの名前",
-            :key     => :username,
-            :type    => :string,
-            :default => "",
+            :label       => "あなたの名前",
+            :key         => :username,
+            :type        => :string,
+            :default     => "",
+            :placeholder => current_user&.name,
           },
         ]
       end
 
       def call
         if request_get?
-          return { _autolink: "解約するために退会しようとしている方へ。SHOGI-EXTEND (このサイト) と、将棋AIによる棋譜解析サービス KENTO は作者も運営元もサイトも異なります。したがって KENTO の有料機能 (KENTO Pro) を解約する目的で SHOGI-EXTEND を退会しても KENTO Pro は解約されません。KENTO Pro を解約するには https://www.kento-shogi.com/ に向かってください。" }
+          return { _autolink: "解約するために退会しようとしている方へ。SHOGI-EXTEND (このサイト) と、棋譜検討サービス KENTO は作者も運営元もサイトも異なります。したがって KENTO の有料機能 (KENTO Pro) を解約する目的で SHOGI-EXTEND を退会しても KENTO Pro は解約されません。KENTO Pro を解約するには https://www.kento-shogi.com/ に向かってください。" }
         end
         if request_post?
           unless current_user

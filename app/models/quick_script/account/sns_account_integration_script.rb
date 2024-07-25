@@ -1,7 +1,7 @@
 module QuickScript
   module Account
     class SnsAccountIntegrationScript < Base
-      self.title = "アカウント連携"
+      self.title = "SNSアカウント連携"
       self.description = "他のSNSのアカウントを使ってログインできるようにする (Googleアカウント一つで充分)"
       self.nuxt_login_required_timing = :immediately
 

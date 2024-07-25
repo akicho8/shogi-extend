@@ -27,6 +27,7 @@ const QueryString = require("query-string")
 import { mod_value_type } from "./mod_value_type.js"
 import { mod_file_upload } from "./mod_file_upload.js"
 import { mod_sidebar } from "./mod_sidebar.js"
+import { mod_storage } from "./mod_storage.js"
 
 export default {
   // scrollToTop: true,
@@ -36,6 +37,7 @@ export default {
     mod_value_type,
     mod_file_upload,
     mod_sidebar,
+    mod_storage,
   ],
 
   provide() {
@@ -130,6 +132,7 @@ export default {
         this.params["form_parts"].forEach(form_part => {
           this.$set(this.attributes, form_part["key"], form_part["default"])
         })
+        this.qs_ls_load()
       }
 
       // CSS を付け加える
@@ -173,6 +176,7 @@ export default {
 
     get_handle() {
       if (this.action_then_nuxt_login_required()) { return }
+      this.qs_ls_save()
       if (this.params.get_then_axios_get) {
         // URL を書き換えずにこっそり GET したい場合
         // this.$sound.play_click()
@@ -185,6 +189,7 @@ export default {
 
     post_handle() {
       if (this.action_then_nuxt_login_required()) { return }
+      this.qs_ls_save()
       this.post_index ??= 0
       this.$axios.$post(this.current_api_path, {...this.new_params, post_index: this.post_index}).then(params => {
         this.post_index += 1
@@ -227,6 +232,7 @@ export default {
         if (this.nuxt_login_required()) { return true }
       }
     },
+
   },
   computed: {
     current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
