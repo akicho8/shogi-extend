@@ -21,6 +21,12 @@
             :placeholder="form_part.placeholder"
             spellcheck="false"
             )
+        template(v-else-if="form_part.type === 'static'")
+          template(v-if="true")
+            input.input.is-static(v-model="QS.attributes[form_part.key]" readonly)
+          template(v-else)
+            p.control
+              span.is-static(v-text="QS.attributes[form_part.key]")
         template(v-else-if="form_part.type === 'text'")
           b-input(
             type="textarea"

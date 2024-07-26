@@ -26,12 +26,20 @@ module QuickScript
             :default => params[:str1].presence || "(string)",
           },
           {
-            :label   => "string (localStorage と同期する)",
+            :label   => "static",
+            :key     => :static1,
+            :type    => :static,
+            :default => params[:static1].presence || "固定文字列",
+            :help_message => "(help_message)",
+          },
+          {
+            :label   => "localStorage 同期",
             :key     => :str2,
             :type    => :string,
             :default => params[:str2].presence || "(string)",
             :ls_sync => {:ls_key => "(ls_key)"}, # localStorage["(ls_key)"].update(str2: "値")
             # :ls_sync => true,                  # localStorage["str2"] = "値"
+            :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
           },
           {
             :label   => "text",
