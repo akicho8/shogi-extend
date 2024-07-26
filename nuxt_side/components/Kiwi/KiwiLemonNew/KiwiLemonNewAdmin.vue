@@ -28,7 +28,7 @@
       | {{row.id}}
 
     b-table-column(v-slot="{row}" field="user.id" label="所有者" sortable :width="1")
-      | {{row.user.name}}
+      | {{row.user?.name}}
 
     // "成功" が "変換中" になったときガクッとさせないための幅
     b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered sortable header-class="table_status_column")

@@ -8,6 +8,7 @@ module QuickScript
       PrisonSearchScript,
       PrisonNewScript,
       PiyoShogiConfigScript,
+      DocumentationScript,
     ]
   end
 end

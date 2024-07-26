@@ -7,7 +7,7 @@
       a.permalink(href="/video/new/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    KiwiLemonNewHelpBody
+    QuickScriptView(qs_group_key="chore" qs_page_key="documentation" :qs_override_params="{md_key: 'video_new', page_layout: 'pl_content_with_padding'}")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>

@@ -65,6 +65,19 @@ module QuickScript
       end
     end
 
+    begin
+      class_attribute :deep_subclasses, default: []
+
+      class << self
+        attr_accessor :abstract_script # 有効にすると Dispatcher.all に現れなくなる
+      end
+
+      def self.inherited(subclass)
+        super
+        deep_subclasses << subclass
+      end
+    end
+
     class_attribute :title,       default: nil
     class_attribute :description, default: nil
 

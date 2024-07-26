@@ -244,4 +244,4 @@
 
 ###### ここに載ってない
 
-- https://twitter.com/sgkinakomochi
+→ https://twitter.com/sgkinakomochi

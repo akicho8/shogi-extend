@@ -4,8 +4,16 @@ module QuickScript
   class Dispatcher
     class << self
       def all
-        Rails.autoloaders.main.eager_load_namespace(QuickScript)
-        Base.subclasses
+        @all ||= yield_self do
+          Rails.autoloaders.main.eager_load_namespace(QuickScript)
+          if false
+            # 直下だけなので継承を継承したクラスはでてこない
+            Base.subclasses.reject(&:abstract_script)
+          else
+            # 継承の継承を含む
+            Base.deep_subclasses.reject(&:abstract_script)
+          end
+        end
       end
 
       def info

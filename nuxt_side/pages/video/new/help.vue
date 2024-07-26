@@ -1,5 +1,5 @@
 <template lang="pug">
-KiwiLemonNewHelp
+QuickScriptView(qs_group_key="chore" qs_page_key="documentation" :qs_override_params="{md_key: 'video_new'}")
 </template>
 
 <script>

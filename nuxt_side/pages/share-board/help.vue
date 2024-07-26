@@ -1,5 +1,5 @@
 <template lang="pug">
-SbHelp
+QuickScriptView(qs_group_key="chore" qs_page_key="documentation" :qs_override_params="{md_key: 'share_board'}")
 </template>
 
 <script>
@@ -16,6 +16,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass">
-</style>

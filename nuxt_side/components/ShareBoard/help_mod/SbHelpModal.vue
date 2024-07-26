@@ -7,7 +7,7 @@
       a.permalink(href="/share-board/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    SbHelpBody
+    QuickScriptView(qs_group_key="chore" qs_page_key="documentation" :qs_override_params="{md_key: 'share_board', page_layout: 'pl_content_with_padding'}")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>

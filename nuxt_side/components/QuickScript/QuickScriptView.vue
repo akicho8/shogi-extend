@@ -54,8 +54,10 @@ export default {
   props: {
     // 呼び出す側で $route.params を上書きすればいいのでこれはいらない。
     // が、一つのページで QuickScriptView を二つ呼ぶ場合には使えないので一応用意しておく。
-    qs_group_key: { type: String },
-    qs_page_key:  { type: String },
+    qs_group_key: { type: String, default: null },
+    qs_page_key:  { type: String, default: null },
+    // $route.query に上書きする値 (このコンポーネントを部分的に呼ぶとき $route.query にマージしたいときがある)
+    qs_override_params: { type: Object, default: {}   },
   },
   data() {
     return {
@@ -248,7 +250,14 @@ export default {
     showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
     main_component()  { return this.params?.main_component },
 
-    new_params() { return {...this.submit_key_params, ...this.$route.query, ...this.attributes} },
+    new_params() {
+      return {
+        ...this.submit_key_params,
+        ...this.$route.query,
+        ...this.qs_override_params,
+        ...this.attributes,
+      }
+    },
 
     // GET のときパラメータに付与するキー
     submit_key_params() {
