@@ -15,7 +15,13 @@
     // ここからがよくわからないが CSR は $fetchState.pending と fetch() のタイミングがずれているので g_loading_p を入れている
     b-loading(:active="$fetchState.pending || g_loading_p")
 
-  component(v-if="params?.main_component" :is="params.main_component")
+  component(
+    v-if="main_component"
+    :is="main_component['_component']"
+    v-bind="main_component['_v_bind']"
+    :class="main_component['class']"
+    :style="main_component['style']"
+  )
 </template>
 
 <script>
@@ -240,6 +246,7 @@ export default {
     current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
     showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
+    main_component()  { return this.params?.main_component },
 
     new_params() { return {...this.submit_key_params, ...this.$route.query, ...this.attributes} },
 

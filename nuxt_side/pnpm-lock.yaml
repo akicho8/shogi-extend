@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  marked:
+    specifier: ^13.0.2
+    version: 13.0.2
   nuxt-basic-auth-module:
     specifier: ^1.4.1
     version: 1.4.1
@@ -8446,6 +8449,12 @@ packages:
     dependencies:
       object-visit: 1.0.1
     dev: true
+
+  /marked@13.0.2:
+    resolution: {integrity: sha512-J6CPjP8pS5sgrRqxVRvkCIkZ6MFdRIjDkwUwgJ9nL2fbmM6qGQeB2C16hi8Cc9BOzj6xXzy0jyi0iPIfnMHYzA==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: false
 
   /md5.js@1.3.5:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==}

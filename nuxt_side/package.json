@@ -63,6 +63,7 @@
     "vuedraggable": "^2.24.3"
   },
   "dependencies": {
+    "marked": "^13.0.2",
     "nuxt-basic-auth-module": "^1.4.1"
   }
 }
