@@ -100,7 +100,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
         template(v-if="true")
           b-menu-list(label="その他")
-            b-menu-item.is_active_unset(label="よくある質問 (FAQ)" @click="APP.general_help_modal_handle")
+            b-menu-item.is_active_unset(label="よくある質問 (FAQ)" tag="nuxt-link" to="/swars/search/help")
             b-menu-item.is_active_unset(label="ショートカット" @click="APP.shortcut_modal_open_handle")
 
         b-menu-list(label="test" v-if="development_p")

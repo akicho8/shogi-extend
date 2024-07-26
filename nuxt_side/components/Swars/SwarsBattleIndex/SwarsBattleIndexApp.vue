@@ -57,7 +57,6 @@ import _ from "lodash"
 
 import { support_parent           } from "./support_parent.js"
 import { mod_chore                } from "./mod_chore.js"
-import { mod_help                 } from "./mod_help.js"
 import { mod_default_key          } from "./mod_default_key.js"
 import { mod_columns              } from "./mod_columns.js"
 import { mod_link_to              } from "./mod_link_to.js"
@@ -90,7 +89,6 @@ export default {
     mod_columns,
     mod_sidebar,
     mod_chore,
-    mod_help,
     mod_default_key,
     mod_storage,
     mod_shortcut,

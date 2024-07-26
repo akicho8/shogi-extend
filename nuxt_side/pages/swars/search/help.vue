@@ -1,5 +1,5 @@
 <template lang="pug">
-SwarsBattleIndexHelp
+QuickScriptView(qs_group_key="swars" qs_page_key="documentation")
 </template>
 
 <script>
@@ -16,6 +16,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass">
-</style>
