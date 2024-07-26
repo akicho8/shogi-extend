@@ -2,10 +2,6 @@ class ApplicationController < ActionController::Base
   include CurrentUserMethods
   include AxiosMethods
 
-  # BASIC認証のキャッシュを消すとき用
-  # http://localhost:3000/admin?request_http_basic_authentication=1
-  before_action :request_http_basic_authentication, :if => proc { params[:request_http_basic_authentication] }
-
   skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
 
   before_action do
@@ -18,6 +14,18 @@ class ApplicationController < ActionController::Base
       current_user_id: current_user&.id,
     }
   end
+
+  # 強制的にBASIC認証を破棄する
+  # http://localhost:3000/admin?invalidate_basic_auth=true
+  def invalidate_basic_auth
+    if params[:invalidate_basic_auth]
+      if request.authorization.present?
+        render html: %(BASIC認証を破棄しました。<br><a href="#{UrlProxy.full_url_for("/")}">TOP</a>).html_safe, status: :unauthorized
+      end
+    end
+  end
+  private :invalidate_basic_auth
+  before_action :invalidate_basic_auth
 
   if Rails.env.development?
     before_action do
@@ -48,8 +56,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  before_action :user_name_required
-
   def user_name_required
     if request.format.html?
       if current_user
@@ -61,6 +67,8 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  private :user_name_required
+  before_action :user_name_required
 
   # for devise
   # ログインしたあとに移動するパス
