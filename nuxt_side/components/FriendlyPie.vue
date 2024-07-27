@@ -62,7 +62,7 @@ export default {
   props: {
     info: { type: Object, required: true, },  // [{name: ..., value: ...}, ...]
     callback_fn: { type: Function, required: false, }
-    // chart_options: { type: Object, default: {}, },
+    // chart_options: { type: Object, default: () => ({}), },
   },
   created() {
     // ・this._chart_config = Object.assign({}, CHART_CONFIG_DEFAULT) はダメ

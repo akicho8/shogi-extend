@@ -183,7 +183,7 @@ export default {
   ],
   props: {
     info: { type: Object, required: true, },  // [{name: ..., value: ...}, ...]
-    // chart_options: { type: Object, default: {}, },
+    // chart_options: { type: Object, default: () => ({}), },
   },
   data() {
     return {

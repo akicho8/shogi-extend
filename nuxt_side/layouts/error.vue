@@ -36,7 +36,7 @@ export default {
   name: "error",
   props: {
     // error({foo: 1}) として呼べば error.foo が入っている
-    error: { type: Object, required: false, default: {}, },
+    error: { type: Object, required: false, default: null, },
   },
 
   data() {
