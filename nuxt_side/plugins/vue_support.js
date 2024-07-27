@@ -199,22 +199,16 @@ export const vue_support = {
       if (!this.g_current_user["email_valid?"] || this.$route.query.__nuxt_login_required_force === "email") {
         // アクティベートしてなければ email は空になっている
         this.toast_warn("正しいメールアドレスを設定してください")
-        this.$router.push({name: "settings-email"})
+        this.$router.push("/lab/account/email-edit")
         return true
       }
       // http://localhost:4000/video/new?__nuxt_login_required_force=name
       if (this.$gs.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
         // なぜか名前が空の人がいる
         this.toast_warn("名前を設定してください")
-        this.$router.push({name: "settings-profile"})
+        this.$router.push("/lab/account/name-edit")
         return true
       }
-      // http://localhost:4000/video/new?__nuxt_login_required_force=ban
-      // if (this.g_current_user.permit_tag_list.includes("ban") || this.$route.query.__nuxt_login_required_force === "ban") {
-      //   this.toast_ng("アカウントは利用を制限されています")
-      //   this.$router.push({name: "index"})
-      //   return true
-      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
