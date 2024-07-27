@@ -37,8 +37,8 @@ module QuickScript
             return
           end
           if true
-            controller.current_user.destroy!
-            controller.current_user_clear
+            current_user.destroy!
+            controller&.current_user_clear
           end
           flash[:notice] = "アカウントを抹殺して本当に退会しました"
           session_reload!
