@@ -30,7 +30,6 @@
     "chartjs-plugin-datalabels": "1.0.0",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.7",
-    "fabric": "^4.2.0",
     "howler": "^2.2.3",
     "jest": "^29.5.0",
     "lzma": "^2.3.2",
