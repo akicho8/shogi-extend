@@ -5,6 +5,7 @@ module QuickScript
     it "works" do
       object = QuickScript::Dev::NullScript.new
       assert { object.as_json.has_key?(:auto_exec_action) }
+      assert { object.as_json.has_key?(:auto_exec_code) }
     end
   end
 end

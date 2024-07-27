@@ -57,7 +57,7 @@ export default {
     qs_group_key: { type: String, default: null },
     qs_page_key:  { type: String, default: null },
     // $route.query に上書きする値 (このコンポーネントを部分的に呼ぶとき $route.query にマージしたいときがある)
-    qs_override_params: { type: Object, default: {}   },
+    qs_override_params: { type: Object, default: null, },
   },
   data() {
     return {
@@ -162,6 +162,10 @@ export default {
         const action = params["auto_exec_action"]
         if (action) {
           this[action]()
+        }
+        const code = params["auto_exec_code"]
+        if (code) {
+          eval(code)
         }
       }
     },

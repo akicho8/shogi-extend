@@ -4,6 +4,9 @@ describe("PiyoShogiTypeCurrent", () => {
   it("reset", () => {
     PiyoShogiTypeCurrent.reset()
   })
+  it("reload", () => {
+    PiyoShogiTypeCurrent.reload()
+  })
   it("info", () => {
     expect(PiyoShogiTypeCurrent.info.key).toEqual("auto")
   })

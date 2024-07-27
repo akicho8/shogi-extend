@@ -23,6 +23,7 @@ module QuickScript
       def call
         if request_post?
           flash[:notice] = "保存しました"
+          piyo_shogi_reload!
         end
         nil
       end

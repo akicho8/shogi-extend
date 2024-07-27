@@ -6,6 +6,11 @@ export const PiyoShogiTypeCurrent = {
     this._info = null
   },
 
+  reload() {
+    this.reset()
+    return this.info
+  },
+
   get info() {
     return this._info ??= this.piyo_shogi_type_info
   },
@@ -18,6 +23,7 @@ export const PiyoShogiTypeCurrent = {
     if (v) {
       key = v.piyo_shogi_type_key
     }
+    console.log(`[PiyoShogiTypeCurrent] localStorage 参照 → ${key}`)
     return PiyoShogiTypeInfo.fetch(key)
   }
 }
