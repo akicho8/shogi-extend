@@ -14,7 +14,7 @@ module QuickScript
             :type         => :radio_button,
             :elems        => { "スマホ" => "auto", "常時" => "native", },
             :default      => params[:piyo_shogi_type_key].presence || "auto",
-            :help_message => "常時は App Store から Mac にぴよ将棋をインストールしている人向けで、Mac にインストールしたぴよ将棋を起動できるようになります。",
+            :help_message => "常時はぴよ将棋を最近の Mac にインストールしている人向け。将棋ウォーズ棋譜検索を Mac から操作しているとき、Mac にインストールしたぴよ将棋を起動できるようになる。",
             :ls_sync      => {:ls_key => "user_settings"},
           },
         ]
