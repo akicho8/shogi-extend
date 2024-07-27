@@ -89,6 +89,8 @@ module QuickScript
       @params = params
       @options = {
       }.merge(options)
+
+      @__performed__ = 0
     end
 
     def as_json(*)
@@ -102,7 +104,12 @@ module QuickScript
     end
 
     def safe_call
-      call
+      if @__performed__ > 1
+        raise QuickScriptDoubleCall, self.class.inspect
+      end
+      call.tap do
+        @__performed__ += 1
+      end
     end
 
     def meta
@@ -142,6 +149,7 @@ module QuickScript
     prepend Middleware::ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
     prepend Middleware::CustomStyleMod
     prepend Middleware::SidebarMod
+    prepend Middleware::ParentLinkMod        # parent_link
 
     # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link

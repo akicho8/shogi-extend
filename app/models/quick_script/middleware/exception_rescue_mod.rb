@@ -4,8 +4,9 @@ module QuickScript
       if Rails.env.local?
         def safe_call
           begin
-            call
+            super
           rescue => error
+            AppLog.error(error)
             {
               _component: "QuickScriptViewValueAsPre",
               _v_bind: {

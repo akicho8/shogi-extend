@@ -7,8 +7,10 @@ module QuickScript
       end
 
       def as_json(*)
-        super.merge(auto_exec_action: auto_exec_action)
-        super.merge(auto_exec_code: auto_exec_code)
+        super.merge({
+            :auto_exec_action => auto_exec_action,
+            :auto_exec_code   => auto_exec_code,
+          })
       end
 
       def session_reload!

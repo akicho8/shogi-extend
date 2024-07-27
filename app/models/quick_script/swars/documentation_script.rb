@@ -1,11 +1,14 @@
 module QuickScript
   module Swars
     class DocumentationScript < Chore::DocumentationScript
-      self.title = MarkdownInfo[:swars_search].title
+      CURRENT = MarkdownInfo[:swars_search]
+
+      self.title = CURRENT.title
+      self.description = CURRENT.description
 
       def initialize(...)
         super
-        params[:md_key] = :swars_search
+        params[:md_key] = CURRENT.key
       end
     end
   end

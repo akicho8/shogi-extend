@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item(tag="nuxt-link" :to="to" @click.native="$sound.play_click()")
+b-navbar-item(:tag="tag" :to="to" @click.native="$sound.play_click()" v-bind="$attrs" v-on="$listeners")
   b-icon(:icon="icon")
 </template>
 
@@ -9,6 +9,7 @@ export default {
   props: {
     to:   { default: () => ({name: "index"}), },
     icon: { default: "home",                  },
+    tag:  { default: "nuxt-link",             },
   },
 }
 </script>

@@ -6,7 +6,7 @@ module QuickScript
 
       def call
         self.title = markdown_info.title
-        self.description = markdown_info.title
+        self.description = markdown_info.description
 
         case page_layout
         when :pl_content_with_padding     # navibar がないだけ

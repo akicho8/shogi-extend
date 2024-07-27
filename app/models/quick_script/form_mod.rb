@@ -10,7 +10,9 @@ module QuickScript
     end
 
     def as_json(*)
-      super.merge({
+      hv = super
+      raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない" unless @__performed__ # ← このチェックいる？
+      hv.merge({
           :form_method                   => form_method,
           :button_label                  => button_label,
           :params_add_submit_key         => params_add_submit_key,

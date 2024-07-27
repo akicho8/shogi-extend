@@ -245,11 +245,18 @@ export default {
       }
     },
 
+    go_back_handle() {
+      if (true) {
+        this.$router.go(-1)
+      } else {
+        window.history.back()
+      }
+    },
   },
   computed: {
-    current_qs_group() { return this.qs_group_key ?? this.$route.params.qs_group_key },
-    current_qs_key()   { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
-    current_api_path() { return `/api/lab/${this.current_qs_group ?? '__qs_group_key_is_blank__'}/${this.current_qs_key ?? '__qs_page_key_is_blank__'}.json` },
+    current_qs_group_key() { return this.qs_group_key ?? this.$route.params.qs_group_key },
+    current_qs_page_key()  { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
+    current_api_path() { return `/api/lab/${this.current_qs_group_key ?? '__qs_group_key_is_blank__'}/${this.current_qs_page_key ?? '__qs_page_key_is_blank__'}.json` },
     meta()             { return this.params ? this.params.meta : null                                                                  },
     showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
     main_component()  { return this.params?.main_component },
