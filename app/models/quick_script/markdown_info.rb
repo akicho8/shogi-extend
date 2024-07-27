@@ -9,7 +9,7 @@ module QuickScript
     ]
 
     def markdown_text
-      Pathname(__dir__).join("md_articles/#{key}.md").read
+      Pathname(__dir__).join("markdown_files/#{key}.md").read
     end
   end
 end
