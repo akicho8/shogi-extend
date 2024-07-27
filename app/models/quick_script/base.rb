@@ -119,26 +119,31 @@ module QuickScript
       params[:fetch_index].to_i
     end
 
+    # 必ずいるっぽいやつ
     prepend FormMod
-    prepend PaginationMod
-    prepend LoginUserMod
-    prepend ControllerMod
-    prepend ThrottleMod
-    prepend ExceptionRescueMod     # 例外を捕捉して表示する
-    prepend PrimaryErrorMessageMod # 404 のときなどに表示するメッセージを指定する
-    prepend FlashMod
     prepend MetaMod
-    prepend InvisibleMod
-    prepend RedirectMod
-    prepend HelperMod              # for h, tag
-    prepend BulmaMod               # for bulma_messsage
-    prepend AutoexecMod
-    prepend OrderMod               # for index_script.rb
-    prepend ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
-    prepend LayoutMod              # MainNavbar の表示管理など
-    prepend CustomStyleMod
-    prepend SidebarMod
     prepend BackgroundMod          # for QuickScriptJob
+    prepend LayoutMod              # MainNavbar の表示管理など
+
+    # なくてもいいがあると便利なやつ
+    prepend Middleware::ControllerMod          # GET POST の判別
+    prepend Middleware::PaginationMod
+    prepend Middleware::LoginUserMod
+    prepend Middleware::ThrottleMod            # 連打対策
+    prepend Middleware::ExceptionRescueMod     # 例外を捕捉して表示する
+    prepend Middleware::PrimaryErrorMessageMod # 404 のときなどに表示するメッセージを指定する
+    prepend Middleware::FlashMod
+    prepend Middleware::InvisibleMod
+    prepend Middleware::RedirectMod
+    prepend Middleware::HelperMod              # for h, tag
+    prepend Middleware::BulmaMod               # for bulma_messsage
+    prepend Middleware::AutoexecMod
+    prepend Middleware::OrderMod               # for index_script.rb
+    prepend Middleware::ProcessTypeMod         # process.client か process.server のどちらで呼ばれたか把握する
+    prepend Middleware::CustomStyleMod
+    prepend Middleware::SidebarMod
+
+    # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link
   end
 end
