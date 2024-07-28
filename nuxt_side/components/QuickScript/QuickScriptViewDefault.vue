@@ -6,10 +6,11 @@
     QuickScriptViewSidebar
     QuickScriptViewNavbar
     MainSection
-      .container(:class="QS.layout_size_class")
+      .container(:class="QS.container_class")
+        QuickScriptViewBody(v-if="QS.params.body_position === 'above'")
         QuickScriptViewFormParts
         QuickScriptViewFormButton
-        QuickScriptViewBody
+        QuickScriptViewBody(v-if="QS.params.body_position === 'below'")
         QuickScriptViewDebug(v-if="development_p")
 </template>
 

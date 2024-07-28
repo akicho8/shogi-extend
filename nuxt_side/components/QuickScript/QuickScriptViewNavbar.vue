@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.layout_size_class].join(' ')" v-if="QS.params.navibar_show")
+MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_class].join(' ')" v-if="QS.params.navibar_show")
   template(slot="brand")
     template(v-if="QS.params.parent_link")
       template(v-if="QS.params.parent_link.to")

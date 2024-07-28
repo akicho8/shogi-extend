@@ -290,7 +290,7 @@ export default {
     },
 
     // レイアウトの CSS class
-    layout_size_class() { return this.params.layout_size == "large" ? "is-fluid" : "is_layout_small" }
+    container_class() { return this.params.container_width == "large" ? "is-fluid" : "is_layout_small" }
   },
 }
 </script>
