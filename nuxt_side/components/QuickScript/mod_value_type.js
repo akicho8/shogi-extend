@@ -1,3 +1,5 @@
+import _ from "lodash"
+
 export const mod_value_type = {
   methods: {
     // API側で判定した方がいい？ → テーブル内のTDなど最適に判定する → ビューで判定であっている
