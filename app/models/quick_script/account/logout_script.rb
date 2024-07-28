@@ -14,7 +14,7 @@ module QuickScript
             flash[:notice] = "ログインしていません"
             return
           end
-          controller.current_user_clear
+          controller&.current_user_clear
 
           # # トップを強くリロードする場合。この場合はメッセージを表示できない。
           # redirect_to UrlProxy.full_url_for("/"), type: :hard

@@ -51,7 +51,7 @@ module QuickScript
     end
 
     def dispatch
-      action.tap(&:render_all)
+      action.tap(&:render_anything)
     end
 
     def action

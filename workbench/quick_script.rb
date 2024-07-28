@@ -1,2 +1,2 @@
 require "./setup"
-QuickScript
+QuickScript                     # => QuickScript

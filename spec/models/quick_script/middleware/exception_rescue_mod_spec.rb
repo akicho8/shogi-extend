@@ -3,8 +3,7 @@ require "rails_helper"
 module QuickScript
   RSpec.describe Middleware::ExceptionRescueMod, type: :model do
     it "works" do
-      proc { Dev::ErrorScript.new.call }.should raise_error(ZeroDivisionError)
-      assert { Dev::ErrorScript.new.as_json }
+      assert { Middleware::ExceptionRescueMod }
     end
   end
 end

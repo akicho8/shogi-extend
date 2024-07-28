@@ -25,7 +25,7 @@ module QuickScript
             current_user.avatar.attach(io: DataUri.new(avatar[:data_uri]).stream, filename: "avatar.png")
             if true
               self.main_component = nil    # リロードする前にいろいろ表示されるのを防ぐ
-              page_reload                  # 右上のプロフィール画像の読み直すため
+              page_reload                  # 右上のプロフィール画像の読み直すため (session_reload! でもよい)
               return
             end
           end

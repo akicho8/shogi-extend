@@ -182,6 +182,10 @@ module QuickScript
           flash[:notice] = "#{current_sw_user_key} さんは存在しません"
           return
         end
+        unless current_sw_user.memberships.exists?
+          flash[:notice] = "対局データが 0 件です"
+          return
+        end
       end
 
       def google_sheet_url

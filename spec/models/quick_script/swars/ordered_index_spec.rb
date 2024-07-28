@@ -2,9 +2,9 @@ require "rails_helper"
 
 module QuickScript
   module Swars
-    RSpec.describe  OrderedIndex, type: :model do
+    RSpec.describe OrderedIndex, type: :model do
       it "works" do
-        assert { OrderedIndex }
+        assert { OrderedIndex.size == 8 }
       end
     end
   end

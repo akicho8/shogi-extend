@@ -21,8 +21,11 @@ module QuickScript
     end
 
     def call_later
-      foreground_mode or raise QuickScriptError, "バックグランドでさらにバックグラウンド実行するべからず"
-      QuickScriptJob.perform_later(params, current_user_id: current_user&.id, admin_user: admin_user)
+      if background_mode
+        raise QuickScriptError, "バックグランドでさらにバックグラウンド実行するべからず"
+      end
+      new_params = params.merge(qs_group_key: self.class.qs_group_key, qs_page_key: self.class.qs_page_key)
+      QuickScriptJob.perform_later(new_params, current_user_id: current_user&.id, admin_user: admin_user)
     end
   end
 end

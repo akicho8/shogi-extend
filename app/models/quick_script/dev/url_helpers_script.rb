@@ -5,7 +5,7 @@ module QuickScript
       self.description = "Application.routes.url_helpers を参照する"
 
       def call
-        url_helpers.edit_user_url(1)
+        url_helpers.root_url
       end
     end
   end

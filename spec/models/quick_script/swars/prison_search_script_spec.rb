@@ -2,7 +2,7 @@ require "rails_helper"
 
 module QuickScript
   module Swars
-    RSpec.describe  PrisonSearchScript, type: :model do
+    RSpec.describe PrisonSearchScript, type: :model do
       before do
         ::Swars::User.create!(user_key: "alice", grade_key: "九段").ban!
         ::Swars::User.create!(user_key: "bob",   grade_key: "初段").ban!

@@ -1,8 +1,8 @@
 module QuickScript
   module Middleware
     concern :ExceptionRescueMod do
-      if Rails.env.local?
-        def safe_call
+      def safe_call
+        if Rails.env.development? || params[:__EXCEPTION_RESCUE__]
           begin
             super
           rescue => error
@@ -14,17 +14,19 @@ module QuickScript
               },
             }
           end
+        else
+          super
         end
+      end
 
-        private
+      private
 
-        def error_to_text(error)
-          text = []
-          text << "#{error.message} (#{error.class.name})"
-          text << ""
-          text += error.backtrace
-          text.join("\n")
-        end
+      def error_to_text(error)
+        text = []
+        text << "#{error.message} (#{error.class.name})"
+        text << ""
+        text += error.backtrace
+        text.join("\n")
       end
     end
   end

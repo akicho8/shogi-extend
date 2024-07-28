@@ -41,18 +41,17 @@ module QuickScript
 
       ################################################################################
 
-      def render_all
+      def render_anything
         if params[:__FOR_ASYNC_DATA__]
-          render_for_ogp
+          render_for_ogp_crawler
         else
-          # AppLog.info(subject: "[#{self.class.name}]", body: params.to_t)
-          render_for_content
+          render_for_basic_content
         end
       end
 
       ################################################################################
 
-      def render_for_content
+      def render_for_basic_content
         if controller
           controller.respond_to do |format|
             render_format(format)
@@ -66,7 +65,7 @@ module QuickScript
 
       ################################################################################
 
-      def render_for_ogp
+      def render_for_ogp_crawler
         if controller
           controller.respond_to do |format|
             format.json { controller.render json: meta_for_async_data, status: status_code }

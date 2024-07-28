@@ -1,7 +1,7 @@
 module QuickScript
   module Swars
     class DocumentationScript < Chore::DocumentationScript
-      CURRENT = MarkdownInfo[:swars_search]
+      CURRENT = MarkdownInfo.fetch(:swars_search)
 
       self.title = CURRENT.title
       self.description = CURRENT.description
