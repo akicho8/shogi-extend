@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "swars"
-    self.script_name = "棋譜検索 古い棋譜を補完"
+    self.script_name = "棋譜検索 古い棋譜の補完"
 
     def script_body
       s = Swars::CrawlReservation.all
@@ -20,7 +20,7 @@ module BackendScript
         "ID"       => record.id,
         "作成者"   => user_link_to(record.user.name, record.user),
         "対象"     => record.target_user_key,
-        "通知先"   => record.to_email,
+        "通知先"   => record.user.email,
         "添付"     => record.attachment_mode,
         "登録日時" => record.created_at.to_fs(:ymdhm),
         "完了日時" => record.processed_at&.to_fs(:ymdhm),

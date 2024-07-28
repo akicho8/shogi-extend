@@ -50,7 +50,7 @@
         template(v-for="e in ZipDlMaxInfo.values")
           b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="e.value" @input="zip_dl_max_change_handle")
             | {{e.name}}
-      //- b-field.zip_dl_max(label="最大件数" custom-class="is-small" message="これ以上一気にダウンロードするときは「古い棋譜を補完」のほうを使ってください")
+      //- b-field.zip_dl_max(label="最大件数" custom-class="is-small" message="これ以上一気にダウンロードするときは「古い棋譜の補完」のほうを使ってください")
       //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="$sound.play_click()" v-if="development_p")   0
       //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="$sound.play_click()" v-if="development_p")   1
       //-   b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="$sound.play_click()") 50
@@ -216,7 +216,7 @@ export default {
 
           this.toast_ok(`たぶんダウンロード完了しました`, {
             onend: () => {
-              this.toast_ok(`もっとたくさん取得したいときは「古い棋譜を補完」のほうを使ってください`)
+              this.toast_ok(`もっとたくさん取得したいときは「古い棋譜の補完」のほうを使ってください`)
             },
           })
         })

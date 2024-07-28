@@ -3,11 +3,11 @@ module Swars
     # Swars::Crawler::ExpertCrawler.new(page_max: 3, sleep: 5).run
     class ExpertCrawler < Base
       def default_params
-        {
-          :user_keys   => default_user_keys,
-          :page_max    => Rails.env.production? ? 5 : 1,
-          :early_break => true,
-        }
+        super.merge({
+            :user_keys   => default_user_keys,
+            :page_max    => Rails.env.production? ? 5 : 1,
+            :early_break => true,
+          })
       end
 
       def perform

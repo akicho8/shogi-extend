@@ -24,26 +24,23 @@ require "rails_helper"
 
 module Swars
   RSpec.describe CrawlReservation, type: :model, swars_spec: true do
-    let :login_user do
-      ::User.create!
-    end
-
-    let :battle do
-      Battle.create!
-    end
-
-    let :battle_user do
-      battle.users.first
-    end
-
     it "works" do
-      record = login_user.swars_crawl_reservations.create!({
+      current_user = ::User.admin
+      sw_user = User.create!
+      battle = Battle.create! do |e|
+        e.memberships.build(user: sw_user)
+      end
+
+      record = current_user.swars_crawl_reservations.create!({
           :attachment_mode => "with_zip",
-          :target_user_key => battle_user.key,
+          :target_user_key => sw_user.key,
         })
 
-      assert { record.persisted? }
-      assert { record.to_zip     }
+      record.crawl!
+      record.reload
+      assert { record.processed_at }
+
+      assert { record.to_zip }
 
       Zip::InputStream.open(record.to_zip) do |zis|
         entry = zis.get_next_entry
@@ -57,9 +54,3 @@ module Swars
     end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >>
-# >> Finished in 1.92 seconds (files took 2.55 seconds to load)
-# >> 1 example, 0 failures
-# >>

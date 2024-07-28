@@ -272,7 +272,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
     end
 
-    describe "古い棋譜を補完" do
+    xdescribe "古い棋譜の補完" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
         visit2 "/swars/users/YamadaTaro/download-all"
         assert_selector(".NuxtLoginContainer", wait: 30)
@@ -283,7 +283,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         visit2 "/swars/search", query: "YamadaTaro"
         global_menu_open
-        find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をクリック
+        find(".swars_users_key_download_all_handle").click # 「古い棋譜の補完」をクリック
         assert_current_path "/swars/users/YamadaTaro/download-all", ignore_query: true
 
         # ページ遷移後

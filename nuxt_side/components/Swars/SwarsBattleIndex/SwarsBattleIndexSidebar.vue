@@ -61,10 +61,10 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_download_all_handle(
-            label="古い棋譜を補完"
+            label="古い棋譜の補完"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-download-all', params: {key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/all-download', query: {user_key: APP.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
         b-menu-list(label="一歩進んだ使い方")

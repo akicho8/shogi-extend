@@ -23,13 +23,7 @@
 module Swars
   class CrawlReservation < ApplicationRecord
     # 一人当たりの予約件数
-    cattr_accessor(:maximum_reservation_number_of_per_capita) do
-      if Rails.env.development?
-        3
-      else
-        10
-      end
-    end
+    cattr_accessor(:maximum_reservation_number_of_per_capita) { Rails.env.development? ? 3 : 10 }
 
     belongs_to :user, class_name: "::User"
 
@@ -38,9 +32,6 @@ module Swars
     after_create_commit :create_notify
 
     before_validation on: :create do
-      if user
-        self.to_email ||= user.email
-      end
       self.attachment_mode ||= "with_zip"
     end
 
@@ -59,7 +50,7 @@ module Swars
           if user
             n = user.swars_crawl_reservations.active_only.count
             if n >= maximum_reservation_number_of_per_capita
-              errors.add(:base, "#{user.name}さんはもう#{n}件も予約してるので次のは明日以降にしてください")
+              errors.add(:base, "もう#{n}件も予約してるので次のは明日以降にしてください")
             end
           end
         end
@@ -68,10 +59,28 @@ module Swars
       if errors.empty?
         if user && target_user_key
           if user.swars_crawl_reservations.active_only.where(target_user_key: target_user.key).exists?
-            errors.add(:base, "#{user.name}さんはもう#{target_user_key}さんの棋譜取得を予約済みです")
+            errors.add(:base, "すでに#{target_user_key}さんの棋譜取得を予約済みです")
           end
         end
       end
+    end
+
+    def crawl!(params = {})
+      if processed_at
+        raise "すでにクローズ済み"
+      end
+
+      params = {
+        :page_max => (Rails.env.production? || Rails.env.staging?) ? 256 : 1,
+      }.merge(params)
+
+      other_options = BattleCountDiff.new.call(target_user_key) do
+        Importer::AllRuleImporter.new(params.merge(user_key: target_user_key)).run
+      end
+
+      update!(processed_at: Time.current)
+
+      UserMailer.battle_fetch_notify(self, other_options).deliver_later
     end
 
     def to_zip

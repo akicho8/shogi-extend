@@ -37,7 +37,7 @@ module Swars
       private
 
       def default_params
-        raise NotImplementedError, "#{__method__} is not implemented"
+        {}
       end
 
       def perform

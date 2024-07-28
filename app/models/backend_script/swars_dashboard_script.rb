@@ -70,7 +70,7 @@ module BackendScript
         search_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
       end
 
-      # 古い棋譜を補完
+      # 古い棋譜の補完
       crawl_reservation_hash = {}
       if true
         model = Swars::CrawlReservation
