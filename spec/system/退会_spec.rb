@@ -2,11 +2,13 @@ require "rails_helper"
 
 RSpec.describe type: :system, login_spec: true do
   it "works" do
-    login_by :admin
-    visit2 "/users/1", fake: true
-    global_menu_open
-    menu_item_click("退会")
-    find(:button, "退会する").click
+    hex = SecureRandom.hex
+    eval_code %(User.create!(key: "#{hex}", name: "退会者の名前"))
+    login_by hex
+
+    visit2 "/lab/account/destroy"
+    find("#form_part-username").set("退会者の名前")
+    find(:button, text: /退会する/).click
     assert_text "退会しました"
   end
 end

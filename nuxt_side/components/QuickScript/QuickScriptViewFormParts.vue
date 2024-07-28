@@ -17,6 +17,7 @@
             button.delete(size="is-small" @click="QS.file_upload_cancel_handle(form_part)")
         template(v-else-if="form_part.type === 'string'")
           b-input(
+            :id="`form_part-${form_part.key}`"
             v-model="QS.attributes[form_part.key]"
             :placeholder="form_part.placeholder"
             spellcheck="false"
