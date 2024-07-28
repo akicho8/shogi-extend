@@ -21,23 +21,40 @@ module QuickScript
           return "ここにはなんもありません"
         end
 
-        rows = all_sort(all).collect do |e|
-          row = {
-            "名前"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_path }, }, },
-            "内容"     => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
-            "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_path }, }, },
-          }
-          if admin_user || Rails.env.local?
-            row["API"] = tag.a(e.qs_key, href: e.qs_api_url, target: "_blank")
-          end
-          row
-        end
-
-        if qs_group_infos.one?
-          rows = rows.collect { |e| e.except("グループ") }
+        # USER_AGENT によって切り替えるのはカオスになるのでやめる
+        # 表示に拘ると QuickScript を作った意味がなくなる
+        if params[:user_agent_key] == "mobile" && false
+          # values = rows.collect { |e|
+          #   { _component: "QuickScriptViewValueAsH", _v_bind: { value: [e["項目"], e["内容"]] }, style: {"gap" => "0.5rem"} }
+          # }
+          values = rows.collect { |e| e["項目"] }
+          return { _component: "QuickScriptViewValueAsV", _v_bind: { value: values }, style: {"gap" => "0.5rem"} }
         end
 
         rows
+      end
+
+      def rows
+        @rows ||= yield_self do
+          rows = all_sort(all).collect do |e|
+            row = {
+              "項目"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_path }, }, },
+              "内容"     => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
+              "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_path }, }, },
+            }
+            if admin_user || Rails.env.local?
+              row["API"] = tag.a(e.qs_key, href: e.qs_api_url, target: "_blank")
+            end
+            row
+          end
+
+          # rows = rows.collect { |e| e.except("内容") }
+
+          if qs_group_infos.one?
+            rows = rows.collect { |e| e.except("グループ") }
+          end
+          rows
+        end
       end
 
       def all

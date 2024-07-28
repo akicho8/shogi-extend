@@ -5,6 +5,7 @@
     div $fetchState.pending: {{$fetchState.pending}}
     div fetch_index: {{fetch_index}}
     div post_index: {{post_index}}
+    div $user_agent_info: {{$user_agent_info}}
 
   DebugBox.is-hidden-mobile(v-if="development_p && params")
     | {{value_type_guess(params.body)}}
@@ -29,6 +30,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
 const QueryString = require("query-string")
+import isMobile from "ismobilejs"
 
 import { mod_value_type } from "./mod_value_type.js"
 import { mod_file_upload } from "./mod_file_upload.js"
@@ -260,9 +262,11 @@ export default {
     meta()             { return this.params ? this.params.meta : null                                                                  },
     showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
     main_component()  { return this.params?.main_component },
+    user_agent_key() { return this.$user_agent_info.any ? "mobile" : "desktop" },
 
     new_params() {
       return {
+        user_agent_key: this.user_agent_key, // 先に置いて $route.query で上書きできるようにする
         ...this.submit_key_params,
         ...this.$route.query,
         ...this.qs_override_params,
