@@ -29,7 +29,6 @@ module ToolBelt
           link_to_eval("Ishitaka_Sumie 取り込み (指導対局)")                  { "Swars::Importer::AllRuleImporter.new(user_key: 'Ishitaka_Sumie', remote_run: true).run" },
           link_to_eval("kinakom0chi 取り込み")                                { "Swars::Importer::AllRuleImporter.new(user_key: 'kinakom0chi', remote_run: true).run"    },
           link_to_eval("メール書式確認", redirect_to: "/rails/mailers")       { ""                                                                        },
-          link_to_eval("RegularCrawler")                                      { "Swars::Crawler::RegularCrawler.new.run"                                  },
           link_to_eval("FreeBattle.destroy_all")                              { "FreeBattle.destroy_all"                                                  },
           link_to_eval("FreeBattle.setup")                                    { "FreeBattle.setup"                                                        },
           h.link_to("将棋のエラーを発生(盤面なし)", [:root, bioshogi_error1: true], :class => "button is-small"),

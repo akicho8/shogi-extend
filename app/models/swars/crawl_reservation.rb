@@ -71,7 +71,7 @@ module Swars
       end
 
       params = {
-        :page_max => (Rails.env.production? || Rails.env.staging?) ? 256 : 1,
+        :page_max => Rails.env.local? ? 1 : 256,
       }.merge(params)
 
       other_options = BattleCountDiff.new.call(target_user_key) do

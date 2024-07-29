@@ -13,8 +13,6 @@
     activemodel: {
       models: {
         "swars/crawler/expert_crawler"   => "高段者",
-        "swars/crawler/recently_crawler" => "直近利用",
-        "swars/crawler/regular_crawler"  => "利用回数",
       },
     },
     activerecord: {

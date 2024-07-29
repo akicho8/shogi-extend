@@ -41,36 +41,6 @@ module Api
       render json: Swars::TagFrequency.new(params.to_unsafe_h.to_options)
     end
 
-    concerning :CrawlReservationMethods do
-      # curl -d _method=post http://localhost:3000/api/swars/users/DevUser1/download_set
-      # http://localhost:3000/api/swars/users/DevUser1/download_set
-      def download_set
-        no = ::Swars::CrawlReservation.active_only.count
-        record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
-        if record.errors.present?
-          error_messages = record.errors.full_messages.join(" ")
-          render json: { xnotice: Xnotice.add(error_messages, type: "is-warning", method: :dialog) }
-          return
-        end
-        xnotice = Xnotice.add("予約しました(#{no}件待ち)", type: "is-success", method: :dialog)
-        render json: { xnotice: xnotice }
-      end
-
-      def crawler_run
-        before_count = ::Swars::CrawlReservation.active_only.count
-        Swars::Crawler::ReservationCrawler.new.run
-        after_count = ::Swars::CrawlReservation.active_only.count
-        xnotice = Xnotice.add("取得処理実行完了(#{before_count}→#{after_count})", type: "is-success")
-        render json: { xnotice: xnotice }
-      end
-
-      private
-
-      def crawl_reservation_params
-        params.permit![:crawl_reservation]
-      end
-    end
-
     concerning :CustomSearchMethods do
       # curl http://localhost:3000/api/swars/custom_search_setup
       def custom_search_setup

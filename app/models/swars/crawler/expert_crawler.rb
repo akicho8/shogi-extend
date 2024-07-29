@@ -7,6 +7,7 @@ module Swars
             :user_keys   => default_user_keys,
             :page_max    => Rails.env.production? ? 5 : 1,
             :early_break => true,
+            :subject     => "高段者",
           })
       end
 
