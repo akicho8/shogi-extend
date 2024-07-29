@@ -109,6 +109,7 @@ Rails.application.routes.draw do
     match "sleep(.:format)",                     to: "etc#sleep",              via: :all, format: nil
     match "general/any_source_to(.:format)",     to: "generals#any_source_to", via: :all, format: nil
     match "lab/:qs_group_key/:qs_page_key(.:format)", to: "quick_scripts#show",     via: :all, format: nil
+    match "public/*path(.:format)",              to: "public_api#show",        via: :all, format: nil
 
     post "app_log(.:format)", to: "etc#app_log"
 
