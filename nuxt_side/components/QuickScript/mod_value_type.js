@@ -42,25 +42,5 @@ export const mod_value_type = {
       }
       return "value_type_is_unknown"
     },
-
-    label_value_array(value) {
-      if (Array.isArray(value)) {
-        return value.map(e => [e, e])
-      } else if (_.isPlainObject(value)) {
-        return Object.entries(value)
-      } else {
-        return [[value, value]]
-      }
-    },
-
-    type_to_component(form_part) {
-      if (form_part.type === "radio_button") {
-        return "b-radio-button"
-      } else if (form_part.type === "checkbox_button") {
-        return "b-checkbox-button"
-      } else {
-        throw new Error("must not happen")
-      }
-    },
   },
 }

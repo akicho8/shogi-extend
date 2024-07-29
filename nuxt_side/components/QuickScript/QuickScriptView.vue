@@ -32,10 +32,11 @@ import Vue from 'vue'
 const QueryString = require("query-string")
 import isMobile from "ismobilejs"
 
-import { mod_value_type } from "./mod_value_type.js"
+import { mod_value_type  } from "./mod_value_type.js"
+import { mod_form        } from "./mod_form.js"
 import { mod_file_upload } from "./mod_file_upload.js"
-import { mod_sidebar } from "./mod_sidebar.js"
-import { mod_storage } from "./mod_storage.js"
+import { mod_sidebar     } from "./mod_sidebar.js"
+import { mod_storage     } from "./mod_storage.js"
 
 export default {
   // scrollToTop: true,
@@ -43,6 +44,7 @@ export default {
 
   mixins: [
     mod_value_type,
+    mod_form,
     mod_file_upload,
     mod_sidebar,
     mod_storage,
@@ -98,8 +100,8 @@ export default {
     // 初回以降も呼ばれるため attributes をまぜる
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
     this.fetch_index ??= 0
-    const new_params = {...this.new_params, fetch_index: this.fetch_index}
-    this.$axios.$get(this.current_api_path, {params: new_params}).then(params => {
+    const new_params2 = {...this.invisible_params, ...this.new_params, fetch_index: this.fetch_index}
+    this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => {
       this.fetch_index += 1
       this.params_receive(params)
     })
@@ -194,7 +196,8 @@ export default {
       if (this.params.get_then_axios_get) {
         // URL を書き換えずにこっそり GET したい場合
         // this.$sound.play_click()
-        this.$axios.$get(this.current_api_path, {params: this.new_params}).then(params => this.params_receive(params))
+        const new_params2 = {...this.invisible_params, ...this.new_params}
+        this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => this.params_receive(params))
       } else {
         // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
         this.router_push()
@@ -205,14 +208,15 @@ export default {
       if (this.action_then_nuxt_login_required()) { return }
       this.qs_ls_save()
       this.post_index ??= 0
-      this.$axios.$post(this.current_api_path, {...this.new_params, post_index: this.post_index}).then(params => {
+      const new_params2 = {...this.invisible_params, ...this.new_params, post_index: this.post_index}
+      this.$axios.$post(this.current_api_path, new_params2).then(params => {
         this.post_index += 1
         this.params_receive(params)
       })
     },
 
     router_push(params = {}) {
-      const new_params2 = {...this.new_params, ...params} // 破壊するため
+      const new_params2 = {...this.invisible_params, ...this.new_params, ...params} // 破壊するため
       this.browser_query_delete(new_params2)   // ブラウザ上で表示させたくないパラメータを削除する(new_params2 を破壊する)
       this.$router.push({query: new_params2}, () => {
         this.debug_alert("Navigation succeeded")
@@ -266,11 +270,16 @@ export default {
 
     new_params() {
       return {
-        user_agent_key: this.user_agent_key, // 先に置いて $route.query で上書きできるようにする
         ...this.submit_key_params,
         ...this.$route.query,
         ...this.qs_override_params,
         ...this.attributes,
+      }
+    },
+
+    invisible_params() {
+      return {
+        user_agent_key: this.user_agent_key,
       }
     },
 
