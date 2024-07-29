@@ -1,6 +1,7 @@
 module QuickScript
   module Swars
     OrderedIndex = [
+      SearchScript,
       AllDownloadScript,
       PiyoShogiConfigScript,
       DocumentationScript,
