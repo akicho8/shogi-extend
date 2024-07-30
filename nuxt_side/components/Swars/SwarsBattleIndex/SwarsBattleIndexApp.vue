@@ -111,12 +111,6 @@ export default {
     "$route.query": "$fetch",
   },
 
-  mounted() {
-    if (true) {
-      this.search_input_blur()
-    }
-  },
-
   fetchOnServer: false,
   fetch() {
     this.$debug.trace("SwarsBattleIndexApp", "fetch begin")
@@ -155,24 +149,13 @@ export default {
       // this.query = this.$route.query.query
 
       this.xnotice_run_all(this.xi)
-
       this.tiresome_alert_check()
-
-      // this.debug_alert(this.xi.records.length)
-
-      // if (Gs.present_p(this.xi.records)) {
-      //   this.search_input_blur()
-      // }
     })
   },
 
   methods: {
     search_input_focus() {
-      this.desktop_focus_to(this.$refs.main_search_form)
-      return true
-    },
-    search_input_blur() {
-      this.desktop_blur_to(this.$refs.main_search_form)
+      this.$refs.main_search_form.focus()
       return true
     },
 
