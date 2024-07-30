@@ -1,9 +1,7 @@
 module QuickScript
   module About
-    class CreditScript < Base
-      self.title = "クレジット"
-      self.description = "クレジットを表示する"
-      self.main_component = { _component: "Credit" }
+    class CreditScript < Chore::DocumentationScript
+      self.md_key = :credit
     end
   end
 end
