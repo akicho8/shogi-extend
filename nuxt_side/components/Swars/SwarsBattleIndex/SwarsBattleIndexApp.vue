@@ -141,8 +141,6 @@ export default {
 
     params = this.pc_url_params_clean(params)
 
-    this.ga_process(params)
-
     // Number(params.per || 1)
 
     return this.$axios.$get("/w.json", {params: params}).then(xi => {
@@ -223,14 +221,6 @@ export default {
       }
       this.app_log({subject: "レイアウト", body: info.name})
       return true
-    },
-
-    ga_process(params) {
-      if (params.query) {
-        this.ga_click("将棋ウォーズ棋譜検索 検索実行")
-      } else {
-        this.ga_click("将棋ウォーズ棋譜検索 未入力")
-      }
     },
 
     tab_switch_router_params(new_params = {}) {
