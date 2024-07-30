@@ -1,8 +1,8 @@
 ## index
 
-- https://www.shogi-extend/lab/chore/documentation?md_key=share_board
-- https://www.shogi-extend/lab/chore/documentation?md_key=swars_search
-- https://www.shogi-extend/lab/chore/documentation?md_key=video_new
+- https://www.shogi-extend.com/lab/chore/documentation?md_key=share_board
+- https://www.shogi-extend.com/lab/chore/documentation?md_key=swars_search
+- https://www.shogi-extend.com/lab/chore/documentation?md_key=video_new
 
 ## md_key
 
@@ -19,4 +19,4 @@
 |-------------------------|-------------------------------------------------|
 | pl_content_with_padding | navibar がないだけ                              |
 | pl_stripped_content     | 本文のみ (いまのところ、どこからも使っていない) |
-| pl_default                  | ページまるごと                                  |
+| pl_default              | ページまるごと                                  |
