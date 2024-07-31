@@ -5,7 +5,7 @@ module QuickScript
       self.description = "プロフィールを表示する"
       self.nuxt_login_required_timing = :immediately
       self.login_link_show = true
-      self.sideber_menu_show = true
+      # self.sideber_menu_show = true
 
       def call
         if current_user
