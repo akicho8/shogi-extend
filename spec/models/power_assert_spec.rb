@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe do
+RSpec.describe do
   it "works" do
     assert 1 + 2 == 3
     assert_equal 3, 1 + 2

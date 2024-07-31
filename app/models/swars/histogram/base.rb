@@ -2,11 +2,7 @@ module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
     class Base
-      if Rails.env.development?
-        BATCH_SIZE = 2
-      else
-        BATCH_SIZE = 5000
-      end
+      BATCH_SIZE = 5000
 
       CHART_BAR_MAX     = 20
 

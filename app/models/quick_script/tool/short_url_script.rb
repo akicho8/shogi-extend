@@ -23,6 +23,15 @@ module QuickScript
         if current_original_url.blank?
           return
         end
+        validate!
+        if flash.present?
+          return
+        end
+        flash[:notice] = "変換しました"
+        { _autolink: ShortUrl[current_original_url] }
+      end
+
+      def validate!
         unless current_original_url.match?(URI.regexp(["https", "http"]))
           flash[:notice] = "正しいURLを入力してください"
           return
@@ -31,8 +40,6 @@ module QuickScript
           flash[:notice] = "それは他のサイトです"
           return
         end
-        flash[:notice] = "変換しました"
-        { _autolink: ShortUrl[current_original_url] }
       end
 
       def current_original_url

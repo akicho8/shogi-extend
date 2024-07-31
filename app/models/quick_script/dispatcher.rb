@@ -51,11 +51,12 @@ module QuickScript
     end
 
     def dispatch
+      AppLog.info(subject: action.class, body: action.params.to_t)
       action.tap(&:render_anything)
     end
 
     def action
-      parameter.receiver_klass.new(parameter.params, @options)
+      @action ||= parameter.receiver_klass.new(parameter.params, @options)
     end
 
     def parameter
