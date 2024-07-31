@@ -113,4 +113,7 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   # Kernel.srand config.seed
+
+  # https://wai-doi.hatenablog.com/entry/rspec-describe
+  config.expose_dsl_globally = false # false: グローバルに RSpec 関連メソッドをぶちまけない
 end
