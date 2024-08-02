@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       items: [
-        { title: "プレイバシー",   to: { name: "about-privacy-policy" }, },
+        { title: "プライバシー",   to: { name: "about-privacy-policy" }, },
         { title: "利用規約",       to: { name: "about-terms"          }, },
         { title: "クレジット",     to: { name: "about-credit"         }, },
       ]
