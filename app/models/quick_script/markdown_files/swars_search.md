@@ -156,11 +156,11 @@ Windows なら Shift_JIS
 
 ###### ウォーズIDはどこに記憶している？
 
-ブラウザの localStorage
+ブラウザの Local Storage
 
 ###### 記憶していたはずのウォーズIDが消えた
 
-Safari では localStorage を使わないと一週間で削除されるそうな。
+Safari では Local Storage を使わないと一週間で削除されるそうな。
 
 ###### ウォーズIDを確実に保存するには？
 
