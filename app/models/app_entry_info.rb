@@ -232,7 +232,7 @@ class AppEntryInfo
       ],
     },
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab" },
       title: "実験室",
