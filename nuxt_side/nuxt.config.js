@@ -43,6 +43,10 @@ const sitemap = {
     let list = []
     let res = null
 
+    // http://localhost:3000/api/lab/chore/sitemap.json
+    res = await axios.get(`${process.env.API_URL}/api/lab/chore/sitemap.json`)
+    list = list.concat(res.data.body)
+
     // http://localhost:3000/api/kiwi/tops/sitemap
     res = await axios.get(`${process.env.API_URL}/api/kiwi/tops/sitemap`)
     list = list.concat(res.data.bananas.map(({key}) => `/video/watch/${key}`))

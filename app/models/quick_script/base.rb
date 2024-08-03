@@ -28,7 +28,7 @@ module QuickScript
 
       # ハイフンがつくのはここだけ
       def qs_path
-        @qs_path ||= "/" + [Dispatcher.path_prefix, qs_key].join("/").dasherize
+        @qs_path ||= "/" + [path_prefix, qs_key].join("/").dasherize
       end
 
       def qs_url
@@ -62,6 +62,12 @@ module QuickScript
           :qs_path       => qs_path,
           :qs_group_info => qs_group_info,
         }
+      end
+
+      private
+
+      def path_prefix
+        "lab"
       end
     end
 

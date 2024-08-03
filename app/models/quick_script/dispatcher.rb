@@ -28,10 +28,6 @@ module QuickScript
         end
       end
 
-      def path_prefix
-        :lab
-      end
-
       def dispatch(...)
         new(...).dispatch
       end
