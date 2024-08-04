@@ -1,8 +1,8 @@
 module QuickScript
   module Chore
     class SitemapScript < Base
-      self.title = "SITEMAPの素"
-      self.description = "SITEMAPの素を生成する"
+      self.title = "サイトマップの素"
+      self.description = "サイトマップの素を生成する"
 
       def call
         [
