@@ -67,6 +67,13 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{path: '/lab/swars/all-download', query: {user_key: APP.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
+          b-menu-item.is_active_unset.swars_users_key_battle_history_handle(
+            label="対局履歴"
+            @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
+            tag="nuxt-link"
+            :to="{path: '/lab/swars/battle-history', query: {user_key: APP.xi.current_swars_user_key}}"
+            :disabled="menu_item_disabled")
+
         b-menu-list(label="一歩進んだ使い方")
           b-menu-item.is_active_unset.swars_default_user_key_set_handle(
             :class="{'has-text-weight-bold': APP.mounted_then_swars_search_default_key_present_p}"
