@@ -11,13 +11,13 @@ module QuickScript
 
       it "通常の出力" do
         case1
-        assert { UserGroupScript.new(user_keys: "a, b").call[:_v_bind][:value][:rows].size == 2 }
+        assert { UserGroupScript.new(swars_user_keys: "a, b").call[:_v_bind][:value][:rows].size == 2 }
       end
 
       it "Google スプレッドシートに出力" do
         case1
         Timecop.return do
-          assert { UserGroupScript.new(user_keys: "a, b", google_sheet: "true").as_json[:redirect_to] }
+          assert { UserGroupScript.new(swars_user_keys: "a, b", google_sheet: "true").as_json[:redirect_to] }
           GoogleApi::ExpirationTracker.destroy_all
         end
       end
@@ -25,7 +25,7 @@ module QuickScript
       it "順番" do
         ::Swars::User.create!(key: "alice")
         def case1(order_by)
-          UserGroupScript.new(user_keys: "alice", order_by: order_by).call
+          UserGroupScript.new(swars_user_keys: "alice", order_by: order_by).call
         end
         assert { case1("grade")     }
         assert { case1("gentleman") }

@@ -18,7 +18,7 @@ module QuickScript
             :label   => "モード",
             :key     => :mode,
             :type    => :radio_button,
-            :elems   => {"結合" => "grapheme_cluster", "分解" => "single_code_point", "詳細" => "info"},
+            :elems   => {"grapheme_cluster" => "結合", "single_code_point" => "分解", "info" => "詳細"},
             :default => current_mode,
           },
         ]

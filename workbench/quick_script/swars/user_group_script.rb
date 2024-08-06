@@ -5,10 +5,10 @@ user1 = Swars::User.create!(key: user_key)
 Swars::Battle.create! do |e|
   e.memberships.build(user: user1)
 end
-QuickScript::Swars::UserGroupScript.new(user_keys: user_key).call[:_v_bind][:value][:rows].size # => 1
+QuickScript::Swars::UserGroupScript.new(swars_user_keys: user_key).call[:_v_bind][:value][:rows].size # => 1
 
 GoogleApi::ExpirationTracker.destroy_all
-QuickScript::Swars::UserGroupScript.new(user_keys: user_key, google_sheet: true).call
+QuickScript::Swars::UserGroupScript.new(swars_user_keys: user_key, google_sheet: true).call
 GoogleApi::ExpirationTracker.count          # => 1
 GoogleApi::ExpirationTracker.destroy_all
 

@@ -2,7 +2,8 @@ module QuickScript
   module Swars
     OrderedIndex = [
       SearchScript,
-      AllDownloadScript,
+      CrawlerBatchScript,
+      BattleDownloadScript,
       PiyoShogiConfigScript,
       DocumentationScript,
       UserGroupScript,

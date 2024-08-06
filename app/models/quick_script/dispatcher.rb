@@ -28,10 +28,12 @@ module QuickScript
         end
       end
 
+      # コントローラーから呼び出す
       def dispatch(...)
         new(...).dispatch
       end
 
+      # app/jobs/quick_script_job.rb から呼び出す
       def background_dispatch(params, options)
         options = {
           :current_user    => User.find_by(id: options[:current_user_id]),

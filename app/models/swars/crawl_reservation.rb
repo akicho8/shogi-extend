@@ -151,10 +151,10 @@ module Swars
     end
 
     def zip_dl_format_info
-      ZipDlFormatInfo.fetch(zip_dl_format_key)
+      ZipDlFormatInfo.fetch(format_key)
     end
 
-    def zip_dl_format_key
+    def format_key
       "kif"
     end
 

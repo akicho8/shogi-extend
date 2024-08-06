@@ -55,7 +55,7 @@
           .title About
           ul
             li
-              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="$sound.play_click()") プライバシー
+              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="$sound.play_click()") プライバシーポリシー
             li
               nuxt-link(:to="{path: '/about/terms'}" @click.native="$sound.play_click()") 利用規約
             li

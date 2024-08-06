@@ -64,7 +64,7 @@ module QuickScript
             :label   => "select (hash)",
             :key     => :select2,
             :type    => :select,
-            :elems   => {"選択1" => "a", "選択2" => "b", "選択3" => "c"},
+            :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
             :default => params[:select2].presence || "a",
           },
           {
@@ -78,7 +78,7 @@ module QuickScript
             :label   => "radio (hash)",
             :key     => :radio2,
             :type    => :radio_button,
-            :elems   => {"選択1" => "a", "選択2" => "b", "選択3" => "c"},
+            :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
             :default => params[:radio2].presence || "a",
           },
           {
@@ -86,6 +86,13 @@ module QuickScript
             :key     => :checkbox1,
             :type    => :checkbox_button,
             :elems   => ["a", "b", "c"],
+            :default => Array(params[:checkbox1].presence || "a"),
+          },
+          {
+            :label   => "チェックボックスで elems の要素が1つの文字列の場合",
+            :key     => :checkbox2,
+            :type    => :checkbox_button,
+            :elems   => "a",
             :default => Array(params[:checkbox1].presence || "a"),
           },
         ]

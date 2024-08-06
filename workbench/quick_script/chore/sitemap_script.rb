@@ -26,7 +26,7 @@ tp QuickScript::Chore::SitemapScript.new.call
 # >> | /lab/chore/not-found                 |
 # >> | /lab/chore/null                      |
 # >> | /lab/chore/status-code               |
-# >> | /lab/swars/all-download              |
+# >> | /lab/swars/crawler-batch              |
 # >> | /lab/swars/battle-history            |
 # >> | /lab/swars/documentation             |
 # >> | /lab/swars/search                    |

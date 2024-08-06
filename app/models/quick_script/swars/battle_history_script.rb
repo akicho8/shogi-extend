@@ -14,23 +14,23 @@ module QuickScript
         super + [
           {
             :label       => "将棋ウォーズID",
-            :key         => :user_key,
+            :key         => :swars_user_key,
             :type        => :string,
-            :default     => params[:user_key].to_s.presence,
-            :placeholder => current_sw_user_key,
+            :default     => params[:swars_user_key].to_s.presence,
+            :placeholder => current_swars_user_key,
           },
           {
             :label       => "Google スプレッドシートに出力",
             :key         => :google_sheet,
             :type        => DEBUG_MODE ? :radio_button : :hidden,
-            :elems       => {"しない" => "false", "する" => "true"},
+            :elems       => {"false" => "しない", "true" => "する"},
             :default     => params[:google_sheet].to_s.presence || (DEBUG_MODE ? "false" : "true"),
           },
           {
             :label       => "バックグランド実行する",
             :key         => :bg_request,
             :type        => DEBUG_MODE ? :radio_button : :hidden,
-            :elems       => {"しない" => "false", "する" => "true"},
+            :elems       => {"false" => "しない", "true" => "する"},
             :default     => params[:bg_request].to_s.presence || (DEBUG_MODE ? "false" : "true"),
           },
         ]
@@ -66,7 +66,7 @@ module QuickScript
 
       def rows
         @rows ||= [].tap do |rows|
-          s = current_sw_user.memberships.all
+          s = current_swars_user.memberships.all
           s = s.joins(:battle)
           s = s.includes(battle: [:memberships, :xmode, :final])
           s = s.includes(taggings: :tag)
@@ -132,12 +132,12 @@ module QuickScript
         end
       end
 
-      def current_sw_user_key
-        params[:user_key].to_s.strip.presence || user_key_default
+      def current_swars_user_key
+        params[:swars_user_key].to_s.strip.presence || user_key_default
       end
 
-      def current_sw_user
-        @current_sw_user ||= ::Swars::User[current_sw_user_key]
+      def current_swars_user
+        @current_swars_user ||= ::Swars::User[current_swars_user_key]
       end
 
       def current_google_sheet
@@ -158,11 +158,11 @@ module QuickScript
       end
 
       def long_title
-        "#{current_sw_user.name_with_grade}の#{title}(直近#{rows.size}件)"
+        "#{current_swars_user.name_with_grade}の#{title}(直近#{rows.size}件)"
       end
 
       def posted_message
-        "承りました。終わったら #{current_user.email} あてに URL を送ります。ずっと残しておきたい場合や編集する場合はそこから自分のところにコピってください。"
+        "いま作ってます。終わったら #{current_user.email} あてに URL を送ります。ずっと残しておきたい場合や編集する場合はそこから自分のところにコピってください。"
       end
 
       def validate!
@@ -174,15 +174,15 @@ module QuickScript
           flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
           return
         end
-        if current_sw_user_key.blank?
+        if current_swars_user_key.blank?
           flash[:notice] = "ウォーズIDを入力してください"
           return
         end
-        unless current_sw_user
-          flash[:notice] = "#{current_sw_user_key} さんは存在しません"
+        unless current_swars_user
+          flash[:notice] = "#{current_swars_user_key} さんは存在しません"
           return
         end
-        unless current_sw_user.memberships.exists?
+        unless current_swars_user.memberships.exists?
           flash[:notice] = "対局データが 0 件です"
           return
         end

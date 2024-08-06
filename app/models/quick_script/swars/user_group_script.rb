@@ -15,23 +15,23 @@ module QuickScript
         super + [
           {
             :label           => "将棋ウォーズID(s)",
-            :key             => :user_keys,
+            :key             => :swars_user_keys,
             :type            => :text,
-            :default         => params[:user_keys].to_s.presence,
+            :default         => params[:swars_user_keys].to_s.presence,
             :placeholder     => default_user_keys,
           },
           {
             :label           => "順番",
             :key             => :order_by,
             :type            => :radio_button,
-            :elems           => {"最高段位" => "grade", "行動規範" => "gentleman", "勢い" => "vitality", "そのまま" => "original"},
+            :elems           => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
             :default         => params[:order_by].presence || "grade",
           },
           {
             :label           => "Google スプレッドシートに出力",
             :key             => :google_sheet,
             :type            => :radio_button,
-            :elems           => {"しない" => "false", "する" => "true"},
+            :elems           => {"false" => "しない", "true" => "する"},
             :default         => "false",
             :hidden_on_query => true,
             :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピってください",
@@ -40,7 +40,7 @@ module QuickScript
       end
 
       def call
-        if current_user_keys.blank?
+        if current_swars_user_keys.blank?
           return
         end
 
@@ -64,7 +64,7 @@ module QuickScript
           when "grade"
             s = s.joins(:grade).order(::Swars::Grade.arel_table[:priority].asc)
           when "original"
-            s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
+            s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_swars_user_keys])
           when "gentleman"
             s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
           when "vitality"
@@ -133,7 +133,7 @@ module QuickScript
       end
 
       def validate!
-        unknown_user_keys = current_user_keys - main_scope.pluck(:key)
+        unknown_user_keys = current_swars_user_keys - main_scope.pluck(:key)
         if unknown_user_keys.present?
           flash[:notice] = "#{unknown_user_keys * ' と '} が見つかりません。将棋ウォーズ棋譜検索で一度検索すると出てくるかもしれません。"
           return
@@ -152,7 +152,7 @@ module QuickScript
 
       def main_scope
         @main_scope ||= yield_self do
-          s = ::Swars::User.where(key: current_user_keys)
+          s = ::Swars::User.where(key: current_swars_user_keys)
           s = s.includes(:grade)       # for e.grade.name
           s = s.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
         end
@@ -166,12 +166,12 @@ module QuickScript
         end
       end
 
-      def current_user_keys
-        user_keys = params[:user_keys].presence
+      def current_swars_user_keys
+        swars_user_keys = params[:swars_user_keys].presence
         if Rails.env.local?
-          user_keys ||= default_user_keys
+          swars_user_keys ||= default_user_keys
         end
-        user_keys.to_s.scan(/\w+/).uniq
+        swars_user_keys.to_s.scan(/\w+/).uniq
       end
 
       def current_order_by

@@ -26,14 +26,14 @@ module Swars
   RSpec.describe CrawlReservation, type: :model, swars_spec: true do
     it "works" do
       current_user = ::User.admin
-      sw_user = User.create!
+      swars_user = User.create!
       battle = Battle.create! do |e|
-        e.memberships.build(user: sw_user)
+        e.memberships.build(user: swars_user)
       end
 
       record = current_user.swars_crawl_reservations.create!({
           :attachment_mode => "with_zip",
-          :target_user_key => sw_user.key,
+          :target_user_key => swars_user.key,
         })
 
       record.crawl!

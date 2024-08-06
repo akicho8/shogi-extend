@@ -3,7 +3,6 @@ module Swars
     def index
       [
         :case_kento_api,
-        :case_zip_download,
         :case_swars_search,
       ].each do |e|
         send(e)

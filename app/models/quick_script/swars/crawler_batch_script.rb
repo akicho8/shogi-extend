@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    class AllDownloadScript < Base
+    class CrawlerBatchScript < Base
       self.title = "古い棋譜の補完"
       self.description = "古い棋譜を補完するために棋譜取得を予約する"
       self.form_method = :post
@@ -11,16 +11,16 @@ module QuickScript
         super + [
           {
             :label       => "将棋ウォーズID",
-            :key         => :user_key,
+            :key         => :swars_user_key,
             :type        => :string,
-            :default     => params[:user_key].to_s.presence,
+            :default     => params[:swars_user_key].to_s.presence,
             :placeholder => "BOUYATETSU5",
           },
           {
             :label       => "ZIPファイルを添付",
             :key         => :attachment_mode,
             :type        => :radio_button,
-            :elems       => {"しない" => "nothing", "する" => "with_zip"},
+            :elems       => {"nothing" => "しない", "with_zip" => "する"},
             :default     => params[:attachment_mode].to_s.presence || "nothing",
           },
         ]
@@ -46,25 +46,25 @@ module QuickScript
         end
       end
 
-      def current_sw_user_key
-        params[:user_key].to_s.strip.presence
+      def current_swars_user_key
+        params[:swars_user_key].to_s.strip.presence
       end
 
-      def current_sw_user
-        @current_sw_user ||= ::Swars::User[current_sw_user_key]
+      def current_swars_user
+        @current_swars_user ||= ::Swars::User[current_swars_user_key]
       end
 
       def current_attachment_mode
         params[:attachment_mode].to_s
       end
 
-      def user_key_default
-        @user_key_default ||= ["BOUYATETSU5"].sample
+      def swars_user_key_default
+        @swars_user_key_default ||= ["BOUYATETSU5"].sample
       end
 
       def crawl_reservation_params
         {
-          :target_user_key => current_sw_user_key,
+          :target_user_key => current_swars_user_key,
           :attachment_mode => current_attachment_mode,
         }
       end
@@ -78,12 +78,12 @@ module QuickScript
           flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
           return
         end
-        if current_sw_user_key.blank?
+        if current_swars_user_key.blank?
           flash[:notice] = "ウォーズIDを入力してください"
           return
         end
-        unless current_sw_user
-          flash[:notice] = "#{current_sw_user_key} さんは存在しません"
+        unless current_swars_user
+          flash[:notice] = "#{current_swars_user_key} さんは存在しません"
           return
         end
       end

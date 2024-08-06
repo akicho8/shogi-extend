@@ -39,7 +39,6 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
-    include ZipDl::ActionMethods
     include IndexMethods
     include ShowMethods
     include ExceptionCatch

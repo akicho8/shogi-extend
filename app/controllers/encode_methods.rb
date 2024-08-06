@@ -1,8 +1,12 @@
 module EncodeMethods
   extend ActiveSupport::Concern
 
+  def current_body_encode_key
+    :body_encode
+  end
+
   def current_body_encode
-    v = params[:body_encode].presence
+    v = params[current_body_encode_key].presence
     if v == "auto"
       v = current_body_encode_default
     end

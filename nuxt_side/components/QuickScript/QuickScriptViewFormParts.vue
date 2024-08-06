@@ -6,7 +6,7 @@
         :label-for="QS.form_part_id(form_part)"
         :label="form_part.label"
         custom-class="is-small"
-        :message="form_part.help_message"
+        :message="QS.form_part_help_message(form_part)"
         )
 
         template(v-if="false")
@@ -58,14 +58,14 @@
             :id="QS.form_part_id(form_part)"
             v-model="QS.attributes[form_part.key]"
             )
-            template(v-for="[label, value] in QS.form_part_elems_to_select_options(form_part.elems)")
-              option(:value="value") {{label}}
+            template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
+              option(:value="key") {{label}}
         template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
-          template(v-for="[label, value] in QS.form_part_elems_to_select_options(form_part.elems)")
+          template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
             component(
               :is="QS.form_part_type_to_component(form_part.type)"
               v-model="QS.attributes[form_part.key]"
-              :native-value="value")
+              :native-value="key")
               span {{label}}
         template(v-else)
           pre form_part.type が間違っている : {{form_part.type}}

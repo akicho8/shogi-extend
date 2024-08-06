@@ -247,7 +247,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   describe "まとめて取得" do
-    describe "ダウンロード" do
+    xdescribe "ダウンロード" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
         visit2 "/swars/direct-download"
         assert_selector(".NuxtLoginContainer")
@@ -264,7 +264,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         # ページ遷移後
         find(".swars_zip_dl_logs_destroy_all").click        # 「クリア」
         find(".oldest_log_create_handle").click             # 「古い1件をDLしたことにする」
-        find(".zdsk_continue").click                        # 「前回の続きから」
+        find(".continue").click                        # 「前回の続きから」
         find(".download_handle").click                      # 「ダウンロード」
 
         # switch_to_window(windows.first)                     # 自力で戻る

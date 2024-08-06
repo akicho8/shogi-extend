@@ -70,16 +70,6 @@ module Api
       render json: { xnotice: Xnotice.add("新しいメールアドレスにメールを送信しました。本文の「アカウントの確認」リンクを踏んでメールアドレスの変更を確定させてください", type: "is-success", method: :dialog, title: "もう少し") }
     end
 
-    # curl -d _method=put http://localhost:3000/api/settings/swars_user_key_fetch.json
-    def swars_user_key_fetch
-      render json: { swars_user_key: current_user.key }
-    end
-
-    def swars_user_key_update
-      xnotice = Xnotice.add("変更しました(嘘)", type: "is-success")
-      render json: { xnotice: xnotice }
-    end
-
     private
 
     def user_save(user)
