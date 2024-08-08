@@ -30,6 +30,6 @@ class SystemMailer < ApplicationMailer
       end
     end
 
-    mail(params.slice(:subject, :body, :content_type, :to))
+    mail(params.slice(:subject, :body, :content_type, :to, :bcc))
   end
 end
