@@ -17,7 +17,7 @@ module QuickScript
             :placeholder => "BOUYATETSU5",
           },
           {
-            :label       => "完了通知メールに棋譜を詰めたZIPファイルを添付",
+            :label       => "ZIPファイルを添付",
             :key         => :attachment_mode,
             :type        => :radio_button,
             :elems       => {"しない" => "nothing", "する" => "with_zip"},
