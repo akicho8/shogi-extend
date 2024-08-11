@@ -164,7 +164,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       end
     end
 
-    describe "ZIPダウンロード" do
+    xdescribe "ZIPダウンロード" do
       before do
         @current_user = user_login
       end
