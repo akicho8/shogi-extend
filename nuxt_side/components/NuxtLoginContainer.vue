@@ -9,7 +9,7 @@
         b-button.has-text-weight-bold(rounded type="is-primary"  @click="passowrd_login_click_handle(e)")
           span パスワードログイン
     hr
-    p.is-size-7 Twitter でメールアドレスを非公開にしている場合の新規 Twitter 経由ログインは、メールアドレスの登録と本人確認の手間がかかるため、おすすめしません。
+    p.is-size-7 Twitter でメールアドレスを非公開にしている場合の Twitter 経由新規ログインは、メールアドレスの登録と本人確認の手間がかかるため、おすすめしません。
 </template>
 
 <script>
