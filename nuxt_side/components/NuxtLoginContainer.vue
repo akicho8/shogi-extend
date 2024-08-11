@@ -4,10 +4,12 @@
     .is-flex.is-justify-content-center.is-flex-direction-column
       template(v-for="e in SocialMediaInfo.values")
         b-button.has-text-weight-bold(rounded :type="`is-${e.key}`" :icon-left="e.key" @click="click_handle(e)")
-          span {{e.name}} でログインする
+          span {{e.label}}
       template(v-if="true")
         b-button.has-text-weight-bold(rounded type="is-primary"  @click="passowrd_login_click_handle(e)")
-          span パスワードでログインする
+          span パスワードログイン
+    hr
+    p.is-size-7 Twitter でメールアドレスを非公開にしている場合の新規 Twitter 経由ログインは、メールアドレスの登録と本人確認の手間がかかるため、おすすめしません。
 </template>
 
 <script>
@@ -16,9 +18,9 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 class SocialMediaInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "google",  name: "Google",  },
-      { key: "twitter", name: "Twitter", },
-      { key: "github",  name: "GitHub",  },
+      { key: "google",  name: "Google",  label: "Google ログイン (推奨)",    },
+      { key: "github",  name: "GitHub",  label: "GitHub ログイン",           },
+      { key: "twitter", name: "Twitter", label: "Twitter ログイン (非推奨)", },
     ]
   }
 }
