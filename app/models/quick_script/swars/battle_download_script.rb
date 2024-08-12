@@ -69,7 +69,9 @@ module QuickScript
         if foreground_mode
           if request_get?
             if Rails.env.local?
-              return "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"
+              if current_user
+                return "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"
+              end
             end
             return
           end
