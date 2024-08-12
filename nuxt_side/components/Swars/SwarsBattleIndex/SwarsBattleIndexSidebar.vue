@@ -54,7 +54,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
         b-menu-list(label="まとめて取得")
           b-menu-item.is_active_unset.swars_direct_download_handle(
-            label="ダウンロード"
+            label="棋譜ダウンロード"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
             :to="{path: '/lab/swars/battle-download', query: {swars_user_key: APP.xi.current_swars_user_key}}"
@@ -68,7 +68,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_battle_history_handle(
-            label="対局履歴"
+            label="対局履歴のエクスポート"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
             :to="{path: '/lab/swars/battle-history', query: {swars_user_key: APP.xi.current_swars_user_key}}"

@@ -17,7 +17,7 @@ module QuickScript
             :placeholder => "BOUYATETSU5",
           },
           {
-            :label       => "ZIPファイルを添付",
+            :label       => "ZIPファイルの添付",
             :key         => :attachment_mode,
             :type        => :radio_button,
             :elems       => {"nothing" => "しない", "with_zip" => "する"},
