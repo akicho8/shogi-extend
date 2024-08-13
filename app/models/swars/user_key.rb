@@ -22,6 +22,16 @@ module Swars
 
     ################################################################################
 
+    def db_record
+      User.find_by(key: key)
+    end
+
+    def db_record!
+      User.find_by!(key: key)
+    end
+
+    ################################################################################
+
     def official_mypage_url
       "https://shogiwars.heroz.jp/users/mypage/#{key}"
     end

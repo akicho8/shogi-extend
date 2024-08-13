@@ -1,4 +1,5 @@
 require "./setup"
+Swars::ZipDlLog.destroy_all
 User.admin.swars_zip_dl_logs.destroy_all
 exit
 # QuickScript::Swars::BattleDownloadScript.new({}, {current_user: User.admin}).oldest_log_create

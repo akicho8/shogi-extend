@@ -5,7 +5,7 @@ module Swars
     describe "プレイヤー情報" do
       before do
         @user = User.create!
-        Battle.create! do |e|
+        @battle = Battle.create! do |e|
           e.memberships.build(user: @user)
         end
         @as_json = @user.stat.to_hash.as_json
@@ -45,6 +45,11 @@ module Swars
       it "対局数0の場合にエラーにならない" do
         user = User.create!
         assert { user.stat.as_json }
+      end
+
+      it "クエリによる対局を絞り込むそのIDsを取得する" do
+        assert { @user.stat(query: "勝敗:負け").filtered_battle_ids == []           }
+        assert { @user.stat(query: "勝敗:勝ち").filtered_battle_ids == [@battle.id] }
       end
     end
   end

@@ -7,18 +7,19 @@ module QuickScript
       self.button_label = "ダウンロード"
       self.login_link_show = true
 
-      DEBUG_MODE = Rails.env.local? && false
+      DEBUG_MODE = Rails.env.local?
 
       attr_accessor :processed_sec
 
       def form_parts
         super + [
           {
-            :label       => "将棋ウォーズID",
-            :key         => :swars_user_key,
-            :type        => :string,
-            :default     => swars_user_key,
-            :placeholder => swars_user_key,
+            :label        => "検索クエリ",
+            :key          => :query,
+            :type         => :string,
+            :default      => query,
+            :placeholder  => "BOUYATETSU5 勝敗:勝ち tag:右四間飛車",
+            :help_message =
           },
           {
             :label       => "範囲",
@@ -94,14 +95,6 @@ module QuickScript
         end
       end
 
-      def swars_user_key
-        params[:swars_user_key].to_s.strip.presence || (DEBUG_MODE ? swars_user_key_default : nil)
-      end
-
-      def swars_user
-        @swars_user ||= ::Swars::User[swars_user_key]
-      end
-
       def current_bg_request
         params[:bg_request].to_s == "true"
       end
@@ -110,7 +103,7 @@ module QuickScript
         @swars_user_key_default ||= yield_self do
           if DEBUG_MODE
             # ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"].sample
-            ["BOUYATETSU5"].sample
+            ["BOUYATETSU5"].sample.collect { |e| UserKey[e] }
           end
         end
       end
@@ -141,7 +134,7 @@ module QuickScript
           return
         end
         if swars_user.battles.empty?
-          flash[:notice] = "対局データがもともととひとつもありません"
+          flash[:notice] = "対局データがひとつもありません"
           return
         end
         if current_user.swars_zip_dl_logs.download_prohibit?
@@ -240,7 +233,7 @@ module QuickScript
       ################################################################################
 
       def main_scope
-        @main_scope ||= scope_info.scope[self, swars_user.battles].limit(dl_rest_count)
+        @main_scope ||= scope_info.scope[self, query_scope].limit(dl_rest_count)
       end
 
       def scope_info
@@ -293,6 +286,30 @@ module QuickScript
 
       def structure_key
         params[:structure_key].presence || StructureInfo.first.key
+      end
+
+      ################################################################################
+
+      def swars_user_key
+        query_info.swars_user_key || (DEBUG_MODE ? swars_user_key_default : nil)
+      end
+
+      def swars_user
+        @swars_user ||= swars_user_key.db_record
+      end
+
+      ################################################################################
+
+      def query
+        params[:query].to_s
+      end
+
+      def query_info
+        @query_info ||= QueryInfo.parse(query)
+      end
+
+      def query_scope
+        @query_scope ||= swars_user.battles.find_all_by_params(query_info: query_info, target_owner: swars_user)
       end
 
       ################################################################################

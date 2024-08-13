@@ -50,13 +50,13 @@ module GoogleApi
     def spreadsheet_create(title = nil)
       spreadsheet = Google::Apis::SheetsV4::Spreadsheet.new(properties: { title: title || "New Spreadsheet" })
       instance = @sheets_service.create_spreadsheet(spreadsheet)
-      AppLog.important(subject: "[GoogleApi][spreadsheet_create] #{instance.spreadsheet_id}")
+      AppLog.important(subject: "[API][Googleスプレッドシート][作成]", body: instance.spreadsheet_url)
       instance
     end
 
     def spreadsheet_delete(spreadsheet_id)
       @drive_service.delete_file(spreadsheet_id)
-      AppLog.important(subject: "[GoogleApi][spreadsheet_delete] #{spreadsheet_id}")
+      AppLog.important(subject: "[API][Googleスプレッドシート][削除] #{spreadsheet_id}")
     end
 
     def spreadsheet_share(spreadsheet_id)

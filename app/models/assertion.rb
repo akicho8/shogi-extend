@@ -41,6 +41,10 @@ module Assertion
     assert_kind_of(var, String)
   end
 
+  def assert_array(var)
+    assert_kind_of(var, Array)
+  end
+
   def assert_kind_of(var, klass)
     if Rails.env.local?
       unless var.kind_of? klass

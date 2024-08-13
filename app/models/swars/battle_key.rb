@@ -56,12 +56,12 @@ module Swars
     end
 
     def user_keys
-      parts.take(2)             # FIXME: UserKey Value Object を生成する
+      @cache[:user_keys] ||= parts.take(2).collect { |e| UserKey[e] }
     end
 
     def user_key_at(location)
       location = Bioshogi::Location.fetch(location)
-      parts[location.code]
+      user_keys[location.code]
     end
 
     def <=>(other)

@@ -94,6 +94,15 @@ module Swars
         @op_scope ||= ScopeExt.new(self, user.op_memberships)
       end
 
+      # さらに絞り込む対局IDs
+      def filtered_battle_ids
+        @filtered_battle_ids ||= yield_self do
+          if query = params[:query]
+            user.battles.find_all_by_query(query, target_owner: user).ids
+          end
+        end
+      end
+
       ################################################################################
 
       def tag_stat

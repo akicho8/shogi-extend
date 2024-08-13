@@ -47,4 +47,14 @@ module TagMethods
       tag_names_for(e)
     end
   end
+
+  # for debug
+  def tag_info
+    {
+      :defense_tag_list   => defense_tag_list,
+      :attack_tag_list    => attack_tag_list,
+      :technique_tag_list => technique_tag_list,
+      :note_tag_list      => note_tag_list,
+    }
+  end
 end

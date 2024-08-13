@@ -9,18 +9,21 @@ class QueryInfo
     "<=" => :lteq,
     "<"  => :lt,
   }
+
   OPRATOR_KEYS_REGEXP    = Regexp.union(OPERATORS.keys) # />=|>/
   OPERATOR_SYNTAX_REGEXP = /\A(?<oprator>#{OPRATOR_KEYS_REGEXP})(?<value>[-\d]\d*)/o # foo:>=-1 にマッチ  # (?<value>[^<>=].*) でも良い
 
   class << self
-    def parse(*args)
-      new(*args).tap do |e|
-        e.parse
-      end
+    def parse(...)
+      new(...).tap(&:parse).freeze
     end
 
-    def swars_user_key_extract(*args)
-      parse(*args).swars_user_key_extractor.extract
+    def null
+      @null ||= parse
+    end
+
+    def swars_user_key(...)
+      parse(...).swars_user_key
     end
   end
 
@@ -30,14 +33,17 @@ class QueryInfo
   attr_accessor :values
   attr_accessor :urls
 
-  def initialize(query, options = {})
+  def initialize(query = nil, options = {})
     @options = {
-      available_keys: nil,
+      :available_keys => nil,
     }.merge(options)
 
-    @query = query
+    @query = query.to_s
+    @cache = {}
 
-    reset
+    @attributes = {}
+    @values = []
+    @urls = []
   end
 
   def parse
@@ -52,6 +58,17 @@ class QueryInfo
 
   def lookup(key)
     @attributes[key.to_sym]
+  end
+
+  def lookup_first(keys)
+    if Rails.env.local?
+      unless keys.kind_of?(Array)
+        raise TypeError, keys.inspect
+      end
+    end
+    if e = keys.find { |e| lookup(e) }
+      lookup(e)
+    end
   end
 
   def lookup_one(key)
@@ -69,21 +86,25 @@ class QueryInfo
   end
 
   def swars_user_key_extractor
-    @swars_user_key_extractor ||= Swars::UserKeyExtractor.new(self)
+    @cache[:swars_user_key_extractor] ||= Swars::UserKeyExtractor.new(self)
   end
+
+  def swars_user_key
+    @cache[:swars_user_key] ||= swars_user_key_extractor.extract
+  end
+
+  def swars_user
+    @cache[:swars_user] ||= swars_user_key&.db_record
+  end
+
+  ################################################################################
 
   private
-
-  def reset
-    @attributes = {}
-    @values = []
-    @urls = []
-  end
 
   def parse_one_part(s)
     case
     when s.match?(/\A(https?:)/i)
-      urls << s
+      @urls << s
     when md = s.match(/\A(?<key>#{available_keys_regexp}):(?<value>\S+)/io) # foo:>=1
       key = md["key"].to_sym           # :foo
       vals = md["value"].split(",")    # [">=1"]
@@ -100,7 +121,7 @@ class QueryInfo
       attributes[key] ||= []
       attributes[key].concat(vals)
     else
-      values.concat(s.split(","))
+      @values.concat(s.split(","))
     end
   end
 

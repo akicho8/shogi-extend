@@ -18,6 +18,7 @@ module Swars
       delegate *[
         :user,
         :params,
+        :filtered_battle_ids,
       ], to: :stat
 
       def initialize(stat, scope)
@@ -62,19 +63,10 @@ module Swars
       #
       def base_scope
         s = @scope.joins(:battle).merge(Battle.newest_order)
-        if ids = selected_battle_ids
+        if ids = filtered_battle_ids
           s = s.where(battle: ids)
         end
         s = s.limit(sample_max)
-      end
-
-      # さらに絞り込む対局IDs
-      def selected_battle_ids
-        @selected_battle_ids ||= yield_self do
-          if query = params[:query]
-            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids
-          end
-        end
       end
     end
   end

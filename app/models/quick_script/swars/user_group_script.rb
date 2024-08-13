@@ -49,11 +49,16 @@ module QuickScript
           return
         end
 
-        if current_google_sheet
-          redirect_to google_sheet_url, type: :tab_open
-        end
+        AppLog.important(subject: mail_subject, body: mail_body)
 
-        simple_table(rows, always_table: true)
+        if current_google_sheet
+          mail_notify
+          redirect_to google_sheet_url, type: :tab_open
+          flash[:notice] = "Google スプレッドシートを生成しました。スマホの場合は別タブがブロックされて自動的に開けないはずなので表示された URL をタップしてください。"
+          { _v_html: result_html }
+        else
+          simple_table(rows, always_table: true)
+        end
       end
 
       # 戻値は Array 型になっている場合もある
@@ -132,6 +137,10 @@ module QuickScript
         @google_sheet_url ||= GoogleApi::Facade.new(title: title, rows: ss_rows, columns_hash: columns_hash).call
       end
 
+      def google_sheet_url_link
+        h.tag.a("Google スプレッドシートを開く", href: google_sheet_url, target: "_blank")
+      end
+
       def validate!
         unknown_user_keys = current_swars_user_keys - main_scope.pluck(:key)
         if unknown_user_keys.present?
@@ -208,6 +217,29 @@ module QuickScript
           "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd", }, },
           "勢い"     => { number_format: { type: "NUMBER",  pattern: "0.00",       }, },
         }
+      end
+
+      def result_html
+        "#{google_sheet_url_link} ← これをタップしてください。編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。"
+      end
+
+      def mail_subject
+        title
+      end
+
+      def mail_body
+        {
+          "google_sheet_url"        => current_google_sheet ? google_sheet_url : nil,
+          "current_swars_user_keys" => current_swars_user_keys,
+          **params,
+        }.compact_blank
+      end
+
+      # ログインしていてメールアドレスが正しいときのみ念のために送信しておく
+      def mail_notify
+        if current_user && current_user.email_valid?
+          SystemMailer.notify(subject: title, to: current_user.email, bcc: AppConfig[:admin_email], body: google_sheet_url).deliver_later
+        end
       end
     end
   end

@@ -20,7 +20,15 @@ module Swars
 
         belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
-        has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
+        has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle do
+          def black
+            self[Bioshogi::Location[:black].code]
+          end
+
+          def white
+            self[Bioshogi::Location[:white].code]
+          end
+        end
 
         has_many :users, through: :memberships
 
@@ -137,6 +145,27 @@ module Swars
       #   @kifu_generator
       #   self.csa_seq = instance.csa_seq
       # end
+
+      # for debug
+      def info
+        {
+          "ID"       => id,
+          "ルール"   => rule_info.name,
+          "結末"     => final_info.name,
+          "モード"   => xmode_info.name,
+          "手合割"   => preset_info.name,
+          "開戦"     => critical_turn,
+          "中盤"     => outbreak_turn,
+          "手数"     => turn_max,
+          "対局日時" => battled_at.to_fs(:ymdhms),
+          "対局秒数" => total_seconds,
+          "終了日時" => end_at.to_fs(:ymdhms),
+          **memberships.inject({}) { |a, e| a.merge(e.location.name => e.name_with_grade_with_judge) },
+          "勝者"     => win_user&.key,
+          "最終参照" => accessed_at.to_fs(:ymdhms),
+          **tag_info,
+        }.compact_blank
+      end
 
       concerning :SummaryMethods do
         def total_seconds

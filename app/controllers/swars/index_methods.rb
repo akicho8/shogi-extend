@@ -157,21 +157,21 @@ module Swars
     end
 
     def current_scope
-      @current_scope ||= current_model.search(params.merge({
-            :user            => current_swars_user,
-            :query_info      => query_info,
-            :main_battle_key => main_battle_key,
-          }))
+      @current_scope ||= yield_self do
+        if current_swars_user
+          s = current_swars_user.battles
+        else
+          s = current_model.none
+        end
+        if primary_record
+          s = s.where(key: primary_record.key)
+        end
+        s.find_all_by_params(query_info: query_info, target_owner: current_swars_user, with_includes: true)
+      end
     end
 
     def current_index_scope
-      @current_index_scope ||= yield_self do
-        s = current_scope
-        if !primary_key_exist?
-          s = s.none
-        end
-        s
-      end
+      @current_index_scope ||= current_scope
     end
 
     # main_battle_key に対応するレコード

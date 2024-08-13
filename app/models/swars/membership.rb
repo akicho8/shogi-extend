@@ -170,6 +170,10 @@ module Swars
       "#{user.key} #{grade.name}"
     end
 
+    def name_with_grade_with_judge
+      "#{user.key} #{grade.name} #{judge.name}"
+    end
+
     # 先手 後手 下手 上手 を返す
     def location_human_name
       location.call_name(battle.handicap)
@@ -224,6 +228,22 @@ module Swars
     def ai_columns_update!
       ai_columns_set
       save!
+    end
+
+    # for debug
+    def info
+      {
+        "ID"         => id,
+        "先後"       => location.name,
+        "勝敗"       => judge_info.name,
+        "棋力"       => grade_info.name,
+        "力差"       => grade_diff,
+        "スタイル"   => style_info&.name,
+        "自分"       => name_with_grade,
+        "相手"       => opponent.name_with_grade,
+        "対"         => opponent.id,
+        **tag_info,
+      }
     end
 
     concerning :BadgeMethods do
