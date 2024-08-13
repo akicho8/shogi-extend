@@ -18,7 +18,7 @@ export const mod_form = {
       }
 
       // 2. 初期値
-      return form_part.el_message
+      return form_part.help_message
     },
 
     // for b-select
