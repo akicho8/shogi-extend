@@ -19,7 +19,7 @@ module QuickScript
             :type         => :string,
             :default      => query,
             :placeholder  => "BOUYATETSU5 勝敗:勝ち tag:右四間飛車",
-            :help_message =
+            :help_message => "",
           },
           {
             :label       => "範囲",
