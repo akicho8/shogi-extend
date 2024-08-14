@@ -1,43 +1,40 @@
 module QuickScript
   module Swars
     class BattleHistoryScript < Base
+      prepend QueryMod
+
       self.title = "将棋ウォーズ対局履歴"
       self.description = "指定ユーザーの対局履歴を Google スプレッドシートに出力する (自分であれこれしたい人向け)"
       self.form_method = :post
       self.button_label = "出力"
+      self.debug_mode = Rails.env.local?
 
-      DEBUG_MODE = Rails.env.local?
       LIMIT_MAX  = Rails.env.local? ? 10 : 2000
       SEPARATOR  = " / "
 
       def form_parts
         super + [
-          {
-            :label       => "将棋ウォーズID",
-            :key         => :swars_user_key,
-            :type        => :string,
-            :default     => params[:swars_user_key].to_s.presence,
-            :placeholder => current_swars_user_key,
-          },
+          form_part_for_query,
           {
             :label       => "Google スプレッドシートに出力",
             :key         => :google_sheet,
-            :type        => DEBUG_MODE ? :radio_button : :hidden,
+            :type        => debug_mode ? :radio_button : :hidden,
             :elems       => {"false" => "しない", "true" => "する"},
-            :default     => params[:google_sheet].to_s.presence || (DEBUG_MODE ? "false" : "true"),
+            :default     => params[:google_sheet].to_s.presence || (debug_mode ? "false" : "true"),
           },
           {
             :label       => "バックグランド実行する",
             :key         => :bg_request,
-            :type        => DEBUG_MODE ? :radio_button : :hidden,
+            :type        => debug_mode ? :radio_button : :hidden,
             :elems       => {"false" => "しない", "true" => "する"},
-            :default     => params[:bg_request].to_s.presence || (DEBUG_MODE ? "false" : "true"),
+            :default     => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
           },
         ]
       end
 
       def call
         if foreground_mode
+          params_restore_and_save_from_session(:query)
           if request_get?
             return "将棋ウォーズ棋譜検索で保持している履歴の中から直近最大#{LIMIT_MAX}件をGoogleスプレッドシートに出力します。"
           end
@@ -66,7 +63,7 @@ module QuickScript
 
       def rows
         @rows ||= [].tap do |rows|
-          s = current_swars_user.memberships.all
+          s = main_scope
           s = s.joins(:battle)
           s = s.includes(battle: [:memberships, :xmode, :final])
           s = s.includes(taggings: :tag)
@@ -132,13 +129,7 @@ module QuickScript
         end
       end
 
-      def current_swars_user_key
-        params[:swars_user_key].to_s.strip.presence || user_key_default
-      end
-
-      def current_swars_user
-        @current_swars_user ||= ::Swars::User[current_swars_user_key]
-      end
+      ################################################################################
 
       def current_google_sheet
         params[:google_sheet].to_s == "true"
@@ -148,17 +139,8 @@ module QuickScript
         params[:bg_request].to_s == "true"
       end
 
-      def user_key_default
-        @user_key_default ||= yield_self do
-          if DEBUG_MODE
-            # ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"].sample
-            ["BOUYATETSU5"].sample
-          end
-        end
-      end
-
       def long_title
-        "#{current_swars_user.name_with_grade}の#{title}(直近#{rows.size}件)"
+        "#{swars_user.name_with_grade}の#{title}(直近#{rows.size}件)"
       end
 
       def posted_message
@@ -174,16 +156,16 @@ module QuickScript
           flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
           return
         end
-        if current_swars_user_key.blank?
+        if swars_user_key.blank?
           flash[:notice] = "ウォーズIDを入力してください"
           return
         end
-        unless current_swars_user
-          flash[:notice] = "#{current_swars_user_key} さんは存在しません"
+        unless swars_user
+          flash[:notice] = "#{swars_user_key} さんは存在しません"
           return
         end
-        unless current_swars_user.memberships.exists?
-          flash[:notice] = "対局データが 0 件です"
+        if main_scope.empty?
+          flash[:notice] = "対局データがひとつもありません"
           return
         end
       end
@@ -203,6 +185,14 @@ module QuickScript
           "中盤"       => { number_format: { type: "NUMBER",  pattern: "0 手目",           }, },
         }
       end
+
+      ################################################################################
+
+      def main_scope
+        @main_scope ||= swars_user.memberships.where(battle_id: query_scope.ids)
+      end
+
+      ################################################################################
     end
   end
 end

@@ -16,6 +16,11 @@ export const mod_storage = {
           } else {
             v = MyLocalStorage.get(form_part["key"])
           }
+          // // 元が null で保存した値が null でないときに復元する
+          // // そうしないと Rails 側で入れた値を上書きしてしまう ← これはちがう。上書きしないといけない。
+          // if (this.attributes[form_part["key"]] == null && v != null) {
+          //   this.$set(this.attributes, form_part["key"], v)
+          // }
           if (v != null) {
             this.$set(this.attributes, form_part["key"], v)
           }

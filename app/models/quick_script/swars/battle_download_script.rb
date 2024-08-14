@@ -1,26 +1,20 @@
 module QuickScript
   module Swars
     class BattleDownloadScript < Base
+      prepend QueryMod
+
       self.title = "将棋ウォーズ棋譜ダウンロード"
       self.description = "指定ウォーズIDの棋譜をまとめてZIPでダウンロードする"
       self.form_method = :post
       self.button_label = "ダウンロード"
       self.login_link_show = true
-
-      DEBUG_MODE = Rails.env.local?
+      self.debug_mode = Rails.env.local?
 
       attr_accessor :processed_sec
 
       def form_parts
         super + [
-          {
-            :label        => "検索クエリ",
-            :key          => :query,
-            :type         => :string,
-            :default      => query,
-            :placeholder  => "BOUYATETSU5 勝敗:勝ち tag:右四間飛車",
-            :help_message => "将棋ウォーズ棋譜検索側と同じ検索クエリを使用できる",
-          },
+          form_part_for_query,
           {
             :label       => "範囲",
             :key         => :scope_key,
@@ -59,15 +53,16 @@ module QuickScript
           {
             :label       => "バックグランド実行する",
             :key         => :bg_request,
-            :type        => DEBUG_MODE ? :radio_button : :hidden,
+            :type        => debug_mode ? :radio_button : :hidden,
             :elems       => {"false" => "しない", "true" => "する"},
-            :default     => params[:bg_request].to_s.presence || (DEBUG_MODE ? "false" : "true"),
+            :default     => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
           },
         ]
       end
 
       def call
         if foreground_mode
+          params_restore_and_save_from_session(:query, :scope_key, :format_key, :encode_key, :max_key, :structure_key)
           if request_get?
             if Rails.env.local?
               if current_user
@@ -97,15 +92,6 @@ module QuickScript
 
       def current_bg_request
         params[:bg_request].to_s == "true"
-      end
-
-      def swars_user_key_default
-        @swars_user_key_default ||= yield_self do
-          if DEBUG_MODE
-            # ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"].sample
-            ["BOUYATETSU5"].sample.collect { |e| UserKey[e] }
-          end
-        end
       end
 
       def long_title
@@ -287,32 +273,6 @@ module QuickScript
       def structure_key
         params[:structure_key].presence || StructureInfo.first.key
       end
-
-      ################################################################################
-
-      def swars_user_key
-        query_info.swars_user_key || (DEBUG_MODE ? swars_user_key_default : nil)
-      end
-
-      def swars_user
-        @swars_user ||= swars_user_key.db_record
-      end
-
-      ################################################################################
-
-      def query
-        params[:query].to_s
-      end
-
-      def query_info
-        @query_info ||= QueryInfo.parse(query)
-      end
-
-      def query_scope
-        @query_scope ||= swars_user.battles.find_all_by_params(query_info: query_info, target_owner: swars_user)
-      end
-
-      ################################################################################
     end
   end
 end

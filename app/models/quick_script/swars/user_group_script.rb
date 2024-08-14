@@ -40,6 +40,8 @@ module QuickScript
       end
 
       def call
+        params_restore_and_save_from_session(:swars_user_keys, :order_by)
+
         if current_swars_user_keys.blank?
           return
         end
@@ -232,7 +234,7 @@ module QuickScript
           "google_sheet_url"        => current_google_sheet ? google_sheet_url : nil,
           "current_swars_user_keys" => current_swars_user_keys,
           **params,
-        }.compact_blank
+        }.compact_blank.to_t
       end
 
       # ログインしていてメールアドレスが正しいときのみ念のために送信しておく

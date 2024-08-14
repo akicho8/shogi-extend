@@ -86,6 +86,7 @@ module QuickScript
 
     class_attribute :title,       default: nil
     class_attribute :description, default: nil
+    class_attribute :debug_mode,  default: false
 
     attr_reader :params
 
