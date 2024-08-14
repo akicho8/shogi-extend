@@ -8,8 +8,8 @@ module Swars
         white = User.create!(key: options[:white_key])
         white.ban!
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq] || Battle::OLD_CSA_SEQ)
-        assert {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
-        assert { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
+        assert { black.battles.find_all_by_query("#{key}:#{value1}", target_owner: black).exists? }
+        assert { black.battles.find_all_by_query("#{key}:#{value2}", target_owner: black).empty?  }
       end
 
       it "棋風" do
@@ -51,16 +51,13 @@ module Swars
 
     describe "手合割" do
       def case1(value)
-        black = User.create!
-        white = User.create!
-        users = [black, white]
-        csa_seq = KifuGenerator.generate_n(1)
-        Battle.create_with_members!(users, preset_key: "平手", csa_seq: csa_seq)
-        Battle.create_with_members!(users, preset_key: "角落ち", csa_seq: csa_seq)
-        Battle.create_with_members!(users, preset_key: "飛車落ち", csa_seq: csa_seq)
-        query_info = QueryInfo.parse("手合割:#{value}")
-        scope = Battle.search(user: white, query_info: query_info)
-        scope.collect { |e| e.preset_key }
+        user = User.create!
+        ["平手", "角落ち", "飛車落ち"].each do |preset_key|
+          Battle.create!(preset_key: preset_key, csa_seq: KifuGenerator.generate_n(1)) do |e|
+            e.memberships.build(user: user)
+          end
+        end
+        user.battles.find_all_by_query("手合割:#{value}").collect(&:preset_key)
       end
 
       it "works" do
@@ -70,21 +67,6 @@ module Swars
         assert { case1("角落ち")            == ["角落ち"]             }
         assert { case1("角落ち,飛車落ち")   == ["角落ち", "飛車落ち"] }
         assert { case1("-角落ち,-飛車落ち") == ["平手"] }
-      end
-    end
-
-    describe "Options" do
-      it "main_battle_key" do
-        key = BattleKeyGenerator.new.generate
-        black = User.create!
-        white = User.create!
-        Battle.create_with_members!([black, white], key: key.to_s)
-        battles = Battle.search({
-            :query_info         => QueryInfo.parse(""),
-            :user => black,
-            :main_battle_key => key,
-          })
-        assert { battles.exists? }
       end
     end
   end

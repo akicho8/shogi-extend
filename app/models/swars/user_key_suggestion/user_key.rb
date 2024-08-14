@@ -4,6 +4,10 @@ module Swars
       MANY_FOUND = 10           # N件以上で多いと見なす
       LIKE_SQL   = "LOWER(user_key) LIKE ?"
 
+      def initialize(user_key)
+        super(user_key.to_s)
+      end
+
       # 大小文字を無視して完全一致する人を返す
       def same_length_user
         @same_length_user ||= Swars::User.find_by([LIKE_SQL, like_value])

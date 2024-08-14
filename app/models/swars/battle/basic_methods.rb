@@ -42,6 +42,8 @@ module Swars
 
         scope :toryo_timeout_checkmate_only, -> { joins(:final).where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) }
 
+        normalizes :key, with: -> e { e.to_s } # BattleKey -> String
+
         # attr_accessor :csa_seq2
 
         before_validation on: :create do
@@ -146,28 +148,28 @@ module Swars
       #   self.csa_seq = instance.csa_seq
       # end
 
-      # for debug
-      def info
-        {
-          "ID"       => id,
-          "ルール"   => rule_info.name,
-          "結末"     => final_info.name,
-          "モード"   => xmode_info.name,
-          "手合割"   => preset_info.name,
-          "開戦"     => critical_turn,
-          "中盤"     => outbreak_turn,
-          "手数"     => turn_max,
-          "対局日時" => battled_at.to_fs(:ymdhms),
-          "対局秒数" => total_seconds,
-          "終了日時" => end_at.to_fs(:ymdhms),
-          **memberships.inject({}) { |a, e| a.merge(e.location.name => e.name_with_grade_with_judge) },
-          "勝者"     => win_user&.key,
-          "最終参照" => accessed_at.to_fs(:ymdhms),
-          **tag_info,
-        }.compact_blank
-      end
-
       concerning :SummaryMethods do
+        # for debug
+        def info
+          {
+            "ID"       => id,
+            "ルール"   => rule_info.name,
+            "結末"     => final_info.name,
+            "モード"   => xmode_info.name,
+            "手合割"   => preset_info.name,
+            "開戦"     => critical_turn,
+            "中盤"     => outbreak_turn,
+            "手数"     => turn_max,
+            "対局日時" => battled_at.to_fs(:ymdhms),
+            "対局秒数" => total_seconds,
+            "終了日時" => end_at.to_fs(:ymdhms),
+            **memberships.inject({}) { |a, e| a.merge(e.location.name => e.name_with_grade_with_judge) },
+            "勝者"     => win_user&.key,
+            "最終参照" => accessed_at.to_fs(:ymdhms),
+            **tag_info,
+          }.compact_blank
+        end
+
         def total_seconds
           @total_seconds ||= memberships.sum(&:total_seconds)
         end

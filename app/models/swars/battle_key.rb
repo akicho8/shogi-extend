@@ -1,8 +1,8 @@
 module Swars
   class BattleKey
     class << self
-      def [](key)
-        create(key)
+      def [](...)
+        create(...)
       end
 
       def create(key)
@@ -16,7 +16,8 @@ module Swars
     attr_reader :key
 
     def initialize(key)
-      BattleKeyValidator.new(key).validate!
+      BattleKeyValidator.new(key).validate! # 生焼けオブジェクトは作らせない
+
       @key = key.dup.freeze
       @cache = {}
       freeze
@@ -51,18 +52,23 @@ module Swars
       UrlProxy.full_url_for("/swars/search?query=#{official_url}")
     end
 
+    # 対局日時
     def to_time
       Time.zone.parse(parts.last)
     end
 
+    # 両対局者名
     def user_keys
       @cache[:user_keys] ||= parts.take(2).collect { |e| UserKey[e] }
     end
 
+    # 両対局者名を :black や :white で引く
     def user_key_at(location)
       location = Bioshogi::Location.fetch(location)
       user_keys[location.code]
     end
+
+    ################################################################################
 
     def <=>(other)
       [self.class, key] <=> [other.class, other.key]

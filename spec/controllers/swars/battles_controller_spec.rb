@@ -94,35 +94,8 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
   end
 
-  # TODO テストは search_spec.rb で書く
+  # テストの詳細は search_spec.rb で書いているので簡単でよい
   describe "詳細検索" do
-    it "vs" do
-      get :index, params: {query: "YamadaTaro vs:DevUser1"}
-      assert { controller.current_scope.count == 1 }
-    end
-
-    it "judge" do
-      get :index, params: {query: "DevUser1 judge:win"}
-      assert { controller.current_scope.count == 1 }
-    end
-
-    it "vs-grade" do
-      get :index, params: {query: "DevUser1 vs-grade:四段"}
-      assert { controller.current_scope.count == 1 }
-    end
-
-    it "turn_max:>=500" do
-      get :index, params: {query: "DevUser1 turn_max:>=500"}
-      assert { controller.current_scope.count == 0 }
-      assert { response.status == 200 }
-    end
-
-    it "turn_max:<=500" do
-      get :index, params: {query: "DevUser1 turn_max:<=500"}
-      assert { controller.current_scope.count == 1 }
-      assert { response.status == 200 }
-    end
-
     describe "手合割" do
       it "平手" do
         get :index, params: {query: "DevUser1 手合割:平手"}
@@ -161,6 +134,20 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
         assert { controller.current_scope.count == 0 }
         assert { response.status == 200 }
+      end
+    end
+
+    describe "直接パラメータに指定する" do
+      it "id" do
+        get :index, params: { id: record.id }
+        assert { response.status == 200 }
+        assert { assigns(:current_records).size == 1 }
+      end
+
+      it "key" do
+        get :index, params: { key: record.key }
+        assert { response.status == 200 }
+        assert { assigns(:current_records).size == 1 }
       end
     end
 

@@ -65,20 +65,9 @@ module Swars
       hv.merge(super)
     end
 
-    # 検索窓に棋譜URLが指定されたときの対局キー
-    def main_battle_key
-      @main_battle_key ||= yield_self do
-        if query = params[:query].presence
-          if battle_url = BattleUrlExtractor.new(query).battle_url
-            battle_url.battle_key
-          end
-        end
-      end
-    end
-
     def import_process_any
-      if main_battle_key
-        Swars::Importer::BattleImporter.new(key: main_battle_key).run
+      if primary_battle_key
+        Swars::Importer::BattleImporter.new(key: primary_battle_key).run
       else
         many_import_process
       end
@@ -96,16 +85,18 @@ module Swars
           # 初回インポートでは User レコードが存在しない
         end
 
-        # 連続クロール回避
-        # 開発環境で回避させるには rails dev:cache しておくこと
-        # 失敗時は current_swars_user ある場合にのみスキップする
-        # そうしないと「もしかして」メッセージの2度目が表示されない
-        @import_errors = []
-        @import_success = Importer::ThrottleImporter.new(import_params).run
-        import_error_message_build
-        if !@import_success && current_swars_user
-          @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
-          return
+        if current_swars_user_key
+          # 連続クロール回避
+          # 開発環境で回避させるには rails dev:cache しておくこと
+          # 失敗時は current_swars_user ある場合にのみスキップする
+          # そうしないと「もしかして」メッセージの2度目が表示されない
+          @import_errors = []
+          @import_success = Importer::ThrottleImporter.new(import_params).run
+          import_error_message_build
+          if !@import_success && current_swars_user
+            @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
+            return
+          end
         end
 
         # ユーザーが見つからなかったということはウォーズIDを間違えている
@@ -118,24 +109,21 @@ module Swars
 
         # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
 
-        @after_count = current_swars_user.battles.count
-        if hit_count.zero?
-          @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
-        else
-          @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
+        if current_swars_user
+          @after_count = current_swars_user.battles.count
+          if hit_count.zero?
+            @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
+          else
+            @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
+          end
+          current_swars_user.search_logs.create!
+          AppLog.debug(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
         end
-        current_swars_user.search_logs.create!
-
-        AppLog.debug(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
       end
     end
 
     def import_page_max
       @import_page_max ||= (params[:page_max].presence || 1).to_i
-    end
-
-    def current_swars_user
-      @current_swars_user ||= User.find_by(user_key: current_swars_user_key.to_s)
     end
 
     def current_musers
@@ -146,42 +134,11 @@ module Swars
       @current_ms_tags ||= query_info.lookup(:ms_tag)
     end
 
-    # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
-    # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
-    def current_swars_user_key
-      @current_swars_user_key ||= params[:user_key].presence || query_info.swars_user_key
-    end
-
     def exclude_column_names
       ["meta_info", "csa_seq"]
     end
 
-    def current_scope
-      @current_scope ||= yield_self do
-        if current_swars_user
-          s = current_swars_user.battles
-        else
-          s = current_model.none
-        end
-        if primary_record
-          s = s.where(key: primary_record.key)
-        end
-        s.find_all_by_params(query_info: query_info, target_owner: current_swars_user, with_includes: true)
-      end
-    end
-
-    def current_index_scope
-      @current_index_scope ||= current_scope
-    end
-
-    # main_battle_key に対応するレコード
-    def primary_record
-      @primary_record ||= yield_self do
-        if main_battle_key
-          Swars::Battle.find_by(key: main_battle_key)
-        end
-      end
-    end
+    ################################################################################
 
     def sort_column_default
       "battled_at"
@@ -199,17 +156,9 @@ module Swars
       s
     end
 
+    ################################################################################
+
     private
-
-    def primary_key_exist?
-      if Rails.env.development?
-        if params[:all]
-          return true
-        end
-      end
-
-      current_swars_user || main_battle_key || query_info.lookup(:ids)
-    end
 
     def x_delete_process
       if Rails.env.local?

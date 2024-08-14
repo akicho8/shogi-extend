@@ -64,6 +64,8 @@ module Swars
     scope :regular_only,  -> { order(search_logs_count: :desc)                                   } # 検索回数が多い人たち順
     scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].asc)              } # 段級位が高い人たち順
 
+    normalizes :user_key, with: -> e { e.to_s } # UserKey 型で来る場合もあるため
+
     before_validation on: :create do
       if Rails.env.local?
         self.key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"

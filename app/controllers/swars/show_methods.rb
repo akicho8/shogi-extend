@@ -9,9 +9,9 @@ module Swars
           if !from_crawl_bot?
             Importer::BattleImporter.new(key: key, SwarsBattleNotFound: params[:SwarsBattleNotFound]).run # すでにあるならskipしている
           end
-          current_scope.find_by!(key: key.to_s)
+          Battle.find_by!(key: key)
         else
-          current_scope.new
+          Battle.new
         end
       end
     end

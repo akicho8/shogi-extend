@@ -39,6 +39,7 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
+    include ScopeMethods
     include IndexMethods
     include ShowMethods
     include ExceptionCatch
