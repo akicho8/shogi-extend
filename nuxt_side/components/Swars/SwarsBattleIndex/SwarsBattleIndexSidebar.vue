@@ -64,14 +64,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="古い棋譜の補完"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/crawler-batch', query: {user_key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/crawler-batch', query: {swars_user_key: APP.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_battle_history_handle(
             label="対局履歴のエクスポート"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/battle-history', query: {swars_user_key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/battle-history', query: {query: APP.xi.query}}"
             :disabled="menu_item_disabled")
 
         b-menu-list(label="一歩進んだ使い方")
