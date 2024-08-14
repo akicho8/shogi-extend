@@ -135,7 +135,7 @@ module Swars
     end
 
     def current_swars_user
-      @current_swars_user ||= User.find_by(user_key: current_swars_user_key)
+      @current_swars_user ||= User.find_by(user_key: current_swars_user_key.to_s)
     end
 
     def current_musers
@@ -149,7 +149,7 @@ module Swars
     # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     def current_swars_user_key
-      @current_swars_user_key ||= params[:user_key].presence || query_info.swars_user_key_extractor.extract
+      @current_swars_user_key ||= params[:user_key].presence || query_info.swars_user_key
     end
 
     def exclude_column_names
