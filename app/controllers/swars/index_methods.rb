@@ -146,10 +146,7 @@ module Swars
 
     def sort_scope(s)
       if md = sort_column.match(/\A(?:membership)\.(?<column>\w+)/)
-        if current_swars_user
-          o = current_swars_user.memberships.order(md[:column] => sort_order)
-          s = s.joins(:memberships).merge(o)
-        end
+        s = s.joins(:memberships).merge(Membership.order(md[:column] => sort_order))
       else
         s = super(s) # Battle のカラムに対するソート
       end
