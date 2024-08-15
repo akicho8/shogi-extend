@@ -5,23 +5,6 @@ module QuickScript
         @options[:controller]
       end
 
-      def session
-        @session ||= controller.respond_to?(:session) ? controller.session : {}
-      end
-
-      ################################################################################
-
-      def scoped_session
-        session[self.class.name] ||= {}
-      end
-
-      def params_restore_and_save_from_session(*keys)
-        keys.each do |key|
-          params[key] ||= scoped_session[key.to_s] # scoped_session 側のハッシュのキーは文字列になってしまう点に注意する
-          scoped_session[key.to_s] = params[key]
-        end
-      end
-
       ################################################################################
 
       def request_format

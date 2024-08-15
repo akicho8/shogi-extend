@@ -15,6 +15,7 @@ module QuickScript
             :type        => :string,
             :default     => params[:swars_user_key].to_s.presence,
             :placeholder => "BOUYATETSU5",
+            :session_sync => true,
           },
           {
             :label       => "ZIPファイルの添付",
@@ -22,12 +23,12 @@ module QuickScript
             :type        => :radio_button,
             :elems       => {"nothing" => "しない", "with_zip" => "する"},
             :default     => params[:attachment_mode].to_s.presence || "nothing",
+            :session_sync => true,
           },
         ]
       end
 
       def call
-        params_restore_and_save_from_session(:swars_user_key, :attachment_mode)
         if request_get?
           self.body_position = :above
           return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box has-background-white-ter" }

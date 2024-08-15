@@ -1,11 +1,11 @@
 module QuickScript
   module Dev
     class SessionScript < Base
-      self.title = "セッションID"
-      self.description = "session.id.to_s"
+      self.title = "セッション確認"
+      self.description = "セッションの内容を確認する"
 
       def call
-        controller.try { session.id.to_s }
+        session
       end
     end
   end

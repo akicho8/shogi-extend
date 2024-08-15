@@ -19,6 +19,7 @@ module QuickScript
             :type            => :text,
             :default         => params[:swars_user_keys].to_s.presence,
             :placeholder     => default_user_keys,
+            :session_sync    => true,
           },
           {
             :label           => "順番",
@@ -26,6 +27,7 @@ module QuickScript
             :type            => :radio_button,
             :elems           => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
             :default         => params[:order_by].presence || "grade",
+            :session_sync    => true,
           },
           {
             :label           => "Google スプレッドシートに出力",
@@ -40,8 +42,6 @@ module QuickScript
       end
 
       def call
-        params_restore_and_save_from_session(:swars_user_keys, :order_by)
-
         if current_swars_user_keys.blank?
           return
         end

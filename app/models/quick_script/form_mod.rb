@@ -7,11 +7,18 @@ module QuickScript
       class_attribute :get_then_axios_get,            default: false  # GETボタンを押したとき axios だけで get するか？  (連打可能になる)
       class_attribute :router_push_failed_then_fetch, default: false  # URL引数に変化がなくてもGETボタンを作動させるか？
       class_attribute :button_click_loading,          default: false  # axios実行中にクルクル画面で連打を防止するか？
+      class_attribute :form_before_call_check,        default: true   # form_parts よぶより call を先に呼んでいること、のチェックを入れるか？
     end
 
     def as_json(*)
       hv = super
-      raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない" unless @__performed__ # ← このチェックいる？
+
+      if form_before_call_check
+        unless @__performed_count__
+          raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない"
+        end
+      end
+
       hv.merge({
           :form_method                   => form_method,
           :button_label                  => button_label,

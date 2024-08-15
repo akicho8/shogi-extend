@@ -9,7 +9,8 @@ module QuickScript
           :default      => query,
           :placeholder  => "BOUYATETSU5 勝敗:勝ち tag:右四間飛車",
           :help_message => "将棋ウォーズ棋譜検索側と同じ検索クエリを指定できる",
-        }
+          :session_sync => true,
+    }
       end
 
       ################################################################################

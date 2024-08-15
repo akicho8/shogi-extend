@@ -8,23 +8,24 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "str1",
-            :key     => :str1,
-            :type    => :string,
-            :default => params[:str1].presence || "(string)",
+            :label        => "str1",
+            :key          => :str1,
+            :type         => :string,
+            :default      => params[:str1].presence || "(str1)",
+            :session_sync => true,
           },
           {
-            :label   => "radio1",
-            :key     => :radio1,
-            :type    => :radio_button,
-            :elems   => ["a", "b", "c"],
-            :default => params[:radio1].presence || "a",
+            :label        => "radio1",
+            :key          => :radio1,
+            :type         => :radio_button,
+            :elems        => ["a", "b", "c"],
+            :default      => params[:radio1].presence || "a",
+            :session_sync => true,
           },
         ]
       end
 
       def call
-        params_restore_and_save_from_session(:str1, :radio1)
         session
       end
     end

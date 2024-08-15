@@ -16,53 +16,57 @@ module QuickScript
         super + [
           form_part_for_query,
           {
-            :label       => "範囲",
-            :key         => :scope_key,
-            :type        => :radio_button,
-            :elems       => ScopeInfo.to_form_elems(self),
-            :default     => scope_info.key,
+            :label        => "範囲",
+            :key          => :scope_key,
+            :type         => :radio_button,
+            :elems        => ScopeInfo.to_form_elems(self),
+            :default      => scope_info.key,
+            :session_sync => true,
           },
           {
-            :label       => "フォーマット",
-            :key         => :format_key,
-            :type        => :radio_button,
-            :elems       => FormatInfo.to_form_elems,
-            :default     => format_info.key,
+            :label        => "フォーマット",
+            :key          => :format_key,
+            :type         => :radio_button,
+            :elems        => FormatInfo.to_form_elems,
+            :default      => format_info.key,
+            :session_sync => true,
           },
           {
-            :label       => "文字コード",
-            :key         => :encode_key,
-            :type        => :radio_button,
-            :elems       => EncodeInfo.to_form_elems,
-            :default     => encode_info.key,
+            :label        => "文字コード",
+            :key          => :encode_key,
+            :type         => :radio_button,
+            :elems        => EncodeInfo.to_form_elems,
+            :default      => encode_info.key,
+            :session_sync => true,
           },
           {
-            :label       => "件数",
-            :key         => :max_key,
-            :type        => :radio_button,
-            :elems       => MaxInfo.to_form_elems,
-            :default     => max_info.key,
+            :label        => "件数",
+            :key          => :max_key,
+            :type         => :radio_button,
+            :elems        => MaxInfo.to_form_elems,
+            :default      => max_info.key,
+            :session_sync => true,
           },
           {
-            :label       => "ZIPの構造",
-            :key         => :structure_key,
-            :type        => :radio_button,
-            :elems       => StructureInfo.to_form_elems,
-            :default     => structure_info.key,
+            :label        => "ZIPの構造",
+            :key          => :structure_key,
+            :type         => :radio_button,
+            :elems        => StructureInfo.to_form_elems,
+            :default      => structure_info.key,
+            :session_sync => true,
           },
           {
-            :label       => "バックグランド実行する",
-            :key         => :bg_request,
-            :type        => debug_mode ? :radio_button : :hidden,
-            :elems       => {"false" => "しない", "true" => "する"},
-            :default     => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
+            :label        => "バックグランド実行する",
+            :key          => :bg_request,
+            :type         => debug_mode ? :radio_button : :hidden,
+            :elems        => {"false" => "しない", "true" => "する"},
+            :default      => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
           },
         ]
       end
 
       def call
         if foreground_mode
-          params_restore_and_save_from_session(:query, :scope_key, :format_key, :encode_key, :max_key, :structure_key)
           if request_get?
             if Rails.env.local?
               if current_user

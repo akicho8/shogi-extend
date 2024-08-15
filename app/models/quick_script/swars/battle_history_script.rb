@@ -34,7 +34,6 @@ module QuickScript
 
       def call
         if foreground_mode
-          params_restore_and_save_from_session(:query)
           if request_get?
             return "将棋ウォーズ棋譜検索で保持している履歴の中から直近最大#{LIMIT_MAX}件をGoogleスプレッドシートに出力します。"
           end

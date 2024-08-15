@@ -97,7 +97,7 @@ module QuickScript
       @options = {
       }.merge(options)
 
-      @__performed__ = 0
+      @__performed_count__ = 0
     end
 
     def as_json(*)
@@ -107,16 +107,24 @@ module QuickScript
       }
     end
 
+    def before_call
+    end
+
     def call
     end
 
+    def after_call
+    end
+
     def safe_call
-      if @__performed__ > 1
+      if @__performed_count__ > 1
         raise QuickScriptDoubleCall, self.class.inspect
       end
-      call.tap do
-        @__performed__ += 1
-      end
+      before_call
+      result = call
+      after_call
+      @__performed_count__ += 1
+      result
     end
 
     def meta
@@ -141,6 +149,7 @@ module QuickScript
 
     # なくてもいいがあると便利なやつ
     prepend Middleware::ControllerMod          # GET POST の判別
+    prepend Middleware::SessionMod             # フォーム値の永続化等
     prepend Middleware::PaginationMod
     prepend Middleware::LoginUserMod
     prepend Middleware::ThrottleMod            # 連打対策
