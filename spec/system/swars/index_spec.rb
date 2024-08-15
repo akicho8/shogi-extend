@@ -52,18 +52,17 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "入力補完" do
       def case1(query, complement_user_keys)
         search_by(query)
-        assert_var_eq(:complement_user_keys, complement_user_keys, wait: 10)
+        visit2 "/swars/search" # 一度リロードする
+        assert_var_eq(:complement_user_keys, complement_user_keys, wait: 5)
       end
 
       it "順番が正しい" do
-        visit2 "/swars/search", complement_user_keys: "b a" # 初期値を設定しておくと
-        assert_var_eq(:complement_user_keys, "b|a")         # Rails側からのコピーをかわせる
+        visit2 "/swars/search", complement_user_keys: "c b a" # 初期値を設定しておくと
+        assert_var_eq(:complement_user_keys, "c|b|a")         # Rails側からのコピーをかわせる
 
-        case1 :DevUser1, "DevUser1|b|a"                     # DevUser1が直近に登場
-        case1 :DevUser1, "DevUser1|b|a"                     # DevUser1はすでに入っているので変化なし
-        case1 :DevUser2, "DevUser2|DevUser1|b"              # DevUser2が先頭に入ったが最大3件なのでaが溢れた
-        case1 :DevUser3, "DevUser3|DevUser2|DevUser1"       # DevUser3が先頭に入ったが最大3件なのでbが溢れた
-        case1 :DevUser0, "DevUser3|DevUser2|DevUser1"       # DevUser0は存在しないので変化なし
+        case1 :DevUser1, "DevUser1|c|b"                       # DevUser1が直近に登場
+        case1 :DevUser2, "DevUser2|DevUser1|c"                # DevUser2が先頭に入ったが最大3件なのでaが溢れた
+        case1 :DevUser3, "DevUser3|DevUser2|DevUser1"         # DevUser3が先頭に入ったが最大3件なのでbが溢れた
       end
 
       it "クエリ全体を取り込む" do

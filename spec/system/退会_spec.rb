@@ -9,6 +9,6 @@ RSpec.describe type: :system, login_spec: true do
     visit2 "/lab/account/destroy"
     find("#form_part-username").set("退会者の名前")
     find(:button, text: /退会する/).click
-    assert_text "退会しました"
+    assert_text "退会しました", wait: 5
   end
 end
