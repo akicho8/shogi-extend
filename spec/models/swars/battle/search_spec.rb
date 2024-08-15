@@ -122,6 +122,27 @@ module Swars
         end
       end
 
+      describe "棋力" do
+        def case1
+          Battle.create!.tap do |e|
+            e.memberships.black.update!(grade_key: "1級")
+            e.memberships.white.update!(grade_key: "2級")
+          end
+        end
+
+        it "grade" do
+          battle = case1
+          assert { Battle.find_all_by_query("自分の棋力:1級", target_owner: battle.memberships.black.user).count == 1 }
+          assert { Battle.find_all_by_query("自分の棋力:2級", target_owner: battle.memberships.black.user).count == 0 }
+        end
+
+        it "vs-grade" do
+          battle = case1
+          assert { Battle.find_all_by_query("相手の棋力:2級", target_owner: battle.memberships.black.user).count == 1 }
+          assert { Battle.find_all_by_query("相手の棋力:1級", target_owner: battle.memberships.black.user).count == 0 }
+        end
+      end
+
       describe "タグ" do
         def case1
           Battle.create!.tap do |e|

@@ -3,13 +3,13 @@ require "rails_helper"
 module Swars
   RSpec.describe type: :model, swars_spec: true do
     describe "カスタム検索からくるパラメータすべて" do
-      def case1(key, value1, value2, options = {})
+      def case1(key, exist_value, none_value, options = {})
         black = User.create!
         white = User.create!(key: options[:white_key])
         white.ban!
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq] || Battle::OLD_CSA_SEQ)
-        assert { black.battles.find_all_by_query("#{key}:#{value1}", target_owner: black).exists? }
-        assert { black.battles.find_all_by_query("#{key}:#{value2}", target_owner: black).empty?  }
+        assert { black.battles.find_all_by_query("#{key}:#{exist_value}", target_owner: black).exists? }
+        assert { black.battles.find_all_by_query("#{key}:#{none_value}",  target_owner: black).empty?  }
       end
 
       it "棋風" do

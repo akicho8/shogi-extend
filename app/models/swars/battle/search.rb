@@ -22,10 +22,12 @@ module Swars
       ]
 
       CONDITION_PATTERN3 = [
-        { target: :my, belongs_to: :judge,    query_key: ["judge", "勝敗"],                    },
+        { target: :my, belongs_to: :judge,    query_key: ["judge",    "勝敗"],                 },
         { target: :my, belongs_to: :location, query_key: ["location", "先後"],                 },
-        { target: :my, belongs_to: :style,    query_key: ["style", "自分の棋風", "棋風"],      },
-        { target: :op, belongs_to: :style,    query_key: ["vs-style", "相手の棋風", "棋風"],   },
+        { target: :my, belongs_to: :style,    query_key: ["style",    "自分の棋風", "棋風"],   },
+        { target: :my, belongs_to: :grade,    query_key: ["grade",    "自分の棋力", "棋力"],   },
+        { target: :op, belongs_to: :style,    query_key: ["vs-style", "相手の棋風"],           },
+        { target: :op, belongs_to: :grade,    query_key: ["vs-grade", "相手の棋力"],           },
       ]
 
       CONDITION_PATTERN4 = [
