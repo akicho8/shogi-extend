@@ -207,7 +207,7 @@ module QuickScript
       ################################################################################
 
       def log_create!(scope = main_scope)
-        current_user.swars_zip_dl_logs.where(swars_user: swars_user).create_by_battles!(scope)
+        current_user.swars_zip_dl_logs.where(swars_user: swars_user).create_by_battles!(scope, query: params[:query])
       end
 
       def swars_zip_dl_logs

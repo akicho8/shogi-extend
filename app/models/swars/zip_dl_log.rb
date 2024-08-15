@@ -80,7 +80,7 @@ module Swars
     end
 
     before_validation on: :create do
-      self.query ||= ""
+      self.query ||= query.to_s.squish
     end
 
     with_options presence: true do
