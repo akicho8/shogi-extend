@@ -15,14 +15,14 @@ module Swars
     end
 
     def extract
-      case_history_or_user_url || case_battle_url || case_values
+      case_official_home_url || case_official_battle_url || case_any_values_first
     end
 
     private
 
     # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
     # https://shogiwars.heroz.jp/users/foo                          -> foo
-    def case_history_or_user_url
+    def case_official_home_url
       if url = query_info.urls.first
         if url = URI::Parser.new.extract(url).first
           uri = URI(url)
@@ -36,7 +36,7 @@ module Swars
     end
 
     # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
-    def case_battle_url
+    def case_official_battle_url
       if url = query_info.urls.first
         if battle_url = BattleUrlExtractor.new(url).battle_url
           UserKey[battle_url.user_key]
@@ -46,7 +46,7 @@ module Swars
 
     # "foo" --> foo
     # この場合は、本当にウォーズIDかどうか怪しい。入力が間違っている恐れもある。
-    def case_values
+    def case_any_values_first
       if value = query_info.values.first
         UserKey[value]
       end

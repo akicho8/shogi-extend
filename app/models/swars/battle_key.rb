@@ -1,5 +1,16 @@
 module Swars
   class BattleKey
+    DELEGATE_METHODS = [
+      :official_url,
+      :inside_show_url,
+      :kento_url,
+      :piyo_shogi_url,
+      :search_url,
+      :to_time,
+      :user_keys,
+      :user_key_at,
+    ]
+
     class << self
       def [](...)
         create(...)

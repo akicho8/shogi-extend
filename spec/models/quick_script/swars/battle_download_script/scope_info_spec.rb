@@ -9,7 +9,7 @@ module QuickScript
         ::Swars::Battle.create! do |e|
           e.memberships.build(user: swars_user)
         end
-        params = {swars_user_key: "SWARS_USER_KEY", scope_key: scope_key}
+        params = {query: "SWARS_USER_KEY", scope_key: scope_key}
         options = {current_user: current_user}
         instance = BattleDownloadScript.new(params, options)
         instance.main_scope.count == 1

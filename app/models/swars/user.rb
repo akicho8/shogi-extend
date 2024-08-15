@@ -87,6 +87,7 @@ module Swars
     def key_info
       @key_info ||= UserKey[key]
     end
+    delegate *UserKey::DELEGATE_METHODS, to: :key_info
 
     # 引数があるけどキャッシュするので注意
     def cached_stat(...)

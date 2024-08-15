@@ -1,5 +1,15 @@
 module Swars
   class UserKey
+    DELEGATE_METHODS = [
+      :official_mypage_url,
+      :official_follow_url,
+      :official_follower_url,
+      :swars_search_url,
+      :player_info_url,
+      :google_search_url,
+      :twitter_search_url,
+    ]
+
     class << self
       def [](key)
         create(key)

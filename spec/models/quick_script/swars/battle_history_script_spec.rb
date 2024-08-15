@@ -11,7 +11,7 @@ module QuickScript
         end
         BattleHistoryScript.new({}, {current_user: current_user}).call
         Timecop.return do
-          BattleHistoryScript.new({swars_user_key: swars_user.key, google_sheet: "true", bg_request: true}, {current_user: current_user, _method: "post"}).call
+          BattleHistoryScript.new({query: swars_user.key, google_sheet: "true", bg_request: true}, {current_user: current_user, _method: "post"}).call
           assert { GoogleApi::ExpirationTracker.count == 1 }
           GoogleApi::ExpirationTracker.destroy_all
         end

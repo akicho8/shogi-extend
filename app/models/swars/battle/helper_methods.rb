@@ -1,25 +1,6 @@
 module Swars
   class Battle
     concern :HelperMethods do
-      class_methods do
-        # continuity_run_counter("xxx_api")
-        # def continuity_run_counter(key, options = {})
-        #   options = {
-        #     interval: 1.seconds,
-        #   }.merge(options)
-        #
-        #   counter = (Rails.cache.read(key) || 0).next
-        #   Rails.cache.write(key, counter, expires_in: options[:interval])
-        #   counter
-        # end
-      end
-
-      # def header_detail(h)
-      #   if v = super
-      #     v.merge("場所" => h.link_to(key, official_swars_battle_url, target: "_self"))
-      #   end
-      # end
-
       def piyo_shogi_base_params
         a = {}
         a[:game_name] = tournament_name

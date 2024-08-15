@@ -10,7 +10,7 @@ module QuickScript
         ::Swars::Battle.create! do |e|
           e.memberships.build(user: swars_user)
         end
-        params = {swars_user_key: "SWARS_USER_KEY", **params}
+        params = {query: "SWARS_USER_KEY", **params}
         options = {current_user: @current_user}
         instance = QuickScript::Swars::BattleDownloadScript.new(params, options)
         blob = instance.zip_builder.to_blob

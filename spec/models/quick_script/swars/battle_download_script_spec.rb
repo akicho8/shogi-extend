@@ -12,7 +12,7 @@ module QuickScript
 
       it "methods" do
         case1
-        instance = BattleDownloadScript.new({swars_user_key: "SWARS_USER_KEY", max_key: "200"}, {current_user: @current_user})
+        instance = BattleDownloadScript.new({query: "SWARS_USER_KEY", max_key: "200"}, {current_user: @current_user})
         assert { instance.download_content  }
         assert { instance.download_filename }
         assert { instance.download_url      }
@@ -28,11 +28,11 @@ module QuickScript
         case1
 
         # ブラウザでダウンロード (開発時のみ可)
-        instance = BattleDownloadScript.new({swars_user_key: "SWARS_USER_KEY"}, {current_user: @current_user, _method: "post"})
+        instance = BattleDownloadScript.new({query: "SWARS_USER_KEY"}, {current_user: @current_user, _method: "post"})
         assert { instance.as_json[:flash][:notice] == "ダウンロードを開始しました" }
 
         # バックグランド実行予約 (本番)
-        BattleDownloadScript.new({swars_user_key: "SWARS_USER_KEY", bg_request: true}, {current_user: @current_user, _method: "post"}).call
+        BattleDownloadScript.new({query: "SWARS_USER_KEY", bg_request: true}, {current_user: @current_user, _method: "post"}).call
         assert { ActionMailer::Base.deliveries.count == 2 } # テスト環境では即座に実行され、管理者と本人にメールされた
       end
     end

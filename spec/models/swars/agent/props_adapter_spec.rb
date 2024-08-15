@@ -53,12 +53,12 @@ module Swars
       it "memberships" do
         expected = [
           {
-            :user_key   => "alice",
+            :user_key   => UserKey["alice"],
             :grade_info => GradeInfo.fetch("1級"),
             :judge_info => JudgeInfo.fetch(:win),
           },
           {
-            :user_key   => "bob",
+            :user_key   => UserKey["bob"],
             :grade_info => GradeInfo.fetch("二段"),
             :judge_info => JudgeInfo.fetch(:lose),
           },

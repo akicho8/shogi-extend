@@ -112,6 +112,7 @@ module Swars
       def key_info
         @key_info ||= BattleKey[key]
       end
+      delegate *BattleKey::DELEGATE_METHODS, to: :key_info
 
       def battle_decorator_class
         BattleDecorator::SwarsBattleDecorator

@@ -41,11 +41,11 @@ module Swars
       end
 
       it "user_keys" do
-        assert { object.user_keys == ["alice", "bob"] }
+        assert { object.user_keys == [UserKey["alice"], UserKey["bob"]] }
       end
 
       it "user_key_at" do
-        assert { object.user_key_at(:white) == "bob" }
+        assert { object.user_key_at(:white) == UserKey["bob"] }
       end
     end
   end

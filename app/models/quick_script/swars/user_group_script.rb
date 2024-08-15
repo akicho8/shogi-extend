@@ -99,8 +99,8 @@ module QuickScript
               if Rails.env.local?
                 row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: {name: "swars-search", query: { query: e.user_key } }, }, }
                 row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
-                row["リンク3"] = tag.a("本家", href: e.key_info.official_mypage_url, target: "_blank")
-                row["リンク4"] = tag.a("ググる", href: e.key_info.google_search_url, target: "_blank")
+                row["リンク3"] = tag.a("本家", href: e.official_mypage_url, target: "_blank")
+                row["リンク4"] = tag.a("ググる", href: e.google_search_url, target: "_blank")
               end
               if Rails.env.local?
                 row["最高段位(index)"] = e.grade.pure_info.priority
@@ -114,7 +114,7 @@ module QuickScript
         @ss_rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"]            = hyper_link(e.name_with_ban, e.key_info.swars_search_url)
+              row["名前"]            = hyper_link(e.name_with_ban, e.swars_search_url)
               row["最高段位"]        = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"]            = e.cached_stat.total_judge_stat.win_ratio
@@ -125,10 +125,10 @@ module QuickScript
               row["主戦法"]          = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
               row["主囲い"]          = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
               row["直近対局"]        = e.latest_battled_at&.to_fs(:ymd)
-              row["リンク1"]         = hyper_link("棋譜検索(#{e.memberships.size})", e.key_info.swars_search_url)
-              row["リンク2"]         = hyper_link("プレイヤー情報", e.key_info.player_info_url)
-              row["リンク3"]         = hyper_link("本家",           e.key_info.official_mypage_url)
-              row["リンク4"]         = hyper_link("ググる",         e.key_info.google_search_url)
+              row["リンク1"]         = hyper_link("棋譜検索(#{e.memberships.size})", e.swars_search_url)
+              row["リンク2"]         = hyper_link("プレイヤー情報", e.player_info_url)
+              row["リンク3"]         = hyper_link("本家",           e.official_mypage_url)
+              row["リンク4"]         = hyper_link("ググる",         e.google_search_url)
               row["最高段位(index)"] = e.grade.pure_info.priority
             end
           end

@@ -83,9 +83,9 @@ module QuickScript
 
       def record_to_row(e)
         {}.tap do |row|
-          row["対象"]              = hyper_link(e.user.key, e.user.key_info.player_info_url)
+          row["対象"]              = hyper_link(e.user.key, e.user.player_info_url)
           row["対象の段位"]        = e.grade.name
-          row["相手"]              = hyper_link(e.op_user.key, e.op_user.key_info.player_info_url)
+          row["相手"]              = hyper_link(e.op_user.key, e.op_user.player_info_url)
           row["相手の段位"]        = e.opponent.grade.name
           row["勝敗"]              = e.judge.name
           row["結末"]              = e.battle.final.pure_info.name
@@ -118,11 +118,11 @@ module QuickScript
 
           row["手合割"]            = e.battle.preset.name
           row["棋力差"]            = e.grade_diff
-          row["リンク1"]           = hyper_link("本家",     e.battle.key_info.official_url)
-          row["リンク2"]           = hyper_link("棋譜",     e.battle.key_info.inside_show_url)
-          row["リンク3"]           = hyper_link("棋譜検索", e.battle.key_info.search_url)
-          row["リンク4"]           = hyper_link("ぴよ将棋", e.battle.key_info.piyo_shogi_url)
-          row["リンク5"]           = hyper_link("KENTO",    e.battle.key_info.kento_url)
+          row["リンク1"]           = hyper_link("本家",     e.battle.official_url)
+          row["リンク2"]           = hyper_link("棋譜",     e.battle.inside_show_url)
+          row["リンク3"]           = hyper_link("棋譜検索", e.battle.search_url)
+          row["リンク4"]           = hyper_link("ぴよ将棋", e.battle.piyo_shogi_url)
+          row["リンク5"]           = hyper_link("KENTO",    e.battle.kento_url)
           row["対象の段位(order)"] = e.grade.priority
           row["相手の段位(order)"] = e.opponent.grade.priority
         end
