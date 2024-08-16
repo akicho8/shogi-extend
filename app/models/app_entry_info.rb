@@ -126,19 +126,6 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/swars/top-group" },
-      title: "将棋ウォーズイベント上位の成績",
-      og_image_key: "swars-top-group",
-      description: "上位プレイヤーの棋譜を見たいときにどうぞ",
-      features: [
-        # "現在開催中のイベントが対象",
-        # "名前タップで棋譜検索",
-        # "「─」は引き分け",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: false,
       nuxt_link_to: { path: "/swars/professional" },
       title: "将棋ウォーズ十段の成績",
       og_image_key: "swars-professional",

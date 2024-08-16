@@ -218,7 +218,6 @@ Rails.application.routes.draw do
     resource :swars_grade_histogram, only: [:show]
     resource :swars_histogram, only: [:show]
     resource :professional, only: [:show]
-    resource :top_group, only: [:show]
 
     # 共有将棋盤用API
     resource :share_board, only: [:show, :create] do
