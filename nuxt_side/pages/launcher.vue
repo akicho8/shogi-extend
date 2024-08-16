@@ -35,7 +35,6 @@ export default {
       page_items: [
         { title: "Home",                                  to: { name: "index"                           }, },
         { title: "サウンドテスト",                        to: { name: "sound-test", }},
-        { title: "プロフィール編集",                      to: { name: "settings-profile", }},
         { title: "ユーザー詳細",                          to: { name: "users-id", params: {id: 1}, }, },
         { title: "将棋ウォーズバトル詳細"    ,            to: { name: "swars-battles-key", params: {key: "DevUser1-YamadaTaro-20200101_123401"}, }, },
         { title: "将棋ウォーズプレイヤー情報2",           to: { name: "swars-users-key",   params: {key: "DevUser1"}, }, },

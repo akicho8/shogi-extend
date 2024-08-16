@@ -30,7 +30,6 @@ Disallow: /
 user-agent: *
 
 disallow: /x/
-disallow: /settings/
 disallow: /experiment/
 disallow: /xusers/
 disallow: /swars/users/*/direct-open/

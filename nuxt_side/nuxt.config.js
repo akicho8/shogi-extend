@@ -32,7 +32,6 @@ const sitemap = {
   cacheTime: (DEVELOPMENT_P ? 0 : 1000 * 60 * 60), // 1時間
   exclude: [
     "/experiment/**",
-    "/settings/**",
     "/launcher",
     "/inspire",
     "/rack/articles/new",

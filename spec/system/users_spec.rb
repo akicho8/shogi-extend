@@ -18,18 +18,4 @@ RSpec.describe "ユーザー", type: :system do
   it "プロフィール設定" do
     visit2 "http://localhost:3000/accounts/1/edit"
   end
-
-  # xit "ぴよ将棋設定" do
-  #   visit2 "/settings/piyo_shogi"
-  # end
-
-  it "メールアドレス設定" do
-    visit2 "/settings/email"
-  end
-
-  # it "名前がないときプロフィール設定に飛ばされる" do
-  #   alice = create(:user, name: "")
-  #   visit2 "http://localhost:3000/?_user_id=#{alice.id}"
-  #   assert_current_path "/accounts/#{alice.id}/edit", ignore_query: true
-  # end
 end

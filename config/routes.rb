@@ -159,12 +159,6 @@ Rails.application.routes.draw do
       delete :auth_user_destroy   # 退会
     end
 
-    resource :settings, only: [] do
-      put :profile_update
-      get :email_fetch
-      put :email_update
-    end
-
     resource :adapter, only: [] do
       get :formal_sheet
       post :record_create
