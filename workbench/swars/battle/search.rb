@@ -8,7 +8,7 @@ user.battles.find_all_by_query("-tag:力戦", target_owner: user).count         
 user.battles.find_all_by_query("力差:>=1 力差:<=1", target_owner: user).count             # => 1
 
 user = Swars::User["slowstep3210"]
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).ids } # => "191.46 ms"
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).ids } # => "17.83 ms"
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).to_a } # => "31.21 ms"
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).to_a } # => "283.12 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).ids } # => "70.90 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).ids } # => "6.31 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).to_a } # => "35.51 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).to_a } # => "249.96 ms"

@@ -1,27 +1,36 @@
 # frozen-string-literal: true
 
+# 使い方
+#
+# Battles.new(all: user.battles, query: "BOUYATETSU5 勝敗:勝ち", target_owner: user, with_includes: true)
+#
+# - query_info がすでにあるときは query_info: query_info と渡してもいい
+# - query は QueryInfo 型にする必要なくそのまま渡せばいい
+# - 検索するとき自分か相手かを見るので自分に相当する target_owner を指定する (user.battles なら user を指定する)
+# - 結果の ids を求めるなら with_includes: true としてはいけない (ただ遅くなる)
+#
 module Swars
   class Battle
     class Search
-      CONDITION_PATTERN0 = [
+      CONDITION_BATTLE_ID_ETC = [
         { db_column: :id,    query_key: ["id", "ids"],                                         },
         { db_column: :key,   query_key: ["key", "keys"],                                       },
       ]
 
-      CONDITION_PATTERN1 = [
+      CONDITION_BATTLE_RELATION = [
         { belongs_to: :xmode,  query_key: ["xmode", "モード", "対局モード"],                    },
         { belongs_to: :rule,   query_key: ["rule", "持ち時間", "種類"],                         },
         { belongs_to: :final,  query_key: ["final", "結末", "最後"],                            },
         { belongs_to: :preset, query_key: ["preset", "手合割", "手合"],                         },
       ]
 
-      CONDITION_PATTERN2 = [
+      CONDITION_BATTLE_INTEGER = [
         { db_column: :critical_turn, query_key: ["critical_turn", "開戦"],                     },
         { db_column: :outbreak_turn, query_key: ["outbreak_turn", "中盤"],                     },
         { db_column: :turn_max,      query_key: ["turn_max", "手数"],                          },
       ]
 
-      CONDITION_PATTERN3 = [
+      CONDITION_MEMBERSHIP_RELATION = [
         { target: :my, belongs_to: :judge,    query_key: ["judge",    "勝敗"],                 },
         { target: :my, belongs_to: :location, query_key: ["location", "先後"],                 },
         { target: :my, belongs_to: :style,    query_key: ["style",    "自分の棋風", "棋風"],   },
@@ -30,7 +39,7 @@ module Swars
         { target: :op, belongs_to: :grade,    query_key: ["vs-grade", "相手の棋力"],           },
       ]
 
-      CONDITION_PATTERN4 = [
+      CONDITION_MEMBERSHIP_TAG = [
         { target: :my, query_key: ["tag"],                       tagged_with_options: {                    }, },
         { target: :my, query_key: ["or-tag", "any-tag"],         tagged_with_options: { any: true          }, },
         { target: :my, query_key: ["-tag", "exclude-tag"],       tagged_with_options: { exclude: true      }, },
@@ -75,12 +84,10 @@ module Swars
         :preset,
         {
           :memberships => [
-            [
-              :grade,
-              :location,
-              :style,
-              :judge,
-            ],
+            :grade,
+            :location,
+            :style,
+            :judge,
             {
               :user => :profile,
               :taggings => :tag,
@@ -100,15 +107,18 @@ module Swars
 
       def call
         @scope = params[:all]
-        case_CONDITION_PATTERN0 # id, key
-        case_CONDITION_PATTERN1 # xmode
-        case_CONDITION_PATTERN2 # turn_max
-        case_CONDITION_PATTERN3 # membership - judge
-        case_CONDITION_MEMBERSHIP_TAG # membership - tag
-        case_CONDITION_MEMBERSHIP_INTEGER # membership - think_max
-        case_battled_at_range
-        case_account_ban
-        case_versus
+
+        case_battle_id_etc
+        case_battle_battled_at
+        case_battle_relation
+        case_battle_integer
+
+        case_membership_relation
+        case_membership_tag
+        case_membership_integer
+        case_membership_use_ban
+        case_membership_versus
+
         process_with_includes
         @scope
       end
@@ -117,15 +127,15 @@ module Swars
 
       ################################################################################
 
-      def case_CONDITION_PATTERN0
-        CONDITION_PATTERN0.each do |e|
+      def case_battle_id_etc
+        CONDITION_BATTLE_ID_ETC.each do |e|
           if values = qi.lookup_first(e[:query_key])
             @scope = @scope.where(e[:db_column] => values.collect(&:to_s))
           end
         end
       end
 
-      def case_battled_at_range
+      def case_battle_battled_at
         if date_strs = qi.lookup_first(["date", "日付", "日時"])
           date_strs.each do |date_str|
             if date_range = DateRange.parse(date_str)
@@ -135,16 +145,16 @@ module Swars
         end
       end
 
-      def case_CONDITION_PATTERN1
-        CONDITION_PATTERN1.each do |e|
+      def case_battle_relation
+        CONDITION_BATTLE_RELATION.each do |e|
           if values = qi.lookup_first(e[:query_key])
             @scope = @scope.public_send("#{e[:belongs_to]}_ex", values)
           end
         end
       end
 
-      def case_CONDITION_PATTERN2
-        CONDITION_PATTERN2.each do |e|
+      def case_battle_integer
+        CONDITION_BATTLE_INTEGER.each do |e|
           if operations = qi.lookup_first(e[:query_key])
             column = Battle.arel_table[e[:db_column]]
             operations.each do |opration|
@@ -162,23 +172,23 @@ module Swars
         end
       end
 
-      def case_CONDITION_PATTERN3
-        CONDITION_PATTERN3.each do |e|
+      def case_membership_relation
+        CONDITION_MEMBERSHIP_RELATION.each do |e|
           if values = qi.lookup_first(e[:query_key]) # values = qi.lookup_first("judge", "勝敗")
             filter_by send(e[:target]).public_send("#{e[:belongs_to]}_ex", values) # m = my.judge_ex(values)
           end
         end
       end
 
-      def case_CONDITION_MEMBERSHIP_TAG
-        CONDITION_PATTERN4.each do |e|
+      def case_membership_tag
+        CONDITION_MEMBERSHIP_TAG.each do |e|
           if tag_names = qi.lookup_first(e[:query_key])
             filter_by send(e[:target]).tagged_with(tag_names, e[:tagged_with_options]) # タグ検索は複数のタグをまとめて指定できる
           end
         end
       end
 
-      def case_CONDITION_MEMBERSHIP_INTEGER
+      def case_membership_integer
         CONDITION_MEMBERSHIP_INTEGER.each do |e|
           if operations = qi.lookup_first(e[:query_key])
             column = Membership.arel_table[e[:db_column]]
@@ -191,7 +201,7 @@ module Swars
       end
 
       # ON / OFF の二択なので av.sole にしていたがなるべくエラーを出したくないのですべて条件に指定する
-      def case_account_ban
+      def case_membership_use_ban
         if values = qi.lookup_first(["垢BAN", "BAN"])
           baned_users = target_owner.op_users.ban_only # 「相手が」BANかどうかを知りたい。
           # target_owner.op_users は target_owner.memberships.collect(&:op_user) をDBで引いたものなので充分速い。
@@ -206,7 +216,7 @@ module Swars
         end
       end
 
-      def case_versus
+      def case_membership_versus
         if swars_user_keys = qi.lookup_first(["vs", "相手", "対戦相手"])
           users = User.where(user_key: swars_user_keys)
           filter_by op.where(user: users)
