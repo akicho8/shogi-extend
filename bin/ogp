@@ -68,7 +68,6 @@ LIST_ALL = [
   # { url: "/swars/users/YamadaTaro/kento-api",                                       validations: { "title" => /YamadaTaro/,                                                                                                                                       }},
   # { url: "/swars/histograms/attack",                                                 validations: { "title" => /戦型/,                                                                                                                                              }},
   # { url: "/swars/histograms/grade",                                                  validations: { "title" => /棋力/,                                                                                                                                              }},
-  # { url: "/swars/professional",                                                      validations: { "title" => /十段/,                                                                                                                                              }},
   # { url: "/xy",                                                                      validations: { "title" => /符号の鬼/,                                                                                                                                          }},
   # { url: "/vs-clock",                                                                validations: { "title" => /対局時計/,                                                                                                                                          }},
   { url: "/three-stage-leagues",                                                     validations: { "og:title" => /第\d+期.*奨励会三段リーグ/,                                                                                                                                                                }},
@@ -235,7 +234,6 @@ end
 # >> http://localhost:4000/swars/users/YamadaTaro/kento-api
 # >> http://localhost:4000/swars/histograms/attack
 # >> http://localhost:4000/swars/histograms/grade
-# >> http://localhost:4000/swars/professional
 # >> http://localhost:4000/xy
 # >> http://localhost:4000/vs-clock
 # >> http://localhost:4000/three-stage-leagues

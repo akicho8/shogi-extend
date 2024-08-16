@@ -217,7 +217,6 @@ Rails.application.routes.draw do
     resource :three_stage_league_player, only: [:show]
     resource :swars_grade_histogram, only: [:show]
     resource :swars_histogram, only: [:show]
-    resource :professional, only: [:show]
 
     # 共有将棋盤用API
     resource :share_board, only: [:show, :create] do

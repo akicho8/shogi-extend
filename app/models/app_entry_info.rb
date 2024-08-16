@@ -126,19 +126,6 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/swars/professional" },
-      title: "将棋ウォーズ十段の成績",
-      og_image_key: "swars-professional",
-      description: "プロの棋譜を見たいときにどうぞ",
-      features: [
-        # "名前タップで棋譜検索",
-        # "先生方がほとんどだが野生の十段もいる",
-        # "なぜか電脳少女シロもいる",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: false,
       nuxt_link_to: { path: "/three-stage-leagues" },
       title: "奨励会三段リーグ成績早見表",
       og_image_key: "three-stage-league",
