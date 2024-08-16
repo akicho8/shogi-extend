@@ -14,7 +14,9 @@
     //- b-loading(:active="$fetchState.pending || (params && params.button_click_loading && g_loading_p)")
     // SSR 中もローディングを出すには必ず $fetchState.pending が必要になる
     // ここからがよくわからないが CSR は $fetchState.pending と fetch() のタイミングがずれているので g_loading_p を入れている
-    b-loading(:active="$fetchState.pending || g_loading_p")
+    // ↓これをやると、talk を呼ぶだけでローディングになってしまう
+    //- b-loading(:active="$fetchState.pending || g_loading_p")
+    b-loading(:active="$fetchState.pending")
 
   component(
     v-if="main_component"

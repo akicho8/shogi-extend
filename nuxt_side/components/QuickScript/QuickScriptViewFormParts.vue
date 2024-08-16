@@ -64,6 +64,7 @@
           template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
             component(
               :is="QS.form_part_type_to_component(form_part.type)"
+              @input="talk(label)"
               v-model="QS.attributes[form_part.key]"
               :native-value="key")
               span {{label}}
