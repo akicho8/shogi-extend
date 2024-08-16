@@ -1,4 +1,4 @@
-const TIRESOME_ALERT_TRIGGER = [10, 20, 40, 80, 160]
+const TIRESOME_ALERT_TRIGGER = [10, 20, 40, 80, 160, 320, 640, 1280, 2048, 4096]
 
 export const mod_tiresome = {
   data() {
@@ -65,7 +65,7 @@ export const mod_tiresome = {
 
       this.$gs.delay_block(1, () => {
         this.$sound.stop_all()
-        this.talk("ところで毎回ウォーズID入力するの不便じゃない？")
+        this.talk("ところで毎回ウォーズID入力するの面倒じゃない？")
       })
 
       const subject = "ウォーズID記憶案内"
@@ -73,18 +73,17 @@ export const mod_tiresome = {
         canCancel: ["button"],
         // hasIcon: true,
         type: "is-info",
-        title: "ところで毎回ウォーズID入力するの不便じゃない？",
+        title: "ところで毎回ウォーズID入力するの面倒じゃない？",
         message: `
           <div class="">
             <ul class="mt-0">
               <p>
                 右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けますよ。
-                設定してもあとから<b>元に戻せる</b>ので安心してください。
               </p>
             </ul>
           </div>`,
         confirmText: "やってみる",
-        cancelText: "💣 不便なまま生きる",
+        cancelText: "情弱として生きる",
         onConfirm: () => {
           this.$sound.play("o")
           this.tiresome_modal_selected = "yes"
@@ -93,7 +92,7 @@ export const mod_tiresome = {
         onCancel: () => {
           this.$sound.play("x")
           this.tiresome_modal_selected = "no"
-          this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 不便なまま生きる`})
+          this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 情弱として生きる`})
         },
       })
     },
