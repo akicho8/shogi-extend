@@ -7,6 +7,7 @@ module QuickScript
       self.description = "指定ユーザーの対局履歴を Google スプレッドシートに出力する (自分であれこれしたい人向け)"
       self.form_method = :post
       self.button_label = "出力"
+      self.login_link_show = true
       self.debug_mode = Rails.env.local?
 
       LIMIT_MAX  = Rails.env.local? ? 10 : 2000
