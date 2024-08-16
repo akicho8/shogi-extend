@@ -77,13 +77,11 @@ export const mod_tiresome = {
         message: `
           <div class="">
             <ul class="mt-0">
-              <p>
-                右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けますよ。
-              </p>
+              <p>あなたはこれまでに${this.tiresome_count}回もそのウォーズIDを無駄に入力していますけど右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けますよ。</p>
             </ul>
           </div>`,
         confirmText: "やってみる",
-        cancelText: "情弱として生きる",
+        cancelText: "絶対やらない",
         onConfirm: () => {
           this.$sound.play("o")
           this.tiresome_modal_selected = "yes"
@@ -92,7 +90,7 @@ export const mod_tiresome = {
         onCancel: () => {
           this.$sound.play("x")
           this.tiresome_modal_selected = "no"
-          this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 情弱として生きる`})
+          this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 絶対やらない`})
         },
       })
     },
