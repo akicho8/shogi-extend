@@ -79,7 +79,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :class="{'has-text-weight-bold': APP.mounted_then_swars_search_default_key_present_p}"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-default-key', params: {key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/search-default', query: {swars_search_default_key: APP.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
             template(#label)
               | ウォーズIDを記憶する

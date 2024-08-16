@@ -401,13 +401,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   def default_swars_id_set
     global_menu_open
     find(".swars_default_user_key_set_handle").click
-    find(".set_handle").click
+    find(".post_handle").click
   end
 
   def default_swars_id_unset
     global_menu_open
     find(".swars_default_user_key_set_handle").click
-    find(".unset_handle").click
+    find("#form_part-swars_search_default_key").set("")
+    find(".post_handle").click
   end
 
   def assert_list_blank

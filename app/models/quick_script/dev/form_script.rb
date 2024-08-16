@@ -1,3 +1,17 @@
+# ls_sync の引数まとめ
+#
+# |---------------------------------------------------------------------+-------------------------------------------------|
+# | localStorage 同期設定                                               | 意味                                            |
+# |---------------------------------------------------------------------+-------------------------------------------------|
+# | { global_key: :a, child_key: :b, loader: :force,  writer: :force }  | localStorage[:a] を読み書きする (基本)          |
+# | { parent_key: :a, child_key: :b, loader: :force,  writer: :force }  | localStorage[:a][:b] を読み書きする             |
+# | { global_key: :a, child_key: :b, loader: :skip,   writer: :skip  }  | 読み出しも書き込みもしない (指定なしと同じ)     |
+# | { global_key: :a, child_key: :b, loader: :if_default_is_nil, writer: :force  } | サーバー側から送った値が nil のときだけ読み出す |
+# |---------------------------------------------------------------------+-------------------------------------------------|
+#
+# - loader は force, skip, if_default_is_nil の3択
+# - writer は force, skip の2択
+
 module QuickScript
   module Dev
     class FormScript < Base
@@ -37,8 +51,9 @@ module QuickScript
             :key     => :str2,
             :type    => :string,
             :default => params[:str2].presence || "(string)",
-            :ls_sync => {:ls_key => "(ls_key)"}, # localStorage["(ls_key)"].update(str2: "値")
-            # :ls_sync => true,                  # localStorage["str2"] = "値"
+            :ls_sync => { parent_key: :"(parent_key)", child_key: :str2, loader: :force, writer: :force }, # localStorage["(parent_key)"].update(str2: "値")
+            # :ls_sync => {global_key: :str2, loader: :force, writer: :force },                      # localStorage["str2"] = "値"
+            # :ls_sync => {global_key: :str2, loader: :if_default_is_nil, writer: :force },                      # loader: :if_default_is_nil なら default: nil なら localStorage の方を書き込む
             :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
           },
           {

@@ -1,5 +1,6 @@
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_storage = {
   methods: {
@@ -7,22 +8,25 @@ export const mod_storage = {
       this.persistence_form_parts.forEach(form_part => {
         const ls_sync = form_part["ls_sync"]
         if (ls_sync) {
+          Gs.assert(_.isPlainObject(ls_sync), "_.isPlainObject(ls_sync)") // 複雑さを避けるためハッシュのみとしてすべて明示する
+          Gs.assert(["if_default_is_nil", "force", "skip"].includes(ls_sync.loader), "ls_sync.loader の値が不正")
           let v = null
-          if (_.isPlainObject(ls_sync)) {
-            // const ls_key = ls_sync["ls_key"]
-            // const hv = MyLocalStorage.get(ls_key) ?? {}
-            // v = hv[form_part["key"]]
-            v = MyLocalStorage.hash_get(ls_sync["ls_key"], form_part["key"])
+          if (ls_sync.global_key) {
+            v = MyLocalStorage.get(ls_sync.global_key)
           } else {
-            v = MyLocalStorage.get(form_part["key"])
+            Gs.assert(ls_sync.parent_key, "ls_sync.parent_key")
+            Gs.assert(ls_sync.child_key, "ls_sync.child_key")
+            v = MyLocalStorage.hash_get(ls_sync.parent_key, ls_sync.child_key)
           }
-          // // 元が null で保存した値が null でないときに復元する
-          // // そうしないと Rails 側で入れた値を上書きしてしまう ← これはちがう。上書きしないといけない。
-          // if (this.attributes[form_part["key"]] == null && v != null) {
-          //   this.$set(this.attributes, form_part["key"], v)
-          // }
           if (v != null) {
-            this.$set(this.attributes, form_part["key"], v)
+            const form_value = this.attributes[form_part["key"]]
+            if (ls_sync.loader === "if_default_is_nil") {
+              if (form_value == null) {
+                this.$set(this.attributes, form_part["key"], v)
+              }
+            } else if (ls_sync.loader == "force") {
+              this.$set(this.attributes, form_part["key"], v)
+            }
           }
         }
       })
@@ -31,15 +35,17 @@ export const mod_storage = {
       this.persistence_form_parts.forEach(form_part => {
         const ls_sync = form_part["ls_sync"]
         if (ls_sync) {
+          Gs.assert(_.isPlainObject(ls_sync), "_.isPlainObject(ls_sync)")
+          Gs.assert(["force", "skip"].includes(ls_sync.writer), "ls_sync.writer の値が不正")
           const v = this.attributes[form_part["key"]]
-          if (_.isPlainObject(ls_sync)) {
-            // const ls_key = ls_sync["ls_key"]
-            // const hv = MyLocalStorage.get(ls_key) ?? {}
-            // hv[form_part["key"]] = v
-            // MyLocalStorage.set(ls_key, hv)
-            MyLocalStorage.hash_update(ls_sync["ls_key"], form_part["key"], v)
-          } else {
-            MyLocalStorage.set(form_part["key"], v)
+          if (ls_sync.writer === "force") {
+            if (ls_sync.global_key) {
+              MyLocalStorage.set(ls_sync.global_key, v)
+            } else {
+              Gs.assert(ls_sync.parent_key, "ls_sync.parent_key")
+              Gs.assert(ls_sync.child_key, "ls_sync.child_key")
+              MyLocalStorage.hash_update(ls_sync.parent_key, ls_sync.child_key, v)
+            }
           }
         }
       })
