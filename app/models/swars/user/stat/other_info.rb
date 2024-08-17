@@ -58,7 +58,7 @@ module Swars
 
         ################################################################################
 
-        { key: "勢い",             body: proc { vitality_stat.level.then { |e| e.round(2) }}, chart_type: :simple, chart_options: { simple_type: :raw, }, with_search: {} },
+        { key: "勢い",             body: proc { vitality_stat.level.then { |e| (e * 100.0).round } }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "%", }, with_search: {} },
 
         ################################################################################
 

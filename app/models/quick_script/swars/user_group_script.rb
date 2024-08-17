@@ -89,7 +89,7 @@ module QuickScript
               row["最高"] = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
-              row["勢い"] = e.cached_stat.vitality_stat.level.try { |e| "%.2f" % e }
+              row["勢い"] = e.cached_stat.vitality_stat.level.try { |e| "%.0f %%" % [e * 100] }
               row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
               row["居飛車"]   = e.cached_stat.tag_stat.use_rate_for(:"居飛車").try { |e| "%.0f %%" % [e * 100] }
               row["振り飛車"] = e.cached_stat.tag_stat.use_rate_for(:"振り飛車").try { |e| "%.0f %%" % [e * 100] }
@@ -212,12 +212,12 @@ module QuickScript
 
       def columns_hash
         {
-          "勝率"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
+          "勝率"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, }, # PERCENT は自動的に100倍してくれる(0.50 → "50 %")
+          "勢い"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "居飛車"   => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
           "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd", }, },
-          "勢い"     => { number_format: { type: "NUMBER",  pattern: "0.00",       }, },
         }
       end
 

@@ -89,7 +89,7 @@ module Swars
 
         ################################################################################
 
-        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",                  if_cond: proc { vitality_stat.level >= 4 },},
+        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",                  if_cond: proc { vitality_stat.badge? },},
         { key: "10連勝",                 icon: "🍉",   message: "すげー連勝した",              if_cond: proc { win_lose_streak_stat.ten_win? },},
         { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい",        if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
