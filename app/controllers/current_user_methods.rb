@@ -117,7 +117,11 @@ module CurrentUserMethods
   end
 
   def current_user_clear
-    session.delete(:user_id)
+    if false
+      session.delete(:user_id)
+    else
+      reset_session
+    end
     cookies.delete(:user_id)
     sign_out(:xuser)
 

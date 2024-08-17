@@ -10,6 +10,7 @@ module QuickScript
       UserGroupScript,
       ProScript,
       BattleHistoryScript,
+      GradeHistogramScript,
       PrisonAllScript,
       PrisonSearchScript,
       PrisonNewScript,

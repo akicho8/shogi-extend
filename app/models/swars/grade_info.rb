@@ -21,7 +21,7 @@ module Swars
       { key:  "7級",    visualize: true,  select_option: false, show_in_search_script: true,  teacher: false, },
       { key:  "8級",    visualize: true,  select_option: false, show_in_search_script: true,  teacher: false, },
       { key:  "9級",    visualize: true,  select_option: false, show_in_search_script: true,  teacher: false, },
-      { key: "10級",    visualize: false, select_option: false, show_in_search_script: false, teacher: false, },
+      { key: "10級",    visualize: true,  select_option: false, show_in_search_script: false, teacher: false, },
       { key: "11級",    visualize: false, select_option: false, show_in_search_script: false, teacher: false, },
       { key: "12級",    visualize: false, select_option: false, show_in_search_script: false, teacher: false, },
       { key: "13級",    visualize: false, select_option: false, show_in_search_script: false, teacher: false, },
