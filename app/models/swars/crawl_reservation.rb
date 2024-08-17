@@ -59,7 +59,7 @@ module Swars
       if errors.empty?
         if user && target_user_key
           if user.swars_crawl_reservations.active_only.where(target_user_key: target_user.key).exists?
-            errors.add(:base, "すでに#{target_user_key}さんの棋譜取得を予約済みです")
+            errors.add(:base, "すでに #{target_user_key} さんの棋譜取得を予約済みです")
           end
         end
       end

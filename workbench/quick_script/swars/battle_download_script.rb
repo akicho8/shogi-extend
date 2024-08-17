@@ -2,7 +2,7 @@ require "./setup"
 Swars::ZipDlLog.destroy_all
 User.admin.swars_zip_dl_logs.destroy_all
 exit
-# QuickScript::Swars::BattleDownloadScript.new({}, {current_user: User.admin}).oldest_log_create
+# QuickScript::Swars::BattleDownloadScript.new({}, {current_user: User.admin}).one_record_download_for_debug
 # exit
 # User.admin = User.create!(email: "pinpon.ikeda+#{SecureRandom.hex}@gmail.com", confirmed_at: Time.current) # =>
 # User.admin.swars_zip_dl_logs.count   # =>

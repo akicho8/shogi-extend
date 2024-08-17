@@ -6,12 +6,15 @@ class QuickScript::Swars::BattleDownloadScript
 
     def info
       {
-        "ユーザー" => @base.current_user.name,
-        "件数"     => @base.main_scope.size,
-        "対象"     => @base.swars_user.key,
-        "スコープ" => @base.scope_info.name,
-        "ファイル" => @base.download_filename,
-        "処理時間" => @base.processed_sec.try { "%.2fs" % self },
+        "ログインユーザー名"           => @base.current_user.name,
+        "検索クエリ(ウォーズIDを含む)"                   => @base.query,
+        "クエリから抽出した対象ウォーズID"               => @base.swars_user.key,
+        "指定したスコープ"                     => @base.scope_info.name,
+        "指定した件数"                   => @base.main_scope.size,
+        "実際に取得した件数"                   => @base.main_scope.size,
+        "ファイル名"                   => @base.download_filename,
+        "処理時間"                     => @base.processed_second.try { "%.2fs" % self },
+        "今回を除くをダウンロード総数" => @base.zip_dl_logs.count,
       }
     end
   end

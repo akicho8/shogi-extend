@@ -61,8 +61,8 @@ module Swars
 
       def to_h_with_processed_sec
         hash = {}
-        processed_sec = Benchmark.realtime { hash = to_h }
-        hash.reverse_merge(processed_sec: processed_sec)
+        processed_second = Benchmark.realtime { hash = to_h }
+        hash.reverse_merge(processed_second: processed_second)
       end
 
       def records_fetch

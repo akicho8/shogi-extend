@@ -262,7 +262,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         # ページ遷移後
         find(".swars_zip_dl_logs_destroy_all").click        # 「クリア」
-        find(".oldest_log_create_handle").click             # 「古い1件をDLしたことにする」
+        find(".one_record_download_for_debug_handle").click             # 「古い1件をDLしたことにする」
         find(".continue").click                        # 「前回の続きから」
         find(".download_handle").click                      # 「ダウンロード」
 

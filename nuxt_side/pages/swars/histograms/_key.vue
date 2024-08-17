@@ -30,7 +30,7 @@ client-only
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="!!development_p")
               //-   template(v-if="row.deviation_score")
               //-     | {{$gs.number_floor(row.deviation_score, 3)}}
-        SwarsHistogramProcessedSec(:xi="xi")
+        SwarsHistogramProcessedSecond(:xi="xi")
 
     //- DebugPre(v-if="development_p") {{xi}}
 </template>

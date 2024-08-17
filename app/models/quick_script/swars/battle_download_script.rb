@@ -3,14 +3,14 @@ module QuickScript
     class BattleDownloadScript < Base
       prepend QueryMod
 
-      self.title = "将棋ウォーズ棋譜ダウンロード"
-      self.description = "指定ウォーズIDの棋譜をまとめてZIPでダウンロードする"
-      self.form_method = :post
-      self.button_label = "ダウンロード"
+      self.title           = "将棋ウォーズ棋譜ダウンロード"
+      self.description     = "指定ウォーズIDの棋譜をまとめてZIPでダウンロードする"
+      self.form_method     = :post
+      self.button_label    = "ダウンロード"
       self.login_link_show = true
-      self.debug_mode = Rails.env.local?
+      self.debug_mode      = Rails.env.local?
 
-      attr_accessor :processed_sec
+      attr_accessor :processed_second
 
       def form_parts
         super + [
@@ -140,7 +140,7 @@ module QuickScript
       def to_zip
         @to_zip ||= yield_self do
           io = nil
-          @processed_sec = Benchmark.realtime { io = zip_builder.to_blob }
+          @processed_second = Benchmark.realtime { io = zip_builder.to_blob }
           AppLog.important(subject: "将棋ウォーズ棋譜ダウンロード", body: summary)
           log_create!
           io
@@ -207,17 +207,20 @@ module QuickScript
       ################################################################################
 
       def log_create!(scope = main_scope)
-        current_user.swars_zip_dl_logs.where(swars_user: swars_user).create_by_battles!(scope, query: params[:query])
+        current_user.swars_zip_dl_logs.where(swars_user: swars_user).create_by_battles!(scope, query: query)
       end
 
       def swars_zip_dl_logs
-        @swars_zip_dl_logs ||= current_user.swars_zip_dl_logs.where(swars_user: swars_user)
+        current_user.swars_zip_dl_logs.where(swars_user: swars_user)
       end
 
-      # 古い1件をダウンロードしたことにする
-      def oldest_log_create
-        scope = swars_user.battles.order(battled_at: :asc).limit(1)
-        log_create!(scope)
+      # デバッグ用で対象ユーザーの一番古い棋譜を1件ダウンロードしたことにする
+      # これによって「前回の続きから」が動作するようになる
+      def one_record_download_for_debug
+        if swars_zip_dl_logs.empty?
+          one = swars_user.battles.order(battled_at: :asc).limit(1)
+          swars_zip_dl_logs.create_by_battles!(one)
+        end
       end
 
       ################################################################################

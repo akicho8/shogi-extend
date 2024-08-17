@@ -5,12 +5,12 @@
       .level-item.has-text-centered
         div
           .heading 実行時間(秒)
-          .title {{$gs.number_floor(xi.processed_sec, 3)}}
+          .title {{$gs.number_floor(xi.processed_second, 3)}}
 </template>
 
 <script>
 export default {
-  name: "SwarsHistogramProcessedSec",
+  name: "SwarsHistogramProcessedSecond",
   props: {
     xi: { type: Object, required: true },
   },

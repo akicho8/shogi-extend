@@ -77,7 +77,7 @@ client-only
                 div
                   .heading 基準値平均
                   .title {{$gs.number_round_s(xi["基準値平均"], 2)}}
-        SwarsHistogramProcessedSec(:xi="xi")
+        SwarsHistogramProcessedSecond(:xi="xi")
 
     DebugPrint(v-if="development_p")
     DebugPre(v-if="development_p && xi")
