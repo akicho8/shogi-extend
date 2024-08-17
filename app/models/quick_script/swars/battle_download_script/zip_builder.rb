@@ -16,9 +16,9 @@ class QuickScript::Swars::BattleDownloadScript
     private
 
     def entry_of(zos, battle)
-      entry = Zip::Entry.new(zos, path_of(battle))
-      entry.time = Zip::DOSTime.from_time(battle.battled_at)
-      entry
+      Zip::Entry.new(zos, path_of(battle)).tap do |entry|
+        entry.time = Zip::DOSTime.from_time(battle.battled_at)
+      end
     end
 
     def path_of(battle)
@@ -33,10 +33,7 @@ class QuickScript::Swars::BattleDownloadScript
 
     def content_of(battle)
       content = battle.to_xxx(@base.format_info.key)
-      if @base.encode_info.key == :"Shift_JIS"
-        content = content.tosjis
-      end
-      content
+      content = content.public_send(@base.encode_info.transform_method)
     end
   end
 end
