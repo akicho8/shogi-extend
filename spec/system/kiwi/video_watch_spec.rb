@@ -26,6 +26,7 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
 
   it "将棋盤に切り替え" do
     visit2("/video/watch/1")                            # 動画詳細へ
+    assert_selector(".KiwiBananaShowMain", wait: 5)     # 遅いPCでは待たないといけない
 
     find(".KiwiBananaShowMain .switch_handle").click      # 切り替え
     assert_selector ".CustomShogiPlayer"                # 将棋盤 ON
