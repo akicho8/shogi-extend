@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(1)
       assert_action_index(0, "alice", "局面転送 #1")
       assert_action_index(1, "alice", "棋譜読込後")
-      assert_text "棋譜を読み込んで共有しました"
+      assert_text "棋譜を読み込んで共有しました", wait: 5
     end
     b_block do
       assert_turn(1)

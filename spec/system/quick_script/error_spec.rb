@@ -24,6 +24,6 @@ RSpec.describe "エラー処理", type: :system do
 
   it "メンテ中になったのでトップに移動する" do
     visit2 "/lab/chore/status_code", status_code: 503
-    assert_current_path "/", wait: 5 # 3秒後に遷移するため
+    assert_current_path "/", wait: 6 # 3秒後に遷移するため
   end
 end

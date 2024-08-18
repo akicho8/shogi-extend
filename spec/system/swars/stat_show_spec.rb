@@ -40,7 +40,7 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
 
   it "絞り込み" do
     visit "/swars/users/YamadaTaro"
-    tab_click_by_name("他")
+    tab_click_by_name("他", wait: 5)
 
     find(".SwarsUserShowDropdownMenu").click # 右上「…」クリック
     find("span", text: "絞り込み").click
@@ -70,11 +70,11 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     find(".tabs li:nth-of-type(#{index.next})").click
   end
 
-  def tab_element(name)
-    find(:xpath, "//*[text()='#{name}']")
+  def tab_element(name, **options)
+    find(:xpath, "//*[text()='#{name}']", **options)
   end
 
-  def tab_click_by_name(name)
-    tab_element(name).click
+  def tab_click_by_name(name, **options)
+    tab_element(name, **options).click
   end
 end

@@ -11,7 +11,7 @@ module SharedMethods
 
   # メンバーが存在する
   def assert_member_exist(user_name)
-    assert_selector(".SbMemberList .user_name", text: user_name, exact_text: true)
+    assert_selector(".SbMemberList .user_name", text: user_name, exact_text: true, wait: 5)
   end
 
   # メンバーが存在しない

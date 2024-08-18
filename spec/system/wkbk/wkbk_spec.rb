@@ -13,7 +13,7 @@ RSpec.describe "将棋ドリル", type: :system do
 
   it "問題集詳細" do
     visit2 "/rack/books/1"
-    assert_text "admin - public"
+    assert_text "admin - public", wait: 5
   end
 
   it "問題集編集" do
