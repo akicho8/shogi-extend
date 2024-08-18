@@ -32,9 +32,10 @@ module QuickScript
           {
             :label        => "対象",
             :key          => :scope_key,
-            :type         => :radio_button,
+            :type         => Rails.env.local? ? :radio_button : :hidden,
             :elems        => ScopeInfo.to_form_elems,
             :default      => scope_key,
+            :help_message => "囚人の棋譜は保持していない場合もあるためグラフが偏っている可能性が高いので信用ならないので本番ではこれ出すな"
           },
           {
             :label        => "最大件数",

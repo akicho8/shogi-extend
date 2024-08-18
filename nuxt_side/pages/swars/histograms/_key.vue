@@ -40,13 +40,8 @@ export default {
   name: "swars-histograms-key",
   watchQuery: ["max"],
   async asyncData({$axios, params, query}) {
-    // http://localhost:3000/api/swars_histogram.json
     const xi = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query}})
     return { xi }
-  },
-  mounted() {
-    // this.ga_click(`${this.xi.histogram_name}分布`)
-    this.ga_click(`データ分布`)
   },
   computed: {
     meta() {
