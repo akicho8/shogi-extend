@@ -10,7 +10,7 @@ module QuickScript
         end
         params = { tag: "居飛車", rule_key: "ten_min" }
         instance = GradeHistogramScript.new(params)
-        assert { instance.freq_count == 1 }
+        assert { instance.total_count == 1 }
       end
     end
   end

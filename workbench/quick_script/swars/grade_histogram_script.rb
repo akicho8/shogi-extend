@@ -7,4 +7,4 @@ instance = QuickScript::Swars::GradeHistogramScript.new(params, {_method: "post"
 instance.call # => 
 tp instance.counts_hash
 tp instance.aggregate2[:status]
-tp instance.result_rows
+tp instance.internal_rows

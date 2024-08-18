@@ -35,49 +35,45 @@ module QuickScript
             :type         => Rails.env.local? ? :radio_button : :hidden,
             :elems        => ScopeInfo.to_form_elems,
             :default      => scope_key,
-            :help_message => "囚人の棋譜は保持していない場合もあるためグラフが偏っている可能性が高いので信用ならないので本番ではこれ出すな"
+            :help_message => "囚人の棋譜は保持していない場合もあるためグラフが偏っている可能性が高いので信用ならないので本番ではこれ出すな",
           },
           {
             :label        => "最大件数",
             :key          => :max,
             :type         => Rails.env.local? ? :integer : :hidden,
             :default      => current_max,
-            :help_message => "#{BATCH_SIZE}単位で処理する"
+            :help_message => "#{BATCH_SIZE}単位で処理する",
           },
         ]
       end
 
       def call
         if request_post?
-          if result_rows.sum { |e| e["度数"] }.zero?
+          if total_count.zero?
             return "その条件では直近 #{current_max} 件のなかに一件も見つかりません"
           end
         end
-        if freq_count.positive?
+        if total_count.positive?
           if request_post?
             flash[:notice] = "集計完了"
           end
           values = [
             { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: {"max-width" => "800px", margin: "auto"}, :class => "is-unselectable is-centered", },
-            simple_table(human_rows, always_table: true),
+            simple_table(table_rows, always_table: true),
             status,
           ]
           { _component: "QuickScriptViewValueAsV", _v_bind: { value: values, }, style: {"gap" => "0rem"} }
         end
       end
 
-      def human_rows
-        result_rows.collect do |e|
+      def table_rows
+        internal_rows.collect do |e|
           {}.tap do |h|
-            if Rails.env.local? && false
-              h.update(e)
-            else
-              h["棋力"]   = e["階級"]
-              h["人数"]   = e["度数"]
-              h["割合"]   = e["相対度数"].try { "%.2f %%" % (self * 100.0) }
-              h["上位"]   = e["累計相対度数"].try { "%.2f %%" % (self * 100.0) }
-              h["偏差値"] = e["偏差値"].try { "%.0f" % self }
-            end
+            h["棋力"]   = e["階級"]
+            h["人数"]   = e["度数"]
+            h["割合"]   = e["相対度数"].try { "%.2f %%" % (self * 100.0) }
+            h["上位"]   = e["累計相対度数"].try { "%.2f %%" % (self * 100.0) }
+            h["偏差値"] = e["偏差値"].try { "%.0f" % self }
           end
         end
       end
@@ -119,26 +115,26 @@ module QuickScript
               list = list.collect { |e| e.merge("度数" => categoy_data_for_development[e["階級"]] || 0) }
             end
 
-            freq_count = list.sum { |e| e["度数"] }                                               # => 48014
-            list = list.collect { |e| e.merge("相対度数" => e["度数"].fdiv(freq_count) ) }
+            total_count = list.sum { |e| e["度数"] }                                               # => 48014
+            list = list.collect { |e| e.merge("相対度数" => e["度数"].fdiv(total_count) ) }
             t = 0; list = list.collect { |e| t += e["相対度数"]; e.merge("累計相対度数" => t) }
             list = list.collect.with_index { |e, i| e.merge("階級値" => -i) }
             score_total = list.sum { |e| e["度数"] * e["階級値"] }                                     # => 378281
-            score_average = score_total.fdiv(freq_count)                                          # => 7.878556254425792
-            variance = list.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / freq_count.pred # => 5.099197349097279
+            score_average = score_total.fdiv(total_count)                                          # => 7.878556254425792
+            variance = list.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / total_count.pred # => 5.099197349097279
             standard_deviation = Math.sqrt(variance)                                                  # => 2.258140241237749
             list = list.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(standard_deviation) ) }
             standard_value_average = list.sum { |e| e["基準値"] } / list.count
             list = list.collect { |e| e.merge("偏差値" => (e["基準値"] * 10 + 50)) }
 
             {
-              :result_rows => list,
+              :internal_rows => list,
               :status => {
                 "集計日時"            => Time.current.to_fs(:distance),
                 "処理時間(秒)"        => Time.current - start_time,
                 "最大件数"            => current_max,
-                "実サンプル数"        => freq_count,
-                "除外件数"            => current_max - freq_count,
+                "実サンプル数"        => total_count,
+                "除外件数"            => current_max - total_count,
                 "[条件] ルール"       => rule_info&.name,
                 "[条件] 戦法・囲い等" => tag,
                 "[条件] 対象"         => scope_info.name,
@@ -153,12 +149,12 @@ module QuickScript
         end
       end
 
-      def freq_count
-        @freq_count = result_rows.sum { |e| e["度数"] }
+      def total_count
+        @total_count = internal_rows.sum { |e| e["度数"] }
       end
 
-      def result_rows
-        @result_rows ||= aggregate[:result_rows]
+      def internal_rows
+        @internal_rows ||= aggregate[:internal_rows]
       end
 
       def status
@@ -166,7 +162,7 @@ module QuickScript
       end
 
       def custom_chart_params
-        e = result_rows.reverse
+        e = internal_rows.reverse
         {
           data: {
             labels: e.collect { |e| e["階級"].remove(/[段級]/) },
@@ -177,8 +173,8 @@ module QuickScript
               },
             ],
           },
-          scales_yAxes_ticks: nil,
-          scales_yAxes_display: false,
+          scales_y_axes_ticks: nil,
+          scales_y_axes_display: false,
         }
       end
 
@@ -261,7 +257,7 @@ module QuickScript
       ################################################################################
 
       def title
-        "#{super} (#{freq_count}件)"
+        "#{super} (#{total_count}件)"
       end
     end
   end

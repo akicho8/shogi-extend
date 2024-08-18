@@ -13,7 +13,7 @@
     b-field(v-if="QS.params.form_method === 'post'")
       .control
         form(method="POST" @submit.prevent="QS.post_handle")
-          b-button.post_handle(native-type="submit" type="is-danger")
+          b-button.post_handle(native-type="submit" type="is-primary")
             | {{QS.params.button_label}}
 </template>
 

@@ -117,19 +117,19 @@ class AppEntryInfo
       title: "将棋ウォーズ棋力分布",
       og_image_key: "quick_script/swars/grade_histogram_script",
       description: "偏差値的なのを見たいときにどうぞ",
-      features: [
-        # "変動するように最近のだけ出してる",
-        # "戦法や囲いの分布もある",
-        # "人気戦法の対策をすれば勝ちやすいかも？",
-      ],
+      # features: [
+      #   # "変動するように最近のだけ出してる",
+      #   # "戦法や囲いの分布もある",
+      #   # "人気戦法の対策をすれば勝ちやすいかも？",
+      # ],
     },
 
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/swars/histograms/attack" },
-      title: "将棋ウォーズ戦型分布",
-      og_image_key: "swars-histograms-attack",
+      nuxt_link_to: { path: "/lab/swars/tactic-histogram" },
+      title: "将棋ウォーズ戦術頻出度",
+      og_image_key: "quick_script/swars/tactic_histogram_script",
       # description: "偏差値的なのを見たいときにどうぞ",
       # features: [
       #   "変動するように最近のだけ出してる",

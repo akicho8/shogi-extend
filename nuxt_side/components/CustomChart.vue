@@ -169,18 +169,22 @@ export default {
     chart_data_set() {
       this.chart_setup(CHART_CONFIG_DEFAULT)
       this._chart_config.data = this.params.data
-
       {
-        const v = this.params.scales_yAxes_ticks
+        const v = this.params.scales_y_axes_ticks
         if (v) {
           this._chart_config.options.scales.yAxes[0].ticks = v
         }
       }
-
       {
-        const v = this.params.scales_yAxes_display
+        const v = this.params.scales_y_axes_display
         if (_.isBoolean(v)) {
           this._chart_config.options.scales.yAxes[0].display = v
+        }
+      }
+      {
+        const v = this.params.aspect_ratio
+        if (v) {
+          this._chart_config.options.aspectRatio = v
         }
       }
     },

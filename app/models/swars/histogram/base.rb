@@ -158,7 +158,7 @@ module Swars
               },
             ],
           },
-          scales_yAxes_ticks: nil,
+          scales_y_axes_ticks: nil,
         }
       end
 

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 2c299f1d693b8a28d436cb925623bb5988d11834
+  revision: 2001cb8a8da40c96c5eff500d1dd81a10b032b5f
   branch: main
   specs:
     bioshogi (0.0.13)
@@ -213,7 +213,7 @@ GEM
     faraday-httpclient (1.0.1)
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
-    faraday-net_http (1.0.1)
+    faraday-net_http (1.0.2)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
@@ -308,7 +308,7 @@ GEM
       activesupport
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    minitest (5.24.1)
+    minitest (5.25.1)
     minitest-power_assert (0.3.1)
       minitest
       power_assert (>= 1.1)
@@ -332,11 +332,11 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.7.3)
     nkf (0.1.2)
-    nokogiri (1.16.6-arm64-darwin)
+    nokogiri (1.16.7-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.6-x86_64-darwin)
+    nokogiri (1.16.7-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.6-x86_64-linux)
+    nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.9)
       faraday (>= 0.17.3, < 3.0)
@@ -380,7 +380,7 @@ GEM
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (2.2.9)
     rack-cors (2.0.1)
       rack (>= 2.0.0)
@@ -585,7 +585,7 @@ GEM
     woothee (1.13.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.16)
+    zeitwerk (2.6.17)
 
 PLATFORMS
   arm64-darwin-22
