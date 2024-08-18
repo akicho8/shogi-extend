@@ -75,7 +75,7 @@ module QuickScript
           when "gentleman"
             s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
           when "vitality"
-            s = s.sort_by { |e| -e.cached_stat.vitality_stat.level }
+            s = s.sort_by { |e| -e.cached_stat.vitality_stat.count }
           end
           s
         end

@@ -8,5 +8,9 @@ module Swars
       assert { RuleInfo.fetch("３分") }
       assert { RuleInfo.fetch("3分切れ負け") }
     end
+
+    it "将棋ウォーズのダメな仕様で10分のときのキーが空文字列になっている" do
+      assert { RuleInfo.fetch("").name == "10分" }
+    end
   end
 end

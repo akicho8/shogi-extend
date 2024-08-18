@@ -57,6 +57,7 @@
           b-select(
             :id="QS.form_part_id(form_part)"
             v-model="QS.attributes[form_part.key]"
+            @input="e => talk(e)"
             )
             template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
               option(:value="key") {{label}}
