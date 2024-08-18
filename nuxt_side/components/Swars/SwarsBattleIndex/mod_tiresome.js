@@ -91,6 +91,8 @@ export const mod_tiresome = {
           this.$sound.play("x")
           this.tiresome_modal_selected = "no"
           this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 絶対やらない`})
+          this.swars_search_default_key_set()
+          this.debug_alert("設定しました")
         },
       })
     },
