@@ -169,7 +169,7 @@ GoogleApi::ExpirationTracker.destroy_all
 # >>   Swars::Membership Average (0.2ms)  SELECT AVG(turn_max) AS `average_turn_max`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 GROUP BY `judges`.`key`
 # >>   ↳ app/models/swars/user/stat/average_moves_by_outcome_stat.rb:30:in `block in averages_hash'
 # >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `tags`.`name` AS `tags_name`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` ON `taggings`.`taggable_type` = 'Swars::Membership' AND `taggings`.`taggable_id` = `swars_memberships`.`id` INNER JOIN `tags` ON `tags`.`id` = `taggings`.`tag_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 GROUP BY `tags`.`name`, `judges`.`key`
-# >>   ↳ app/models/swars/user/stat/tag_stat.rb:236:in `block in inside_counts_hash'
+# >>   ↳ app/models/swars/user/stat/tag_stat.rb:236:in `block in internal_counts_hash'
 # >>   Swars::Membership Count (0.1ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 AND `judges`.`key` = 'draw'
 # >>   ↳ app/models/swars/user/stat/sub_scope_methods.rb:43:in `draw_count'
 # >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_memberships`.`think_all_avg`) FROM `swars_memberships` WHERE `swars_memberships`.`id` = 100028947
@@ -248,7 +248,7 @@ GoogleApi::ExpirationTracker.destroy_all
 # >>   Swars::Membership Average (0.3ms)  SELECT AVG(turn_max) AS `average_turn_max`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 GROUP BY `judges`.`key`
 # >>   ↳ app/models/swars/user/stat/average_moves_by_outcome_stat.rb:30:in `block in averages_hash'
 # >>   Swars::Membership Count (0.7ms)  SELECT COUNT(*) AS `count_all`, `tags`.`name` AS `tags_name`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` ON `taggings`.`taggable_type` = 'Swars::Membership' AND `taggings`.`taggable_id` = `swars_memberships`.`id` INNER JOIN `tags` ON `tags`.`id` = `taggings`.`tag_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 GROUP BY `tags`.`name`, `judges`.`key`
-# >>   ↳ app/models/swars/user/stat/tag_stat.rb:236:in `block in inside_counts_hash'
+# >>   ↳ app/models/swars/user/stat/tag_stat.rb:236:in `block in internal_counts_hash'
 # >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` = 100028947 AND `judges`.`key` = 'draw'
 # >>   ↳ app/models/swars/user/stat/sub_scope_methods.rb:43:in `draw_count'
 # >>   Swars::Membership Average (0.2ms)  SELECT AVG(`swars_memberships`.`think_all_avg`) FROM `swars_memberships` WHERE `swars_memberships`.`id` = 100028947

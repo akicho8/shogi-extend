@@ -106,13 +106,13 @@ module Swars
       ################################################################################
 
       def counts_hash
-        @counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+        @counts_hash ||= internal_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
           m.update(tag => count) { |k, v1, v2| v1 + v2 }
         end
       end
 
       def win_counts_hash
-        @win_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+        @win_counts_hash ||= internal_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
           if judge_key == :win
             m[tag] = count
           end
@@ -121,7 +121,7 @@ module Swars
 
       # 未使用
       def lose_counts_hash
-        @lose_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+        @lose_counts_hash ||= internal_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
           if judge_key == :lose
             m[tag] = count
           end
@@ -130,7 +130,7 @@ module Swars
 
       # 未使用
       def draw_counts_hash
-        @draw_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+        @draw_counts_hash ||= internal_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
           if judge_key == :draw
             m[tag] = count
           end
@@ -163,8 +163,8 @@ module Swars
 
       def to_win_lose_h(tag, options = {})
         assert_tag(tag)
-        win  = inside_counts_hash[[tag, :win]]
-        lose = inside_counts_hash[[tag, :lose]]
+        win  = internal_counts_hash[[tag, :win]]
+        lose = internal_counts_hash[[tag, :lose]]
         if win || lose
           if options[:swap]
             win, lose = lose, win
@@ -178,8 +178,8 @@ module Swars
 
       def win_lose_sum(tag)
         assert_tag(tag)
-        win  = inside_counts_hash[[tag, :win]] || 0
-        lose = inside_counts_hash[[tag, :lose]] || 0
+        win  = internal_counts_hash[[tag, :win]] || 0
+        lose = internal_counts_hash[[tag, :lose]] || 0
         win + lose
       end
 
@@ -188,8 +188,8 @@ module Swars
       def ratios_hash
         @ratios_hash ||= {}.tap do |m|
           counts_hash.each_key do |tag|
-            win = inside_counts_hash[[tag, :win]] || 0
-            lose = inside_counts_hash[[tag, :lose]] || 0
+            win = internal_counts_hash[[tag, :win]] || 0
+            lose = internal_counts_hash[[tag, :lose]] || 0
             denominator = win + lose
             if denominator.positive?
               m[tag] = win.fdiv(denominator)
@@ -226,8 +226,8 @@ module Swars
 
       private
 
-      def inside_counts_hash
-        @inside_counts_hash ||= yield_self do
+      def internal_counts_hash
+        @internal_counts_hash ||= yield_self do
           s = ids_scope
           s = s.joins(:taggings => :tag)
           s = s.joins(:judge)
