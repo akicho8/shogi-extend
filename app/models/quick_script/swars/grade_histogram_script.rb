@@ -10,7 +10,7 @@ module QuickScript
 
       BATCH_SIZE       = 5000    # 一度に取得するサイズ
       MAX_DEFAULT      = 50000   # サンプル数の初期値
-      MAX_LIMIT        = 200000  # 全体のサンプル数の限度
+      MAX_LIMIT        = 300000  # 全体のサンプル数の限度
       CACHE_EXPIRES_IN = 1.days  # 集計を保持する期間
 
       def form_parts
