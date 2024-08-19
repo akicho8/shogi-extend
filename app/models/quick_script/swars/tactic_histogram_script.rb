@@ -101,7 +101,7 @@ module QuickScript
             {
               :internal_rows => list,
               :status => {
-                "集計日時"     => Time.current.to_fs(:distance),
+                "集計日時"     => Time.current.to_fs(:ymdhms),
                 "処理時間(秒)" => Time.current - start_time,
                 "最大件数"     => current_max,
                 "抽出タグ数"   => total_count,
