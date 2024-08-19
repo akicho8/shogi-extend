@@ -65,10 +65,10 @@ const sitemap = {
 
     // /swars/histograms/*
     // grade は自動的に拾われているので指定する必要なし
-    list.push("/swars/histograms/attack")
-    list.push("/swars/histograms/defense")
-    list.push("/swars/histograms/technique")
-    list.push("/swars/histograms/note")
+    // list.push("/swars/histograms/attack")
+    // list.push("/swars/histograms/defense")
+    // list.push("/swars/histograms/technique")
+    // list.push("/swars/histograms/note")
 
     return list
   },
