@@ -11,6 +11,7 @@ module QuickScript
       ProScript,
       BattleHistoryScript,
       GradeHistogramScript,
+      TacticStatScript,
       PrisonAllScript,
       PrisonSearchScript,
       PrisonNewScript,

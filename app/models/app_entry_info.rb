@@ -127,10 +127,10 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/lab/swars/tactic-histogram" },
-      title: "将棋ウォーズ戦術頻出度",
-      og_image_key: "quick_script/swars/tactic_histogram_script",
-      # description: "偏差値的なのを見たいときにどうぞ",
+      nuxt_link_to: { path: "/lab/swars/tactic-stat" },
+      title: "将棋ウォーズ戦型勝率ランキング",
+      og_image_key: "quick_script/swars/tactic_stat_script",
+      description: "最近のいちばん強い戦型がわかる",
       # features: [
       #   "変動するように最近のだけ出してる",
       #   "戦法や囲いの分布もある",

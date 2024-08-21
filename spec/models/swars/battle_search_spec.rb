@@ -32,12 +32,12 @@ module Swars
       it { case1("垢BAN", "and", "reject") }
       it { case1("対局モード", "野良", "友達") }
       it { case1("手合割", "平手", "角落ち") }
-      it { case1("tag", "居飛車", "振り飛車") }
-      it { case1("any-tag", "居飛車", "振り飛車") }
-      it { case1("exclude-tag", "振り飛車", "居飛車") }
-      it { case1("vs-tag", "振り飛車", "居飛車") }
-      it { case1("vs-any-tag", "振り飛車", "居飛車") }
-      it { case1("vs-exclude-tag", "居飛車", "振り飛車") }
+      it { case1("tag", "新嬉野流", "振り飛車") }
+      it { case1("any-tag", "新嬉野流", "振り飛車") }
+      it { case1("exclude-tag", "振り飛車", "新嬉野流") }
+      it { case1("vs-tag", "振り飛車", "新嬉野流") }
+      it { case1("vs-any-tag", "振り飛車", "新嬉野流") }
+      it { case1("vs-exclude-tag", "新嬉野流", "振り飛車") }
       it { case1("手数", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }
       it { case1("中盤", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }
       it { case1("開戦", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }

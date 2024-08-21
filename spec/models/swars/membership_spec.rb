@@ -49,8 +49,8 @@ module Swars
         assert { battle.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"]              }
         assert { battle.memberships[0].defense_tag_list == []                                 }
         assert { battle.memberships[1].defense_tag_list == []                                 }
-        assert { battle.memberships[0].note_tag_list    == ["対振り飛車", "居飛車", "対抗形"] }
-        assert { battle.memberships[1].note_tag_list    == ["振り飛車", "対居飛車", "対抗形"] }
+        assert { battle.memberships[0].note_tag_list    == ["対振り飛車", "対抗形"]           }
+        assert { battle.memberships[1].note_tag_list    == ["振り飛車", "対抗形"]             }
       end
 
       it "タグ検索で LOWER を使う" do

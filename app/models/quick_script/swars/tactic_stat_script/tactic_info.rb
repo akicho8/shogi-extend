@@ -1,4 +1,4 @@
-class QuickScript::Swars::TacticHistogramScript
+class QuickScript::Swars::TacticStatScript
   class TacticInfo
     include ApplicationMemoryRecord
     memory_record [
@@ -17,7 +17,7 @@ class QuickScript::Swars::TacticHistogramScript
       {
         key: :note,
         name: "備考",
-        el_message: "備考は異なるタイプの値が混在しているため全体での比較にはほとんど意味がない。「居飛車」と「振り飛車」などを部分的にペアにして見る。",
+        el_message: "備考は異なるグループが混在しているため全体での比較には意味がない。たとえば「居飛車」と「入玉」を比べても意味がない。「居飛車」なら「振り飛車」と比べる。",
       },
     ]
 

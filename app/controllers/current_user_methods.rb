@@ -116,12 +116,9 @@ module CurrentUserMethods
     cookies.signed[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
   end
 
+  # ここで reset_session してはいけない。フォームに記憶した値まで消えてしまう。
   def current_user_clear
-    if false
-      session.delete(:user_id)
-    else
-      reset_session
-    end
+    session.delete(:user_id)
     cookies.delete(:user_id)
     sign_out(:xuser)
 

@@ -8,6 +8,8 @@ module QuickScript
           e.memberships.build(grade_key: "初段")
           e.memberships.build(grade_key: "初段")
         end
+        battle.memberships.black.update!(attack_tag_list: "居飛車")
+
         params = { tag: "居飛車", rule_key: "ten_min" }
         instance = GradeHistogramScript.new(params)
         assert { instance.total_count == 1 }
@@ -16,7 +18,7 @@ module QuickScript
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> QuickScript::Swars::GradeHistogramScript
 # >> |------+------+------+------+------+----------+------------+------------+------+------------------+-------------------+--------------------+--------------------------|
 # >> | ID   | 先後 | 勝敗 | 棋力 | 力差 | スタイル | 自分       | 相手       | 対   | defense_tag_list | attack_tag_list   | technique_tag_list | note_tag_list            |
@@ -68,11 +70,11 @@ end
 # >> | 9級  |    0 |      0.0 |          1.0 |    -17 | NaN    | NaN    |
 # >> |------+------+----------+--------------+--------+--------+--------|
 # >>   works
-# >> 
+# >>
 # >> Top 1 slowest examples (0.51394 seconds, 19.9% of total time):
 # >>   QuickScript::Swars::GradeHistogramScript works
 # >>     0.51394 seconds -:6
-# >> 
+# >>
 # >> Finished in 2.58 seconds (files took 2.11 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

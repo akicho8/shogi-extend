@@ -15,6 +15,7 @@ module QuickScript
             return
           end
           controller&.current_user_clear
+          controller&.reset_session
 
           # # トップを強くリロードする場合。この場合はメッセージを表示できない。
           # redirect_to UrlProxy.full_url_for("/"), type: :hard

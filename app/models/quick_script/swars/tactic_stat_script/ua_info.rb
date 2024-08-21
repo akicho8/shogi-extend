@@ -1,4 +1,4 @@
-class QuickScript::Swars::TacticHistogramScript
+class QuickScript::Swars::TacticStatScript
   class UaInfo
     include ApplicationMemoryRecord
     memory_record [

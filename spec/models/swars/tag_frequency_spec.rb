@@ -5,7 +5,7 @@ module Swars
     it "as_json" do
       Battle.create!
       json = TagFrequency.new.as_json
-      assert { json["居飛車"] }
+      assert { json["新嬉野流"] }
     end
   end
 end
