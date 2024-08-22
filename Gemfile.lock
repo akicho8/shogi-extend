@@ -1,6 +1,10 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
+<<<<<<< HEAD
   revision: 2001cb8a8da40c96c5eff500d1dd81a10b032b5f
+=======
+  revision: a41567b7e3115ac2dfadd7b43cfc35d7d55ecb52
+>>>>>>> b319e3e9b ([fix] 1手も指していないのに振り飛車の相手を居飛車判定してしまうのを修正する)
   branch: main
   specs:
     bioshogi (0.0.13)
