@@ -57,7 +57,7 @@
           b-select(
             :id="QS.form_part_id(form_part)"
             v-model="QS.attributes[form_part.key]"
-            @input="e => talk(e)"
+            @input="e => click_talk_handle(e)"
             )
             template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
               option(:value="key") {{label}}
@@ -65,7 +65,7 @@
           template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
             component(
               :is="QS.form_part_type_to_component(form_part.type)"
-              @input="talk(label)"
+              @input="click_talk_handle(label)"
               v-model="QS.attributes[form_part.key]"
               :native-value="key")
               span {{label}}
@@ -77,6 +77,12 @@
 export default {
   name: "QuickScriptViewFormParts",
   inject: ["QS"],
+  methods: {
+    click_talk_handle(str) {
+      this.$sound.play_click()
+      this.talk(str)
+    },
+  },
 }
 </script>
 

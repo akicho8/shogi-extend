@@ -44,7 +44,7 @@ every("5 3 * * *") do
     # "FreeBattle.where(:sfen_hash => nil).find_each{|e|e.save!}",
 
     "Tsl::League.setup(verbose: false)",
-    "Swars::TagJudgeItem.create_new_generation_items",
+    "Swars::TransientAggregate.set",
 
     "Kiwi::Lemon.background_job_for_cron",   # 動画変換。job時間が 0...0 ならcronで実行する
 

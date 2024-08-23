@@ -8,7 +8,7 @@ module QuickScript
         ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.generate_n(14)) do |e|
           e.memberships.build(user: black)
         end
-        ::Swars::TagJudgeItem.create_new_generation_items(scope: black.memberships)
+        ::Swars::TransientAggregate.set(scope: black.memberships)
       end
 
       it "works" do

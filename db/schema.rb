@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_18_000002) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_18_000004) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -597,20 +597,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_000002) do
     t.index ["position"], name: "index_swars_styles_on_position"
   end
 
-  create_table "swars_tag_judge_items", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.integer "generation", null: false, comment: "世代"
-    t.string "tag_name", null: false, comment: "タグ名"
-    t.integer "win_count", null: false, comment: "勝数"
-    t.integer "lose_count", null: false, comment: "敗数"
-    t.integer "draw_count", null: false, comment: "引き分け数"
-    t.integer "freq_count", null: false, comment: "総数"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["generation", "tag_name"], name: "index_swars_tag_judge_items_on_generation_and_tag_name", unique: true
-    t.index ["generation"], name: "index_swars_tag_judge_items_on_generation"
-    t.index ["tag_name"], name: "index_swars_tag_judge_items_on_tag_name"
-  end
-
   create_table "swars_users", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "user_key", null: false, comment: "対局者名"
     t.bigint "grade_id", null: false, comment: "最高段級"
@@ -674,6 +660,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_000002) do
     t.string "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "transient_aggregates", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "group_name", null: false, comment: "スコープ"
+    t.integer "generation", null: false, comment: "世代"
+    t.json "aggregated_value", null: false, comment: "集計済みのデータ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["generation"], name: "index_transient_aggregates_on_generation"
+    t.index ["group_name", "generation"], name: "index_transient_aggregates_on_group_name_and_generation", unique: true
+    t.index ["group_name"], name: "index_transient_aggregates_on_group_name"
   end
 
   create_table "tsl_leagues", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

@@ -1,9 +1,5 @@
 # セットアップ手順
-#
-# Swars::TagJudgeItem.create_new_generation_items
-# または
-# Swars::TagJudgeItem.create_new_generation_items(scope: Swars::User["BOUYATETSU5"].memberships)
-#
+# QuickScript::Swars::TacticStatScript.write
 module QuickScript
   module Swars
     class TacticStatScript < Base
@@ -13,6 +9,61 @@ module QuickScript
       self.button_label = "集計"
 
       COUNT_GTEQ_DEFAULT = 1000
+
+      class << self
+        def write(options = {})
+          TransientAggregate[name].write(aggregated_value(options))
+        end
+
+        def aggregated_value(options = {})
+          start_time = Time.current
+
+          main_scope = options[:scope] || ::Swars::Membership.all
+          main_scope = main_scope.joins(:battle).where(::Swars::Battle.arel_table[:turn_max].gteq(::Swars::Config.seiritsu_gteq))
+          memberships_count = main_scope.count
+
+          sub_scope = main_scope.joins(:taggings => :tag)
+          sub_scope = sub_scope.joins(:judge)
+          sub_scope = sub_scope.group("tags.name")
+          sub_scope = sub_scope.group("judges.key")
+          coutns_hash = sub_scope.count
+
+          # hv = { "棒銀" => { win_count: 2, lose_count: 3, draw_count: 1 } } の形に変換する
+
+          hv = {}
+          coutns_hash.each do |(tag_name, judge_key), count|
+            hv[tag_name] ||= { win_count: 0, lose_count: 0, draw_count: 0 }
+            hv[tag_name][:"#{judge_key}_count"] = count
+          end
+
+          # records = [ { tag_name => "棒銀", ... } ] の型に変換する
+
+          records = hv.collect do |tag_name, e|
+            freq_count     = e[:win_count] + e[:lose_count] + e[:draw_count]
+            win_lose_count = e[:win_count] + e[:lose_count]
+            win_ratio      = e[:win_count].fdiv(win_lose_count)
+            {
+              :tag_name       => tag_name,
+              :win_count      => e[:win_count],
+              :win_ratio      => win_ratio,
+              :lose_count     => e[:lose_count],
+              :draw_count     => e[:draw_count],
+              :freq_count     => freq_count,
+              :win_lose_count => win_lose_count, # 未使用
+              :freq_ratio     => freq_count.fdiv(memberships_count),
+            }
+          end
+
+          # JSON 型カラムにまとめていれる形に変換する
+
+          {
+            :primary_aggregated_at      => Time.current,
+            :primary_aggregation_second => Time.current - start_time,
+            :memberships_count          => memberships_count,
+            :records                    => records,
+          }
+        end
+      end
 
       def form_parts
         super + [
@@ -43,10 +94,13 @@ module QuickScript
       end
 
       def call
-        if total_count.zero?
+        unless aggregated_value
+          return "一次集計データがありません"
+        end
+        if internal_rows.blank?
           return "一件も見つかりません"
         end
-        if total_count.positive?
+        if internal_rows.present?
           values = [
             { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: {"max-width" => ua_info.max_width, margin: "auto"}, :class => "is-unselectable is-centered", },
             simple_table(table_rows, always_table: true),
@@ -59,7 +113,7 @@ module QuickScript
       def table_rows
         internal_rows.collect.with_index do |e, i|
           {}.tap do |h|
-            win_ratio   = e[:win_ratio].try   { "%.3f %%" % (self * 100.0) }
+            win_ratio  = e[:win_ratio].try  { "%.3f %%" % (self * 100.0) }
             freq_ratio = e[:freq_ratio].try { "%.3f %%" % (self * 100.0) }
             if tactic_info.key != :note
               h["#"] = i.next
@@ -84,10 +138,6 @@ module QuickScript
         "将棋ウォーズ#{tactic_info.name}#{order_info.name}ランキング"
       end
 
-      def total_count
-        @total_count = internal_rows.sum { |e| e[:freq_count] }
-      end
-
       def internal_rows
         @internal_rows ||= aggregate[:internal_rows]
       end
@@ -100,45 +150,37 @@ module QuickScript
         @aggregate ||= yield_self do
           start_time = Time.current
 
-          total_count = db_latest_items.sum(&:freq_count)
-
-          list = db_latest_items.collect do |e|
-            {
-              :tag_name   => e.tag_name,
-              :win_ratio  => e.win_count.fdiv(e.win_lose_count), # 引き分けを除く
-              :win_count  => e.win_count,
-              :lose_count => e.lose_count,
-              :draw_count => e.draw_count,
-              :freq_count => e.freq_count,
-              :freq_ratio => e.freq_count.fdiv(total_count),
-            }
-          end
-
-          list = list.find_all { |e| e[:freq_count] >= count_gteq }
-          list = list.find_all { |e| tactic_info.ancestor_info.model[e[:tag_name]] }
+          av = aggregated_value[:records]
+          av = av.find_all { |e| tactic_info.ancestor_info.model[e[:tag_name]] } # 種類別
 
           if tactic_info.key == :note
+            # 備考は bioshogi 側の並びに合わせるのみ
             model = tactic_info.ancestor_info.model
-            list = list.sort_by { |e| model[e[:tag_name]].code }
+            av = av.sort_by { |e| model[e[:tag_name]].code }
           else
-            list = list.sort_by { |e| -e[order_info.order_by] }
+            # 勝率条件出現数N以上
+            if order_info.key == :win_rate
+              av = av.find_all { |e| e[:freq_count] >= count_gteq }
+            end
+            # ランキング
+            av = av.sort_by { |e| -e[order_info.order_by] }
           end
 
           {
-            :internal_rows => list,
+            :internal_rows => av,
             :status => {
-              "一次集計日時"     => ::Swars::TagJudgeItem.db_latest_created_at.try { to_fs(:distance) },
-              "二次集計処理(秒)" => Time.current - start_time,
-              "サンプル総数"     => total_count,
-              "タグ総数"         => db_latest_items.size,
+              "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
+              "一次集計処理" => aggregated_value[:primary_aggregation_second].try { seconds.inspect },
+              "二次集計処理" => (Time.current - start_time).try { seconds.inspect },
+              "対局数"       => aggregated_value[:memberships_count],
+              "タグ総数"     => aggregated_value[:records].size,
             },
           }
-          # end
         end
       end
 
-      def db_latest_items
-        @db_latest_items ||= ::Swars::TagJudgeItem.db_latest_items
+      def aggregated_value
+        @aggregated_value ||= TransientAggregate[self.class.name].read
       end
 
       ################################################################################

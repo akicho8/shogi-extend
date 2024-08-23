@@ -1,16 +1,14 @@
-# ~/src/shogi-extend/app/models/swars/histogram/grade.rb
-
 module QuickScript
   module Swars
     class GradeHistogramScript < Base
-      self.title = "将棋ウォーズ棋力分布"
-      self.description = "将棋ウォーズの棋力分布を集計する"
+      self.title = "将棋ウォーズ棋力偏差値"
+      self.description = "将棋ウォーズの棋力帯ごとの人数から偏差値を求める"
       self.form_method = :post
       self.button_label = "集計"
 
       BATCH_SIZE       = 5000    # 一度に取得するサイズ
-      MAX_DEFAULT      = 50000   # サンプル数の初期値
-      MAX_LIMIT        = 300000  # 全体のサンプル数の限度
+      MAX_DEFAULT      = 50000   # サンプル対局数の初期値
+      MAX_LIMIT        = 300000  # 全体のサンプル対局数の限度
       CACHE_EXPIRES_IN = 1.days  # 集計を保持する期間
 
       def form_parts
@@ -133,7 +131,7 @@ module QuickScript
                 "集計日時"            => Time.current.to_fs(:ymdhms),
                 "処理時間(秒)"        => Time.current - start_time,
                 "最大件数"            => current_max,
-                "実サンプル数"        => total_count,
+                "サンプル対局数"      => total_count,
                 "除外件数"            => current_max - total_count,
                 "[条件] ルール"       => rule_info&.name,
                 "[条件] 戦法・囲い等" => tag,
