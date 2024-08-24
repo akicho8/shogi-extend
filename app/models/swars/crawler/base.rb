@@ -39,7 +39,7 @@ module Swars
 
       def mail_body
         av = []
-        av << params.to_t
+        av << params.to_t(truncate: 80)
         av << rows.to_t
         av.join
       end
