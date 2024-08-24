@@ -1,4 +1,4 @@
-class QuickScript::Swars::GradeHistogramScript
+class QuickScript::Swars::GradeStatScript
   class ScopeInfo
     include ApplicationMemoryRecord
     memory_record [

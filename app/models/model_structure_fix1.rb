@@ -4,6 +4,27 @@ class ModelStructureFix1
   def call
     ActiveRecord::Base.logger = nil
     AppLog.important("#{self.class.name} start")
+    Swars::Membership.in_batches do |e|
+      c = 0
+      e.tagged_with("居飛車").each do |e|
+        o = e.opponent
+        unless o.note_tag_list.include?("対居飛車")
+          o.note_tag_list = o.note_tag_list + ["対居飛車"]
+          Retryable.retryable(on: ActiveRecord::Deadlocked) do
+            o.save!(validate: false)
+          end
+          c += 1
+        end
+      end
+      AppLog.info("#{self.class.name} #{c}")
+      p [Time.current.to_fs(:ymdhms), c]
+    end
+    AppLog.important("#{self.class.name} done")
+  end
+
+  def call2
+    ActiveRecord::Base.logger = nil
+    AppLog.important("#{self.class.name} start")
     scope = Swars::Battle.joins(:memberships).merge(Swars::Membership.where(opponent: nil)).distinct
     count = scope.count
     updated = 0

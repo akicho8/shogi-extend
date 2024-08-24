@@ -1,5 +1,12 @@
-# rails r 'TransientAggregate["A"].write'
-class TransientAggregate < ApplicationRecord
+# インターフェイスはこの2つだけ
+#
+# 書き込み
+# AggregateCache["A"].write("X")
+#
+# 読み出し
+# AggregateCache["A"].read # => "X"
+#
+class AggregateCache < ApplicationRecord
   scope :group_only, -> group_name { where(group_name: group_name) } # group_name で絞る
   scope :old_only, -> { where.not(generation: latest_generation) }   # 最後の世代を除くすべて
 
@@ -45,6 +52,6 @@ class TransientAggregate < ApplicationRecord
   end
 
   after_create_commit do
-    AppLog.important(subject: "[#{group_name}][#{generation}] 一次集計完了", body: aggregated_value.inspect)
+    AppLog.important(subject: "[#{group_name}][#{generation}] 一次集計完了", body: aggregated_value.to_t(truncate: 80))
   end
 end

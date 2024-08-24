@@ -39,6 +39,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_18_000004) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "aggregate_caches", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "group_name", null: false, comment: "スコープ"
+    t.integer "generation", null: false, comment: "世代"
+    t.json "aggregated_value", null: false, comment: "集計済みデータ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["generation"], name: "index_aggregate_caches_on_generation"
+    t.index ["group_name", "generation"], name: "index_aggregate_caches_on_group_name_and_generation", unique: true
+    t.index ["group_name"], name: "index_aggregate_caches_on_group_name"
+  end
+
   create_table "app_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "level", null: false
     t.string "emoji", null: false

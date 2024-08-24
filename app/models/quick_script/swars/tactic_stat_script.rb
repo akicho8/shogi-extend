@@ -1,67 +1,19 @@
-# セットアップ手順
-# QuickScript::Swars::TacticStatScript.write
+# frozen-string-literal: true
+#
+# 一次集計
+# QuickScript::Swars::TacticStatScript.primary_aggregate_run
+#
 module QuickScript
   module Swars
     class TacticStatScript < Base
       self.title = "将棋ウォーズ戦型勝率ランキング"
-      self.description = "戦型・囲いなどの勝率や出現率を調べる"
+      self.description = "戦型・囲いなどの勝率・頻度を調べる"
       self.form_method = :get
       self.button_label = "集計"
 
-      COUNT_GTEQ_DEFAULT = 1000
-
       class << self
-        def write(options = {})
-          TransientAggregate[name].write(aggregated_value(options))
-        end
-
-        def aggregated_value(options = {})
-          start_time = Time.current
-
-          main_scope = options[:scope] || ::Swars::Membership.all
-          main_scope = main_scope.joins(:battle).where(::Swars::Battle.arel_table[:turn_max].gteq(::Swars::Config.seiritsu_gteq))
-          memberships_count = main_scope.count
-
-          sub_scope = main_scope.joins(:taggings => :tag)
-          sub_scope = sub_scope.joins(:judge)
-          sub_scope = sub_scope.group("tags.name")
-          sub_scope = sub_scope.group("judges.key")
-          coutns_hash = sub_scope.count
-
-          # hv = { "棒銀" => { win_count: 2, lose_count: 3, draw_count: 1 } } の形に変換する
-
-          hv = {}
-          coutns_hash.each do |(tag_name, judge_key), count|
-            hv[tag_name] ||= { win_count: 0, lose_count: 0, draw_count: 0 }
-            hv[tag_name][:"#{judge_key}_count"] = count
-          end
-
-          # records = [ { tag_name => "棒銀", ... } ] の型に変換する
-
-          records = hv.collect do |tag_name, e|
-            freq_count     = e[:win_count] + e[:lose_count] + e[:draw_count]
-            win_lose_count = e[:win_count] + e[:lose_count]
-            win_ratio      = e[:win_count].fdiv(win_lose_count)
-            {
-              :tag_name       => tag_name,
-              :win_count      => e[:win_count],
-              :win_ratio      => win_ratio,
-              :lose_count     => e[:lose_count],
-              :draw_count     => e[:draw_count],
-              :freq_count     => freq_count,
-              :win_lose_count => win_lose_count, # 未使用
-              :freq_ratio     => freq_count.fdiv(memberships_count),
-            }
-          end
-
-          # JSON 型カラムにまとめていれる形に変換する
-
-          {
-            :primary_aggregated_at      => Time.current,
-            :primary_aggregation_second => Time.current - start_time,
-            :memberships_count          => memberships_count,
-            :records                    => records,
-          }
+        def primary_aggregate_run(options = {})
+          AggregateCache[name].write PrimaryAggregator.new(options).call
         end
       end
 
@@ -170,8 +122,8 @@ module QuickScript
             :internal_rows => av,
             :status => {
               "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
-              "一次集計処理" => aggregated_value[:primary_aggregation_second].try { seconds.inspect },
-              "二次集計処理" => (Time.current - start_time).try { seconds.inspect },
+              "一次集計処理" => aggregated_value[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
+              "二次集計処理" => (Time.current - start_time).then { |e| ActiveSupport::Duration.build(e).inspect },
               "対局数"       => aggregated_value[:memberships_count],
               "タグ総数"     => aggregated_value[:records].size,
             },
@@ -180,7 +132,7 @@ module QuickScript
       end
 
       def aggregated_value
-        @aggregated_value ||= TransientAggregate[self.class.name].read
+        @aggregated_value ||= AggregateCache[self.class.name].read
       end
 
       ################################################################################
@@ -229,18 +181,18 @@ module QuickScript
 
       ################################################################################
 
+      def count_gteq
+        (params[:count_gteq] || 1000).to_i
+      end
+
+      ################################################################################
+
       def ua_key
         params[:user_agent_key].presence || :mobile
       end
 
       def ua_info
         UaInfo.fetch(ua_key)
-      end
-
-      ################################################################################
-
-      def count_gteq
-        (params[:count_gteq] || COUNT_GTEQ_DEFAULT).to_i
       end
 
       ################################################################################

@@ -3,18 +3,20 @@ require "rails_helper"
 module QuickScript
   module Swars
     RSpec.describe TacticStatScript, type: :model do
-      def case1
-        black = ::Swars::User.create!
-        ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.generate_n(14)) do |e|
-          e.memberships.build(user: black)
-        end
-        ::Swars::TransientAggregate.set(scope: black.memberships)
+      def case1(params)
+        instance = TacticStatScript.new({count_gteq: 0, **params})
+        instance.as_json
+        !instance.table_rows.empty?
       end
 
       it "works" do
-        case1
-        assert { TacticStatScript.new({tactic_key: :attack, count_gteq: 0}).as_json }
-        assert { TacticStatScript.new({tactic_key: :note, count_gteq: 0}).as_json }
+        TacticStatScript::PrimaryAggregator.mock_setup
+        TacticStatScript.primary_aggregate_run
+
+        assert { case1(tactic_key: :attack)  }
+        assert { case1(tactic_key: :note)    }
+        assert { case1(order_key: :win_rate) }
+        assert { case1(order_key: :popular)  }
       end
     end
   end
