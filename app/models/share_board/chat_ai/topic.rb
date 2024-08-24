@@ -9,8 +9,8 @@ module ShareBoard
         collect(&:to_api)
       end
 
-      def to_t
-        collect(&:to_h).to_t
+      def to_t(options = {})
+        collect(&:to_h).to_t(options)
       end
     end
   end
