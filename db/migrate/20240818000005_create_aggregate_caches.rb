@@ -16,7 +16,7 @@ class CreateAggregateCaches < ActiveRecord::Migration[6.0]
     add_index(:aggregate_caches, [:group_name, :generation], unique: true)
 
     AggregateCache.reset_column_information
-    QuickScript::Swars::GradeStatScript.primary_aggregate_run
-    QuickScript::Swars::TacticStatScript.primary_aggregate_run
+    # QuickScript::Swars::GradeStatScript.primary_aggregate_run
+    # QuickScript::Swars::TacticStatScript.primary_aggregate_run
   end
 end
