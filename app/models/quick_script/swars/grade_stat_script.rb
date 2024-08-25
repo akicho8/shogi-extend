@@ -87,7 +87,7 @@ module QuickScript
               "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
               "一次集計処理" => aggregated_value[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
               "二次集計処理" => (Time.current - start_time).try { ActiveSupport::Duration.build(self).inspect },
-              "対局数"       => aggregated_value[:memberships_count],
+              "対局数"       => aggregated_value[:population_count],
               "絞り込み"     => tag,
               "合計度数"     => total_count,
               "平均"         => score_average,
