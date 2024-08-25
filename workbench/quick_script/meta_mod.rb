@@ -1,3 +1,2 @@
 require "./setup"
-_ { QuickScript::MetaMod.new.call } # =>
-s { QuickScript::MetaMod.new.call } # =>
+QuickScript::Chore::NullScript.og_image_key_default # => "quick_script/chore/null_script"

@@ -7,7 +7,7 @@ module QuickScript
 
     class_methods do
       def og_image_key_default
-        @og_image_key_default ||= og_card_path.exist? ? "quick_script/#{qs_key.underscore}" : :application # or :quick_script
+        @og_image_key_default ||= og_card_path.exist? ? name.underscore : :application # or :quick_script
       end
 
       def og_card_size_default
