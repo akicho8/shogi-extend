@@ -114,7 +114,7 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/grade-stat" },
-      title: "将棋ウォーズ棋力偏差値",
+      title: "将棋ウォーズ棋力分布",
       og_image_key: "quick_script/swars/grade_stat_script",
       description: "偏差値的なのを見たいときにどうぞ",
       # features: [

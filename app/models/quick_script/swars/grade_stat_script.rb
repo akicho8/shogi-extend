@@ -6,7 +6,7 @@
 module QuickScript
   module Swars
     class GradeStatScript < Base
-      self.title = "将棋ウォーズ棋力偏差値"
+      self.title = "将棋ウォーズ棋力分布"
       self.description = "将棋ウォーズの棋力帯ごとの人数から偏差値を求める"
       self.form_method = :get
       self.button_label = "集計"
