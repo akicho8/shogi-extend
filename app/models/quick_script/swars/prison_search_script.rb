@@ -5,7 +5,7 @@ module QuickScript
       self.description = "囚人を収監発見日の直近順に表示する"
       self.form_method = :get
       self.button_label = "検索"
-      self.per_page_default = 500
+      self.per_page_default = 100
 
       def form_parts
         super + [
