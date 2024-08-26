@@ -48,19 +48,14 @@ module QuickScript
             end
             user.ban!
           end
-          flash[:notice] = "#{user_key} を一覧に追加しました"
-          redirect_to index_url_for(user_key)
+          flash[:notice] = "#{user_key} を追加しました"
+          redirect_to "/lab/swars/prison-search"
           nil
         end
       end
 
       def current_swars_user_key
         params[:swars_user_key].to_s.strip.presence
-      end
-
-      def index_url_for(user_key)
-        query = { query: user_key }.to_query
-        "/lab/swars/prison-search?#{query}"
       end
     end
   end
