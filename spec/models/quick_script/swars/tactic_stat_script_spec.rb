@@ -4,7 +4,7 @@ module QuickScript
   module Swars
     RSpec.describe TacticStatScript, type: :model do
       def case1(params)
-        instance = TacticStatScript.new({count_gteq: 0, **params})
+        instance = TacticStatScript.new({freq_ratio_gteq: 0, **params})
         instance.as_json
         !instance.table_rows.empty?
       end

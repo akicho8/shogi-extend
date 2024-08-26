@@ -10,6 +10,7 @@ module QuickScript
       self.description = "戦型・囲いなどの勝率・頻度を調べる"
       self.form_method = :get
       self.button_label = "集計"
+      self.debug_mode = Rails.env.local?
 
       class << self
         def primary_aggregate_run(options = {})
@@ -36,10 +37,18 @@ module QuickScript
             :session_sync => true,
           },
           {
-            :label        => "[勝率条件] 出現数N以上",
-            :key          => :count_gteq,
-            :type         => :integer,
-            :default      => count_gteq,
+            :label        => "[勝率ランキング参加条件] 出現率N%以上",
+            :key          => :freq_ratio_gteq,
+            :type         => :numeric,
+            :options      => { min: 0, step: 0.01 },
+            :default      => freq_ratio_gteq,
+            :session_sync => true,
+          },
+          {
+            :label        => "[勝率ランキング参加条件] 出現数N以上",
+            :key          => :freq_count_gteq,
+            :type         => debug_mode ? :numeric : :hidden,
+            :default      => params[:freq_count_gteq],
             :session_sync => true,
           },
         ]
@@ -110,9 +119,16 @@ module QuickScript
             model = tactic_info.ancestor_info.model
             av = av.sort_by { |e| model[e[:tag_name]].code }
           else
-            # 勝率条件出現数N以上
             if order_info.key == :win_rate
-              av = av.find_all { |e| e[:freq_count] >= count_gteq }
+              # 勝率条件出現数N以上
+              if freq_count_gteq
+                av = av.find_all { |e| e[:freq_count] >= freq_count_gteq }
+              end
+              # 勝率条件出現数N%以上
+              if freq_ratio_gteq
+                pivot = freq_ratio_gteq.fdiv(100)
+                av = av.find_all { |e| e[:freq_ratio] >= pivot }
+              end
             end
             # ランキング
             av = av.sort_by { |e| -e[order_info.order_by] }
@@ -181,8 +197,12 @@ module QuickScript
 
       ################################################################################
 
-      def count_gteq
-        (params[:count_gteq] || 1000).to_i
+      def freq_count_gteq
+        params[:freq_count_gteq].presence.try { to_i }
+      end
+
+      def freq_ratio_gteq
+        (params[:freq_ratio_gteq].presence || 0.03).to_f
       end
 
       ################################################################################
