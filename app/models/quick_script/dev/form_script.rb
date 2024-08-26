@@ -65,7 +65,7 @@ module QuickScript
           {
             :label   => "integer",
             :key     => :int1,
-            :type    => :integer,
+            :type    => :numeric,
             :default => (params[:int1].presence || "1").to_i,
           },
           {

@@ -46,12 +46,15 @@
             :placeholder="form_part.placeholder"
             spellcheck="false"
             )
-        template(v-else-if="form_part.type === 'integer'")
+        template(v-else-if="form_part.type === 'numeric'")
           b-numberinput(
             :id="QS.form_part_id(form_part)"
             v-model="QS.attributes[form_part.key]"
             controls-position="compact"
             :exponential="true"
+            :min="form_part?.options?.min"
+            :max="form_part?.options?.max"
+            :step="form_part?.options?.step ?? 1"
             )
         template(v-else-if="form_part.type === 'select'")
           b-select(

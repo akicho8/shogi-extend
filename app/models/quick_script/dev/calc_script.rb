@@ -11,7 +11,7 @@ module QuickScript
           {
             :label   => "左辺",
             :key     => :lhv,
-            :type    => :integer,
+            :type    => :numeric,
             :default => params[:lhv].presence.try { to_i } || 1,
           },
           {
@@ -24,7 +24,7 @@ module QuickScript
           {
             :label   => "右辺",
             :key     => :rhv,
-            :type    => :integer,
+            :type    => :numeric,
             :default => params[:rhv].presence.try { to_i } || 2,
           },
         ]
