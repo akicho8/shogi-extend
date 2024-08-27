@@ -1,8 +1,14 @@
 module Swars
   class Battle
     class CsaSeqToCsa
+      CSA_COMMENT = "'"
+
       def initialize(battle)
         @battle = battle
+      end
+
+      def call
+        to_csa
       end
 
       def to_csa
@@ -21,6 +27,14 @@ module Swars
         @lines << ["$START_TIME", @battle.battled_at.to_fs(:csa_ymdhms)] * ":"
         @lines << ["$EVENT", "#{event_title}(#{event_types.join(' ')})"] * ":"
         @lines << ["$TIME_LIMIT", @battle.rule_info.csa_time_limit] * ":"
+
+        if true
+          @lines << ["$X_FINAL", @battle.final_info.name] * ":" # 未使用
+          if membership = @battle.memberships.find { |e| e.judge_key == "win" }
+            @lines << ["$X_WINNER", membership.location_key] * ":" # 確実に勝者をパーサーに伝える (超重要)
+          end
+        end
+
         if @battle.preset_info.handicap
           @lines << @battle.preset_info.to_board.to_csa.strip
           @lines << "-"
@@ -55,6 +69,10 @@ module Swars
 
       def render_footer
         @lines << @battle.final_info.csa_footer
+        # @lines << "#{CSA_COMMENT} 結末: #{@battle.final_info.name}"
+        # if membership = @battle.memberships.find { |e| e.judge_key == "win" }
+        #   @lines << "#{CSA_COMMENT} 勝者: #{membership.location_key}"
+        # end
       end
 
       def event_title

@@ -167,9 +167,9 @@ module Swars
         @rule_key ||= props.fetch("gtype")
       end
 
-      def judge_key_for(name)
+      def judge_key_for(player_name)
         if v = win_side_name
-          if v == name
+          if v == player_name
             :win
           else
             :lose
@@ -211,6 +211,7 @@ module Swars
         # result は情報が混在しているため分離する
         # props["result"] は対局中の場合は無い
         # https://github.com/tosh1ki/shogiwars
+        # "SENTE_WIN_DISCONNECT"
         def result_md
           @result_md ||= (props["result"] || "").match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)
         end
