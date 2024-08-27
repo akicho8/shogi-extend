@@ -1,4 +1,4 @@
-class Fix58 < ActiveRecord::Migration[6.0]
+class Fix59 < ActiveRecord::Migration[6.0]
   def change
     Swars::Membership.in_batches(of: 10000) do |relation|
       p relation.count
