@@ -52,7 +52,6 @@ class QuickScript::Swars::TacticStatScript
         population_count = 0
 
         main_scope.in_batches(of: @options[:batch_size] || 1000).each.with_index do |relation, batch_index|
-          AppLog.info "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{batch_index}"
           puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{batch_index}"
 
           relation = relation.joins(:battle).merge(::Swars::Battle.valid_match_only) # 激重条件はここ！(重要)

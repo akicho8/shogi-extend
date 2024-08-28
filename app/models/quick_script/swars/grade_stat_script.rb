@@ -20,11 +20,19 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "絞り込み",
-            :key     => :tag,
-            :type    => :select,
-            :elems   => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default => params[:tag],
+            :label        => "対象",
+            :key          => :population_key,
+            :type         => :radio_button,
+            :elems        => PopulationInfo.to_form_elems,
+            :default      => population_key,
+            :session_sync => true,
+          },
+          {
+            :label        => "絞り込み",
+            :key          => :tag,
+            :type         => :select,
+            :elems        => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
+            :default      => params[:tag],
           },
         ]
       end
@@ -53,7 +61,8 @@ module QuickScript
             h["偏差値"] = e["偏差値"].try       { "%.0f" % self }
             h["上位"]   = e["累計相対度数"].try { "%.3f %%" % (self * 100.0) }
             h["割合"]   = e["相対度数"].try     { "%.3f %%" % (self * 100.0) }
-            h["対局数"] = e["度数"]
+            h["人数"]   = count_by(e["階級"], :user)
+            h["対局数"] = count_by(e["階級"], :membership)
           end
         end
       end
@@ -65,7 +74,7 @@ module QuickScript
           av = target_grades.collect do |grade|
             {
               "階級" => grade.key,
-              "度数" => aggregated_value[:counts_hash].dig(grade.key.to_sym, tag || :__tag_nothing__) || 0,
+              "度数" => count_by(grade.key, population_info.key),
             }
           end
 
@@ -87,9 +96,11 @@ module QuickScript
               "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
               "一次集計処理" => aggregated_value[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
               "二次集計処理" => (Time.current - start_time).try { ActiveSupport::Duration.build(self).inspect },
-              "対局数"       => aggregated_value[:population_count],
+              "度数対象"     => population_info.name,
+              "人数合計"     => aggregated_value[:total_user_count],
+              "対局数合計"   => aggregated_value[:total_membership_count],
               "絞り込み"     => tag,
-              "合計度数"     => total_count,
+              "度数合計"     => total_count,
               "平均"         => score_average,
               "不偏分散"     => variance,
               "標準偏差"     => standard_deviation,
@@ -97,6 +108,10 @@ module QuickScript
             },
           }
         end
+      end
+
+      def count_by(grade_key, population_key)
+        aggregated_value[:counts_hash].dig(grade_key.to_sym, population_key.to_sym, (tag || :__tag_nothing__).to_sym) || 0
       end
 
       def aggregated_value
@@ -152,6 +167,18 @@ module QuickScript
       def title
         "#{super} (#{total_count}件)"
       end
+
+      ################################################################################
+
+      def population_key
+        params[:population_key].presence || PopulationInfo.first.key
+      end
+
+      def population_info
+        PopulationInfo.fetch(population_key)
+      end
+
+      ################################################################################
     end
   end
 end

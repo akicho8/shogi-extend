@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+
 class QuickScript::Swars::GradeStatScript
   class PrimaryAggregator
     class << self
@@ -16,54 +18,53 @@ class QuickScript::Swars::GradeStatScript
     def call
       primary_aggregation_second = Benchmark.realtime { aggregate }
       {
-        :counts_hash                => aggregate[:counts_hash],
-        :population_count           => aggregate[:population_count],
+        :counts_hash                => aggregate,
+        :total_user_count           => aggregate.values.sum { |e| e[:user][:__tag_nothing__] },
+        :total_membership_count     => aggregate.values.sum { |e| e[:membership][:__tag_nothing__] },
         :primary_aggregated_at      => Time.current,
         :primary_aggregation_second => primary_aggregation_second,
       }
     end
 
     def aggregate
-      @aggregate ||= yield_self do
-        counts_hash = {}
-        population_count = 0
-
+      @aggregate ||= {}.tap do |counts_hash|
         main_scope.in_batches(of: @options[:batch_size] || 1000).each.with_index do |relation, batch_index|
-          AppLog.info "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{batch_index}"
           puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{batch_index}"
-
           relation = condition_add(relation) # 共通の激重条件を追加する
-          population_count += relation.count
 
-          # タグを考慮しない頻度を作る
-          # counts_hash = { "初段" => {"__tag_nothing__" => 9999} }
+          # 人数
+          sub_aggregate(counts_hash, :user, relation.joins(:grade).select(:user_id, "swars_grades.key").distinct)
 
-          s = relation
-          s = s.joins(:grade).group("swars_grades.key")
-          s.count.collect do |grade_key, count|
-            counts_hash[grade_key] ||= {}
-            counts_hash[grade_key]["__tag_nothing__"] ||= 0
-            counts_hash[grade_key]["__tag_nothing__"] += count
-          end
-
-          # タグを考慮した頻度を追加する
-          # counts_hash = { "初段" => {"__tag_nothing__" => 9999, "棒銀" => 1234, ...} }
-
-          s = relation
-          s = s.joins(:grade).group("swars_grades.key")
-          s = s.joins(:taggings => :tag).group("tags.name")
-          s.count.collect do |(grade_key, tag_name), count|
-            counts_hash[grade_key] ||= {}
-            counts_hash[grade_key][tag_name] ||= 0
-            counts_hash[grade_key][tag_name] += count
-          end
+          # 対局
+          scope = relation
+          sub_aggregate(counts_hash, :membership, relation)
         end
-
-        {
-          :counts_hash      => counts_hash,
-          :population_count => population_count,
-        }
       end
+    end
+
+    def sub_aggregate(counts_hash, population_key, scope)
+      # タグを考慮しない頻度を作る
+      # counts_hash = { "初段" => {user: {:__tag_nothing__ => 9999} }}
+
+      scope = scope.joins(:grade).group("swars_grades.key")
+      scope.count.collect do |grade_key, count|
+        store(counts_hash, grade_key, population_key, :__tag_nothing__, count)
+      end
+
+      # タグを考慮した頻度を追加する
+      # counts_hash = { "初段" => {user: {:__tag_nothing__ => 9999, "棒銀" => 1234, ...} }}
+
+      scope = scope.joins(:taggings => :tag).group("tags.name")
+      scope.count.collect do |(grade_key, tag_name), count|
+        store(counts_hash, grade_key, population_key, tag_name, count)
+      end
+    end
+
+    def store(counts_hash, grade_key, population_key, tag, count)
+      counts_hash[grade_key] ||= {}
+      counts_hash[grade_key][population_key] ||= {}
+      counts_hash[grade_key][population_key][tag] ||= 0
+      counts_hash[grade_key][population_key][tag] += count
     end
 
     # ここは軽くする

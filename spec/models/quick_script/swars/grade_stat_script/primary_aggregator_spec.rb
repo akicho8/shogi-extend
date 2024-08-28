@@ -6,7 +6,7 @@ module QuickScript
       RSpec.describe PrimaryAggregator, type: :model do
         it "works" do
           PrimaryAggregator.mock_setup
-          assert { PrimaryAggregator.new.call[:population_count] == 2 }
+          assert { PrimaryAggregator.new.call[:total_user_count] == 2 }
         end
       end
     end
