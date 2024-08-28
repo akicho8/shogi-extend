@@ -36,7 +36,9 @@ export const mod_tabs = {
 
     validation_tab_handle() {
       this.tab_set("validation")
-      this.talk(this.article.direction_message)
+      if (this.talk) {
+        this.talk(this.article.direction_message) // server side で呼ばれようとしている
+      }
     },
   },
   computed: {
