@@ -87,10 +87,11 @@ module QuickScript
               h["出現率"] = freq_ratio
               h["勝率"]     = win_ratio
             end
+            h["出現数"] = e[:freq_count]
+            h["スタイル"] = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tag_name]).try { style_info.name }
             h["WIN"]    = e[:win_count]
             h["LOSE"]   = e[:lose_count]
             h["DRAW"]   = e[:draw_count]
-            h["出現数"] = e[:freq_count]
           end
         end
       end
