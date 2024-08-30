@@ -132,7 +132,7 @@ class ApplicationRecord < ActiveRecord::Base
       if str
         column = columns_hash[colum_name.to_s]
         if max = column.limit
-          if connection.adapter_name == "Mysql2"
+          if connection.adapter_name.match?(/Mysql2|Trilogy/i)
             if column.type == :text
               max = max / "🍄".bytesize
             end
