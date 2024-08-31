@@ -52,9 +52,11 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "レグスペマン",     tactic_key: "レグスペ",           },
   { expected_badge_key: "入玉勝ちマン",     tactic_key: "入玉",               },
   { expected_badge_key: "雲隠れマン",       tactic_key: "雲隠れ玉",           },
+  { expected_badge_key: "雀刺しマン",       tactic_key: "雀刺し",             },
   { expected_badge_key: "無敵囲いマン",     tactic_key: "無敵囲い",           },
   { expected_badge_key: "鬼殺しマン",       tactic_key: "鬼殺し",             },
   { expected_badge_key: "金底マン",         tactic_key: "金底の歩",           },
   { expected_badge_key: "駒柱マン",         tactic_key: "駒柱",               },
   { expected_badge_key: "都詰めマン",       tactic_key: "都詰め",             },
+  { expected_badge_key: "姿焼マン",         tactic_key: "穴熊の姿焼き",       },
 ]
