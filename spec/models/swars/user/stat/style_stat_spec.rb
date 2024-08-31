@@ -13,8 +13,8 @@ module Swars
 
       it "works" do
         style_stat = case1("新米長玉")
-        assert { style_stat.counts_hash  == {:"変態" => 1} }
-        assert { style_stat.ratios_hash  == {:"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 0.0, :"変態" => 1.0} }
+        assert { style_stat.counts_hash  == {:"準変態" => 1} }
+        assert { style_stat.ratios_hash  == {:"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 1.0, :"変態" => 0.0} }
         assert { style_stat.denominator  == 1 }
         assert { style_stat.majority_ratio == 0.0 }
         assert { style_stat.minority_ratio == 1.0 }
@@ -25,8 +25,8 @@ module Swars
           case1("新米長玉").to_chart == [
             { :name => "王道",   :value => 0 },
             { :name => "準王道", :value => 0 },
-            { :name => "準変態", :value => 0 },
-            { :name => "変態",   :value => 1 },
+            { :name => "準変態", :value => 1 },
+            { :name => "変態",   :value => 0 },
           ]
         end
       end
