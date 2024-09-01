@@ -9,6 +9,10 @@ module ApplicationMemoryRecord
   end
 
   class_methods do
+    def valid_key_or_first(key, default = nil, &block)
+      valid_key(key, default, &block) || first&.key
+    end
+
     def keys_from(values)
       Array(values).collect { |e| fetch(e).key }
     end

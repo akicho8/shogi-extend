@@ -22,10 +22,10 @@ module QuickScript
         super + [
           {
             :label        => "種類",
-            :key          => :tactic_key,
+            :key          => :scope_key,
             :type         => :radio_button,
-            :elems        => TacticInfo.to_form_elems,
-            :default      => tactic_key,
+            :elems        => ScopeInfo.to_form_elems,
+            :default      => scope_key,
             :session_sync => true,
           },
           {
@@ -73,13 +73,15 @@ module QuickScript
 
       def table_rows
         internal_rows.collect.with_index do |e, i|
+          item = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tag_name])
+
           {}.tap do |h|
             win_ratio  = e[:win_ratio].try  { "%.3f %%" % (self * 100.0) }
             freq_ratio = e[:freq_ratio].try { "%.3f %%" % (self * 100.0) }
-            if tactic_info.key != :note
+            if scope_info.key != :note
               h["#"] = i.next
             end
-            h[tactic_info.name] = e[:tag_name]
+            h[scope_info.name] = e[:tag_name]
             if order_info.key == :win_rate
               h["勝率"]     = win_ratio
               h["出現率"] = freq_ratio
@@ -87,17 +89,18 @@ module QuickScript
               h["出現率"] = freq_ratio
               h["勝率"]     = win_ratio
             end
-            h["出現数"] = e[:freq_count]
-            h["スタイル"] = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tag_name]).try { style_info.name }
             h["WIN"]    = e[:win_count]
             h["LOSE"]   = e[:lose_count]
             h["DRAW"]   = e[:draw_count]
+            h["出現数"] = e[:freq_count]
+            h["スタイル"] = item.try { style_info.name }
+            h["種類"]     = item.try { self.class.human_name }
           end
         end
       end
 
       def title
-        "将棋ウォーズ#{tactic_info.name}#{order_info.name}ランキング"
+        "将棋ウォーズ#{scope_info.name}#{order_info.name}ランキング"
       end
 
       def internal_rows
@@ -113,12 +116,11 @@ module QuickScript
           start_time = Time.current
 
           av = aggregated_value[:records]
-          av = av.find_all { |e| tactic_info.ancestor_info.model[e[:tag_name]] } # 種類別
+          av = scope_info.scope_block[av]
 
-          if tactic_info.key == :note
+          if scope_info.key == :note
             # 備考は bioshogi 側の並びに合わせるのみ
-            model = tactic_info.ancestor_info.model
-            av = av.sort_by { |e| model[e[:tag_name]].code }
+            av = av.sort_by { |e| Bioshogi::Explain::NoteInfo[e[:tag_name]].code }
           else
             if order_info.key == :win_rate
               # 勝率条件出現数N以上
@@ -178,22 +180,22 @@ module QuickScript
 
       ################################################################################
 
-      def tactic_key
-        params[:tactic_key].presence || :attack
+      def scope_key
+        ScopeInfo.valid_key_or_first(params[:scope_key])
       end
 
-      def tactic_info
-        TacticInfo.fetch(tactic_key)
+      def scope_info
+        ScopeInfo.fetch(scope_key)
       end
 
       ################################################################################
 
       def order_key
-        params[:order_key]
+        OrderInfo.valid_key_or_first(params[:order_key])
       end
 
       def order_info
-        OrderInfo.lookup(order_key) || OrderInfo.first
+        OrderInfo.fetch(order_key)
       end
 
       ################################################################################
@@ -209,7 +211,7 @@ module QuickScript
       ################################################################################
 
       def ua_key
-        params[:user_agent_key].presence || :mobile
+        UaInfo.valid_key_or_first(params[:user_agent_key])
       end
 
       def ua_info

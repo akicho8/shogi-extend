@@ -13,8 +13,11 @@ module QuickScript
         TacticStatScript::PrimaryAggregator.mock_setup
         TacticStatScript.primary_aggregate_run
 
-        assert { case1(tactic_key: :attack)  }
-        assert { case1(tactic_key: :note)    }
+        assert { case1(scope_key: :attack)             }
+        assert { case1(scope_key: :attack_and_defense) }
+        assert { case1(scope_key: :note)               }
+        assert { case1(scope_key: :all)                }
+
         assert { case1(order_key: :win_rate) }
         assert { case1(order_key: :popular)  }
       end
