@@ -135,13 +135,17 @@ module Swars
       s = user.swars_crawl_reservations
       count = s.where(target_user_key: target_user.key).count
       total = s.count
-      body << "#{user.name} #{user.email} さんが全体#{total}回目個別#{count}回目の予約で対象は #{target_user.key.inspect}"
-      body << ""
+      subject = []
+      subject << "棋譜取得予約"
+      subject << user.name
+      subject << "全体#{total}回目"
+      subject << "個別#{count}回目"
+      subject << "対象:#{target_user.key.inspect}"
       if attachment_mode == "with_zip"
-        body << "(要ZIP添付)"
+        subject << "(要ZIP添付)"
       end
-      body = body.join(" ")
-      AppLog.info(emoji: ":目覚まし時計:", subject: "棋譜取得予約", body: body)
+      subject = subject.join(" ")
+      AppLog.important(emoji: ":目覚まし時計:", subject: subject, body: attributes.to_t)
     end
 
     private
