@@ -276,7 +276,7 @@ export default {
         return
       }
 
-      this.ga_click(`詰将棋用ストップウォッチ●`)
+      this.app_log(`詰将棋用ストップウォッチ●`)
       this.mode = "playing"
       this.interval_runner.start()
       this.$sound.play("start")
@@ -569,7 +569,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("詰将棋用ストップウォッチ")
+    this.app_log("詰将棋用ストップウォッチ")
   },
 
   computed: {

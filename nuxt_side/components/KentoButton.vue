@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.ga_click("KENTO")
+      this.app_log("KENTO")
     },
   },
 }

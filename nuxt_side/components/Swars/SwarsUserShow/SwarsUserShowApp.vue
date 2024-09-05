@@ -90,7 +90,7 @@ export default {
   },
 
   mounted() {
-    // this.ga_click("プレイヤー情報")
+    // this.app_log("プレイヤー情報")
   },
 
   methods: {

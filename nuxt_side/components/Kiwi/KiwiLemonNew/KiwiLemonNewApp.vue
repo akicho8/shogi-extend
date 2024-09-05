@@ -95,7 +95,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("動画作成")
+    this.app_log("動画作成")
     if (this.nuxt_login_required()) { return }
     this.debug_alert("mounted")
   },

@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("動画一覧")
+    this.app_log("動画一覧")
   },
 
   fetchOnServer: false,

@@ -9,7 +9,7 @@ export default {
   methods: {
     click_handle() {
       // 詳細のコンポーネント側で記録するので不要
-      // this.ga_click("詳細")
+      // this.app_log("詳細")
     },
   },
 }

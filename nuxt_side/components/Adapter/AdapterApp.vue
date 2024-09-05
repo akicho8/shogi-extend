@@ -90,7 +90,7 @@ export default {
     }
   },
   mounted() {
-    this.ga_click("なんでも棋譜変換")
+    this.app_log("なんでも棋譜変換")
     this.app_runner()
     this.input_text_focus()
   },
@@ -272,7 +272,7 @@ export default {
     },
 
     record_create(callback) {
-      this.ga_click("なんでも棋譜変換●")
+      this.app_log("なんでも棋譜変換●")
       const params = {
         input_text: this.input_text,
         edit_mode: "adapter",

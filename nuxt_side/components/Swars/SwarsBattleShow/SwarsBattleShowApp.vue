@@ -162,7 +162,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("バトル詳細")
+    this.app_log("バトル詳細")
   },
 
   // watch: {
@@ -288,7 +288,7 @@ export default {
     other_app_click_handle(app_name) {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.ga_click(app_name)
+      this.app_log(app_name)
       this.app_log({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
     },
   },

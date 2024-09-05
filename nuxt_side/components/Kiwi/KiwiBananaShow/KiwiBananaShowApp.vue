@@ -71,7 +71,7 @@ export default {
 
     if (process.client) {
       this.banana_room_create()
-      this.ga_click(`動画 ID:${this.banana.id} ${this.banana.title}`)
+      this.app_log(`動画 ID:${this.banana.id} ${this.banana.title}`)
     }
   },
 

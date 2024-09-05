@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.ga_click("コピー")
+      this.app_log("コピー")
     },
   },
 }

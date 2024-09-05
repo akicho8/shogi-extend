@@ -174,7 +174,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("CPU対戦")
+    this.app_log("CPU対戦")
     if (this.$route.query.auto_play) {
       this.start_handle()
     }
@@ -265,7 +265,7 @@ export default {
 
     // 開始
     start_handle() {
-      this.ga_click("CPU対戦●")
+      this.app_log("CPU対戦●")
 
       this.$sound.play_click()
 

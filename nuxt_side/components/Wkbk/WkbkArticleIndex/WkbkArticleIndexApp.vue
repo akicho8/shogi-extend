@@ -57,7 +57,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("問題リスト")
+    this.app_log("問題リスト")
   },
 
   fetch() {

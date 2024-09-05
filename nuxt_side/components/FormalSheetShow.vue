@@ -272,7 +272,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("棋譜用紙")
+    this.app_log("棋譜用紙")
 
     if (AUTO_PRINT) {
       setTimeout(() => {

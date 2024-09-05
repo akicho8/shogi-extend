@@ -153,7 +153,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("符号の鬼")
+    this.app_log("符号の鬼")
     this.sfen_clear_or_set()
   },
 

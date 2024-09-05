@@ -129,7 +129,7 @@ export default {
 
   mounted() {
     // this.clog("book", this.book)
-    // this.ga_click("将棋ドリル")
+    // this.app_log("将棋ドリル")
 
     // if (this.nuxt_login_required()) { return }
   },

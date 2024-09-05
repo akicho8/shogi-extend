@@ -73,7 +73,7 @@ export default {
 
   mounted() {
     // console.log("[mounted]")
-    this.ga_click("問題集一覧")
+    this.app_log("問題集一覧")
   },
 
   // fetchOnServer: false,

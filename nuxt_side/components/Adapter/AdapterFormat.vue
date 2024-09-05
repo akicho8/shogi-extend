@@ -58,7 +58,7 @@ import { TryFormatInfo } from "./models/try_format_info.js"
 export default {
   name: "AdapterFormat",
   mounted() {
-    this.ga_click("対応形式確認")
+    this.app_log("対応形式確認")
   },
   computed: {
     TryFormatInfo() { return TryFormatInfo },

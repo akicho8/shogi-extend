@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.ga_click("ぴよ将棋")
+      this.app_log("ぴよ将棋")
     },
   },
   computed: {

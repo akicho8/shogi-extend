@@ -136,7 +136,7 @@ export default {
     }
   },
   mounted() {
-    this.ga_click("対局時計")
+    this.app_log("対局時計")
     if (this.development_p) {
     } else {
       // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
@@ -191,7 +191,7 @@ export default {
       } else {
         this.full_screen.on()
         this.$sound.play("start")
-        this.ga_click("対局時計●")
+        this.app_log("対局時計●")
         this.say(this.play_talk_message())
         this.clock_box.play_handle()
         this.behavior_notify("play")

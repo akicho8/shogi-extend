@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("将棋ドリル")
+    this.app_log("将棋ドリル")
   },
 
   // fetchOnServer: false,

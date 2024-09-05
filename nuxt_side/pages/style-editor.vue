@@ -20,7 +20,7 @@ export default {
     },
   },
   mounted() {
-    this.ga_click("スタイルエディタ")
+    this.app_log("スタイルエディタ")
   },
   computed: {
     meta() {
