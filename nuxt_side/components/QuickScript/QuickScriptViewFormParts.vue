@@ -26,12 +26,24 @@
             img(:src="QS.attributes[form_part.key].data_uri")
             button.delete(size="is-small" @click="QS.file_upload_cancel_handle(form_part)")
         template(v-else-if="form_part.type === 'string'")
-          b-input(
-            :id="QS.form_part_id(form_part)"
-            v-model="QS.attributes[form_part.key]"
-            :placeholder="form_part.placeholder"
-            spellcheck="false"
-            )
+          template(v-if="form_part.ac_by === 'b_autocomplete'")
+            b-autocomplete(
+              :id="QS.form_part_id(form_part)"
+              v-model.trim="QS.attributes[form_part.key]"
+              :placeholder="form_part.placeholder"
+              spellcheck="false"
+              :data="QS.form_part_autocomplete_datalist(form_part)"
+              max-height="50vh"
+              )
+          template(v-else)
+            b-input(
+              :id="QS.form_part_id(form_part)"
+              v-model="QS.attributes[form_part.key]"
+              :placeholder="form_part.placeholder"
+              spellcheck="false"
+              :list="QS.form_part_datalist_id(form_part)"
+              )
+
         template(v-else-if="form_part.type === 'static'")
           template(v-if="true")
             input.input.is-static(:id="QS.form_part_id(form_part)" v-model="QS.attributes[form_part.key]" readonly)
@@ -74,6 +86,15 @@
               span {{label}}
         template(v-else)
           pre form_part.type が間違っている : {{form_part.type}}
+
+  // b-input の隣に書くとレイアウトが崩れるため分けて記述する
+  template(v-for="form_part in QS.showable_form_parts")
+    template(v-if="form_part.type === 'string'")
+      template(v-if="form_part.ac_by === 'html5'")
+        template(v-if="form_part.elems")
+          datalist(:id="QS.form_part_datalist_id(form_part)")
+            template(v-for="e in form_part.elems")
+              option(:value="e")
 </template>
 
 <script>

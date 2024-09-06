@@ -110,8 +110,8 @@ devDependencies:
     specifier: ^1.2.6
     version: 1.2.6
   shogi-player:
-    specifier: ^1.1.16
-    version: 1.1.16
+    specifier: ^1.1.17
+    version: 1.1.17
   strict-uri-encode:
     specifier: ^2.0.0
     version: 2.0.0
@@ -10708,8 +10708,8 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
-  /shogi-player@1.1.16:
-    resolution: {integrity: sha512-VKuF2Wq1C8JbsalzWdgjQ1oN70W1rASXU2YYD1fa3NevqmIx1Ohz811gSz+vJJbv7azPGFaHCdpq0CGMPUoCmg==}
+  /shogi-player@1.1.17:
+    resolution: {integrity: sha512-Z2gak0xH7qZ2MYrSR98pn2rZH+7zcRyRmpXkPLoXHO7GGyU/6WFpg3gSJiEZF/OM0tH70/qApUCii7BQZOSDng==}
     dependencies:
       beetleshine: 0.0.14
       chroma-js: 2.4.2

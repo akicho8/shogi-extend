@@ -12,7 +12,7 @@ module QuickScript
     end
 
     it "OGPの情報のみを返す" do
-      assert { Dispatcher.dispatch(qs_group_key: "dev", qs_page_key: "null", __FOR_ASYNC_DATA__: true) }
+      assert { Dispatcher.dispatch(qs_group_key: "dev", qs_page_key: "null", __RESPOND_TO_CRAWLER__: true) }
     end
 
     it "対応するクラスが反応している" do

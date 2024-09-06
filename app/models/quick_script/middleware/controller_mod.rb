@@ -38,7 +38,7 @@ module QuickScript
       ################################################################################
 
       def render_anything
-        if params[:__FOR_ASYNC_DATA__]
+        if params[:__RESPOND_TO_CRAWLER__]
           render_for_ogp_crawler
         else
           render_for_basic_content

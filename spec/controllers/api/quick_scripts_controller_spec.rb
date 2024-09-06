@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::QuickScriptsController, type: :controller do
   it "中身は返さずOGP専用の情報を返す" do
-    get :show, params: { qs_group_key: "chore", qs_page_key: "null", format: "json", __FOR_ASYNC_DATA__: "true"}
+    get :show, params: { qs_group_key: "chore", qs_page_key: "null", format: "json", __RESPOND_TO_CRAWLER__: "true"}
     hash = JSON.parse(response.body, symbolize_names: true)
     assert { hash[:title] }
     assert { hash[:description] }

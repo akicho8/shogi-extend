@@ -14,7 +14,7 @@ export default {
     if (process.server) {
       const url = `/api/lab/${params.qs_group_key ?? '__qs_group_key_is_blank__'}/${params.qs_page_key ?? '__qs_page_key_is_blank__'}.json`
       try {
-        const meta = await $axios.$get(url, { params: { ...query, __FOR_ASYNC_DATA__: true } })
+        const meta = await $axios.$get(url, { params: { ...query, __RESPOND_TO_CRAWLER__: true } })
         return { meta }
       } catch (e) {
         // console.warn(e)

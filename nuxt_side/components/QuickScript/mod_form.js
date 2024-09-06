@@ -3,8 +3,21 @@ import { Gs } from "@/components/models/gs.js"
 
 export const mod_form = {
   methods: {
-    form_part_id(form_part) {
-      return `form_part-${form_part.key}`
+    form_part_id(form_part) { return `form_part-${form_part.key}`      },
+
+    // input の list と datalist の id に指定する
+    form_part_datalist_id(form_part) {
+      if (form_part.ac_by === 'html5') {
+        return `form_part-list-${form_part.key}`
+      }
+    },
+
+    form_part_autocomplete_datalist(form_part) {
+      return form_part.elems.filter(e => {
+        const a = e.toString().toLowerCase()
+        const b = (this.attributes[form_part.key] || "").toLowerCase()
+        return a.indexOf(b) >= 0
+      })
     },
 
     form_part_help_message(form_part) {
