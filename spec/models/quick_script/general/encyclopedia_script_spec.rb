@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module QuickScript
-  module Tool
+  module General
     RSpec.describe EncyclopediaScript, type: :model do
       it "works" do
         assert { EncyclopediaScript.new(tag: "棒銀").as_json }

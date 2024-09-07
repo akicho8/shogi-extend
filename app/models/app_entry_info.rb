@@ -117,11 +117,12 @@ class AppEntryInfo
       title: "将棋ウォーズ棋力分布",
       og_image_key: "quick_script/swars/grade_stat_script",
       description: "偏差値的なのを見たいときにどうぞ",
-      # features: [
-      #   # "変動するように最近のだけ出してる",
-      #   # "戦法や囲いの分布もある",
-      #   # "人気戦法の対策をすれば勝ちやすいかも？",
-      # ],
+      features: [
+        "一日ごと更新",
+        # "変動するように最近のだけ出してる",
+        # "戦法や囲いの分布もある",
+        # "人気戦法の対策をすれば勝ちやすいかも？",
+      ],
     },
 
     {
@@ -131,6 +132,20 @@ class AppEntryInfo
       title: "将棋ウォーズ戦法勝率ランキング",
       og_image_key: "quick_script/swars/tactic_stat_script",
       description: "最近のいちばん強い戦法がわかる",
+      features: [
+        "一日ごと更新",
+        # "戦法や囲いの分布もある",
+        # "人気戦法の対策をすれば勝ちやすいかも？",
+      ],
+    },
+
+    {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab/general/encyclopedia" },
+      title: "戦法ミニ事典",
+      og_image_key: "quick_script/general/encyclopedia_script",
+      description: "戦法の組み方を知りたいときにどうぞ",
       # features: [
       #   "変動するように最近のだけ出してる",
       #   "戦法や囲いの分布もある",

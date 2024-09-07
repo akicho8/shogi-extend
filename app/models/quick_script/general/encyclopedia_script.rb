@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module QuickScript
-  module Tool
+  module General
     class EncyclopediaScript < Base
       self.title = "戦法ミニ事典"
       self.description = "任意の戦法の組み方や棋譜を確認する"
