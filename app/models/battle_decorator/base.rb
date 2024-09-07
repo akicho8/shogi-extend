@@ -13,8 +13,8 @@ module BattleDecorator
       {
         outer_columns: 3,       # 横何列か
         cell_rows: 25,          # 縦何行か
-        separator: "→",        # 戦型の区切り
-        strategy_take_max: 3,   # 戦型は最大何個表示するか
+        separator: "→",        # 戦法の区切り
+        strategy_take_max: 3,   # 戦法は最大何個表示するか
       }
     end
 
@@ -54,7 +54,7 @@ module BattleDecorator
     def end_at_s
     end
 
-    # 戦型は空にすると .value の部分が入力できなくなるため td を edit できるようにした
+    # 戦法は空にすると .value の部分が入力できなくなるため td を edit できるようにした
     # そのため先後まとめたテキストに変更した
     # なかに <br> が含まれるのがいやだけど仕方ない
     # もし buefy で textarea 対応の dialog がでたら改善できるかもしれない

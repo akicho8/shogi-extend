@@ -4,7 +4,7 @@ class QuickScript::Swars::TacticStatScript
     memory_record [
       {
         key: :attack,
-        name: "戦型",
+        name: "戦法",
         scope_block: -> av { av.find_all { |e| Bioshogi::Explain::AttackInfo[e[:tag_name]] } },
       },
       {
@@ -14,7 +14,7 @@ class QuickScript::Swars::TacticStatScript
       },
       {
         key: :attack_and_defense,
-        name: "戦型＋囲い",
+        name: "戦法＋囲い",
         scope_block: -> av { av.find_all { |e| Bioshogi::Explain::AttackInfo[e[:tag_name]] || Bioshogi::Explain::DefenseInfo[e[:tag_name]] } },
       },
       {

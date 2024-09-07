@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "戦型", to: { name: "swars-histograms-key",   params: { key: "attack"    }, }, development_only: false, },
+        { title: "戦法", to: { name: "swars-histograms-key",   params: { key: "attack"    }, }, development_only: false, },
         { title: "囲い", to: { name: "swars-histograms-key",   params: { key: "defense"   }, }, development_only: false, },
         { title: "手筋", to: { name: "swars-histograms-key",   params: { key: "technique" }, }, development_only: true,  },
         { title: "備考", to: { name: "swars-histograms-key",   params: { key: "note"      }, }, development_only: false, },

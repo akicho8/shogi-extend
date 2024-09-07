@@ -128,9 +128,9 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/tactic-stat" },
-      title: "将棋ウォーズ戦型勝率ランキング",
+      title: "将棋ウォーズ戦法勝率ランキング",
       og_image_key: "quick_script/swars/tactic_stat_script",
-      description: "最近のいちばん強い戦型がわかる",
+      description: "最近のいちばん強い戦法がわかる",
       # features: [
       #   "変動するように最近のだけ出してる",
       #   "戦法や囲いの分布もある",

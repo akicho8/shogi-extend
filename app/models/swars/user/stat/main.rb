@@ -64,7 +64,7 @@ module Swars
         {
           :day_items      => daily_win_lose_list_stat.to_chart, # 「日付」
           :vs_grade_items => vs_stat.to_chart,                  # 「段級」
-          **matrix_stat.to_all_chart,                           # 「戦型」「対攻」「囲い」「対囲」
+          **matrix_stat.to_all_chart,                           # 「戦法」「対攻」「囲い」「対囲」
           :etc_items      => other_stat.to_a,                   # 「他」
         }
       end

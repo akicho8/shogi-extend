@@ -26,7 +26,7 @@ module Swars
           names += e.tag_names_for(:attack)
           names += e.tag_names_for(:defense)
 
-          # 「居飛車」という情報は戦型から自明なので戦型も囲いもないときだけ入れる
+          # 「居飛車」という情報は戦法から自明なので戦法も囲いもないときだけ入れる
           if names.blank?
             names += e.tag_names_for(:note) - (reject_tag_keys[:note] || [])
           end

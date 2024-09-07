@@ -137,7 +137,7 @@
                     // しかし二年たって見ると不具合のように見えてしまったため b_b の --- に変更した
                     // 元から変な部分に無理に合わせる必要はない
                     td.b_b.basic_label(rowspan="2")
-                      | 戦型
+                      | 戦法
                     td.b_b.td_strategy_pack_body(rowspan="2" @click="edit_to(page_index, 'strategy_pack_for_all')" :class="{editable: page_index === 0}")
                       template(v-if="page_index === 0")
                         // 値がないときに .value のタグを取らないとCSSの :empty にマッチしないため v-if を入れている

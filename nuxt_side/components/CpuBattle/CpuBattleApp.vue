@@ -271,7 +271,7 @@ export default {
 
       this.sp_body_set()
 
-      // オールラウンドの戦型選択
+      // オールラウンドの戦法選択
       this.cpu_strategy_random_number_reset()
 
       // 候補手クリア

@@ -6,8 +6,8 @@
 module QuickScript
   module Swars
     class TacticStatScript < Base
-      self.title = "将棋ウォーズ戦型勝率ランキング"
-      self.description = "戦型・囲いなどの勝率・頻度を調べる"
+      self.title = "将棋ウォーズ戦法勝率ランキング"
+      self.description = "戦法・囲いなどの勝率・頻度を調べる"
       self.form_method = :get
       self.button_label = "集計"
       self.debug_mode = Rails.env.local?
