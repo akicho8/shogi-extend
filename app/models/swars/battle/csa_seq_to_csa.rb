@@ -31,7 +31,7 @@ module Swars
         if true
           @lines << ["$X_FINAL", @battle.final_info.name] * ":" # 未使用
           if membership = @battle.memberships.find { |e| e.judge_key == "win" }
-            @lines << ["$X_WINNER", membership.location_key] * ":" # 確実に勝者をパーサーに伝える (超重要)
+            @lines << ["$X_WINNER", membership.location_info.name] * ":" # 確実に勝者をパーサーに伝える (超重要)
           end
         end
 

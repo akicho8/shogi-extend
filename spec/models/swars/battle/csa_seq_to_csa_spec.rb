@@ -5,7 +5,7 @@ module Swars
     it "works" do
       battle = Swars::Battle.create!
       battle.kifu_body.include?("$X_FINAL:投了")
-      battle.kifu_body.include?("$X_WINNER:black")
+      battle.kifu_body.include?("$X_WINNER:▲")
     end
   end
 end
