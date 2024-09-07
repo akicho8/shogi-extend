@@ -95,6 +95,8 @@ module QuickScript
             h["出現数"] = e[:freq_count]
             h["スタイル"] = item.try { style_info.name }
             h["種類"]     = item.try { self.class.human_name }
+            h["リンク1"]  = { _nuxt_link: { name: "棋力帯",   to: {path: "/lab/swars/grade-stat", query: {population_key: "user", tag: e[:tag_name]}}, }, }
+            h["リンク2"]  = { _nuxt_link: { name: "ミニ事典", to: {path: "/lab/tool/encyclopedia", query: {tag: e[:tag_name]}}, }, }
           end
         end
       end
