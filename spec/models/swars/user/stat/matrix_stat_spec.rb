@@ -3,15 +3,16 @@ require "rails_helper"
 module Swars
   RSpec.describe User::Stat::MatrixStat, type: :model, swars_spec: true do
     describe "戦法・囲い×自分・相手" do
-      def case1(tactic_key, judge_key)
-        Battle.create!(tactic_key: tactic_key) do |e|
-          e.memberships.build(user: @user, judge_key: judge_key)
+      def case1
+        kifu_body = Rails.root.join("spec/files/アヒル戦法.kif").read
+        battle = Battle.create!(kifu_body_for_test: kifu_body) do |e|
+          e.memberships.build(user: @user, judge_key: :win)
         end
       end
 
       before do
         @user = User.create!
-        case1("アヒル戦法", :win)
+        case1
       end
 
       it "my_attack_items" do

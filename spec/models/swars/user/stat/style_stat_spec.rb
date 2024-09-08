@@ -5,10 +5,12 @@ module Swars
     describe "棋風" do
       def case1(tactic_key)
         black = User.create!
+        white = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
+          e.memberships.build(user: white)
         end
-        black.stat.style_stat
+        white.stat.style_stat
       end
 
       it "works" do
@@ -34,18 +36,18 @@ module Swars
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::User::Stat::StyleStat
 # >>   棋風
 # >>     works
 # >>     to_chart
-# >> 
+# >>
 # >> Top 2 slowest examples (0.77407 seconds, 27.2% of total time):
 # >>   Swars::User::Stat::StyleStat 棋風 works
 # >>     0.5544 seconds -:14
 # >>   Swars::User::Stat::StyleStat 棋風 to_chart
 # >>     0.21966 seconds -:23
-# >> 
+# >>
 # >> Finished in 2.85 seconds (files took 1.83 seconds to load)
 # >> 2 examples, 0 failures
-# >> 
+# >>
