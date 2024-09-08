@@ -6,12 +6,14 @@ module Swars
     def current_scope
       @current_scope ||= yield_self do
         case
-        when v = params[:id] || params[:ids]
-          Battle.where(id: v)
-        when v = params[:key] || params[:keys] || primary_battle_key
+        when v = (params[:id].presence || params[:ids].presence)
+          Battle.where(id: v.to_s.scan(/\d+/))
+        when v = (params[:key].presence || params[:keys].presence || primary_battle_key)
           Battle.where(key: v)
         when params[:all]
           Battle.all
+        when query_info.lookup_first([:id, :ids, :key, :keys])
+          Battle.find_all_by_params(query_info: query_info)
         when current_swars_user
           current_swars_user.battles.find_all_by_params(query_info: query_info, target_owner: current_swars_user, with_includes: true)
         when (v = params[:tag] || query_info.values.presence) && Rails.env.local? && false

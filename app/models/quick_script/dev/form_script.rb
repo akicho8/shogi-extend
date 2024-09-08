@@ -33,58 +33,37 @@ module QuickScript
             :type    => :file,
             :default => nil,
           },
-          {
-            :label   => "string (補完: なし)",
-            :key     => :str1,
-            :type    => :string,
-            :default => params[:str1].presence || "(string)",
-          },
-          {
-            :label   => "string (補完: ブラウザ機能)",
-            :key     => :str3,
-            :type    => :string,
-            :ac_by   => :html5,
-            :elems   => ["foo", "bar", "baz"],
-            :default => params[:str3].presence || "a",
-          },
-          {
-            :label   => "string (補完: b-autocomplete)",
-            :key     => :str4,
-            :type    => :string,
-            :ac_by   => :b_autocomplete,
-            :elems   => ["foo", "bar", "baz"],
-            :default => params[:str4].presence || "a",
-          },
+
+          ################################################################################ 文字列
 
           {
-            :label   => "static",
-            :key     => :static1,
-            :type    => :static,
-            :default => params[:static1].presence || "固定文字列",
-            :help_message => "(help_message)",
+            :label        => "string",
+            :key          => :str1_a,
+            :type         => :string,
+            :default      => params[:str1_a].presence || "a",
+            :help_message => "補完: なし",
           },
           {
-            :label   => "localStorage 同期",
-            :key     => :str2,
-            :type    => :string,
-            :default => params[:str2].presence || "(string)",
-            :ls_sync => { parent_key: :"(parent_key)", child_key: :str2, loader: :force, writer: :force }, # localStorage["(parent_key)"].update(str2: "値")
-            # :ls_sync => {global_key: :str2, loader: :force, writer: :force },                      # localStorage["str2"] = "値"
-            # :ls_sync => {global_key: :str2, loader: :if_default_is_nil, writer: :force },                      # loader: :if_default_is_nil なら default: nil なら localStorage の方を書き込む
-            :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
+            :label        => "string",
+            :key          => :str1_b,
+            :type         => :string,
+            :ac_by        => :html5,
+            :elems        => ["foo", "bar", "baz"],
+            :default      => params[:str1_b].presence || "a",
+            :help_message => "補完: HTML5 の datalist",
           },
           {
-            :label   => "text",
-            :key     => :text1,
-            :type    => :text,
-            :default => params[:text1].presence || "(text)",
+            :label        => "string ",
+            :key          => :str1_c,
+            :type         => :string,
+            :ac_by        => :b_autocomplete,
+            :elems        => ["foo", "bar", "baz"],
+            :default      => params[:str1_c].presence || "a",
+            :help_message => "補完: Buefy の b-autocomplete",
           },
-          {
-            :label   => "integer",
-            :key     => :int1,
-            :type    => :numeric,
-            :default => (params[:int1].presence || "1").to_i,
-          },
+
+          ################################################################################ 多数の中から選択
+
           {
             :label   => "select (array)",
             :key     => :select1,
@@ -99,6 +78,45 @@ module QuickScript
             :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
             :default => params[:select2].presence || "a",
           },
+
+          ################################################################################
+
+          {
+            :label   => "static",
+            :key     => :static1,
+            :type    => :static,
+            :default => params[:static1].presence || "固定文字列",
+            :help_message => "(help_message)",
+          },
+
+          ################################################################################
+
+          {
+            :label   => "localStorage 同期",
+            :key     => :str_ls,
+            :type    => :string,
+            :default => params[:str_ls].presence || "(string)",
+            :ls_sync => { parent_key: :"(parent_key)", child_key: :str_ls, loader: :force, writer: :force }, # localStorage["(parent_key)"].update(str_ls: "値")
+            # :ls_sync => {global_key: :str_ls, loader: :force, writer: :force },                      # localStorage["str_ls"] = "値"
+            # :ls_sync => {global_key: :str_ls, loader: :if_default_is_nil, writer: :force },                      # loader: :if_default_is_nil なら default: nil なら localStorage の方を書き込む
+            :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
+          },
+
+          ################################################################################
+
+          {
+            :label   => "text",
+            :key     => :text1,
+            :type    => :text,
+            :default => params[:text1].presence || "(text)",
+          },
+          {
+            :label   => "integer",
+            :key     => :int1,
+            :type    => :numeric,
+            :default => (params[:int1].presence || "1").to_i,
+          },
+
           {
             :label   => "radio (array)",
             :key     => :radio1,

@@ -8,32 +8,35 @@ module QuickScript
       self.form_method = :get
       self.button_label = "表示"
       self.router_push_failed_then_fetch = true
+      self.debug_mode = false
+      self.qs_invisible = true
 
       def form_parts
         super + [
           {
-            :label   => "戦法 (選択)",
-            :key     => :tag,
-            :type    => :select,
-            :elems   => [""] + [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default => (params[:input_tag1].present? || params[:input_tag2].present?) ? "" : params[:tag],
+            :label        => "戦法",
+            :key          => :tag,
+            :type         => :string,
+            :ac_by        => :html5,
+            :elems        => candidate_tag_names,
+            :default      => params[:tag].presence,
+            :help_message => "直接入力 or 右端の▼から選択",
           },
-          {
-            :label   => "戦法 (入力)",
-            :key     => :input_tag1,
-            :type    => :string,
-            :ac_by   => :b_autocomplete,
-            :elems   => [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default => params[:input_tag1].presence,
-          },
-          {
-            :label   => "戦法 (入力)",
-            :key     => :input_tag2,
-            :type    => :string,
-            :ac_by   => :html5,
-            :elems   => [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default => params[:input_tag2].presence,
-          },
+          # {
+          #   :label        => "戦法 (選択)",
+          #   :key          => :input_tag1,
+          #   :type         => debug_mode ? :select : :hidden,
+          #   :elems        => [""] + candidate_tag_names,
+          #   :default      => params[:input_tag1],
+          # },
+          # {
+          #   :label        => "戦法 (入力)",
+          #   :key          => :input_tag2,
+          #   :type         => debug_mode ? :string : :hidden,
+          #   :ac_by        => :b_autocomplete,
+          #   :elems        => candidate_tag_names,
+          #   :default      => params[:input_tag2].presence,
+          # },
         ]
       end
 
@@ -54,11 +57,15 @@ module QuickScript
       ################################################################################
 
       def tag
-        @tag ||= (params[:input_tag2].presence || params[:input_tag1].presence || params[:tag].presence).to_s
+        @tag ||= (params[:input_tag1].presence || params[:input_tag2].presence || params[:tag].presence).to_s
       end
 
       def current_item
         @current_item ||= Bioshogi::Explain::TacticInfo.flat_lookup(tag)
+      end
+
+      def candidate_tag_names
+        @candidate_tag_names ||= [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) }
       end
 
       ################################################################################
