@@ -82,6 +82,7 @@ module QuickScript
 
       def sp_params
         {
+          :key           => SecureRandom.hex, # 再度表示ボタンを押したときに盤面を作り直すため
           :sp_mode       => "view",
           :sp_body       => sp_body,
           :sp_turn       => sp_turn,
