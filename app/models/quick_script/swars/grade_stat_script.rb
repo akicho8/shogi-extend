@@ -42,7 +42,7 @@ module QuickScript
           return "一次集計データがありません"
         end
         if total_count.zero?
-          return "一件も見つかりません"
+          return "一#{population_info.unit}も見つかりません"
         end
         if total_count.positive?
           values = [
@@ -96,10 +96,10 @@ module QuickScript
               "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
               "一次集計処理" => aggregated_value[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
               "二次集計処理" => (Time.current - start_time).try { ActiveSupport::Duration.build(self).inspect },
-              "度数対象"     => population_info.name,
               "人数合計"     => aggregated_value[:total_user_count],
               "対局数合計"   => aggregated_value[:total_membership_count],
               "絞り込み"     => tag,
+              "度数対象"     => population_info.name,
               "度数合計"     => total_count,
               "平均"         => score_average,
               "不偏分散"     => variance,
@@ -165,7 +165,7 @@ module QuickScript
       ################################################################################
 
       def title
-        "#{super} (#{total_count}件)"
+        "#{super} (#{total_count}#{population_info.unit})"
       end
 
       ################################################################################
