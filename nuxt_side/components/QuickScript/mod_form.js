@@ -15,6 +15,7 @@ export const mod_form = {
     form_part_autocomplete_datalist(form_part) {
       return form_part.elems.filter(e => {
         const a = e.toString().toLowerCase()
+        console.log(this.attributes[form_part.key])
         const b = (this.attributes[form_part.key] || "").toLowerCase()
         return a.indexOf(b) >= 0
       })

@@ -4,17 +4,17 @@ module QuickScript
       prepend QueryMod
 
       self.title               = "将棋ウォーズ横断検索"
-      self.description         = "ウォーズIDを指定しない検索"
+      self.description         = "ウォーズIDを指定しない検索で、特定の戦法の対局を探したいときに使う"
       self.form_method         = :post
-      self.button_label        = "実行"
+      self.button_label        = "検索"
       self.login_link_show     = true
       self.debug_mode          = Rails.env.local?
       self.throttle_expires_in = 5.0
-      self.qs_invisible        = true
+      # self.qs_invisible        = true
 
-      MAX_OF_WANT_MAX      = 500    # 必要件数は N 以下
-      BACKGROUND_THRESHOLD = 10000  # N以上ならバックグランド実行する
-      MAX_OF_RANGE_MAX     = 50000  # 対象件数は N 以下
+      MAX_OF_WANT_MAX      = 500     # 必要件数は N 以下
+      BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
+      MAX_OF_RANGE_MAX     = 50000   # 対象件数は N 以下
 
       def form_parts
         super + [
@@ -25,22 +25,39 @@ module QuickScript
             :ac_by        => :html5,
             :elems        => candidate_tag_names,
             :default      => params[:tag].presence,
-            :help_message => "直接入力 or 右端の▼から選択する。この戦法が現われた対局で絞る。絞らなくてもいい。",
+            :help_message => "この戦法が使われた対局に絞る。直接入力 or 右端の▼から選択。複数指定でAND条件",
             :session_sync => true,
           },
-
+          {
+            :label        => "勝敗",
+            :key          => :judge_keys,
+            :type         => :checkbox_button,
+            :elems        => JudgeInfo.to_form_elems,
+            :default      => judge_keys,
+            :help_message => "指定の戦法で勝った対局に絞りたいときに使う",
+            :session_sync => true,
+          },
           {
             :label        => "クエリ",
             :key          => :query,
             :type         => :string,
             :default      => params[:query].presence,
-            :placeholder  => "ルール:10分 モード:野良 勝敗:勝ち 手数:>=80",
-            :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。ただしウォーズIDは指定できない。対局の条件のみで対局者一方の情報(たとえば先後)などは指定できない。",
+            :placeholder  => "ルール:10分 モード:野良 手数:>=80",
+            :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。対局者側の情報(先後や勝敗など)は指定できない",
             :session_sync => true,
           },
 
           ################################################################################
 
+          {
+            :label        => "検索対象件数 - 直近N件",
+            :key          => :range_max,
+            :type         => :numeric,
+            :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
+            :default      => range_max,
+            :help_message => "この件数の中から必要件数分の対局を探す。抽出件数が足りないときはこの上限を増やす",
+            :session_sync => true,
+          },
           {
             :label        => "必要件数",
             :key          => :want_max,
@@ -50,20 +67,11 @@ module QuickScript
             :help_message => "この件数だけ見つけたら検索を終える",
             :session_sync => true,
           },
-          {
-            :label        => "検索対象件数 - 直近N件",
-            :key          => :range_max,
-            :type         => :numeric,
-            :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
-            :default      => range_max,
-            :help_message => "この件数の中から必要件数分の対局を探す。抽出件数が足りないときはこの上限を増やす。",
-            :session_sync => true,
-          },
 
           ################################################################################
 
           {
-            :label   => "バックグランド実行する",
+            :label   => "バックグランド実行",
             :key     => :bg_request,
             :type    => :radio_button,
             :elems   => {
@@ -109,7 +117,7 @@ module QuickScript
       end
 
       def posted_message
-        "終わったら #{current_user.email} あてに URL を送ります"
+        "承りました。終わったら #{current_user.email} あてに一報します。"
       end
 
       def validate!
@@ -163,7 +171,6 @@ module QuickScript
 
       def sub_scope(scope)
         if current_tag_names.present?
-          tag_scope = ::Swars::Membership.tagged_with(current_tag_names)
           if true
             # distinct を使う場合。こっちの方が 10 ms 速い。
             scope = scope.joins(:memberships).distinct.merge(tag_scope)
@@ -173,6 +180,14 @@ module QuickScript
           end
         end
         scope = scope.find_all_by_params(query_info: query_info)
+      end
+
+      def tag_scope
+        s = ::Swars::Membership.tagged_with(current_tag_names)
+        if judge_infos.present?
+          s = s.judge_eq(judge_infos.pluck(:key))
+        end
+        s
       end
 
       ################################################################################
@@ -197,6 +212,16 @@ module QuickScript
 
       ################################################################################
 
+      def judge_keys
+        Array(params[:judge_keys])
+      end
+
+      def judge_infos
+        @judge_infos ||= JudgeInfo.array_from(judge_keys)
+      end
+
+      ################################################################################
+
       def want_max
         (params[:want_max].presence || 100).to_i
       end
@@ -217,6 +242,7 @@ module QuickScript
 
       def mail_notify
         begin
+          @processed_at = Time.current
           @processed_second = Benchmark.realtime { all_ids }
         end
         SystemMailer.notify({
@@ -230,7 +256,7 @@ module QuickScript
 
       def mail_subject
         [
-          *current_tag_names.collect { |e| "[#{e}]" },
+          current_tag_names.collect { |e| "【#{e}】" }.join,
           "抽出#{all_ids.size}件",
         ].compact_blank.join(" ")
       end
@@ -254,6 +280,7 @@ module QuickScript
           "抽出"     => all_ids.size,
           "必要"     => want_max,
           "対象"     => range_max,
+          "実行開始" => @processed_at.try { to_fs(:ymdhms) },
           "処理時間" => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
         }
       end

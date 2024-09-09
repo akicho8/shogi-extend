@@ -9,7 +9,7 @@ module QuickScript
       self.button_label = "表示"
       self.router_push_failed_then_fetch = true
       self.debug_mode = false
-      self.qs_invisible = true
+      # self.qs_invisible = true
 
       def form_parts
         super + [

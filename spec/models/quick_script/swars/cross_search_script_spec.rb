@@ -11,3 +11,15 @@ module QuickScript
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> QuickScript::Swars::CrossSearchScript
+# >>   works
+# >> 
+# >> Top 1 slowest examples (0.52559 seconds, 19.3% of total time):
+# >>   QuickScript::Swars::CrossSearchScript works
+# >>     0.52559 seconds -:5
+# >> 
+# >> Finished in 2.72 seconds (files took 2.27 seconds to load)
+# >> 1 example, 0 failures
+# >> 

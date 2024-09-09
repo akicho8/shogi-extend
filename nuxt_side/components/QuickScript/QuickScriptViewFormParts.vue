@@ -43,7 +43,35 @@
               spellcheck="false"
               :list="QS.form_part_datalist_id(form_part)"
               )
-
+        template(v-else-if="form_part.type === 'taginput'")
+          // 作りかけ
+          //- :size="TheApp.input_element_size"
+          //- v-model="current_tags"
+          //- :data="filtered_tags"
+          //- autocomplete
+          //- open-on-focus
+          //- allow-new
+          //- icon="label"
+          //- placeholder="Add a tag"
+          //- spellcheck="false"
+          //- @typing="typing_handle"
+          //- @add="add_handle"
+          //- @remove="remove_handle"
+          //- max-height="50vh"
+          //- group-field="name"
+          //- group-options="values"
+          //- expanded
+          //- attached
+          //- @typing="typing_handle"
+          //- :data="QS.form_part_autocomplete_datalist(form_part)"
+          //- max-height="50vh"
+          b-taginput(
+            :id="QS.form_part_id(form_part)"
+            :on-paste-separators="[',', ' ']"
+            v-model="QS.attributes[form_part.key]"
+            :placeholder="form_part.placeholder"
+            spellcheck="false"
+            )
         template(v-else-if="form_part.type === 'static'")
           template(v-if="true")
             input.input.is-static(:id="QS.form_part_id(form_part)" v-model="QS.attributes[form_part.key]" readonly)

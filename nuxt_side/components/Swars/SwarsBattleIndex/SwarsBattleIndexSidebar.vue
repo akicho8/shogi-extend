@@ -6,13 +6,26 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: APP.xi.current_swars_user_key}, query: {query: APP.query_for_link}}" @click.native="$sound.play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.swars_users_key_handle(
+            label="プレイヤー情報"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key', params: {key: APP.xi.current_swars_user_key}, query: {query: APP.query_for_link}}"
+            @click.native="$sound.play_click()"
+            :disabled="menu_item_disabled"
+          )
 
           b-menu-item.swars_custom_search_handle(
             label="カスタム検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
             :to="{name: 'swars-search-custom', query: $gs.hash_compact({user_key: APP.xi.current_swars_user_key})}"
+            )
+
+          b-menu-item.swars_cross_search_handle(
+            label="横断検索"
+            @click.native="$sound.play_click()"
+            tag="nuxt-link"
+            :to="{path: '/lab/swars/cross-search'}"
             )
 
         b-menu-list(label="レイアウト")

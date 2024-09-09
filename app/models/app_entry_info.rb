@@ -134,13 +134,13 @@ class AppEntryInfo
       description: "最近のいちばん強い戦法がわかる",
       features: [
         "一日ごと更新",
-        # "戦法や囲いの分布もある",
+        "勝率の高い「囲い」も見れる",
         # "人気戦法の対策をすれば勝ちやすいかも？",
       ],
     },
 
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/encyclopedia" },
       title: "戦法ミニ事典",
@@ -154,7 +154,7 @@ class AppEntryInfo
     },
 
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/cross-search" },
       title: "将棋ウォーズ横断検索",
