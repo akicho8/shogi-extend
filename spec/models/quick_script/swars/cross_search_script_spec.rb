@@ -5,10 +5,10 @@ module QuickScript
     it "works" do
       battle = ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.ibis_pattern)
       tp battle.info if $0 == "-"
-      instance = Swars::CrossSearchScript.new(x_tag: "居飛車", x_judge_keys: "勝ち,負け", x_grade_keys: "30級", xmode_keys: "野良", rule_keys: "10分", _method: "post")
+      instance = Swars::CrossSearchScript.new(exec: "true", x_tag: "居飛車", x_judge_keys: "勝ち,負け", x_grade_keys: "30級", xmode_keys: "野良", rule_keys: "10分", _method: "get")
       assert { instance.all_ids == [battle.id] }
       assert { instance.as_json }
-      assert { Swars::CrossSearchScript.new(x_tag: "振り飛車", _method: "post").all_ids == [] }
+      assert { Swars::CrossSearchScript.new(exec: "true", x_tag: "振り飛車", _method: "get").all_ids == [] }
     end
   end
 end
@@ -16,7 +16,7 @@ end
 # >> 
 # >> QuickScript::Swars::CrossSearchScript
 # >> |----------+--------------------------------------------|
-# >> |       ID | 4415                                       |
+# >> |       ID | 4416                                       |
 # >> |   ルール | 10分                                       |
 # >> |     結末 | 投了                                       |
 # >> |   モード | 野良                                       |
@@ -30,13 +30,13 @@ end
 # >> |     勝者 | user1                                      |
 # >> | 最終参照 | 2000-01-01 00:00:00                        |
 # >> |----------+--------------------------------------------|
-# >> 1999-12-31T15:00:00.000Z pid=60141 tid=1e2d INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >> 1999-12-31T15:00:00.000Z pid=67570 tid=1ht6 INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
 # >>   works
 # >> 
-# >> Top 1 slowest examples (0.57162 seconds, 21.4% of total time):
+# >> Top 1 slowest examples (0.63986 seconds, 22.9% of total time):
 # >>   QuickScript::Swars::CrossSearchScript works
-# >>     0.57162 seconds -:5
+# >>     0.63986 seconds -:5
 # >> 
-# >> Finished in 2.67 seconds (files took 2.14 seconds to load)
+# >> Finished in 2.8 seconds (files took 2.29 seconds to load)
 # >> 1 example, 0 failures
 # >> 

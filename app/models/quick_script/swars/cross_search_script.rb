@@ -1,13 +1,15 @@
 module QuickScript
   module Swars
     class CrossSearchScript < Base
-      self.title               = "将棋ウォーズ横断検索"
-      self.description         = "ウォーズIDを指定しない検索"
-      self.form_method         = :post
-      self.button_label        = "検索"
-      self.login_link_show     = true
-      self.debug_mode          = Rails.env.local?
-      self.throttle_expires_in = 5.0
+      self.title                         = "将棋ウォーズ横断検索"
+      self.description                   = "ウォーズIDを指定しない検索"
+      self.form_method                   = :get
+      self.router_push_failed_then_fetch = true
+      self.button_label                  = "検索"
+      self.login_link_show               = true
+      self.debug_mode                    = Rails.env.local?
+      self.throttle_expires_in           = 5.0
+      self.params_add_submit_key         = :exec
 
       MAX_OF_WANT_MAX      = 500     # 必要件数は N 以下
       BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
@@ -140,33 +142,31 @@ module QuickScript
       end
 
       def call
-        if foreground_mode
-          if request_post?
-            validate!
-            if flash.present?
+        if foreground_mode && submitted? && fetch_index >= 0
+          validate!
+          if flash.present?
+            return
+          end
+          if current_bg_request
+            unless throttle.call
+              flash[:notice] = "連打すな"
               return
             end
-            if current_bg_request
-              unless throttle.call
-                flash[:notice] = "連打すな"
-                return
-              end
-              call_later
-              # self.form_method = nil # form をまるごと消す
-              return posted_message
-            end
-            first_heavy_run
-            app_log_call
-            if all_ids.empty?
-              flash[:notice] = empty_message
-              return
-            end
-            flash[:notice] = found_message
-            if false
-              return { _autolink: search_url }
-            else
-              redirect_to search_path, type: :tab_open
-            end
+            call_later
+            # self.form_method = nil # form をまるごと消す
+            return posted_message
+          end
+          first_heavy_run
+          app_log_call
+          if all_ids.empty?
+            flash[:notice] = empty_message
+            return
+          end
+          flash[:notice] = found_message
+          if false
+            return { _autolink: search_url }
+          else
+            redirect_to search_path, type: :tab_open
           end
         end
         if background_mode
