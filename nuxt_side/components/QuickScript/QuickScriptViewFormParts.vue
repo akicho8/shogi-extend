@@ -151,4 +151,8 @@ export default {
       // border-radius: 4px
     button
       margin-left: 0.5rem
+
+  // 長いラジオボタンやチェックボックスをスクロールさせる
+  .field-body
+    +is_scroll_x
 </style>

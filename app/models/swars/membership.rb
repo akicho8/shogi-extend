@@ -171,7 +171,7 @@ module Swars
     end
 
     def name_with_grade_with_judge
-      "#{user.key} #{grade.name} #{judge.name}"
+      "#{user.key} #{grade.name} #{judge.name} (#{all_tag_names.join(" ")})"
     end
 
     # 先手 後手 下手 上手 を返す

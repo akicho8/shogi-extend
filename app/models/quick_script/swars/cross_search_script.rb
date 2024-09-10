@@ -1,16 +1,13 @@
 module QuickScript
   module Swars
     class CrossSearchScript < Base
-      prepend QueryMod
-
       self.title               = "将棋ウォーズ横断検索"
-      self.description         = "ウォーズIDを指定しない検索で、特定の戦法の対局を探したいときに使う"
+      self.description         = "ウォーズIDを指定しない検索"
       self.form_method         = :post
       self.button_label        = "検索"
       self.login_link_show     = true
       self.debug_mode          = Rails.env.local?
       self.throttle_expires_in = 5.0
-      # self.qs_invisible        = true
 
       MAX_OF_WANT_MAX      = 500     # 必要件数は N 以下
       BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
@@ -20,30 +17,88 @@ module QuickScript
         super + [
           {
             :label        => "戦法",
-            :key          => :tag,
+            :key          => :x_tag,
             :type         => :string,
             :ac_by        => :html5,
             :elems        => candidate_tag_names,
-            :default      => params[:tag].presence,
-            :help_message => "この戦法が使われた対局に絞る。直接入力 or 右端の▼から選択。複数指定でAND条件",
+            :default      => params[:x_tag].presence,
+            :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
+            :session_sync => true,
+          },
+          {
+            :label        => "棋力",
+            :key          => :x_grade_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+            :default      => x_grade_keys,
+            # :help_message => "指定の戦法を使った人の棋力",
             :session_sync => true,
           },
           {
             :label        => "勝敗",
-            :key          => :judge_keys,
+            :key          => :x_judge_keys,
             :type         => :checkbox_button,
-            :elems        => JudgeInfo.to_form_elems,
-            :default      => judge_keys,
-            :help_message => "指定の戦法で勝った対局に絞りたいときに使う",
+            :elems        => ::JudgeInfo.to_form_elems,
+            :default      => x_judge_keys,
+            # :help_message => "指定の戦法を使ったときの勝敗",
             :session_sync => true,
           },
+          {
+            :label        => "相手の戦法",
+            :key          => :y_tag,
+            :type         => :string,
+            :ac_by        => :html5,
+            :elems        => candidate_tag_names,
+            :default      => params[:y_tag].presence,
+            :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
+            :session_sync => true,
+          },
+          {
+            :label        => "相手の棋力",
+            :key          => :y_grade_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+            :default      => y_grade_keys,
+            # :help_message => "指定の戦法を食らった人の棋力",
+            :session_sync => true,
+          },
+          {
+            :label        => "相手の勝敗",
+            :key          => :y_judge_keys,
+            :type         => :checkbox_button,
+            :elems        => ::JudgeInfo.to_form_elems,
+            :default      => y_judge_keys,
+            # :help_message => "指定の戦法を使ったときの勝敗",
+            :session_sync => true,
+          },
+
+          ################################################################################
+
+          {
+            :label        => "ルール",
+            :key          => :rule_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::RuleInfo.to_form_elems,
+            :default      => rule_keys,
+            :session_sync => true,
+          },
+
+          {
+            :label        => "モード",
+            :key          => :xmode_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::XmodeInfo.to_form_elems,
+            :default      => xmode_keys,
+            :session_sync => true,
+          },
+
           {
             :label        => "クエリ",
             :key          => :query,
             :type         => :string,
-            :default      => params[:query].presence,
-            :placeholder  => "ルール:10分 モード:野良 手数:>=80",
-            :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。対局者側の情報(先後や勝敗など)は指定できない",
+            :default      => query,
+            :placeholder  => "手数:>=80",
+            :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
             :session_sync => true,
           },
 
@@ -64,7 +119,7 @@ module QuickScript
             :type         => :numeric,
             :options      => { min: 100, max: MAX_OF_WANT_MAX, step: 100 },
             :default      => want_max,
-            :help_message => "この件数だけ見つけたら検索を終える",
+            :help_message => "最大N件見つけたら検索を終える",
             :session_sync => true,
           },
 
@@ -98,13 +153,20 @@ module QuickScript
               end
               call_later
               # self.form_method = nil # form をまるごと消す
-              return { _autolink: posted_message }
+              return posted_message
             end
+            first_heavy_run
+            app_log_call
             if all_ids.empty?
               flash[:notice] = empty_message
               return
             end
-            redirect_to search_path
+            flash[:notice] = found_message
+            if false
+              return { _autolink: search_url }
+            else
+              redirect_to search_path, type: :tab_open
+            end
           end
         end
         if background_mode
@@ -121,7 +183,7 @@ module QuickScript
       end
 
       def validate!
-        current_tag_names.each do |tag_name|
+        x_tag_names.each do |tag_name|
           unless Bioshogi::Explain::TacticInfo.flat_lookup(tag_name)
             flash[:notice] = "#{tag_name}とはなんでしょう？"
             return
@@ -153,6 +215,14 @@ module QuickScript
         end
       end
 
+      def first_heavy_run
+        if @processed_at
+          raise "must not happen"
+        end
+        @processed_at = Time.current
+        @processed_second = Benchmark.realtime { all_ids }
+      end
+
       def all_ids
         @all_ids ||= yield_self do
           ids = []
@@ -170,30 +240,74 @@ module QuickScript
       end
 
       def sub_scope(scope)
-        if current_tag_names.present?
-          if true
-            # distinct を使う場合。こっちの方が 10 ms 速い。
-            scope = scope.joins(:memberships).distinct.merge(tag_scope)
-          else
-            # distinct を使いたくないので再度 id で引く
-            scope = scope.where(id: scope.joins(:memberships).merge(tag_scope).ids)
+        scope = scope.then do |s|
+          if v = rule_infos.presence
+            s = s.rule_eq(v.pluck(:key))
           end
+          if v = xmode_infos.presence
+            s = s.xmode_eq(v.pluck(:key))
+          end
+          s
         end
-        scope = scope.find_all_by_params(query_info: query_info)
-      end
 
-      def tag_scope
-        s = ::Swars::Membership.tagged_with(current_tag_names)
-        if judge_infos.present?
-          s = s.judge_eq(judge_infos.pluck(:key))
+        memberships = ::Swars::Membership.where(battle: scope.ids)
+
+        # X側
+        x = memberships.then do |s|
+          if v = x_tag_names.presence
+            s = s.tagged_with(v)
+          end
+          if v = x_judge_infos.presence
+            s = s.judge_eq(v.pluck(:key))
+          end
+          if v = x_grade_infos.presence
+            s = s.grade_eq(v.pluck(:key))
+          end
+          s
         end
-        s
+
+        # Y側 (変なことをせずX側と同じ条件にする)
+        y = memberships.then do |s|
+          if v = y_tag_names.presence
+            s = s.tagged_with(v)
+          end
+          if v = y_judge_infos.presence
+            s = s.judge_eq(v.pluck(:key))
+          end
+          if v = y_grade_infos.presence
+            s = s.grade_eq(v.pluck(:key))
+          end
+          s
+        end
+
+        s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
+
+        if true
+          # distinct を使う場合。こっちの方が 10 ms 速い。
+          scope = scope.joins(:memberships).distinct.merge(s) # distinct 重要
+        else
+          # distinct を使いたくないので再度 id で引く
+          scope = scope.where(id: scope.joins(:memberships).merge(s).ids)
+        end
+
+        scope = scope.find_all_by_query(query)
       end
 
       ################################################################################
 
-      def current_tag_names
-        @current_tag_names ||= params[:tag].to_s.split(/[,[:blank:]]+/).uniq
+      def x_tag_names
+        @x_tag_names ||= array_from_tag_string(params[:x_tag])
+      end
+
+      def y_tag_names
+        @y_tag_names ||= array_from_tag_string(params[:y_tag])
+      end
+
+      def array_from_tag_string(str)
+        unless str.kind_of?(Array)
+          str = str.to_s.split(/[,[:blank:]]+/)
+        end
+        str.uniq
       end
 
       def candidate_tag_names
@@ -206,18 +320,64 @@ module QuickScript
         params[:query].to_s
       end
 
-      def query_info
-        @query_info ||= QueryInfo.parse(query)
+      ################################################################################
+
+      def x_judge_keys
+        array_from_tag_string(params[:x_judge_keys])
+      end
+
+      def x_judge_infos
+        @x_judge_infos ||= ::JudgeInfo.array_from(x_judge_keys)
       end
 
       ################################################################################
 
-      def judge_keys
-        Array(params[:judge_keys])
+      def y_judge_keys
+        array_from_tag_string(params[:y_judge_keys])
       end
 
-      def judge_infos
-        @judge_infos ||= JudgeInfo.array_from(judge_keys)
+      def y_judge_infos
+        @y_judge_infos ||= ::JudgeInfo.array_from(y_judge_keys)
+      end
+
+      ################################################################################
+
+      def x_grade_keys
+        array_from_tag_string(params[:x_grade_keys])
+      end
+
+      def x_grade_infos
+        @x_grade_infos ||= ::Swars::GradeInfo.array_from(x_grade_keys)
+      end
+
+      ################################################################################
+
+      def y_grade_keys
+        array_from_tag_string(params[:y_grade_keys])
+      end
+
+      def y_grade_infos
+        @y_grade_infos ||= ::Swars::GradeInfo.array_from(y_grade_keys)
+      end
+
+      ################################################################################
+
+      def rule_keys
+        array_from_tag_string(params[:rule_keys])
+      end
+
+      def rule_infos
+        @rule_infos ||= ::Swars::RuleInfo.array_from(rule_keys)
+      end
+
+      ################################################################################
+
+      def xmode_keys
+        array_from_tag_string(params[:xmode_keys])
+      end
+
+      def xmode_infos
+        @xmode_infos ||= ::Swars::XmodeInfo.array_from(xmode_keys)
       end
 
       ################################################################################
@@ -240,11 +400,14 @@ module QuickScript
 
       ################################################################################
 
+      def app_log_call
+        AppLog.important(subject: mail_subject, body: mail_body, emoji: ":CHECK:")
+      end
+
+      ################################################################################
+
       def mail_notify
-        begin
-          @processed_at = Time.current
-          @processed_second = Benchmark.realtime { all_ids }
-        end
+        first_heavy_run
         SystemMailer.notify({
             :emoji   => ":検索:",
             :subject => mail_subject,
@@ -255,10 +418,11 @@ module QuickScript
       end
 
       def mail_subject
-        [
-          current_tag_names.collect { |e| "【#{e}】" }.join,
-          "抽出#{all_ids.size}件",
-        ].compact_blank.join(" ")
+        "【将棋ウォーズ横断検索】抽出#{all_ids.size}件"
+      end
+
+      def found_message
+        "#{all_ids.size}件見つかりました"
       end
 
       def mail_body
@@ -269,20 +433,28 @@ module QuickScript
           out << search_url
         end
         out << ""
-        out << info.inspect
+        out << info.collect { |k, v| "#{k}: #{v}" }.join("\n")
         out.join("\n")
       end
 
       def info
         {
-          "タグ"     => current_tag_names,
-          "クエリ"   => query,
-          "抽出"     => all_ids.size,
-          "必要"     => want_max,
-          "対象"     => range_max,
-          "実行開始" => @processed_at.try { to_fs(:ymdhms) },
-          "処理時間" => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
-        }
+          "戦法"               => x_tag_names,
+          "勝敗"               => x_judge_keys,
+          "棋力"               => x_grade_keys,
+          "相手の戦法"         => y_tag_names,
+          "相手の勝敗"         => y_judge_keys,
+          "相手の棋力"         => x_grade_keys,
+          "ルール"             => rule_keys,
+          "モード"             => xmode_keys,
+          "クエリ"             => query,
+          "検索対象件数"       => range_max,
+          "必要件数"           => want_max,
+          "バックグランド実行" => current_bg_request,
+          "抽出"               => all_ids.size,
+          "実行開始"           => @processed_at.try { to_fs(:ymdhms) },
+          "処理時間"           => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
+        }.compact_blank
       end
 
       def search_url
