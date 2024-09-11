@@ -41,11 +41,11 @@ module QuickScript
         form_parts.each do |e|
           if e[:session_sync]
             key = e[:key]
-            if fetch_index >= 1
-              if e[:type] == :checkbox_button
-                params[key] ||= []
-              end
-            end
+            # if fetch_index >= 1
+            #   if e[:type] == :checkbox_button
+            #     params[key] ||= []
+            #   end
+            # end
             params[key] ||= scoped_session[key.to_s] # scoped_session 側のハッシュのキーは文字列になってしまう点に注意する
             scoped_session[key.to_s] = params[key]
           end

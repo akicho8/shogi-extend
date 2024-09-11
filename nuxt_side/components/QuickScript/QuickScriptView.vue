@@ -103,7 +103,7 @@ export default {
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
     this.fetch_index ??= 0
     const new_params2 = {...this.invisible_params, ...this.new_params, fetch_index: this.fetch_index}
-    this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => {
+    this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => { // post にする？
       this.fetch_index += 1
       this.params_receive(params)
     })
