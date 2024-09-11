@@ -98,7 +98,7 @@ module QuickScript
           row["最終手思考"]        = e.think_last
           row["対象の棋風"]        = e.style.try { pure_info.name }
           row["相手の棋風"]        = e.opponent.style.try { pure_info.name }
-          row["ルール"]            = e.battle.rule.pure_info.long_name
+          row["持ち時間"]            = e.battle.rule.pure_info.long_name
           row["先後"]              = e.location_human_name
           row["対局モード"]        = e.battle.xmode.name
           row["対局日時"]          = e.battle.battled_at.to_fs(:ymdhms)

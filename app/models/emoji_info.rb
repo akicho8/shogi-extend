@@ -46,6 +46,8 @@ class EmojiInfo
     { key: ":検索:",         raw: "🔍", },
     { key: ":参照:",         raw: "🪪", },
     { key: ":短縮URL:",      raw: "📦", },
+    { key: ":BACKGROUND:",   raw: "✉", },
+    { key: ":REALTIME:",     raw: "💡", },
   ]
 
   def to_s

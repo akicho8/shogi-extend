@@ -256,8 +256,8 @@ end
 # s = s.group("rule_key")
 # s = s.joins("JOIN swars_grades g ON g.id = swars_users.grade_id") if false # 最高棋力をついでに求める
 # s = s.select("swars_users.user_key")                                       # ウォーズID
-# s = s.select("#{::Swars::Rule.table_name}.key AS rule_key")                # ルール
-# s = s.select("MIN(#{::Swars::Grade.table_name}.priority) AS min_priority") # ルール別の最高棋力
+# s = s.select("#{::Swars::Rule.table_name}.key AS rule_key")                # 持ち時間
+# s = s.select("MIN(#{::Swars::Grade.table_name}.priority) AS min_priority") # 持ち時間別の最高棋力
 # s = s.select("g.key AS max_grade_key") if false                            # 最高棋力
 #
 # # >> |-------------+-----------+--------------+

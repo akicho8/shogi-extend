@@ -12,9 +12,9 @@ module QuickScript
       self.params_add_submit_key         = :exec
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
-      MAX_OF_WANT_MAX      = 500     # 必要件数は N 以下
+      MAX_OF_WANT_MAX      = 500     # 抽出最大件数は N 以下
       BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
-      MAX_OF_RANGE_MAX     = 50000   # 対象件数は N 以下
+      MAX_OF_RANGE_MAX     = 100000  # 対象件数は N 以下
 
       def form_parts
         super + [
@@ -78,15 +78,6 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "ルール",
-            :key          => :rule_keys,
-            :type         => :checkbox_button,
-            :elems        => ::Swars::RuleInfo.to_form_elems,
-            :default      => rule_keys,
-            :session_sync => true,
-          },
-
-          {
             :label        => "モード",
             :key          => :xmode_keys,
             :type         => :checkbox_button,
@@ -96,7 +87,16 @@ module QuickScript
           },
 
           {
-            :label        => "クエリ",
+            :label        => "持ち時間",
+            :key          => :rule_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::RuleInfo.to_form_elems,
+            :default      => rule_keys,
+            :session_sync => true,
+          },
+
+          {
+            :label        => "おまけクエリ",
             :key          => :query,
             :type         => :string,
             :default      => query,
@@ -113,16 +113,16 @@ module QuickScript
             :type         => :numeric,
             :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
             :default      => range_max,
-            :help_message => "この件数の中から必要件数分の対局を探す。抽出件数が足りないときはこの上限を増やす",
+            :help_message => "この件数の中から抽出最大件数分の対局を探す。出てこないときはこの上限を増やそう",
             :session_sync => true,
           },
           {
-            :label        => "必要件数",
+            :label        => "抽出最大件数",
             :key          => :want_max,
             :type         => :numeric,
-            :options      => { min: 100, max: MAX_OF_WANT_MAX, step: 100 },
+            :options      => { min: 50, max: MAX_OF_WANT_MAX, step: 50 },
             :default      => want_max,
-            :help_message => "最大N件見つけたら検索を終える",
+            :help_message => "これだけ見つけたら検索を終える",
             :session_sync => true,
           },
 
@@ -134,7 +134,7 @@ module QuickScript
             :type    => :radio_button,
             :elems   => {
               "false" => { el_label: "しない", el_message: "リアルタイムで結果を得る", },
-              "true"  => { el_label: "する",   el_message: "あとでメールする",         },
+              "true"  => { el_label: "する",   el_message: "メールで結果を受け取る",   },
             },
             :default => params[:bg_request].to_s.presence || "false",
             :session_sync => true,
@@ -159,7 +159,7 @@ module QuickScript
           end
           first_heavy_run
           app_log_call
-          if all_ids.empty?
+          if found_ids.empty?
             flash[:notice] = empty_message
             return
           end
@@ -191,7 +191,7 @@ module QuickScript
           end
         end
         if want_max > MAX_OF_WANT_MAX
-          flash[:notice] = "必要件数は#{MAX_OF_WANT_MAX}以下にしてください"
+          flash[:notice] = "抽出最大件数は#{MAX_OF_WANT_MAX}以下にしてください"
           return
         end
         if range_max > MAX_OF_RANGE_MAX
@@ -221,11 +221,11 @@ module QuickScript
           raise "must not happen"
         end
         @processed_at = Time.current
-        @processed_second = Benchmark.realtime { all_ids }
+        @processed_second = Benchmark.realtime { found_ids }
       end
 
-      def all_ids
-        @all_ids ||= yield_self do
+      def found_ids
+        @found_ids ||= yield_self do
           ids = []
           ::Swars::Battle.in_batches(of: batch_size, order: :desc).each.with_index do |relation, i|
             if i >= batch_loop_max
@@ -384,7 +384,7 @@ module QuickScript
       ################################################################################
 
       def want_max
-        (params[:want_max].presence || 100).to_i
+        (params[:want_max].presence || 50).to_i
       end
 
       def range_max
@@ -402,7 +402,7 @@ module QuickScript
       ################################################################################
 
       def app_log_call
-        AppLog.important(subject: mail_subject, body: mail_body, emoji: ":CHECK:")
+        AppLog.important(emoji: ":REALTIME:", subject: mail_subject, body: mail_body)
       end
 
       ################################################################################
@@ -410,7 +410,7 @@ module QuickScript
       def mail_notify
         first_heavy_run
         SystemMailer.notify({
-            :emoji   => ":検索:",
+            :emoji   => ":BACKGROUND:",
             :subject => mail_subject,
             :body    => mail_body,
             :to      => current_user.email,
@@ -419,16 +419,16 @@ module QuickScript
       end
 
       def mail_subject
-        "【将棋ウォーズ横断検索】抽出#{all_ids.size}件"
+        "【将棋ウォーズ横断検索】抽出#{found_ids.size}件"
       end
 
       def found_message
-        "#{all_ids.size}件見つかりました"
+        "#{found_ids.size}件見つかりました"
       end
 
       def mail_body
         out = []
-        if all_ids.empty?
+        if found_ids.empty?
           out << empty_message
         else
           out << search_url
@@ -441,18 +441,18 @@ module QuickScript
       def info
         {
           "戦法"               => x_tag_names,
-          "勝敗"               => x_judge_keys,
-          "棋力"               => x_grade_keys,
+          "勝敗"               => x_judge_infos.pluck(:name),
+          "棋力"               => x_grade_infos.pluck(:name),
           "相手の戦法"         => y_tag_names,
-          "相手の勝敗"         => y_judge_keys,
-          "相手の棋力"         => x_grade_keys,
-          "ルール"             => rule_keys,
-          "モード"             => xmode_keys,
+          "相手の勝敗"         => y_judge_infos.pluck(:name),
+          "相手の棋力"         => x_grade_infos.pluck(:name),
+          "モード"             => xmode_infos.pluck(:name),
+          "持ち時間"           => rule_infos.pluck(:name),
           "クエリ"             => query,
           "検索対象件数"       => range_max,
-          "必要件数"           => want_max,
+          "抽出最大件数"       => want_max,
           "バックグランド実行" => current_bg_request,
-          "抽出"               => all_ids.size,
+          "抽出"               => found_ids.size,
           "実行開始"           => @processed_at.try { to_fs(:ymdhms) },
           "処理時間"           => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
         }.compact_blank
@@ -463,7 +463,7 @@ module QuickScript
       end
 
       def search_path
-        query = "id:" + all_ids * ","
+        query = "id:" + found_ids * ","
         "/swars/search" + "?" + { query: query }.to_query
       end
 
