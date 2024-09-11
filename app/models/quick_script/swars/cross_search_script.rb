@@ -185,11 +185,8 @@ module QuickScript
             return
           end
           flash[:notice] = found_message
-          if false
-            return { _autolink: search_url }
-          else
-            redirect_to search_path, type: :tab_open
-          end
+          redirect_to search_path, type: :tab_open
+          return { _v_html: result_html }
         end
         if background_mode
           mail_notify
@@ -441,6 +438,24 @@ module QuickScript
 
       ################################################################################
 
+      def empty_message
+        "ひとつも見つかりませんでした"
+      end
+
+      def safari_user_message
+        "#{search_url}"
+      end
+
+      def link_to_search_url
+        h.tag.a("ここ", href: search_url, target: "_blank", :class => "tag is-primary")
+      end
+
+      def result_html
+        "自動的に遷移しない場合は #{link_to_search_url} をタップしてください (モバイル Safari の場合はポップアップブロックを解除しておくと遷移するようになります)"
+      end
+
+      ################################################################################
+
       def mail_notify
         first_heavy_run
         SystemMailer.notify({
@@ -507,10 +522,6 @@ module QuickScript
       def search_path
         query = "id:" + found_ids * ","
         "/swars/search" + "?" + { query: query }.to_query
-      end
-
-      def empty_message
-        "ひとつも見つかりませんでした"
       end
 
       ################################################################################

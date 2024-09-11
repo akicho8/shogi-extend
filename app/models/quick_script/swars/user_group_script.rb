@@ -56,7 +56,7 @@ module QuickScript
         if current_google_sheet
           mail_notify
           redirect_to google_sheet_url, type: :tab_open
-          flash[:notice] = "Google スプレッドシートを生成しました。スマホの場合は別タブがブロックされて自動的に開けないはずなので表示された URL をタップしてください。"
+          flash[:notice] = "Google スプレッドシートを生成しました"
           { _v_html: result_html }
         else
           simple_table(rows, always_table: true)
@@ -140,7 +140,7 @@ module QuickScript
       end
 
       def google_sheet_url_link
-        h.tag.a("Google スプレッドシートを開く", href: google_sheet_url, target: "_blank")
+        h.tag.a("Google スプレッドシートを開く", href: google_sheet_url, target: "_blank", :class => "tag is-primary")
       end
 
       def validate!
@@ -222,7 +222,7 @@ module QuickScript
       end
 
       def result_html
-        "#{google_sheet_url_link} ← これをタップしてください。編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。"
+        "自動的に遷移しない場合は #{google_sheet_url_link} をタップしてください。モバイル Safari の場合はポップアップブロックを解除しておくと遷移するようになります。Google スプレッドシートを編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。"
       end
 
       def mail_subject
