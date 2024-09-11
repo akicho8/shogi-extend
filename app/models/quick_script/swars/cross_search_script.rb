@@ -12,7 +12,7 @@ module QuickScript
       self.params_add_submit_key         = :exec
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
-      MAX_OF_WANT_MAX      = 500     # 抽出最大件数は N 以下
+      MAX_OF_WANT_MAX      = 500     # 抽出希望件数は N 以下
       BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
       MAX_OF_RANGE_MAX     = 100000  # 対象件数は N 以下
 
@@ -113,11 +113,11 @@ module QuickScript
             :type         => :numeric,
             :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
             :default      => range_max,
-            :help_message => "この件数の中から抽出最大件数分の対局を探す。出てこないときはこの上限を増やそう",
+            :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
             :session_sync => true,
           },
           {
-            :label        => "抽出最大件数",
+            :label        => "抽出希望件数",
             :key          => :want_max,
             :type         => :numeric,
             :options      => { min: 50, max: MAX_OF_WANT_MAX, step: 50 },
@@ -191,7 +191,7 @@ module QuickScript
           end
         end
         if want_max > MAX_OF_WANT_MAX
-          flash[:notice] = "抽出最大件数は#{MAX_OF_WANT_MAX}以下にしてください"
+          flash[:notice] = "抽出希望件数は#{MAX_OF_WANT_MAX}以下にしてください"
           return
         end
         if range_max > MAX_OF_RANGE_MAX
@@ -440,19 +440,25 @@ module QuickScript
 
       def info
         {
+          # -------------------------------------------------------------------------------- 対象
           "戦法"               => x_tag_names,
           "勝敗"               => x_judge_infos.pluck(:name),
           "棋力"               => x_grade_infos.pluck(:name),
+          # -------------------------------------------------------------------------------- 相手
           "相手の戦法"         => y_tag_names,
           "相手の勝敗"         => y_judge_infos.pluck(:name),
           "相手の棋力"         => y_grade_infos.pluck(:name),
+          # -------------------------------------------------------------------------------- バトルに対して
           "モード"             => xmode_infos.pluck(:name),
           "持ち時間"           => rule_infos.pluck(:name),
-          "クエリ"             => query,
+          "おまけクエリ"       => query,
+          # -------------------------------------------------------------------------------- フォーム
           "検索対象件数"       => range_max,
-          "抽出最大件数"       => want_max,
+          "抽出希望件数"       => want_max,
           "バックグランド実行" => current_bg_request,
+          # -------------------------------------------------------------------------------- 結果
           "抽出"               => found_ids.size,
+          # -------------------------------------------------------------------------------- 時間
           "実行開始"           => @processed_at.try { to_fs(:ymdhms) },
           "処理時間"           => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
         }.compact_blank
