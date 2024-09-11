@@ -18,6 +18,8 @@ module QuickScript
 
       def form_parts
         super + [
+          ################################################################################
+
           {
             :label        => "戦法",
             :key          => :x_tag,
@@ -47,6 +49,17 @@ module QuickScript
             :session_sync => true,
           },
           {
+            :label        => "スタイル",
+            :key          => :x_style_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::StyleInfo.to_form_elems,
+            :default      => x_style_keys,
+            :session_sync => true,
+          },
+
+          ################################################################################
+
+          {
             :label        => "相手の戦法",
             :key          => :y_tag,
             :type         => :string,
@@ -74,7 +87,14 @@ module QuickScript
             # :help_message => "指定の戦法を使ったときの勝敗",
             :session_sync => true,
           },
-
+          {
+            :label        => "相手のスタイル",
+            :key          => :y_style_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::StyleInfo.to_form_elems,
+            :default      => y_style_keys,
+            :session_sync => true,
+          },
           ################################################################################
 
           {
@@ -155,7 +175,8 @@ module QuickScript
             end
             call_later
             # self.form_method = nil # form をまるごと消す
-            return posted_message
+            flash[:notice] = posted_message
+            return
           end
           first_heavy_run
           app_log_call
@@ -253,33 +274,8 @@ module QuickScript
 
         memberships = ::Swars::Membership.where(battle: scope.ids)
 
-        # X側
-        x = memberships.then do |s|
-          if v = x_tag_names.presence
-            s = s.tagged_with(v)
-          end
-          if v = x_judge_infos.presence
-            s = s.judge_eq(v.pluck(:key))
-          end
-          if v = x_grade_infos.presence
-            s = s.grade_eq(v.pluck(:key))
-          end
-          s
-        end
-
-        # Y側 (変なことをせずX側と同じ条件にする)
-        y = memberships.then do |s|
-          if v = y_tag_names.presence
-            s = s.tagged_with(v)
-          end
-          if v = y_judge_infos.presence
-            s = s.judge_eq(v.pluck(:key))
-          end
-          if v = y_grade_infos.presence
-            s = s.grade_eq(v.pluck(:key))
-          end
-          s
-        end
+        x = memberships_scope_by(memberships, x_tag_names, x_judge_infos, x_style_infos, x_grade_infos)
+        y = memberships_scope_by(memberships, y_tag_names, y_judge_infos, y_style_infos, y_grade_infos)
 
         s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
 
@@ -292,6 +288,24 @@ module QuickScript
         end
 
         scope = scope.find_all_by_query(query)
+      end
+
+      def memberships_scope_by(memberships, tag_names, judge_infos, style_infos, grade_infos)
+        memberships.then do |s|
+          if v = tag_names.presence
+            s = s.tagged_with(v)
+          end
+          if v = judge_infos.presence
+            s = s.judge_eq(v.pluck(:key))
+          end
+          if v = style_infos.presence
+            s = s.style_eq(v.pluck(:key))
+          end
+          if v = grade_infos.presence
+            s = s.grade_eq(v.pluck(:key))
+          end
+          s
+        end
       end
 
       ################################################################################
@@ -339,6 +353,26 @@ module QuickScript
 
       def y_judge_infos
         @y_judge_infos ||= ::JudgeInfo.array_from(y_judge_keys)
+      end
+
+      ################################################################################
+
+      def x_style_keys
+        array_from_tag_string(params[:x_style_keys])
+      end
+
+      def x_style_infos
+        @x_style_infos ||= ::Swars::StyleInfo.array_from(x_style_keys)
+      end
+
+      ################################################################################
+
+      def y_style_keys
+        array_from_tag_string(params[:y_style_keys])
+      end
+
+      def y_style_infos
+        @y_style_infos ||= ::Swars::StyleInfo.array_from(y_style_keys)
       end
 
       ################################################################################
@@ -410,12 +444,12 @@ module QuickScript
       def mail_notify
         first_heavy_run
         SystemMailer.notify({
-            :emoji   => ":BACKGROUND:",
+            :emoji   => ":検索:",
             :subject => mail_subject,
             :body    => mail_body,
             :to      => current_user.email,
             :bcc     => AppConfig[:admin_email],
-          }).deliver_now
+          }).deliver_later
       end
 
       def mail_subject
@@ -442,15 +476,17 @@ module QuickScript
         {
           # -------------------------------------------------------------------------------- 対象
           "戦法"               => x_tag_names,
-          "勝敗"               => x_judge_infos.pluck(:name),
-          "棋力"               => x_grade_infos.pluck(:name),
+          "棋力"               => x_grade_infos.collect(&:name),
+          "勝敗"               => x_judge_infos.collect(&:name),
+          "スタイル"           => x_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- 相手
           "相手の戦法"         => y_tag_names,
-          "相手の勝敗"         => y_judge_infos.pluck(:name),
-          "相手の棋力"         => y_grade_infos.pluck(:name),
+          "相手の棋力"         => y_grade_infos.collect(&:name),
+          "相手の勝敗"         => y_judge_infos.collect(&:name),
+          "相手のスタイル"     => y_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- バトルに対して
-          "モード"             => xmode_infos.pluck(:name),
-          "持ち時間"           => rule_infos.pluck(:name),
+          "モード"             => xmode_infos.collect(&:name),
+          "持ち時間"           => rule_infos.collect(&:name),
           "おまけクエリ"       => query,
           # -------------------------------------------------------------------------------- フォーム
           "検索対象件数"       => range_max,
