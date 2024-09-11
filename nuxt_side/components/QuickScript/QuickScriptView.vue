@@ -109,6 +109,28 @@ export default {
     })
   },
 
+  // mounted() {
+  //   // ページ読み込み時に履歴に現在のページを追加
+  //   // window.addEventListener('load', () => {
+  //   history.replaceState({ internal: true }, '')
+  //   alert(1)
+  //   // })
+  //
+  //   // popstate イベントを監視
+  //   window.addEventListener('popstate', (event) => {
+  //     alert(event.state)
+  //     // 戻る先が同じサイト内かどうかを確認
+  //     if (event.state && event.state.internal) {
+  //       // 同じサイト内であれば、通常通り履歴を戻る
+  //       console.log("Same site navigation")
+  //     } else {
+  //       // 外部サイトへの戻りを無効化し、カスタムアクションを実行
+  //       history.go(1) // 進む
+  //       console.log("Attempted to go back to an external site.")
+  //     }
+  //   })
+  // },
+
   methods: {
     params_receive(params) {
       // fetchOnServer: true のときに実行すると this.toast_ok がないと言われる
