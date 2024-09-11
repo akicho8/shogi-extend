@@ -445,7 +445,7 @@ module QuickScript
           "棋力"               => x_grade_infos.pluck(:name),
           "相手の戦法"         => y_tag_names,
           "相手の勝敗"         => y_judge_infos.pluck(:name),
-          "相手の棋力"         => x_grade_infos.pluck(:name),
+          "相手の棋力"         => y_grade_infos.pluck(:name),
           "モード"             => xmode_infos.pluck(:name),
           "持ち時間"           => rule_infos.pluck(:name),
           "クエリ"             => query,
