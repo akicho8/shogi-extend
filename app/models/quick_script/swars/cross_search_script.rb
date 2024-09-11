@@ -10,6 +10,7 @@ module QuickScript
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
       self.params_add_submit_key         = :exec
+      self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
       MAX_OF_WANT_MAX      = 500     # 必要件数は N 以下
       BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
