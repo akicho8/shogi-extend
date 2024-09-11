@@ -28,7 +28,7 @@ module QuickScript
             :elems        => candidate_tag_names,
             :default      => params[:x_tag].presence,
             :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "棋力",
@@ -37,7 +37,7 @@ module QuickScript
             :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
             :default      => x_grade_keys,
             # :help_message => "指定の戦法を使った人の棋力",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "勝敗",
@@ -46,7 +46,7 @@ module QuickScript
             :elems        => ::JudgeInfo.to_form_elems,
             :default      => x_judge_keys,
             # :help_message => "指定の戦法を使ったときの勝敗",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "スタイル",
@@ -54,7 +54,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => x_style_keys,
-            :session_sync => true,
+            :session_sync => false,
           },
 
           ################################################################################
@@ -67,7 +67,7 @@ module QuickScript
             :elems        => candidate_tag_names,
             :default      => params[:y_tag].presence,
             :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "相手の棋力",
@@ -76,7 +76,7 @@ module QuickScript
             :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
             :default      => y_grade_keys,
             # :help_message => "指定の戦法を食らった人の棋力",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "相手の勝敗",
@@ -85,7 +85,7 @@ module QuickScript
             :elems        => ::JudgeInfo.to_form_elems,
             :default      => y_judge_keys,
             # :help_message => "指定の戦法を使ったときの勝敗",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "相手のスタイル",
@@ -93,7 +93,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => y_style_keys,
-            :session_sync => true,
+            :session_sync => false,
           },
           ################################################################################
 
@@ -103,7 +103,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::XmodeInfo.to_form_elems,
             :default      => xmode_keys,
-            :session_sync => true,
+            :session_sync => false,
           },
 
           {
@@ -112,7 +112,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::RuleInfo.to_form_elems,
             :default      => rule_keys,
-            :session_sync => true,
+            :session_sync => false,
           },
 
           {
@@ -122,7 +122,7 @@ module QuickScript
             :default      => query,
             :placeholder  => "手数:>=80",
             :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
-            :session_sync => true,
+            :session_sync => false,
           },
 
           ################################################################################
@@ -134,7 +134,7 @@ module QuickScript
             :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
             :default      => range_max,
             :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
-            :session_sync => true,
+            :session_sync => false,
           },
           {
             :label        => "抽出希望件数",
@@ -143,7 +143,7 @@ module QuickScript
             :options      => { min: 50, max: MAX_OF_WANT_MAX, step: 50 },
             :default      => want_max,
             :help_message => "これだけ見つけたら検索を終える",
-            :session_sync => true,
+            :session_sync => false,
           },
 
           ################################################################################
@@ -157,7 +157,7 @@ module QuickScript
               "true"  => { el_label: "する",   el_message: "メールで結果を受け取る",   },
             },
             :default => params[:bg_request].to_s.presence || "false",
-            :session_sync => true,
+            :session_sync => false,
           },
         ]
       end
