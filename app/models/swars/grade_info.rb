@@ -90,6 +90,10 @@ module Swars
       @short_name ||= name.remove(/[段級]/)
     end
 
+    def el_label
+      short_name
+    end
+
     def kanji_number_dan
       if name.include?("段")
         Bioshogi::KanjiNumber.kanji_to_number_string(name)

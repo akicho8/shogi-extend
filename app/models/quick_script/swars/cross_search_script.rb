@@ -27,7 +27,15 @@ module QuickScript
             :ac_by        => :html5,
             :elems        => candidate_tag_names,
             :default      => params[:x_tag].presence,
-            :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
+            :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+            :session_sync => true,
+          },
+          {
+            :label        => "戦法の解釈",
+            :key          => :x_tag_cond_key,
+            :type         => :radio_button,
+            :elems        => TagCondInfo.to_form_elems,
+            :default      => x_tag_cond_key,
             :session_sync => true,
           },
           {
@@ -66,7 +74,15 @@ module QuickScript
             :ac_by        => :html5,
             :elems        => candidate_tag_names,
             :default      => params[:y_tag].presence,
-            :help_message => "直接入力 or 右端の▼から選択。複数指定でAND条件",
+            :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+            :session_sync => true,
+          },
+          {
+            :label        => "相手の戦法の解釈",
+            :key          => :y_tag_cond_key,
+            :type         => :radio_button,
+            :elems        => TagCondInfo.to_form_elems,
+            :default      => y_tag_cond_key,
             :session_sync => true,
           },
           {
@@ -116,15 +132,23 @@ module QuickScript
           },
 
           {
+            :label        => "結末",
+            :key          => :final_keys,
+            :type         => :checkbox_button,
+            :elems        => ::Swars::FinalInfo.to_form_elems,
+            :default      => final_keys,
+            :session_sync => true,
+          },
+
+          {
             :label        => "おまけクエリ",
             :key          => :query,
             :type         => :string,
             :default      => query,
-            :placeholder  => "手数:>=80",
-            :help_message => "必要なら将棋ウォーズ棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
+            :placeholder  => "開戦:>=21 中盤:>=42 手数:>=89 手合割:二枚落ち",
+            :help_message => "棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
             :session_sync => true,
           },
-
           ################################################################################
 
           {
@@ -153,8 +177,8 @@ module QuickScript
             :key     => :bg_request,
             :type    => :radio_button,
             :elems   => {
-              "false" => { el_label: "しない", el_message: "リアルタイムで結果を得る", },
-              "true"  => { el_label: "する",   el_message: "メールで結果を受け取る",   },
+              "false" => { el_label: "しない", el_message: "リアルタイムで結果を得る",     },
+              "true"  => { el_label: "する",   el_message: "あとで結果をメールで受け取る", },
             },
             :default => params[:bg_request].to_s.presence || "false",
             :session_sync => true,
@@ -260,19 +284,22 @@ module QuickScript
 
       def sub_scope(scope)
         scope = scope.then do |s|
+          if v = xmode_infos.presence
+            s = s.xmode_eq(v.pluck(:key))
+          end
           if v = rule_infos.presence
             s = s.rule_eq(v.pluck(:key))
           end
-          if v = xmode_infos.presence
-            s = s.xmode_eq(v.pluck(:key))
+          if v = final_infos.presence
+            s = s.final_eq(v.pluck(:key))
           end
           s
         end
 
         memberships = ::Swars::Membership.where(battle: scope.ids)
 
-        x = memberships_scope_by(memberships, x_tag_names, x_judge_infos, x_style_infos, x_grade_infos)
-        y = memberships_scope_by(memberships, y_tag_names, y_judge_infos, y_style_infos, y_grade_infos)
+        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos)
+        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info, y_judge_infos, y_style_infos, y_grade_infos)
 
         s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
 
@@ -287,10 +314,10 @@ module QuickScript
         scope = scope.find_all_by_query(query)
       end
 
-      def memberships_scope_by(memberships, tag_names, judge_infos, style_infos, grade_infos)
+      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos)
         memberships.then do |s|
           if v = tag_names.presence
-            s = s.tagged_with(v)
+            s = s.tagged_with(v, tag_cond_info.tagged_with_options)
           end
           if v = judge_infos.presence
             s = s.judge_eq(v.pluck(:key))
@@ -394,12 +421,42 @@ module QuickScript
 
       ################################################################################
 
+      def x_tag_cond_key
+        TagCondInfo.valid_key_or_first(params[:x_tag_cond_key])
+      end
+
+      def x_tag_cond_info
+        @x_tag_cond_info ||= TagCondInfo.fetch(x_tag_cond_key)
+      end
+
+      ################################################################################
+
+      def y_tag_cond_key
+        TagCondInfo.valid_key_or_first(params[:y_tag_cond_key])
+      end
+
+      def y_tag_cond_info
+        @y_tag_cond_info ||= TagCondInfo.fetch(y_tag_cond_key)
+      end
+
+      ################################################################################
+
       def rule_keys
         array_from_tag_string(params[:rule_keys])
       end
 
       def rule_infos
         @rule_infos ||= ::Swars::RuleInfo.array_from(rule_keys)
+      end
+
+      ################################################################################
+
+      def final_keys
+        array_from_tag_string(params[:final_keys])
+      end
+
+      def final_infos
+        @final_infos ||= ::Swars::FinalInfo.array_from(final_keys)
       end
 
       ################################################################################
@@ -451,7 +508,7 @@ module QuickScript
       end
 
       def result_html
-        "自動的に遷移しない場合は #{link_to_search_url} をタップしてください (モバイル Safari の場合はポップアップブロックを解除しておくと遷移するようになります)"
+        "自動的に遷移しない場合は #{link_to_search_url} をタップしてください (モバイル Safari の場合は忌しいポップアップブロックを解除しておくと快適になります)"
       end
 
       ################################################################################
@@ -490,28 +547,31 @@ module QuickScript
       def info
         {
           # -------------------------------------------------------------------------------- 対象
-          "戦法"               => x_tag_names,
-          "棋力"               => x_grade_infos.collect(&:name),
-          "勝敗"               => x_judge_infos.collect(&:name),
-          "スタイル"           => x_style_infos.collect(&:name),
+          "戦法"                 => x_tag_names,
+          "戦法の解釈"           => x_tag_cond_info.name,
+          "棋力"                 => x_grade_infos.collect(&:name),
+          "勝敗"                 => x_judge_infos.collect(&:name),
+          "スタイル"             => x_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- 相手
-          "相手の戦法"         => y_tag_names,
-          "相手の棋力"         => y_grade_infos.collect(&:name),
-          "相手の勝敗"         => y_judge_infos.collect(&:name),
-          "相手のスタイル"     => y_style_infos.collect(&:name),
+          "相手の戦法"           => y_tag_names,
+          "相手の戦法の解釈"     => y_tag_cond_info.name,
+          "相手の棋力"           => y_grade_infos.collect(&:name),
+          "相手の勝敗"           => y_judge_infos.collect(&:name),
+          "相手のスタイル"       => y_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- バトルに対して
-          "モード"             => xmode_infos.collect(&:name),
-          "持ち時間"           => rule_infos.collect(&:name),
-          "おまけクエリ"       => query,
+          "モード"               => xmode_infos.collect(&:name),
+          "持ち時間"             => rule_infos.collect(&:name),
+          "結末"                 => final_infos.collect(&:name),
+          "おまけクエリ"         => query,
           # -------------------------------------------------------------------------------- フォーム
-          "検索対象件数"       => range_max,
-          "抽出希望件数"       => want_max,
+          "検索対象件数"         => range_max,
+          "抽出希望件数"         => want_max,
           "バックグラウンド実行" => current_bg_request,
           # -------------------------------------------------------------------------------- 結果
-          "抽出"               => found_ids.size,
+          "抽出"                 => found_ids.size,
           # -------------------------------------------------------------------------------- 時間
-          "実行開始"           => @processed_at.try { to_fs(:ymdhms) },
-          "処理時間"           => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
+          "実行開始"             => @processed_at.try { to_fs(:ymdhms) },
+          "処理時間"             => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
         }.compact_blank
       end
 
