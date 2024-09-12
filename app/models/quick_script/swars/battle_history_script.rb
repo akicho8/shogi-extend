@@ -24,7 +24,7 @@ module QuickScript
             :default     => params[:google_sheet].to_s.presence || (debug_mode ? "false" : "true"),
           },
           {
-            :label       => "バックグランド実行する",
+            :label       => "バックグラウンド実行する",
             :key         => :bg_request,
             :type        => debug_mode ? :radio_button : :hidden,
             :elems       => {"false" => "しない", "true" => "する"},

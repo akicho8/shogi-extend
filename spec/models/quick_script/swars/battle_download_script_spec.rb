@@ -31,7 +31,7 @@ module QuickScript
         instance = BattleDownloadScript.new({query: "SWARS_USER_KEY"}, {current_user: @current_user, _method: "post"})
         assert { instance.as_json[:flash][:notice] == "ダウンロードを開始しました" }
 
-        # バックグランド実行予約 (本番)
+        # バックグラウンド実行予約 (本番)
         BattleDownloadScript.new({query: "SWARS_USER_KEY", bg_request: true}, {current_user: @current_user, _method: "post"}).call
         assert { ActionMailer::Base.deliveries.count == 2 } # テスト環境では即座に実行され、管理者と本人にメールされた
       end

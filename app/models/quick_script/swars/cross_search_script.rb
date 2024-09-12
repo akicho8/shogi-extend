@@ -13,7 +13,7 @@ module QuickScript
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
       MAX_OF_WANT_MAX      = 500     # 抽出希望件数は N 以下
-      BACKGROUND_THRESHOLD = 10000   # N以上ならバックグランド実行する
+      BACKGROUND_THRESHOLD = 10000   # N以上ならバックグラウンド実行する
       MAX_OF_RANGE_MAX     = 100000  # 対象件数は N 以下
 
       def form_parts
@@ -149,7 +149,7 @@ module QuickScript
           ################################################################################
 
           {
-            :label   => "バックグランド実行",
+            :label   => "バックグラウンド実行",
             :key     => :bg_request,
             :type    => :radio_button,
             :elems   => {
@@ -218,13 +218,13 @@ module QuickScript
         end
         if range_max > BACKGROUND_THRESHOLD
           if !current_bg_request
-            flash[:notice] = "#{BACKGROUND_THRESHOLD.next}件以上を対象するとき場合はバックグランド実行してください"
+            flash[:notice] = "#{BACKGROUND_THRESHOLD.next}件以上を対象するとき場合はバックグラウンド実行してください"
             return
           end
         end
         if current_bg_request
           unless current_user
-            flash[:notice] = "バックグランド実行する場合は結果をメールするのでログインしてください"
+            flash[:notice] = "バックグラウンド実行する場合は結果をメールするのでログインしてください"
             return
           end
           unless current_user.email_valid?
@@ -506,7 +506,7 @@ module QuickScript
           # -------------------------------------------------------------------------------- フォーム
           "検索対象件数"       => range_max,
           "抽出希望件数"       => want_max,
-          "バックグランド実行" => current_bg_request,
+          "バックグラウンド実行" => current_bg_request,
           # -------------------------------------------------------------------------------- 結果
           "抽出"               => found_ids.size,
           # -------------------------------------------------------------------------------- 時間

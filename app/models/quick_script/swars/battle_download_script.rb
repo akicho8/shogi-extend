@@ -56,7 +56,7 @@ module QuickScript
             :session_sync => true,
           },
           {
-            :label        => "バックグランド実行する",
+            :label        => "バックグラウンド実行する",
             :key          => :bg_request,
             :type         => debug_mode ? :radio_button : :hidden,
             :elems        => {"false" => "しない", "true" => "する"},

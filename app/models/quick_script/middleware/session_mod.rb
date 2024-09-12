@@ -5,7 +5,7 @@ module QuickScript
         if controller
           controller.session    # 通常
         else
-          @session ||= {}       # バックグランド実行時 (or テスト時)
+          @session ||= {}       # バックグラウンド実行時 (or テスト時)
         end
       end
 
