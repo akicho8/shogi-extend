@@ -1,5 +1,10 @@
 require "./setup"
 
+tp Swars::Battle.group(:preset).count.keys.collect(&:name)
+
+exit
+
+
 QuickScript::Swars::CrossSearchScript.new(x_style_keys: "王道").x_style_infos.collect(&:name) # => ["王道"]
 exit
 

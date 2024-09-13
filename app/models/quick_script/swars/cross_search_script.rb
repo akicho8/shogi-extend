@@ -132,6 +132,15 @@ module QuickScript
           },
 
           {
+            :label        => "手合割",
+            :key          => :preset_keys,
+            :type         => :checkbox_button,
+            :elems        => PresetInfo.swars_preset_infos.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+            :default      => preset_keys,
+            :session_sync => true,
+          },
+
+          {
             :label        => "結末",
             :key          => :final_keys,
             :type         => :checkbox_button,
@@ -145,7 +154,7 @@ module QuickScript
             :key          => :query,
             :type         => :string,
             :default      => query,
-            :placeholder  => "開戦:>=21 中盤:>=42 手数:>=89 手合割:二枚落ち",
+            :placeholder  => "開戦:>=21 中盤:>=42 手数:>=89",
             :help_message => "棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
             :session_sync => true,
           },
@@ -289,6 +298,9 @@ module QuickScript
           end
           if v = rule_infos.presence
             s = s.rule_eq(v.pluck(:key))
+          end
+          if v = preset_infos.presence
+            s = s.preset_eq(v.pluck(:key))
           end
           if v = final_infos.presence
             s = s.final_eq(v.pluck(:key))
@@ -439,7 +451,17 @@ module QuickScript
         @y_tag_cond_info ||= TagCondInfo.fetch(y_tag_cond_key)
       end
 
-      ################################################################################
+      ################################################################################ モード
+
+      def xmode_keys
+        array_from_tag_string(params[:xmode_keys])
+      end
+
+      def xmode_infos
+        @xmode_infos ||= ::Swars::XmodeInfo.array_from(xmode_keys)
+      end
+
+      ################################################################################ 持ち時間
 
       def rule_keys
         array_from_tag_string(params[:rule_keys])
@@ -449,7 +471,17 @@ module QuickScript
         @rule_infos ||= ::Swars::RuleInfo.array_from(rule_keys)
       end
 
-      ################################################################################
+      ################################################################################ 手合割
+
+      def preset_keys
+        array_from_tag_string(params[:preset_keys])
+      end
+
+      def preset_infos
+        @preset_infos ||= PresetInfo.array_from(preset_keys)
+      end
+
+      ################################################################################ 結末
 
       def final_keys
         array_from_tag_string(params[:final_keys])
@@ -457,16 +489,6 @@ module QuickScript
 
       def final_infos
         @final_infos ||= ::Swars::FinalInfo.array_from(final_keys)
-      end
-
-      ################################################################################
-
-      def xmode_keys
-        array_from_tag_string(params[:xmode_keys])
-      end
-
-      def xmode_infos
-        @xmode_infos ||= ::Swars::XmodeInfo.array_from(xmode_keys)
       end
 
       ################################################################################

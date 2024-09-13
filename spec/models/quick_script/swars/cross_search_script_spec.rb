@@ -5,7 +5,7 @@ module QuickScript
     it "works" do
       battle = ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.ibis_pattern)
       tp battle.info if $0 == "-"
-      instance = Swars::CrossSearchScript.new(exec: "true", x_tag: "居飛車", x_judge_keys: "勝ち,負け", x_grade_keys: "30級", xmode_keys: "野良", rule_keys: "10分", final_keys: "投了", _method: "get")
+      instance = Swars::CrossSearchScript.new(exec: "true", x_tag: "居飛車", x_judge_keys: "勝ち,負け", x_grade_keys: "30級", xmode_keys: "野良", rule_keys: "10分", final_keys: "投了", preset_keys: "平手", _method: "get")
       assert { instance.found_ids == [battle.id] }
       assert { instance.as_json }
       assert { Swars::CrossSearchScript.new(exec: "true", x_tag: "振り飛車", _method: "get").found_ids == [] }
