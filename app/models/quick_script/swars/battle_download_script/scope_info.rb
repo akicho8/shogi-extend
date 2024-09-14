@@ -5,7 +5,7 @@ class QuickScript::Swars::BattleDownloadScript
       {
         key: :continue,
         name: "前回の続きから",
-        el_message: "新しい棋譜だけを取得する。ただし初回は直近を取得する。(推奨)",
+        el_message: "新しい棋譜だけを取得する(推奨) ※初回は直近を取得する",
         error_message: "前回取得以降の新しい対局がありません",
         scope: -> context, s {
           context.swars_user or raise "required context.swars_user"

@@ -6,7 +6,7 @@ module QuickScript
       self.form_method = :post
 
       def call
-        if foreground_mode
+        if running_in_foreground
           if request_post?
             call_later
             self.button_label = "実行(#{params[:post_index]})"
@@ -14,7 +14,7 @@ module QuickScript
           end
         end
 
-        if background_mode
+        if running_in_background
           AppLog.important(subject: "バックグラウンド実行完了(#{params[:post_index]})", body: params)
         end
       end

@@ -104,6 +104,12 @@
             )
             template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
               option(:value="key") {{label}}
+        template(v-else-if="form_part.type === 'b_switch'")
+          b-switch(
+            :id="QS.form_part_id(form_part)"
+            v-model="QS.attributes[form_part.key]"
+            )
+            span {{form_part.on_label}}
         template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
           template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
             component(

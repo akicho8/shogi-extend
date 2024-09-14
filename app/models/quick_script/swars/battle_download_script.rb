@@ -3,12 +3,13 @@ module QuickScript
     class BattleDownloadScript < Base
       prepend QueryMod
 
-      self.title           = "将棋ウォーズ棋譜ダウンロード"
-      self.description     = "指定ウォーズIDの棋譜をまとめてZIPでダウンロードする"
-      self.form_method     = :post
-      self.button_label    = "ダウンロード"
-      self.login_link_show = true
-      self.debug_mode      = Rails.env.local?
+      self.title               = "将棋ウォーズ棋譜ダウンロード"
+      self.description         = "指定ウォーズIDの棋譜をまとめてZIPでダウンロードする"
+      self.form_method         = :post
+      self.button_label        = "ダウンロード"
+      self.login_link_show     = true
+      self.debug_mode          = Rails.env.local?
+      self.throttle_expires_in = 5.0
 
       attr_accessor :processed_second
 
@@ -56,17 +57,18 @@ module QuickScript
             :session_sync => true,
           },
           {
-            :label        => "バックグラウンド実行する",
-            :key          => :bg_request,
+            :label        => "バックグラウンド実行",
+            :key          => :bg_request_key,
             :type         => debug_mode ? :radio_button : :hidden,
-            :elems        => {"false" => "しない", "true" => "する"},
-            :default      => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
+            :elems        => BgRequestInfo.to_form_elems,
+            :default      => bg_request_key,
+            :session_sync => true,
           },
         ]
       end
 
       def call
-        if foreground_mode
+        if running_in_foreground
           if request_get?
             if Rails.env.local?
               if current_user
@@ -80,22 +82,24 @@ module QuickScript
             if flash.present?
               return
             end
-            if current_bg_request
+            unless throttle.call
+              flash[:notice] = "連打すな"
+              return
+            end
+            if bg_request_info.key == :on
               call_later
-              self.form_method = nil # form をまるごと消す
-              return { _autolink: posted_message }
+              # self.form_method = nil # form をまるごと消す
+              flash[:notice] = posted_message
+              return
             end
             flash[:notice] = "ダウンロードを開始しました"
             redirect_to download_url, type: :hard
+            return
           end
         end
-        if background_mode
+        if running_in_background
           mail_notify
         end
-      end
-
-      def current_bg_request
-        params[:bg_request].to_s == "true"
       end
 
       def long_title
@@ -103,7 +107,7 @@ module QuickScript
       end
 
       def posted_message
-        "できたら #{current_user.email} あてに#{main_scope.size}件の棋譜をZIPで送ります。数分かかる場合があります。"
+        "承りました。終わったら #{current_user.email} あてに#{main_scope.size}件の棋譜をZIPで送ります。"
       end
 
       def validate!
@@ -280,6 +284,18 @@ module QuickScript
       def structure_key
         params[:structure_key].presence || StructureInfo.first.key
       end
+
+      ################################################################################
+
+      def bg_request_key
+        BgRequestInfo.valid_key(params[:bg_request_key], (debug_mode ? :off : :on))
+      end
+
+      def bg_request_info
+        BgRequestInfo.fetch(bg_request_key)
+      end
+
+      ################################################################################
     end
   end
 end

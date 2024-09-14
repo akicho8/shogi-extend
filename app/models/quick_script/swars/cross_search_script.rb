@@ -5,16 +5,17 @@ module QuickScript
       self.description                   = "ウォーズIDを指定しない検索"
       self.form_method                   = :post # GET にすると json でこないので空配列が nil になってしまって session_sync がバグる
       self.router_push_failed_then_fetch = true
-      self.button_label                  = "検索"
+      self.button_label                  = "実行"
       self.login_link_show               = true
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
       self.params_add_submit_key         = :exec
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
-      MAX_OF_WANT_MAX      = 500     # 抽出希望件数は N 以下
-      BACKGROUND_THRESHOLD = 10000   # N以上ならバックグラウンド実行する
-      MAX_OF_RANGE_MAX     = 100000  # 対象件数は N 以下
+      WANT_MAX_DEFAULT     = 50      # 抽出希望件数は N 以下
+      WANT_MAX_MAX         = 500     # 抽出希望件数は N 以下
+      RANGE_MAX_THRESHOLD = 10000   # N以上ならバックグラウンド実行する
+      RANGE_MAX_MAX        = 100000  # 対象件数は N 以下
 
       def form_parts
         super + [
@@ -53,7 +54,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::JudgeInfo.to_form_elems,
             :default      => x_judge_keys,
-            # :help_message => "指定の戦法を使ったときの勝敗",
+            # :help_message => "スタイルは membership に結び付く",
             :session_sync => true,
           },
           {
@@ -62,6 +63,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => x_style_keys,
+            # :help_message => "",
             :session_sync => true,
           },
 
@@ -164,7 +166,7 @@ module QuickScript
             :label        => "検索対象件数 - 直近N件",
             :key          => :range_max,
             :type         => :numeric,
-            :options      => { min: 10000, max: MAX_OF_RANGE_MAX, step: 10000 },
+            :options      => { min: 10000, max: RANGE_MAX_MAX, step: 10000 },
             :default      => range_max,
             :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
             :session_sync => true,
@@ -173,7 +175,7 @@ module QuickScript
             :label        => "抽出希望件数",
             :key          => :want_max,
             :type         => :numeric,
-            :options      => { min: 50, max: MAX_OF_WANT_MAX, step: 50 },
+            :options      => { min: 50, max: WANT_MAX_MAX, step: 50 },
             :default      => want_max,
             :help_message => "これだけ見つけたら検索を終える",
             :session_sync => true,
@@ -182,26 +184,32 @@ module QuickScript
           ################################################################################
 
           {
-            :label   => "バックグラウンド実行",
-            :key     => :bg_request,
-            :type    => :radio_button,
-            :elems   => {
-              "false" => { el_label: "しない", el_message: "リアルタイムで結果を得る",     },
-              "true"  => { el_label: "する",   el_message: "あとで結果をメールで受け取る", },
-            },
-            :default => params[:bg_request].to_s.presence || "false",
+            :label        => "ZIPダウンロード",
+            :key          => :download_key,
+            :type         => :radio_button,
+            :elems        => DownloadInfo.to_form_elems,
+            :default      => download_key,
+            :session_sync => true,
+          },
+
+          {
+            :label        => "バックグラウンド実行",
+            :key          => :bg_request_key,
+            :type         => :radio_button,
+            :elems        => BgRequestInfo.to_form_elems,
+            :default      => bg_request_key,
             :session_sync => true,
           },
         ]
       end
 
       def call
-        if foreground_mode && submitted? && fetch_index >= 0
+        if running_in_foreground && submitted? && fetch_index >= 0
           validate!
           if flash.present?
             return
           end
-          if current_bg_request
+          if bg_request_info.key == :on
             unless throttle.call
               flash[:notice] = "連打すな"
               return
@@ -211,23 +219,25 @@ module QuickScript
             flash[:notice] = posted_message
             return
           end
-          first_heavy_run
-          app_log_call
+          first_heavy_process_execute
+          foreground_execute_log
           if found_ids.empty?
             flash[:notice] = empty_message
             return
           end
-          flash[:notice] = found_message
-          redirect_to search_path, type: :tab_open
-          return { _v_html: result_html }
+          if download_info.key == :on
+            flash[:notice] = "ダウンロードを開始しました"
+            redirect_to download_url, type: :hard
+            return
+          else
+            flash[:notice] = found_message
+            redirect_to search_path, type: :tab_open
+            return { _v_html: result_html }
+          end
         end
-        if background_mode
+        if running_in_background
           mail_notify
         end
-      end
-
-      def current_bg_request
-        params[:bg_request].to_s == "true"
       end
 
       def posted_message
@@ -241,21 +251,39 @@ module QuickScript
             return
           end
         end
-        if want_max > MAX_OF_WANT_MAX
-          flash[:notice] = "抽出希望件数は#{MAX_OF_WANT_MAX}以下にしてください"
+
+        ################################################################################
+
+        if range_max > RANGE_MAX_MAX
+          flash[:notice] = "検索対象件数は#{RANGE_MAX_MAX}件以下にしてください"
           return
         end
-        if range_max > MAX_OF_RANGE_MAX
-          flash[:notice] = "対象件数は#{MAX_OF_RANGE_MAX}以下にしてください"
-          return
-        end
-        if range_max > BACKGROUND_THRESHOLD
-          if !current_bg_request
-            flash[:notice] = "#{BACKGROUND_THRESHOLD.next}件以上を対象するとき場合はバックグラウンド実行してください"
+        if range_max > RANGE_MAX_THRESHOLD
+          if bg_request_info.key == :off
+            flash[:notice] = "検索対象件数が#{RANGE_MAX_THRESHOLD}件を越える場合はバックグラウンド実行してください"
             return
           end
         end
-        if current_bg_request
+
+        ################################################################################
+
+        if want_max > WANT_MAX_MAX
+          flash[:notice] = "抽出希望件数は#{WANT_MAX_MAX}件以下にしてください"
+          return
+        end
+
+        if download_info.key == :on
+          if want_max > WANT_MAX_DEFAULT
+            if bg_request_info.key == :off
+              flash[:notice] = "#{WANT_MAX_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行してください"
+              return
+            end
+          end
+        end
+
+        ################################################################################
+
+        if bg_request_info.key == :on
           unless current_user
             flash[:notice] = "バックグラウンド実行する場合は結果をメールするのでログインしてください"
             return
@@ -267,12 +295,15 @@ module QuickScript
         end
       end
 
-      def first_heavy_run
+      def first_heavy_process_execute
         if @processed_at
           raise "must not happen"
         end
         @processed_at = Time.current
         @processed_second = Benchmark.realtime { found_ids }
+        if download_info.key == :on
+          download_content
+        end
       end
 
       def found_ids
@@ -494,12 +525,34 @@ module QuickScript
       ################################################################################
 
       def want_max
-        (params[:want_max].presence || 50).to_i
+        (params[:want_max].presence || WANT_MAX_DEFAULT).to_i
       end
 
       def range_max
-        (params[:range_max].presence || BACKGROUND_THRESHOLD).to_i
+        (params[:range_max].presence || RANGE_MAX_THRESHOLD).to_i
       end
+
+      ################################################################################
+
+      def download_key
+        DownloadInfo.valid_key_or_first(params[:download_key])
+      end
+
+      def download_info
+        DownloadInfo.fetch(download_key)
+      end
+
+      ################################################################################
+
+      def bg_request_key
+        BgRequestInfo.valid_key_or_first(params[:bg_request_key])
+      end
+
+      def bg_request_info
+        BgRequestInfo.fetch(bg_request_key)
+      end
+
+      ################################################################################
 
       def batch_size
         1000
@@ -511,7 +564,7 @@ module QuickScript
 
       ################################################################################
 
-      def app_log_call
+      def foreground_execute_log
         AppLog.important(emoji: ":REALTIME:", subject: mail_subject, body: mail_body)
       end
 
@@ -536,14 +589,21 @@ module QuickScript
       ################################################################################
 
       def mail_notify
-        first_heavy_run
+        first_heavy_process_execute
         SystemMailer.notify({
-            :emoji   => ":検索:",
-            :subject => mail_subject,
-            :body    => mail_body,
-            :to      => current_user.email,
-            :bcc     => AppConfig[:admin_email],
-          }).deliver_later
+            :emoji       => ":検索:",
+            :subject     => mail_subject,
+            :body        => mail_body,
+            :to          => current_user.email,
+            :bcc         => AppConfig[:admin_email],
+            :attachments => mail_attachments,
+          }).deliver_now        # deliver_later では download_content のシリアライズの関係でエラーになる
+      end
+
+      def mail_attachments
+        if download_info.key == :on
+          { download_filename => download_content }
+        end
       end
 
       def mail_subject
@@ -570,25 +630,28 @@ module QuickScript
         {
           # -------------------------------------------------------------------------------- 対象
           "戦法"                 => x_tag_names,
-          "戦法の解釈"           => x_tag_cond_info.name,
+          "戦法の解釈"           => x_tag_names.presence&.then { x_tag_cond_info.name },
           "棋力"                 => x_grade_infos.collect(&:name),
           "勝敗"                 => x_judge_infos.collect(&:name),
           "スタイル"             => x_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- 相手
           "相手の戦法"           => y_tag_names,
-          "相手の戦法の解釈"     => y_tag_cond_info.name,
+          "相手の戦法の解釈"     => y_tag_names.presence&.then { y_tag_cond_info.name },
           "相手の棋力"           => y_grade_infos.collect(&:name),
           "相手の勝敗"           => y_judge_infos.collect(&:name),
           "相手のスタイル"       => y_style_infos.collect(&:name),
           # -------------------------------------------------------------------------------- バトルに対して
           "モード"               => xmode_infos.collect(&:name),
           "持ち時間"             => rule_infos.collect(&:name),
+          "手合割"               => preset_infos.collect(&:name),
           "結末"                 => final_infos.collect(&:name),
           "おまけクエリ"         => query,
           # -------------------------------------------------------------------------------- フォーム
           "検索対象件数"         => range_max,
           "抽出希望件数"         => want_max,
-          "バックグラウンド実行" => current_bg_request,
+          # -------------------------------------------------------------------------------- 受け取り方法
+          "ZIPダウンロード"      => download_info.name,
+          "バックグラウンド実行" => bg_request_info.name,
           # -------------------------------------------------------------------------------- 結果
           "抽出"                 => found_ids.size,
           # -------------------------------------------------------------------------------- 時間
@@ -604,6 +667,55 @@ module QuickScript
       def search_path
         query = "id:" + found_ids * ","
         "/swars/search" + "?" + { query: query }.to_query
+      end
+
+      ################################################################################
+
+      def download_key
+        DownloadInfo.valid_key_or_first(params[:download_key])
+      end
+
+      def download_info
+        DownloadInfo.fetch(download_key)
+      end
+
+      ################################################################################
+
+      def render_format(format)
+        super
+        format.zip do
+          controller.send_data(download_content, {
+              :type        => Mime["zip"],
+              :filename    => download_filename,
+              :disposition => "attachment",
+            })
+        end
+      end
+
+      def download_filename
+        @download_filename ||= FilenameBuilder.new(self).call
+      end
+
+      def download_content
+        to_zip.string
+      end
+
+      def download_url
+        query = params.except(:controller, :action, :format, :_method)
+        self.class.qs_api_url(:zip) + "?" + query.to_query
+      end
+
+      def zip_builder
+        ZipBuilder.new(self)
+      end
+
+      def to_zip
+        @to_zip ||= yield_self do
+          io = nil
+          processed_second = Benchmark.realtime { io = zip_builder.to_blob }
+          AppLog.important(subject: "ZIP生成 (#{found_ids.size})", body: ActiveSupport::Duration.build(processed_second).inspect)
+          io
+        end
       end
 
       ################################################################################

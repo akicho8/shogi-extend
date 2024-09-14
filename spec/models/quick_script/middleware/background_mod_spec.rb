@@ -2,9 +2,9 @@ require "rails_helper"
 
 module QuickScript
   RSpec.describe Middleware::ControllerMod, type: :model do
-    it "background_mode" do
-      object = QuickScript::Dev::NullScript.new({}, {background_mode: true})
-      assert { object.background_mode }
+    it "running_in_background" do
+      object = QuickScript::Dev::NullScript.new({}, {running_in_background: true})
+      assert { object.running_in_background }
     end
 
     it "call_later" do

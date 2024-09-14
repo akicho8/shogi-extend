@@ -10,7 +10,7 @@ module QuickScript
     end
 
     it "バックグラウンド実行する予定のコードを直接実行する" do
-      assert { Dev::BackgroundJobScript.new({}, {background_mode: true}).call.kind_of?(AppLog) }
+      assert { Dev::BackgroundJobScript.new({}, {running_in_background: true}).call.kind_of?(AppLog) }
     end
   end
 end

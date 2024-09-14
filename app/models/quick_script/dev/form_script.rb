@@ -91,7 +91,6 @@ module QuickScript
 
           ################################################################################
 
-
           {
             :label   => "static",
             :key     => :static1,
@@ -155,6 +154,16 @@ module QuickScript
             :type    => :checkbox_button,
             :elems   => "a",
             :default => Array(params[:checkbox1].presence || "a"),
+          },
+
+          ################################################################################
+
+          {
+            :label        => "スイッチ",
+            :key          => :switch_key,
+            :type         => :b_switch,
+            :on_label     => "有効",
+            :default      => params[:dl_switch_key],
           },
         ]
       end

@@ -34,7 +34,7 @@ module QuickScript
       end
 
       def call
-        if foreground_mode
+        if running_in_foreground
           if request_get?
             return "将棋ウォーズ棋譜検索で保持している履歴の中から直近最大#{LIMIT_MAX}件をGoogleスプレッドシートに出力します。"
           end
@@ -56,7 +56,7 @@ module QuickScript
             end
           end
         end
-        if background_mode
+        if running_in_background
           SystemMailer.notify(subject: long_title, to: current_user.email, bcc: AppConfig[:admin_email], body: google_sheet_url).deliver_later
         end
       end

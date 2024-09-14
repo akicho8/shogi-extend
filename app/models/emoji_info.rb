@@ -43,7 +43,7 @@ class EmojiInfo
     { key: ":ChatGPT_OUT:",  raw: "🤖", },
     { key: ":ChatGPT_ERR:",  raw: "🤯", },
     { key: ":絞込:",         raw: "🔍", },
-    { key: ":検索:",         raw: "🔍", },
+    { key: ":検索:",         raw: "⛏", },
     { key: ":参照:",         raw: "🪪", },
     { key: ":短縮URL:",      raw: "📦", },
     { key: ":REALTIME:",     raw: "💡", },

@@ -1,27 +1,27 @@
 # def call
-#   if foreground_mode
+#   if running_in_foreground
 #     if request_post?
 #       call_later
 #     end
 #   end
 #
-#   if background_mode
+#   if running_in_background
 #     AppLog.important(subject: "バックグラウンド実行完了", body: params)
 #   end
 # end
 
 module QuickScript
   concern :BackgroundMod do
-    def background_mode
-      @options[:background_mode].to_s == "true"
+    def running_in_background
+      @options[:running_in_background].to_s == "true"
     end
 
-    def foreground_mode
-      !background_mode
+    def running_in_foreground
+      !running_in_background
     end
 
     def call_later
-      if background_mode
+      if running_in_background
         raise QuickScriptError, "バックグラウンドでさらにバックグラウンド実行するべからず"
       end
       new_params = params.merge(qs_group_key: self.class.qs_group_key, qs_page_key: self.class.qs_page_key)

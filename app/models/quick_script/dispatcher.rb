@@ -37,7 +37,7 @@ module QuickScript
       def background_dispatch(params, options)
         options = {
           :current_user    => User.find_by(id: options[:current_user_id]),
-          :background_mode => true,
+          :running_in_background => true,
         }
         new(params, options).action.tap(&:call)
       end
