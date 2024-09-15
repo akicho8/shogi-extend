@@ -66,6 +66,14 @@ module QuickScript
             # :help_message => "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
             :session_sync => true,
           },
+          {
+            :label        => "ウォーズIDs",
+            :key          => :x_user_keys,
+            :type         => :string,
+            :default      => params[:x_user_keys].presence,
+            :help_message => "複数指定可 (ここで一人だけ指定するなら通常の棋譜検索を使った方がいい)",
+            :session_sync => true,
+          },
 
           ################################################################################
 
@@ -112,6 +120,14 @@ module QuickScript
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => y_style_keys,
             # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
+            :session_sync => true,
+          },
+          {
+            :label        => "相手のウォーズIDs",
+            :key          => :y_user_keys,
+            :type         => :string,
+            :default      => params[:y_user_keys].presence,
+            :help_message => "複数指定可",
             :session_sync => true,
           },
           ################################################################################
@@ -253,6 +269,13 @@ module QuickScript
           end
         end
 
+        all_user_keys.each do |user_key|
+          unless ::Swars::User.exists?(key: user_key)
+            flash[:notice] = "#{user_key} さんは見つかりません。ウォーズIDが間違っていませんか？"
+            return
+          end
+        end
+
         ################################################################################
 
         if range_max > RANGE_MAX_MAX
@@ -333,26 +356,12 @@ module QuickScript
       end
 
       def sub_scope(scope)
-        scope = scope.then do |s|
-          if v = xmode_infos.presence
-            s = s.xmode_eq(v.pluck(:key))
-          end
-          if v = rule_infos.presence
-            s = s.rule_eq(v.pluck(:key))
-          end
-          if v = preset_infos.presence
-            s = s.preset_eq(v.pluck(:key))
-          end
-          if v = final_infos.presence
-            s = s.final_eq(v.pluck(:key))
-          end
-          s
-        end
+        scope = battle_scope(scope)
 
         memberships = ::Swars::Membership.where(battle: scope.ids)
 
-        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos)
-        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info, y_judge_infos, y_style_infos, y_grade_infos)
+        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos, x_user_keys)
+        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info, y_judge_infos, y_style_infos, y_grade_infos, y_user_keys)
 
         s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
 
@@ -367,7 +376,25 @@ module QuickScript
         scope = scope.find_all_by_query(query)
       end
 
-      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos)
+      def battle_scope(scope)
+        scope.then do |s|
+          if v = xmode_infos.presence
+            s = s.xmode_eq(v.pluck(:key))
+          end
+          if v = rule_infos.presence
+            s = s.rule_eq(v.pluck(:key))
+          end
+          if v = preset_infos.presence
+            s = s.preset_eq(v.pluck(:key))
+          end
+          if v = final_infos.presence
+            s = s.final_eq(v.pluck(:key))
+          end
+          s
+        end
+      end
+
+      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos, user_keys)
         memberships.then do |s|
           if v = tag_names.presence
             s = s.tagged_with(v, tag_cond_info.tagged_with_options)
@@ -381,6 +408,9 @@ module QuickScript
           if v = grade_infos.presence
             s = s.grade_eq(v.pluck(:key))
           end
+          if v = user_keys.presence
+            s = s.where(user: ::Swars::User.where(key: v))
+          end
           s
         end
       end
@@ -388,18 +418,18 @@ module QuickScript
       ################################################################################
 
       def x_tag_names
-        @x_tag_names ||= array_from_tag_string(params[:x_tag])
+        @x_tag_names ||= tag_string_split(params[:x_tag])
       end
 
       def y_tag_names
-        @y_tag_names ||= array_from_tag_string(params[:y_tag])
+        @y_tag_names ||= tag_string_split(params[:y_tag])
       end
 
       def all_tag_names
         x_tag_names + y_tag_names
       end
 
-      def array_from_tag_string(str)
+      def tag_string_split(str)
         unless str.kind_of?(Array)
           str = str.to_s.split(/[,[:blank:]]+/)
         end
@@ -412,14 +442,29 @@ module QuickScript
 
       ################################################################################
 
-      def query
-        params[:query].to_s
+      def x_user_keys
+        @x_user_keys ||= user_keys_wrap(params[:x_user_keys])
+      end
+
+      def y_user_keys
+        @y_user_keys ||= user_keys_wrap(params[:y_user_keys])
+      end
+
+      def all_user_keys
+        x_user_keys + y_user_keys
+      end
+
+      def user_keys_wrap(str)
+        unless str.kind_of?(Array)
+          str = str.to_s.scan(/\w+/)
+        end
+        str.uniq
       end
 
       ################################################################################
 
       def x_judge_keys
-        array_from_tag_string(params[:x_judge_keys])
+        tag_string_split(params[:x_judge_keys])
       end
 
       def x_judge_infos
@@ -429,7 +474,7 @@ module QuickScript
       ################################################################################
 
       def y_judge_keys
-        array_from_tag_string(params[:y_judge_keys])
+        tag_string_split(params[:y_judge_keys])
       end
 
       def y_judge_infos
@@ -439,7 +484,7 @@ module QuickScript
       ################################################################################
 
       def x_style_keys
-        array_from_tag_string(params[:x_style_keys])
+        tag_string_split(params[:x_style_keys])
       end
 
       def x_style_infos
@@ -449,7 +494,7 @@ module QuickScript
       ################################################################################
 
       def y_style_keys
-        array_from_tag_string(params[:y_style_keys])
+        tag_string_split(params[:y_style_keys])
       end
 
       def y_style_infos
@@ -459,7 +504,7 @@ module QuickScript
       ################################################################################
 
       def x_grade_keys
-        array_from_tag_string(params[:x_grade_keys])
+        tag_string_split(params[:x_grade_keys])
       end
 
       def x_grade_infos
@@ -469,7 +514,7 @@ module QuickScript
       ################################################################################
 
       def y_grade_keys
-        array_from_tag_string(params[:y_grade_keys])
+        tag_string_split(params[:y_grade_keys])
       end
 
       def y_grade_infos
@@ -499,7 +544,7 @@ module QuickScript
       ################################################################################ モード
 
       def xmode_keys
-        array_from_tag_string(params[:xmode_keys])
+        tag_string_split(params[:xmode_keys])
       end
 
       def xmode_infos
@@ -509,7 +554,7 @@ module QuickScript
       ################################################################################ 持ち時間
 
       def rule_keys
-        array_from_tag_string(params[:rule_keys])
+        tag_string_split(params[:rule_keys])
       end
 
       def rule_infos
@@ -519,7 +564,7 @@ module QuickScript
       ################################################################################ 手合割
 
       def preset_keys
-        array_from_tag_string(params[:preset_keys])
+        tag_string_split(params[:preset_keys])
       end
 
       def preset_infos
@@ -529,7 +574,7 @@ module QuickScript
       ################################################################################ 結末
 
       def final_keys
-        array_from_tag_string(params[:final_keys])
+        tag_string_split(params[:final_keys])
       end
 
       def final_infos
@@ -564,6 +609,12 @@ module QuickScript
 
       def bg_request_info
         BgRequestInfo.fetch(bg_request_key)
+      end
+
+      ################################################################################
+
+      def query
+        params[:query].to_s
       end
 
       ################################################################################
@@ -657,12 +708,14 @@ module QuickScript
           "棋力"                 => x_grade_infos.collect(&:name),
           "勝敗"                 => x_judge_infos.collect(&:name),
           "スタイル"             => x_style_infos.collect(&:name),
+          "ウォーズIDs"          => x_user_keys,
           # -------------------------------------------------------------------------------- 相手
           "相手の戦法"           => y_tag_names,
           "相手の戦法の解釈"     => y_tag_names.presence&.then { y_tag_cond_info.name },
           "相手の棋力"           => y_grade_infos.collect(&:name),
           "相手の勝敗"           => y_judge_infos.collect(&:name),
           "相手のスタイル"       => y_style_infos.collect(&:name),
+          "相手のウォーズIDs"    => y_user_keys,
           # -------------------------------------------------------------------------------- バトルに対して
           "モード"               => xmode_infos.collect(&:name),
           "持ち時間"             => rule_infos.collect(&:name),
