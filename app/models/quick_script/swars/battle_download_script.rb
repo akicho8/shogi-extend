@@ -102,8 +102,8 @@ module QuickScript
         end
       end
 
-      def long_title
-        "#{swars_user.name_with_grade}の#{title}(#{scope_info.name}#{main_scope.size}件)"
+      def mail_subject
+        "【将棋ウォーズ棋譜ダウンロード】#{swars_user.name_with_grade} (#{scope_info.name}#{main_scope.size}件)"
       end
 
       def posted_message
@@ -159,7 +159,8 @@ module QuickScript
 
       def mail_notify
         SystemMailer.notify({
-            :subject     => long_title,
+            :emoji       => ":棋譜ZIP:",
+            :subject     => mail_subject,
             :to          => current_user.email,
             :bcc         => AppConfig[:admin_email],
             :body        => "",
@@ -272,23 +273,23 @@ module QuickScript
       end
 
       def format_key
-        params[:format_key].presence || FormatInfo.first.key
+        FormatInfo.lookup_key_or_first(params[:format_key])
       end
 
       ################################################################################
+
+      def structure_key
+        StructureInfo.lookup_key_or_first(params[:structure_key])
+      end
 
       def structure_info
         StructureInfo.fetch(structure_key)
       end
 
-      def structure_key
-        params[:structure_key].presence || StructureInfo.first.key
-      end
-
       ################################################################################
 
       def bg_request_key
-        BgRequestInfo.valid_key(params[:bg_request_key], (debug_mode ? :off : :on))
+        BgRequestInfo.lookup_key(params[:bg_request_key], (debug_mode ? :off : :on))
       end
 
       def bg_request_info

@@ -197,7 +197,7 @@ module ShareBoardControllerMethods
   def viewpoint
     key = params[:viewpoint]
     key ||= params[:abstract_viewpoint] # 誰かがブックマークしているかもしれないため過去のキーも使えるようにしておく
-    ViewpointInfo.valid_key(key, :black)
+    ViewpointInfo.lookup_key(key, :black)
   end
 
   # 駒落ちを考慮した擬似ターン数

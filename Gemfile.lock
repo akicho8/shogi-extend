@@ -305,7 +305,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    memory_record (0.0.19)
+    memory_record (0.0.20)
       activesupport
     mini_magick (4.12.0)
     mini_mime (1.1.5)

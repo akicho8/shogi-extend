@@ -63,7 +63,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => x_style_keys,
-            # :help_message => "",
+            # :help_message => "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
             :session_sync => true,
           },
 
@@ -111,6 +111,7 @@ module QuickScript
             :type         => :checkbox_button,
             :elems        => ::Swars::StyleInfo.to_form_elems,
             :default      => y_style_keys,
+            # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
             :session_sync => true,
           },
           ################################################################################
@@ -245,7 +246,7 @@ module QuickScript
       end
 
       def validate!
-        x_tag_names.each do |tag_name|
+        all_tag_names.each do |tag_name|
           unless Bioshogi::Explain::TacticInfo.flat_lookup(tag_name)
             flash[:notice] = "#{tag_name}とはなんでしょう？"
             return
@@ -272,12 +273,21 @@ module QuickScript
           return
         end
 
-        if download_info.key == :on
+        if params[:experiment]
           if want_max > WANT_MAX_DEFAULT
-            if bg_request_info.key == :off
+            if download_info.key == :on && bg_request_info.key == :off
               flash[:notice] = "#{WANT_MAX_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行してください"
               return
             end
+          end
+        end
+
+        ################################################################################
+
+        unless params[:experiment]
+          if download_info.key == :on && bg_request_info.key == :off
+            flash[:notice] = "ZIPダウンロードする場合はバックグラウンド実行してください"
+            return
           end
         end
 
@@ -385,6 +395,10 @@ module QuickScript
         @y_tag_names ||= array_from_tag_string(params[:y_tag])
       end
 
+      def all_tag_names
+        x_tag_names + y_tag_names
+      end
+
       def array_from_tag_string(str)
         unless str.kind_of?(Array)
           str = str.to_s.split(/[,[:blank:]]+/)
@@ -465,7 +479,7 @@ module QuickScript
       ################################################################################
 
       def x_tag_cond_key
-        TagCondInfo.valid_key_or_first(params[:x_tag_cond_key])
+        TagCondInfo.lookup_key_or_first(params[:x_tag_cond_key])
       end
 
       def x_tag_cond_info
@@ -475,7 +489,7 @@ module QuickScript
       ################################################################################
 
       def y_tag_cond_key
-        TagCondInfo.valid_key_or_first(params[:y_tag_cond_key])
+        TagCondInfo.lookup_key_or_first(params[:y_tag_cond_key])
       end
 
       def y_tag_cond_info
@@ -535,7 +549,7 @@ module QuickScript
       ################################################################################
 
       def download_key
-        DownloadInfo.valid_key_or_first(params[:download_key])
+        DownloadInfo.lookup_key_or_first(params[:download_key])
       end
 
       def download_info
@@ -545,7 +559,7 @@ module QuickScript
       ################################################################################
 
       def bg_request_key
-        BgRequestInfo.valid_key_or_first(params[:bg_request_key])
+        BgRequestInfo.lookup_key_or_first(params[:bg_request_key])
       end
 
       def bg_request_info
@@ -571,11 +585,20 @@ module QuickScript
       ################################################################################
 
       def empty_message
-        "ひとつも見つかりませんでした"
+        out = []
+        out << "ひとつも見つかりませんでした。"
+        out << advice_message
+        out.compact.join("\n")
       end
 
-      def safari_user_message
-        "#{search_url}"
+      def advice_message
+        if x_tag_names.present? && x_style_infos.present?
+          return "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「スタイル」の指定は外した方がいいかもしれません。"
+        end
+        if y_tag_names.present? && y_style_infos.present?
+          return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
+        end
+        return "条件を緩くするか、「検索対象件数」を増やしてみてください。"
       end
 
       def link_to_search_url
@@ -672,7 +695,7 @@ module QuickScript
       ################################################################################
 
       def download_key
-        DownloadInfo.valid_key_or_first(params[:download_key])
+        DownloadInfo.lookup_key_or_first(params[:download_key])
       end
 
       def download_info

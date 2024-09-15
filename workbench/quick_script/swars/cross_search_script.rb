@@ -1,5 +1,9 @@
 require "./setup"
 
+puts QuickScript::Swars::CrossSearchScript.new.empty_message # => nil
+exit
+
+
 QuickScript::Swars::CrossSearchScript.new({exec: "true", download_key: "on"}, {current_user: User.admin}).mail_notify
 exit
 
@@ -15,4 +19,5 @@ _ { QuickScript::Swars::CrossSearchScript.new(x_tag: "居飛車", exec: "true", 
 sql
 QuickScript::Swars::CrossSearchScript.new(x_tag: "居飛車", x_judge_keys: "勝ち", exec: "true", _method: "get").all_ids.size # => 
 
-# >> 2024-09-14T13:15:02.259Z pid=67642 tid=1koa INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >> ひとつも見つかりませんでした。
+# >> 「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している

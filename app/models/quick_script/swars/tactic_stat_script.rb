@@ -186,7 +186,7 @@ module QuickScript
       ################################################################################
 
       def scope_key
-        ScopeInfo.valid_key_or_first(params[:scope_key])
+        ScopeInfo.lookup_key_or_first(params[:scope_key])
       end
 
       def scope_info
@@ -196,7 +196,7 @@ module QuickScript
       ################################################################################
 
       def order_key
-        OrderInfo.valid_key_or_first(params[:order_key])
+        OrderInfo.lookup_key_or_first(params[:order_key])
       end
 
       def order_info
@@ -216,7 +216,7 @@ module QuickScript
       ################################################################################
 
       def ua_key
-        UaInfo.valid_key_or_first(params[:user_agent_key])
+        UaInfo.lookup_key_or_first(params[:user_agent_key])
       end
 
       def ua_info

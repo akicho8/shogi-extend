@@ -9,8 +9,8 @@ module ApplicationMemoryRecord
   end
 
   class_methods do
-    def valid_key_or_first(key, default = nil, &block)
-      valid_key(key, default, &block) || first&.key
+    def lookup_key_or_first(key, default = nil, &block)
+      lookup_key(key, default, &block) || first&.key
     end
 
     def keys_from(values)
