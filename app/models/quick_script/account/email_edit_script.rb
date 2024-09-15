@@ -14,7 +14,7 @@ module QuickScript
             :label   => "メールアドレス",
             :key     => :email,
             :type    => :string,
-            :default => current_email,
+            :default => -> { current_email },
           },
         ]
       end

@@ -11,7 +11,7 @@ module QuickScript
           {
             :key     => :query,
             :type    => :string,
-            :default => params[:query].to_s,
+            :default => -> { params[:query].to_s },
           },
         ]
       end

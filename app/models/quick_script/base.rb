@@ -93,7 +93,7 @@ module QuickScript
     delegate :url_helpers, to: :"self.class"
 
     def initialize(params = {}, options = {})
-      @params = params
+      @params = params_normalize(params)
       @options = {
       }.merge(options)
 
@@ -139,6 +139,10 @@ module QuickScript
     # 例えばページに飛んだ瞬間にスプレッドシートの出力をさせたくない場合は fetch_index >= 1 で弾けばよい
     def fetch_index
       params[:fetch_index].to_i
+    end
+
+    def params_normalize(params)
+      params.dup
     end
 
     # 必ずいるっぽいやつ

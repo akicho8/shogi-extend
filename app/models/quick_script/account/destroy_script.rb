@@ -13,8 +13,8 @@ module QuickScript
             :label       => "あなたの名前",
             :key         => :username,
             :type        => :string,
-            :default     => "",
-            :placeholder => current_user&.name,
+            :default     => -> { "" },
+            :placeholder => -> { current_user&.name },
           },
         ]
       end

@@ -24,7 +24,7 @@ module QuickScript
             :key          => :population_key,
             :type         => :radio_button,
             :elems        => PopulationInfo.to_form_elems,
-            :default      => population_key,
+            :default      => -> { population_key },
             :session_sync => true,
           },
           {
@@ -32,7 +32,7 @@ module QuickScript
             :key          => :tag,
             :type         => :select,
             :elems        => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default      => params[:tag],
+            :default      => -> { params[:tag] },
           },
         ]
       end

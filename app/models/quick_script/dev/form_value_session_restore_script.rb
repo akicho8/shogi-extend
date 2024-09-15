@@ -11,7 +11,7 @@ module QuickScript
             :label        => "str1",
             :key          => :str1,
             :type         => :string,
-            :default      => params[:str1].presence || "(str1)",
+            :default      => -> { params[:str1].presence || "(str1)" },
             :session_sync => true,
           },
           {
@@ -19,7 +19,7 @@ module QuickScript
             :key          => :radio1,
             :type         => :radio_button,
             :elems        => ["a", "b", "c"],
-            :default      => params[:radio1].presence || "a",
+            :default      => -> { params[:radio1].presence || "a" },
             :session_sync => true,
           },
         ]

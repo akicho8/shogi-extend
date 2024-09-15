@@ -25,7 +25,7 @@ module QuickScript
             :key          => :scope_key,
             :type         => :radio_button,
             :elems        => ScopeInfo.to_form_elems,
-            :default      => scope_key,
+            :default      => -> { scope_key },
             :session_sync => true,
           },
           {
@@ -33,7 +33,7 @@ module QuickScript
             :key          => :order_key,
             :type         => :radio_button,
             :elems        => OrderInfo.to_form_elems,
-            :default      => order_info.key,
+            :default      => -> { order_info.key },
             :session_sync => true,
           },
           {
@@ -41,14 +41,14 @@ module QuickScript
             :key          => :freq_ratio_gteq,
             :type         => :numeric,
             :options      => { min: 0, step: 0.01 },
-            :default      => freq_ratio_gteq,
+            :default      => -> { freq_ratio_gteq },
             :session_sync => true,
           },
           {
             :label        => "[勝率ランキング参加条件] 出現数N以上",
             :key          => :freq_count_gteq,
             :type         => debug_mode ? :numeric : :hidden,
-            :default      => params[:freq_count_gteq],
+            :default      => -> { params[:freq_count_gteq] },
             :session_sync => true,
           },
         ]

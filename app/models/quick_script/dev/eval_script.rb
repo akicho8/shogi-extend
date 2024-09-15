@@ -12,7 +12,7 @@ module QuickScript
             :label   => "コード",
             :key     => :code,
             :type    => :text,
-            :default => params[:code],
+            :default => -> { params[:code] },
           },
         ]
       end

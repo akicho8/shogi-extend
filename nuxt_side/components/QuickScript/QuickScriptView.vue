@@ -32,6 +32,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
 const QueryString = require("query-string")
+const QS = require("qs")
 import isMobile from "ismobilejs"
 
 import { mod_value_type  } from "./mod_value_type.js"
@@ -101,9 +102,12 @@ export default {
   fetch() {
     // 初回以降も呼ばれるため attributes をまぜる
     // $route.query は初回のときに使い、this.attributes は次からのときに使う
+    // axios 古すぎて paramsSerializer が効かない
     this.fetch_index ??= 0
     const new_params2 = {...this.invisible_params, ...this.new_params, fetch_index: this.fetch_index}
-    this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => { // post にする？
+    this.$axios.$get(this.current_api_path, {
+      params: this.params_wrap(new_params2),
+    }).then(params => { // post にする？
       this.fetch_index += 1
       this.params_receive(params)
     })
@@ -132,6 +136,21 @@ export default {
   // },
 
   methods: {
+    // Rails に GET で渡したとき空配列認識することができないため、配列を join(",") し、空なら "__empty__" とする
+    params_wrap(params) {
+      const hv = {}
+      _.forIn(params, (val, key) => {
+        if (_.isArray(val)) {
+          if (_.isEmpty(val)) {
+            val = "__empty__"
+          } else {
+            val = val.join(",")
+          }
+        }
+        hv[key] = val
+      })
+      return hv
+    },
     params_receive(params) {
       // fetchOnServer: true のときに実行すると this.toast_ok がないと言われる
       if (process.client) {
@@ -221,7 +240,7 @@ export default {
         // URL を書き換えずにこっそり GET したい場合
         // this.$sound.play_click()
         const new_params2 = {...this.invisible_params, ...this.new_params}
-        this.$axios.$get(this.current_api_path, {params: new_params2}).then(params => this.params_receive(params))
+        this.$axios.$get(this.current_api_path, {params: this.params_wrap(new_params2)}).then(params => this.params_receive(params))
       } else {
         // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
         this.router_push()
@@ -242,7 +261,7 @@ export default {
     router_push(params = {}) {
       const new_params2 = {...this.invisible_params, ...this.new_params, ...params} // 破壊するため
       this.browser_query_delete(new_params2)   // ブラウザ上で表示させたくないパラメータを削除する(new_params2 を破壊する)
-      this.$router.push({query: new_params2}, () => {
+      this.$router.push({query: this.params_wrap(new_params2)}, () => {
         this.debug_alert("Navigation succeeded")
         // this.$sound.play_click()
       }, () => {

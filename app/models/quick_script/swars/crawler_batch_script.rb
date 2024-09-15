@@ -13,8 +13,8 @@ module QuickScript
             :label       => "将棋ウォーズID",
             :key         => :swars_user_key,
             :type        => :string,
-            :default     => params[:swars_user_key].to_s.presence,
-            :placeholder => "BOUYATETSU5",
+            :default     => -> { params[:swars_user_key].to_s.presence },
+            :placeholder => -> { "BOUYATETSU5" },
             :session_sync => true,
           },
           {
@@ -22,7 +22,7 @@ module QuickScript
             :key         => :attachment_mode,
             :type        => :radio_button,
             :elems       => {"nothing" => "しない", "with_zip" => "する"},
-            :default     => params[:attachment_mode].to_s.presence || "nothing",
+            :default     => -> { params[:attachment_mode].to_s.presence || "nothing" },
             :session_sync => true,
           },
         ]

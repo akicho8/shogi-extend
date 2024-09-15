@@ -15,14 +15,14 @@ module QuickScript
             :key             => :key1,
             :type            => :radio_button,
             :elems           => {"false" => "A", "true" => "B"},
-            :default         => params[:key1].presence || "false",
+            :default         => -> { params[:key1].presence || "false" },
           },
           {
             :label           => "非公開",
             :key             => :key2,
             :type            => :radio_button,
             :elems           => {"false" => "A", "true" => "B"},
-            :default         => "false",   # 毎回元に戻したい場合
+            :default         => -> { "false" },   # 毎回元に戻したい場
             :hidden_on_query => true,      # URLからも隠したい場合
           },
         ]

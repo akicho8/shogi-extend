@@ -26,7 +26,7 @@ module QuickScript
           :get_then_axios_get            => get_then_axios_get,
           :router_push_failed_then_fetch => router_push_failed_then_fetch,
           :button_click_loading          => button_click_loading,
-          :form_parts                    => form_parts,
+          :form_parts                    => form_parts_as_json,
         })
     end
 
@@ -34,9 +34,44 @@ module QuickScript
       []
     end
 
+    def form_parts_as_json
+      form_parts.collect do |form_part|
+        [:default, :placeholder].each do |column_key|
+          if v = form_part[column_key]
+            unless v.kind_of?(Proc)
+              raise "#{self.class.name} の #{form_part[:key]} の #{column_key} をブロックにしてください"
+            end
+            form_part = form_part.merge(default: v.call)
+          end
+        end
+        form_part
+      end
+    end
+
     def submitted?
       if params_add_submit_key
         params[params_add_submit_key].to_s == "true"
+      end
+    end
+
+    def params_normalize(params)
+      super.dup.tap do |params|
+        form_parts.each do |e|
+          key = e[:key]
+          if e[:type] == :checkbox_button # 配列型かどうかを知りたいので checkbox_button で判定するのはちょっとおかしい
+            if v = params[key]
+              if v.kind_of?(String)
+                v = v.strip
+                if v == "__empty__" # "[]" にする手もあるがクライアント側と合わせること
+                  v = []
+                else
+                  v = v.split(/[,[:blank:]]/).uniq.sort
+                end
+                params[key] = v
+              end
+            end
+          end
+        end
       end
     end
   end

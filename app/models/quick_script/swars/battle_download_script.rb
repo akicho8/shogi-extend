@@ -21,7 +21,7 @@ module QuickScript
             :key          => :scope_key,
             :type         => :radio_button,
             :elems        => ScopeInfo.to_form_elems(self),
-            :default      => scope_info.key,
+            :default      => -> { scope_info.key },
             :session_sync => true,
           },
           {
@@ -29,7 +29,7 @@ module QuickScript
             :key          => :format_key,
             :type         => :radio_button,
             :elems        => FormatInfo.to_form_elems,
-            :default      => format_info.key,
+            :default      => -> { format_info.key },
             :session_sync => true,
           },
           {
@@ -37,7 +37,7 @@ module QuickScript
             :key          => :encode_key,
             :type         => :radio_button,
             :elems        => EncodeInfo.to_form_elems,
-            :default      => encode_info.key,
+            :default      => -> { encode_info.key },
             :session_sync => true,
           },
           {
@@ -45,7 +45,7 @@ module QuickScript
             :key          => :max_key,
             :type         => :radio_button,
             :elems        => MaxInfo.to_form_elems,
-            :default      => max_info.key,
+            :default      => -> { max_info.key },
             :session_sync => true,
           },
           {
@@ -53,7 +53,7 @@ module QuickScript
             :key          => :structure_key,
             :type         => :radio_button,
             :elems        => StructureInfo.to_form_elems,
-            :default      => structure_info.key,
+            :default      => -> { structure_info.key },
             :session_sync => true,
           },
           {
@@ -61,7 +61,7 @@ module QuickScript
             :key          => :bg_request_key,
             :type         => debug_mode ? :radio_button : :hidden,
             :elems        => BgRequestInfo.to_form_elems,
-            :default      => bg_request_key,
+            :default      => -> { bg_request_key },
             :session_sync => true,
           },
         ]

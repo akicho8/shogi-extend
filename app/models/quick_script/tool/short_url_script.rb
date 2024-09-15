@@ -11,7 +11,7 @@ module QuickScript
             :label   => "長いURL",
             :key     => :original_url,
             :type    => :string,
-            :default => current_original_url,
+            :default => -> { current_original_url },
           },
         ]
       end

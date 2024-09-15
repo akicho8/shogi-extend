@@ -13,7 +13,7 @@ module QuickScript
             :key          => :piyo_shogi_type_key,
             :type         => :radio_button,
             :elems        => {"auto" => "スマホ", "native" => "常時"},
-            :default      => params[:piyo_shogi_type_key].presence || "auto",
+            :default      => -> { params[:piyo_shogi_type_key].presence || "auto" },
             :help_message => "常時はぴよ将棋を最近の Mac にインストールしている人向け。将棋ウォーズ棋譜検索を Mac から操作しているとき、Mac にインストールしたぴよ将棋を起動できるようになる。",
             :ls_sync      => { parent_key: :user_settings, child_key: :piyo_shogi_type_key, loader: :force, writer: :force },
           },

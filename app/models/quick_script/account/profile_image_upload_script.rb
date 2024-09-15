@@ -14,7 +14,7 @@ module QuickScript
             :label   => "プロフィール画像",
             :key     => :avatar,
             :type    => :file,
-            :default => nil,
+            :default => -> { nil },
           },
         ]
       end

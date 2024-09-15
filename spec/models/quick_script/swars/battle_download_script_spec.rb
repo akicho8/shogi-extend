@@ -16,7 +16,7 @@ module QuickScript
         assert { instance.download_content  }
         assert { instance.download_filename }
         assert { instance.download_url      }
-        assert { instance.long_title        }
+        assert { instance.mail_subject      }
         assert { instance.posted_message    }
         assert { instance.summary           }
         assert { instance.mail_notify       }

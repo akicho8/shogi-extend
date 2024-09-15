@@ -12,14 +12,14 @@ module QuickScript
             :label   => "絵文字",
             :key     => :emoji_text,
             :type    => :text,
-            :default => current_emoji_text,
+            :default => -> { current_emoji_text },
           },
           {
             :label   => "モード",
             :key     => :mode,
             :type    => :radio_button,
             :elems   => {"grapheme_cluster" => "結合", "single_code_point" => "分解", "info" => "詳細"},
-            :default => current_mode,
+            :default => -> { current_mode },
           },
         ]
       end

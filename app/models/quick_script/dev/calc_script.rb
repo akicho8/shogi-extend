@@ -12,20 +12,20 @@ module QuickScript
             :label   => "左辺",
             :key     => :lhv,
             :type    => :numeric,
-            :default => params[:lhv].presence.try { to_i } || 1,
+            :default => -> { params[:lhv].presence.try { to_i } || 1 },
           },
           {
             :label   => "演算子",
             :key     => :operator,
             :type    => :select,
             :elems   => ["+", "-"],
-            :default => current_operator,
+            :default => -> { current_operator },
           },
           {
             :label   => "右辺",
             :key     => :rhv,
             :type    => :numeric,
-            :default => params[:rhv].presence.try { to_i } || 2,
+            :default => -> { params[:rhv].presence.try { to_i } || 2 },
           },
         ]
       end

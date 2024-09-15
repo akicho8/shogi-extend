@@ -12,7 +12,7 @@ module QuickScript
             :label   => "検索初期値",
             :key     => :swars_search_default_key,
             :type    => :string,
-            :default => swars_search_default_key, # nil で送ったときだけ復帰するのでつまり URL 引数を優先する
+            :default => -> { swars_search_default_key }, # nil で送ったときだけ復帰するのでつまり URL 引数を優先する
             :ls_sync => { global_key: :swars_search_default_key, loader: :if_default_is_nil, writer: :force },
           },
         ]
