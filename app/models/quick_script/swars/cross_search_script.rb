@@ -12,10 +12,10 @@ module QuickScript
       self.params_add_submit_key         = :exec
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
 
-      WANT_MAX_DEFAULT     = 50      # 抽出希望件数は N 以下
-      WANT_MAX_MAX         = 500     # 抽出希望件数は N 以下
+      WANT_MAX_DEFAULT    = 50      # 抽出希望件数は N 以下
+      WANT_MAX_MAX        = 500     # 抽出希望件数は N 以下
       RANGE_MAX_THRESHOLD = 10000   # N以上ならバックグラウンド実行する
-      RANGE_MAX_MAX        = 100000  # 対象件数は N 以下
+      RANGE_MAX_MAX       = 100000  # 対象件数は N 以下
 
       def form_parts
         super + [

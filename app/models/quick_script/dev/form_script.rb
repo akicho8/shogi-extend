@@ -15,7 +15,7 @@
 module QuickScript
   module Dev
     class FormScript < Base
-      self.title = "form"
+      self.title = "フォーム入力要素のテスト"
       self.description = "form_parts のテスト"
       self.form_method = :get
 
