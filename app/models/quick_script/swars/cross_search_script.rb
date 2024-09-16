@@ -9,8 +9,9 @@ module QuickScript
       self.login_link_show               = true
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
-      self.params_add_submit_key         = :exec
+      # self.params_add_submit_key         = :exec
       self.parent_link                   = { to: "/swars/search" } # { go_back: true }
+      self.title_link                    = nil
 
       WANT_MAX_DEFAULT    = 50      # 抽出希望件数は N 以下
       WANT_MAX_MAX        = 500     # 抽出希望件数は N 以下
@@ -275,6 +276,19 @@ module QuickScript
           ################################################################################
 
           {
+            :label        => "別タブで開く",
+            :key          => :new_tab_key,
+            :type         => :radio_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => NewTabInfo.to_form_elems,
+                :default => new_tab_key,
+              }
+            },
+          },
+
+          {
             :label        => "ZIPダウンロード",
             :key          => :download_key,
             :type         => :radio_button,
@@ -299,14 +313,32 @@ module QuickScript
               }
             },
           },
+
+          {
+            :label        => "ブックマーク用URLの生成",
+            :key          => :bookmark_url_key,
+            :type         => :radio_button,
+            :session_sync => false,
+            :dynamic_part => -> {
+              {
+                :elems           => BookmarkUrlInfo.to_form_elems,
+                :default         => "off",
+                :hidden_on_query => true,
+              }
+            },
+          },
         ]
       end
 
       def call
-        if running_in_foreground && submitted? && fetch_index >= 0
+        if running_in_foreground && (params[:exec].to_s == "true" || fetch_index >= 1)
           validate!
           if flash.present?
             return
+          end
+          if bookmark_url_info.key == :on
+            flash[:notice] = "生成しました"
+            return { _v_html: bookmark_html }
           end
           if bg_request_info.key == :on
             unless throttle.call
@@ -314,7 +346,6 @@ module QuickScript
               return
             end
             call_later
-            # self.form_method = nil # form をまるごと消す
             flash[:notice] = posted_message
             return
           end
@@ -330,7 +361,7 @@ module QuickScript
             return
           else
             flash[:notice] = found_message
-            redirect_to search_path, type: :tab_open
+            redirect_to search_path, type: new_tab_info.redirect_type
             return { _v_html: result_html }
           end
         end
@@ -675,6 +706,16 @@ module QuickScript
 
       ################################################################################
 
+      def new_tab_key
+        NewTabInfo.lookup_key_or_first(params[:new_tab_key])
+      end
+
+      def new_tab_info
+        NewTabInfo.fetch(new_tab_key)
+      end
+
+      ################################################################################
+
       def download_key
         DownloadInfo.lookup_key_or_first(params[:download_key])
       end
@@ -691,6 +732,16 @@ module QuickScript
 
       def bg_request_info
         BgRequestInfo.fetch(bg_request_key)
+      end
+
+      ################################################################################
+
+      def bookmark_url_key
+        BookmarkUrlInfo.lookup_key_or_first(params[:bookmark_url_key])
+      end
+
+      def bookmark_url_info
+        BookmarkUrlInfo.fetch(bookmark_url_key)
       end
 
       ################################################################################
@@ -779,6 +830,9 @@ module QuickScript
         end
         out << ""
         out << info.collect { |k, v| "#{k}: #{v}" }.join("\n")
+        out << ""
+        out << "▼再実行用URL (ブックマーク用URL)"
+        out << bookmark_url
         out.join("\n")
       end
 
@@ -808,6 +862,7 @@ module QuickScript
           "検索対象件数"         => range_max,
           "抽出希望件数"         => want_max,
           # -------------------------------------------------------------------------------- 受け取り方法
+          "別タブで開く"         => new_tab_info.name,
           "ZIPダウンロード"      => download_info.name,
           "バックグラウンド実行" => bg_request_info.name,
           # -------------------------------------------------------------------------------- 結果
@@ -815,6 +870,7 @@ module QuickScript
           # -------------------------------------------------------------------------------- 時間
           "実行開始"             => @processed_at.try { to_fs(:ymdhms) },
           "処理時間"             => @processed_second.try { ActiveSupport::Duration.build(self).inspect },
+          # -------------------------------------------------------------------------------- 時間
         }.compact_blank
       end
 
@@ -829,12 +885,20 @@ module QuickScript
 
       ################################################################################
 
-      def download_key
-        DownloadInfo.lookup_key_or_first(params[:download_key])
+      def bookmark_html
+        "#{bookmark_link} をブックマークしておくと現在の条件で即実行できるぞ"
       end
 
-      def download_info
-        DownloadInfo.fetch(download_key)
+      def bookmark_link
+        h.tag.a("横断検索", href: bookmark_url, target: "_blank", :class => "tag is-primary")
+      end
+
+      def bookmark_url
+        self.class.qs_url + "?" + bookmark_params.merge(bookmark_url_key: false, exec: true).to_query
+      end
+
+      def bookmark_params
+        form_parts.inject({}) { |a, e| a.merge(e[:key] => controller.try { params[e[:key]] }) }
       end
 
       ################################################################################

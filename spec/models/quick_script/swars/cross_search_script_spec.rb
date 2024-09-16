@@ -1,42 +1,49 @@
 require "rails_helper"
 
 module QuickScript
-  RSpec.describe Swars::CrossSearchScript, type: :model do
-    it "works" do
-      battle = ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.ibis_pattern)
-      tp battle.info if $0 == "-"
-      instance = Swars::CrossSearchScript.new(exec: "true", x_tag: "居飛車", x_judge_keys: "勝ち,負け", x_grade_keys: "30級", xmode_keys: "野良", rule_keys: "10分", final_keys: "投了", preset_keys: "平手", _method: "get")
-      assert { instance.found_ids == [battle.id] }
-      assert { instance.as_json }
-      assert { Swars::CrossSearchScript.new(exec: "true", x_tag: "振り飛車", _method: "get").found_ids == [] }
+  module Swars
+    RSpec.describe CrossSearchScript, type: :model do
+      before do
+        @current_user = User.create!
+        @battle = ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.ibis_pattern)
+        tp @battle.info if $0 == "-"
+      end
+
+      it "検索にマッチする" do
+        condition = {
+          :x_tag        => "居飛車",
+          :x_judge_keys => "勝ち,負け",
+          :x_grade_keys => "30級",
+          :xmode_keys   => "野良",
+          :rule_keys    => "10分",
+          :final_keys   => "投了",
+          :preset_keys  => "平手"
+        }
+        instance = CrossSearchScript.new(exec: "true", **condition)
+        assert { instance.found_ids == [@battle.id] }
+        assert { instance.as_json }
+      end
+
+      it "検索にマッチしない" do
+        condition = {
+          :x_tag        => "振り飛車",
+        }
+        instance = CrossSearchScript.new(exec: "true", **condition)
+        assert { instance.found_ids == [] }
+        assert { instance.as_json }
+      end
+
+      it "バックグランドでダウンロードする" do
+        instance = CrossSearchScript.new({download_key: :on, bg_request_key: :on, exec: true}, {current_user: @current_user})
+        assert { instance.as_json[:flash][:notice].match?(/承りました/) }
+        assert { ActionMailer::Base.deliveries.count == 2 }
+      end
+
+      it "各種メソッド" do
+        assert { CrossSearchScript.new.bookmark_url }
+        assert { CrossSearchScript.new.mail_body    }
+        assert { CrossSearchScript.new.to_zip       }
+      end
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
-# >> QuickScript::Swars::CrossSearchScript
-# >> |----------+--------------------------------------------|
-# >> |       ID | 4416                                       |
-# >> |   ルール | 10分                                       |
-# >> |     結末 | 投了                                       |
-# >> |   モード | 野良                                       |
-# >> |   手合割 | 平手                                       |
-# >> |     手数 | 2                                          |
-# >> |       ▲ | user1 30級 勝ち (居飛車 相居飛車 対居飛車) |
-# >> |       △ | user2 30級 負け (居飛車 相居飛車 対居飛車) |
-# >> | 対局日時 | 2000-01-01 00:00:00                        |
-# >> | 対局秒数 | 0                                          |
-# >> | 終了日時 | 2000-01-01 00:00:00                        |
-# >> |     勝者 | user1                                      |
-# >> | 最終参照 | 2000-01-01 00:00:00                        |
-# >> |----------+--------------------------------------------|
-# >> 1999-12-31T15:00:00.000Z pid=67570 tid=1ht6 INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
-# >>   works
-# >> 
-# >> Top 1 slowest examples (0.63986 seconds, 22.9% of total time):
-# >>   QuickScript::Swars::CrossSearchScript works
-# >>     0.63986 seconds -:5
-# >> 
-# >> Finished in 2.8 seconds (files took 2.29 seconds to load)
-# >> 1 example, 0 failures
-# >> 

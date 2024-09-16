@@ -170,6 +170,7 @@ module QuickScript
     prepend Middleware::CustomStyleMod
     prepend Middleware::SidebarMod
     prepend Middleware::ParentLinkMod        # parent_link
+    prepend Middleware::TitleLinkMod         # title_link
 
     # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link

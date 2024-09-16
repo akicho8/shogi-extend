@@ -214,8 +214,7 @@ export default {
       }
     },
 
-    title_click_handle() {
-      //
+    title_click_handle(e) {
     },
 
     attr_value(form_part) {

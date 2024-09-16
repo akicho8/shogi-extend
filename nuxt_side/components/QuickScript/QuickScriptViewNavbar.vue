@@ -19,9 +19,14 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
         // レベル3: グループ内を表示する
         NavbarItemHome(icon="chevron-left" :to="{name: 'lab-qs_group_key-qs_page_key', params: {qs_group_key: QS.current_qs_group_key}}")
 
-    // タイトルをクリックしたときは query を外す
-    b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle" v-if="QS.meta.title")
-      h1.has-text-weight-bold {{QS.meta.title}}
+    // タイトルをクリックしたときの挙動
+    template(v-if="QS.meta.title")
+      template(v-if="QS.params.title_link == 'url_path_reset'")
+        b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle")
+          h1.has-text-weight-bold {{QS.meta.title}}
+      template(v-else)
+        b-navbar-item(tag="span")
+          h1.has-text-weight-bold {{QS.meta.title}}
 
   template(slot="end")
     b-navbar-item(tag="a" :href="QS.current_api_url" target="_blank" v-if="development_p") API
