@@ -106,7 +106,7 @@ export default {
     this.fetch_index ??= 0
     const new_params2 = {...this.invisible_params, ...this.new_params, fetch_index: this.fetch_index}
     this.$axios.$get(this.current_api_path, {
-      params: this.params_wrap(new_params2),
+      params: this.params_serialize(new_params2),
     }).then(params => { // post にする？
       this.fetch_index += 1
       this.params_receive(params)
@@ -136,16 +136,13 @@ export default {
   // },
 
   methods: {
-    // Rails に GET で渡したとき空配列認識することができないため、配列を join(",") し、空なら "__empty__" とする
-    params_wrap(params) {
+    // :PARAMS_SERIALIZE_DESERIALIZE:
+    // Rails に GET で渡したとき空配列を空配列として認識させられないため配列を文字列化する
+    params_serialize(params) {
       const hv = {}
       _.forIn(params, (val, key) => {
         if (_.isArray(val)) {
-          if (_.isEmpty(val)) {
-            val = "__empty__"
-          } else {
-            val = val.join(",")
-          }
+          val = "[" + val.join(",") + "]"
         }
         hv[key] = val
       })
@@ -240,7 +237,7 @@ export default {
         // URL を書き換えずにこっそり GET したい場合
         // this.$sound.play_click()
         const new_params2 = {...this.invisible_params, ...this.new_params}
-        this.$axios.$get(this.current_api_path, {params: this.params_wrap(new_params2)}).then(params => this.params_receive(params))
+        this.$axios.$get(this.current_api_path, {params: this.params_serialize(new_params2)}).then(params => this.params_receive(params))
       } else {
         // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
         this.router_push()
@@ -261,7 +258,7 @@ export default {
     router_push(params = {}) {
       const new_params2 = {...this.invisible_params, ...this.new_params, ...params} // 破壊するため
       this.browser_query_delete(new_params2)   // ブラウザ上で表示させたくないパラメータを削除する(new_params2 を破壊する)
-      this.$router.push({query: this.params_wrap(new_params2)}, () => {
+      this.$router.push({query: this.params_serialize(new_params2)}, () => {
         this.debug_alert("Navigation succeeded")
         // this.$sound.play_click()
       }, () => {

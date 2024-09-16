@@ -93,7 +93,7 @@ module QuickScript
     delegate :url_helpers, to: :"self.class"
 
     def initialize(params = {}, options = {})
-      @params = params_normalize(params)
+      @params = params_deserialize(params)
       @options = {
       }.merge(options)
 
@@ -141,7 +141,7 @@ module QuickScript
       params[:fetch_index].to_i
     end
 
-    def params_normalize(params)
+    def params_deserialize(params)
       params.dup
     end
 

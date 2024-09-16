@@ -54,21 +54,21 @@ module QuickScript
       end
     end
 
-    def params_normalize(params)
+    # :PARAMS_SERIALIZE_DESERIALIZE:
+    # 文字列が配列風であれば配列化する "[a,b]" => ["a", "b"]
+    # もともと form_part[:type] を見ていたが、たんに文字列を見るようにすれば form_part に依存しなくなると考えたものの
+    # params[form_part[:key]] としないとパラメータが取れないため、form_part に依存してしまう
+    # したがって form_parts 内で params にアクセスしているところはすべて実行されないように proc 化する必要がある
+    def params_deserialize(params)
       super.dup.tap do |params|
         form_parts.each do |e|
           key = e[:key]
-          if e[:type] == :checkbox_button # 配列型かどうかを知りたいので checkbox_button で判定するのはちょっとおかしい
-            if v = params[key]
-              if v.kind_of?(String)
-                v = v.strip
-                if v == "__empty__" # "[]" にする手もあるがクライアント側と合わせること
-                  v = []
-                else
-                  v = v.split(/[,[:blank:]]/).uniq.sort
-                end
-                params[key] = v
+          if v = params[key]
+            if v.kind_of?(String)
+              if md = v.match(/\A\[(?<array>.*)\]\z/)
+                v = md[:array].split(/,/)
               end
+              params[key] = v
             end
           end
         end
