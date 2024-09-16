@@ -3,7 +3,7 @@ module QuickScript
     class CrossSearchScript < Base
       self.title                         = "将棋ウォーズ横断検索"
       self.description                   = "ウォーズIDを指定しない検索"
-      self.form_method                   = :post # GET にすると json でこないので空配列が nil になってしまって session_sync がバグる
+      self.form_method                   = :get
       self.router_push_failed_then_fetch = true
       self.button_label                  = "実行"
       self.login_link_show               = true
@@ -550,7 +550,7 @@ module QuickScript
       end
 
       def x_judge_infos
-        @x_judge_infos ||= ::JudgeInfo.array_from(x_judge_keys)
+        @x_judge_infos ||= ::JudgeInfo.lookup_from_array(x_judge_keys)
       end
 
       ################################################################################
@@ -560,7 +560,7 @@ module QuickScript
       end
 
       def y_judge_infos
-        @y_judge_infos ||= ::JudgeInfo.array_from(y_judge_keys)
+        @y_judge_infos ||= ::JudgeInfo.lookup_from_array(y_judge_keys)
       end
 
       ################################################################################
@@ -570,7 +570,7 @@ module QuickScript
       end
 
       def x_style_infos
-        @x_style_infos ||= ::Swars::StyleInfo.array_from(x_style_keys)
+        @x_style_infos ||= ::Swars::StyleInfo.lookup_from_array(x_style_keys)
       end
 
       ################################################################################
@@ -580,7 +580,7 @@ module QuickScript
       end
 
       def y_style_infos
-        @y_style_infos ||= ::Swars::StyleInfo.array_from(y_style_keys)
+        @y_style_infos ||= ::Swars::StyleInfo.lookup_from_array(y_style_keys)
       end
 
       ################################################################################
@@ -590,7 +590,7 @@ module QuickScript
       end
 
       def x_grade_infos
-        @x_grade_infos ||= ::Swars::GradeInfo.array_from(x_grade_keys)
+        @x_grade_infos ||= ::Swars::GradeInfo.lookup_from_array(x_grade_keys)
       end
 
       ################################################################################
@@ -600,7 +600,7 @@ module QuickScript
       end
 
       def y_grade_infos
-        @y_grade_infos ||= ::Swars::GradeInfo.array_from(y_grade_keys)
+        @y_grade_infos ||= ::Swars::GradeInfo.lookup_from_array(y_grade_keys)
       end
 
       ################################################################################
@@ -630,7 +630,7 @@ module QuickScript
       end
 
       def xmode_infos
-        @xmode_infos ||= ::Swars::XmodeInfo.array_from(xmode_keys)
+        @xmode_infos ||= ::Swars::XmodeInfo.lookup_from_array(xmode_keys)
       end
 
       ################################################################################ 持ち時間
@@ -640,7 +640,7 @@ module QuickScript
       end
 
       def rule_infos
-        @rule_infos ||= ::Swars::RuleInfo.array_from(rule_keys)
+        @rule_infos ||= ::Swars::RuleInfo.lookup_from_array(rule_keys)
       end
 
       ################################################################################ 手合割
@@ -650,7 +650,7 @@ module QuickScript
       end
 
       def preset_infos
-        @preset_infos ||= PresetInfo.array_from(preset_keys)
+        @preset_infos ||= PresetInfo.lookup_from_array(preset_keys)
       end
 
       ################################################################################ 結末
@@ -660,7 +660,7 @@ module QuickScript
       end
 
       def final_infos
-        @final_infos ||= ::Swars::FinalInfo.array_from(final_keys)
+        @final_infos ||= ::Swars::FinalInfo.lookup_from_array(final_keys)
       end
 
       ################################################################################

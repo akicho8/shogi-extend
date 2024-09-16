@@ -13,12 +13,16 @@ module ApplicationMemoryRecord
       lookup_key(key, default, &block) || first&.key
     end
 
-    def keys_from(values)
-      Array(values).collect { |e| fetch(e).key }
+    # def keys_from(values)
+    #   Array(values).collect { |e| fetch(e).key }
+    # end
+
+    def fetch_from_array(values)
+      Array(values).collect { |e| fetch(e) }
     end
 
-    def array_from(values)
-      Array(values).collect { |e| fetch(e) }
+    def lookup_from_array(values)
+      Array(values).collect { |e| lookup(e) }.compact
     end
 
     def to_form_elems(...)

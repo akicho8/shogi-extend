@@ -77,11 +77,11 @@ class ApplicationRecord < ActiveRecord::Base
       # 検索用
 
       scope "#{key}_eq".to_sym, -> v {                 # scope :final_eq, -> v {
-        where(key => ar_model.array_from(v))           #   where(final: Final.array_from(v))
+        where(key => ar_model.fetch_from_array(v))           #   where(final: Final.fetch_from_array(v))
       }                                                # }
 
       scope "#{key}_not_eq".to_sym, -> v {             # scope :final_not_eq, -> v {
-        where.not(key => ar_model.array_from(v))       #   where.not(final: Final.array_from(v))
+        where.not(key => ar_model.fetch_from_array(v))       #   where.not(final: Final.fetch_from_array(v))
       }                                                # }
 
       scope "#{key}_ex".to_sym, proc { |v; s, g|       # scope :final_ex, proc { |v; s, g|

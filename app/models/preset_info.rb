@@ -14,7 +14,7 @@ class PresetInfo < Bioshogi::PresetInfo
 
   class << self
     def swars_preset_infos
-      @swars_preset_infos ||= array_from(SWARS_PRESET_KEYS)
+      @swars_preset_infos ||= fetch_from_array(SWARS_PRESET_KEYS)
     end
   end
 end
