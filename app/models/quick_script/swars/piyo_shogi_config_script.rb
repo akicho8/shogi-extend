@@ -9,15 +9,14 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label        => "ぴよ将棋ボタンをいつ表示する？ (ブラウザ毎に保存)",
+            :label        => "ぴよ将棋ボタンをいつ表示する？ (ブラウザ毎に設定する)",
             :key          => :piyo_shogi_type_key,
             :type         => :radio_button,
             :ls_sync      => { parent_key: :user_settings, child_key: :piyo_shogi_type_key, loader: :force, writer: :force },
             :dynamic_part => -> {
               {
-                :elems        => {"auto" => "スマホ", "native" => "常時"},
-                :default      => params[:piyo_shogi_type_key].presence || "auto",
-                :help_message => "常時はぴよ将棋を最近の Mac にインストールしている人向け。将棋ウォーズ棋譜検索を Mac から操作しているとき、Mac にインストールしたぴよ将棋を起動できるようになる。",
+                :elems   => PiyoShogiTypeInfo.to_form_elems,
+                :default => piyo_shogi_type_key,
               }
             },
           },
@@ -30,6 +29,14 @@ module QuickScript
           piyo_shogi_reload!
         end
         nil
+      end
+
+      def piyo_shogi_type_key
+        PiyoShogiTypeInfo.lookup_key_or_first(params[:piyo_shogi_type_key])
+      end
+
+      def piyo_shogi_type_info
+        PiyoShogiTypeInfo.fetch(piyo_shogi_type_key)
       end
     end
   end
