@@ -101,6 +101,14 @@ module QuickScript
         end
       end
 
+      def parent_link
+        if params[:qs_group_only]
+          { force_link_to: "/lab" }
+        else
+          { force_link_to: "/lab/chore" }
+        end
+      end
+
       private
 
       def all_sort(all)

@@ -36,7 +36,7 @@ export default {
     },
     back_handle() {
       this.$sound.play_click()
-      this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
+      this.back_to_or({name: "swars-search", query: {query: this.$route.params.key}})
     },
   },
   computed: {

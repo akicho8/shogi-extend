@@ -1,5 +1,5 @@
 // 汎用コード
-// import { Gs        } from "@/components/models/gs.js"
+import { Gs        } from "@/components/models/gs.js"
 import { AppHelper  } from "@/components/models/app_helper.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
@@ -103,13 +103,20 @@ export const vue_support = {
     // 戻れないならトップに戻る
     // window.history.length は自分を含めるので、1つ前に戻れる条件は2要素以上あるとき
     // 2要素あっても戻れないことがあるので3にしてみる(適当)→やっぱり2にしとく
-    back_to(path = null) {
-      if (window.history.length >= 2) {
-        this.debug_alert("戻る")
-        this.$router.go(-1)
-      } else {
-        this.debug_alert("戻れない")
-        this.$router.push(path || "/")
+    //
+    // ↑この方法はうまくいかない
+    //
+    back_to() {
+      this.back_to_or("/")
+    },
+    back_to_or(path) {
+      Gs.assert(Gs.present_p(path), "Gs.present_p(path)")
+      if (typeof window !== "undefined") {
+        if (window.history.state.back_to_ok) {
+          this.$router.go(-1)
+        } else {
+          this.$router.push(path)
+        }
       }
     },
 

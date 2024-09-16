@@ -10,7 +10,7 @@ module QuickScript
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
       # self.params_add_submit_key         = :exec
-      self.parent_link                   = { to: "/swars/search" } # { go_back: true }
+      # self.parent_link                   = { to: "/swars/search" } # { go_back: true }
       self.title_link                    = nil
 
       WANT_MAX_DEFAULT    = 50      # 抽出希望件数は N 以下

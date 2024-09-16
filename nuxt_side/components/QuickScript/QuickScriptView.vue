@@ -290,11 +290,21 @@ export default {
       }
     },
 
-    go_back_handle() {
+    parent_link_click_handle() {
+      let v = null
+      const parent_link = this.params.parent_link
+      if (v = parent_link?.force_link_to) {
+        this.$router.push(v)
+        return
+      }
+      if (v = parent_link?.fallback_url) {
+        this.back_to_or(v)
+        return
+      }
       if (true) {
-        this.$router.go(-1)
-      } else {
-        window.history.back()
+        v = {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: this.current_qs_group_key}}
+        this.back_to_or(v)
+        return
       }
     },
   },

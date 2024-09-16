@@ -3,6 +3,7 @@ module QuickScript
     class GroupScript < Base
       self.title = "実験室"
       self.description = "グループ一覧を表示する"
+      self.parent_link = { force_link_to: "/" }
 
       def call
         rows = all.collect do |e|

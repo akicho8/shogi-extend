@@ -19,7 +19,7 @@ module QuickScript
         hv = @original_params
         hv = hv.merge(qs_group_key: hv[:qs_group_key].to_s.underscore, qs_page_key: hv[:qs_page_key].to_s.underscore)
         if hv[:qs_page_key] == "__qs_page_key_is_blank__"
-          hv = hv.merge(qs_group_only: hv[:qs_group_key], qs_group_key: "chore", qs_page_key: "index")
+          hv = hv.merge(qs_group_key: "chore", qs_page_key: "index", qs_group_only: hv[:qs_group_key])
         end
         hv
       end
