@@ -14,7 +14,11 @@ module QuickScript
             :label   => "メールアドレス",
             :key     => :email,
             :type    => :string,
-            :default => -> { current_email },
+            :dynamic_part => -> {
+              {
+                :default => current_email,
+              }
+            },
           },
         ]
       end

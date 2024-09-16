@@ -24,32 +24,48 @@ module QuickScript
             :label        => "種類",
             :key          => :scope_key,
             :type         => :radio_button,
-            :elems        => ScopeInfo.to_form_elems,
-            :default      => -> { scope_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ScopeInfo.to_form_elems,
+                :default => scope_key,
+              }
+            },
           },
           {
             :label        => "ランキング",
             :key          => :order_key,
             :type         => :radio_button,
-            :elems        => OrderInfo.to_form_elems,
-            :default      => -> { order_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => OrderInfo.to_form_elems,
+                :default => order_info.key,
+              }
+            },
           },
           {
             :label        => "[勝率ランキング参加条件] 出現率N%以上",
             :key          => :freq_ratio_gteq,
             :type         => :numeric,
-            :options      => { min: 0, step: 0.01 },
-            :default      => -> { freq_ratio_gteq },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :options => { min: 0, step: 0.01 },
+                :default => freq_ratio_gteq,
+              }
+            },
           },
           {
             :label        => "[勝率ランキング参加条件] 出現数N以上",
             :key          => :freq_count_gteq,
             :type         => debug_mode ? :numeric : :hidden,
-            :default      => -> { params[:freq_count_gteq] },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :default => params[:freq_count_gteq],
+              }
+            },
           },
         ]
       end

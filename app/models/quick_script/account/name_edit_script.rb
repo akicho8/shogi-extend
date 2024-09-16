@@ -14,7 +14,11 @@ module QuickScript
             :label   => "名前",
             :key     => :username,
             :type    => :string,
-            :default => -> { current_username },
+            :dynamic_part => -> {
+              {
+                :default => current_username,
+              }
+            },
           },
         ]
       end

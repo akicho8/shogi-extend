@@ -25,54 +25,78 @@ module QuickScript
             :label        => "戦法",
             :key          => :x_tag,
             :type         => :string,
-            :ac_by        => :html5,
-            :elems        => candidate_tag_names,
-            :default      => -> { params[:x_tag].presence },
-            :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :ac_by        => :html5,
+                :elems        => candidate_tag_names,
+                :default      => params[:x_tag].presence,
+                :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+              }
+            },
           },
           {
             :label        => "戦法の解釈",
             :key          => :x_tag_cond_key,
             :type         => :radio_button,
-            :elems        => TagCondInfo.to_form_elems,
-            :default      => -> { x_tag_cond_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => TagCondInfo.to_form_elems,
+                :default => x_tag_cond_key,
+              }
+            },
           },
           {
             :label        => "棋力",
             :key          => :x_grade_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-            :default      => -> { x_grade_keys },
-            # :help_message => "指定の戦法を使った人の棋力",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+                :default => x_grade_keys,
+                # :help_message => "指定の戦法を使った人の棋力",
+              }
+            },
           },
           {
             :label        => "勝敗",
             :key          => :x_judge_keys,
             :type         => :checkbox_button,
-            :elems        => ::JudgeInfo.to_form_elems,
-            :default      => -> { x_judge_keys },
-            # :help_message => "スタイルは membership に結び付く",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ::JudgeInfo.to_form_elems,
+                :default => x_judge_keys,
+                # :help_message => "スタイルは membership に結び付く",
+              }
+            },
           },
           {
             :label        => "スタイル",
             :key          => :x_style_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::StyleInfo.to_form_elems,
-            :default      => -> { x_style_keys },
-            # :help_message => "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ::Swars::StyleInfo.to_form_elems,
+                :default => x_style_keys,
+                # :help_message => "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
+              }
+            },
           },
           {
             :label        => "ウォーズIDs",
             :key          => :x_user_keys,
             :type         => :string,
-            :default      => -> { params[:x_user_keys].presence },
-            :help_message => "複数指定可 (ここで一人だけ指定するなら通常の棋譜検索を使った方がいい)",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :default => params[:x_user_keys].presence,
+                :help_message => "複数指定可 (ここで一人だけ指定するなら通常の棋譜検索を使った方がいい)",
+              }
+            },
           },
 
           ################################################################################
@@ -81,54 +105,76 @@ module QuickScript
             :label        => "相手の戦法",
             :key          => :y_tag,
             :type         => :string,
-            :ac_by        => :html5,
-            :elems        => candidate_tag_names,
-            :default      => -> { params[:y_tag].presence },
-            :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :ac_by        => :html5,
+                :elems        => candidate_tag_names,
+                :default      => params[:y_tag].presence,
+                :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+              }
+            },
           },
           {
             :label        => "相手の戦法の解釈",
             :key          => :y_tag_cond_key,
             :type         => :radio_button,
-            :elems        => TagCondInfo.to_form_elems,
-            :default      => -> { y_tag_cond_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => TagCondInfo.to_form_elems,
+                :default => y_tag_cond_key,
+              }
+            }
           },
           {
             :label        => "相手の棋力",
             :key          => :y_grade_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-            :default      => -> { y_grade_keys },
-            # :help_message => "指定の戦法を食らった人の棋力",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+                :default => y_grade_keys,
+              }
+            },
           },
           {
             :label        => "相手の勝敗",
             :key          => :y_judge_keys,
             :type         => :checkbox_button,
-            :elems        => ::JudgeInfo.to_form_elems,
-            :default      => -> { y_judge_keys },
-            # :help_message => "指定の戦法を使ったときの勝敗",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ::JudgeInfo.to_form_elems,
+                :default => y_judge_keys,
+              }
+            },
           },
           {
             :label        => "相手のスタイル",
             :key          => :y_style_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::StyleInfo.to_form_elems,
-            :default      => -> { y_style_keys },
-            # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ::Swars::StyleInfo.to_form_elems,
+                :default => y_style_keys,
+                # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
+              }
+            },
           },
           {
             :label        => "相手のウォーズIDs",
             :key          => :y_user_keys,
             :type         => :string,
-            :default      => -> { params[:y_user_keys].presence },
-            :help_message => "複数指定可",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :default => params[:y_user_keys].presence,
+                :help_message => "複数指定可",
+              }
+            },
           },
           ################################################################################
 
@@ -136,46 +182,66 @@ module QuickScript
             :label        => "モード",
             :key          => :xmode_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::XmodeInfo.to_form_elems,
-            :default      => -> { xmode_keys },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ::Swars::XmodeInfo.to_form_elems,
+                :default => xmode_keys,
+              }
+            },
           },
 
           {
             :label        => "持ち時間",
             :key          => :rule_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::RuleInfo.to_form_elems,
-            :default      => -> { rule_keys },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ::Swars::RuleInfo.to_form_elems,
+                :default => rule_keys,
+              }
+            },
           },
 
           {
             :label        => "手合割",
             :key          => :preset_keys,
             :type         => :checkbox_button,
-            :elems        => PresetInfo.swars_preset_infos.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-            :default      => -> { preset_keys },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => PresetInfo.swars_preset_infos.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+                :default => preset_keys,
+              }
+            },
           },
 
           {
             :label        => "結末",
             :key          => :final_keys,
             :type         => :checkbox_button,
-            :elems        => ::Swars::FinalInfo.to_form_elems,
-            :default      => -> { final_keys },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ::Swars::FinalInfo.to_form_elems,
+                :default => final_keys,
+              }
+            },
           },
 
           {
             :label        => "おまけクエリ",
             :key          => :query,
             :type         => :string,
-            :default      => -> { query },
-            :placeholder  => -> { "開戦:>=21 中盤:>=42 手数:>=89" },
-            :help_message => "棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :default => query,
+                :placeholder =>  "開戦:>=21 中盤:>=42 手数:>=89" ,
+                :help_message => "棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
+              }
+            },
           },
           ################################################################################
 
@@ -183,19 +249,27 @@ module QuickScript
             :label        => "検索対象件数 - 直近N件",
             :key          => :range_max,
             :type         => :numeric,
-            :options      => { min: 10000, max: RANGE_MAX_MAX, step: 10000 },
-            :default      => -> { range_max },
-            :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :options      => { min: 10000, max: RANGE_MAX_MAX, step: 10000 },
+                :default      => range_max,
+                :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
+              }
+            },
           },
           {
             :label        => "抽出希望件数",
             :key          => :want_max,
             :type         => :numeric,
-            :options      => { min: 50, max: WANT_MAX_MAX, step: 50 },
-            :default      => -> { want_max },
-            :help_message => "これだけ見つけたら検索を終える",
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :options      => { min: 50, max: WANT_MAX_MAX, step: 50 },
+                :default => want_max,
+                :help_message => "これだけ見つけたら検索を終える",
+              }
+            },
           },
 
           ################################################################################
@@ -204,18 +278,26 @@ module QuickScript
             :label        => "ZIPダウンロード",
             :key          => :download_key,
             :type         => :radio_button,
-            :elems        => DownloadInfo.to_form_elems,
-            :default      => -> { download_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => DownloadInfo.to_form_elems,
+                :default => download_key,
+              }
+            },
           },
 
           {
             :label        => "バックグラウンド実行",
             :key          => :bg_request_key,
             :type         => :radio_button,
-            :elems        => BgRequestInfo.to_form_elems,
-            :default      => -> { bg_request_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => BgRequestInfo.to_form_elems,
+                :default => bg_request_key,
+              }
+            },
           },
         ]
       end

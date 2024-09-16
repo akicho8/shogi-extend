@@ -25,13 +25,21 @@ module QuickScript
             :label   => "hidden",
             :key     => :hidden1,
             :type    => :hidden,
-            :default => -> { params[:hidden1].presence || "(hidden)" },
+            :dynamic_part => -> {
+              {
+                :default => params[:hidden1].presence || "(hidden)",
+              }
+            },
           },
           {
             :label   => "file",
             :key     => :file1,
             :type    => :file,
-            :default => -> { nil },
+            :dynamic_part => -> {
+              {
+                :default => nil,
+              }
+            },
           },
 
           ################################################################################ 文字列
@@ -40,26 +48,38 @@ module QuickScript
             :label        => "string",
             :key          => :str1_a,
             :type         => :string,
-            :default      => -> { params[:str1_a].presence || "a" },
-            :help_message => "補完: なし",
+            :dynamic_part => -> {
+              {
+                :default => params[:str1_a].presence || "a",
+                :help_message => "補完: なし",
+              }
+            },
           },
           {
             :label        => "string",
             :key          => :str1_b,
             :type         => :string,
-            :ac_by        => :html5,
-            :elems        => ["foo", "bar", "baz"],
-            :default      => -> { params[:str1_b].presence || "a" },
-            :help_message => "補完: HTML5 の datalist",
+            :dynamic_part => -> {
+              {
+                :ac_by        => :html5,
+                :elems        => ["foo", "bar", "baz"],
+                :default => params[:str1_b].presence || "a",
+                :help_message => "補完: HTML5 の datalist",
+              }
+            },
           },
           {
             :label        => "string ",
             :key          => :str1_c,
             :type         => :string,
-            :ac_by        => :b_autocomplete,
-            :elems        => ["foo", "bar", "baz"],
-            :default      => -> { params[:str1_c].presence || "a" },
-            :help_message => "補完: Buefy の b-autocomplete",
+            :dynamic_part => -> {
+              {
+                :ac_by        => :b_autocomplete,
+                :elems        => ["foo", "bar", "baz"],
+                :default      => params[:str1_c].presence || "a",
+                :help_message => "補完: Buefy の b-autocomplete",
+              }
+            },
           },
 
           ################################################################################ 多数の中から選択
@@ -68,15 +88,23 @@ module QuickScript
             :label   => "select (array)",
             :key     => :select1,
             :type    => :select,
-            :elems   => ["a", "b", "c"],
-            :default => -> { params[:select1].presence || "a" },
+            :dynamic_part => -> {
+              {
+                :elems   => ["a", "b", "c"],
+                :default => params[:select1].presence || "a",
+              }
+            },
           },
           {
             :label   => "select (hash)",
             :key     => :select2,
             :type    => :select,
-            :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
-            :default => -> { params[:select2].presence || "a" },
+            :dynamic_part => -> {
+              {
+                :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
+                :default => params[:select2].presence || "a",
+              }
+            }
           },
 
           ################################################################################
@@ -85,8 +113,12 @@ module QuickScript
             :label   => "タグ入力",
             :key     => :tag1,
             :type    => :taginput,
-            :elems   => ["foo", "bar", "baz"],
-            :default => -> { params[:tag1].presence || "" },
+            :dynamic_part => -> {
+              {
+                :elems   => ["foo", "bar", "baz"],
+                :default => params[:tag1].presence || "",
+              }
+            },
           },
 
           ################################################################################
@@ -95,8 +127,12 @@ module QuickScript
             :label   => "static",
             :key     => :static1,
             :type    => :static,
-            :default => -> { params[:static1].presence || "固定文字列" },
-            :help_message => "(help_message)",
+            :dynamic_part => -> {
+              {
+                :default => params[:static1].presence || "固定文字列",
+                :help_message => "(help_message)",
+              }
+            },
           },
 
           ################################################################################
@@ -105,11 +141,15 @@ module QuickScript
             :label   => "localStorage 同期",
             :key     => :str_ls,
             :type    => :string,
-            :default => -> { params[:str_ls].presence || "(string)" },
             :ls_sync => { parent_key: :"(parent_key)", child_key: :str_ls, loader: :force, writer: :force }, # localStorage["(parent_key)"].update(str_ls: "値")
             # :ls_sync => {global_key: :str_ls, loader: :force, writer: :force },                      # localStorage["str_ls"] = "値"
             # :ls_sync => {global_key: :str_ls, loader: :if_default_is_nil, writer: :force },                      # loader: :if_default_is_nil なら default: nil なら localStorage の方を書き込む
-            :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
+            :dynamic_part => -> {
+              {
+                :default => params[:str_ls].presence || "(string)",
+                :help_message => "最初の fetch の直後に localStorage の方が null でなければ上書きし GET POST したタイミングで localStorage に書き込む。バリデーションはない。",
+              }
+            },
           },
 
           ################################################################################
@@ -118,42 +158,66 @@ module QuickScript
             :label   => "text",
             :key     => :text1,
             :type    => :text,
-            :default => -> { params[:text1].presence || "(text)" },
+            :dynamic_part => -> {
+              {
+                :default => params[:text1].presence || "(text)",
+              }
+            },
           },
           {
             :label   => "integer",
             :key     => :int1,
             :type    => :numeric,
-            :default => -> { (params[:int1].presence || "1").to_i },
+            :dynamic_part => -> {
+              {
+                :default => (params[:int1].presence || "1").to_i,
+              }
+            },
           },
 
           {
             :label   => "radio (array)",
             :key     => :radio1,
             :type    => :radio_button,
-            :elems   => ["a", "b", "c"],
-            :default => -> { params[:radio1].presence || "a" },
+            :dynamic_part => -> {
+              {
+                :elems   => ["a", "b", "c"],
+                :default => params[:radio1].presence || "a",
+              }
+            },
           },
           {
             :label   => "radio (hash)",
             :key     => :radio2,
             :type    => :radio_button,
-            :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
-            :default => -> { params[:radio2].presence || "a" },
+            :dynamic_part => -> {
+              {
+                :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
+                :default => params[:radio2].presence || "a",
+              }
+            },
           },
           {
             :label   => "checkbox (array)",
             :key     => :checkbox1,
             :type    => :checkbox_button,
-            :elems   => ["a", "b", "c"],
-            :default => -> { Array(params[:checkbox1].presence || "a") },
+            :dynamic_part => -> {
+              {
+                :elems   => ["a", "b", "c"],
+                :default => Array(params[:checkbox1].presence || "a"),
+              }
+            },
           },
           {
             :label   => "チェックボックスで elems の要素が1つの文字列の場合",
             :key     => :checkbox2,
             :type    => :checkbox_button,
-            :elems   => "a",
-            :default => -> { Array(params[:checkbox1].presence || "a") },
+            :dynamic_part => -> {
+              {
+                :elems   => "a",
+                :default => Array(params[:checkbox1].presence || "a"),
+              }
+            },
           },
 
           ################################################################################
@@ -162,8 +226,12 @@ module QuickScript
             :label        => "スイッチ",
             :key          => :switch_key,
             :type         => :b_switch,
-            :on_label     => "有効",
-            :default      => -> { params[:dl_switch_key] },
+            :dynamic_part => -> {
+              {
+                :on_label => "有効",
+                :default  => params[:dl_switch_key],
+              }
+            },
           },
         ]
       end

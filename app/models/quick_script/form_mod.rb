@@ -10,6 +10,14 @@ module QuickScript
       class_attribute :form_before_call_check,        default: true   # form_parts を呼ぶより前に call を呼んでいること、のチェックをするか？
     end
 
+    def initialize(...)
+      super
+
+      if Rails.env.local?
+        form_parts_as_json
+      end
+    end
+
     def as_json(*)
       hv = super
 
@@ -36,13 +44,15 @@ module QuickScript
 
     def form_parts_as_json
       form_parts.collect do |form_part|
-        [:default, :placeholder].each do |column_key|
-          if v = form_part[column_key]
-            unless v.kind_of?(Proc)
-              raise "#{self.class.name} の #{form_part[:key]} の #{column_key} をブロックにしてください"
-            end
-            form_part = form_part.merge(default: v.call)
+        rest = form_part.keys - [:key, :type, :label, :dynamic_part, :session_sync, :ls_sync]
+        if rest.present?
+          raise "#{self.class.name} の #{form_part[:key]} の #{rest} を dynamic_part の中に入れてください"
+        end
+        if v = form_part[:dynamic_part]
+          unless v.kind_of?(Proc)
+            raise "#{self.class.name} の #{form_part[:key]} の #{column_key} をブロックにしてください"
           end
+          form_part = form_part.merge(v.call, dynamic_part: nil)
         end
         form_part
       end

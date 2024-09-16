@@ -11,7 +11,11 @@ module QuickScript
             :label   => "カウンタ",
             :key     => :my_counter,
             :type    => :numeric,
-            :default => -> { @my_counter },
+            :dynamic_part => -> {
+              {
+                :default => @my_counter,
+              }
+            },
           },
         ]
       end

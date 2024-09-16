@@ -11,9 +11,13 @@ module QuickScript
             :label        => "checkbox (array)",
             :key          => :x,
             :type         => :checkbox_button,
-            :elems        => ["a", "b", "c"],
-            :default      => -> { Array.wrap(params[:x].presence) & ["a", "b", "c"] }, # elems で and しておかないと不正な値がずっと含まれてしまう
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ["a", "b", "c"],
+                :default => Array.wrap(params[:x].presence) & ["a", "b", "c"], # elems で and しておかないと不正な値がずっと含まれてしまう
+              }
+            },
           },
         ]
       end

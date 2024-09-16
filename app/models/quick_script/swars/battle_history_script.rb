@@ -20,15 +20,23 @@ module QuickScript
             :label       => "Google スプレッドシートに出力",
             :key         => :google_sheet,
             :type        => debug_mode ? :radio_button : :hidden,
-            :elems       => {"false" => "しない", "true" => "する"},
-            :default     => -> { params[:google_sheet].to_s.presence || (debug_mode ? "false" : "true") },
+            :dynamic_part => -> {
+              {
+                :elems       => {"false" => "しない", "true" => "する"},
+                :default => params[:google_sheet].to_s.presence || (debug_mode ? "false" : "true"),
+              }
+            },
           },
           {
             :label       => "バックグラウンド実行する",
             :key         => :bg_request,
             :type        => debug_mode ? :radio_button : :hidden,
-            :elems       => {"false" => "しない", "true" => "する"},
-            :default     => -> { params[:bg_request].to_s.presence || (debug_mode ? "false" : "true") },
+            :dynamic_part => -> {
+              {
+                :elems       => {"false" => "しない", "true" => "する"},
+                :default => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
+              }
+            },
           },
         ]
       end

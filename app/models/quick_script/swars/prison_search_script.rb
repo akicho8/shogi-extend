@@ -13,7 +13,11 @@ module QuickScript
             :label   => "部分一致文字列",
             :key     => :query,
             :type    => :string,
-            :default => -> { params[:query].to_s },
+            :dynamic_part => -> {
+              {
+                :default => params[:query].to_s,
+              }
+            },
           },
         ]
       end

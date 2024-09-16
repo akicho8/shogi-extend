@@ -13,8 +13,12 @@ module QuickScript
             :label       => "囚人のウォーズID",
             :key         => :swars_user_key,
             :type        => :string,
-            :default     => -> { params[:swars_user_key] },
-            :placeholder => -> { "AKABAN_TARO" },
+            :dynamic_part => -> {
+              {
+                :default     => params[:swars_user_key],
+                :placeholder => "AKABAN_TARO",
+              }
+            },
           },
         ]
       end

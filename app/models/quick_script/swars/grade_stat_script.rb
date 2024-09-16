@@ -23,16 +23,24 @@ module QuickScript
             :label        => "対象",
             :key          => :population_key,
             :type         => :radio_button,
-            :elems        => PopulationInfo.to_form_elems,
-            :default      => -> { population_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => PopulationInfo.to_form_elems,
+                :default => population_key,
+              }
+            },
           },
           {
             :label        => "絞り込み",
             :key          => :tag,
             :type         => :select,
-            :elems        => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
-            :default      => -> { params[:tag] },
+            :dynamic_part => -> {
+              {
+                :elems   => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
+                :default => params[:tag],
+              }
+            },
           },
         ]
       end

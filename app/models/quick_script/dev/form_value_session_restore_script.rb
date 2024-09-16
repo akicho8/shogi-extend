@@ -11,16 +11,24 @@ module QuickScript
             :label        => "str1",
             :key          => :str1,
             :type         => :string,
-            :default      => -> { params[:str1].presence || "(str1)" },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :default => params[:str1].presence || "(str1)",
+              }
+            },
           },
           {
             :label        => "radio1",
             :key          => :radio1,
             :type         => :radio_button,
-            :elems        => ["a", "b", "c"],
-            :default      => -> { params[:radio1].presence || "a" },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ["a", "b", "c"],
+                :default => params[:radio1].presence || "a",
+              }
+            },
           },
         ]
       end

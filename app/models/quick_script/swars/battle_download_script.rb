@@ -20,49 +20,73 @@ module QuickScript
             :label        => "範囲",
             :key          => :scope_key,
             :type         => :radio_button,
-            :elems        => ScopeInfo.to_form_elems(self),
-            :default      => -> { scope_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => ScopeInfo.to_form_elems(self),
+                :default => scope_info.key,
+              }
+            },
           },
           {
             :label        => "フォーマット",
             :key          => :format_key,
             :type         => :radio_button,
-            :elems        => FormatInfo.to_form_elems,
-            :default      => -> { format_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => FormatInfo.to_form_elems,
+                :default => format_info.key,
+              }
+            },
           },
           {
             :label        => "文字コード",
             :key          => :encode_key,
             :type         => :radio_button,
-            :elems        => EncodeInfo.to_form_elems,
-            :default      => -> { encode_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => EncodeInfo.to_form_elems,
+                :default => encode_info.key,
+              }
+            },
           },
           {
             :label        => "件数",
             :key          => :max_key,
             :type         => :radio_button,
-            :elems        => MaxInfo.to_form_elems,
-            :default      => -> { max_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => MaxInfo.to_form_elems,
+                :default => max_info.key,
+              }
+            },
           },
           {
             :label        => "ZIPの構造",
             :key          => :structure_key,
             :type         => :radio_button,
-            :elems        => StructureInfo.to_form_elems,
-            :default      => -> { structure_info.key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems        => StructureInfo.to_form_elems,
+                :default => structure_info.key,
+              }
+            },
           },
           {
             :label        => "バックグラウンド実行",
             :key          => :bg_request_key,
             :type         => debug_mode ? :radio_button : :hidden,
-            :elems        => BgRequestInfo.to_form_elems,
-            :default      => -> { bg_request_key },
             :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => BgRequestInfo.to_form_elems,
+                :default => bg_request_key,
+              }
+            },
           },
         ]
       end

@@ -17,26 +17,38 @@ module QuickScript
             :label           => "将棋ウォーズID(s)",
             :key             => :swars_user_keys,
             :type            => :text,
-            :default         => -> { params[:swars_user_keys].to_s.presence },
-            :placeholder     => -> { default_user_keys },
             :session_sync    => true,
+            :dynamic_part => -> {
+              {
+                :default => params[:swars_user_keys].to_s.presence,
+                :placeholder => default_user_keys,
+              }
+            },
           },
           {
             :label           => "順番",
             :key             => :order_by,
             :type            => :radio_button,
-            :elems           => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
-            :default         => -> { params[:order_by].presence || "grade" },
             :session_sync    => true,
+            :dynamic_part => -> {
+              {
+                :elems   => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
+                :default => params[:order_by].presence || "grade",
+              }
+            },
           },
           {
-            :label           => "Google スプレッドシートに出力",
-            :key             => :google_sheet,
-            :type            => :radio_button,
-            :elems           => {"false" => "しない", "true" => "する"},
-            :default         => -> { "false" },
-            :hidden_on_query => true,
-            :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピってください",
+            :label => "Google スプレッドシートに出力",
+            :key   => :google_sheet,
+            :type  => :radio_button,
+            :dynamic_part => -> {
+              {
+                :hidden_on_query => true,
+                :elems           => {"false" => "しない", "true" => "する"},
+                :default         => "false",
+                :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピってください",
+              }
+            },
           },
         ]
       end
