@@ -7,7 +7,7 @@ export const mod_form = {
 
     // input の list と datalist の id に指定する
     form_part_datalist_id(form_part) {
-      if (form_part.ac_by === 'html5') {
+      if (form_part.auto_complete_by === 'html5') {
         return `form_part-list-${form_part.key}`
       }
     },

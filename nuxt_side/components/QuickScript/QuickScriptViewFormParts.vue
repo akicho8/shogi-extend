@@ -26,7 +26,7 @@
             img(:src="QS.attributes[form_part.key].data_uri")
             button.delete(size="is-small" @click="QS.file_upload_cancel_handle(form_part)")
         template(v-else-if="form_part.type === 'string'")
-          template(v-if="form_part.ac_by === 'b_autocomplete'")
+          template(v-if="form_part.auto_complete_by === 'b_autocomplete'")
             b-autocomplete(
               :id="QS.form_part_id(form_part)"
               v-model.trim="QS.attributes[form_part.key]"
@@ -124,7 +124,7 @@
   // b-input の隣に書くとレイアウトが崩れるため分けて記述する
   template(v-for="form_part in QS.showable_form_parts")
     template(v-if="form_part.type === 'string'")
-      template(v-if="form_part.ac_by === 'html5'")
+      template(v-if="form_part.auto_complete_by === 'html5'")
         template(v-if="form_part.elems")
           datalist(:id="QS.form_part_datalist_id(form_part)")
             template(v-for="e in form_part.elems")

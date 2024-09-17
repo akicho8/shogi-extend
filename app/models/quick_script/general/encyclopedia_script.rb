@@ -19,7 +19,7 @@ module QuickScript
             :type         => :string,
             :dynamic_part => -> {
               {
-                :ac_by        => :html5,
+                :auto_complete_by        => :html5,
                 :elems        => candidate_tag_names,
                 :default      => params[:tag].presence,
                 :help_message => "直接入力 or 右端の▼から選択",
@@ -41,7 +41,7 @@ module QuickScript
           #   :label        => "戦法 (入力)",
           #   :key          => :input_tag2,
           #   :type         => debug_mode ? :string : :hidden,
-          #   :ac_by        => :b_autocomplete,
+          #   :auto_complete_by        => :b_autocomplete,
           #   :elems        => candidate_tag_names,
           #   :dynamic_part => -> {
           #   {

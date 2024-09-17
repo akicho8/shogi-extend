@@ -61,7 +61,7 @@ module QuickScript
             :type         => :string,
             :dynamic_part => -> {
               {
-                :ac_by        => :html5,
+                :auto_complete_by        => :html5,
                 :elems        => ["foo", "bar", "baz"],
                 :default => params[:str1_b].presence || "a",
                 :help_message => "補完: HTML5 の datalist",
@@ -74,7 +74,7 @@ module QuickScript
             :type         => :string,
             :dynamic_part => -> {
               {
-                :ac_by        => :b_autocomplete,
+                :auto_complete_by        => :b_autocomplete,
                 :elems        => ["foo", "bar", "baz"],
                 :default      => params[:str1_c].presence || "a",
                 :help_message => "補完: Buefy の b-autocomplete",

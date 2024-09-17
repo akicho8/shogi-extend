@@ -9,14 +9,12 @@ module QuickScript
       self.login_link_show               = true
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
-      # self.params_add_submit_key         = :exec
-      # self.parent_link                   = { to: "/swars/search" } # { go_back: true }
       self.title_link                    = nil
 
-      WANT_MAX_DEFAULT    = 50      # 抽出希望件数は N 以下
-      WANT_MAX_MAX        = 500     # 抽出希望件数は N 以下
-      RANGE_MAX_THRESHOLD = 10000   # N以上ならバックグラウンド実行する
-      RANGE_MAX_MAX       = 100000  # 対象件数は N 以下
+      RANGE_SIZE_THRESHOLD = 20000   # N以上ならバックグラウンド実行する
+      RANGE_SIZE_MAX       = 100000  # 対象件数は N 以下
+      REQUEST_SIZE_DEFAULT = 50      # 抽出希望件数は N 以下
+      REQUEST_SIZE_MAX     = 500     # 抽出希望件数は N 以下
 
       def form_parts
         super + [
@@ -29,10 +27,10 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :ac_by        => :html5,
-                :elems        => candidate_tag_names,
-                :default      => params[:x_tag].presence,
-                :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+                :auto_complete_by => :html5,
+                :elems            => candidate_tag_names,
+                :default          => params[:x_tag].presence,
+                :help_message     => "直接入力 or 右端の▼から選択。複数指定可。",
               }
             },
           },
@@ -44,7 +42,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => TagCondInfo.to_form_elems,
-                :default => x_tag_cond_key,
+                :default => x_tag_cond_info.key,
               }
             },
           },
@@ -56,8 +54,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-                :default => x_grade_keys,
-                # :help_message => "指定の戦法を使った人の棋力",
+                :default => x_grade_infos.collect(&:key),
               }
             },
           },
@@ -69,8 +66,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => ::JudgeInfo.to_form_elems,
-                :default => x_judge_keys,
-                # :help_message => "スタイルは membership に結び付く",
+                :default => x_judge_infos.collect(&:key),
               }
             },
           },
@@ -81,9 +77,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ::Swars::StyleInfo.to_form_elems,
-                :default => x_style_keys,
-                # :help_message => "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
+                :elems   => ::Swars::StyleInfo.to_form_elems,
+                :default => x_style_infos.collect(&:key),
               }
             },
           },
@@ -109,7 +104,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :ac_by        => :html5,
+                :auto_complete_by        => :html5,
                 :elems        => candidate_tag_names,
                 :default      => params[:y_tag].presence,
                 :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
@@ -124,7 +119,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => TagCondInfo.to_form_elems,
-                :default => y_tag_cond_key,
+                :default => y_tag_cond_info.key,
               }
             }
           },
@@ -135,8 +130,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-                :default => y_grade_keys,
+                :elems   => ::Swars::GradeInfo.find_all(&:select_option).reverse.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+                :default => y_grade_infos.collect(&:key),
               }
             },
           },
@@ -148,7 +143,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => ::JudgeInfo.to_form_elems,
-                :default => y_judge_keys,
+                :default => y_judge_infos.collect(&:key),
               }
             },
           },
@@ -159,8 +154,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ::Swars::StyleInfo.to_form_elems,
-                :default => y_style_keys,
+                :elems   => ::Swars::StyleInfo.to_form_elems,
+                :default => y_style_infos.collect(&:key),
                 # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
               }
             },
@@ -186,8 +181,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ::Swars::XmodeInfo.to_form_elems,
-                :default => xmode_keys,
+                :elems   => ::Swars::XmodeInfo.to_form_elems,
+                :default => xmode_infos.collect(&:key),
               }
             },
           },
@@ -199,8 +194,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ::Swars::RuleInfo.to_form_elems,
-                :default => rule_keys,
+                :elems   => ::Swars::RuleInfo.to_form_elems,
+                :default => rule_infos.collect(&:key),
               }
             },
           },
@@ -212,8 +207,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => PresetInfo.swars_preset_infos.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
-                :default => preset_keys,
+                :elems   => PresetInfo.swars_preset_infos.inject({}) { |a, e| a.merge(e.key => e.to_form_elem) },
+                :default => preset_infos.collect(&:key),
               }
             },
           },
@@ -226,7 +221,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => ::Swars::FinalInfo.to_form_elems,
-                :default => final_keys,
+                :default => final_infos.collect(&:key),
               }
             },
           },
@@ -248,26 +243,26 @@ module QuickScript
 
           {
             :label        => "検索対象件数 - 直近N件",
-            :key          => :range_max,
+            :key          => :range_size,
             :type         => :numeric,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :options      => { min: 10000, max: RANGE_MAX_MAX, step: 10000 },
-                :default      => range_max,
-                :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう",
+                :options      => { min: 10000, max: RANGE_SIZE_MAX, step: 10000 },
+                :default      => range_size,
+                :help_message => "この件数の中から抽出希望件数分の対局を探す。出てこないときはこの上限を増やそう。(#{RANGE_SIZE_THRESHOLD}件まではリアルタイム検索)",
               }
             },
           },
           {
             :label        => "抽出希望件数",
-            :key          => :want_max,
+            :key          => :request_size,
             :type         => :numeric,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :options      => { min: 50, max: WANT_MAX_MAX, step: 50 },
-                :default => want_max,
+                :options      => { min: 50, max: REQUEST_SIZE_MAX, step: 50 },
+                :default => request_size,
                 :help_message => "これだけ見つけたら検索を終える",
               }
             },
@@ -276,14 +271,14 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "別タブで開く",
-            :key          => :new_tab_key,
+            :label        => "結果表示",
+            :key          => :open_action_key,
             :type         => :radio_button,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => NewTabInfo.to_form_elems,
-                :default => new_tab_key,
+                :elems   => OpenActionInfo.to_form_elems,
+                :default => open_action_info.key,
               }
             },
           },
@@ -296,7 +291,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => DownloadInfo.to_form_elems,
-                :default => download_key,
+                :default => download_info.key,
               }
             },
           },
@@ -309,7 +304,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems   => BgRequestInfo.to_form_elems,
-                :default => bg_request_key,
+                :default => bg_request_info.key,
               }
             },
           },
@@ -322,7 +317,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :elems           => BookmarkUrlInfo.to_form_elems,
-                :default         => "off",
+                :default         => BookmarkUrlInfo[:off].key,
                 :hidden_on_query => true,
               }
             },
@@ -345,6 +340,7 @@ module QuickScript
               flash[:notice] = "連打すな"
               return
             end
+            params[:__bookmark_url__] = bookmark_url # バックグランドの場合は controller がないため、あらかじめ入れておく
             call_later
             flash[:notice] = posted_message
             return
@@ -361,7 +357,7 @@ module QuickScript
             return
           else
             flash[:notice] = found_message
-            redirect_to search_path, type: new_tab_info.redirect_type
+            redirect_to search_path, type: open_action_info.redirect_type
             return { _v_html: result_html }
           end
         end
@@ -371,10 +367,12 @@ module QuickScript
       end
 
       def posted_message
-        "承りました。終わったら #{current_user.email} あてに一報します。"
+        "承りました。終わったら #{current_user.email} あてに報告します。"
       end
 
       def validate!
+        ################################################################################
+
         all_tag_names.each do |tag_name|
           unless Bioshogi::Explain::TacticInfo.flat_lookup(tag_name)
             flash[:notice] = "#{tag_name}とはなんでしょう？"
@@ -384,37 +382,61 @@ module QuickScript
 
         all_user_keys.each do |user_key|
           unless ::Swars::User.exists?(key: user_key)
-            flash[:notice] = "#{user_key} さんは見つかりません。ウォーズIDが間違っていませんか？"
+            flash[:notice] = "#{user_key} さんが見つかりません。ウォーズIDが間違っていませんか？"
             return
           end
         end
 
         ################################################################################
 
-        if range_max > RANGE_MAX_MAX
-          flash[:notice] = "検索対象件数は#{RANGE_MAX_MAX}件以下にしてください"
+        if range_size > RANGE_SIZE_MAX
+          flash[:notice] = "検索対象件数は#{RANGE_SIZE_MAX}件以下にしてください"
           return
         end
-        if range_max > RANGE_MAX_THRESHOLD
+        if range_size > RANGE_SIZE_THRESHOLD
           if bg_request_info.key == :off
-            flash[:notice] = "検索対象件数が#{RANGE_MAX_THRESHOLD}件を越える場合はバックグラウンド実行してください"
+            flash[:notice] = "検索対象件数が#{RANGE_SIZE_THRESHOLD}件を越える場合はバックグラウンド実行してください"
             return
           end
         end
 
         ################################################################################
 
-        if want_max > WANT_MAX_MAX
-          flash[:notice] = "抽出希望件数は#{WANT_MAX_MAX}件以下にしてください"
+        if request_size > REQUEST_SIZE_MAX
+          flash[:notice] = "抽出希望件数は#{REQUEST_SIZE_MAX}件以下にしてください"
           return
         end
 
         if params[:experiment]
-          if want_max > WANT_MAX_DEFAULT
+          if request_size > REQUEST_SIZE_DEFAULT
             if download_info.key == :on && bg_request_info.key == :off
-              flash[:notice] = "#{WANT_MAX_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行してください"
+              flash[:notice] = "#{REQUEST_SIZE_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行してください"
               return
             end
+          end
+        end
+
+        ################################################################################
+
+        if x_judge_infos.present? && y_judge_infos.present?
+          flash[:notice] = "「勝敗」と「相手の勝敗」は一方が決まれば一方が決まるので指定するのは片方だけでよいでしょう"
+          return
+        end
+
+        ################################################################################
+
+        [
+          { name: "勝敗",       model: ::JudgeInfo,                    infos: x_judge_infos, },
+          { name: "相手の勝敗", model: ::JudgeInfo,                    infos: y_judge_infos, },
+          # ----
+          { name: "モード",     model: ::Swars::XmodeInfo,             infos: xmode_infos,   },
+          { name: "持ち時間",   model: ::Swars::RuleInfo,              infos: rule_infos,    },
+          { name: "手合割",     model: PresetInfo.swars_preset_infos,  infos: preset_infos,  },
+          { name: "結末",       model: ::Swars::FinalInfo,             infos: final_infos,   },
+        ].each do |e|
+          if (e[:model].collect(&:key) - e[:infos].collect(&:key)).empty?
+            flash[:notice] = "#{e[:name]}の項目をすべて有効にするのは検索が遅くなるだけで意味がありません"
+            return
           end
         end
 
@@ -461,11 +483,11 @@ module QuickScript
               break
             end
             ids += sub_scope(relation).ids
-            if ids.size >= want_max
+            if ids.size >= request_size
               break
             end
           end
-          ids.take(want_max)
+          ids.take(request_size)
         end
       end
 
@@ -493,16 +515,16 @@ module QuickScript
       def battle_scope(scope)
         scope.then do |s|
           if v = xmode_infos.presence
-            s = s.xmode_eq(v.pluck(:key))
+            s = s.xmode_eq(v.collect(&:key))
           end
           if v = rule_infos.presence
-            s = s.rule_eq(v.pluck(:key))
+            s = s.rule_eq(v.collect(&:key))
           end
           if v = preset_infos.presence
-            s = s.preset_eq(v.pluck(:key))
+            s = s.preset_eq(v.collect(&:key))
           end
           if v = final_infos.presence
-            s = s.final_eq(v.pluck(:key))
+            s = s.final_eq(v.collect(&:key))
           end
           s
         end
@@ -514,13 +536,13 @@ module QuickScript
             s = s.tagged_with(v, tag_cond_info.tagged_with_options)
           end
           if v = judge_infos.presence
-            s = s.judge_eq(v.pluck(:key))
+            s = s.judge_eq(v.collect(&:key))
           end
           if v = style_infos.presence
-            s = s.style_eq(v.pluck(:key))
+            s = s.style_eq(v.collect(&:key))
           end
           if v = grade_infos.presence
-            s = s.grade_eq(v.pluck(:key))
+            s = s.grade_eq(v.collect(&:key))
           end
           if v = user_keys.presence
             s = s.where(user: ::Swars::User.where(key: v))
@@ -697,22 +719,22 @@ module QuickScript
 
       ################################################################################
 
-      def want_max
-        (params[:want_max].presence || WANT_MAX_DEFAULT).to_i
+      def request_size
+        (params[:request_size].presence || REQUEST_SIZE_DEFAULT).to_i
       end
 
-      def range_max
-        (params[:range_max].presence || RANGE_MAX_THRESHOLD).to_i
+      def range_size
+        (params[:range_size].presence || RANGE_SIZE_THRESHOLD).to_i
       end
 
       ################################################################################
 
-      def new_tab_key
-        NewTabInfo.lookup_key_or_first(params[:new_tab_key])
+      def open_action_key
+        OpenActionInfo.lookup_key_or_first(params[:open_action_key])
       end
 
-      def new_tab_info
-        NewTabInfo.fetch(new_tab_key)
+      def open_action_info
+        OpenActionInfo.fetch(open_action_key)
       end
 
       ################################################################################
@@ -758,7 +780,7 @@ module QuickScript
       end
 
       def batch_loop_max
-        @batch_loop_max ||= range_max.ceildiv(batch_size)
+        @batch_loop_max ||= range_size.ceildiv(batch_size)
       end
 
       ################################################################################
@@ -860,10 +882,10 @@ module QuickScript
           "結末"                 => final_infos.collect(&:name),
           "おまけクエリ"         => query,
           # -------------------------------------------------------------------------------- フォーム
-          "検索対象件数"         => range_max,
-          "抽出希望件数"         => want_max,
+          "検索対象件数"         => range_size,
+          "抽出希望件数"         => request_size,
           # -------------------------------------------------------------------------------- 受け取り方法
-          "別タブで開く"         => new_tab_info.name,
+          "結果表示"             => open_action_info.name,
           "ZIPダウンロード"      => download_info.name,
           "バックグラウンド実行" => bg_request_info.name,
           # -------------------------------------------------------------------------------- 結果
@@ -887,7 +909,7 @@ module QuickScript
       ################################################################################
 
       def bookmark_html
-        "#{bookmark_link} をブックマークしておくと現在の条件で即実行できるぞ"
+        "#{bookmark_link} ← これをブックマークしよう"
       end
 
       def bookmark_link
@@ -895,6 +917,11 @@ module QuickScript
       end
 
       def bookmark_url
+        # バックグランドの場合は controller がないため、あらかじめ params[:__bookmark_url__] に入れておいたのを取り出す
+        if v = params[:__bookmark_url__]
+          return v
+        end
+
         self.class.qs_url + "?" + bookmark_params.merge(bookmark_url_key: false, exec: true).to_query
       end
 

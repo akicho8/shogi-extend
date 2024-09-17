@@ -10,19 +10,11 @@ module QuickScript
       class_attribute :form_before_call_check,        default: true   # form_parts を呼ぶより前に call を呼んでいること、のチェックをするか？
     end
 
-    def initialize(...)
-      super
-
-      if Rails.env.local?
-        form_parts_as_json
-      end
-    end
-
     def as_json(*)
       hv = super
 
       if form_before_call_check
-        unless @__performed_count__
+        unless @__performed__
           raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない"
         end
       end

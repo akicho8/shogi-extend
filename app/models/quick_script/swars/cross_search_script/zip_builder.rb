@@ -44,7 +44,7 @@ class QuickScript::Swars::CrossSearchScript
     end
 
     def format_info
-      @format_info ||= FormatInfo.fetch(FORMAT_KEY)
+      @format_info ||= Bioshogi::KifuFormatInfo.fetch(FORMAT_KEY)
     end
   end
 end

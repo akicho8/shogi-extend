@@ -96,8 +96,6 @@ module QuickScript
       @params = params_deserialize(params)
       @options = {
       }.merge(options)
-
-      @__performed_count__ = 0
     end
 
     def as_json(*)
@@ -117,13 +115,13 @@ module QuickScript
     end
 
     def safe_call
-      if @__performed_count__ > 1
+      if @__performed__
         raise QuickScriptDoubleCall, self.class.inspect
       end
       before_call
       result = call
       after_call
-      @__performed_count__ += 1
+      @__performed__ = true
       result
     end
 
