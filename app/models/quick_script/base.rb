@@ -111,17 +111,17 @@ module QuickScript
     def call
     end
 
-    def after_call
-    end
-
     def safe_call
       if @__performed__
         raise QuickScriptDoubleCall, self.class.inspect
       end
       before_call
-      result = call
-      after_call
-      @__performed__ = true
+      result = nil
+      begin
+        result = call
+      ensure
+        @__performed__ = true
+      end
       result
     end
 

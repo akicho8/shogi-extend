@@ -3,9 +3,9 @@ require "rails_helper"
 module QuickScript
   RSpec.describe Middleware::AutoexecMod, type: :model do
     it "works" do
-      object = QuickScript::Dev::NullScript.new
-      assert { object.as_json.has_key?(:auto_exec_action) }
-      assert { object.as_json.has_key?(:auto_exec_code) }
+      json = QuickScript::Dev::NullScript.new.as_json
+      assert { json.has_key?(:auto_exec_action) }
+      assert { json.has_key?(:auto_exec_code) }
     end
   end
 end

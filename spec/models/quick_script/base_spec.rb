@@ -11,5 +11,11 @@ module QuickScript
       assert { Dev::FooBarBazScript.qs_group_key     == "dev"                                                }
       assert { Dev::FooBarBazScript.qs_page_key      == "foo_bar_baz"                                        }
     end
+
+    it "QuickScriptDoubleCall" do
+      inspect = Dev::NullScript.new
+      assert { inspect.as_json }
+      proc { inspect.as_json }.should raise_error(QuickScriptDoubleCall)
+    end
   end
 end
