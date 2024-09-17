@@ -455,6 +455,7 @@ module QuickScript
       def found_ids
         @found_ids ||= yield_self do
           ids = []
+          # FIXME: order(battled_at: :desc) としたいが実際は id: desc になっている
           ::Swars::Battle.in_batches(of: batch_size, order: :desc).each.with_index do |relation, i|
             if i >= batch_loop_max
               break
