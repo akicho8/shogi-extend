@@ -806,7 +806,10 @@ module QuickScript
         if y_tag_names.present? && y_style_infos.present?
           return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
         end
-        return "条件を緩くするか、「検索対象件数」を増やしてみてください。"
+        if x_tag_names.present? || y_tag_names.present?
+          return "「戦法」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
+        end
+        return "条件を緩めてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
       end
 
       def link_to_search_url
