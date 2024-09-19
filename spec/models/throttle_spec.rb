@@ -1,13 +1,23 @@
 require "rails_helper"
 
 RSpec.describe type: :model do
-  it "works" do
-    throttle = Throttle.new(expires_in: 0.1)
+  it "一定時間立つと許可" do
+    throttle = Throttle.new(expires_in: 0.2, delayed_again: false)
     throttle.reset
-    assert { throttle.call { true } == true  } # 初回は実行できる
-    assert { throttle.call { true } == false } # しかし連打状態だと2回目は実行されない
-    sleep(0.1)                                 # 指定の時間待つと
-    assert { throttle.call { true } == true  } # 再度初回は実行でき
-    assert { throttle.call { true } == false } # また連打はできない
+    assert { throttle.call == true }
+    sleep(0.1)
+    assert { throttle.call == false }
+    sleep(0.1)
+    assert { throttle.call == true }
+  end
+
+  it "連打している限り許さん" do
+    throttle = Throttle.new(expires_in: 0.2, delayed_again: true)
+    throttle.reset
+    assert { throttle.call == true }
+    sleep(0.1)
+    assert { throttle.call == false }
+    sleep(0.1)
+    assert { throttle.call == false }
   end
 end

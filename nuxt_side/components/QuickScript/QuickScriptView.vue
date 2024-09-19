@@ -141,8 +141,15 @@ export default {
     params_serialize(params) {
       const hv = {}
       _.forIn(params, (val, key) => {
-        if (_.isArray(val)) {
-          val = "[" + val.join(",") + "]"
+        if (Gs.blank_p(val)) {
+          val = "__empty__"
+          // } else {
+          // if (_.isArray(val)) {
+          //   val = "[" + val.join(",") + "]"
+          // }
+          // if (val === "") {
+          //   val = '""'
+          // }
         }
         hv[key] = val
       })
@@ -258,14 +265,15 @@ export default {
       const new_params2 = {...this.invisible_params, ...this.new_params, ...params} // 破壊するため
       this.browser_query_delete(new_params2)   // ブラウザ上で表示させたくないパラメータを削除する(new_params2 を破壊する)
       this.$router.push({query: this.params_serialize(new_params2)}, () => {
-        this.debug_alert("Navigation succeeded")
+        this.debug_alert("$router.push 成功")
         // this.$sound.play_click()
       }, () => {
-        this.debug_alert("Navigation failed")
         if (this.params.router_push_failed_then_fetch) {
+          this.debug_alert("$router.push 失敗 (だが自力でfetch)")
           // this.$sound.play_click()
           this.$fetch()         // Googleシートの場合はこの方法で自力で呼ぶ
         } else {
+          this.debug_alert("$router.push 失敗")
           // this.toast_ok(`もう${this.params.button_label}しました`)
         }
       })

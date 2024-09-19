@@ -11,7 +11,8 @@ module QuickScript
       self.throttle_expires_in           = 5.0
       self.title_link                    = nil
 
-      RANGE_SIZE_THRESHOLD = 20000   # N以上ならバックグラウンド実行する
+      RANGE_SIZE_DEFAULT   = 10000   # 初期値
+      RANGE_SIZE_THRESHOLD = 30000   # N以上ならバックグラウンド実行する
       RANGE_SIZE_MAX       = 100000  # 対象件数は N 以下
       REQUEST_SIZE_DEFAULT = 50      # 抽出希望件数は N 以下
       REQUEST_SIZE_MAX     = 500     # 抽出希望件数は N 以下
@@ -335,11 +336,11 @@ module QuickScript
             flash[:notice] = "生成しました"
             return { _v_html: bookmark_html }
           end
+          unless throttle.call
+            flash[:notice] = "連打すな"
+            return
+          end
           if bg_request_info.key == :on
-            unless throttle.call
-              flash[:notice] = "連打すな"
-              return
-            end
             params[:__bookmark_url__] = bookmark_url # バックグランドの場合は controller がないため、あらかじめ入れておく
             call_later
             flash[:notice] = posted_message
@@ -724,7 +725,7 @@ module QuickScript
       end
 
       def range_size
-        (params[:range_size].presence || RANGE_SIZE_THRESHOLD).to_i
+        (params[:range_size].presence || RANGE_SIZE_DEFAULT).to_i
       end
 
       ################################################################################

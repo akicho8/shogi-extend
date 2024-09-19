@@ -88,7 +88,7 @@ module QuickScript
     class_attribute :description, default: nil
     class_attribute :debug_mode,  default: false
 
-    attr_reader :params
+    attr_accessor :params
 
     delegate :url_helpers, to: :"self.class"
 

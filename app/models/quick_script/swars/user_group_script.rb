@@ -1,13 +1,14 @@
 module QuickScript
   module Swars
     class UserGroupScript < Base
-      self.title = "将棋ウォーズ棋力一覧"
-      self.description = "指定ユーザーたちの棋力をまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいとき用)"
-      self.form_method = :get
-      self.button_label = "実行"
-      self.per_page_default = 1000
+      self.title                         = "将棋ウォーズ棋力一覧"
+      self.description                   = "指定ユーザーたちの棋力をまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいとき用)"
+      self.form_method                   = :get
+      self.button_label                  = "実行"
+      self.per_page_default              = 1000
       self.router_push_failed_then_fetch = true
-      self.button_click_loading = true
+      # self.button_click_loading          = true
+      self.throttle_expires_in           = 2.0
 
       LIMIT_MAX = 50
 
@@ -63,8 +64,14 @@ module QuickScript
           return
         end
 
+        unless throttle.call
+          flash[:notice] = "連打すな"
+          return
+        end
+
         AppLog.important(subject: mail_subject, body: mail_body)
 
+        # if params[:exec].to_s == "true" || fetch_index >= 1
         if current_google_sheet
           mail_notify
           redirect_to google_sheet_url, type: :tab_open
@@ -73,6 +80,7 @@ module QuickScript
         else
           simple_table(rows, always_table: true)
         end
+        # end
       end
 
       # 戻値は Array 型になっている場合もある

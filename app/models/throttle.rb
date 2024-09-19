@@ -20,8 +20,9 @@ class Throttle
 
   def initialize(options = {})
     @options = {
-      :key        => nil,
-      :expires_in => 3.seconds,
+      :key           => nil,
+      :expires_in    => 3.seconds,
+      :delayed_again => false, # 連打している限り、延期するか？
     }.merge(options)
   end
 
@@ -40,6 +41,12 @@ class Throttle
         return true
       end
       return false
+    end
+
+    if @options[:delayed_again]
+      if throttled?
+        redis.pexpire(key, expires_in_ms, xx: true)
+      end
     end
 
     stop!
