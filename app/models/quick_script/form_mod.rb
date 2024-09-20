@@ -68,19 +68,21 @@ module QuickScript
     # したがって form_parts 内で params にアクセスしているところはすべて実行されないように proc 化する必要がある
     def params_deserialize(params)
       super.dup.tap do |params|
-        # form_parts.each do |e|
-        #   key = e[:key]
-        #   if v = params[key]
-        #     if v.kind_of?(String)
-        #       case
-        #       when md = v.match(/\A\[(?<array>.*)\]\z/)
-        #         params[key] = md[:array].split(/,/)
-        #       when v == %("") || v == %('')
-        #         params[key] = ""
-        #       end
-        #     end
-        #   end
-        # end
+        form_parts.each do |e|
+          key = e[:key]
+          if v = params[key]
+            if v.kind_of?(String)
+              case
+              when v == "__empty__"
+                params[key] = ""
+              when v == %("") || v == %('')
+                params[key] = ""
+              when md = v.match(/\A\[(?<array>.*)\]\z/)
+                params[key] = md[:array].split(/,/)
+              end
+            end
+          end
+        end
       end
     end
   end
