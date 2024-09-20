@@ -105,10 +105,10 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :auto_complete_by        => :html5,
-                :elems        => candidate_tag_names,
-                :default      => params[:y_tag].presence,
-                :help_message => "直接入力 or 右端の▼から選択。複数指定可。",
+                :auto_complete_by => :html5,
+                :elems            => candidate_tag_names,
+                :default          => params[:y_tag].presence,
+                :help_message     => "直接入力 or 右端の▼から選択。複数指定可。",
               }
             },
           },
@@ -125,6 +125,18 @@ module QuickScript
             }
           },
           {
+            :label        => "相手の棋力(差)",
+            :key          => :x_grade_diff_key,
+            :type         => :select,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => {"" => ""}.merge(GradeDiffInfo.to_form_elems),
+                :default => x_grade_diff_info.try { key },
+              }
+            },
+          },
+          {
             :label        => "相手の棋力",
             :key          => :y_grade_keys,
             :type         => :checkbox_button,
@@ -136,18 +148,18 @@ module QuickScript
               }
             },
           },
-          {
-            :label        => "相手の勝敗",
-            :key          => :y_judge_keys,
-            :type         => :checkbox_button,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :elems   => ::JudgeInfo.to_form_elems,
-                :default => y_judge_infos.collect(&:key),
-              }
-            },
-          },
+          # {
+          #   :label        => "相手の勝敗",
+          #   :key          => :y_judge_keys,
+          #   :type         => :checkbox_button,
+          #   :session_sync => true,
+          #   :dynamic_part => -> {
+          #     {
+          #       :elems   => ::JudgeInfo.to_form_elems,
+          #       :default => y_judge_infos.collect(&:key),
+          #     }
+          #   },
+          # },
           {
             :label        => "相手のスタイル",
             :key          => :y_style_keys,
@@ -419,16 +431,16 @@ module QuickScript
 
         ################################################################################
 
-        if x_judge_infos.present? && y_judge_infos.present?
-          flash[:notice] = "「勝敗」と「相手の勝敗」は一方が決まれば一方が決まるので指定するのは片方だけでよいでしょう"
-          return
-        end
+        # if x_judge_infos.present? && y_judge_infos.present?
+        #   flash[:notice] = "「勝敗」と「相手の勝敗」は一方が決まれば一方が決まるので指定するのは片方だけでよいでしょう"
+        #   return
+        # end
 
         ################################################################################
 
         [
           { name: "勝敗",       model: ::JudgeInfo,                    infos: x_judge_infos, },
-          { name: "相手の勝敗", model: ::JudgeInfo,                    infos: y_judge_infos, },
+          # { name: "相手の勝敗", model: ::JudgeInfo,                  infos: y_judge_infos, },
           # ----
           { name: "モード",     model: ::Swars::XmodeInfo,             infos: xmode_infos,   },
           { name: "持ち時間",   model: ::Swars::RuleInfo,              infos: rule_infos,    },
@@ -497,8 +509,8 @@ module QuickScript
 
         memberships = ::Swars::Membership.where(battle: scope.ids)
 
-        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos, x_user_keys)
-        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info, y_judge_infos, y_style_infos, y_grade_infos, y_user_keys)
+        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos, x_user_keys, x_grade_diff_info)
+        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info,           nil, y_style_infos, y_grade_infos, y_user_keys,               nil)
 
         s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
 
@@ -531,7 +543,7 @@ module QuickScript
         end
       end
 
-      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos, user_keys)
+      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos, user_keys, grade_diff_info)
         memberships.then do |s|
           if v = tag_names.presence
             s = s.tagged_with(v, tag_cond_info.tagged_with_options)
@@ -547,6 +559,9 @@ module QuickScript
           end
           if v = user_keys.presence
             s = s.where(user: ::Swars::User.where(key: v))
+          end
+          if v = grade_diff_info
+            s = s.where(::Swars::Membership.arel_table[:grade_diff].public_send(v.key, 0))
           end
           s
         end
@@ -610,13 +625,13 @@ module QuickScript
 
       ################################################################################
 
-      def y_judge_keys
-        tag_string_split(params[:y_judge_keys])
-      end
-
-      def y_judge_infos
-        @y_judge_infos ||= ::JudgeInfo.lookup_from_array(y_judge_keys)
-      end
+      # def y_judge_keys
+      #   tag_string_split(params[:y_judge_keys])
+      # end
+      #
+      # def y_judge_infos
+      #   @y_judge_infos ||= ::JudgeInfo.lookup_from_array(y_judge_keys)
+      # end
 
       ################################################################################
 
@@ -656,6 +671,16 @@ module QuickScript
 
       def y_grade_infos
         @y_grade_infos ||= ::Swars::GradeInfo.lookup_from_array(y_grade_keys)
+      end
+
+      ################################################################################
+
+      def x_grade_diff_key
+        GradeDiffInfo.lookup_key(params[:x_grade_diff_key])
+      end
+
+      def x_grade_diff_info
+        @x_grade_diff_info ||= GradeDiffInfo.fetch_if(x_grade_diff_key)
       end
 
       ################################################################################
@@ -800,15 +825,26 @@ module QuickScript
       end
 
       def advice_message
-        if x_tag_names.present? && x_style_infos.present?
-          return "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「スタイル」の指定は外した方がいいかもしれません。"
+        # 強めの改善指示
+        begin
+          if x_tag_names.present? && x_style_infos.present?
+            return "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「スタイル」の指定は外した方がいいかもしれません。"
+          end
+          if y_tag_names.present? && y_style_infos.present?
+            return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
+          end
+          if x_grade_diff_info.present? && y_grade_infos.present?
+            return "「相手の棋力」と「相手の棋力(差)」の指定は一方だけにした方がよいでしょう。"
+          end
         end
-        if y_tag_names.present? && y_style_infos.present?
-          return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定しているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
+
+        # 弱めの改善指示
+        begin
+          if x_tag_names.present? || y_tag_names.present?
+            return "「戦法」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
+          end
         end
-        if x_tag_names.present? || y_tag_names.present?
-          return "「戦法」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
-        end
+
         return "条件を緩めてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
       end
 
@@ -875,8 +911,9 @@ module QuickScript
           # -------------------------------------------------------------------------------- 相手
           "相手の戦法"           => y_tag_names,
           "相手の戦法の解釈"     => y_tag_names.presence&.then { y_tag_cond_info.name },
+          "相手の棋力(差)"       => x_grade_diff_info&.name,
           "相手の棋力"           => y_grade_infos.collect(&:name),
-          "相手の勝敗"           => y_judge_infos.collect(&:name),
+          # "相手の勝敗"           => y_judge_infos.collect(&:name),
           "相手のスタイル"       => y_style_infos.collect(&:name),
           "相手のウォーズIDs"    => y_user_keys,
           # -------------------------------------------------------------------------------- バトルに対して

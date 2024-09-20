@@ -6,12 +6,14 @@
 module QuickScript
   module Swars
     class TacticStatScript < Base
-      self.title = "将棋ウォーズ戦法勝率ランキング"
-      self.description = "戦法・囲いなどの勝率・頻度を調べる"
-      self.form_method = :get
+      self.title        = "将棋ウォーズ戦法勝率ランキング"
+      self.description  = "戦法・囲いなどの勝率・頻度を調べる"
+      self.form_method  = :get
       self.button_label = "集計"
-      self.debug_mode = Rails.env.local?
+      self.debug_mode   = Rails.env.local?
 
+      FREQ_RATIO_GTEQ_DEFAULT = 0.1
+      
       class << self
         def primary_aggregate_run(options = {})
           AggregateCache[name].write PrimaryAggregator.new(options).call
@@ -51,8 +53,9 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :options => { min: 0, step: 0.01 },
-                :default => freq_ratio_gteq,
+                :options      => { min: 0, step: 0.01 },
+                :default      => freq_ratio_gteq,
+                :help_message => "初期値: #{FREQ_RATIO_GTEQ_DEFAULT}",
               }
             },
           },
@@ -226,7 +229,7 @@ module QuickScript
       end
 
       def freq_ratio_gteq
-        (params[:freq_ratio_gteq].presence || 0.03).to_f
+        (params[:freq_ratio_gteq].presence || FREQ_RATIO_GTEQ_DEFAULT).to_f
       end
 
       ################################################################################
