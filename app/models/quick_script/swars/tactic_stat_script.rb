@@ -12,8 +12,8 @@ module QuickScript
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local?
 
-      FREQ_RATIO_GTEQ_DEFAULT = 0.1
-      
+      FREQ_RATIO_GTEQ_DEFAULT = 0.03
+
       class << self
         def primary_aggregate_run(options = {})
           AggregateCache[name].write PrimaryAggregator.new(options).call
