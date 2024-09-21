@@ -560,8 +560,8 @@ module QuickScript
           if v = user_keys.presence
             s = s.where(user: ::Swars::User.where(key: v))
           end
-          if v = grade_diff_info
-            s = s.where(::Swars::Membership.arel_table[:grade_diff].public_send(v.key, 0))
+          if info = grade_diff_info
+            s = s.where(::Swars::Membership.arel_table[:grade_diff].public_send(info.comparison, info.value))
           end
           s
         end
