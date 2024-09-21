@@ -104,6 +104,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled"
             )
 
+          b-menu-item.is_active_unset(
+            @click.native="$sound.play_click()"
+            tag="nuxt-link"
+            :to="{path: '/lab/general/piyo-shogi-config'}"
+            )
+            template(#label)
+              | ぴよ将棋の設定
+
           b-menu-item.is_active_unset.swars_users_key_kento_api_menu_item(
             label="KENTOから連携"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"

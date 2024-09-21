@@ -1,5 +1,5 @@
 module QuickScript
-  module Swars
+  module General
     class PiyoShogiConfigScript < Base
       self.title = "ぴよ将棋の設定"
       self.description = "このブラウザでぴよ将棋ボタンを表示する条件を設定する (Mac ユーザー向け)"
@@ -9,7 +9,7 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label        => "ぴよ将棋ボタンをいつ表示する？ (ブラウザ毎に設定する)",
+            :label        => "ぴよ将棋ボタン表示",
             :key          => :piyo_shogi_type_key,
             :type         => :radio_button,
             :ls_sync      => { parent_key: :user_settings, child_key: :piyo_shogi_type_key, loader: :force, writer: :force },
@@ -26,6 +26,7 @@ module QuickScript
       def call
         if request_post?
           flash[:notice] = "保存しました"
+          AppLog.important(subject: "[ぴよ将棋の設定] #{piyo_shogi_type_info.name}")
           piyo_shogi_reload!
         end
         nil

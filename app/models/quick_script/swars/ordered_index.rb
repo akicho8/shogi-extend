@@ -6,7 +6,6 @@ module QuickScript
       CrawlerBatchScript,
       BattleDownloadScript,
       SearchDefaultScript,
-      PiyoShogiConfigScript,
       DocumentationScript,
       UserGroupScript,
       ProScript,
