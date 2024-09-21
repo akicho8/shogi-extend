@@ -14,19 +14,21 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled"
           )
 
-          b-menu-item.swars_custom_search_handle(
+          b-menu-item.is_active_unset.swars_custom_search_handle(
             label="カスタム検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
             :to="{name: 'swars-search-custom', query: $gs.hash_compact({user_key: APP.xi.current_swars_user_key})}"
             )
 
-          b-menu-item.swars_cross_search_handle(
+          b-menu-item.is_active_unset.swars_cross_search_handle(
             label="横断検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
             :to="{path: '/lab/swars/cross-search'}"
             )
+
+          b-menu-item.is_active_unset(label="詳細をまとめて開く" @click="APP.show_url_all_open_handle")
 
         b-menu-list(label="レイアウト")
           template(v-for="e in APP.LayoutInfo.values")
@@ -98,12 +100,6 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
               | ウォーズIDを記憶する
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="!menu_item_disabled && !APP.mounted_then_swars_search_default_key_present_p")
 
-          b-menu-item.is_active_unset.home_bookmark_handle(
-            label="ホーム画面に追加"
-            @click="APP.home_bookmark_handle"
-            :disabled="menu_item_disabled"
-            )
-
           b-menu-item.is_active_unset(
             @click.native="$sound.play_click()"
             tag="nuxt-link"
@@ -111,6 +107,12 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             )
             template(#label)
               | ぴよ将棋の設定
+
+          b-menu-item.is_active_unset.home_bookmark_handle(
+            label="ホーム画面に追加"
+            @click="APP.home_bookmark_handle"
+            :disabled="menu_item_disabled"
+            )
 
           b-menu-item.is_active_unset.swars_users_key_kento_api_menu_item(
             label="KENTOから連携"

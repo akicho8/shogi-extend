@@ -16,6 +16,9 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         _if: (c, e) => c.keyboard_single_key_equal(e, "p"),
         call: (c, e) => c.page_forward(-1),
       }, {
+        _if: (c, e) => c.keyboard_single_key_equal(e, "o"),
+        call: (c, e) => c.show_url_all_open_handle(),
+      }, {
         _if: (c, e) => c.keyboard_single_key_equal(e, "/"),
         call: (c, e) => c.search_input_focus(),
       }, {

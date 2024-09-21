@@ -9,5 +9,8 @@ export const mod_sidebar = {
       this.$sound.play_click()
       this.sidebar_p = !this.sidebar_p
     },
+    sidebar_close() {
+      this.sidebar_p = false
+    },
   },
 }

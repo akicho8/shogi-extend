@@ -41,6 +41,10 @@
         td
           b-tag(type="is-primary") p
       tr
+        th 詳細をまとめて開く
+        td
+          b-tag(type="is-primary") o
+      tr
         th プレイヤー情報
         td
           b-tag(type="is-primary") i

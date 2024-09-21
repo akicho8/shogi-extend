@@ -38,6 +38,24 @@ export const mod_chore = {
 
     // ################################################################################
 
+    show_url_all_open_handle() {
+      this.sidebar_close()
+      this.$sound.play_click()
+      if (this.xi && Gs.present_p(this.xi.records)) {
+        this.xi.records.forEach(row => {
+          this.other_window_open(this.show_url(row))
+        })
+      }
+      return true
+    },
+
+    show_url(row) {
+      const router_params = {name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location_key}}
+      return this.$router.resolve(router_params).href
+    },
+
+    // ################################################################################
+
     kifu_copy_first(e, options = {}) {
       if (this.xi) {
         const row = this.xi.records[0]
