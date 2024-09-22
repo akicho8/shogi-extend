@@ -110,6 +110,23 @@ class AppEntryInfo
         "問題は自分で用意しよう",
       ],
     },
+
+    ################################################################################
+
+    {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab/swars/cross-search" },
+      title: "将棋ウォーズ横断検索",
+      og_image_key: "quick_script/swars/cross_search_script",
+      description: "特定の戦法の棋譜を探したいときにどうぞ",
+      # features: [
+      #   "変動するように最近のだけ出してる",
+      #   "戦法や囲いの分布もある",
+      #   "人気戦法の対策をすれば勝ちやすいかも？",
+      # ],
+    },
+
     {
       display_p: true,
       experiment_p: false,
@@ -153,19 +170,7 @@ class AppEntryInfo
       # ],
     },
 
-    {
-      display_p: true,
-      experiment_p: false,
-      nuxt_link_to: { path: "/lab/swars/cross-search" },
-      title: "将棋ウォーズ横断検索",
-      og_image_key: "quick_script/swars/cross_search_script",
-      description: "特定の戦法の棋譜を探したいときにどうぞ",
-      # features: [
-      #   "変動するように最近のだけ出してる",
-      #   "戦法や囲いの分布もある",
-      #   "人気戦法の対策をすれば勝ちやすいかも？",
-      # ],
-    },
+    ################################################################################
 
     {
       display_p: true,
