@@ -98,7 +98,7 @@ class MediaBuilder
 
     # def default_options
     #   super.merge({
-    #       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.local?,
+    #       cache_feature: Rails.env.production? || Rails.env.staging? || Rails.env.local?,
     #     })
     # end
 

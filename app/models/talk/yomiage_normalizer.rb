@@ -1,13 +1,14 @@
 # 読み上げやすい文字列に変換する
 #
-#   YomiageNormalizer.new("手番w").to_s # => "てばんわら"
+#   YomiageNormalizer.normalize("手番w") # => "てばんわら"
 #
 module Talk
   class YomiageNormalizer
-    # 基本的に AWS の読み方に任せているが看過できないものはここで変換する
-    WORD_REPLACE_TABLE = {
-      "手番" => "てばん",       # 「てつがい」と読んでしまうため
-    }
+    class << self
+      def normalize(...)
+        new(...).to_s
+      end
+    end
 
     def initialize(source_text)
       @source_text = source_text
@@ -35,7 +36,7 @@ module Talk
 
     # 読み間違いは許容するがあきらかに支障がある文言のみ訂正する
     def word_replace(s)
-      s.gsub(/#{WORD_REPLACE_TABLE.keys.join("|")}/o, WORD_REPLACE_TABLE)
+      s.gsub(/#{WordReplaceTable.keys.join("|")}/o, WordReplaceTable)
     end
 
     # 長いURLをチャットに貼られると課金が死ぬ

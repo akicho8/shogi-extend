@@ -25,7 +25,7 @@ module BackendScript
     end
 
     def talk_object
-      Talk.create(source_text: current_message, disk_cache_enable: false)
+      Talk.create(source_text: current_message, cache_feature: false)
     end
   end
 end

@@ -10,7 +10,7 @@
 # ▼キャッシュ削除 (production)
 # cap production rails:runner CODE='Talk::Main.cache_delete_all'
 #
-# ▼特定のキャッシュ削除
+# ▼特定のキャッシュ削除 (production)
 # cap production rails:runner CODE='Talk::Main.new(source_text: "こんにちは").cache_delete'
 
 module Talk

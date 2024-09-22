@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Talk
   RSpec.describe Main do
-    it "to_browser_path" do
+    it "生成してブラウザ用のURLパスを取得する" do
       Timecop.return do
         obj = Main.new(source_text: "あ")
         assert { obj.to_browser_path.match?(%r{\A/system/talk/../../.{32}\.mp3\z}) }
@@ -12,22 +12,23 @@ module Talk
 
     it "as_json" do
       Timecop.return do
-        obj = Main.new(source_text: "こんにちは")
-        assert { obj.as_json }
+        assert { Main.new(source_text: "こんにちは").as_json }
       end
     end
 
     it "キャッシュOFFなら必ず生成する" do
       Timecop.return do
-        obj = Main.new(source_text: "こんにちは", disk_cache_enable: false)
+        obj = Main.new(source_text: "こんにちは", cache_feature: false)
         assert { obj.as_json }
       end
     end
 
-    it "cache_delete" do
+    it "特定の文章のキャッシュを削除する" do
       obj = Main.new(source_text: "こんにちは")
-      obj.to_browser_path     # => "/system/talk/9e/f6/9ef638a57701331482ac4cc52e05795b.mp3"
+      obj.to_browser_path
+      assert { obj.file_exist? }
       obj.cache_delete
+      assert { !obj.file_exist? }
     end
   end
 end

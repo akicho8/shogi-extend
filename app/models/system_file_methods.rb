@@ -28,9 +28,9 @@ module SystemFileMethods
     # SystemFileMethods 用のパラメータ
     def default_options
       {
-        :disk_cache_enable => Rails.env.production? || Rails.env.staging? || Rails.env.local?,
+        :cache_feature => Rails.env.production? || Rails.env.staging? || Rails.env.local?,
         :progress_callback => nil,
-        :unique_key        => nil, # 明示的にキーを決める場合は指定。これがユニークだとキャッシュヒットしないため disk_cache_enable は false と似た状況になる
+        :unique_key        => nil, # 明示的にキーを決める場合は指定。これがユニークだとキャッシュヒットしないため cache_feature は false と似た状況になる
       }
     end
   end
@@ -88,7 +88,7 @@ module SystemFileMethods
   end
 
   def not_exist_then_build
-    if @options[:disk_cache_enable] && file_exist?
+    if @options[:cache_feature] && file_exist?
       log! "[already_existd]"
       return
     end
@@ -144,7 +144,7 @@ module SystemFileMethods
 
   def to_h
     {
-      :disk_cache_enable => @options[:disk_cache_enable],
+      :cache_feature => @options[:cache_feature],
       :unique_key        => unique_key,
       :to_browser_path   => to_browser_path,
       :to_real_path      => to_real_path,
