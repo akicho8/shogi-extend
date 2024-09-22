@@ -46,8 +46,37 @@ module QuickScript
           end
           form_part = form_part.merge(v.call, dynamic_part: nil)
         end
-        form_part
+        form_part.merge(elems: elsms_normalize(form_part[:elems]))
       end
+    end
+
+    # elsms_normalize(nil)                                                                                              # => {} }
+    # elsms_normalize("a")                                                                                              # => {:a=>{:el_label=>"a", :el_message=>nil}} }
+    # elsms_normalize([1, 2])                                                                                           # => {:"1"=>{:el_label=>"1", :el_message=>nil}, :"2"=>{:el_label=>"2", :el_message=>nil}}
+    # elsms_normalize([["a", "A"], ["b", "B"]])                                                                         # => {:a=>{:el_label=>"A", :el_message=>nil}, :b=>{:el_label=>"B", :el_message=>nil}}
+    # elsms_normalize(["a", "b"])                                                                                       # => {:a=>{:el_label=>"a", :el_message=>nil}, :b=>{:el_label=>"b", :el_message=>nil}}
+    # elsms_normalize({ "a" => "A", "b" => "B" })                                                                       # => {:a=>{:el_label=>"A", :el_message=>nil}, :b=>{:el_label=>"B", :el_message=>nil}}
+    # elsms_normalize({ "a" => { el_label: "A", el_message: "am" }, "b" => { el_label: "B", el_message: "bm" }, })      # => {:a=>{:el_label=>"A", :el_message=>"am"}, :b=>{:el_label=>"B", :el_message=>"bm"}}
+    # elsms_normalize([ { key: "a", el_label: "A", el_message: "am" }, { key: "b", el_label: "B", el_message: "bm" } ]) # => {:a=>{:el_label=>"A", :el_message=>"am"}, :b=>{:el_label=>"B", :el_message=>"bm"}}
+    def elsms_normalize(elems)
+      # nil => []
+      # "a" => ["a"]
+      unless elems.kind_of?(Hash)
+        elems = Array.wrap(elems)
+      end
+
+      hv = {}
+      elems.each do |key, value|
+        if key.kind_of?(Hash)
+          value = key
+          key = value[:key]
+          value = value.except(:key)
+        elsif !value.kind_of?(Hash)
+          value = { el_label: value || key.to_s, el_message: nil }
+        end
+        hv[key.to_s.to_sym] = value
+      end
+      hv
     end
 
     def submitted?

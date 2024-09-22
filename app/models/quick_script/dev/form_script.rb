@@ -56,32 +56,31 @@ module QuickScript
             },
           },
           {
-            :label        => "string",
+            :label        => "string (html5)",
             :key          => :str1_b,
             :type         => :string,
             :dynamic_part => -> {
               {
-                :auto_complete_by        => :html5,
-                :elems        => ["foo", "bar", "baz"],
-                :default => params[:str1_b].presence || "a",
-                :help_message => "補完: HTML5 の datalist",
+                :auto_complete_by => :html5,
+                :elems            => ["foo", "bar", "baz"],
+                :default          => params[:str1_b].presence || "a",
+                :help_message     => "補完: HTML5 の datalist",
               }
             },
           },
           {
-            :label        => "string ",
+            :label        => "string (b_autocomplete)",
             :key          => :str1_c,
             :type         => :string,
             :dynamic_part => -> {
               {
-                :auto_complete_by        => :b_autocomplete,
-                :elems        => ["foo", "bar", "baz"],
-                :default      => params[:str1_c].presence || "a",
-                :help_message => "補完: Buefy の b-autocomplete",
+                :auto_complete_by => :b_autocomplete,
+                :elems            => ["foo", "bar", "baz"],
+                :default          => params[:str1_c].presence || "a",
+                :help_message     => "補完: Buefy の b-autocomplete",
               }
             },
           },
-
           ################################################################################ 多数の中から選択
 
           {
@@ -106,7 +105,6 @@ module QuickScript
               }
             }
           },
-
           ################################################################################
 
           {

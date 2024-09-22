@@ -29,7 +29,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ScopeInfo.to_form_elems,
+                :elems   => ScopeInfo.form_part_elems,
                 :default => scope_key,
               }
             },
@@ -41,7 +41,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => OrderInfo.to_form_elems,
+                :elems   => OrderInfo.form_part_elems,
                 :default => order_info.key,
               }
             },

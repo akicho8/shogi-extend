@@ -10,7 +10,7 @@ resp = client.synthesize_speech({
   })
 tp resp.to_h
 # >> |--------------------+-----------------------------------------------------|
-# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x00007f87ad96fc80> |
+# >> |       audio_stream | #<Seahorse::Client::ManagedFile:0x000000010a5d7810> |
 # >> |       content_type | audio/mpeg                                          |
 # >> | request_characters | 5                                                   |
 # >> |--------------------+-----------------------------------------------------|

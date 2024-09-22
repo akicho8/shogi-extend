@@ -42,7 +42,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => TagCondInfo.to_form_elems,
+                :elems   => TagCondInfo.form_part_elems,
                 :default => x_tag_cond_info.key,
               }
             },
@@ -66,7 +66,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::JudgeInfo.to_form_elems,
+                :elems   => ::JudgeInfo.form_part_elems,
                 :default => x_judge_infos.collect(&:key),
               }
             },
@@ -78,7 +78,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::StyleInfo.to_form_elems,
+                :elems   => ::Swars::StyleInfo.form_part_elems,
                 :default => x_style_infos.collect(&:key),
               }
             },
@@ -119,7 +119,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => TagCondInfo.to_form_elems,
+                :elems   => TagCondInfo.form_part_elems,
                 :default => y_tag_cond_info.key,
               }
             }
@@ -131,7 +131,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => {"" => ""}.merge(GradeDiffInfo.to_form_elems),
+                :elems   => {"" => ""}.merge(GradeDiffInfo.form_part_elems),
                 :default => x_grade_diff_info.try { key },
               }
             },
@@ -155,7 +155,7 @@ module QuickScript
           #   :session_sync => true,
           #   :dynamic_part => -> {
           #     {
-          #       :elems   => ::JudgeInfo.to_form_elems,
+          #       :elems   => ::JudgeInfo.form_part_elems,
           #       :default => y_judge_infos.collect(&:key),
           #     }
           #   },
@@ -167,7 +167,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::StyleInfo.to_form_elems,
+                :elems   => ::Swars::StyleInfo.form_part_elems,
                 :default => y_style_infos.collect(&:key),
                 # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
               }
@@ -194,7 +194,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::XmodeInfo.to_form_elems,
+                :elems   => ::Swars::XmodeInfo.form_part_elems,
                 :default => xmode_infos.collect(&:key),
               }
             },
@@ -207,7 +207,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::RuleInfo.to_form_elems,
+                :elems   => ::Swars::RuleInfo.form_part_elems,
                 :default => rule_infos.collect(&:key),
               }
             },
@@ -233,7 +233,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::FinalInfo.to_form_elems,
+                :elems   => ::Swars::FinalInfo.form_part_elems,
                 :default => final_infos.collect(&:key),
               }
             },
@@ -290,7 +290,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => OpenActionInfo.to_form_elems,
+                :elems   => OpenActionInfo.form_part_elems,
                 :default => open_action_info.key,
               }
             },
@@ -303,7 +303,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => DownloadInfo.to_form_elems,
+                :elems   => DownloadInfo.form_part_elems,
                 :default => download_info.key,
               }
             },
@@ -316,7 +316,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => BgRequestInfo.to_form_elems,
+                :elems   => BgRequestInfo.form_part_elems,
                 :default => bg_request_info.key,
               }
             },
@@ -329,7 +329,7 @@ module QuickScript
             :session_sync => false,
             :dynamic_part => -> {
               {
-                :elems           => BookmarkUrlInfo.to_form_elems,
+                :elems           => BookmarkUrlInfo.form_part_elems,
                 :default         => BookmarkUrlInfo[:off].key,
                 :hidden_on_query => true,
               }

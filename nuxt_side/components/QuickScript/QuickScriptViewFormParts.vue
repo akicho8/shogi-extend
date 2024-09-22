@@ -100,10 +100,10 @@
           b-select(
             :id="QS.form_part_id(form_part)"
             v-model="QS.attributes[form_part.key]"
-            @input="e => click_talk_handle(e)"
+            @input="e => click_talk_handle(form_part.elems[e].el_label)"
             )
-            template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
-              option(:value="key") {{label}}
+            template(v-for="(hv, key) in form_part.elems")
+              option(:value="key") {{hv.el_label}}
         template(v-else-if="form_part.type === 'b_switch'")
           b-switch(
             :id="QS.form_part_id(form_part)"
@@ -111,13 +111,13 @@
             )
             span {{form_part.on_label}}
         template(v-else-if="form_part.type === 'radio_button' || form_part.type === 'checkbox_button'")
-          template(v-for="[key, label] in QS.form_part_elems_to_key_label_array(form_part.elems)")
+          template(v-for="(hv, key) in form_part.elems")
             component(
               :is="QS.form_part_type_to_component(form_part.type)"
-              @input="click_talk_handle(label)"
+              @input="click_talk_handle(hv.el_label)"
               v-model="QS.attributes[form_part.key]"
               :native-value="key")
-              span {{label}}
+              span {{hv.el_label}}
         template(v-else)
           pre form_part.type が間違っている : {{form_part.type}}
 
@@ -127,8 +127,8 @@
       template(v-if="form_part.auto_complete_by === 'html5'")
         template(v-if="form_part.elems")
           datalist(:id="QS.form_part_datalist_id(form_part)")
-            template(v-for="e in form_part.elems")
-              option(:value="e")
+            template(v-for="(hv, key) in form_part.elems")
+              option(:value="key")
 </template>
 
 <script>

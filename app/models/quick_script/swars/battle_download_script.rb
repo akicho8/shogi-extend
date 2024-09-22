@@ -23,7 +23,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => ScopeInfo.to_form_elems(self),
+                :elems   => ScopeInfo.form_part_elems(self),
                 :default => scope_info.key,
               }
             },
@@ -35,7 +35,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => FormatInfo.to_form_elems,
+                :elems   => FormatInfo.form_part_elems,
                 :default => format_info.key,
               }
             },
@@ -47,7 +47,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => EncodeInfo.to_form_elems,
+                :elems   => EncodeInfo.form_part_elems,
                 :default => encode_info.key,
               }
             },
@@ -59,7 +59,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => MaxInfo.to_form_elems,
+                :elems        => MaxInfo.form_part_elems,
                 :default => max_info.key,
               }
             },
@@ -71,7 +71,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems        => StructureInfo.to_form_elems,
+                :elems        => StructureInfo.form_part_elems,
                 :default => structure_info.key,
               }
             },
@@ -83,7 +83,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => BgRequestInfo.to_form_elems,
+                :elems   => BgRequestInfo.form_part_elems,
                 :default => bg_request_key,
               }
             },

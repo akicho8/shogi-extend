@@ -15,7 +15,7 @@ module QuickScript
             :ls_sync      => { parent_key: :user_settings, child_key: :piyo_shogi_type_key, loader: :force, writer: :force },
             :dynamic_part => -> {
               {
-                :elems   => PiyoShogiTypeInfo.to_form_elems,
+                :elems   => PiyoShogiTypeInfo.form_part_elems,
                 :default => piyo_shogi_type_key,
               }
             },

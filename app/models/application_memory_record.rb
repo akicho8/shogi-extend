@@ -25,7 +25,7 @@ module ApplicationMemoryRecord
       Array(values).collect { |e| lookup(e) }.compact
     end
 
-    def to_form_elems(...)
+    def form_part_elems(...)
       inject({}) do |a, e|
         a.merge(e.key => e.to_form_elem(...))
       end

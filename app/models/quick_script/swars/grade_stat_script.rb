@@ -26,7 +26,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => PopulationInfo.to_form_elems,
+                :elems   => PopulationInfo.form_part_elems,
                 :default => population_key,
               }
             },

@@ -13,9 +13,10 @@ export const mod_form = {
     },
 
     form_part_autocomplete_datalist(form_part) {
-      return form_part.elems.filter(e => {
-        const a = e.toString().toLowerCase()
-        console.log(this.attributes[form_part.key])
+      // const keys = _.map(form_part.elems, (key, e) => key)
+      const keys = _.keys(form_part.elems)
+      return _.filter(keys, key => {
+        const a = key.toString().toLowerCase()
         const b = (this.attributes[form_part.key] || "").toLowerCase()
         return a.indexOf(b) >= 0
       })
@@ -35,35 +36,35 @@ export const mod_form = {
       return form_part.help_message
     },
 
-    // for b-select
-    form_part_elems_to_key_label_array(elems) {
-      // elems: [1, 2, 3]
-      if (Array.isArray(elems)) {
-        return elems.map(e => [e, e])
-      }
-
-      // elems: { "key1" => { el_label: "(label)" } }  // ← この場合 el_message を追加できる
-      // elems: { "key1" => "(label)"            }
-      if (_.isPlainObject(elems)) {
-        return _.map(elems, (attrs, key) => {
-          let label = null
-          if (_.isPlainObject(attrs)) {
-            label = attrs.el_label
-          } else {
-            label = attrs
-          }
-          Gs.assert(label != null, "label != null")
-          return [key, label]
-        })
-      }
-
-      // elems: "a"
-      if (elems) {
-        return [[elems, elems]]
-      }
-
-      return []
-    },
+    // // for b-select
+    // form_part_elems_to_key_label_array(elems) {
+    //   // elems: [1, 2, 3]
+    //   if (Array.isArray(elems)) {
+    //     return elems.map(e => [e, e])
+    //   }
+    //
+    //   // elems: { "key1" => { el_label: "(label)" } }  // ← この場合 el_message を追加できる
+    //   // elems: { "key1" => "(label)"            }
+    //   if (_.isPlainObject(elems)) {
+    //     return _.map(elems, (attrs, key) => {
+    //       let label = null
+    //       if (_.isPlainObject(attrs)) {
+    //         label = attrs.el_label
+    //       } else {
+    //         label = attrs
+    //       }
+    //       Gs.assert(label != null, "label != null")
+    //       return [key, label]
+    //     })
+    //   }
+    //
+    //   // elems: "a"
+    //   if (elems) {
+    //     return [[elems, elems]]
+    //   }
+    //
+    //   return []
+    // },
 
     // for b-radio-button, b-checkbox-button
     form_part_type_to_component(type) {
