@@ -23,21 +23,20 @@ module QuickScript
 
           {
             :label        => "戦法",
-            :key          => :x_tag,
-            :type         => :string,
+            :key          => :x_tags,
+            :type         => :b_taginput,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :auto_complete_by => :html5,
-                :elems            => candidate_tag_names,
-                :default          => params[:x_tag].presence,
-                :help_message     => "直接入力 or 右端の▼から選択。複数指定可。",
+                :elems        => candidate_tag_names,
+                :default      => x_tag_names,
+                :help_message => "⏎で確定。複数指定可。",
               }
             },
           },
           {
             :label        => "戦法の解釈",
-            :key          => :x_tag_cond_key,
+            :key          => :x_tags_cond_key,
             :type         => :radio_button,
             :session_sync => true,
             :dynamic_part => -> {
@@ -100,21 +99,20 @@ module QuickScript
 
           {
             :label        => "相手の戦法",
-            :key          => :y_tag,
-            :type         => :string,
+            :key          => :y_tags,
+            :type         => :b_taginput,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :auto_complete_by => :html5,
-                :elems            => candidate_tag_names,
-                :default          => params[:y_tag].presence,
-                :help_message     => "直接入力 or 右端の▼から選択。複数指定可。",
+                :elems        => candidate_tag_names,
+                :default      => y_tag_names,
+                :help_message => "⏎で確定。複数指定可。",
               }
             },
           },
           {
             :label        => "相手の戦法の解釈",
-            :key          => :y_tag_cond_key,
+            :key          => :y_tags_cond_key,
             :type         => :radio_button,
             :session_sync => true,
             :dynamic_part => -> {
@@ -570,11 +568,11 @@ module QuickScript
       ################################################################################
 
       def x_tag_names
-        @x_tag_names ||= tag_string_split(params[:x_tag])
+        @x_tag_names ||= tag_string_split(params[:x_tags])
       end
 
       def y_tag_names
-        @y_tag_names ||= tag_string_split(params[:y_tag])
+        @y_tag_names ||= tag_string_split(params[:y_tags])
       end
 
       def all_tag_names
@@ -685,22 +683,22 @@ module QuickScript
 
       ################################################################################
 
-      def x_tag_cond_key
-        TagCondInfo.lookup_key_or_first(params[:x_tag_cond_key])
+      def x_tags_cond_key
+        TagCondInfo.lookup_key_or_first(params[:x_tags_cond_key])
       end
 
       def x_tag_cond_info
-        @x_tag_cond_info ||= TagCondInfo.fetch(x_tag_cond_key)
+        @x_tag_cond_info ||= TagCondInfo.fetch(x_tags_cond_key)
       end
 
       ################################################################################
 
-      def y_tag_cond_key
-        TagCondInfo.lookup_key_or_first(params[:y_tag_cond_key])
+      def y_tags_cond_key
+        TagCondInfo.lookup_key_or_first(params[:y_tags_cond_key])
       end
 
       def y_tag_cond_info
-        @y_tag_cond_info ||= TagCondInfo.fetch(y_tag_cond_key)
+        @y_tag_cond_info ||= TagCondInfo.fetch(y_tags_cond_key)
       end
 
       ################################################################################ モード

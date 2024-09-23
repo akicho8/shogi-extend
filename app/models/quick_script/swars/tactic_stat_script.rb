@@ -117,7 +117,7 @@ module QuickScript
             if admin_user
               h["リンク1"]  = { _nuxt_link: { name: "棋力帯",       to: {path: "/lab/swars/grade-stat",       query: { tag: e[:tag_name], }, }, }, }
               h["リンク2"]  = { _nuxt_link: { name: "戦法ミニ事典", to: {path: "/lab/general/encyclopedia",   query: { tag: e[:tag_name], }, }, }, }
-              h["リンク3"]  = { _nuxt_link: { name: "採用者を探す", to: {path: "/lab/swars/cross-search",     query: { x_tag: e[:tag_name], }, }, }, }
+              h["リンク3"]  = { _nuxt_link: { name: "採用者を探す", to: {path: "/lab/swars/cross-search",     query: { x_tags: e[:tag_name], }, }, }, }
             end
           end
         end

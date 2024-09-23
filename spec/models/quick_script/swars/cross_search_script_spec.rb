@@ -11,7 +11,7 @@ module QuickScript
 
       it "検索にマッチする" do
         condition = {
-          :x_tag        => "居飛車",
+          :x_tags       => "居飛車",
           :x_judge_keys => "勝ち,負け",
           :x_grade_keys => "30級",
           :xmode_keys   => "野良",
@@ -26,7 +26,7 @@ module QuickScript
 
       it "検索にマッチしない" do
         condition = {
-          :x_tag        => "振り飛車",
+          :x_tags => "振り飛車",
         }
         instance = CrossSearchScript.new(exec: "true", **condition)
         assert { instance.found_ids == [] }

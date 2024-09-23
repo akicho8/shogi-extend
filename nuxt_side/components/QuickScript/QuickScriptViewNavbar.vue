@@ -5,7 +5,7 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
 
     // タイトルをクリックしたときの挙動
     template(v-if="QS.meta.title")
-      template(v-if="QS.params.title_link == 'url_path_reset'")
+      template(v-if="QS.params.title_link === 'url_path_reset'")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle")
           h1.has-text-weight-bold {{QS.meta.title}}
       template(v-else)
