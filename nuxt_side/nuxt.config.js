@@ -1,4 +1,5 @@
 import dayjs from "dayjs"
+// import QueryString from "query-string"
 
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 const PRODUCTION_P = process.env.NODE_ENV === "production"
@@ -107,6 +108,28 @@ const config = {
 
     // https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-router/#linkactiveclass
     linkActiveClass: "is-active",
+
+    // クエリ文字列のパース方法をカスタマイズ
+    // https://v2.nuxt.com/ja/docs/configuration-glossary/configuration-router/#parsequery--stringifyquery
+    // デフォルトのままだと Rails が渡した "foo[]=1" を {"foo[]" => [1]} としてしまう。{foo: [1]} としないといけない。
+    // https://zenn.dev/dl10yr/articles/nuxt3-stringifyquery
+    //
+    // ↓ QueryString が参照できない
+    //
+    // parseQuery: (query) => {
+    //   if (process.env.NODE_ENV === "production") {
+    //   } else {
+    //     console.log("NUXT_CONFIG_JS")
+    //     console.log(query)
+    //     console.log(QueryString.parse(query, {arrayFormat: "bracket"}))
+    //   }
+    //   return QueryString.parse(query, {arrayFormat: "bracket"})
+    // },
+    // // // クエリパラメータのシリアライズ方法をカスタマイズ
+    // // stringifyQuery(params) {
+    // //   const result = QueryString.stringify(params, { arrayFormat: 'bracket' });
+    // //   return result ? `?${result}` : '';
+    // // }
 
     // base: process.env.NODE_ENV === "production" ? "/app/" : "/",
 

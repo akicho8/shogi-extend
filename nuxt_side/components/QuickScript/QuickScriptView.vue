@@ -32,7 +32,6 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
 const QueryString = require("query-string")
-const QS = require("qs")
 import isMobile from "ismobilejs"
 
 import { mod_value_type  } from "./mod_value_type.js"
@@ -325,10 +324,24 @@ export default {
     main_component()  { return this.params?.main_component },
     user_agent_key() { return this.$user_agent_info.any ? "mobile" : "desktop" },
 
+    // Vue.js 側は URL の "foo[]=1" を {"foo" => [1]} ではなく {"foo[]": [1]} として解釈しているため
+    // そのまま Rails 側に送ると foo[][]=1 となり、{foo: [[1]]} としてネストが深くなってしまう。
+    // したがって "foo[]" を "foo" に直す。
+    // nuxt.config.js の router.queryParser でやるのが正しいらしいが QueryString ライブラリが参照できないというしょうもない理由で諦めた。
+    bracket_deleted_route_query() {
+      const hv = {}
+      _.each(this.$route.query, (value, key) => {
+        const bracket_deleted_key = key.replace(/\[\]/, "") // "foo[]" => "foo"
+        hv[bracket_deleted_key] = value
+      })
+      return hv
+    },
+
     new_params() {
       return {
         ...this.submit_key_params,
-        ...this.$route.query,
+        // ...this.$route.query,      // ← このままGETで送ると危険。このなかには {"foo[]" => 1} という形式で入っているため Rails 側に foo[][]=1 で渡ってしまう
+        ...this.bracket_deleted_route_query,
         ...this.qs_override_params,
         ...this.attributes,
       }
