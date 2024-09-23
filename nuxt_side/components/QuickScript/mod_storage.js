@@ -24,7 +24,7 @@ export const mod_storage = {
               if (form_value == null) {
                 this.$set(this.attributes, form_part["key"], v)
               }
-            } else if (ls_sync.loader == "force") {
+            } else if (ls_sync.loader === "force") {
               this.$set(this.attributes, form_part["key"], v)
             }
           }
