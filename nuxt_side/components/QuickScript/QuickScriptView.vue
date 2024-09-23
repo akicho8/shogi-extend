@@ -36,6 +36,7 @@ import isMobile from "ismobilejs"
 
 import { mod_value_type  } from "./mod_value_type.js"
 import { mod_form        } from "./mod_form.js"
+import { mod_taginput    } from "./mod_taginput.js"
 import { mod_file_upload } from "./mod_file_upload.js"
 import { mod_sidebar     } from "./mod_sidebar.js"
 import { mod_storage     } from "./mod_storage.js"
@@ -47,6 +48,7 @@ export default {
   mixins: [
     mod_value_type,
     mod_form,
+    mod_taginput,
     mod_file_upload,
     mod_sidebar,
     mod_storage,
@@ -189,7 +191,13 @@ export default {
       if (this.params["form_parts"]) {
         this.params["form_parts"].forEach(form_part => {
           this.$set(this.attributes, form_part["key"], form_part["default"])
+
+          // b-taginput 用の候補初期値を設定する
+          if (form_part.type === "b_taginput") {
+            this.taginput_init(form_part)
+          }
         })
+
         this.qs_ls_load()
       }
 

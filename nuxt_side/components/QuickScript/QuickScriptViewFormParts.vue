@@ -43,35 +43,37 @@
               spellcheck="false"
               :list="QS.form_part_datalist_id(form_part)"
               )
-        template(v-else-if="form_part.type === 'taginput'")
-          // 作りかけ
+        template(v-else-if="form_part.type === 'b_taginput'")
+          //- template(v-if="form_part.auto_complete_feature")
+          //- https://buefy.org/documentation/taginput/
           //- :size="TheApp.input_element_size"
-          //- v-model="current_tags"
-          //- :data="filtered_tags"
-          //- autocomplete
-          //- open-on-focus
-          //- allow-new
-          //- icon="label"
-          //- placeholder="Add a tag"
-          //- spellcheck="false"
-          //- @typing="typing_handle"
-          //- @add="add_handle"
-          //- @remove="remove_handle"
-          //- max-height="50vh"
-          //- group-field="name"
-          //- group-options="values"
           //- expanded
           //- attached
-          //- @typing="typing_handle"
-          //- :data="QS.form_part_autocomplete_datalist(form_part)"
-          //- max-height="50vh"
           b-taginput(
             :id="QS.form_part_id(form_part)"
             :on-paste-separators="[',', ' ']"
             v-model="QS.attributes[form_part.key]"
             :placeholder="form_part.placeholder"
             spellcheck="false"
+
+            autocomplete
+            icon="label"
+            open-on-focus
+            allow-new
+            :data="QS.taginput_filtered_tags[form_part.key] ?? []"
+            @typing="text => QS.taginput_typing_handle(form_part, text)"
+            @add="tag => QS.taginput_add_handle(form_part, tag)"
+            @remove="tag => QS.taginput_remove_handle(form_part, tag)"
+            max-height="50vh"
             )
+          //- template(v-else)
+          //- b-taginput(
+          //-   :id="QS.form_part_id(form_part)"
+          //-   :on-paste-separators="[',', ' ']"
+          //-   v-model="QS.attributes[form_part.key]"
+          //-   :placeholder="form_part.placeholder"
+          //-   spellcheck="false"
+          //-   )
         template(v-else-if="form_part.type === 'static'")
           template(v-if="true")
             input.input.is-static(:id="QS.form_part_id(form_part)" v-model="QS.attributes[form_part.key]" readonly)

@@ -110,7 +110,7 @@ module QuickScript
           {
             :label   => "タグ入力",
             :key     => :tag1,
-            :type    => :taginput,
+            :type    => :b_taginput,
             :dynamic_part => -> {
               {
                 :elems   => ["foo", "bar", "baz"],
