@@ -1,5 +1,8 @@
 require "./setup"
 
+puts "#{QuickScript::Swars::CrossSearchScript::TagCondInfo[:and]}"
+exit
+
 QuickScript::Swars::CrossSearchScript.new.bookmark_url # => "http://localhost:4000/lab/swars/cross-search?bg_request_key=&bookmark_url_key=false&download_key=&exec=true&final_keys=&open_action_key=&preset_keys=&query=&range_size=&request_size=&rule_keys=&x_grade_diff_key=&x_grade_keys=&x_judge_keys=&x_style_keys=&x_tags=&x_tags_cond_key=&x_user_keys=&xmode_keys=&y_grade_keys=&y_style_keys=&y_tags=&y_tags_cond_key=&y_user_keys="
 puts QuickScript::Swars::CrossSearchScript.new.mail_body
 

@@ -822,18 +822,36 @@ module QuickScript
         out.compact.join("\n")
       end
 
+      # 抽出0件のときの条件修正アドバイス
       def advice_message
         # 強めの改善指示
         begin
+          ################################################################################
+
           if x_tag_names.present? && x_style_infos.present?
             return "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「スタイル」の指定は外した方がいいかもしれません。"
           end
           if y_tag_names.present? && y_style_infos.present?
             return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
           end
-          if x_grade_diff_info.present? && y_grade_infos.present?
-            return "「相手の棋力」と「相手の棋力(差)」の指定は一方だけにした方がよいでしょう。"
+
+          ################################################################################
+
+          info = TagCondInfo.fetch(:and)
+          if x_tag_names.many? && x_tag_cond_info == info
+            return "「戦法の解釈」は「#{info}」で間違いありませんか？"
           end
+          if y_tag_names.many? && y_tag_cond_info == info
+            return "「相手の戦法の解釈」は「#{info}」で間違いありませんか？"
+          end
+
+          ################################################################################
+
+          if x_grade_diff_info.present? && y_grade_infos.present?
+            return "「相手の棋力」と「相手の棋力(差)」の指定を一方だけにしてみてください。"
+          end
+
+          ################################################################################
         end
 
         # 弱めの改善指示
