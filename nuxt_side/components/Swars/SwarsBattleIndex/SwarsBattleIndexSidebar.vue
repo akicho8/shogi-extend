@@ -28,7 +28,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{path: '/lab/swars/cross-search'}"
             )
 
-          b-menu-item.is_active_unset(label="詳細をまとめて開く" @click="APP.show_url_all_open_handle")
+          b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")
 
         b-menu-list(label="レイアウト")
           template(v-for="e in APP.LayoutInfo.values")

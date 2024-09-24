@@ -41,7 +41,7 @@
         td
           b-tag(type="is-primary") p
       tr
-        th 詳細をまとめて開く
+        th 詳細を一気に開く
         td
           b-tag(type="is-primary") o
       tr
