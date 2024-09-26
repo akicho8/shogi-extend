@@ -113,7 +113,7 @@ module QuickScript
               "不偏分散"     => variance,
               "標準偏差"     => standard_deviation,
               "基準値平均"   => standard_value_average,
-            },
+            }.compact_blank,
           }
         end
       end
