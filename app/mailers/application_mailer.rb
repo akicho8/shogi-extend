@@ -56,7 +56,9 @@ class ApplicationMailer < ActionMailer::Base
 
     def params_normalize_if_fixed(params)
       params = {
-        fixed: false,
+        :table_format   => false,
+        :fixed          => false,
+        :eob_auto_enter => true,
       }.merge(params)
 
       if params[:table_format]
@@ -65,11 +67,13 @@ class ApplicationMailer < ActionMailer::Base
         end
       end
 
-      body = gmail_problem_workaround(params[:body])
-
       if params[:fixed]
-        body = gmail_problem_workaround(params[:body])
-        params = params.merge(content_type: "text/html", body: pre_tag(body))
+        params[:body] = pre_tag(gmail_problem_workaround(params[:body]))
+        params[:content_type] = "text/html"
+      end
+
+      if params[:eob_auto_enter]
+        params[:body] = eob_auto_enter(params[:body])
       end
 
       params
@@ -82,6 +86,11 @@ class ApplicationMailer < ActionMailer::Base
     # GMailで改行が2重になる対策
     def gmail_problem_workaround(text)
       text.to_s.gsub("\n", "<br>")
+    end
+
+    # 添付ファイルの位置がずれるのを防ぐために必ず改行を入れる
+    def eob_auto_enter(text)
+      text.to_s.rstrip + "\n"
     end
   end
 end
