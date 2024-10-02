@@ -79,6 +79,7 @@ module QuickScript
               {
                 :elems   => ::Swars::StyleInfo.form_part_elems,
                 :default => x_style_infos.collect(&:key),
+                :help_message => "「戦法」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
               }
             },
           },
@@ -165,9 +166,9 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => ::Swars::StyleInfo.form_part_elems,
-                :default => y_style_infos.collect(&:key),
-                # :help_message => "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でほぼスタイルが確定している",
+                :elems        => ::Swars::StyleInfo.form_part_elems,
+                :default      => y_style_infos.collect(&:key),
+                :help_message => "「相手の戦法」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
               }
             },
           },
