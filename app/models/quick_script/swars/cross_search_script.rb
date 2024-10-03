@@ -71,6 +71,18 @@ module QuickScript
             },
           },
           {
+            :label        => "先後",
+            :key          => :x_location_keys,
+            :type         => :checkbox_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => LocationInfo.form_part_elems,
+                :default => x_location_infos.collect(&:key),
+              }
+            },
+          },
+          {
             :label        => "スタイル",
             :key          => :x_style_keys,
             :type         => :checkbox_button,
@@ -184,6 +196,7 @@ module QuickScript
               }
             },
           },
+
           ################################################################################
 
           {
@@ -508,8 +521,8 @@ module QuickScript
 
         memberships = ::Swars::Membership.where(battle: scope.ids)
 
-        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_style_infos, x_grade_infos, x_user_keys, x_grade_diff_info)
-        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info,           nil, y_style_infos, y_grade_infos, y_user_keys,               nil)
+        x = memberships_scope_by(memberships, x_tag_names, x_tag_cond_info, x_judge_infos, x_location_infos, x_style_infos, x_grade_infos, x_user_keys, x_grade_diff_info)
+        y = memberships_scope_by(memberships, y_tag_names, y_tag_cond_info,           nil,              nil, y_style_infos, y_grade_infos, y_user_keys,               nil)
 
         s = x.where(opponent: y.ids) # ids を明示すると速くなる(317ms → 101ms)
 
@@ -542,13 +555,16 @@ module QuickScript
         end
       end
 
-      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, style_infos, grade_infos, user_keys, grade_diff_info)
+      def memberships_scope_by(memberships, tag_names, tag_cond_info, judge_infos, location_infos, style_infos, grade_infos, user_keys, grade_diff_info)
         memberships.then do |s|
           if v = tag_names.presence
             s = s.tagged_with(v, tag_cond_info.tagged_with_options)
           end
           if v = judge_infos.presence
             s = s.judge_eq(v.collect(&:key))
+          end
+          if (v = location_infos.presence) && v.one?
+            s = s.location_eq(v.collect(&:key))
           end
           if v = style_infos.presence
             s = s.style_eq(v.collect(&:key))
@@ -611,6 +627,26 @@ module QuickScript
         end
         str.uniq
       end
+
+      ################################################################################
+
+      def x_location_keys
+        tag_string_split(params[:x_location_keys])
+      end
+
+      def x_location_infos
+        @x_location_infos ||= LocationInfo.lookup_from_array(x_location_keys)
+      end
+
+      ################################################################################
+
+      # def y_location_keys
+      #   tag_string_split(params[:y_location_keys])
+      # end
+      #
+      # def y_location_infos
+      #   @y_location_infos ||= LocationInfo.lookup_from_array(y_location_keys)
+      # end
 
       ################################################################################
 

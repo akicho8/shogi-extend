@@ -11,13 +11,14 @@ module QuickScript
 
       it "検索にマッチする" do
         condition = {
-          :x_tags       => "居飛車",
-          :x_judge_keys => "勝ち,負け",
-          :x_grade_keys => "30級",
-          :xmode_keys   => "野良",
-          :rule_keys    => "10分",
-          :final_keys   => "投了",
-          :preset_keys  => "平手"
+          :x_tags          => "居飛車",
+          :x_judge_keys    => "勝ち,負け",
+          :x_location_keys => "black",
+          :x_grade_keys    => "30級",
+          :xmode_keys      => "野良",
+          :rule_keys       => "10分",
+          :final_keys      => "投了",
+          :preset_keys     => "平手"
         }
         instance = CrossSearchScript.new(exec: "true", **condition)
         assert { instance.found_ids == [@battle.id] }
