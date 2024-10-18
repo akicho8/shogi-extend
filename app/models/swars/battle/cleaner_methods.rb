@@ -66,7 +66,7 @@ module Swars
           options = {
             :xmode_only  => "野良",
             :ban_except  => true,
-            :old_only    => Rails.env.local? ? 0.days : 50.days,
+            :old_only    => Rails.env.local? ? 0.days : 25.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
@@ -77,7 +77,7 @@ module Swars
           options = {
             :xmode_only  => "野良",
             :ban_except  => true,
-            :old_only    => Rails.env.local? ? 0.days : 100.days,
+            :old_only    => Rails.env.local? ? 0.days : 50.days,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても
             :user_except => Swars::User::Vip.protected_user_keys,      # さらにこちらで除外される
           }.merge(options)

@@ -4,7 +4,7 @@ class GeneralCleaner
       :subject    => nil,
       :scope      => [],
       :execute    => false,
-      :time_limit => Rails.env.local? ? nil : 4.hours, # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
+      :time_limit => Rails.env.local? ? nil : nil, # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
       :verbose    => false,
       :batch_size => 1000,
     }.merge(options)
