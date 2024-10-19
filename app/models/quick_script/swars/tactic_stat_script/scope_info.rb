@@ -20,7 +20,7 @@ class QuickScript::Swars::TacticStatScript
       {
         key: :right_king,
         name: "右玉",
-        scope_block: -> av { av.find_all { |e| e[:tag_name].match?(/右玉|清野流岐阜戦法/) } },
+        scope_block: -> av { av.find_all { |e| Bioshogi::Explain::AttackInfo[e[:tag_name]].try { group_info.key == :"右玉" } } },
       },
       {
         key: :technique,
