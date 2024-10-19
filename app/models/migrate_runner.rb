@@ -7,9 +7,10 @@
 class MigrateRunner
   def call
     public_methods.grep(/\A(step\w+)/).sort.each do |e|
-      p e
+      p [Time.now.to_s, e, :begin]
       ms = Benchmark.ms { public_send(e) }
       AppLog.important("[#{e}] (#{ms})")
+      p [Time.now.to_s, e, :end]
     end
     nil
   end
