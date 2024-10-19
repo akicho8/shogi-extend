@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 7bd71e45071eafcf1220292589229eaaa71de103
+  revision: f840e693574597aa1207d9bb43d813bd5142035c
   branch: main
   specs:
     bioshogi (0.0.13)
@@ -587,7 +587,7 @@ GEM
     woothee (1.13.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.0)
+    zeitwerk (2.7.1)
 
 PLATFORMS
   arm64-darwin-22
