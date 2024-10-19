@@ -32,7 +32,7 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     within(".boxes") { assert_text "舟囲い" }
 
     tab_click_by_index(5)
-    within(".boxes") { assert_text "高美濃囲い" }
+    within(".boxes") { assert_text "美濃囲い" }
 
     tab_click_by_name("他")
     within(".boxes") { assert_text "将棋ウォーズの運営を支える力" }
