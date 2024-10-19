@@ -29,6 +29,8 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
       {
         key: "対局を盛り上げる",
         command_fn: (context, params) => {
+          return
+
           if (!context.order_enable_p) {
             return `対局が開始されました。盛り上げてください。`
           } else {
