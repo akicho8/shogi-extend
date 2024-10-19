@@ -51,7 +51,8 @@ module Swars
       it "my_technique_items" do
         assert do
           @user.stat.matrix_stat.my_technique_items == [
-            {:tag => :"垂れ歩", :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}}
+            {:tag=>:"3段ロケット", :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:垂れ歩, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
           ]
         end
       end
@@ -68,6 +69,7 @@ module Swars
             {:tag=>:居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:対振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:ロケット, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
           ]
