@@ -71,14 +71,14 @@ class MigrateRunner
   end
 
   def step3_all_update
-    # s = Swars::Battle.all
-    # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/18 00:00")))
-    # all_count = s.count.ceildiv(1000)
-    # s.in_batches(use_ranges: true).each_with_index do |relation, batch|
-    #   p [batch, all_count, batch.fdiv(all_count)]
-    #   relation.each(&:rebuild)
-    #   puts
-    # end
+    s = Swars::Battle.all
+    s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/18 00:00")))
+    all_count = s.count.ceildiv(1000)
+    s.in_batches(use_ranges: true).each_with_index do |relation, batch|
+      p [batch, all_count, batch.fdiv(all_count)]
+      relation.each(&:rebuild)
+      puts
+    end
   end
 
   # def step4
