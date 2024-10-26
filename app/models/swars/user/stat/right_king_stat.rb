@@ -33,7 +33,7 @@ module Swars
 
       # 右玉形の戦法名一覧
       def keys
-        @keys ||= Bioshogi::Explain::GroupInfo.fetch("右玉").values.collect(&:key)
+        @keys ||= Bioshogi::Analysis::GroupInfo.fetch("右玉").values.collect(&:key)
       end
     end
   end

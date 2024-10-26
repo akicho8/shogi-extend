@@ -399,7 +399,7 @@ module QuickScript
         ################################################################################
 
         all_tag_names.each do |tag_name|
-          unless Bioshogi::Explain::TacticInfo.flat_lookup(tag_name)
+          unless Bioshogi::Analysis::TacticInfo.flat_lookup(tag_name)
             flash[:notice] = "#{tag_name}とはなんでしょう？"
             return
           end
@@ -604,7 +604,7 @@ module QuickScript
       end
 
       def candidate_tag_names
-        @candidate_tag_names ||= [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) }
+        @candidate_tag_names ||= [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Analysis::TacticInfo[e].model.collect(&:name) }
       end
 
       ################################################################################

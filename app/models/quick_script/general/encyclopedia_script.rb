@@ -73,11 +73,11 @@ module QuickScript
       end
 
       def current_item
-        @current_item ||= Bioshogi::Explain::TacticInfo.flat_lookup(tag)
+        @current_item ||= Bioshogi::Analysis::TacticInfo.flat_lookup(tag)
       end
 
       def candidate_tag_names
-        @candidate_tag_names ||= [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) }
+        @candidate_tag_names ||= [:attack, :defense, :technique, :note].flat_map { |e| Bioshogi::Analysis::TacticInfo[e].model.collect(&:name) }
       end
 
       ################################################################################

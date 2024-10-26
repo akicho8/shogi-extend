@@ -6,7 +6,7 @@ module Assertion
   def assert_tag(tag)
     if Rails.env.local?
       assert_symbol(tag)
-      unless Bioshogi::Explain::TacticInfo.flat_lookup(tag)
+      unless Bioshogi::Analysis::TacticInfo.flat_lookup(tag)
         raise ArgumentError, "存在しない : #{tag.inspect}"
       end
     end

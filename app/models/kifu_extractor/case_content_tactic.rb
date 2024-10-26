@@ -3,7 +3,7 @@
 module KifuExtractor
   class CaseContentTactic < Base
     def resolve
-      if e = Bioshogi::Explain::TacticInfo.fuzzy_flat_lookup(item.source)
+      if e = Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(item.source)
         @body = e.sample_kif_file.read
       end
     end

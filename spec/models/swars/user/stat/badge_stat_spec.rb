@@ -13,7 +13,7 @@ module Swars
         def case1(e)
           black = User.create!
           white = User.create!
-          skill = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tactic_key])
+          skill = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tactic_key])
           info = skill.sample_kif_info
           player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
           Battle.create!(tactic_key: e[:tactic_key]) do |e|

@@ -43,7 +43,7 @@ module Swars
         }
       end
 
-      hv[:tactic_infos] = Bioshogi::Explain::TacticInfo.inject({}) do |a, e|
+      hv[:tactic_infos] = Bioshogi::Analysis::TacticInfo.inject({}) do |a, e|
         a.merge(e.key => {
             :key    => e.key,
             :name   => e.name,

@@ -37,7 +37,7 @@ module QuickScript
             :type         => :select,
             :dynamic_part => -> {
               {
-                :elems   => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Explain::TacticInfo[e].model.collect(&:name) },
+                :elems   => [""] + [:note, :technique, :attack, :defense].flat_map { |e| Bioshogi::Analysis::TacticInfo[e].model.collect(&:name) },
                 :default => params[:tag],
               }
             },

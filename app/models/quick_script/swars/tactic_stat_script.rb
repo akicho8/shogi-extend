@@ -92,7 +92,7 @@ module QuickScript
 
       def table_rows
         internal_rows.collect.with_index do |e, i|
-          item = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tag_name])
+          item = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tag_name])
 
           {}.tap do |h|
             win_ratio  = e[:win_ratio].try  { "%.3f %%" % (self * 100.0) }
@@ -144,7 +144,7 @@ module QuickScript
 
           if scope_info.key == :note
             # 備考は bioshogi 側の並びに合わせるのみ
-            av = av.sort_by { |e| Bioshogi::Explain::NoteInfo[e[:tag_name]].code }
+            av = av.sort_by { |e| Bioshogi::Analysis::NoteInfo[e[:tag_name]].code }
           else
             if order_info.key == :win_rate
               # 勝率条件出現数N以上
