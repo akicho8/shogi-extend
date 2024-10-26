@@ -151,7 +151,7 @@ module Swars
       end
       it "works" do
         # もともと「相居飛車」タグを除去していたが、除去しないようにした
-        assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車", "対居飛車"] }
+        assert { record.memberships[0].note_tag_list == ["入玉", "名人に定跡なし", "相入玉", "居飛車", "相居飛車", "対居飛車"] }
         assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車", "相居飛車", "対居飛車"] }
       end
     end
