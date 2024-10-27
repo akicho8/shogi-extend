@@ -107,11 +107,11 @@ module QuickScript
       end
 
       def parser
-        @parser ||= current_item.sample_kif_info
+        @parser ||= current_item.main_reference_info
       end
 
       def sp_body
-        @sp_body ||= current_item.sample_kif_file.read
+        @sp_body ||= current_item.main_reference_file.read
       end
 
       def sp_turn

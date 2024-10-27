@@ -14,7 +14,7 @@ module Swars
           black = User.create!
           white = User.create!
           skill = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tactic_key])
-          info = skill.sample_kif_info
+          info = skill.main_reference_info
           player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
           Battle.create!(tactic_key: e[:tactic_key]) do |e|
             e.memberships.build(user: black, judge_key: player.location.key == :black ? :win : :lose) # そのプレイヤーの方を勝ちにする
