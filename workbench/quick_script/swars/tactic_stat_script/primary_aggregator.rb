@@ -1,10 +1,17 @@
 require "./setup"
 
+# Swars::Membership.joins(:battle => :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良")).to_sql # => "SELECT `swars_memberships`.* FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_xmodes`.`key` = '野良'"
+# Swars::Membership.joins(:battle => :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良")).count # => 3476368
+
+# s = s.where(xmode: ::Swars::Xmode.arel_table[:key].eq(:"野良"))
+
+scope = Swars::Membership.where(id: Swars::Membership.last(100).collect(&:id))
+p _ { QuickScript::Swars::TacticStatScript::PrimaryAggregator.new(scope: scope).call } # => "55.90 ms"
+tp QuickScript::Swars::TacticStatScript::PrimaryAggregator.new(scope: scope).call
+
 # # Time.current.to_fs(:ymdhms)               # => "2024-08-25 10:54:56"
 # # p _ { QuickScript::Swars::TacticStatScript::PrimaryAggregator.new(batch_size: 500000).call }
-# # scope = Swars::Membership.where(id: Swars::Membership.last(100000).collect(&:id))
-# # p _ { QuickScript::Swars::TacticStatScript::PrimaryAggregator.new(scope: scope).call } # => "1009.66 ms"
-#
+
 # s = Swars::Membership.where(id: Swars::Membership.last(100).collect(&:id))
 # s = s.joins(:taggings => :tag)
 # s = s.joins(:judge)
@@ -19,6 +26,12 @@ require "./setup"
 # s = s.group("judges.key")
 # s.count
 
-# >>   Swars::Membership Load (0.4ms)  SELECT `swars_memberships`.* FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` = 1 AND `swars_battles`.`turn_max` >= 14
-# >>   Swars::Membership Load (0.2ms)  SELECT `swars_memberships`.* FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` = 1 AND `swars_battles`.`turn_max` >= 14
-# >>   Swars::Membership Load (0.2ms)  SELECT `swars_memberships`.* FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` = 1 AND `swars_battles`.`turn_max` >= 14
+# >> [2024-10-27 19:08:39][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> "55.90 ms"
+# >> [2024-10-27 19:08:39][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> |----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+# >> |                    records | [{:tag_name=>"三間飛車", :win_count=>8, :win_ratio=>0.6153846153846154, :lose_count=>5, :draw_count=>0, :freq_count=>13, :win_lose_count=>13, :freq_ratio=>0.1326530612244898}, {:tag_name=>"角交換振り飛車", :win_count=>3, :win_ratio=>0.75, :lose_count=>1, :draw_count=... |
+# >> |           population_count | 98                                                                                                                                                                                                                                                                             |
+# >> |      primary_aggregated_at | 2024-10-27 19:08:39 +0900                                                                                                                                                                                                                                                      |
+# >> | primary_aggregation_second | 0.013133999891579151                                                                                                                                                                                                                                                           |
+# >> |----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

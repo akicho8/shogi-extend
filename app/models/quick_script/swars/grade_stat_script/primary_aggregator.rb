@@ -36,7 +36,6 @@ class QuickScript::Swars::GradeStatScript
           sub_aggregate(counts_hash, :user, relation.joins(:grade).select(:user_id, "swars_grades.key").distinct)
 
           # 対局
-          scope = relation
           sub_aggregate(counts_hash, :membership, relation)
         end
       end
@@ -77,9 +76,12 @@ class QuickScript::Swars::GradeStatScript
       ::Swars::Grade.where(key: keys).unscope(:order)
     end
 
+    # 激重条件はここでくっつける(重要)
     def condition_add(s)
-      s = s.joins(:battle).merge(::Swars::Battle.valid_match_only) # 激重条件はここでくっつける(重要)
+      s = s.joins(:battle => :xmode)
+      s = s.merge(::Swars::Battle.valid_match_only)
       s = s.where(grade: target_grades)
+      s = s.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
     end
   end
 end

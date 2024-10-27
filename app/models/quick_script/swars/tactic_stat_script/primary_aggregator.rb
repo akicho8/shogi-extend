@@ -54,7 +54,7 @@ class QuickScript::Swars::TacticStatScript
         main_scope.in_batches(of: @options[:batch_size] || 1000).each.with_index do |relation, batch_index|
           puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{batch_index}"
 
-          relation = relation.joins(:battle).merge(::Swars::Battle.valid_match_only) # 激重条件はここ！(重要)
+          relation = condition_add(relation) # 激重条件はここ！(重要)
           population_count += relation.count
 
           s = relation
@@ -86,6 +86,13 @@ class QuickScript::Swars::TacticStatScript
     # 毎回 JOIN されるので遅いと勘違いしてしまいそうになるが、少ない件数に対して毎回 JOIN するので正しい。
     def main_scope
       @options[:scope] || ::Swars::Membership.all
+    end
+
+    # 激重条件はここ！(重要)
+    def condition_add(s)
+      s = s.joins(:battle => :xmode)
+      s = s.merge(::Swars::Battle.valid_match_only)
+      s = s.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
     end
   end
 end
