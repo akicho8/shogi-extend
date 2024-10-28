@@ -1,9 +1,12 @@
-# cap production deploy:upload FILES=app/models/migrate_runner.rb
 # cap staging    deploy:upload FILES=app/models/migrate_runner.rb
 # rails r MigrateRunner.new.call
 # rails r "tp Swars::Battle"
 # rails r "tp Swars::Membership"
+
+# cap production deploy:upload FILES=app/models/migrate_runner.rb
+# RAILS_ENV=production bundle exec bin/rails r 'MigrateRunner.new.call'
 # RAILS_ENV=production nohup bundle exec bin/rails r 'MigrateRunner.new.call' &
+# tailf nohup.out
 
 class MigrateRunner
   def call
@@ -115,7 +118,9 @@ class MigrateRunner
     s.in_batches(use_ranges: true).each_with_index do |s, batch|
       p [batch, all_count, batch.fdiv(all_count)]
       s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-      s.each(&:rebuild)
+      s.each do |e|
+        e.rebuild(tries: 1)
+      end
       puts
     end
   end

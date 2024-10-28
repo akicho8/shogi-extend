@@ -1,26 +1,32 @@
 module Swars
   class Battle
     class Rebuilder
-      def initialize(record)
+      def initialize(record, options = {})
         @record = record
+        @options = options
       end
 
       def call
-        retryable_options = {
-          :on           => StandardError,
-          :tries        => 5,
-          :sleep        => 1,
-          :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
-          :exception_cb => proc { |exception| puts "exception_cb: #{exception}"                          },
-          :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}"         },
-        }
         begin
           Retryable.retryable(retryable_options) do
             without_retry
           end
         rescue => error
-          puts error
+          $stdout.puts
+          $stdout.puts error
+          $stdout.flush
         end
+      end
+
+      def retryable_options
+        {
+          :on           => StandardError,
+          :tries        => @options[:tries] || 5,
+          :sleep        => 1,
+          # :ensure       => proc { |retries| puts "E#{retries}" if retries.positive? },
+          # :exception_cb => proc { |exception| puts; puts "#{exception}"             },
+          :log_method   => proc { |retries, exception| puts; puts "E#{retries}: #{exception}" },
+        }
       end
 
       def without_retry
@@ -29,7 +35,9 @@ module Swars
         build_fast
         after = tag_names.call
         updated = before != after
-        print updated ? "U" : "."
+        mark = updated ? "U" : "."
+        $stdout.print mark
+        $stdout.flush
         updated
       end
 
