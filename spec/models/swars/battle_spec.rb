@@ -174,5 +174,15 @@ module Swars
       user.reload
       assert { user.latest_battled_at.to_fs(:ymd) == "2000-01-01" }
     end
+
+    it "rebuild すると必ず analysis_version を更新する" do
+      battle = Swars::Battle.create!
+      assert { battle.analysis_version == Bioshogi::ANALYSIS_VERSION }
+      battle.update!(analysis_version: 0)
+      battle = Swars::Battle.find(battle.id) # インスタンス変数を内部に持っているため reload ではだめ
+      assert { battle.analysis_version == 0 }
+      capture(:stdout) { battle.rebuild }
+      assert { battle.analysis_version == Bioshogi::ANALYSIS_VERSION }
+    end
   end
 end

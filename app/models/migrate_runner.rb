@@ -50,22 +50,23 @@ class MigrateRunner
     # p Swars::Membership.where(judge_id: nil).count
   end
 
-  # def step1_delete
-  #   [
-  #     "大隅囲い",
-  #     "三手囲い",
-  #     "高田流左玉",
-  #     "ロケット",
-  #     "手得角交換型",
-  #     "手損角交換型",
-  #     "角交換型",
-  #     "角換わり新型",
-  #     "新丸山ワクチン",
-  #     "矢倉左美濃急戦",
-  #   ].each do |name|
-  #     tag_delete(name)
-  #   end
-  # end
+  def step1_delete
+    [
+      # "大隅囲い",
+      # "三手囲い",
+      # "高田流左玉",
+      # "ロケット",
+      # "手得角交換型",
+      # "手損角交換型",
+      # "角交換型",
+      # "角換わり新型",
+      # "新丸山ワクチン",
+      # "矢倉左美濃急戦",
+      "2手目△6二銀戦法",
+    ].each do |name|
+      tag_delete(name)
+    end
+  end
 
   def step2_rename
     list = {
@@ -119,7 +120,8 @@ class MigrateRunner
     all_count = s.count.ceildiv(batch_size)
     s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
       p [batch, all_count, batch.fdiv(all_count)]
-      s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+      # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+      s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
       s.each { |e| e.rebuild(tries: 1) }
       puts
     end

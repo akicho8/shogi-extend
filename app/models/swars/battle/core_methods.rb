@@ -56,6 +56,8 @@ module Swars
       end
 
       def parser_exec_after(info)
+        self.analysis_version = Bioshogi::ANALYSIS_VERSION
+
         memberships.each(&:think_columns_update)
 
         # 駒の使用頻度を保存
