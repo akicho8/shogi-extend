@@ -124,7 +124,7 @@ module QuickScript
       end
 
       def title
-        "将棋ウォーズ#{scope_info.name}#{order_info.name}ランキング"
+        "将棋ウォーズ#{scope_info.name}#{order_info.name}ランキング (現在データ再構築中のため順位が確定していません)"
       end
 
       def internal_rows
