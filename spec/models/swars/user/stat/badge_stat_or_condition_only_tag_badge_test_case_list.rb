@@ -40,6 +40,7 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "チョコレートマン", tactic_key: "チョコレート囲い",   },
   { expected_badge_key: "幽霊角マン",       tactic_key: "幽霊角",             },
   { expected_badge_key: "土下座マン",       tactic_key: "土下座の歩",         },
+  { expected_badge_key: "田楽マン",         tactic_key: "田楽刺し",           },
   { expected_badge_key: "定跡なしマン",     tactic_key: "名人に定跡なし",     },
   { expected_badge_key: "極限早繰りマン",   tactic_key: "極限早繰り銀",       },
   { expected_badge_key: "坊主マン",         tactic_key: "坊主美濃",           },
