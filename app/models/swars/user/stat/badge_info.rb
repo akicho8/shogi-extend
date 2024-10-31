@@ -146,13 +146,13 @@ module Swars
 
         { key: "切断マン",       icon: "💩",   message: "切断の使い手",       if_cond: proc { judge_final_stat.count_by(:lose, :DISCONNECT).try { self >= 1 } },},
         { key: "投了マン",       icon: "🤚",   message: "投了を究めた",       if_cond: proc { judge_final_stat.master_ratio(:TORYO).try { self == 1.0 } }, },
-        { key: "詰まされマン",   icon: "Ⓜ️",   message: "Mの傾向がある",      if_cond: proc { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
+        { key: "詰まされマン",   icon: "Ⓜ️",   message: "マゾの傾向がある",   if_cond: proc { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "切れ負けの常連",     if_cond: proc { judge_final_stat.master_ratio(:TIMEOUT).try { self >= 0.25 } },},
         { key: "タイムキーパー", icon: "⏰",   message: "時間の使い方が上手", if_cond: proc { judge_final_stat.master_ratio(:TIMEOUT).try { self == 0 } },},
 
         ################################################################################ 隠れキャラ
 
-        { key: "ただのサンタ", icon: "🎅",  message: "将棋の戦績が気になる君たちへのクリスマスプレゼントに勝利の秘訣を贈ろうと思ったけど結局は地道な鍛練しかないんじゃ", if_cond: proc { Time.current.then { |t| (t.month == 12 && t.day == 24) || Rails.env.local? } }, },
+        { key: "ただのサンタ", icon: "🎅",  message: "", if_cond: proc { Time.current.then { |t| (t.month == 12 && t.day == 24) || Rails.env.local? } }, },
       ]
     end
   end
