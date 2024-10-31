@@ -22,7 +22,7 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "戦法",
+            :label        => "自分のタグ",
             :key          => :x_tags,
             :type         => :b_taginput,
             :session_sync => true,
@@ -35,7 +35,7 @@ module QuickScript
             },
           },
           {
-            :label        => "戦法の解釈",
+            :label        => "自分のタグの解釈",
             :key          => :x_tags_cond_key,
             :type         => :radio_button,
             :session_sync => true,
@@ -47,7 +47,7 @@ module QuickScript
             },
           },
           {
-            :label        => "棋力",
+            :label        => "自分の棋力",
             :key          => :x_grade_keys,
             :type         => :checkbox_button,
             :session_sync => true,
@@ -59,7 +59,7 @@ module QuickScript
             },
           },
           {
-            :label        => "勝敗",
+            :label        => "自分の勝敗",
             :key          => :x_judge_keys,
             :type         => :checkbox_button,
             :session_sync => true,
@@ -71,7 +71,7 @@ module QuickScript
             },
           },
           {
-            :label        => "先後",
+            :label        => "自分の先後",
             :key          => :x_location_keys,
             :type         => :checkbox_button,
             :session_sync => true,
@@ -83,7 +83,7 @@ module QuickScript
             },
           },
           {
-            :label        => "スタイル",
+            :label        => "自分のスタイル",
             :key          => :x_style_keys,
             :type         => :checkbox_button,
             :session_sync => true,
@@ -91,12 +91,12 @@ module QuickScript
               {
                 :elems   => ::Swars::StyleInfo.form_part_elems,
                 :default => x_style_infos.collect(&:key),
-                :help_message => "「戦法」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
+                :help_message => "「自分のタグ」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
               }
             },
           },
           {
-            :label        => "ウォーズIDs",
+            :label        => "自分のウォーズIDs",
             :key          => :x_user_keys,
             :type         => :string,
             :session_sync => true,
@@ -111,7 +111,7 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "相手の戦法",
+            :label        => "相手のタグ",
             :key          => :y_tags,
             :type         => :b_taginput,
             :session_sync => true,
@@ -124,7 +124,7 @@ module QuickScript
             },
           },
           {
-            :label        => "相手の戦法の解釈",
+            :label        => "相手のタグの解釈",
             :key          => :y_tags_cond_key,
             :type         => :radio_button,
             :session_sync => true,
@@ -180,7 +180,7 @@ module QuickScript
               {
                 :elems        => ::Swars::StyleInfo.form_part_elems,
                 :default      => y_style_infos.collect(&:key),
-                :help_message => "「相手の戦法」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
+                :help_message => "「相手のタグ」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
               }
             },
           },
@@ -866,20 +866,20 @@ module QuickScript
           ################################################################################
 
           if x_tag_names.present? && x_style_infos.present?
-            return "「戦法」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「スタイル」の指定は外した方がいいかもしれません。"
+            return "「自分のタグ」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「自分のスタイル」の指定は外した方がいいかもしれません。"
           end
           if y_tag_names.present? && y_style_infos.present?
-            return "「相手の戦法」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
+            return "「相手のタグ」欄で具体的な戦法や囲いを指定している場合、その時点でスタイルがほぼ絞られているため、「相手のスタイル」の指定は外した方がいいかもしれません。"
           end
 
           ################################################################################
 
           info = TagCondInfo.fetch(:and)
           if x_tag_names.many? && x_tag_cond_info == info
-            return "「戦法の解釈」は「#{info}」で間違いありませんか？"
+            return "「自分のタグの解釈」は「#{info}」で間違いありませんか？"
           end
           if y_tag_names.many? && y_tag_cond_info == info
-            return "「相手の戦法の解釈」は「#{info}」で間違いありませんか？"
+            return "「相手のタグの解釈」は「#{info}」で間違いありませんか？"
           end
 
           ################################################################################
@@ -894,7 +894,7 @@ module QuickScript
         # 弱めの改善指示
         begin
           if x_tag_names.present? || y_tag_names.present?
-            return "「戦法」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
+            return "「自分のタグ」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
           end
         end
 
@@ -955,18 +955,18 @@ module QuickScript
       def info
         {
           # -------------------------------------------------------------------------------- 対象
-          "戦法"                 => x_tag_names,
-          "戦法の解釈"           => x_tag_names.presence&.then { x_tag_cond_info.name },
-          "棋力"                 => x_grade_infos.collect(&:name),
-          "勝敗"                 => x_judge_infos.collect(&:name),
-          "スタイル"             => x_style_infos.collect(&:name),
-          "ウォーズIDs"          => x_user_keys,
+          "自分のタグ"           => x_tag_names,
+          "自分のタグの解釈"     => x_tag_names.presence&.then { x_tag_cond_info.name },
+          "自分の棋力"           => x_grade_infos.collect(&:name),
+          "自分の勝敗"           => x_judge_infos.collect(&:name),
+          "自分のスタイル"       => x_style_infos.collect(&:name),
+          "自分のウォーズIDs"    => x_user_keys,
           # -------------------------------------------------------------------------------- 相手
-          "相手の戦法"           => y_tag_names,
-          "相手の戦法の解釈"     => y_tag_names.presence&.then { y_tag_cond_info.name },
+          "相手のタグ"           => y_tag_names,
+          "相手のタグの解釈"     => y_tag_names.presence&.then { y_tag_cond_info.name },
           "相手の棋力(差)"       => x_grade_diff_info&.name,
           "相手の棋力"           => y_grade_infos.collect(&:name),
-          # "相手の勝敗"           => y_judge_infos.collect(&:name),
+          # "相手の勝敗"         => y_judge_infos.collect(&:name),
           "相手のスタイル"       => y_style_infos.collect(&:name),
           "相手のウォーズIDs"    => y_user_keys,
           # -------------------------------------------------------------------------------- バトルに対して
