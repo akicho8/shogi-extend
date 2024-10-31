@@ -1,5 +1,5 @@
 class QuickScriptJob < ApplicationJob
-  queue_as :default
+  queue_as :low
 
   def perform(params, options)
     QuickScript::Dispatcher.background_dispatch(params, options)

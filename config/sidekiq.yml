@@ -16,10 +16,10 @@
   - critical
   - mailers
   - default
+  - low
   - active_storage_analysis
   - active_storage_purge
   - kiwi_lemon_only
-  - low
 
 ################################################################################ staging
 staging:
