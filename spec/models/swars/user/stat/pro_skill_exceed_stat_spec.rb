@@ -23,3 +23,16 @@ module Swars
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::User::Stat::ProSkillExceedStat
+# >>   指導の平手で勝った回数
+# >>     works
+# >> 
+# >> Top 1 slowest examples (1.62 seconds, 43.4% of total time):
+# >>   Swars::User::Stat::ProSkillExceedStat 指導の平手で勝った回数 works
+# >>     1.62 seconds -:16
+# >> 
+# >> Finished in 3.72 seconds (files took 2.07 seconds to load)
+# >> 1 example, 0 failures
+# >> 

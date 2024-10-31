@@ -57,6 +57,7 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "雲隠れマン",       tactic_key: "雲隠れ玉",           },
   { expected_badge_key: "雀刺しマン",       tactic_key: "雀刺し",             },
   { expected_badge_key: "竹スペ乱戦マン",   tactic_key: "竹部スペシャル",     },
+  { expected_badge_key: "ゴリ金マン",       tactic_key: "ゴリゴリ金",         },
   { expected_badge_key: "無敵囲いマン",     tactic_key: "無敵囲い",           },
   { expected_badge_key: "鬼殺しマン",       tactic_key: "鬼殺し",             },
   { expected_badge_key: "金底マン",         tactic_key: "金底の歩",           },
