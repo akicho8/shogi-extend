@@ -80,7 +80,7 @@ module Swars
         { key: "雲隠れマン",             icon: "🌥️",   message: "雲隠れ玉の使い手",           if_cond: proc { win_stat.exist?(:"雲隠れ玉") }, },
         { key: "雀刺しマン",             icon: "🪶",   message: "雀刺しの達人",               if_cond: proc { win_stat.exist?(:"雀刺し") }, },
         { key: "竹スペ乱戦マン",         icon: "🎍",   message: "竹部スペシャルの使い手",     if_cond: proc { win_stat.exist?(:"竹部スペシャル") }, },
-        { key: "ゴリ金マン",             icon: "🦍",   message: "ゴリゴリ金の使い手",         if_cond: proc { win_stat.exist?(:"ゴリゴリ金") }, },
+        { key: "ゴリ金マン",             icon: "🦍",   message: "ゴリゴリ金の使い手",         if_cond: proc { win_stat.match?(/ゴリゴリ金|ゴリラの右手|ゴリ違い角/) },},
 
         ################################################################################ 文言が特殊
 
@@ -118,7 +118,7 @@ module Swars
 
         { key: "友対GGマン",             icon: "❤️",   message: "いい感じの友達対局をした",                           if_cond: proc { xmode_judge_stat.friend_battle_sessatakuma? } },
         { key: "指導受けマン",           icon: "👨‍🎓",   message: "指導対局を受けた",                                   if_cond: proc { xmode_stat.versus_pro? } },
-        { key: "プロ越えマン",           icon: "🦸‍♂️",   message: "野生のプロ棋士",                                     if_cond: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] } },
+        { key: "プロ越えマン",           icon: "🥋️",   message: "野生のプロ棋士",                                     if_cond: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] } },
 
         ################################################################################ 不成
 
