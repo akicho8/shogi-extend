@@ -93,6 +93,7 @@ class QuickScript::Swars::TacticStatScript
       s = s.joins(:battle => :xmode)
       s = s.merge(::Swars::Battle.valid_match_only)
       s = s.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
+      s = s.where(::Swars::Battle.arel_table[:analysis_version].eq(Bioshogi::ANALYSIS_VERSION))
     end
   end
 end
