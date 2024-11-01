@@ -64,13 +64,6 @@ const sitemap = {
     res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
     list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
 
-    // /swars/histograms/*
-    // grade は自動的に拾われているので指定する必要なし
-    // list.push("/swars/histograms/attack")
-    // list.push("/swars/histograms/defense")
-    // list.push("/swars/histograms/technique")
-    // list.push("/swars/histograms/note")
-
     return list
   },
 }

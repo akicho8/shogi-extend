@@ -225,8 +225,6 @@ end
 # >> http://localhost:4000/swars/users/YamadaTaro/direct-open/kento
 # >> http://localhost:4000/swars/users/YamadaTaro/direct-open/piyo_shogi
 # >> http://localhost:4000/swars/users/YamadaTaro/kento-api
-# >> http://localhost:4000/swars/histograms/attack
-# >> http://localhost:4000/swars/histograms/grade
 # >> http://localhost:4000/xy
 # >> http://localhost:4000/vs-clock
 # >> http://localhost:4000/three-stage-leagues
