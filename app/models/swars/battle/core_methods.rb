@@ -68,7 +68,7 @@ module Swars
           info.container.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
-                e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
+                e.send("#{key}_tag_list=", values)
               end
               e.ek_score_without_cond = player.ek_score_without_cond
               e.ek_score_with_cond = player.ek_score_with_cond

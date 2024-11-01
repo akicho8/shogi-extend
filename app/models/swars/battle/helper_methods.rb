@@ -28,7 +28,7 @@ module Swars
 
           # 「居飛車」という情報は戦法から自明なので戦法も囲いもないときだけ入れる
           if names.blank?
-            names += e.tag_names_for(:note) - (reject_tag_keys[:note] || [])
+            names += e.tag_names_for(:note)
           end
 
           names = names.presence || ["その他"]

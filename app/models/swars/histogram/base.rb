@@ -56,7 +56,6 @@ module Swars
           end
           loop_index += 1
         end
-        counts_hash_normalize
       end
 
       def to_h_with_processed_sec
@@ -183,22 +182,6 @@ module Swars
 
       def cache_expires_in
         2.hour
-      end
-
-      def counts_hash_normalize
-        # タグにない戦法も抽出する場合
-        if false
-          @counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => @counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
-        end
-
-        # いらんタグを消す場合
-        if false
-          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
-            Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
-              @counts_hash.delete(e)
-            end
-          end
-        end
       end
     end
   end
