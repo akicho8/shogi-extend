@@ -19,36 +19,36 @@ class MigrateRunner
     nil
   end
 
-  def step1
-    # Swars::Rule.unscoped.find_each do |rule|
-    #   tp rule
-    #   Swars::Battle.where(rule_id: nil).where(rule_key: rule.key).update_all(rule_id: rule.id)
-    # end
-    # Swars::Final.unscoped.find_each do |final|
-    #   tp final
-    #   Swars::Battle.where(final_id: nil).where(final_key: final.key).update_all(final_id: final.id)
-    # end
-    # Preset.unscoped.find_each do |preset|
-    #   tp preset
-    #   Swars::Battle.where(preset_id: nil).where(preset_key: preset.key).update_all(preset_id: preset.id)
-    #   FreeBattle.where(preset_id: nil).where(preset_key: preset.key).update_all(preset_id: preset.id)
-    # end
-    # Location.unscoped.find_each do |location|
-    #   tp location
-    #   Swars::Membership.where(location_id: nil).where(location_key: location.key).update_all(location_id: location.id)
-    # end
-    # Judge.unscoped.find_each do |judge|
-    #   tp judge
-    #   Swars::Membership.where(judge_id: nil).where(judge_key: judge.key).update_all(judge_id: judge.id)
-    # end
-    #
-    # p Swars::Battle.where(rule_id: nil).count
-    # p Swars::Battle.where(final_id: nil).count
-    # p Swars::Battle.where(preset_id: nil).count
-    # p FreeBattle.where(preset_id: nil).count
-    # p Swars::Membership.where(location_id: nil).count
-    # p Swars::Membership.where(judge_id: nil).count
-  end
+  # def step1
+  #   Swars::Rule.unscoped.find_each do |rule|
+  #     tp rule
+  #     Swars::Battle.where(rule_id: nil).where(rule_key: rule.key).update_all(rule_id: rule.id)
+  #   end
+  #   Swars::Final.unscoped.find_each do |final|
+  #     tp final
+  #     Swars::Battle.where(final_id: nil).where(final_key: final.key).update_all(final_id: final.id)
+  #   end
+  #   Preset.unscoped.find_each do |preset|
+  #     tp preset
+  #     Swars::Battle.where(preset_id: nil).where(preset_key: preset.key).update_all(preset_id: preset.id)
+  #     FreeBattle.where(preset_id: nil).where(preset_key: preset.key).update_all(preset_id: preset.id)
+  #   end
+  #   Location.unscoped.find_each do |location|
+  #     tp location
+  #     Swars::Membership.where(location_id: nil).where(location_key: location.key).update_all(location_id: location.id)
+  #   end
+  #   Judge.unscoped.find_each do |judge|
+  #     tp judge
+  #     Swars::Membership.where(judge_id: nil).where(judge_key: judge.key).update_all(judge_id: judge.id)
+  #   end
+  #
+  #   p Swars::Battle.where(rule_id: nil).count
+  #   p Swars::Battle.where(final_id: nil).count
+  #   p Swars::Battle.where(preset_id: nil).count
+  #   p FreeBattle.where(preset_id: nil).count
+  #   p Swars::Membership.where(location_id: nil).count
+  #   p Swars::Membership.where(judge_id: nil).count
+  # end
 
   # def step1_delete
   #   [
@@ -114,18 +114,18 @@ class MigrateRunner
   #   end
   # end
 
-  def step3_rebuild
-    s = Swars::Battle.all
-    batch_size = 1000
-    all_count = s.count.ceildiv(batch_size)
-    s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-      p [batch, all_count, batch.fdiv(all_count)]
-      # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-      s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
-      s.each { |e| e.rebuild(tries: 1) }
-      puts
-    end
-  end
+  # def step3_rebuild
+  #   s = Swars::Battle.all
+  #   batch_size = 1000
+  #   all_count = s.count.ceildiv(batch_size)
+  #   s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+  #     p [batch, all_count, batch.fdiv(all_count)]
+  #     # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+  #     s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
+  #     s.each { |e| e.rebuild(tries: 1) }
+  #     puts
+  #   end
+  # end
 
   # def step4
   #   [
@@ -136,6 +136,18 @@ class MigrateRunner
   #     context_change(name, from, to)
   #   end
   # end
+
+  def step5_onirokuryu_dokkan_bisya
+    if e = ActsAsTaggableOn::Tag.find_by(name: "原始中飛車")
+      batch_size = 100
+      all_count = e.taggings.where(taggable_type: "Swars::Membership").count
+      e.taggings.in_batches(of: batch_size, order: :desc).each_with_index do |relation, batch|
+        p [batch, all_count, batch.fdiv(all_count)]
+        battle_ids = relation.where(taggable_type: "Swars::Membership").collect { |e| e.taggable.battle_id }.uniq
+        Swars::Battle.find(battle_ids).each(&:rebuild)
+      end
+    end
+  end
 
   private
 
