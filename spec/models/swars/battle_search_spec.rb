@@ -8,14 +8,15 @@ module Swars
         white = User.create!(key: options[:white_key])
         white.ban!
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq] || Battle::OLD_CSA_SEQ)
+        # tp battle.memberships.collect(&:info)
         assert { black.battles.find_all_by_query("#{key}:#{exist_value}", target_owner: black).exists? }
         assert { black.battles.find_all_by_query("#{key}:#{none_value}",  target_owner: black).empty?  }
       end
 
       it "棋風" do
-        case1("自分の棋風", "王道", "準王道")
-        case1("相手の棋風", "準王道", "王道")
-        case1("棋風", "王道", "準王道") # alias
+        case1("自分の棋風", "王道", "変態")
+        case1("相手の棋風", "王道", "変態")
+        case1("棋風", "王道", "変態") # alias
       end
 
       it { case1("日付", "2000-01-01...2000-01-02", "2001") }
