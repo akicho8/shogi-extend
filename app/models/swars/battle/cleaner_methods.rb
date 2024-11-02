@@ -65,7 +65,7 @@ module Swars
         scope :drop_scope1, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
-            :ban_except  => true,
+            :ban_except  => false,
             :old_only    => Rails.env.local? ? 0.days : 7.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
@@ -76,7 +76,7 @@ module Swars
         scope :drop_scope2, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
-            :ban_except  => true,
+            :ban_except  => false,
             :old_only    => Rails.env.local? ? 0.days : 50.days,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても
             :user_except => Swars::User::Vip.protected_user_keys,      # さらにこちらで除外される
