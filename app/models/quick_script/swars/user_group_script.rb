@@ -139,7 +139,7 @@ module QuickScript
               row.update(grade_per_rule(e))
               row["勝率"]            = e.cached_stat.total_judge_stat.win_ratio
               row["勢い"]            = e.cached_stat.vitality_stat.level
-              row["行動規範"]        = e.cached_stat.gentleman_stat.final_score
+              row["行動規範"]        = e.cached_stat.gentleman_stat.final_score.try { floor }
               row["居飛車"]          = e.cached_stat.tag_stat.use_rate_for(:"居飛車")
               row["振り飛車"]        = e.cached_stat.tag_stat.use_rate_for(:"振り飛車")
               row["主戦法"]          = e.cached_stat.simple_matrix_stat.my_attack_tag.try { name }
@@ -236,7 +236,7 @@ module QuickScript
           "勢い"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "居飛車"   => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
           "振り飛車" => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
-          "行動規範" => { number_format: { type: "NUMBER",  pattern: "0.000 点",   }, },
+          "行動規範" => { number_format: { type: "NUMBER",  pattern: "0 点",       }, }, # 0.000 にすると小数点表記になる。整数にする場合、ここだけを変更すると四捨五入になるため元を floor にすること。
           "直近対局" => { number_format: { type: "DATE",    pattern: "yyyy/MM/dd", }, },
         }
       end
