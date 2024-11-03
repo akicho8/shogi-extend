@@ -5,8 +5,8 @@ module Swars
       def default_params
         super.merge({
             :user_keys   => default_user_keys,
-            :page_max    => Rails.env.production? ? 5 : 1,
-            :early_break => true,
+            :page_max    => Rails.env.production? ? 100 : 1,
+            :early_break => false,
             :subject     => "高段者",
           })
       end
