@@ -1,8 +1,7 @@
-# cap staging    deploy:upload FILES=app/models/migrate_runner.rb
+# ▼ローカル更新
 # rails r MigrateRunner.new.call
-# rails r "tp Swars::Battle"
-# rails r "tp Swars::Membership"
 
+# ▼本番更新
 # cap production deploy:upload FILES=app/models/migrate_runner.rb
 # RAILS_ENV=production bundle exec bin/rails r 'MigrateRunner.new.call'
 # RAILS_ENV=production nohup bundle exec bin/rails r 'MigrateRunner.new.call' &
@@ -13,7 +12,7 @@ class MigrateRunner
     public_methods.grep(/\A(step\w+)/).sort.each do |e|
       p [Time.now.to_s, e, :begin]
       ms = Benchmark.ms { public_send(e) }
-      AppLog.important("[#{e}] (#{ms})")
+      AppLog.important("[#{e}][完了] (#{ms})")
       p [Time.now.to_s, e, :end]
     end
     nil
@@ -137,14 +136,31 @@ class MigrateRunner
   #   end
   # end
 
-  def step5_onirokuryu_dokkan_bisya
-    if e = ActsAsTaggableOn::Tag.find_by(name: "原始中飛車")
-      batch_size = 100
-      all_count = e.taggings.where(taggable_type: "Swars::Membership").count
-      e.taggings.in_batches(of: batch_size, order: :desc).each_with_index do |relation, batch|
-        p [batch, all_count, batch.fdiv(all_count)]
-        battle_ids = relation.where(taggable_type: "Swars::Membership").collect { |e| e.taggable.battle_id }.uniq
-        Swars::Battle.find(battle_ids).each(&:rebuild)
+  # def step5_onirokuryu_dokkan_bisya
+  #   if e = ActsAsTaggableOn::Tag.find_by(name: "原始中飛車")
+  #     batch_size = 100
+  #     all_count = e.taggings.where(taggable_type: "Swars::Membership").count
+  #     e.taggings.in_batches(of: batch_size, order: :desc).each_with_index do |relation, batch|
+  #       p [batch, all_count, batch.fdiv(all_count)]
+  #       battle_ids = relation.where(taggable_type: "Swars::Membership").collect { |e| e.taggable.battle_id }.uniq
+  #       Swars::Battle.find(battle_ids).each(&:rebuild)
+  #     end
+  #   end
+  # end
+
+  def step6_rebuild_for_auto_crawl_user_keys
+    ::Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
+      p user_key
+      if user = Swars::User[user_key]
+        s = user.battles
+        batch_size = 1000
+        all_count = s.count.ceildiv(batch_size)
+        s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+          p [batch, all_count, batch.fdiv(all_count)]
+          s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
+          s.each { |e| e.rebuild(tries: 1) }
+          puts
+        end
       end
     end
   end
