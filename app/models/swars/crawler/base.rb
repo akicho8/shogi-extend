@@ -45,7 +45,8 @@ module Swars
       end
 
       def mail_subject
-        @params[:subject] || self.class.name
+        str = @params[:subject] || self.class.name
+        "[将棋ウォーズ][クロール完了][#{str}]"
       end
 
       private
