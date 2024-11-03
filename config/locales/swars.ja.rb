@@ -12,7 +12,7 @@
     },
     activemodel: {
       models: {
-        "swars/crawler/expert_crawler"   => "高段者",
+        "swars/crawler/notable_crawler" => "活動的なプレイヤー",
       },
     },
     activerecord: {

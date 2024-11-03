@@ -1,13 +1,13 @@
 module Swars
   module Crawler
-    # Swars::Crawler::ExpertCrawler.new(page_max: 3, sleep: 5).run
-    class ExpertCrawler < Base
+    # Swars::Crawler::NotableCrawler.new(page_max: 3, sleep: 5).run
+    class NotableCrawler < Base
       def default_params
         super.merge({
             :user_keys   => default_user_keys,
             :page_max    => Rails.env.production? ? 100 : 1,
             :early_break => false,
-            :subject     => "高段者",
+            :subject     => "活動的なプレイヤー",
           })
       end
 

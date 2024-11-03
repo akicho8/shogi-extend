@@ -12,7 +12,7 @@ module Swars
           if Rails.env.development?
             Importer::AllRuleImporter.new(user_key: "DevUser1").run
             if ENV["IT_IS_CALLED_THE_CRAWLER_AT_THE_TIME_OF_SETUP"]
-              puts Crawler::ExpertCrawler.new.run.rows.to_t
+              puts Crawler::NotableCrawler.new.run.rows.to_t
             end
             find_each(&:rebuild)
           end
