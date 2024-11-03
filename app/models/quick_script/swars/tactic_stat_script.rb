@@ -96,7 +96,7 @@ module QuickScript
 
           {}.tap do |h|
             win_ratio  = e[:win_ratio].try  { "%.3f %%" % (self * 100.0) }
-            freq_ratio = e[:freq_ratio].try { "%.3f %%" % (self * 100.0) }
+            freq_ratio = e[:freq_ratio].try { "%.2f %%" % (self * 100.0) }
             if scope_info.key != :note
               h["#"] = i.next
             end
