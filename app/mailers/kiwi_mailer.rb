@@ -11,7 +11,7 @@ class KiwiMailer < ApplicationMailer
       subject << s.squish
     end
     subject = subject.join(" ")
-    subject = [EmojiInfo.fetch(":動画:"), app_name_prepend(subject)].join
+    subject = [EmojiInfo.fetch(":動画:"), subject_decorate(subject)].join
 
     body = []
 

@@ -5,7 +5,7 @@ class KifuMailer < ApplicationMailer
 
     subject = [
       EmojiInfo.fetch(adapter.main_icon),
-      app_name_prepend(adapter.subject),
+      subject_decorate(adapter.subject),
     ].join
 
     body = []

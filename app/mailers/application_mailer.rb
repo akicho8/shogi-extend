@@ -16,12 +16,16 @@ class ApplicationMailer < ActionMailer::Base
 
   private
 
-  def subject_prefix
+  def subject_decorate(subject, options = {})
+    [subject_prefix(options), subject].join
+  end
+
+  def subject_prefix(options = {})
     av = []
     if APP_NAME_APPEND
       av << "[#{AppConfig[:app_name]}]"
     end
-    if !Rails.env.production?
+    if !Rails.env.production? || options[:rails_env_required]
       av << "[#{Rails.env}]"
     end
     s = av.join
@@ -29,10 +33,6 @@ class ApplicationMailer < ActionMailer::Base
       s += " "
     end
     s
-  end
-
-  def app_name_prepend(subject)
-    [subject_prefix, subject].join
   end
 
   # 役に立たないメールアドレスか？

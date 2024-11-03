@@ -18,7 +18,7 @@ class SystemMailer < ApplicationMailer
     if v = params[:emoji]
       subject << (EmojiInfo.lookup(v) || v)
     end
-    subject << app_name_prepend(params[:subject])
+    subject << subject_decorate(params[:subject], params)
     subject = subject.join
 
     params = params.merge(subject: subject)

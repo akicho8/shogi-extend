@@ -37,9 +37,9 @@
 # AppLog.call("xxx")
 
 class AppLog < ApplicationRecord
-  EXCEPTION_SUPPORT = true
+  EXCEPTION_SUPPORT      = true
   EXCEPTION_NOTIFIER_USE = false
-  LEVEL_DEFAULT = :info
+  LEVEL_DEFAULT          = :info
 
   class << self
     # AppLog.call("x")
@@ -114,7 +114,7 @@ class AppLog < ApplicationRecord
     private
 
     def mail_notify(params)
-      SystemMailer.notify({fixed: true}.merge(params)).deliver_later
+      SystemMailer.notify({fixed: true, rails_env_required: true}.merge(params)).deliver_later
     end
 
     def slack_notify(params)
