@@ -6,7 +6,7 @@ module Swars
         super.merge({
             :user_keys   => default_user_keys,
             :page_max    => Rails.env.production? ? 100 : 1,
-            :early_break => false,
+            :early_break => true,
             :subject     => "活動的なプレイヤー",
           })
       end
