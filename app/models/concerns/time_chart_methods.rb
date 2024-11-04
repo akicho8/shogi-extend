@@ -96,7 +96,7 @@ module TimeChartMethods
   def time_chart_xy_list4(location_info)
     # c = LocationInfo.count
     # loc = preset_info.to_turn_info.current_location(location_info.code)
-    # time_chart_sec_list_of(location_info).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location_info.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
+    # time_chart_sec_list_of(location_info).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location_info.sign_dir * (e || 0) } } # 表示上「1手目」と表記したいので +1
 
     location_info = LocationInfo[location_info]
 
@@ -121,7 +121,7 @@ module TimeChartMethods
       begin
         if i >= 1
           if (loc.code + i).modulo(c).nonzero?
-            y = location_info.value_sign * (it.next || 0)
+            y = location_info.sign_dir * (it.next || 0)
           end
         end
       rescue StopIteration
