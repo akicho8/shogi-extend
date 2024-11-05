@@ -3,7 +3,7 @@
 
 # ▼本番更新
 # cap production deploy:upload FILES=app/models/migrate_runner.rb
-# RAILS_ENV=production bundle exec bin/rails r 'MigrateRunner.new.call'
+# # RAILS_ENV=production bundle exec bin/rails r 'MigrateRunner.new.call'
 # RAILS_ENV=production nohup bundle exec bin/rails r 'MigrateRunner.new.call' &
 # tailf nohup.out
 
@@ -114,18 +114,19 @@ class MigrateRunner
   #   end
   # end
 
-  # def step3_rebuild
-  #   s = Swars::Battle.all
-  #   batch_size = 1000
-  #   all_count = s.count.ceildiv(batch_size)
-  #   s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-  #     p [batch, all_count, batch.fdiv(all_count)]
-  #     # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-  #     s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
-  #     s.each { |e| e.rebuild(tries: 1) }
-  #     puts
-  #   end
-  # end
+  def step3_rebuild
+    s = Swars::Battle.all
+    batch_size = 1000
+    all_count = s.count.ceildiv(batch_size)
+    s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+      p [batch, all_count, batch.fdiv(all_count)]
+      # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+      # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
+      s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION - 1}")
+      s.each { |e| e.rebuild(tries: 1) }
+      puts
+    end
+  end
 
   # def step4
   #   [
@@ -137,20 +138,26 @@ class MigrateRunner
   #   end
   # end
 
-  def step5_都成流_更新
-    if e = ActsAsTaggableOn::Tag.find_by(name: "都成流△3一金")
-      batch_size = 100
-      all_count = e.taggings.where(taggable_type: "Swars::Membership").count
-      e.taggings.in_batches(of: batch_size, order: :desc).each_with_index do |relation, batch|
-        p [batch, all_count, batch.fdiv(all_count)]
-        battle_ids = relation.where(taggable_type: "Swars::Membership").collect { |e| e.taggable&.battle_id }.compact.uniq
-        s = Swars::Battle.where(id: battle_ids)
-        # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
-        s.each(&:rebuild)
-        puts
-      end
-    end
-  end
+  # def step5_都成流_更新
+  #   [
+  #     "都成流△3一金",
+  #     "端玉には端歩",
+  #   ].each do |name|
+  #     p name
+  #     if e = ActsAsTaggableOn::Tag.find_by(name: name)
+  #       batch_size = 100
+  #       all_count = e.taggings.where(taggable_type: "Swars::Membership").count
+  #       e.taggings.in_batches(of: batch_size, order: :desc).each_with_index do |relation, batch|
+  #         p [batch, all_count, batch.fdiv(all_count)]
+  #         battle_ids = relation.where(taggable_type: "Swars::Membership").collect { |e| e.taggable&.battle_id }.compact.uniq
+  #         s = Swars::Battle.where(id: battle_ids)
+  #         s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
+  #         s.each(&:rebuild)
+  #         puts
+  #       end
+  #     end
+  #   end
+  # end
 
   # def step6_rebuild_for_auto_crawl_user_keys
   #   ::Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
