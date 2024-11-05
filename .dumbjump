@@ -1,0 +1,20 @@
+-coverage
+-db
+-doc
+-kento_api_log
+-kifu_data
+-kifu_data_etc
+-kifu_files
+-log
+-next_side
+-node_modules
+-nuxt_side
+-nuxt_side_small
+-public
+-screenshot
+-share_board_order_setting_modal_ui_mock_experiment
+-storage
+-tmp
+-trash
+-workbench
+# +/opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems
