@@ -122,7 +122,8 @@ class MigrateRunner
       p [batch, all_count, batch.fdiv(all_count)]
       # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
       # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
-      s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION - 1}")
+      # s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION - 1}")
+      s = s.where("analysis_version < 2")
       s.each { |e| e.rebuild(tries: 1) }
       puts
     end
