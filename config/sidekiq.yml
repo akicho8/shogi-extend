@@ -28,5 +28,7 @@ staging:
 ################################################################################ production
 production:
   # https://saitoxu.io/2018/03/sidekiq-introduction
-  :concurrency: 15
+  # ssh i tailf /var/shogi_web_production/current/log/sidekiq_production.log
+  # ログを指定しているのに吐かれないのはない
+  :concurrency: 1
   :logfile: log/sidekiq_production.log
