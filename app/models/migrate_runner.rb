@@ -177,6 +177,33 @@ class MigrateRunner
   #   end
   # end
 
+  # def step7_style_update_for_auto_crawl_user_keys
+  #   ::Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
+  #     p user_key
+  #     if user = Swars::User[user_key]
+  #       s = user.battles
+  #       batch_size = 100
+  #       all_count = s.count.ceildiv(batch_size)
+  #       s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+  #         p [batch, all_count, batch.fdiv(all_count)]
+  #         s.each do |e|
+  #           before = e.memberships.collect(&:style).compact.collect(&:key)
+  #           e.send(:style_update_all, e.fast_parsed_info)
+  #           begin
+  #             e.memberships.each(&:save!)
+  #           rescue => error
+  #             p error
+  #           end
+  #           after = e.reload.memberships.collect(&:style).compact.collect(&:key)
+  #           print before == after ? "." : "U"
+  #           STDOUT.flush
+  #         end
+  #         puts
+  #       end
+  #     end
+  #   end
+  # end
+
   private
 
   def tag_delete(name)
