@@ -30,5 +30,6 @@ production:
   # https://saitoxu.io/2018/03/sidekiq-introduction
   # ssh i tailf /var/shogi_web_production/current/log/sidekiq_production.log
   # ログを指定しているのに吐かれないのはない
-  :concurrency: 1
+  # BANチェッククローラーは何時間も実行中になるため 1 ではだめ
+  :concurrency: 5
   :logfile: log/sidekiq_production.log
