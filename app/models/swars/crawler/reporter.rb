@@ -41,7 +41,7 @@ module Swars
         if user
           row["後"] = user.battles.count
           if battle = user.battles.order(:battled_at).last
-            row["最終対局"] = battle.battled_at.to_fs(:battle_time_detail)
+            row["最終対局"] = battle.battled_at.to_fs(:ymdhms)
           end
         end
 

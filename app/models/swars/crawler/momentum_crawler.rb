@@ -1,0 +1,29 @@
+module Swars
+  module Crawler
+    # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).run
+    class MomentumCrawler < Base
+      def default_params
+        super.merge({
+            :page_max    => Rails.env.production? ? 100 : 1,
+            :early_break => false,
+            :subject     => "直近数日で注目されているユーザー",
+            :period      => 3.days, # この期間で
+            :at_least    => 5,      # N件以上検索されている(多い順)
+            :limit       => 50,     # ユーザーを最大N件
+          })
+      end
+
+      def perform
+        s = User.all
+        s = s.vip_except
+        s = s.momentum_only(period: params[:period], at_least: params[:at_least])
+        s = s.limit(params[:limit])
+        s.find_each do |user|
+          report_for(user.key) do
+            Importer::AllRuleImporter.new(params.merge(user_key: user.key)).run
+          end
+        end
+      end
+    end
+  end
+end

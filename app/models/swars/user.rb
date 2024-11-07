@@ -35,8 +35,9 @@
 module Swars
   class User < ApplicationRecord
     include GradeMethods
-    include BanMethods
+    include GeneralScopeMethods
     include SearchMethods
+    include BanMethods
 
     class << self
       def [](key)
@@ -59,10 +60,6 @@ module Swars
     has_many :op_users, through: :op_memberships, source: :user
 
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
-
-    scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) } # 最近使ってくれた人たち順
-    scope :regular_only,  -> { order(search_logs_count: :desc)                                   } # 検索回数が多い人たち順
-    scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].asc)              } # 段級位が高い人たち順
 
     normalizes :user_key, with: -> e { e.to_s } # UserKey 型で来る場合もあるため
 

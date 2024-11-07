@@ -24,21 +24,32 @@ module Swars
       user = User.create!
       user.search_logs.create!
       assert { SearchLog.count == 1 }
-      SearchLog.old_only(0.days).cleaner(execute: true).call
+      Timecop.freeze(1.seconds.from_now) do
+        SearchLog.old_only(0).cleaner(execute: true).call
+      end
       assert { SearchLog.count == 0 }
+    end
+
+    it "VIPユーザーを除いて最近検索したユーザーIDsを取得する" do
+      user = User.create!
+      user.search_logs.create!
+      assert { SearchLog.momentum_user_ids(period: 0.days, at_least: 1) == [user.id] }
     end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
 # >> Swars::SearchLog
-# >> 1999-12-31T15:00:00.000Z pid=97485 tid=1zqd INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
-# >>   .old_only
+# >> 1999-12-31T15:00:01.000Z pid=85696 tid=1w7s INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >>   古いレコードを削除する
+# >>   最近検索したユーザーIDsを取得する
 # >> 
-# >> Top 1 slowest examples (0.32399 seconds, 13.6% of total time):
-# >>   Swars::SearchLog .old_only
-# >>     0.32399 seconds -:5
+# >> Top 2 slowest examples (0.41428 seconds, 16.2% of total time):
+# >>   Swars::SearchLog 古いレコードを削除する
+# >>     0.34404 seconds -:23
+# >>   Swars::SearchLog 最近検索したユーザーIDsを取得する
+# >>     0.07025 seconds -:33
 # >> 
-# >> Finished in 2.39 seconds (files took 1.99 seconds to load)
-# >> 1 example, 0 failures
+# >> Finished in 2.56 seconds (files took 2.21 seconds to load)
+# >> 2 examples, 0 failures
 # >> 

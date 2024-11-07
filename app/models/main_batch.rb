@@ -8,6 +8,7 @@ class MainBatch
   def production
     # 将棋ウォーズ棋譜検索クロール
     Swars::Crawler::NotableCrawler.run
+    Swars::Crawler::MomentumCrawler.run
     Swars::Crawler::ReservationCrawler.run
 
     Tsl::League.setup(verbose: false)
