@@ -2,9 +2,9 @@ require "rails_helper"
 
 module Swars
   RSpec.describe User::Stat::TagStat, type: :model, swars_spec: true do
-    def case1(tactic_key)
+    def case1(strike_plan)
       @black = User.create!
-      Battle.create!(tactic_key: tactic_key) do |e|
+      Battle.create!(strike_plan: strike_plan) do |e|
         e.memberships.build(user: @black)
       end
     end

@@ -7,7 +7,7 @@ module Swars
         black = User.create!
         white = User.create!
         tactic_keys.each do |e|
-          Battle.create!(tactic_key: e) do |e|
+          Battle.create!(strike_plan: e) do |e|
             e.memberships.build(user: black, judge_key: win_or_lose)
             e.memberships.build(user: white)
           end

@@ -4,19 +4,19 @@ module Swars
       included do
         serialize :csa_seq
         attr_accessor :kifu_body_for_test
-        attr_accessor :tactic_key
+        attr_accessor :strike_plan
         # attr_accessor :kifu_generator
 
         before_save do
-          if tactic_key || kifu_body_for_test || (will_save_change_to_attribute?(:csa_seq) && csa_seq)
+          if strike_plan || kifu_body_for_test || (will_save_change_to_attribute?(:csa_seq) && csa_seq)
             parser_exec
           end
         end
       end
 
       def kifu_body
-        if tactic_key
-          return Bioshogi::Analysis::TacticInfo.flat_lookup(tactic_key).main_reference_file.read
+        if strike_plan
+          return Bioshogi::Analysis::TacticInfo.flat_lookup(strike_plan).main_reference_file.read
         end
         kifu_body_for_test || to_temporary_csa
       end

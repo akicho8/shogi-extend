@@ -5,7 +5,7 @@ module Swars
     describe "右玉" do
       def case1
         black = User.create!
-        Battle.create!(tactic_key: "糸谷流右玉") do |e|
+        Battle.create!(strike_plan: "糸谷流右玉") do |e|
           e.memberships.build(user: black)
         end
         black.stat.right_king_stat

@@ -5,7 +5,7 @@ module Swars
     describe "舐めプ戦法回数" do
       def case1
         @black = User.create!
-        Battle.create!(tactic_key: "穴角戦法") do |e|
+        Battle.create!(strike_plan: "穴角戦法") do |e|
           e.memberships.build(user: @black)
         end
       end

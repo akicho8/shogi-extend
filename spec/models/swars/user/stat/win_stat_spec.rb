@@ -4,8 +4,8 @@ module Swars
   RSpec.describe User::Stat::WinStat, type: :model, swars_spec: true do
     def case1(tactic_keys, judge_key)
       @black = User.create!
-      tactic_keys.each do |tactic_key|
-        Battle.create!(tactic_key: tactic_key) do |e|
+      tactic_keys.each do |strike_plan|
+        Battle.create!(strike_plan: strike_plan) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
       end
