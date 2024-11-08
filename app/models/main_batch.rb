@@ -7,9 +7,9 @@ class MainBatch
 
   def production
     # 将棋ウォーズ棋譜検索クロール
+    Swars::Crawler::ReservationCrawler.run
     Swars::Crawler::NotableCrawler.run
     Swars::Crawler::MomentumCrawler.run
-    Swars::Crawler::ReservationCrawler.run
 
     Tsl::League.setup(verbose: false)
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する

@@ -1,3 +1,6 @@
+# cap production rails:runner CODE="p Swars::User.vip_except.momentum_only(period: 1.days, at_least: 5).count"
+# cap production deploy:upload FILES=app/models/swars/crawler/momentum_crawler.rb
+
 module Swars
   module Crawler
     # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).run
@@ -7,7 +10,7 @@ module Swars
             :page_max    => Rails.env.production? ? 100 : 1,
             :early_break => false,
             :subject     => "直近数日で注目されているユーザー",
-            :period      => 3.days, # この期間で
+            :period      => 1.days, # この期間で
             :at_least    => 5,      # N件以上検索されている(多い順)
             :limit       => 50,     # ユーザーを最大N件
           })

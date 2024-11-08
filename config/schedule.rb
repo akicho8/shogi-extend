@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
+# -*- coding: utf-8; compile-command: "bundle exec cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
 # cap production rails:cron_log
 
 puts "=== 環境確認 ==="
@@ -24,7 +24,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 #   ].join(";")
 # end
 
-every("5 3 * * *") { runner "MainBatch.new.call" }
+every("40 2 * * *") { runner "MainBatch.new.call" }
 
 # every("0 18 * * *")  { runner "Kiwi::Lemon.background_job_for_cron" }
 
