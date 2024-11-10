@@ -269,8 +269,8 @@ class MediaBuilder
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
   def parser_options
     {
-      # :skill_monitor_enable           => false,
-      # :skill_monitor_technique_enable => false,
+      # :analyzer_enable           => false,
+      # :analyzer_technique_enable => false,
       :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
       :candidate_enable   => false,
       :validate_enable    => false,
