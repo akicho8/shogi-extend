@@ -5,11 +5,11 @@ module Swars
     extend self
 
     def auto_crawl_user_keys
-      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other, :momentum, :heroz)
+      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other, :heroz)
     end
 
     def long_time_keep_user_keys
-      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other, :momentum)
+      group(:honwaka, :pro, :semi_pro, :youtuber, :twitter, :comedian, :tiktoker, :amateur, :other)
     end
 
     def protected_user_keys
