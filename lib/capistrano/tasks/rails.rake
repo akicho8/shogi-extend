@@ -85,6 +85,18 @@ namespace :rails do
     end
   end
 
+  # cap production rails:nohup
+  desc "current にある nohup を tailf する"
+  task :nohup do
+    on roles(:all) do
+      within current_path do
+        execute :pwd
+        execute :ls, "nohup.out"
+        execute :tailf, "nohup.out"
+      end
+    end
+  end
+
   desc "DBのインデックスの表示"
   task :index do
     on roles(:all) do
