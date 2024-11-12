@@ -114,20 +114,20 @@ class MigrateRunner
   #   end
   # end
 
-  def step3_rebuild
-    s = Swars::Battle.all
-    batch_size = 1000
-    all_count = s.count.ceildiv(batch_size)
-    s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-      p [batch, all_count, batch.fdiv(all_count)]
-      # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-      # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
-      # s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION - 1}")
-      s = s.where("analysis_version < 2")
-      s.each { |e| e.rebuild(tries: 1) }
-      puts
-    end
-  end
+  # def step3_rebuild
+  #   s = Swars::Battle.all
+  #   batch_size = 1000
+  #   all_count = s.count.ceildiv(batch_size)
+  #   s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+  #     p [batch, all_count, batch.fdiv(all_count)]
+  #     # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+  #     # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
+  #     # s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION - 1}")
+  #     s = s.where("analysis_version < 2")
+  #     s.each { |e| e.rebuild(tries: 1) }
+  #     puts
+  #   end
+  # end
 
   # def step4
   #   [
@@ -203,6 +203,17 @@ class MigrateRunner
   #     end
   #   end
   # end
+
+  def step7_hard_rename
+    list = {
+      "戸部流4→3戦法" => "戸辺流4→3戦法",
+    }
+    list.each do |from, to|
+      tag = ActsAsTaggableOn::Tag.find_by!(name: from)
+      tag.update!(name: to)
+      p [from, to, :update]
+    end
+  end
 
   private
 
