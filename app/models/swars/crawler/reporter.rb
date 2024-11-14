@@ -35,7 +35,7 @@ module Swars
           yield
         rescue => error
           AppLog.error(error, data: {user_key: @user_key})
-          row["エラー"] = "#{error.message} (#{error.class.name})"
+          row["エラー"] = error.class.name
         end
 
         if user
