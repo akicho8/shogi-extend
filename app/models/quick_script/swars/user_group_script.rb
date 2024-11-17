@@ -1,16 +1,15 @@
 module QuickScript
   module Swars
     class UserGroupScript < Base
-      self.title                         = "将棋ウォーズ棋力一覧"
-      self.description                   = "指定ユーザーたちの棋力をまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいとき用)"
-      self.form_method                   = :get
-      self.button_label                  = "実行"
-      self.per_page_default              = 1000
-      self.router_push_failed_then_fetch = true
-      # self.button_click_loading          = true
-      self.throttle_expires_in           = 2.0
+      self.title           = "将棋ウォーズプレイヤー情報一覧"
+      self.description     = "指定ユーザーたちの情報を簡単にまとめて表示する (小規模グループ内メンバーの棋力をまとめて把握したいとき用)"
+      self.form_method     = :post
+      self.button_label    = "実行"
+      self.login_link_show = true
+      self.debug_mode      = Rails.env.local?
 
-      LIMIT_MAX = 50
+      LIMIT_MAX         = 1000
+      DEFAULT_USER_KEYS = ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"]
 
       def form_parts
         super + [
@@ -23,6 +22,7 @@ module QuickScript
               {
                 :default => params[:swars_user_keys].to_s.presence,
                 :placeholder => default_user_keys,
+                :help_message => "複数指定できます",
               }
             },
           },
@@ -41,13 +41,22 @@ module QuickScript
           {
             :label => "Google スプレッドシートに出力",
             :key   => :google_sheet,
-            :type  => :radio_button,
+            :type  => debug_mode ? :radio_button : :hidden,
             :dynamic_part => -> {
               {
-                :hidden_on_query => true,
-                :elems           => {"false" => "しない", "true" => "する"},
-                :default         => "false",
-                :help_message    => "ずっと残しておきたい場合や編集する場合は出力後にエクスポートするか自分のところにコピってください",
+                :elems        => {"false" => "しない", "true" => "する"},
+                :default      => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
+              }
+            },
+          },
+          {
+            :label       => "バックグラウンド実行する",
+            :key         => :bg_request,
+            :type        => debug_mode ? :radio_button : :hidden,
+            :dynamic_part => -> {
+              {
+                :elems   => {"false" => "しない", "true" => "する"},
+                :default => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
               }
             },
           },
@@ -55,32 +64,31 @@ module QuickScript
       end
 
       def call
-        if current_swars_user_keys.blank?
-          return
+        if running_in_foreground
+          if request_get?
+            return "指定プレイヤーたちの情報を簡単にまとめてGoogleスプレッドシートに出力します"
+          end
+          if request_post?
+            validate!
+            if flash.present?
+              return
+            end
+            if current_bg_request
+              call_later
+              self.form_method = nil # form をまるごと消す
+              return { _autolink: posted_message }
+            end
+            if current_google_sheet
+              redirect_to sheet_url, type: :tab_open
+              return { _v_html: sheet_result_html }
+            else
+              return simple_table(rows, always_table: true)
+            end
+          end
         end
-
-        validate!
-        if flash.present?
-          return
-        end
-
-        unless throttle.call
-          flash[:notice] = "連打すな"
-          return
-        end
-
-        AppLog.important(subject: mail_subject, body: mail_body)
-
-        # if params[:exec].to_s == "true" || fetch_index >= 1
-        if current_google_sheet
+        if running_in_background
           mail_notify
-          redirect_to google_sheet_url, type: :tab_open
-          flash[:notice] = "Google スプレッドシートを生成しました"
-          { _v_html: result_html }
-        else
-          simple_table(rows, always_table: true)
         end
-        # end
       end
 
       # 戻値は Array 型になっている場合もある
@@ -130,8 +138,100 @@ module QuickScript
         end
       end
 
-      def ss_rows
-        @ss_rows ||= ordered_scope.collect do |e|
+      def validate!
+        if current_swars_user_keys.blank?
+          flash[:notice] = "ウォーズIDを指定してください"
+          return
+        end
+
+        if main_scope.none?
+          flash[:notice] = "一人も見つかりません"
+          return
+        end
+
+        if missing_user_keys.present?
+          flash[:notice] = "#{missing_user_keys * ' と '} が見つかりません。将棋ウォーズ棋譜検索で一度検索すると出てくるかもしれません。"
+          return
+        end
+
+        if main_scope.count > LIMIT_MAX
+          flash[:notice] = "#{LIMIT_MAX} 人以下にしてください"
+          return
+        end
+
+        unless current_user
+          flash[:notice] = "完了後の通知を受け取るためにログインしてください"
+          return
+        end
+
+        unless current_user.email_valid?
+          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+          return
+        end
+      end
+
+      def main_scope
+        @main_scope ||= yield_self do
+          s = ::Swars::User.where(key: current_swars_user_keys)
+          s = s.includes(:grade)       # for e.grade.name
+          s = s.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
+        end
+      end
+
+      def grade_per_rule(user)
+        {}.tap do |row|
+          user.cached_stat.grade_by_rules_stat.ruleships.each do |e|
+            row[e[:rule_info].name] = e[:grade_info].try { name } || ""
+          end
+        end
+      end
+
+      def current_order_by
+        (params[:order_by].presence || "original").to_s
+      end
+
+      def current_google_sheet
+        params[:google_sheet].to_s == "true"
+      end
+
+      def current_bg_request
+        params[:bg_request].to_s == "true"
+      end
+
+      def posted_message
+        "承りました。終わったら #{current_user.email} あてに URL を送ります。"
+      end
+
+      ################################################################################ 対象ウォーズIDs
+
+      def default_user_keys
+        @default_user_keys ||= (Rails.env.local? ? DEFAULT_USER_KEYS : []).shuffle * " "
+      end
+
+      def current_swars_user_keys
+        av = params[:swars_user_keys].presence
+        av ||= Rails.env.local? && default_user_keys
+        av.to_s.scan(/\w+/).uniq
+      end
+
+      # DBに存在するユニークなウォーズIDたち
+      def db_exist_user_keys
+        @db_exist_user_keys ||= main_scope.distinct.pluck(:key)
+      end
+
+      # 引き数で指定したが存在しなかったウォーズIDたち
+      def missing_user_keys
+        current_swars_user_keys - db_exist_user_keys
+      end
+
+      ################################################################################ Google Sheet
+
+      def sheet_title
+        "#{title}(#{main_scope.size}人)"
+      end
+
+      def sheet_rows
+        @sheet_rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
               row["名前"]            = hyper_link(e.name_with_ban, e.swars_search_url)
@@ -155,82 +255,7 @@ module QuickScript
         end
       end
 
-      def google_sheet_url
-        @google_sheet_url ||= GoogleApi::Facade.new(title: title, rows: ss_rows, columns_hash: columns_hash).call
-      end
-
-      def google_sheet_url_link
-        h.tag.a("Google スプレッドシートを開く", href: google_sheet_url, target: "_blank", :class => "tag is-primary")
-      end
-
-      def validate!
-        unknown_user_keys = current_swars_user_keys - main_scope.pluck(:key)
-        if unknown_user_keys.present?
-          flash[:notice] = "#{unknown_user_keys * ' と '} が見つかりません。将棋ウォーズ棋譜検索で一度検索すると出てくるかもしれません。"
-          return
-        end
-
-        unless main_scope.exists?
-          flash[:notice] = "一人も見つかりません"
-          return
-        end
-
-        if main_scope.count > LIMIT_MAX
-          flash[:notice] = "#{LIMIT_MAX} 人以下にしてください"
-          return
-        end
-      end
-
-      def main_scope
-        @main_scope ||= yield_self do
-          s = ::Swars::User.where(key: current_swars_user_keys)
-          s = s.includes(:grade)       # for e.grade.name
-          s = s.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
-        end
-      end
-
-      def grade_per_rule(user)
-        {}.tap do |row|
-          user.cached_stat.grade_by_rules_stat.ruleships.each do |e|
-            row[e[:rule_info].name] = e[:grade_info].try { name } || ""
-          end
-        end
-      end
-
-      def current_swars_user_keys
-        swars_user_keys = params[:swars_user_keys].presence
-        if Rails.env.local?
-          swars_user_keys ||= default_user_keys
-        end
-        swars_user_keys.to_s.scan(/\w+/).uniq
-      end
-
-      def current_order_by
-        (params[:order_by].presence || "original").to_s
-      end
-
-      def current_google_sheet
-        params[:google_sheet].to_s == "true"
-      end
-
-      def default_user_keys
-        @default_user_keys ||= yield_self do
-          av = nil
-          # av ||= ::Swars::User::Vip.auto_crawl_user_keys
-          av ||= ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"]
-          av ||= []
-          av.shuffle * " "
-        end
-      end
-
-      def title
-        if main_scope.present?
-          return "#{super}(#{main_scope.size}人)"
-        end
-        super
-      end
-
-      def columns_hash
+      def sheet_columns_hash
         {
           "勝率"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, }, # PERCENT は自動的に100倍してくれる(0.50 → "50 %")
           "勢い"     => { number_format: { type: "PERCENT", pattern: "0 %",        }, },
@@ -241,28 +266,40 @@ module QuickScript
         }
       end
 
-      def result_html
-        "自動的に遷移しない場合は #{google_sheet_url_link} をタップしてください。モバイル Safari の場合はポップアップブロックを解除しておくと遷移するようになります。Google スプレッドシートを編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。"
+      def sheet_url
+        @sheet_url ||= GoogleApi::Facade.new(title: sheet_title, rows: sheet_rows, columns_hash: sheet_columns_hash).call
+      end
+
+      def sheet_url_link
+        h.tag.a("Google スプレッドシートを開く", href: sheet_url, target: "_blank", :class => "tag is-primary")
+      end
+
+      def sheet_result_html
+        "自動的に遷移しない場合は #{sheet_url_link} をタップしてください。モバイル Safari の場合はポップアップブロックを解除しておくと遷移するようになります。Google スプレッドシートを編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。"
+      end
+
+      ################################################################################
+
+      def mail_notify
+        SystemMailer.notify(subject: mail_subject, to: current_user.email, bcc: AppConfig[:admin_email], body: mail_body).deliver_later
       end
 
       def mail_subject
-        title
+        sheet_title
       end
 
       def mail_body
-        {
-          "google_sheet_url"        => current_google_sheet ? google_sheet_url : nil,
-          "current_swars_user_keys" => current_swars_user_keys,
-          **params,
-        }.compact_blank.to_t
+        out = []
+        out << sheet_url
+        out << "この URL は1ヶ月程度で消えます。ずっと残しておきたい場合や編集する場合はそこから「コピーを作成」で自分のところにコピってください。"
+        # Google スプレッドシートを編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。
+        out << ""
+        out << "▼対象者"
+        out << db_exist_user_keys.join(" ")
+        out.join("\n")
       end
 
-      # ログインしていてメールアドレスが正しいときのみ念のために送信しておく
-      def mail_notify
-        if current_user && current_user.email_valid?
-          SystemMailer.notify(subject: title, to: current_user.email, bcc: AppConfig[:admin_email], body: google_sheet_url).deliver_later
-        end
-      end
+      ################################################################################
     end
   end
 end

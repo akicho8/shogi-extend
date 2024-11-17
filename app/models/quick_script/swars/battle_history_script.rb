@@ -152,7 +152,7 @@ module QuickScript
       end
 
       def posted_message
-        "いま作ってます。終わったら #{current_user.email} あてに URL を送ります。ずっと残しておきたい場合や編集する場合はそこから自分のところにコピってください。"
+        "承りました。終わったら #{current_user.email} あてに URL を送ります。ずっと残しておきたい場合や編集する場合はそこから自分のところにコピってください。"
       end
 
       def validate!
