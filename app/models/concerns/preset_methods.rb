@@ -7,6 +7,6 @@ module PresetMethods
     delegate :handicap, to: :preset_info
   end
 
-  def preset_key_set(info)
+  def preset_key_set
   end
 end

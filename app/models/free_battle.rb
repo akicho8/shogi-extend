@@ -95,7 +95,7 @@ class FreeBattle < ApplicationRecord
         if Bioshogi::Parser::KifParser.accept?(kifu_body)
           self.kifu_body = Bioshogi::Source.wrap(kifu_body).to_s.gsub(/^\*.*\R/, "")
         end
-        parser_exec
+        parsed_data_to_columns_set
 
         # コメントとして active_record_value_too_long を入れると確認できる
         if kifu_body.include?("active_record_value_too_long")
@@ -184,26 +184,25 @@ class FreeBattle < ApplicationRecord
 
   # 野良棋譜の場合、手合割は解析しないとわからない
   # ウォーズはあらかじめわかっているのでこの処理はいれない
-  def preset_key_set(info)
-    self.preset_key = info.formatter.preset_info.key
+  def preset_key_set
+    self.preset_key = fast_parsed_info.formatter.preset_info.key
   end
 
-  def parser_exec_after(info)
-    self.meta_info = info.container.players.inject({}) do |a, player|
+  def parsed_data_to_columns_set_after
+    self.meta_info = fast_parsed_info.container.players.inject({}) do |a, player|
       a.merge(player.location.key => player.skill_set.to_h)
     end
 
     if use_info.key == :basic || use_info.key == :kiwi_lemon
-      self.defense_tag_list = ""
-      self.attack_tag_list = ""
+      self.defense_tag_list   = ""
+      self.attack_tag_list    = ""
       self.technique_tag_list = ""
-      self.note_tag_list = ""
-      # self.other_tag_list = ""
+      self.note_tag_list      = ""
 
-      defense_tag_list.add   info.container.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-      attack_tag_list.add    info.container.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      technique_tag_list.add info.container.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      note_tag_list.add      info.container.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      defense_tag_list.add   fast_parsed_info.container.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    fast_parsed_info.container.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add fast_parsed_info.container.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      fast_parsed_info.container.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     end
   end
 

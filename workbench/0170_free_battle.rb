@@ -10,7 +10,7 @@ tp free_battle
 
 # >>    (0.6ms)  SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483
 # >>    (0.4ms)  BEGIN
-# >>   ↳ app/models/free_battle.rb:307:in `parser_exec_after'
+# >>   ↳ app/models/free_battle.rb:307:in `parsed_data_to_columns_set_after'
 # >>   FreeBattle Create (0.6ms)  INSERT INTO `free_battles` (`key`, `kifu_body`, `turn_max`, `meta_info`, `battled_at`, `use_key`, `accessed_at`, `created_at`, `updated_at`, `title`, `description`, `saturn_key`, `sfen_body`, `preset_key`, `sfen_hash`) VALUES ('321cfa772ce81f65c4b44130b2616f9d', '', 0, '---\n:black:\n  :defense: []\n  :attack: []\n  :technique: []\n  :note:\n  - :居飛車\n  - :相居飛車\n  - :居玉\n  - :相居玉\n:white:\n  :defense: []\n  :attack: []\n  :technique: []\n  :note:\n  - :居飛車\n  - :相居飛車\n  - :居玉\n  - :相居玉\n', '0000-12-31 14:41:01', 'basic', '2020-06-05 04:44:03', '2020-06-05 04:44:03', '2020-06-05 04:44:03', '', '', 'public', 'position startpos', '平手', 'd3c5be51f1d024db54df870a6ebca2a3')
 # >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 3 AND `taggings`.`taggable_type` = 'FreeBattle' AND (taggings.context = 'defense_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id
 # >>   ActsAsTaggableOn::Tag Load (0.5ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 3 AND `taggings`.`taggable_type` = 'FreeBattle' AND (taggings.context = 'attack_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id

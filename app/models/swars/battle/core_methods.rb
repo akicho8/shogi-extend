@@ -9,7 +9,7 @@ module Swars
 
         before_save do
           if strike_plan || kifu_body_for_test || (will_save_change_to_attribute?(:csa_seq) && csa_seq)
-            parser_exec
+            parsed_data_to_columns_set
           end
         end
       end
@@ -55,7 +55,7 @@ module Swars
         }
       end
 
-      def parser_exec_after(info)
+      def parsed_data_to_columns_set_after
         self.analysis_version = Bioshogi::ANALYSIS_VERSION
 
         memberships.each(&:think_columns_update)
@@ -65,7 +65,7 @@ module Swars
 
         # 囲い対決・得点
         if true
-          info.container.players.each.with_index do |player, i|
+          fast_parsed_info.container.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
                 e.send("#{key}_tag_list=", values)
@@ -76,11 +76,11 @@ module Swars
           end
         end
 
-        style_update_all(info)
+        style_update_all
       end
 
-      def style_update_all(info)
-        info.container.players.each.with_index do |player, i|
+      def style_update_all
+        fast_parsed_info.container.players.each.with_index do |player, i|
           memberships[i].style_update(player)
         end
       end

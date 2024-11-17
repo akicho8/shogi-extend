@@ -188,7 +188,7 @@ class MigrateRunner
   #         p [batch, all_count, batch.fdiv(all_count)]
   #         s.each do |e|
   #           before = e.memberships.collect(&:style).compact.collect(&:key)
-  #           e.send(:style_update_all, e.fast_parsed_info)
+  #           e.send(:style_update_all)
   #           begin
   #             e.memberships.each(&:save!)
   #           rescue => error

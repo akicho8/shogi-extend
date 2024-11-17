@@ -42,7 +42,7 @@ module Swars
       end
 
       def build_fast
-        @record.parser_exec
+        @record.parsed_data_to_columns_set
         @record.transaction do
           @record.memberships.each(&:save!)
           @record.updated_at = Time.current

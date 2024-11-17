@@ -10,7 +10,7 @@ battle.rebuild                   # => true
 # battle.memberships.collect { |e| e.taggings.collect { |e| e.tag.name } } # => [["手得角交換型", "角換わり腰掛け銀", "角換わり新型", "居飛車", "相居飛車", "持久戦", "短手数"], ["一手損角換わり", "角換わり右玉", "居飛車", "相居飛車", "持久戦", "短手数", "垂れ歩"]]
 # 
 # s
-# battle.parser_exec
+# battle.parsed_data_to_columns_set
 # battle.memberships.each(&:save!)   # 更新で設定したタグを保存するため
 # battle.save!
 # battle.memberships.collect(&:note_tag_list) # => [["居飛車", "相居飛車", "持久戦", "短手数"], ["居飛車", "相居飛車", "持久戦", "短手数"]]

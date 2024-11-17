@@ -8,7 +8,7 @@ module QuickScript
 
       def call
         if request_get?
-          return { _autolink: "SHOGI-EXTEND (このサイト) と、KENTO は根本的に異なるため、KENTO Pro を解約するには KENTO のサイトで手続きを進めてください。" }
+          return { _autolink: "SHOGI-EXTEND (このサイト) と、KENTO は根本的に異なります。KENTO Pro を解約するには KENTO のサイトで手続きを進めてください。" }
         end
         if request_post?
           redirect_to "https://www.kento-shogi.com/", type: :hard
