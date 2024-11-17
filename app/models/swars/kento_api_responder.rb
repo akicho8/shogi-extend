@@ -26,10 +26,14 @@ module Swars
     BLACK_LIST  = /.*|maruded|Lesser_panda20|Tiffblue|katsudon_kuitai|Icy_tail|shogi_priest|champion2020|StaySea|ribako1210|si_kun_YouTuber|karma99/
 
     def initialize(params = {})
-      @user          = params[:user]
+      @user          = params.fetch(:user)
       @scope         = params[:scope] || @user.battles
       @max           = params[:max]
       @notify_params = params[:notify_params] || {}
+    end
+
+    def call(...)
+      as_json(...)
     end
 
     # http://localhost:3000/w.json?format_type=kento&query=YamadaTaro
@@ -40,6 +44,10 @@ module Swars
 
     def black_user?
       BLACK_LIST.match?(@user.key)
+    end
+
+    def white_user?
+      !black_user?
     end
 
     private
@@ -56,7 +64,7 @@ module Swars
     end
 
     def to_h
-      unless black_user?
+      if white_user?
         @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
       end
       {
