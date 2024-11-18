@@ -17,7 +17,7 @@ module QuickScript
             :label           => "将棋ウォーズID(s)",
             :key             => :swars_user_keys,
             :type            => :text,
-            :session_sync    => true,
+            :session_sync    => true, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため保存してはいけない
             :dynamic_part => -> {
               {
                 :default => params[:swars_user_keys].to_s.presence,
