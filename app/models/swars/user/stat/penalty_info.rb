@@ -22,7 +22,7 @@ module Swars
         { weight:  15.0, key: "1手詰を焦らした対局数",            short_name: "1手詰焦らし",    x_count: proc { taunt_mate_stat.count                                        }, },
         { weight:  20.0, key: "必勝形から焦らした対局数",         short_name: "勝ち焦らし",     x_count: proc { taunt_timeout_stat.count                                     }, },
         { weight:  10.0, key: "人に対して棋神を使った対局数",     short_name: "棋神",           x_count: proc { fraud_stat.count                                             }, },
-        { weight:  10.0, key: "恐怖の級位者として無双した",       short_name: "逆棋力詐欺(強)", x_count: proc { gdiff_stat.row_grade_pretend_count                           }, },
+        { weight:   0.5, key: "恐怖の級位者として無双した",       short_name: "逆棋力詐欺(強)", x_count: proc { gdiff_stat.row_grade_pretend_count                           }, },
         { weight:   5.0, key: "適正な棋力帯で対局しなかった",     short_name: "棋力詐欺(弱)",   x_count: proc { user.grade_info.teacher ? 0 : gdiff_stat.grade_penalty_ratio }, },
         { weight:   5.0, key: "対局放棄のような長考をした対局数", short_name: "対局放棄長考",   x_count: proc { prolonged_deliberation_stat.count                            }, },
         { weight:  10.0, key: "切断逃亡",                         short_name: "切断逃亡",       x_count: proc { judge_final_stat.count_by(:lose, :DISCONNECT)                }, },
