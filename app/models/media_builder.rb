@@ -272,7 +272,7 @@ class MediaBuilder
       # :analyzer_enable           => false,
       # :analyzer_technique_enable => false,
       :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
-      :candidate_enable   => false,
+      :ki2_function   => false,
       :validate_enable    => false,
       :container_class     => Bioshogi::Container::Fast,
       :turn_limit         => turn,

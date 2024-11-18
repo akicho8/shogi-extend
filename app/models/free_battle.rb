@@ -174,7 +174,7 @@ class FreeBattle < ApplicationRecord
     if use_info.key == :share_board || use_info.key == :kiwi_lemon
       # めちゃくちゃな操作でもエラーにしない
       {
-        :candidate_enable => false,
+        :ki2_function => false,
         :validate_enable  => false,
       }
     else

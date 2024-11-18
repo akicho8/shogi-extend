@@ -208,7 +208,7 @@ class KifuParser
       options[:turn_limit] = turn_limit
     end
     [
-      :candidate_enable,
+      :ki2_function,
       :validate_enable,
     ].each do |key|
       if params.has_key?(key)

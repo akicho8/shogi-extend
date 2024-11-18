@@ -9,7 +9,7 @@ export const vue_general_kifu_copy = {
     // general_kifu_copy(sfen, {to_format: "kif"})
     async general_kifu_copy(any_source, options = {}) {
       options = {
-        candidate_enable: true, // KI2 の場合 true にしないとエラーになる
+        ki2_function: true, // KI2 の場合 true にしないとエラーになる
         validate_enable: false,
         any_source: any_source,
         ...options,

@@ -51,7 +51,7 @@ module Swars
       def fast_parser_options
         {
           :validate_enable  => false,
-          :candidate_enable => false,
+          :ki2_function => false,
         }
       end
 

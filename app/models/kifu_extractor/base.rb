@@ -31,7 +31,7 @@ module KifuExtractor
         info = Bioshogi::Parser.parse(str, {
             :analyzer_enable           => false,
             :analyzer_technique_enable => false,
-            :candidate_enable          => false,
+            :ki2_function          => false,
             :validate_enable           => false, # 二歩を許可するため
           })
         info.formatter.container_run_once
