@@ -66,14 +66,14 @@ module Swars
         { key: "ダイヤマン",             icon: "💎",   message: "ダイヤモンド美濃の使い手",   if_cond: proc { win_stat.exist?(:"ダイヤモンド美濃")                 },},
         { key: "チョコレートマン",       icon: "🍫",   message: "チョコレート囲いの使い手",   if_cond: proc { win_stat.exist?(:"チョコレート囲い")                 },},
         { key: "極限早繰りマン",         icon: "🎸",   message: "極限早繰り銀の使い手",       if_cond: proc { win_stat.exist?(:"極限早繰り銀")                  },},
-        { key: "坊主マン",               icon: "👴🏻", message: "坊主美濃の使い手",             if_cond: proc { win_stat.exist?(:"坊主美濃")                  },},
+        { key: "坊主マン",               icon: "👴🏻",   message: "坊主美濃の使い手",           if_cond: proc { win_stat.exist?(:"坊主美濃")                  },},
         { key: "レグスペマン",           icon: "🐔",   message: "レグスペの使い手",           if_cond: proc { win_stat.exist?(:"レグスペ")                  },},
         { key: "音無しマン",             icon: "🦉",   message: "居飛穴音無しの構えの使い手", if_cond: proc { win_stat.exist?(:"居飛穴音無しの構え")                 },},
         { key: "スイーツマン",           icon: "🍓",   message: "いちご囲いの使い手",         if_cond: proc { win_stat.exist?(:"いちご囲い")                  },},
         { key: "無敵囲いマン",           icon: "🔰",   message: "無敵囲いのスペシャリスト",   if_cond: proc { win_stat.exist?(:"無敵囲い")                  },},
         { key: "エルモマン",             icon: "🐵",   message: "エルモ囲いの使い手",         if_cond: proc { win_stat.exist?(:"エルモ囲い")                  },},
         { key: "鬼殺しマン",             icon: "👹",   message: "鬼殺しの使い手",             if_cond: proc { win_stat.include?("鬼殺し") },},
-        { key: "アヒルマン",             icon: "🐥",   message: "アヒル戦法の使い手",             if_cond: proc { win_stat.exist?(:"アヒル戦法") },},
+        { key: "アヒルマン",             icon: "🐥",   message: "アヒル戦法の使い手",         if_cond: proc { win_stat.exist?(:"アヒル戦法") },},
         { key: "稲庭マン",               icon: "👾",   message: "稲庭戦法のエキスパート",     if_cond: proc { win_stat.exist?(:"稲庭戦法") },},
         { key: "居玉勝ちマン",           icon: "🗿",   message: "居玉の達人",                 if_cond: proc { win_stat.exist?(:"居玉") }, },
         { key: "入玉勝ちマン",           icon: "🏈",   message: "入玉の達人",                 if_cond: proc { win_stat.exist?(:"入玉") }, },
@@ -86,7 +86,7 @@ module Swars
         ################################################################################ 文言が特殊
 
         { key: "駒柱マン",               icon: "🗽",   message: "駒柱の作り手",               if_cond: proc { win_stat.exist?(:"駒柱") }  },
-        { key: "パンツマン",             icon: "🩲",   message: "パンツの使い手",             if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
+        { key: "パンツマン",             icon: "🩲",   message: "パンツを脱ぎがち",           if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
         { key: "小部屋マン",             icon: "🛖",   message: "銀冠の小部屋に逃げて勝った", if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
         { key: "都詰めマン",             icon: "🪬",   message: "都詰めマスター (超レア)",    if_cond: proc { win_stat.exist?(:"都詰め") } },
         { key: "姿焼マン",               icon: "🍳",   message: "穴熊姿焼き名人",             if_cond: proc { win_stat.exist?(:"穴熊の姿焼き") } },
@@ -134,14 +134,14 @@ module Swars
 
         ################################################################################ 駒の使用率
 
-        { key: "玉使いこなしマン", icon: "👑", message: "玉の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"玉") } },
-        { key: "飛使いこなしマン", icon: "🐲", message: "飛の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"飛") } },
-        { key: "角使いこなしマン", icon: "🦄", message: "角の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"角") } },
-        { key: "金使いこなしマン", icon: "🛡",  message: "金の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"金") } },
-        { key: "銀使いこなしマン", icon: "⚔",  message: "銀の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"銀") } },
-        { key: "桂使いこなしマン", icon: "🐸", message: "桂の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"桂") } },
-        { key: "香使いこなしマン", icon: "🎯", message: "香の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"香") } },
-        { key: "歩使いこなしマン", icon: "🗡",  message: "歩の使い方が上手", if_cond: proc { piece_master_stat.win_average_above?(:"歩") } },
+        { key: "玉使いこなしマン", icon: "👑", message: "玉の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"玉") } },
+        { key: "飛使いこなしマン", icon: "🐲", message: "飛の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"飛") } },
+        { key: "角使いこなしマン", icon: "🦄", message: "角の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"角") } },
+        { key: "金使いこなしマン", icon: "🛡",  message: "金の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"金") } },
+        { key: "銀使いこなしマン", icon: "⚔",  message: "銀の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"銀") } },
+        { key: "桂使いこなしマン", icon: "🐸", message: "桂の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"桂") } },
+        { key: "香使いこなしマン", icon: "🎯", message: "香の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"香") } },
+        { key: "歩使いこなしマン", icon: "🗡",  message: "歩の使い方が上手", if_cond: proc { piece_master_stat.badge?(:"歩") } },
 
         ################################################################################ 結末
 

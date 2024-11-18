@@ -3,6 +3,8 @@
 module Swars
   module User::Stat
     class PieceMasterStat < Base
+      THRESHOLD = 1.2           # 1.0 では表示されるバッジが多すぎてありがたみがないので突き出ている場合だけバッジにする
+
       class << self
         def report(options = {})
           options = {
@@ -30,30 +32,45 @@ module Swars
 
       def to_report_h
         Bioshogi::Piece.each_with_object({}) do |e, m|
-          m[e.name] = average_above?(e.name.to_sym) ? "○" : ""
+          # m[e.name] = average_above?(e.name.to_sym) ? "○" : ""
+          v = above_level(e.name.to_sym)
+          if v >= THRESHOLD
+            v = v.round(2)
+          else
+            v = nil
+          end
+          m[e.name] = v
         end
       end
 
-      def win_average_above?(piece_name)
+      def badge?(piece_name)
         if ids_count >= Config.master_count_gteq
           if stat.win_ratio > 0.5
-            average_above?(piece_name)
+            above_level(piece_name) >= THRESHOLD
           end
         end
       end
 
-      def average_above?(piece_name)
-        a = piece_name
-        ratio_a = piece_stat.ratios_hash.fetch(a)
-        ratio_b = FreqPieceInfo[a].ratio
+      # 1.0 を越えていれば piece_name は平均よりも活用されている
+      def above_level(piece_name)
+        piece_name = piece_name
+        ratio = piece_stat.ratios_hash.fetch(piece_name)
+        avg = FreqPieceInfo[piece_name].ratio
 
-        if b = Bioshogi::Piece[piece_name.to_s].promoted_name
-          b = b.to_sym
-          ratio_a += piece_stat.ratios_hash.fetch(b)
-          ratio_b += FreqPieceInfo[b].ratio
+        # 成った駒が活用されている場合「成っていない駒の使い方が上手だったから」ということにするため加算する
+        if promoted_name = Bioshogi::Piece[piece_name.to_s].promoted_name
+          promoted_name = promoted_name.to_sym
+          ratio += piece_stat.ratios_hash.fetch(promoted_name)
+          avg += FreqPieceInfo[promoted_name].ratio
         end
 
-        ratio_a > ratio_b
+        ratio.fdiv(avg)         # 利用割合 / 平均割合
+      end
+
+      # 未使用
+      # 「平均越え」だと出すぎてしまう
+      def average_above?(piece_name)
+        above_level(piece_name) > 1.0
       end
     end
   end
