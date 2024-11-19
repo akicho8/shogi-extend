@@ -95,7 +95,8 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
             return
           }
           if (context.one_vs_one_p) {
-            return "対局が終わったところです。両者を労ってください。"
+            return
+            // return "対局が終わったところです。両者を労ってください。"
           }
           if (context.many_vs_many_p) {
             const members = context.visible_member_groups[params.win_location_key]
