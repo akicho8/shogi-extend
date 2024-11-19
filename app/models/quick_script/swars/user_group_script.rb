@@ -139,6 +139,16 @@ module QuickScript
       end
 
       def validate!
+        unless current_user
+          flash[:notice] = "完了後の通知を受け取るためにログインしてください"
+          return
+        end
+
+        unless current_user.email_valid?
+          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+          return
+        end
+
         if current_swars_user_keys.blank?
           flash[:notice] = "ウォーズIDを指定してください"
           return
@@ -156,16 +166,6 @@ module QuickScript
 
         if main_scope.count > LIMIT_MAX
           flash[:notice] = "#{LIMIT_MAX} 人以下にしてください"
-          return
-        end
-
-        unless current_user
-          flash[:notice] = "完了後の通知を受け取るためにログインしてください"
-          return
-        end
-
-        unless current_user.email_valid?
-          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
           return
         end
       end
