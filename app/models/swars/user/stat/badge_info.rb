@@ -24,18 +24,18 @@ module Swars
         ################################################################################ 種類
 
         { key: "居飛車党",               icon: "⬆️",    message: "真の居飛車党",         if_cond: proc { win_stat.the_ture_master_of_ibis? },},
-        { key: "振り飛車党",             icon: "⬅️",   message: "真の振り飛車党",       if_cond: proc { win_stat.the_ture_master_of_furi? },},
+        { key: "振り飛車党",             icon: "⬅️",   message: "真の振り飛車党",        if_cond: proc { win_stat.the_ture_master_of_furi? },},
         { key: "オールラウンダー",       icon: "🃏",   message: "真のオールラウンダー", if_cond: proc { win_stat.the_ture_master_of_all_rounder? },},
 
         ################################################################################ 列
 
-        { key: "三間飛車マン",           icon: "3⃣",  message: "三間飛車の使い手",     if_cond: proc { win_stat.match?(/三間|石田/) },},
-        { key: "四間飛車マン",           icon: "4⃣",  message: "四間飛車の使い手",     if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
-        { key: "九間飛車マン",           icon: "9⃣",  message: "九間飛車の先駆者", if_cond: proc { win_stat.include?("九間飛車") }, },
-        { key: "中飛車マン",             icon: "🀄", message: "中飛車の使い手",       if_cond: proc { win_stat.include?("中飛車") },},
-        { key: "右四間飛車マン",         icon: "🦖", message: "右四間飛車の使い手",   if_cond: proc { win_stat.include?("右四間") }, },
-        { key: "袖飛車マン",             icon: "👘", message: "袖飛車の奇人",     if_cond: proc { win_stat.exist?(:"袖飛車") },},
-        { key: "一間飛車マン",           icon: "1️⃣",  message: "一間飛車の異端児", if_cond: proc { win_stat.include?("一間飛車") }, },
+        { key: "三間飛車マン",           icon: "3⃣",  message: "三間飛車の使い手",   if_cond: proc { win_stat.match?(/三間|石田/) },},
+        { key: "四間飛車マン",           icon: "4⃣",  message: "四間飛車の使い手",   if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
+        { key: "九間飛車マン",           icon: "9⃣",  message: "九間飛車の先駆者",   if_cond: proc { win_stat.include?("九間飛車") }, },
+        { key: "中飛車マン",             icon: "🀄", message: "中飛車の使い手",     if_cond: proc { win_stat.include?("中飛車") },},
+        { key: "右四間飛車マン",         icon: "🦖", message: "右四間飛車の使い手", if_cond: proc { win_stat.include?("右四間") }, },
+        { key: "袖飛車マン",             icon: "👘", message: "袖飛車の奇人",       if_cond: proc { win_stat.exist?(:"袖飛車") },},
+        { key: "一間飛車マン",           icon: "1️⃣",  message: "一間飛車の異端児",   if_cond: proc { win_stat.include?("一間飛車") }, },
 
         ################################################################################ 手筋 / 備考
 
@@ -54,10 +54,10 @@ module Swars
         { key: "嬉野マン",               icon: "↗️",    message: "嬉野流の使い手",             if_cond: proc { win_stat.include?("嬉野流") },},
         { key: "パックマン野郎",         icon: "🅿",    message: "パックマンの達人",           if_cond: proc { win_stat.include?("パックマン") },},
         { key: "耀龍マン",               icon: "🐉",   message: "耀龍戦法の使い手",           if_cond: proc { win_stat.include?("耀龍") }, },
-        { key: "右玉マン",               icon: "➡",    message: "右玉の使い手",                   if_cond: proc { win_stat.include?("右玉") }, },
+        { key: "右玉マン",               icon: "➡",    message: "右玉の使い手",               if_cond: proc { win_stat.include?("右玉") }, },
         { key: "屋敷マン",               icon: "🥷",   message: "屋敷流二枚銀の使い手",       if_cond: proc { win_stat.include?("屋敷流二枚銀") },},
         { key: "UFOマン",                icon: "🛸",   message: "UFO銀の使い手",              if_cond: proc { win_stat.exist?(:"UFO銀") },},
-        { key: "魔界マン",               icon: "🧛‍♀️",   message: "魔界四間飛車の使い手",       if_cond: proc { win_stat.exist?(:"魔界四間飛車") },},
+        { key: "魔界マン",               icon: "🧛‍♀️",   message: "魔界四間飛車の使い手",     if_cond: proc { win_stat.exist?(:"魔界四間飛車") },},
         { key: "カニ囲いマン",           icon: "🦀",   message: "カニ囲いの使い手",           if_cond: proc { win_stat.exist?(:"カニ囲い") },},
         { key: "たこ金マン",             icon: "🪁",   message: "きｍきｍ金の使い手",         if_cond: proc { win_stat.exist?(:"きｍきｍ金") },},
         { key: "カメレオンマン",         icon: "🦎",   message: "カメレオン戦法の使い手",     if_cond: proc { win_stat.exist?(:"カメレオン戦法") },},
@@ -66,7 +66,7 @@ module Swars
         { key: "ダイヤマン",             icon: "💎",   message: "ダイヤモンド美濃の使い手",   if_cond: proc { win_stat.exist?(:"ダイヤモンド美濃")                 },},
         { key: "チョコレートマン",       icon: "🍫",   message: "チョコレート囲いの使い手",   if_cond: proc { win_stat.exist?(:"チョコレート囲い")                 },},
         { key: "極限早繰りマン",         icon: "🎸",   message: "極限早繰り銀の使い手",       if_cond: proc { win_stat.exist?(:"極限早繰り銀")                  },},
-        { key: "坊主マン",               icon: "👴🏻",   message: "坊主美濃の使い手",           if_cond: proc { win_stat.exist?(:"坊主美濃")                  },},
+        { key: "坊主マン",               icon: "👴🏻",   message: "坊主美濃の使い手",         if_cond: proc { win_stat.exist?(:"坊主美濃")                  },},
         { key: "レグスペマン",           icon: "🐔",   message: "レグスペの使い手",           if_cond: proc { win_stat.exist?(:"レグスペ")                  },},
         { key: "音無しマン",             icon: "🦉",   message: "居飛穴音無しの構えの使い手", if_cond: proc { win_stat.exist?(:"居飛穴音無しの構え")                 },},
         { key: "スイーツマン",           icon: "🍓",   message: "いちご囲いの使い手",         if_cond: proc { win_stat.exist?(:"いちご囲い")                  },},
@@ -77,11 +77,11 @@ module Swars
         { key: "稲庭マン",               icon: "👾",   message: "稲庭戦法のエキスパート",     if_cond: proc { win_stat.exist?(:"稲庭戦法") },},
         { key: "居玉勝ちマン",           icon: "🗿",   message: "居玉の達人",                 if_cond: proc { win_stat.exist?(:"居玉") }, },
         { key: "入玉勝ちマン",           icon: "🏈",   message: "入玉の達人",                 if_cond: proc { win_stat.exist?(:"入玉") }, },
-        { key: "雲隠れマン",             icon: "🌥️",   message: "雲隠れ玉の使い手",           if_cond: proc { win_stat.exist?(:"雲隠れ玉") }, },
+        { key: "雲隠れマン",             icon: "🌥️",   message: "雲隠れ玉の使い手",            if_cond: proc { win_stat.exist?(:"雲隠れ玉") }, },
         { key: "雀刺しマン",             icon: "🪶",   message: "雀刺しの達人",               if_cond: proc { win_stat.exist?(:"雀刺し") }, },
         { key: "竹スペ乱戦マン",         icon: "🎍",   message: "竹部スペシャルの使い手",     if_cond: proc { win_stat.exist?(:"竹部スペシャル") }, },
         { key: "ゴリ金マン",             icon: "🦍",   message: "ゴリゴリ金の使い手",         if_cond: proc { win_stat.match?(/ゴリゴリ金|ゴリラの右手|ゴリ違い角/) },},
-        { key: "カギ囲いマン",           icon: "🗝️",   message: "カギ囲いの使い手",           if_cond: proc { win_stat.exist?(:"カギ囲い") }, },
+        { key: "カギ囲いマン",           icon: "🗝️",   message: "カギ囲いの使い手",            if_cond: proc { win_stat.exist?(:"カギ囲い") }, },
 
         ################################################################################ 文言が特殊
 
@@ -99,20 +99,20 @@ module Swars
 
         ################################################################################ 連勝
 
-        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",                  if_cond: proc { vitality_stat.badge? },},
-        { key: "10連勝",                 icon: "🍉",   message: "すげー連勝した",              if_cond: proc { win_lose_streak_stat.ten_win? },},
-        { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい",        if_cond: proc { win_lose_streak_stat.waves_strong? },},
+        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",           if_cond: proc { vitality_stat.badge? },},
+        { key: "10連勝",                 icon: "🍉",   message: "すげー連勝した",       if_cond: proc { win_lose_streak_stat.ten_win? },},
+        { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい", if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
         ################################################################################ もっと特殊
 
-        { key: "200手越えマン",          icon: "🏃‍♂️",   message: "長手数の熱戦を制した",                                if_cond: proc { win_turn_stat.max.try { self >= 200 } },},
+        { key: "200手越えマン",          icon: "🏃‍♂️",   message: "長手数の熱戦を制した",                             if_cond: proc { win_turn_stat.max.try { self >= 200 } },},
         { key: "心強すぎマン",           icon: "🫀",   message: "折れない心の持ち主",                                 if_cond: proc { mental_stat.hard_brain? },},
         { key: "廃指しマン",             icon: "😡",   message: "局後の検討をすることもなく感情的になって廃指しした", if_cond: proc { daily_average_matches_stat.max.try { self >= 30 } },},
 
         { key: "レア戦法マン",           icon: "🍀",   message: "レア (変態) 戦法の使い手",                           if_cond: proc { style_stat.minority_ratio.try { self > 0.5 } },},
         { key: "長考マン",               icon: "🤯",   message: "考えすぎて負けがち",                                 if_cond: proc { overthinking_loss_stat.badge? } },
         { key: "ただの千日手",           icon: "🍌",   message: "千日手の使い手",                                     if_cond: proc { draw_stat.normal_count.try { positive? } } },
-        { key: "運営支えマン",           icon: "🧙‍♂️",   message: "将棋ウォーズの運営を支える力がある",                 if_cond: proc { fraud_stat.count.positive? } },
+        { key: "運営支えマン",           icon: "🧙‍♂️",   message: "将棋ウォーズの運営を支える力がある",               if_cond: proc { fraud_stat.count.positive? } },
         { key: "示範マン",               icon: "🤵",   message: "マナーが良い",                                       if_cond: proc { gentleman_stat.badge_score.try { self >= 95 } } },
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
