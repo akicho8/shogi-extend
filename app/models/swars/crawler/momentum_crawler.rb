@@ -1,6 +1,18 @@
+# ▼人数確認
 # cap production rails:runner CODE="p Swars::User.vip_except.momentum_only(period: 1.days, at_least: 5).count"
+#
+# ▼即反映
 # cap production deploy:upload FILES=app/models/swars/crawler/momentum_crawler.rb
-
+#
+# ▼対象人数
+# |--------+----------+------|
+# | period | at_least | 人数 |
+# |--------+----------+------|
+# | 1.days |        5 |  329 |
+# | 1.days |        6 |  199 |
+# | 1.days |        7 |  143 |
+# |--------+----------+------|
+#
 module Swars
   module Crawler
     # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).run
@@ -12,7 +24,7 @@ module Swars
             :subject     => "直近数日で注目されているユーザー",
             :period      => 1.days, # この期間で
             :at_least    => 5,      # N件以上検索されている(多い順)
-            :limit       => 100,    # ユーザーを最大N件
+            :limit       => 150,    # ユーザーを最大N件
           })
       end
 
