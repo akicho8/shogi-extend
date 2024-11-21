@@ -3,15 +3,17 @@ module Swars
     class OneRuleImporter
       attr_reader :params
 
+      class_attribute :default_options, default: {
+        :verbose                => Rails.env.development?,
+        :last_page_break        => true,  # 最後のページと思われるときは終わる
+        :early_break            => false, # 1ページ目で新しいものが見つからなければ終わる
+        :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
+        :bs_error_capture_fake  => false, # trueならわざと例外
+      }
+
       # Importer::OneRuleImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).run
       def initialize(params = {})
-        @params = {
-          :verbose                => Rails.env.development?,
-          :last_page_break        => true,  # 最後のページと思われるときは終わる
-          :early_break            => false, # 1ページ目で新しいものが見つからなければ終わる
-          :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
-          :bs_error_capture_fake  => false, # trueならわざと例外
-        }.merge(params)
+        @params = default_options.merge(params)
       end
 
       def run
