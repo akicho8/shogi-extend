@@ -14,16 +14,26 @@ module Swars
         RuleInfo.each do |e|
           OneRuleImporter.new(params.merge(rule_key: e.key)).run
         end
-        if user
-          if early_break
-            user.update_columns(soft_crawled_at: Time.current)
-          else
-            user.update_columns(soft_crawled_at: Time.current, hard_crawled_at: Time.current)
-          end
-        end
+        after_process
       end
 
       private
+
+      def after_process
+        if user
+          begin
+            Retryable.retryable(on: ActiveRecord::Deadlocked) do
+              if early_break
+                user.update_columns(soft_crawled_at: Time.current)
+              else
+                user.update_columns(soft_crawled_at: Time.current, hard_crawled_at: Time.current)
+              end
+            end
+          rescue ActiveRecord::Deadlocked => error
+            AppLog.important(error, data: params)
+          end
+        end
+      end
 
       def user
         @user ||= User[params[:user_key]]
