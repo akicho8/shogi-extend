@@ -3,7 +3,7 @@
 module Swars
   module User::Stat
     class WinStat < Base
-      THRESHOLD = 0.58 # 0.5 を越えた場合にメダルを出すと出すぎるので 0.5〜0.6 ぐらいで調整する
+      THRESHOLD = 0.6 # 0.5 を越えた場合にメダルを出すと出すぎるので 0.5〜0.6 ぐらいで調整する
 
       delegate *[
         :tag_stat,
@@ -27,7 +27,7 @@ module Swars
 
       def ratios_hash
         @ratios_hash ||= tag_stat.ratios_hash.each_with_object({}) do |(tag, ratio), m|
-          if ratio > THRESHOLD  # 「勝ち越し」なので >= ではだめ
+          if ratio >= THRESHOLD
             m[tag] = ratio
           end
         end
