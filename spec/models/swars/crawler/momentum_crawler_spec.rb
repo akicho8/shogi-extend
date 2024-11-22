@@ -5,7 +5,7 @@ module Swars
     it "works" do
       user = User.create!
       user.search_logs.create!
-      instance = Crawler::MomentumCrawler.new(period: 0, at_least: 1)
+      instance = Crawler::MomentumCrawler.new(period: 0, at_least: 1, hard_crawled_old: -1.seconds)
       assert { Battle.none? }
       instance.run
       assert { Battle.exists? }

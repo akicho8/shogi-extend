@@ -69,6 +69,12 @@ module Swars
       end
       self.key ||= SecureRandom.hex
       self.latest_battled_at ||= Time.current
+
+      if Rails.env.local?
+        self.soft_crawled_at ||= latest_battled_at
+        self.hard_crawled_at ||= latest_battled_at
+      end
+
       profile || build_profile
     end
 

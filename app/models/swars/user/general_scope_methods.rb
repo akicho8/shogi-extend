@@ -10,6 +10,8 @@ module Swars
         scope :vip_except, -> { where.not(key: Vip.auto_crawl_user_keys) }                             # VIPユーザーを除く
 
         scope :momentum_only, -> **options { where(id: SearchLog.momentum_user_ids(**options)) }     # 最近たくさん検索されたユーザーたち
+
+        scope :hard_crawled_old_only, -> expires_in { where(arel_table[:hard_crawled_at].lt(expires_in.seconds.ago)) } # expires_in より前にハードクロールした人たち
       end
     end
   end
