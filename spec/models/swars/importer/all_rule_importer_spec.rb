@@ -27,7 +27,7 @@ module Swars
             AllRuleImporter.new(user_key: "DevUser1", early_break: true).run
           end
           assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time }
-          assert { Swars::User["DevUser1"].hard_crawled_at == nil                  }
+          assert { Swars::User["DevUser1"].hard_crawled_at == "2000-01-01".to_time }
         end
       end
     end
