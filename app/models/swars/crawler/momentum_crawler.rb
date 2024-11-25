@@ -1,5 +1,5 @@
 # ▼人数確認
-# cap production rails:runner CODE="p Swars::User.vip_except.momentum_only(period: 1.days, at_least: 5).count"
+# cap production rails:runner CODE="p Swars::User.vip_except.momentum_only(period: 1.days, at_least: 5).hard_crawled_old_only(1.days).count"
 #
 # ▼即反映
 # cap production deploy:upload FILES=app/models/swars/crawler/momentum_crawler.rb
