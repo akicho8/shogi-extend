@@ -5,8 +5,8 @@ module Swars
 
       class_attribute :default_options, default: {
         :verbose                => Rails.env.development?,
+        :hard_crawl             => false, # true: 新しい対局が見つからなくても次のページに進む(遅いが過去の棋譜を落とせる)
         :last_page_break        => true,  # 最後のページと思われるときは終わる
-        :early_break            => false, # 1ページ目で新しいものが見つからなければ終わる
         :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
         :bs_error_capture_fake  => false, # trueならわざと例外
       }
@@ -25,7 +25,7 @@ module Swars
       # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
       def new_keys
         new_keys = Set.new
-        (params[:page_max] || 1).times do |i|
+        page_max.times do |i|
           result = Agent::History.new(params.merge(page_index: i)).fetch
           log_puts { [params[:user_key], "P#{i.next}", rule_info.name, result.inspect].join(" ") }
           new_keys += result.new_keys
@@ -35,10 +35,12 @@ module Swars
               break
             end
           end
-          if params[:early_break]
-            if result.new_keys.empty?
-              log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
-              break
+          if page_max > 1
+            if !params[:hard_crawl]
+              if result.new_keys.empty?
+                log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
+                break
+              end
             end
           end
         end
@@ -69,6 +71,10 @@ module Swars
           return
         end
         puts yield
+      end
+
+      def page_max
+        params[:page_max] || 1
       end
     end
   end

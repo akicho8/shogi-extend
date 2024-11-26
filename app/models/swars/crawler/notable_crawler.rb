@@ -4,10 +4,9 @@ module Swars
     class NotableCrawler < Base
       def default_params
         super.merge({
-            :user_keys   => default_user_keys,
-            :page_max    => Rails.env.production? ? 100 : 1,
-            :early_break => true,
-            :subject     => "活動的なプレイヤー",
+            :user_keys => default_user_keys,
+            :page_max  => Rails.env.production? ? 100 : 1,
+            :subject   => "活動的なプレイヤー",
           })
       end
 

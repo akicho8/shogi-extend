@@ -179,6 +179,7 @@ module Swars
       {
         :user_key                => current_swars_user_key,
         :page_max                => import_page_max,
+        # :hard_crawl              => (params[:hard_crawl].presence || "false") == "true",
         :throttle_cache_clear    => params[:throttle_cache_clear],
         :bs_error_capture_fake   => params[:bs_error_capture_fake],
         :bs_error_capture_block  => -> error { @import_errors << error },

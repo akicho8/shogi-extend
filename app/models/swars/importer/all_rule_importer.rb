@@ -23,10 +23,10 @@ module Swars
         if user
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked) do
-              if early_break
-                user.update_columns(soft_crawled_at: Time.current)
-              else
+              if hard_crawl
                 user.update_columns(soft_crawled_at: Time.current, hard_crawled_at: Time.current)
+              else
+                user.update_columns(soft_crawled_at: Time.current)
               end
             end
           rescue ActiveRecord::Deadlocked => error
@@ -39,8 +39,8 @@ module Swars
         @user ||= User[params[:user_key]]
       end
 
-      def early_break
-        OneRuleImporter.default_options.merge(params)[:early_break]
+      def hard_crawl
+        OneRuleImporter.default_options.merge(params)[:hard_crawl]
       end
     end
   end

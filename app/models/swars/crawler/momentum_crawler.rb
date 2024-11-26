@@ -21,7 +21,7 @@ module Swars
         super.merge({
             :subject          => "直近数日で注目されているユーザー",
             :page_max         => Rails.env.production? ? 100 : 1,
-            :early_break      => false,  # false: 全体クロール
+            :hard_crawl       => true,   # true: 全体クロール
             :period           => 1.days, # この期間で
             :at_least         => 5,      # N件以上検索されている(多い順)
             :limit            => 50,     # ユーザーを最大N件

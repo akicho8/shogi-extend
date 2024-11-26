@@ -11,23 +11,23 @@ module Swars
         assert { Battle.count == 3 }
       end
 
-      describe "early_break に対応して hard_crawled_at と soft_crawled_at を更新する" do
+      describe "hard_crawl に対応して hard_crawled_at と soft_crawled_at を更新する" do
+        it "見ているページに新しい対局がない場合はすぐに終わる (デフォルト)" do
+          user = Swars::User.create!(user_key: "DevUser1")
+          Timecop.freeze("2001-01-01") do
+            AllRuleImporter.new(user_key: "DevUser1").run # オプションなしの場合
+          end
+          assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time } # ← こっちだけ更新している
+          assert { Swars::User["DevUser1"].hard_crawled_at == "2000-01-01".to_time }
+        end
+
         it "全体の場合は hard_crawled_at も更新する" do
           user = Swars::User.create!(user_key: "DevUser1")
           Timecop.freeze("2001-01-01") do
-            AllRuleImporter.new(user_key: "DevUser1", early_break: false).run
+            AllRuleImporter.new(user_key: "DevUser1", hard_crawl: true).run
           end
-          assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time }
-          assert { Swars::User["DevUser1"].hard_crawled_at == "2001-01-01".to_time }
-        end
-
-        it "1ページ目のみの場合は soft_crawled_at のみ" do
-          user = Swars::User.create!(user_key: "DevUser1")
-          Timecop.freeze("2001-01-01") do
-            AllRuleImporter.new(user_key: "DevUser1", early_break: true).run
-          end
-          assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time }
-          assert { Swars::User["DevUser1"].hard_crawled_at == "2000-01-01".to_time }
+          assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time } # ← 両方を
+          assert { Swars::User["DevUser1"].hard_crawled_at == "2001-01-01".to_time } # ← 更新している
         end
       end
     end

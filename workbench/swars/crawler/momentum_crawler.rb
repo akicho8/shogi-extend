@@ -31,7 +31,7 @@ Swars::Battle.count                    # => 1895528
 # >> |            sleep | 0                                |
 # >> |          subject | 直近数日で注目されているユーザー |
 # >> |         page_max | 1                                |
-# >> |      early_break | false                            |
+# >> |      hard_crawl | false                            |
 # >> |           period | 8640000                          |
 # >> |         at_least | 1                                |
 # >> |            limit | 2                                |
