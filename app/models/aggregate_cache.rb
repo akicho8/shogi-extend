@@ -1,10 +1,13 @@
 # インターフェイスはこの2つだけ
 #
-# 書き込み
-# AggregateCache["A"].write("X")
+# |----------+----------------------------------------|
+# | 内容     | コード                                 |
+# |----------+----------------------------------------|
+# | 書き込み | AggregateCache["A"].write({foo: 1})    |
+# | 読み出し | AggregateCache["A"].read # => {foo: 1} |
+# |----------+----------------------------------------|
 #
-# 読み出し
-# AggregateCache["A"].read # => "X"
+# 疑問: これなんで世代を持つようにしたんだっけ？？？
 #
 class AggregateCache < ApplicationRecord
   scope :group_only, -> group_name { where(group_name: group_name) } # group_name で絞る

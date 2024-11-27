@@ -54,13 +54,37 @@ module QuickScript
         value = JSON.parse(value)
       end
 
+      ################################################################################ DBを使うセッション
+
+      def db_session_write(key, value)
+        if current_user
+          PermanentVariable[db_session_key(key)] = value
+        end
+      end
+
+      def db_session_read(key)
+        if current_user
+          PermanentVariable[db_session_key(key)]
+        end
+      end
+
+      def db_session_key(key)
+        [current_user.id, self.class.qs_key, key].join("|")
+      end
+
       ################################################################################
 
       def before_call
         Rails.logger.tagged("パラメータ復元と現在の値を保存") do
           form_parts.each do |e|
-            if e[:session_sync]
-              key = e[:key]
+            key = e[:key]
+            case e[:session_sync]
+            when :use_db_session_for_login_user_only
+              if current_user
+                params[key] ||= db_session_read(key)
+                db_session_write(key, params[key])
+              end
+            when true
               # :PARAMS_SERIALIZE_DESERIALIZE:
               # if params[key] == "__empty__"
               #   Rails.logger.debug { "params = params.except(#{key.inspect})" }

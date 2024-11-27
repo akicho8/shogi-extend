@@ -17,7 +17,7 @@ module QuickScript
             :label           => "将棋ウォーズID(s)",
             :key             => :swars_user_keys,
             :type            => :text,
-            :session_sync    => false, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため保存してはいけない
+            :session_sync    => :use_db_session_for_login_user_only, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため保存してはいけない
             :dynamic_part => -> {
               {
                 :default => params[:swars_user_keys].to_s.presence,
@@ -154,13 +154,13 @@ module QuickScript
           return
         end
 
-        if main_scope.none?
-          flash[:notice] = "一人も見つかりません"
+        if missing_user_keys.present?
+          flash[:notice] = "#{missing_user_keys * ' と '} が見つかりません。将棋ウォーズ棋譜検索で一度検索すると出てくるかもしれません。"
           return
         end
 
-        if missing_user_keys.present?
-          flash[:notice] = "#{missing_user_keys * ' と '} が見つかりません。将棋ウォーズ棋譜検索で一度検索すると出てくるかもしれません。"
+        if main_scope.none?
+          flash[:notice] = "一人も見つかりません"
           return
         end
 

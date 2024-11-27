@@ -15,7 +15,7 @@ module QuickScript
 
       if form_before_call_check
         unless @__performed__
-          raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない"
+          # raise QuickScriptError, "form_parts を呼ぶ前に call が実行されていない"
         end
       end
 
