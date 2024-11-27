@@ -9,20 +9,24 @@ module QuickScript
       self.debug_mode      = Rails.env.local?
 
       LIMIT_MAX         = 1000
-      DEFAULT_USER_KEYS = ["BOUYATETSU5", "itoshinTV", "TOBE_CHAN"]
+      USER_ITEMS_TEXT_DEFAULT = <<~EOS
+藤森哲也 BOUYATETSU5
+伊藤真吾 itoshinTV
+戸辺誠 TOBE_CHAN
+EOS
 
       def form_parts
         super + [
           {
-            :label           => "将棋ウォーズID(s)",
-            :key             => :swars_user_keys,
+            :label           => "名前とウォーズIDたち",
+            :key             => :user_items_text,
             :type            => :text,
-            :session_sync    => :use_db_session_for_login_user_only, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため保存してはいけない
+            :session_sync    => :use_db_session_for_login_user_only, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため普通のセッションに保存してはいけない
             :dynamic_part => -> {
               {
-                :default => params[:swars_user_keys].to_s.presence,
-                :placeholder => default_user_keys,
-                :help_message => "複数指定できます",
+                :default      => params[:user_items_text].to_s.presence,
+                :placeholder  => USER_ITEMS_TEXT_DEFAULT,
+                :help_message => "名前とウォーズIDのペアを一行ずつ並べてください",
               }
             },
           },
@@ -35,6 +39,7 @@ module QuickScript
               {
                 :elems   => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
                 :default => params[:order_by].presence || "grade",
+                :help_message => "上で記入した通りの並びでいいなら「そのまま」にしてください",
               }
             },
           },
@@ -99,7 +104,7 @@ module QuickScript
           when "grade"
             s = s.joins(:grade).order(::Swars::Grade.arel_table[:priority].asc)
           when "original"
-            s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_swars_user_keys])
+            s = s.order([Arel.sql("FIELD(#{::Swars::User.table_name}.user_key, ?)"), current_user_keys])
           when "gentleman"
             s = s.sort_by { |e| -(e.cached_stat.gentleman_stat.final_score || -Float::INFINITY) }
           when "vitality"
@@ -113,7 +118,8 @@ module QuickScript
         @rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"] = { _nuxt_link: { name: e.name_with_ban, to: {name: "swars-search", query: { query: e.user_key } }, }, }
+              row["名前"] = user_items_hash[e.key][:name]
+              row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: {name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
@@ -149,7 +155,7 @@ module QuickScript
           return
         end
 
-        if current_swars_user_keys.blank?
+        if current_user_keys.blank?
           flash[:notice] = "ウォーズIDを指定してください"
           return
         end
@@ -172,7 +178,7 @@ module QuickScript
 
       def main_scope
         @main_scope ||= yield_self do
-          s = ::Swars::User.where(key: current_swars_user_keys)
+          s = ::Swars::User.where(key: current_user_keys)
           s = s.includes(:grade)       # for e.grade.name
           s = s.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
         end
@@ -204,14 +210,30 @@ module QuickScript
 
       ################################################################################ 対象ウォーズIDs
 
-      def default_user_keys
-        @default_user_keys ||= (Rails.env.local? ? DEFAULT_USER_KEYS : []).shuffle * " "
+      # def user_items_text_default
+      #   @user_items_text_default ||= Rails.env.local? ? USER_ITEMS_TEXT_DEFAULT : ""
+      # end
+
+      def user_item_columns
+        [:name, :swars_key]
+      end
+      
+      def user_items
+        @user_items ||= params[:user_items_text].to_s.strip.lines.collect { |e|
+          if values = e.strip.split(/[[:space:],|]+/).presence
+            user_item_columns.zip(values).to_h
+          end
+        }.compact
       end
 
-      def current_swars_user_keys
-        av = params[:swars_user_keys].presence
-        av ||= Rails.env.local? && default_user_keys
-        av.to_s.scan(/\w+/).uniq
+      # 指定のウォーズID(s)
+      def current_user_keys
+        @current_user_keys ||= user_items.collect { |e| e[:swars_key] }
+      end
+
+      # ウォーズIDから名前を求めるためのテーブル
+      def user_items_hash
+        @user_items_hash ||= user_items.inject({}) {|a, e| a.merge(e[:swars_key] => e) }
       end
 
       # DBに存在するユニークなウォーズIDたち
@@ -221,7 +243,7 @@ module QuickScript
 
       # 引き数で指定したが存在しなかったウォーズIDたち
       def missing_user_keys
-        current_swars_user_keys - db_exist_user_keys
+        current_user_keys - db_exist_user_keys
       end
 
       ################################################################################ Google Sheet
@@ -234,7 +256,8 @@ module QuickScript
         @sheet_rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"]            = hyper_link(e.name_with_ban, e.swars_search_url)
+              row["名前"]            = user_items_hash[e.key][:name]
+              row["ウォーズID"]      = hyper_link(e.name_with_ban, e.swars_search_url)
               row["最高段位"]        = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"]            = e.cached_stat.total_judge_stat.win_ratio
@@ -294,8 +317,8 @@ module QuickScript
         out << "生成した Google スプレッドシートは1ヶ月ほどで消します。保存しておきたい場合や編集する場合は、そこから「コピーを作成」で自分のところにコピってください。"
         # Google スプレッドシートを編集するなら開いてから右上メニューから「共有とエクスポート」→「コピーを作成」してください。PC の場合は「ファイル」→「コピーを作成」です。
         out << ""
-        out << "▼対象者"
-        out << db_exist_user_keys.join(" ")
+        out << "▼再度生成したいときのコピペ用テキスト"
+        out << user_items.collect { |e| [e[:name], e[:swars_key]].join(" ") }.join("\n")
         out.join("\n")
       end
 
