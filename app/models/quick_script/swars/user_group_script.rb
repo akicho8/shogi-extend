@@ -8,7 +8,8 @@ module QuickScript
       self.login_link_show = true
       self.debug_mode      = Rails.env.local?
 
-      LIMIT_MAX         = 1000
+      STAT_OPTIONS            = { sample_max: 500 }
+      LIMIT_MAX               = 1000 
       USER_ITEMS_TEXT_DEFAULT = <<~EOS
 藤森哲也 BOUYATETSU5
 伊藤真吾 itoshinTV
@@ -186,7 +187,7 @@ EOS
 
       def grade_per_rule(user)
         {}.tap do |row|
-          user.cached_stat.grade_by_rules_stat.ruleships.each do |e|
+          user.cached_stat(STAT_OPTIONS).grade_by_rules_stat.ruleships.each do |e|
             row[e[:rule_info].name] = e[:grade_info].try { name } || ""
           end
         end
