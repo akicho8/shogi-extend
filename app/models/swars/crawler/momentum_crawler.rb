@@ -25,7 +25,7 @@ module Swars
             :hard_crawl       => true,   # true: 全体クロール
             :period           => 3.days, # この期間で
             :at_least         => 5,      # N件以上検索されている(多い順)
-            :limit            => 50,     # ユーザーを最大N件
+            :limit            => 100,    # ユーザーを最大N件
             :hard_crawled_old => 3.days, # 全体クロールしてN日以上経過している人たち
           })
       end
