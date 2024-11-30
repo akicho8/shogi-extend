@@ -25,7 +25,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="横断検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/cross-search'}"
+            :to="{path: '/lab/swars/cross-search', query: {back_to: $route.fullPath}}"
             )
 
           b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")
@@ -72,21 +72,21 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="棋譜ダウンロード"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/battle-download', query: {query: APP.xi.query}}"
+            :to="{path: '/lab/swars/battle-download', query: {query: APP.xi.query, back_to: $route.fullPath}}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_download_all_handle(
             label="古い棋譜の補完"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/crawler-batch', query: {swars_user_key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/crawler-batch', query: {swars_user_key: APP.xi.current_swars_user_key, back_to: $route.fullPath}}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_battle_history_handle(
             label="対局履歴のエクスポート"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/battle-history', query: {query: APP.xi.query}}"
+            :to="{path: '/lab/swars/battle-history', query: {query: APP.xi.query, back_to: $route.fullPath}}"
             :disabled="menu_item_disabled")
 
         b-menu-list(label="一歩進んだ使い方")
@@ -94,7 +94,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :class="{'has-text-weight-bold': APP.mounted_then_swars_search_default_key_present_p}"
             @click.native="APP.xi.current_swars_user_key && $sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/search-default', query: {swars_search_default_key: APP.xi.current_swars_user_key}}"
+            :to="{path: '/lab/swars/search-default', query: {swars_search_default_key: APP.xi.current_swars_user_key, back_to: $route.fullPath}}"
             :disabled="menu_item_disabled")
             template(#label)
               | ウォーズIDを記憶する
@@ -103,7 +103,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           b-menu-item.is_active_unset(
             @click.native="$sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/general/piyo-shogi-config'}"
+            :to="{path: '/lab/general/piyo-shogi-config', query: {back_to: $route.fullPath}}"
             )
             template(#label)
               | ぴよ将棋の設定

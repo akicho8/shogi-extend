@@ -111,12 +111,19 @@ export const vue_support = {
     },
     back_to_or(path) {
       Gs.assert(Gs.present_p(path), "Gs.present_p(path)")
-      if (typeof window !== "undefined") {
-        if (window.history.state.back_to_ok) {
-          this.$router.go(-1)
-        } else {
-          this.$router.push(path)
+      if (false) {
+        // この方法でブラウザバックを行うとループする
+        // 例えばリダイレクトで A → B ときた場合 B から戻るで再度 A → B が起きて B から上がれなくなる
+        // なのでもう使わない
+        if (typeof window !== "undefined") {
+          if (window.history.state.back_to_ok) {
+            this.$router.go(-1)
+          } else {
+            this.$router.push(path)
+          }
         }
+      } else {
+        this.$router.push(path)
       }
     },
 
