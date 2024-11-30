@@ -174,7 +174,7 @@ module Swars
         },
       }, {
         key: "千日手逃げマン",
-        message: "先手なのに千日手で逃げた",
+        message: "先手なのに千日手",
         badge_params: "🍌",
         if_cond: -> m {
           if m.judge_key == "draw"

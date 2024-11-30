@@ -2,7 +2,7 @@ require "./setup"
 tp Swars::User["Taichan0601"].stat(sample_max: 100).gentleman_stat.to_a
 # tp Swars::User["yomeP"].stat(sample_max: 50).gentleman_stat.to_a
 # tp Swars::User["yomeP"].stat(sample_max: 0).gentleman_stat.to_a
-tp Swars::User::Stat::GentlemanStat.report(sample_max: 5)
+# tp Swars::User::Stat::GentlemanStat.report(sample_max: 5)
 # >> |----------------+------+---------+-------|
 # >> | 項目           | 重み | 回数    | 減点  |
 # >> |----------------+------+---------+-------|
@@ -20,6 +20,8 @@ tp Swars::User::Stat::GentlemanStat.report(sample_max: 5)
 # >> | 棋力調整       |  6.0 |         |       |
 # >> | 角不成         |  2.0 |         |       |
 # >> | 飛車不成       |  4.0 |         |       |
+# >> | 全駒           |  5.0 |         |       |
+# >> | 玉単騎         | 10.0 |         |       |
 # >> | 1手詰焦らし    | 15.0 |         |       |
 # >> | 勝ち焦らし     | 20.0 |         |       |
 # >> | 棋神           | 10.0 |         |       |

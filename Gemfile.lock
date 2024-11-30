@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 9d23c6459bdd138fc2213fd80254f38edff465b2
+  revision: 2bbad1da5b7307b66ed10034412f9b38f31f5631
   branch: main
   specs:
     bioshogi (0.0.15)
@@ -309,7 +309,7 @@ GEM
       activesupport
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.2)
     minitest-power_assert (0.3.1)
       minitest
       power_assert (>= 1.1)
@@ -317,7 +317,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
-    mutex_m (0.2.0)
+    mutex_m (0.3.0)
     net-imap (0.4.14)
       date
       net-protocol
@@ -368,7 +368,7 @@ GEM
       omniauth-oauth2 (~> 1.0)
     orm_adapter (0.5.0)
     os (1.1.4)
-    pkg-config (1.5.7)
+    pkg-config (1.5.8)
     power_assert (2.0.3)
     pp (0.4.0)
       prettyprint

@@ -3,7 +3,7 @@
 module Swars
   module User::Stat
     class PieceMasterStat < Base
-      THRESHOLD = 1.2           # 1.0 では表示されるバッジが多すぎてありがたみがないので突き出ている場合だけバッジにする
+      THRESHOLD = 1.4           # 1.0 では表示されるバッジが多すぎてありがたみがないので突き出ている場合だけバッジにする
 
       class << self
         def report(options = {})

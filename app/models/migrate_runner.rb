@@ -1,12 +1,15 @@
 # ▼ローカル更新
 # rails r MigrateRunner.new.call
-
+#
 # ▼本番更新
 # cap production deploy:upload FILES=app/models/migrate_runner.rb
 # # RAILS_ENV=production bundle exec bin/rails r 'MigrateRunner.new.call'
 # RAILS_ENV=production nohup bundle exec bin/rails r 'MigrateRunner.new.call' &
 # tailf nohup.out
-
+#
+# ▼手数の多いレコード数
+# cap production rails:runner CODE='p Swars::Battle.where("turn_max >= 220").count'
+#
 class MigrateRunner
   def call
     public_methods.grep(/\A(step\w+)/).sort.each do |e|
@@ -50,23 +53,23 @@ class MigrateRunner
   #   p Swars::Membership.where(judge_id: nil).count
   # end
 
-  # def step1_delete
-  #   [
-  #     # "大隅囲い",
-  #     # "三手囲い",
-  #     # "高田流左玉",
-  #     # "ロケット",
-  #     # "手得角交換型",
-  #     # "手損角交換型",
-  #     # "角交換型",
-  #     # "角換わり新型",
-  #     # "新丸山ワクチン",
-  #     # "矢倉左美濃急戦",
-  #     "2手目△6二銀戦法",
-  #   ].each do |name|
-  #     tag_delete(name)
-  #   end
-  # end
+  def step1_delete
+    [
+      # "大隅囲い",
+      # "三手囲い",
+      # "高田流左玉",
+      # "ロケット",
+      # "手得角交換型",
+      # "手損角交換型",
+      # "角交換型",
+      "角換わり新型",
+      # "新丸山ワクチン",
+      # "矢倉左美濃急戦",
+      # "2手目△6二銀戦法",
+    ].each do |name|
+      tag_delete(name)
+    end
+  end
 
   # def step2_rename
   #   list = {
@@ -204,14 +207,39 @@ class MigrateRunner
   #   end
   # end
 
-  def step7_hard_rename
-    list = {
-      "戸部流4→3戦法" => "戸辺流4→3戦法",
-    }
-    list.each do |from, to|
-      tag = ActsAsTaggableOn::Tag.find_by!(name: from)
-      tag.update!(name: to)
-      p [from, to, :update]
+  # def step7_hard_rename
+  #   list = {
+  #     "戸部流4→3戦法" => "戸辺流4→3戦法",
+  #   }
+  #   list.each do |from, to|
+  #     tag = ActsAsTaggableOn::Tag.find_by!(name: from)
+  #     tag.update!(name: to)
+  #     p [from, to, :update]
+  #   end
+  # end
+
+  def step8_手数の多い対局を読み直して全駒と玉単騎のタグをつける
+    s = ::Swars::Battle.all
+    batch_size = 2000
+    all_count = s.count.ceildiv(batch_size)
+    s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+      p [batch, all_count, batch.fdiv(all_count)]
+      s.each do |e|
+        if e.turn_max >= 200
+          if e.memberships.any? { |e| e.note_tag_list.include?("大駒全ブッチ") || e.note_tag_list.include?("大駒コンプリート") }
+            e.rebuild
+            e.reload
+            if e.memberships.any? { |e| e.note_tag_list.include?("全駒") }
+              print "A"
+            end
+            if e.memberships.any? { |e| e.note_tag_list.include?("玉単騎") }
+              print "1"
+            end
+            STDOUT.flush
+          end
+        end
+      end
+      puts
     end
   end
 

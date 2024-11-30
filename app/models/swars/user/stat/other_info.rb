@@ -54,7 +54,9 @@ module Swars
         { key: "わざと負けて棋力調整",             local_only: false, body: proc { skill_adjust_stat.count                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: SkillAdjustStat.search_params, }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "角不成", } }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "飛車不成", } }, },
-        { key: "先手なのに千日手で逃げた",         local_only: false, body: proc { draw_stat.black_sennichi_count                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: DrawStat.search_params } },
+        { key: "全駒",                             local_only: false, body: proc { tag_stat.counts_hash[:"全駒"]                 }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "全駒", } }, },
+        { key: "玉単騎",                           local_only: false, body: proc { tag_stat.counts_hash[:"玉単騎"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "玉単騎", } }, },
+        { key: "先手なのに千日手",                 local_only: false, body: proc { draw_stat.black_sennichi_count                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: DrawStat.search_params } },
 
         ################################################################################
 

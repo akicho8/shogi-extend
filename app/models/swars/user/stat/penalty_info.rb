@@ -19,6 +19,8 @@ module Swars
         { weight:   6.0, key: "わざと負けて棋力調整",             short_name: "棋力調整",       x_count: proc { skill_adjust_stat.count                                      }, },
         { weight:   2.0, key: "角不成をした対局数",               short_name: "角不成",         x_count: proc { tag_stat.count_by(:"角不成")                                 }, },
         { weight:   4.0, key: "飛車不成をした対局数",             short_name: "飛車不成",       x_count: proc { tag_stat.count_by(:"飛車不成")                               }, },
+        { weight:   5.0, key: "全駒をした対局数",                 short_name: "全駒",           x_count: proc { tag_stat.count_by(:"全駒")                                   }, },
+        { weight:  10.0, key: "玉単騎をした対局数",               short_name: "玉単騎",         x_count: proc { tag_stat.count_by(:"玉単騎")                                 }, },
         { weight:  15.0, key: "1手詰を焦らした対局数",            short_name: "1手詰焦らし",    x_count: proc { taunt_mate_stat.count                                        }, },
         { weight:  20.0, key: "必勝形から焦らした対局数",         short_name: "勝ち焦らし",     x_count: proc { taunt_timeout_stat.count                                     }, },
         { weight:  10.0, key: "人に対して棋神を使った対局数",     short_name: "棋神",           x_count: proc { fraud_stat.count                                             }, },
