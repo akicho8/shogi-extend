@@ -53,23 +53,23 @@ class MigrateRunner
   #   p Swars::Membership.where(judge_id: nil).count
   # end
 
-  def step1_delete
-    [
-      # "大隅囲い",
-      # "三手囲い",
-      # "高田流左玉",
-      # "ロケット",
-      # "手得角交換型",
-      # "手損角交換型",
-      # "角交換型",
-      "角換わり新型",
-      # "新丸山ワクチン",
-      # "矢倉左美濃急戦",
-      # "2手目△6二銀戦法",
-    ].each do |name|
-      tag_delete(name)
-    end
-  end
+  # def step1_delete
+  #   [
+  #     # "大隅囲い",
+  #     # "三手囲い",
+  #     # "高田流左玉",
+  #     # "ロケット",
+  #     # "手得角交換型",
+  #     # "手損角交換型",
+  #     # "角交換型",
+  #     # "角換わり新型",
+  #     # "新丸山ワクチン",
+  #     # "矢倉左美濃急戦",
+  #     # "2手目△6二銀戦法",
+  #   ].each do |name|
+  #     tag_delete(name)
+  #   end
+  # end
 
   # def step2_rename
   #   list = {
