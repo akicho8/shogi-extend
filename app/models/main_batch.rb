@@ -6,13 +6,14 @@ class MainBatch
   end
 
   def production
+    # 動画変換
+    Tsl::League.setup(verbose: false)
+    Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
+
     # 将棋ウォーズ棋譜検索クロール
     Swars::Crawler::ReservationCrawler.run
     Swars::Crawler::NotableCrawler.run
     Swars::Crawler::MomentumCrawler.run
-
-    Tsl::League.setup(verbose: false)
-    Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
 
     # 削除シリーズ
     Kiwi::Lemon.cleanup(execute: true)   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
