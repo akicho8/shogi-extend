@@ -2,11 +2,13 @@ require "rails_helper"
 
 module Swars
   RSpec.describe User::Stat::WinStat, type: :model, swars_spec: true do
-    def case1(tactic_keys, judge_key)
+    def case1(tactic_keys, judge_key, n_times = 1)
       @black = User.create!
-      tactic_keys.each do |strike_plan|
-        Battle.create!(strike_plan: strike_plan) do |e|
-          e.memberships.build(user: @black, judge_key: judge_key)
+      n_times.times do
+        tactic_keys.each do |strike_plan|
+          Battle.create!(strike_plan: strike_plan) do |e|
+            e.memberships.build(user: @black, judge_key: judge_key)
+          end
         end
       end
     end
@@ -51,17 +53,17 @@ module Swars
 
       describe "派閥" do
         it "the_ture_master_of_ibis?" do
-          case1(["棒銀"], :win)
+          case1(["棒銀"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_ibis? }
         end
 
         it "the_ture_master_of_furi?" do
-          case1(["四間飛車"], :win)
+          case1(["四間飛車"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_furi? }
         end
 
         it "the_ture_master_of_all_rounder?" do
-          case1(["棒銀", "四間飛車"], :win)
+          case1(["棒銀", "四間飛車"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_all_rounder? }
         end
       end
