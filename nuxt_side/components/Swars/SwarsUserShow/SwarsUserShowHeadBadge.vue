@@ -25,7 +25,7 @@ export default {
 
   .badges_line
     text-align: center
-    white-space: wrap           // nowrap:一行スクロールモード wrap:改行モード (ここだけで切り替え可)
+    white-space: nowrap         // nowrap:一行スクロールモード wrap:改行モード (ここだけで切り替え可)
     max-width: 100%             // 重要。width だと数が少ないとき左寄せになってしまう。
 
   .XemojiWrap
