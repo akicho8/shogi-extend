@@ -12,7 +12,14 @@ module Swars
       ], to: :stat
 
       def as_json
-        active_badges.collect { |e| { icon: e.icon, message: e.message } }
+        av = active_badges.collect { |e| { icon: e.icon, message: e.message } }
+        av = av.shuffle
+        if Rails.env.local?
+          if badge_debug
+            av = [{icon: "左端"}, *av, {icon: "右端"}]
+          end
+        end
+        av
       end
 
       def active_badges

@@ -71,14 +71,14 @@ pre
 .is_line_break_on
   @extend %is_line_break_on
 
-//////// 単語折り返し  
-  
+//////// 単語折り返し
+
 .is_word_break_on
   @extend %is_word_break_on
 
 .is_word_break_off
   @extend %is_word_break_off
-  
+
 ////////// aタグを装飾しない
 
 .is_decoration_off
@@ -102,6 +102,14 @@ pre
 .is_buttons_scroll
   flex-wrap: nowrap
   @extend .is_scroll_x
+
+////////// スクロールバー非表示
+
+.is_scrollbar_invisible
+  -webkit-overflow-scrolling: touch // モバイルでスムーズスクロールを有効化
+  scrollbar-width: none             // Firefoxでスクロールバーを非表示にする
+  &::-webkit-scrollbar
+    display: none                   // Webkit系でスクロールバーを非表示にする
 
 ////////// truncate
 
