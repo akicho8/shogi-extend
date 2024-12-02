@@ -52,17 +52,17 @@ module Swars
       end
 
       describe "派閥" do
-        it "the_ture_master_of_ibis?" do
+        it "the_ture_master_of_ibis? / 居飛車党" do
           case1(["棒銀"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_ibis? }
         end
 
-        it "the_ture_master_of_furi?" do
+        it "the_ture_master_of_furi? / 振り飛車党" do
           case1(["四間飛車"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_furi? }
         end
 
-        it "the_ture_master_of_all_rounder?" do
+        it "the_ture_master_of_all_rounder? / オールランダー" do
           case1(["棒銀", "四間飛車"], :win, 10)
           assert { @black.stat.win_stat.the_ture_master_of_all_rounder? }
         end

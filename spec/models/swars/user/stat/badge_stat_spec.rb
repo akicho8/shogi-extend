@@ -16,9 +16,11 @@ module Swars
           skill = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:strike_plan])
           info = skill.main_reference_info
           player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
-          Battle.create!(strike_plan: e[:strike_plan]) do |e|
-            e.memberships.build(user: black, judge_key: player.location.key == :black ? :win : :lose) # そのプレイヤーの方を勝ちにする
-            e.memberships.build(user: white, judge_key: player.location.key == :white ? :win : :lose)
+          e[:n_times].times do
+            Battle.create!(strike_plan: e[:strike_plan]) do |e|
+              e.memberships.build(user: black, judge_key: player.location.key == :black ? :win : :lose) # そのプレイヤーの方を勝ちにする
+              e.memberships.build(user: white, judge_key: player.location.key == :white ? :win : :lose)
+            end
           end
           [black, white].any? do |user|
             if false
