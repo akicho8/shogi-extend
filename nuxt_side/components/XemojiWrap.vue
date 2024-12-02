@@ -1,5 +1,5 @@
 <template lang="pug">
-.XemojiWrap(:is="component" v-xemoji :key="str" v-html="str")
+.XemojiWrap(:is="component" v-xemoji :key="str" v-html="str" v-bind="$attrs" v-on="$listeners")
 </template>
 
 <script>
