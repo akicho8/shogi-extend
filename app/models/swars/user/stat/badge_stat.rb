@@ -16,7 +16,11 @@ module Swars
         av = av.shuffle
         if Rails.env.local?
           if badge_debug
-            av = [{icon: "左端"}, *av, {icon: "右端"}]
+            av = [
+              { icon: "←", message: "左端" },
+              *av,
+              { icon: "→", message: "右端" },
+            ]
           end
         end
         av
