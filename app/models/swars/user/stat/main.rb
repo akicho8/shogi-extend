@@ -320,7 +320,7 @@ module Swars
       private
 
       def prepare
-        @params[:badge_debug] = @params[:badge_debug].to_s == "true"
+        @params[:badge_debug] = @params[:badge_debug].to_s.in?(["true", "1"])
       end
     end
   end
