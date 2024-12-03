@@ -1,4 +1,5 @@
-web: DOMAIN=10.0.1.16 bundle exec bin/rails server -p $PORT -b 10.0.1.16
+# IP は ifconfig | grep inet で調べる
+web: DOMAIN=10.0.1.9 bundle exec bin/rails server -p $PORT -b 10.0.1.9
 webpack-watcher: bundle exec bin/webpack-dev-server
-sidekiq: DOMAIN=10.0.1.16 sidekiq
-nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -H 10.0.1.16 -o --dotenv .env.home)
+sidekiq: DOMAIN=10.0.1.9 sidekiq
+nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -H 10.0.1.9 -o --dotenv .env.home)
