@@ -17,6 +17,7 @@ module Swars
           "検索回数"   => nil,
           "最終検索"   => nil,
           "最終対局"   => nil,
+          "全クロール" => nil,
           "エラー"     => nil,
         }
 
@@ -43,6 +44,7 @@ module Swars
           if battle = user.battles.order(:battled_at).last
             row["最終対局"] = battle.battled_at.to_fs(:ymdhms)
           end
+          row["全クロール"] = user.hard_crawled_at&.to_fs(:ymdhms)
         end
 
         if row["前"] && row["後"]
