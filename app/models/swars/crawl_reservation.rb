@@ -23,7 +23,7 @@
 module Swars
   class CrawlReservation < ApplicationRecord
     # 一人当たりの予約件数
-    cattr_accessor(:maximum_reservation_number_of_per_capita) { Rails.env.development? ? 3 : 10 }
+    cattr_accessor(:maximum_reservation_number_of_per_capita) { Rails.env.development? ? 3 : 50 }
 
     belongs_to :user, class_name: "::User"
 
