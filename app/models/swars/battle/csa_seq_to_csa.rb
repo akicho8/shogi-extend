@@ -46,7 +46,13 @@ module Swars
       def render_body
         # 残り時間の並びから使用時間を求めつつ指し手と一緒に並べていく
         life = [@battle.rule_info.life_time] * @battle.memberships.size
+
         @battle.csa_seq.each.with_index do |(op, t), i|
+          if true
+            # 2024-12-25: 消費時間が nil になってい場合があるため 0 にしておく
+            t ||= 0
+          end
+
           i = i.modulo(life.size)
           used = life[i] - t
           life[i] = t
