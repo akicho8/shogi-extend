@@ -62,7 +62,7 @@ module Swars
         { key: "たこ金マン",             icon: "🪁",   message: "きｍきｍ金の使い手",         if_cond: proc { win_stat.exist?(:"きｍきｍ金") },},
         { key: "カメレオンマン",         icon: "🦎",   message: "カメレオン戦法の使い手",     if_cond: proc { win_stat.exist?(:"カメレオン戦法") },},
         { key: "ポンポンマン",           icon: "🦗",   message: "ポンポン桂の使い手",         if_cond: proc { win_stat.exist?(:"ポンポン桂") },},
-        { key: "穴熊マン",               icon: "🐻",   message: "穴熊名人",                   if_cond: proc { win_stat.include?("熊") },},
+        { key: "穴熊マン",               icon: "🐻",   message: "穴熊名人",                   if_cond: proc { win_stat.anaguma_medal? },},
         { key: "ダイヤマン",             icon: "💎",   message: "ダイヤモンド美濃の使い手",   if_cond: proc { win_stat.exist?(:"ダイヤモンド美濃")                 },},
         { key: "チョコレートマン",       icon: "🍫",   message: "チョコレート囲いの使い手",   if_cond: proc { win_stat.exist?(:"チョコレート囲い")                 },},
         { key: "極限早繰りマン",         icon: "🎸",   message: "極限早繰り銀の使い手",       if_cond: proc { win_stat.exist?(:"極限早繰り銀")                  },},

@@ -67,6 +67,13 @@ module Swars
           assert { @black.stat.win_stat.the_ture_master_of_all_rounder? }
         end
       end
+
+      describe "穴熊" do
+        it "anaguma_medal?" do
+          case1(["四枚穴熊"], :win, 10)
+          assert { @black.stat.win_stat.anaguma_medal? }
+        end
+      end
     end
   end
 end
