@@ -15,9 +15,9 @@ module Swars
         end
       end
       it "production" do
-        result = History.new(user_key: "chrono_", remote_run: true).fetch
+        result = History.new(user_key: "abacus10", remote_run: true).fetch
         assert { result.all_keys.present? }
-        assert { result.all_keys.all? { |e| e.user_keys.include?(UserKey["chrono_"]) } }
+        assert { result.all_keys.all? { |e| e.user_keys.include?(UserKey["abacus10"]) } }
       end
     end
   end
