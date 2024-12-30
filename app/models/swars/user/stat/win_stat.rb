@@ -33,6 +33,15 @@ module Swars
 
       ################################################################################
 
+      # 「穴熊マン」か？
+      def anaguma_medal?
+        Bioshogi::Analysis::DefenseInfo.anaguma_elems.any? do |e|
+          exist?(e.key)
+        end
+      end
+
+      ################################################################################
+
       def ratios_hash
         @ratios_hash ||= tag_stat.ratios_hash.each_with_object({}) do |(tag, ratio), m|
           if ratio >= THRESHOLD
