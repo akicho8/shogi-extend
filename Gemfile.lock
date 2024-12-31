@@ -220,6 +220,7 @@ GEM
     faraday-retry (1.0.3)
     faraday_middleware (1.2.0)
       faraday (~> 1.0)
+    ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
@@ -309,6 +310,7 @@ GEM
       activesupport
     mini_magick (4.12.0)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.8)
     minitest (5.25.4)
     minitest-power_assert (0.3.1)
       minitest
@@ -332,6 +334,9 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.7.3)
     nkf (0.1.2)
+    nokogiri (1.18.1)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.18.1-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.1-x86_64-darwin)
@@ -591,6 +596,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  ruby
   x86_64-darwin-21
   x86_64-linux
 
