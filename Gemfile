@@ -136,6 +136,8 @@ gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
 gem "nokogiri", force_ruby_platform: true # for Swars::Agent
+# gem "nokogiri", platforms: :ruby # for Swars::Agent
+# gem "nokogiri", platforms: [:arm64_darwin, :x86_64_darwin, :x86_64_linux] # ← 動かない
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
