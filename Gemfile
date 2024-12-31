@@ -135,7 +135,7 @@ gem "bioshogi", github: "akicho8/bioshogi", branch: "main"
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
-gem "nokogiri" # for Swars::Agent
+gem "nokogiri", force_ruby_platform: true # for Swars::Agent
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
