@@ -90,6 +90,8 @@ module Swars
         { key: "パンツマン",             icon: "🩲",   message: "パンツを脱ぎがち",           if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
         { key: "小部屋マン",             icon: "🛖",   message: "銀冠の小部屋に逃げて勝った", if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
         { key: "都詰めマン",             icon: "🪬",   message: "都詰めマスター (超レア)",    if_cond: proc { win_stat.exist?(:"都詰め") } },
+        { key: "吊るし桂マン",           icon: "🪝",   message: "吊るし桂で勝った",           if_cond: proc { win_stat.exist?(:"吊るし桂") } },
+        { key: "雪隠詰めマン",           icon: "🚾",   message: "雪隠詰めで勝った",           if_cond: proc { win_stat.exist?(:"雪隠詰め") } },
         { key: "姿焼マン",               icon: "🍳",   message: "穴熊姿焼き名人",             if_cond: proc { win_stat.exist?(:"穴熊の姿焼き") } },
         { key: "ブッチマン",             icon: "🧠",   message: "大駒全ブッチの達人",         if_cond: proc { win_stat.exist?(:"大駒全ブッチ") },},
         { key: "筋違い角マン",           icon: "👨🏻",   message: "筋違い角おじさん",           if_cond: proc { win_stat.exist?(:"筋違い角") },},
