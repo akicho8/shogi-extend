@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 71cb58f338670f7f314f3b7e8a1188dba3473d85
+  revision: 2336fa0e2cc19c19d1eeac8448e04c46ea27a798
   branch: main
   specs:
     bioshogi (0.0.15)
@@ -161,7 +161,7 @@ GEM
       simplecov (>= 0.15, < 0.22)
     color (1.8)
     concurrent-ruby (1.3.4)
-    connection_pool (2.4.1)
+    connection_pool (2.5.0)
     crass (1.0.6)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
@@ -367,7 +367,7 @@ GEM
       omniauth-oauth2 (~> 1.0)
     orm_adapter (0.5.0)
     os (1.1.4)
-    pkg-config (1.5.8)
+    pkg-config (1.5.9)
     power_assert (2.0.3)
     pp (0.4.0)
       prettyprint
