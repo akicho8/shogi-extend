@@ -37,6 +37,7 @@ namespace :my do
       system! "gzcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
     end
 
+    # rake my:db:production_db_backup_to_local
     desc "本番サーバーの production の DB をローカルにバックアップする"
     task "production_db_backup_to_local" do
       tables = ENV["TABLES"].to_s.scan(/\w+/).join(" ")
