@@ -23,6 +23,9 @@ module QuickScript
 
         assert { case1(order_key: :win_rate) }
         assert { case1(order_key: :popular)  }
+
+        assert { case1(period_key: :day1)  }
+        assert { case1(period_key: :year1) }
       end
     end
   end

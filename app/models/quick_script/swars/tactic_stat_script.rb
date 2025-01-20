@@ -47,6 +47,18 @@ module QuickScript
             },
           },
           {
+            :label        => "期間直近",
+            :key          => :period_key,
+            :type         => :radio_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => PeriodInfo.form_part_elems,
+                :default => period_info.key,
+              }
+            },
+          },
+          {
             :label        => "[勝率ランキング参加条件] 出現率N%以上",
             :key          => :freq_ratio_gteq,
             :type         => :numeric,
@@ -66,7 +78,8 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :default => params[:freq_count_gteq],
+                :options => { min: 0 },
+                :default => (params[:freq_count_gteq].presence || 0).to_i,
               }
             },
           },
@@ -74,7 +87,7 @@ module QuickScript
       end
 
       def call
-        unless aggregated_value
+        unless aggregated_all
           return "一次集計データがありません"
         end
         if internal_rows.blank?
@@ -115,9 +128,9 @@ module QuickScript
             h["スタイル"] = item.try { style_info.name }
             h["種類"]     = item.try { self.class.human_name }
             if admin_user
-              h["リンク1"]  = { _nuxt_link: { name: "棋力帯",       to: {path: "/lab/swars/grade-stat",       query: { tag: e[:tag_name], }, }, }, }
-              h["リンク2"]  = { _nuxt_link: { name: "戦法ミニ事典", to: {path: "/lab/general/encyclopedia",   query: { tag: e[:tag_name], }, }, }, }
-              h["リンク3"]  = { _nuxt_link: { name: "採用者を探す", to: {path: "/lab/swars/cross-search",     query: { x_tags: e[:tag_name], }, }, }, }
+              h["リンク1"]  = { _nuxt_link: { name: "棋力帯",       to: {path: "/lab/swars/grade-stat",     query: { tag: e[:tag_name], }, }, }, }
+              h["リンク2"]  = { _nuxt_link: { name: "戦法ミニ事典", to: {path: "/lab/general/encyclopedia", query: { tag: e[:tag_name], }, }, }, }
+              h["リンク3"]  = { _nuxt_link: { name: "採用者を探す", to: {path: "/lab/swars/cross-search",   query: { x_tags: e[:tag_name], }, }, }, }
             end
           end
         end
@@ -139,7 +152,7 @@ module QuickScript
         @aggregate ||= yield_self do
           start_time = Time.current
 
-          av = aggregated_value[:records]
+          av = current_agg[:records]
           av = scope_info.scope_block[av]
 
           if scope_info.key == :note
@@ -164,20 +177,25 @@ module QuickScript
           {
             :internal_rows => av,
             :status => {
-              "一次集計日時" => aggregated_value[:primary_aggregated_at].try { to_time.to_fs(:distance) },
-              "一次集計処理" => aggregated_value[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
-              "二次集計処理" => (Time.current - start_time).then { |e| ActiveSupport::Duration.build(e).inspect },
-              "対局数"       => aggregated_value[:population_count],
-              "タグ総数"     => aggregated_value[:records].size,
+              "全体一次集計日時" => aggregated_all[:primary_aggregated_at].try { to_time.to_fs(:distance) },
+              "全体一次集計処理" => aggregated_all[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
+              "二次集計処理"     => (Time.current - start_time).then { |e| ActiveSupport::Duration.build(e).inspect },
+              "対象対局数"       => current_agg[:population_count],
+              "対象タグ数"       => current_agg[:records].size,
             },
           }
         end
       end
 
-      def aggregated_value
-        @aggregated_value ||= AggregateCache[self.class.name].read
+      def aggregated_all
+        @aggregated_all ||= AggregateCache[self.class.name].read
       end
 
+      # 指定期間の一次集計情報
+      def current_agg
+        @current_agg ||= aggregated_all[:period_based_agg].fetch(period_info.key)
+      end
+      
       ################################################################################
 
       def chart_bar_max
@@ -224,8 +242,18 @@ module QuickScript
 
       ################################################################################
 
+      def period_key
+        PeriodInfo.lookup_key_or_first(params[:period_key])
+      end
+
+      def period_info
+        PeriodInfo.fetch(period_key)
+      end
+      
+      ################################################################################
+
       def freq_count_gteq
-        params[:freq_count_gteq].presence.try { to_i }
+        (params[:freq_count_gteq].presence || 0).to_i
       end
 
       def freq_ratio_gteq

@@ -61,23 +61,23 @@ module Swars
           s
         }
 
-        # 一般ユーザーの対局は50日後に消す
+        # 一般ユーザーの対局は60日後に消す
         scope :drop_scope1, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 50.days,
+            :old_only    => Rails.env.local? ? 0.days : 60.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
         }
 
-        # VIPユーザーの対局は100日後に消す
+        # VIPユーザーの対局は120日後に消す
         scope :drop_scope2, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 100.days,
+            :old_only    => Rails.env.local? ? 0.days : 120.days,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても
             :user_except => Swars::User::Vip.protected_user_keys,      # さらにこちらで除外される
           }.merge(options)
