@@ -10,6 +10,7 @@ namespace :my do
         Rake::Task["my:db:db_sync"].invoke
       end
 
+      # rails my:db:production_db_backup_to_local_and_db_sync:swars
       desc "production の将棋ウォーズ棋譜検索のDBを開発環境に同期する"
       task :swars do
         ENV["TABLES"] = [
