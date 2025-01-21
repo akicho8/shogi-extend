@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 2336fa0e2cc19c19d1eeac8448e04c46ea27a798
+  revision: 35170c69b266c4fc7842f9f6bb0d66d08b1884e7
   branch: main
   specs:
     bioshogi (0.0.15)
@@ -160,7 +160,7 @@ GEM
     codecov (0.6.0)
       simplecov (>= 0.15, < 0.22)
     color (1.8)
-    concurrent-ruby (1.3.4)
+    concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
     crass (1.0.6)
     database_cleaner (2.0.2)
@@ -269,7 +269,7 @@ GEM
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (1.14.6)
+    i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -334,7 +334,7 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.7.3)
     nkf (0.1.2)
-    nokogiri (1.18.1)
+    nokogiri (1.18.2)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (1.4.9)
@@ -454,7 +454,7 @@ GEM
     retriable (3.1.2)
     retryable (3.0.5)
     rexml (3.2.5)
-    rmagick (6.0.1)
+    rmagick (6.1.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)
