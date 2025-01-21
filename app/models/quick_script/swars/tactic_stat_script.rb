@@ -177,7 +177,7 @@ module QuickScript
           {
             :internal_rows => av,
             :status => {
-              "全体一次集計日時" => aggregated_all[:primary_aggregated_at].try { to_time.to_fs(:distance) },
+              "全体一次集計日時" => aggregated_all[:primary_aggregated_at].try { to_time.to_fs(:ymdhms) },
               "全体一次集計処理" => aggregated_all[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
               "二次集計処理"     => (Time.current - start_time).then { |e| ActiveSupport::Duration.build(e).inspect },
               "対象対局数"       => current_agg[:population_count],
