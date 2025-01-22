@@ -1,35 +1,39 @@
 require "./setup"
-_ { Swars::User["SugarHuuko"].stat.piece_master_stat.to_report_h } # => "130.66 ms"
-s { Swars::User["SugarHuuko"].stat.piece_master_stat.to_report_h } # => {"玉"=>nil, "飛"=>nil, "角"=>nil, "金"=>nil, "銀"=>nil, "桂"=>nil, "香"=>nil, "歩"=>nil}
+_ { Swars::User["SugarHuuko"].stat.piece_master_stat.to_report_h } # => "162.52 ms"
+s { Swars::User["SugarHuuko"].stat.piece_master_stat.to_report_h } # => {"玉"=>nil, "飛"=>nil, "角"=>nil, "金"=>nil, "銀"=>nil, "桂"=>1.33, "香"=>nil, "歩"=>nil}
 tp Swars::User["SugarHuuko"].stat.piece_master_stat.to_report_h
 tp Swars::User::Stat::PieceMasterStat.report
 # >>   Swars::User Load (0.3ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
 # >>   ↳ app/models/swars/user.rb:44:in `[]'
-# >>   Swars::Membership Ids (13.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
+# >>   Swars::Membership Ids (11.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
 # >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in `scope_ids'
-# >>   Swars::Membership Load (0.9ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (108919997, 108919998, 108920001, 108854434, 108854437, 108854426, 108854428, 108854440, 108854445, 108854447, 108845794, 108854453, 108854454, 108854457, 108854458, 108835634, 108835636, 108835638, 108835641, 108835643, 108835645, 108835648, 108835650, 108835653, 108835654, 108835657, 108832566, 108632095, 108632097, 108632098, 108632103, 108612069, 108612071, 108507336, 108507338, 108488956, 108507340, 108481127, 108488033, 108488034, 108452590, 108452595, 108452597, 108452598, 108452601, 108452604, 108452609, 108452612, 108452614, 108411255)
+# >>   Swars::Membership Load (1.0ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (115545741, 115545743, 115545745, 115545747, 115545748, 115545750, 115545729, 115545730, 115545732, 115545734, 115545736, 115545738, 115524969, 115423852, 115423855, 115423856, 115423859, 115423861, 115423863, 115423867, 115423869, 115423871, 115423872, 115390821, 115390824, 115390829, 115390832, 115390837, 115390843, 115390845, 115390847, 115390850, 115390851, 115262523, 115262526, 115262529, 115262530, 115262534, 115262537, 115262539, 115262540, 115262542, 115262547, 115262549, 115249062, 115249050, 115249052, 115249058, 115249060, 115226111)
 # >>   ↳ app/models/swars/user/stat/piece_stat.rb:71:in `block in counts_hash'
-# >>   Swars::MembershipExtra Load (0.6ms)  SELECT `swars_membership_extras`.* FROM `swars_membership_extras` WHERE `swars_membership_extras`.`membership_id` IN (108411255, 108452590, 108452595, 108452597, 108452598, 108452601, 108452604, 108452609, 108452612, 108452614, 108481127, 108488033, 108488034, 108488956, 108507336, 108507338, 108507340, 108612069, 108612071, 108632095, 108632097, 108632098, 108632103, 108832566, 108835634, 108835636, 108835638, 108835641, 108835643, 108835645, 108835648, 108835650, 108835653, 108835654, 108835657, 108845794, 108854426, 108854428, 108854434, 108854437, 108854440, 108854445, 108854447, 108854453, 108854454, 108854457, 108854458, 108919997, 108919998, 108920001)
+# >>   Swars::MembershipExtra Load (0.8ms)  SELECT `swars_membership_extras`.* FROM `swars_membership_extras` WHERE `swars_membership_extras`.`membership_id` IN (115226111, 115249050, 115249052, 115249058, 115249060, 115249062, 115262523, 115262526, 115262529, 115262530, 115262534, 115262537, 115262539, 115262540, 115262542, 115262547, 115262549, 115390821, 115390824, 115390829, 115390832, 115390837, 115390843, 115390845, 115390847, 115390850, 115390851, 115423852, 115423855, 115423856, 115423859, 115423861, 115423863, 115423867, 115423869, 115423871, 115423872, 115524969, 115545729, 115545730, 115545732, 115545734, 115545736, 115545738, 115545741, 115545743, 115545745, 115545747, 115545748, 115545750)
 # >>   ↳ app/models/swars/user/stat/piece_stat.rb:71:in `block in counts_hash'
-# >> |----+--|
-# >> | 玉 |  |
-# >> | 飛 |  |
-# >> | 角 |  |
-# >> | 金 |  |
-# >> | 銀 |  |
-# >> | 桂 |  |
-# >> | 香 |  |
-# >> | 歩 |  |
-# >> |----+--|
+# >> |----+------|
+# >> | 玉 |      |
+# >> | 飛 |      |
+# >> | 角 |      |
+# >> | 金 |      |
+# >> | 銀 |      |
+# >> | 桂 | 1.33 |
+# >> | 香 |      |
+# >> | 歩 |      |
+# >> |----+------|
 # >> |-----------------+------+------+------+------+------+------+------+----|
 # >> | user_key        | 玉   | 飛   | 角   | 金   | 銀   | 桂   | 香   | 歩 |
 # >> |-----------------+------+------+------+------+------+------+------+----|
+# >> | AkapenKasiteeee |      |      | 1.38 |      |      |      |      |    |
+# >> | Broom_Star      |      |      |      |      |      |      |      |    |
 # >> | Cookieboy1129   |      |      |      |      |      |      |      |    |
 # >> | GOLD_harupona   |      |      |      |      |      |      |      |    |
+# >> | HGJBJJJJ        |      |      |      |      |      |      |  1.6 |    |
 # >> | Human_of_Amen   |      |      |      |      |      |      |      |    |
-# >> | Jyohshin        |      |      |      |      |      |      | 1.41 |    |
+# >> | Jyohshin        |      |      |      |      |      |      |      |    |
 # >> | KURONEKOFUKU    |      |      |      |      |      |      |      |    |
-# >> | Mibuki0101      |      |      |      |      |      |      |      |    |
+# >> | Mappyy          |      |      |      |      |      |      |      |    |
+# >> | Mibuki0101      | 1.33 |      |      |      |      |      |      |    |
 # >> | NT1679          |      |      |      |      |      |      |      |    |
 # >> | Nihei_kisi      |      |      |      |      |      |      |      |    |
 # >> | Omannyawa       |      |      |      |      |      |      |      |    |
@@ -38,50 +42,56 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | Ritsumeikan_APU |      |      |      |      |      |      |      |    |
 # >> | Ryamaguchi      |      |      |      |      |      |      |      |    |
 # >> | SATORI99        |      |      |      |      |      |      |      |    |
-# >> | Seiryuushogi    |      |      |      |      |      |      | 1.44 |    |
+# >> | Seiryuushogi    | 1.37 |      |      |      |      |      | 1.51 |    |
 # >> | Shisakugata     |      |      |      |      |      |      |      |    |
-# >> | TAMAKOCHAN_     |      |      |      |      |      |      |      |    |
+# >> | TAMAKOCHAN_     |      |      |      |      |      |      | 1.38 |    |
 # >> | Tesla_R         |      |      |      |      |      |      |      |    |
-# >> | Tokusyo_1       |      | 1.52 |      |      |      |      |      |    |
+# >> | Tokusyo_1       | 1.55 |      |      |      |      |      |      |    |
 # >> | UMR_Summer      | 1.61 |      |      |      |      |      |      |    |
 # >> | Waiem_0827      |      |      |      |      |      |      |      |    |
+# >> | Zenkyu_910      |      |      |      |      |      |      |      |    |
 # >> | abacus10        |      |      |      |      |      |      |      |    |
 # >> | adgjm3121       |      |      |      |      |      |      |      |    |
 # >> | akihiko810      |      |      |      |      |      |      |      |    |
 # >> | bulletcheckmate |      |      |      |      |      |      |      |    |
+# >> | choko456        |      |      |      |      |      |      |      |    |
 # >> | eGuiterman      |      |      |      |      |      |      |      |    |
 # >> | eternalvirgin   |      |      |      |      |      |      |      |    |
+# >> | free_free_free  |      |      |      |      |      |      |      |    |
 # >> | gagagakuma      |      |      |      |      |      |      |      |    |
-# >> | gomiress        |      |      |      |      |      |      |      |    |
+# >> | gomiress        |      |      |      |      |      |      | 1.44 |    |
 # >> | hide_yuki_kun   |      |      |      |      |      |      |      |    |
 # >> | kallsium        |      |      |      |      |      |      |      |    |
 # >> | kamiosa         |      |      |      |      |      |      |      |    |
+# >> | kashima_        |      |      |      |      |      |      |      |    |
 # >> | kawa_toshi_1    |      |      |      |      |      |      |      |    |
 # >> | kinakom0chi     |      |      |      |      |      |      |      |    |
+# >> | kiwi_kiwi0712   |      |      |      |      |      |      |      |    |
 # >> | korirakkuma0108 |      |      |      |      |      |      |      |    |
 # >> | kzts            |      |      |      |      |      |      |      |    |
 # >> | maiyahi4649     |      |      |      |      |      |      |      |    |
 # >> | molcar          |      |      |      |      |      |      |      |    |
-# >> | mosangun        |      |      |      |      |      |      | 1.49 |    |
+# >> | mosangun        |      |      |      |      |      |      | 1.77 |    |
 # >> | nao_frag        |      |      |      |      |      |      |      |    |
 # >> | news3939        |      |      |      |      |      |      |      |    |
 # >> | nisiyan0204     |      |      |      |      |      |      |      |    |
 # >> | penguinyasu     |      |      |      |      |      |      |      |    |
 # >> | pooh1122N       |      |      |      |      |      |      |      |    |
+# >> | pooh_gorou      |      |      |      |      |      |      |      |    |
 # >> | puniho          |      |      |      |      |      |      |      |    |
 # >> | sea_sky_        |      |      |      |      |      |      |      |    |
-# >> | seimei_0917     |      |      |      |      |      |      |      |    |
+# >> | seimei_0917     |      | 1.31 |      |      |      |      | 1.45 |    |
 # >> | shinbigiumu     |      |      |      |      |      |      |      |    |
-# >> | sir_lancelo     |      | 1.41 |      |      |      |      |      |    |
+# >> | sir_lancelo     |      | 1.45 |      |      |      |      | 1.38 |    |
 # >> | slowstep3210    |      |      |      |      |      |      |      |    |
 # >> | slowstep5678    |      |      |      |      |      |      |      |    |
 # >> | sptree          |      |      |      |      |      |      |      |    |
 # >> | stampedeod      |      |      |      |      |      |      |      |    |
 # >> | staygold3377    |      |      |      |      |      |      |      |    |
-# >> | toshimetal      |      |      |      |      |      |      |      |    |
-# >> | twitter_X       |      |      | 1.44 |      |      |      |      |    |
-# >> | wicvofy         |      |      |      |      |      |      | 1.43 |    |
-# >> | yinhe           |      |      |      |      |      |      | 2.54 |    |
+# >> | toshimetal      |      |  1.4 |      |      |      |      |      |    |
+# >> | twitter_X       |      |      | 1.36 |      |      |      |      |    |
+# >> | wicvofy         |      |      |      |      |      |      | 1.38 |    |
+# >> | yinhe           |      |      |      |      |      |      | 2.27 |    |
 # >> | yukky1119       |      |      |      |      |      |      |      |    |
 # >> | yuyuqi          |      |      |      |      |      |      |      |    |
 # >> | zun_y           |      |      |      |      |      |      |      |    |
@@ -91,98 +101,99 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | MurachanLions   |      |      |      |      |      |      |      |    |
 # >> | pagagm          |      |      |      |      |      |      |      |    |
 # >> | TOBE_CHAN       |      |      |      |      |      |      |      |    |
-# >> | ideon_shogi     |      |      |      |      |      |      | 1.69 |    |
+# >> | ideon_shogi     |      |      |      |      |      |      | 1.44 |    |
 # >> | Odenryu         |      |      |      |      |      |      |      |    |
 # >> | chanlili        |      |      |      |      |      |      |      |    |
 # >> | Dsuke213        |      |      | 1.45 |      |      |      | 1.67 |    |
 # >> | GOMUNINGEN      |      |      |      |      |      |      |      |    |
 # >> | Y_Hiroshi_316   |      |      |      |      |      |      | 2.04 |    |
-# >> | T_Hiroki_323    |      |      |      |      |      |      |      |    |
+# >> | T_Hiroki_323    |      | 1.35 |      |      |      |      |      |    |
 # >> | erikokouza      |      |      |      |      |      |      |      |    |
 # >> | Manaochannel    |      |      |      |      |      |      |      |    |
-# >> | ryomou27        |      | 1.47 |      |      |      |      | 1.72 |    |
+# >> | ryomou27        |      |      |      |      |      |      |      |    |
 # >> | kodai_murasaki  |      |      |      |      |      |      |      |    |
+# >> | mentaikoVT      |      | 1.49 |      |      |      |      | 1.46 |    |
 # >> | KOH56           |      |      |      |      |      |      |      |    |
-# >> | yukkuri22       |      |      |      |      |      |      |      |    |
+# >> | yukkuri22       |      |      |      |      |      |      | 1.47 |    |
 # >> | Cupro_Rin       |      |      |      |      |      |      |      |    |
-# >> | AmanogawaNemu   |      |      |      |      |      |      | 1.47 |    |
+# >> | AmanogawaNemu   |      |      |      |      |      |      | 1.41 |    |
 # >> | Judar_dAlembert |      |      |      |      |      |      |      |    |
 # >> | uuta_game       |      |      |      |      |      |      |      |    |
-# >> | YumeKokona      |      |      |      |      |      |      |      |    |
-# >> | NamomeOga       |      | 1.49 |      |      |      |      | 1.93 |    |
-# >> | marinohiyo      |      | 1.53 | 1.44 |      |      |      | 1.45 |    |
+# >> | YumeKokona      |      |      |      |      |      |      | 1.59 |    |
+# >> | NamomeOga       |      | 1.57 |      |      |      |      | 1.46 |    |
+# >> | marinohiyo      |      | 1.63 |  1.3 |      |      |      |      |    |
 # >> | kone_kone_ru    |      |      |      |      |      |      |      |    |
 # >> | YotsumiyaS      |      |      |      |      |      |      |      |    |
-# >> | eirukoyume      |      |      |      |      |      |      |  1.6 |    |
-# >> | Tsukune_Yuki    |      |      |      |      |      |      | 1.55 |    |
+# >> | eirukoyume      |      |      |      |      |      |      |      |    |
+# >> | Tsukune_Yuki    |      |      |      |      |      |      |      |    |
 # >> | kodai_murasaki  |      |      |      |      |      |      |      |    |
-# >> | oshtaraataru    |      |      | 1.47 |      |      |      | 1.48 |    |
+# >> | oshtaraataru    |      | 1.31 |      |      |      |      |  1.7 |    |
 # >> | flamme_o        |      |      |      |      |      |      |      |    |
 # >> | K_Yamawasabi    |      |      |      |      |      |      |      |    |
 # >> | ichilitre       |      |      |      |      |      |      |      |    |
-# >> | tabinosoiri     |      |      |      |      |      |      | 1.41 |    |
-# >> | ONETWO3         |      |      |      |      |      |      |  2.0 |    |
+# >> | tabinosoiri     |      |      |      |      |      |      |      |    |
+# >> | ONETWO3         |      |      |      |      |      |      |  1.7 |    |
 # >> | tampopochan     |      |      |      |      |      |      |      |    |
-# >> | urechannel      |      |      |      |      |      |      |      |    |
+# >> | urechannel      |      |      |      |      |      |      | 1.38 |    |
 # >> | pome_em         |      |      |      |      |      |      |      |    |
 # >> | XK_Pekeko       |      |      |      |      |      |      |      |    |
-# >> | SUZUKI_NEKO     |      | 1.44 |      |      |      |      |      |    |
-# >> | yukkuri22       |      |      |      |      |      |      |      |    |
+# >> | SUZUKI_NEKO     |      | 1.35 |      |      |      |      |  1.4 |    |
+# >> | yukkuri22       |      |      |      |      |      |      | 1.47 |    |
 # >> | weissvice       |      |      |      |      |      |      |      |    |
-# >> | K1254           |      |      |      |      |      |      | 1.64 |    |
-# >> | Moka_K          |      |      |      | 1.87 |      |      |      |    |
-# >> | totutohoku      |      |      |      |      |      |      |      |    |
+# >> | K1254           |      |      |      |      |      |      | 1.61 |    |
+# >> | Moka_K          |      |      |      | 2.16 |      |      |      |    |
+# >> | totutohoku      |      | 1.37 |      |      |      |      |      |    |
 # >> | mo_ri_          |      |      |      |      |      |      |      |    |
 # >> | PARM_shogi_CH_  |      |      |      |      |      |      |      |    |
-# >> | ahirutaityouZ   |      |      |      |      |      |      | 2.46 |    |
-# >> | ryutaro1991     |      |      |      |      |      |      |      |    |
+# >> | ahirutaityouZ   |      |      |      |      |      |      | 2.67 |    |
+# >> | ryutaro1991     |      | 1.37 |      |      |      | 1.31 |      |    |
 # >> | omuomun         |      |      |      |      |      |      |      |    |
-# >> | aya_s_love      |      |      |      |      |      |      |      |    |
+# >> | aya_s_love      |      | 1.47 |      |      |      |      |      |    |
 # >> | Seigo_S         |      |      |      |      |      |      |      |    |
-# >> | IrUkAzz         |      |      |      |      |      |      |      |    |
+# >> | IrUkAzz         |      |  1.4 |      |      |      |      |      |    |
 # >> | raikachess      |      |      |      |      |      |      |      |    |
 # >> | TYosTYos        |      |      |      |      |      |      |      |    |
 # >> | okayama_shogi   |      |      |      |      |      |      |      |    |
 # >> | YT_Dash         |      |      |      |      |      |      |      |    |
-# >> | MartinRiggs     |      |      |      |      |      |      |      |    |
+# >> | MartinRiggs     |      | 1.45 |      |      |      |      |      |    |
 # >> | MaisonMargiela  |      |      |      |      |      |      |      |    |
-# >> | kanikubo73      |      | 1.44 |      |      |      |      | 1.86 |    |
+# >> | kanikubo73      |      | 1.44 |      |      |      |      |      |    |
 # >> | 9114aaxt        |      |      |      |      |      |      |      |    |
-# >> | AHIRU_MAN_      |      | 1.45 |      |      |      |      | 2.31 |    |
-# >> | Ayaseaya        |      |      |      |      |      |      | 1.69 |    |
+# >> | AHIRU_MAN_      |      |  1.5 |      |      |      | 1.31 | 1.97 |    |
+# >> | Ayaseaya        |      |      |      |      |      |      | 1.56 |    |
 # >> | Choco_math      |      |      |      |      |      |      |      |    |
 # >> | EffectTarou     |      |      |      |      |      |      |      |    |
 # >> | FujitaAoi       |      |      |      |      |      |      |      |    |
 # >> | Gotanda_N       |      |      |      |      |      |      |      |    |
 # >> | H_Britney       |      |      |      |      |      |      |      |    |
-# >> | Kaku_Kiriko     |      |      |      |      |      |      | 1.58 |    |
+# >> | Kaku_Kiriko     |      | 1.32 |      |      |      |      | 1.36 |    |
 # >> | Kousaka_Makuri  |      |      |      |      |      |      |      |    |
-# >> | NgisaNagi       |      |      |      |      |      |      |      |    |
+# >> | NgisaNagi       | 1.32 |      |      |      |      |      |      |    |
 # >> | RIKISEN_shogi   |      |      |      |      |      |      |      |    |
-# >> | ShowYanChannel  |      |      |      |      |      |      |      |    |
+# >> | ShowYanChannel  |      |      |      |      |      |      | 1.39 |    |
 # >> | SugarHuuko      |      |      |      |      |      |      |      |    |
 # >> | Sukonbu3        |      |      |      |      |      |      |      |    |
 # >> | Sushi_Kuine     |      |      |      |      |      |      |      |    |
 # >> | Sylvamiya       |      |      |      |      |      |      |      |    |
 # >> | UtadaHikaru     |      |      |      |      |      |      |      |    |
-# >> | YARD_CHANNEL    |      |      |      |      | 1.46 |      |      |    |
-# >> | anpirika        |      |      |      |      |      | 1.41 | 1.52 |    |
+# >> | YARD_CHANNEL    |      |      |      |      | 1.39 |      |      |    |
+# >> | anpirika        |      |      |      |      |      |      |      |    |
 # >> | bsplive         |      |      |      |      |      |      |      |    |
-# >> | chisei_mazawa   |      |      |      |      |      |      |      |    |
+# >> | chisei_mazawa   |      | 1.35 |      |      |      |      |      |    |
 # >> | chrono_         |      |      |      |      |      |      |      |    |
-# >> | garo0926        |      |      |      |      |      | 1.69 |      |    |
-# >> | gorirakouen     |      |      |      | 1.87 |      |      |      |    |
-# >> | UMA7777777      |      |      |      |      |      |      |      |    |
-# >> | hakuyoutu       |      |      |      |      |      |      |      |    |
+# >> | garo0926        |      |      |      |      |      |      |      |    |
+# >> | gorirakouen     |      |      |      | 1.98 |      |      |      |    |
+# >> | UMA7777777      |      |      |      |      |      | 1.33 |      |    |
+# >> | hakuyoutu       |      |      |      |      |      | 1.32 |      |    |
 # >> | mafuneko        |      |      |      |      |      |      |      |    |
-# >> | micro77         |      |      |      |      | 1.43 |      |      |    |
+# >> | micro77         |      |      |      |      | 1.41 |      |      |    |
 # >> | mokkun_mokumoku |      |      |      |      |      |      |      |    |
 # >> | morusuko        |      |      |      |      |      |      |      |    |
 # >> | naruru55        |      |      |      |      |      |      |      |    |
-# >> | ray_nanakawa    |      |      |      |      |      |      |      |    |
+# >> | ray_nanakawa    |      |      |      |  1.4 |      |      |      |    |
 # >> | saisai_shogi    |      |      |      |      |      |      |      |    |
 # >> | verdura         |      |      |      |      |      |      |      |    |
-# >> | yomeP           |      |      |      |      |      |      |      |    |
+# >> | yomeP           |      | 1.34 |      |      |      |      |      |    |
 # >> | polunga_shogi   |      |      |      |      |      |      |      |    |
 # >> | si_kun_YouTuber |      |      |      |      |      |      |      |    |
 # >> | Ada_Tsugamachi  |      |      |      |      |      |      |      |    |
@@ -190,22 +201,23 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | kaorin55        |      |      |      |      |      |      |      |    |
 # >> | sakuya_T        |      |      |      |      |      |      |      |    |
 # >> | kimbrelp        |      |      |      |      |      |      |      |    |
-# >> | Traumonac       |      |      |      |      |      |      |      |    |
+# >> | Traumonac       |      |      |      |      |      | 1.33 |      |    |
+# >> | tastjade        |      |      |      | 1.43 |      |      |      |    |
 # >> | vivid_dub       |      |      |      |      |      |      |      |    |
-# >> | yoppiyopy       |      | 1.42 |      |      |      |      |      |    |
+# >> | yoppiyopy       |      | 1.43 |      |      |      |      |      |    |
 # >> | ruka_peta       |      |      |      |      |      |      |      |    |
 # >> | oosyoutatuya160 |      |      |      |      |      |      |      |    |
 # >> | LinLin_         |      |      |      |      |      |      |      |    |
-# >> | stmtk           |      |      |      |      |      |      |      |    |
-# >> | trick98         |      |      | 1.57 |      |      |      |      |    |
+# >> | stmtk           |      |  1.5 |      |      |      |      |      |    |
+# >> | trick98         |      | 1.53 |  1.4 |      |      |      |      |    |
 # >> | JANUS001        |      |      |      |      |      |      |      |    |
 # >> | discodancer     |      |      |      |      |      |      |      |    |
 # >> | Corilla         |      |      |      |      |      |      |      |    |
 # >> | shusorairaku    |      |      |      |      |      |      |      |    |
 # >> | LEVEKO          |      |      |      |      |      |      |      |    |
-# >> | ttmnttmn        |      |      |      |      |      |      |      |    |
-# >> | touchica        |      |      |      |      |      |      |      |    |
-# >> | ibisya_bokumetu |      |      |      |      |      |      |      |    |
+# >> | ttmnttmn        |      | 1.43 |      |      |      |      |      |    |
+# >> | touchica        |      |      |      |      |      | 1.44 |      |    |
+# >> | ibisya_bokumetu |      |      |      |      |      |      | 1.43 |    |
 # >> | TANTANMENDAYO   |      |      |      |      |      |      |      |    |
 # >> | Habu            |      |      |      |      |      |      |      |    |
 # >> | mrynu           |      |      |      |      |      |      |      |    |
@@ -232,50 +244,52 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | kd2001          |      |      |      |      |      |      |      |    |
 # >> | Kaori3159       |      |      |      |      |      |      |      |    |
 # >> | ariakedo        |      |      |      |      |      |      |      |    |
-# >> |       443443443 |      |      |      |      |      |      | 1.43 |    |
-# >> | piyomaru_shogi  |      |      |      |      |      |      |      |    |
+# >> |       443443443 |      |      |      |      |      |      |  1.3 |    |
+# >> | piyomaru_shogi  |      |      |      |      |      |      | 1.33 |    |
 # >> | hebosugiChan    |      |      |      |      |      |      |      |    |
 # >> | IKEMENKISHI     |      |      |      |      |      |      |      |    |
-# >> | ANAGUMA4MAI     |      |      |      |      |      |      |  2.0 |    |
+# >> | ANAGUMA4MAI     |      |      |      |      |      |      | 1.85 |    |
 # >> | H_Kirara        |      |      |      |      |      |      |      |    |
-# >> | Jerry_Shogi     |      |      |      |      |      |      |      |    |
-# >> | M_10032         |      |      | 1.44 |      |      |      |      |    |
+# >> | Jerry_Shogi     |      |      |      |      |      |      | 1.61 |    |
+# >> | M_10032         |      |      | 1.36 |      |      |      |      |    |
 # >> | Serumasama      |      |      |      |      |      |      |      |    |
 # >> | TokiwadaiMei    |      |      |      |      |      |      |      |    |
-# >> | Weiss_Hairi     |      |      |      |      |      |      |  1.4 |    |
+# >> | Weiss_Hairi     |      |      |      |      |      |      |      |    |
 # >> | asa2yoru        |      |      |      |      |      |      |      |    |
 # >> | chodo           |      |      |      |      |      |      |      |    |
 # >> | kisamoko        |      |      |      |      |      |      |      |    |
 # >> | mai_ueo         |      |      |      |      |      |      |      |    |
-# >> | takayukiando    |      |      |      |      | 1.42 |      |      |    |
-# >> | tora9900_torara |      |      |      |      |      |      |      |    |
+# >> | takayukiando    |      |      |      |      |      |      |      |    |
+# >> | tora9900_torara |      | 1.31 |      |      |      |      |      |    |
 # >> | yadamon2525     |      |      |      |      |      |      |      |    |
-# >> | yoru0000        |      |      |      |      |      |      |      |    |
-# >> | hanabi7711      |      |      |      |      |      |      | 1.57 |    |
+# >> | yoru0000        |      | 1.42 |      |      |      |      |      |    |
+# >> | hanabi7711      |      |      |      |      |      |      | 1.73 |    |
 # >> | nananamin       |      |      |      |      |      |      |      |    |
 # >> | ds4             |      |      |      |      |      |      |      |    |
 # >> | wata1417        |      |      |      |      |      |      |      |    |
-# >> | katoayumn       |      |      |      |      |      |      | 1.64 |    |
-# >> | daiwajpjp       |      |      |      |      |      |      |  1.7 |    |
+# >> | katoayumn       |      |      | 1.33 |      |      |      |  1.7 |    |
+# >> | daiwajpjp       |      |      |      |      |      |      |  2.0 |    |
 # >> | yamaloveuma     |      |      |      |      |      |      |      |    |
 # >> | HIKOUKI_GUMO    |      |      |      |      |      |      |      |    |
-# >> | ultimate701     |      |      |      |      |      |      | 1.44 |    |
+# >> | ultimate701     |      |      |      |      |      |      |      |    |
 # >> | terauching      |      |      |      |      |      |      |      |    |
 # >> | daichukikikuchi |      |      |      |      |      |      |      |    |
+# >> | Niko43          |      |      |      |      |      |      |      |    |
 # >> | 5inkyo          |      |      |      |      |      |      |      |    |
 # >> | nitro7910       |      |      |      |      |      |      |      |    |
 # >> | soyokaz         |      |      |      |      |      |      |      |    |
-# >> | SevenColor627   |      |      |      |      |      |      |      |    |
+# >> | SevenColor627   | 1.37 |      |      | 1.33 | 1.77 |      |      |    |
 # >> | santa_ABC       |      |      |      |      |      |      |      |    |
 # >> | arminn          |      |      |      |      |      |      |      |    |
 # >> | createv         |      |      |      |      |      |      |      |    |
 # >> | Naitot          |      |      |      |      |      |      |      |    |
 # >> | hitoride_nemuru |      |      |      |      |      |      |      |    |
+# >> | akine9          |      |      |      |      |      |      | 1.56 |    |
 # >> | Hey_Ya          |      |      |      |      |      |      |      |    |
 # >> | sleepycat       |      |      |      |      |      |      |      |    |
 # >> | tanukitirou     |      |      |      |      |      |      |      |    |
 # >> | zibakuou        |      |      |      |      |      |      |      |    |
-# >> | suzukihajime    |      |      |      |      |      |      |      |    |
+# >> | suzukihajime    |      |      |      |      |      |      | 1.44 |    |
 # >> | Janne1          |      |      |      |      |      |      |      |    |
 # >> | alonPlay        |      |      |      |      |      |      |      |    |
 # >> | k_tp            |      |      |      |      |      |      |      |    |
