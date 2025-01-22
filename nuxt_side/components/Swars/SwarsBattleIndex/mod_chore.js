@@ -90,6 +90,17 @@ export const mod_chore = {
       this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     },
 
+    kifu_save_shortcut_handle(e) {
+      if (this.xi) {
+        const row = this.xi.records[0]
+        if (row) {
+          this.kifu_save_handle(row)
+          location.href = this.kifu_save_url(row, {body_encode: 'UTF-8'})
+          return true
+        }
+      }
+    },
+
     home_bookmark_handle() {
       this.sidebar_p = false
       this.$sound.play_click()

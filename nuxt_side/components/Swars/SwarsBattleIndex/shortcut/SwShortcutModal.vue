@@ -9,6 +9,10 @@
         td
           b-tag(type="is-primary") c
       tr
+        th 棋譜保存
+        td
+          b-tag(type="is-primary") s
+      tr
         th 棋譜コピー (KI2)
         td
           b-tag(type="is-primary") x
@@ -51,7 +55,7 @@
       tr
         th カスタム検索
         td
-          b-tag(type="is-primary") s
+          b-tag(type="is-primary") f
       //- tr
       //-   th チャットを開く
       //-   td

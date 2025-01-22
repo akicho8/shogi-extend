@@ -7,6 +7,9 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         _if: (c, e) => c.keyboard_single_key_equal(e, "c"),
         call: (c, e) => c.kifu_copy_first(e, {format: "kif"}),
       }, {
+        _if: (c, e) => c.keyboard_single_key_equal(e, "s"),
+        call: (c, e) => c.kifu_save_shortcut_handle(e),
+      }, {
         _if: (c, e) => c.keyboard_single_key_equal(e, "x"),
         call: (c, e) => c.kifu_copy_first(e, {format: "ki2"}),
       }, {
@@ -37,7 +40,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         _if: (c, e) => e.key === "i",
         call: (c, e) => c.goto_player_info(e),
       }, {
-        _if: (c, e) => e.key === "s",
+        _if: (c, e) => e.key === "f",
         call: (c, e) => c.goto_custom_search(e),
       }, {
         _if: (c, e) => e.key === "?",
