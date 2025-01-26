@@ -5,6 +5,7 @@ module Swars
       { key: "magic_number:0", xmode_key: "野良", },
       { key: "magic_number:1", xmode_key: "友達", },
       { key: "magic_number:2", xmode_key: "指導", },
+      { key: "magic_number:3", xmode_key: "大会", }, # たんぽぽ杯
 
       # 4 が来る場合もあるらしいが条件がわからないためスキップさせることにする
       # >> |----------------------------------------|

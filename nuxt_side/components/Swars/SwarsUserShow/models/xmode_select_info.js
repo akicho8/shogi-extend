@@ -7,6 +7,7 @@ export class XmodeSelectInfo extends ApplicationMemoryRecord {
       { key: "野良", name: "野良",           },
       { key: "友達", name: "友達",           },
       { key: "指導", name: "指導",           },
+      { key: "大会", name: "大会",           },
     ]
   }
 }

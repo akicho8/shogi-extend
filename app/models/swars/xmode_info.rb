@@ -5,6 +5,7 @@ module Swars
       { key: "野良", alias_key: "通常", },
       { key: "友達", alias_key: nil,    },
       { key: "指導", alias_key: nil,    },
+      { key: "大会", alias_key: nil,    },
     ]
 
     class << self
