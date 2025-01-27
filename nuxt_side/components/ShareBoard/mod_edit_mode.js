@@ -1,14 +1,22 @@
 export const mod_edit_mode = {
+  data() {
+    return {
+      edit_warn_modal_instance: null, // 「共有中の局面編集は危険」モーダルが起動していれば情報が入っている
+    }
+  },
   methods: {
     edit_warn_modal_handle() {
-      this.dialog_confirm({
+      if (this.edit_warn_modal_instance) {
+        return
+      }
+      this.edit_warn_modal_instance = this.dialog_confirm({
         title: "共有中の局面編集は危険",
         message: `
           <div class="content">
-            <ul class="mt-0 ml-5">
-              <li>初期配置に戻すにはここではなく「初期配置に戻す」をタップする</li>
-              <li>編集すると編集後の局面を0手目とした棋譜になってしまう</li>
-              <li>基本的に共有中の局面編集は変則的な配置で対戦するときの初期配置設定だけに使う</li>
+            <ul class="mt-0 ml-5 is-size-7">
+              <li>初期配置に戻したければここではなく<b>初期配置に戻す</b>をタップすべし</li>
+              <li>局面編集すると編集後の局面を0手目とした棋譜になってしまう</li>
+              <li>共有中の局面編集は変則的な配置で対局したいときだけ使うべし</li>
             </ul>
           </div>
         `,
@@ -21,12 +29,26 @@ export const mod_edit_mode = {
           this.$sound.play_click()
           this.al_share({label: "局面編集前"})
           this.sp_mode = "edit"
+          this.edit_warn_modal_close()
+        },
+        onCancel: () => {
+          this.$sound.play_click()
+          this.edit_warn_modal_close()
         },
       })
+    },
+    edit_warn_modal_close() {
+      if (this.edit_warn_modal_instance) {
+        this.edit_warn_modal_instance.close()
+        this.edit_warn_modal_instance = null
+      }
     },
 
     // 編集モード
     edit_mode_handle() {
+      if (this.edit_warn_modal_instance) {
+        return
+      }
       this.sidebar_p = false
       this.$sound.play_click()
       if (this.ac_room) {

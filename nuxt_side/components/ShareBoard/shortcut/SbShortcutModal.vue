@@ -34,6 +34,10 @@
         td
           b-tag(type="is-primary") ⇧ v
       tr
+        th 局面編集・完了
+        td
+          b-tag(type="is-primary") ⇧ e
+      tr
         th 設定
         td
           b-tag(type="is-primary") ,
