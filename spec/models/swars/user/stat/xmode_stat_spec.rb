@@ -14,11 +14,13 @@ module Swars
         case1(:"野良")
         case1(:"友達")
         case1(:"指導")
+        case1(:"大会")
         assert do
           @black.stat.xmode_stat.to_chart == [
             {:name => "野良", :value => 1},
             {:name => "友達", :value => 1},
             {:name => "指導", :value => 1},
+            {:name => "大会", :value => 1},
           ]
         end
       end
