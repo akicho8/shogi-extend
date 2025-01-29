@@ -110,8 +110,8 @@ devDependencies:
     specifier: ^1.2.6
     version: 1.2.6
   shogi-player:
-    specifier: ^1.1.17
-    version: 1.1.17
+    specifier: ^1.1.18
+    version: 1.1.18
   strict-uri-encode:
     specifier: ^2.0.0
     version: 2.0.0
@@ -3352,6 +3352,7 @@ packages:
 
   /acorn-import-assertions@1.9.0(acorn@8.8.2):
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
+    deprecated: package has been renamed to acorn-import-attributes
     peerDependencies:
       acorn: ^8
     dependencies:
@@ -6036,7 +6037,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
@@ -10715,8 +10716,8 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
-  /shogi-player@1.1.17:
-    resolution: {integrity: sha512-Z2gak0xH7qZ2MYrSR98pn2rZH+7zcRyRmpXkPLoXHO7GGyU/6WFpg3gSJiEZF/OM0tH70/qApUCii7BQZOSDng==}
+  /shogi-player@1.1.18:
+    resolution: {integrity: sha512-VpMQacHzsSs3s+x1SQHifdONEz7+urt9QLHPgBo0AYbOYVPdNtUYSx0w1KF8215dgM7ByGH9puhXLyOqg3XBkw==}
     dependencies:
       beetleshine: 0.0.14
       chroma-js: 2.4.2
