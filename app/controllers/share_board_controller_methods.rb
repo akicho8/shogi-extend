@@ -56,7 +56,7 @@ module ShareBoardControllerMethods
     # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_real&color_theme_preview_image_use=true
     if request.format.png?
       if params[:color_theme_preview_image_use].to_s == "true"
-        color_theme_key = params[:color_theme_key].presence || "is_color_theme_real"
+        color_theme_key = params[:color_theme_key].presence || "is_color_theme_modern"
         path = Gem.find_files("bioshogi/assets/images/color_theme_preview/#{color_theme_key}.png").first || Rails.root.join("app/assets/images/fallback.png")
         if stale?(last_modified: Pathname(path).mtime, public: true)
           send_file path, type: Mime[:png], disposition: :inline
@@ -84,7 +84,7 @@ module ShareBoardControllerMethods
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
       # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
       params2 = params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: viewpoint)
-      params2[:color_theme_key] ||= "is_color_theme_real"
+      params2[:color_theme_key] ||= "is_color_theme_modern"
       media_builder = MediaBuilder.new(current_record, params2)
       path = media_builder.to_real_path
       if stale?(last_modified: path.mtime, public: true)

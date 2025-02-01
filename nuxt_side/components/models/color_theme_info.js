@@ -11,11 +11,12 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_color_theme_real",   name: "木目風",          },
+      { key: "is_color_theme_modern",   name: "モダン",          },
+      { key: "is_color_theme_real",   name: "リアル",          },
       { key: "is_color_theme_piyo",   name: "ぴよ将棋風",      },
       { key: "is_color_theme_club24", name: "将棋倶楽部24風" , },
       { key: "is_color_theme_paper",  name: "紙面風",          },
-      { key: "is_color_theme_shape",  name: "紙面風(☖付き)",   },
+      { key: "is_color_theme_shape",  name: "紙面風(☖付き)",  },
     ]
   }
 

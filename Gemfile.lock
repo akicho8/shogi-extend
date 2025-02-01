@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 98d8ea8332948128a138719d07a6157f75233f03
+  revision: 7b0301ffb76ad3c123b86ab4bc58a86e7d4a1387
   branch: main
   specs:
     bioshogi (0.0.15)
@@ -454,7 +454,7 @@ GEM
     retriable (3.1.2)
     retryable (3.0.5)
     rexml (3.2.5)
-    rmagick (6.1.0)
+    rmagick (6.1.1)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)

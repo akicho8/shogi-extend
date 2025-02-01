@@ -12,7 +12,7 @@ export class ParamInfo extends ParamBase {
       { key: "turn_embed_key",        type: "string",  name: "手数表示",            default: "is_turn_embed_on",                     permanent: true,  relation: "TurnEmbedInfo",       desc: "",           },
       { key: "piece_font_weight_key", type: "string",  name: "駒書体の太さ",        default: "is_piece_font_weight_auto",            permanent: true,  relation: "PieceFontWeightInfo", desc: "",           },
       { key: "viewpoint",             type: "string",  name: "視点",                default: "black",                                permanent: false, relation: "ViewpointInfo",       desc: "",           },
-      { key: "color_theme_key",       type: "string",  name: "配色",                default: "is_color_theme_real", permanent: true, relation: "ColorThemeInfo",      desc: "",           },
+      { key: "color_theme_key",       type: "string",  name: "配色",                default: "is_color_theme_modern",                permanent: true, relation: "ColorThemeInfo",      desc: "",           },
       { key: "audio_theme_key",       type: "string",  name: "BGM",                 default: "is_audio_theme_custom",                permanent: true,  relation: "AudioThemeInfo",      desc: "",           },
       { key: "factory_method_key",    type: "string",  name: "生成ツール",          default: "is_factory_method_ffmpeg",             permanent: true,  relation: "FactoryMethodInfo",   desc: "",           },
       { key: "cover_text",            type: "string",  name: "表紙文言",            default: "",                                     permanent: true,  relation: null,                  desc: "",           },
