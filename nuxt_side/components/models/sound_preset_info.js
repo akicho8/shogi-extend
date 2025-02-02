@@ -37,7 +37,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "notify",                               source: require("@/static/sound_effect/soundeffect_lab/decision29.mp3"),                                         volume: 0.30, },
       { key: "spon",                                 source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                                            volume: 0.50, },
       { key: "pon",                                  source: require("@/assets/UniversalSoundFX/CARTOON/POP_Mouth_mono.wav"),                                         volume: 0.40, },
-      { key: "piece_put",                            source: require("@/assets/UniversalSoundFX/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_07_Hard_mono.wav"),         volume: 0.20, },
+      { key: "piece_put",                            source: require("@/static/sound_effect/soundeffect_lab/piece_put.mp3"),                                          volume: 0.8,  },
     ]
   }
 }
