@@ -40,6 +40,7 @@ tmux select-pane -t shogi.3
 
 sleep 5
 open http://localhost:3000/admin/sidekiq
+open http://0.0.0.0:5000/
 
 # open http://10.0.1.2:3000/admin
 # open http://10.0.1.2:4000
