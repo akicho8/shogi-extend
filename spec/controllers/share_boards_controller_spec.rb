@@ -64,10 +64,10 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "配色テーマのサムネイル画像" do
-    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_real&color_theme_preview_image_use=true
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_modern&color_theme_preview_image_use=true
     get :show, params: { color_theme_preview_image_use: "true", format: "png" }
     assert { response.media_type == "image/png" }
-    assert { response["Content-Disposition"].match?(/is_color_theme_real/) }
+    assert { response["Content-Disposition"].match?(/is_color_theme_modern/) }
     assert { response.status == 200 }
   end
 
