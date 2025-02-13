@@ -63,6 +63,7 @@
       .panel-block 自分は観戦者か？ {{SB.self_is_watcher_p}}
       .panel-block 自分チームのメンバー数 {{SB.my_team_member_count}}
       .panel-block 自分チームのメンバーは2人以上いる？ {{SB.my_team_member_is_many_p}}
+      .panel-block 自分チームのメンバーは自分だけか？ {{SB.my_team_member_is_one_p}}
 
   .column.is-4(v-if="SB.new_v.order_unit")
     .panel

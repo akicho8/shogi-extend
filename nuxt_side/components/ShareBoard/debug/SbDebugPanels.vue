@@ -1,5 +1,6 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  SbDebugPanelsSpectatorMark
   SbDebugPanelsChat
 
   .column.is-2

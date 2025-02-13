@@ -220,6 +220,24 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
+  describe "マーク設定" do
+    before do
+      subscribe(room_key: room_key)
+    end
+    it "works" do
+      data = data_factory({
+          # "order_unit" => [
+          #   # FIXME
+          #   { "user_name" => "alice", },
+          #   { "user_name" => "bob",   },
+          # ],
+        })
+      expect {
+        subscription.single_mark_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "single_mark_share_broadcasted", bc_params: data)
+    end
+  end
+
   describe "メッセージ" do
     before do
       subscribe(room_key: room_key)

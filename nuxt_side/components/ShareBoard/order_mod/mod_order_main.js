@@ -180,8 +180,8 @@ export const mod_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
-    self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
+    self_is_member_p()          { return this.order_enable_p && !!this.order_lookup_from_name(this.user_name) }, // 自分はメンバーに含まれているか？
+    self_is_watcher_p()         { return this.order_enable_p && !this.order_lookup_from_name(this.user_name)  }, // 自分は観戦者か？
     my_location()               { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +239,11 @@ export const mod_order_main = {
     // 自分のチームは二人以上いるか？
     my_team_member_is_many_p() {
       return (this.my_team_member_count ?? 0) >= 2
+    },
+
+    // 自分のチームは自分だけか？
+    my_team_member_is_one_p() {
+      return (this.my_team_member_count ?? 0) === 1
     },
   },
 }

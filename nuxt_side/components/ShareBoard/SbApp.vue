@@ -84,6 +84,7 @@ import { mod_edit_mode                     } from "./mod_edit_mode.js"
 import { mod_yomikomi                      } from "./mod_yomikomi.js"
 import { mod_sp                            } from "./mod_sp.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
+import { mod_spectator_mark                } from "./spectator_mark/mod_spectator_mark.js"
 import { mod_devise                        } from "./mod_devise.js"
 import { mod_user_kick                     } from "./mod_user_kick.js"
 import { mod_track_log                     } from "./track_log/mod_track_log.js"
@@ -191,6 +192,7 @@ export default {
     mod_yomikomi,
     mod_sp,
     mod_perpetual,
+    mod_spectator_mark,
     mod_devise,
     mod_user_kick,
     mod_track_log,
