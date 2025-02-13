@@ -15,6 +15,7 @@ export const mod_order_new = {
         order_unit:        null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
         illegal_behavior_key: null, // 反則をどうするか
         auto_resign_key:  null, // 投了のタイミング
+        think_mark_receive_scope_key:  null, // 投了のタイミング
         change_per:            null, // N手毎交代
         os_change:         null, // OsChange のインスタンス
         os_dnd_count:         0, // ドラッグ中なら 1 以上
@@ -93,6 +94,7 @@ export const mod_order_new = {
       {
         this.new_v.illegal_behavior_key = this.illegal_behavior_key
         this.new_v.auto_resign_key = this.auto_resign_key
+        this.new_v.think_mark_receive_scope_key = this.think_mark_receive_scope_key
         this.new_v.change_per            = this.change_per
       }
 
@@ -127,6 +129,7 @@ export const mod_order_new = {
       })
     },
 
+    // 反映ボタンを押したときに呼ぶ
     // 「順番設定(仮)」の値を全体送信する
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
@@ -135,9 +138,10 @@ export const mod_order_new = {
       const params = {
         order_unit:        this.new_v.order_unit.attributes,
         //
-        illegal_behavior_key: this.new_v.illegal_behavior_key,
-        auto_resign_key: this.new_v.auto_resign_key,
-        change_per:            this.new_v.change_per,
+        illegal_behavior_key:         this.new_v.illegal_behavior_key,
+        auto_resign_key:              this.new_v.auto_resign_key,
+        think_mark_receive_scope_key: this.new_v.think_mark_receive_scope_key,
+        change_per:                   this.new_v.change_per,
         //
         message:           message,
       }
@@ -155,6 +159,8 @@ export const mod_order_new = {
 
       // new_v.order_unit のパラメータを order_unit に反映する
       this.order_copy_from_bc(params)
+
+      this.think_mark_auto_set() // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // 新しくなった order_unit を new_v.order_unit に反映する

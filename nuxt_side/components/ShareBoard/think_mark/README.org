@@ -1,0 +1,49 @@
+目印共有
+
+* 正しい動作
+
+|------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 面子 | 観戦 | 自分 | 操作 | 理由         |                                                                                                                                                              |
+|------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| a b  | c    | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c    | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member_names=a,b,c&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c    | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&fixed_member_names=a,b,c&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+|------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+* 順番設定UI確認
+
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c&fixed_order_names=a,b&handle_name_validate=false&autoexec=os_modal_handle
+
+
+
+* 正しい動作
+
+|------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 面子 | 観戦 | 自分 | 操作 | 理由         |                                                                                                                                                                |
+|------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| a b  | c d  | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c d  | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c d  | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c d  | d    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=d&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+|------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+* 2つのブラウザでテストする場合
+
+|------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 面子 | 観戦 | 自分 |                                                                                                                                                                |
+|------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| a b  | c d  | a    | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+| a b  | c d  | b    | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member_names=a,b,c,d&fixed_order_names=a,b&handle_name_validate=false&autoexec=cc_create |
+|------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+* マーク送受信条件
+
+|----+----+------+------+-----+-----+-----+-------+-------+-------|
+| ▲ | △ | 観戦 | 現在 | 印a | 印b | 印c | 受信a | 受信b | 受信c |
+|----+----+------+------+-----+-----+-----+-------+-------+-------|
+| a  | b  | c    | a    | ×  | ○  | ○  | ×    | b     | bc    |
+| a  | b  | c    | b    | ○  | ×  | ○  | a     | ×    | ac    |
+|----+----+------+------+-----+-----+-----+-------+-------+-------|
+
+・対局者同士では送り合えないが印はつけることができる
+・その印は観戦者にだけ見える

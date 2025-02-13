@@ -91,18 +91,34 @@ export const mod_sp = {
 
     // 手番が違うのに操作しようとした
     ev_illegal_click_but_self_is_not_turn() {
-      this.debug_alert("手番が違うのに操作しようとした")
+      if (this.think_mark_mode_p) {
+        return
+      }
+
+      // if (this.think_mark_mode_global_p) {
+      //   if (this.i_am_member_p) {
+      //     this.debug_alert("手番ではないが対局メンバー")
+      //   }
+      // } else {
       if (this.order_enable_p) {
+        this.debug_alert("手番が違うのに操作しようとした")
         this.$sound.play("x")
         const messages = []
         const name = this.current_turn_user_name
         if (Gs.blank_p(name)) {
           messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
         } else {
-          messages.push(`今は${this.user_call_name(name)}の手番です`)
-          if (this.self_is_watcher_p) {
-            messages.push(`あなたは観戦者なので操作できません`)
+          if (this.i_am_member_p) {
+            messages.push(`今は${this.user_call_name(name)}の手番です`)
           }
+          if (this.i_am_watcher_p) {
+            messages.push(`あなたは観戦者なので操作できません`)
+            // if (this.think_mark_mode_p) {
+            //   // 観戦者はマークできるのでエラーメッセージは出さない
+            // } else {
+            // }
+          }
+
           if (this.clock_box && this.clock_box.play_p) {
             // 対局中と思われる
           } else {
@@ -116,6 +132,7 @@ export const mod_sp = {
           this.tl_add("OPVALID", `(${full_message})`)
         }
       }
+      // }
     },
 
     // 自分が手番だが相手の駒を動かそうとした

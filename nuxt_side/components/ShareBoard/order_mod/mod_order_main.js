@@ -59,6 +59,7 @@ export const mod_order_main = {
       }
       this.order_enable_p = params.order_enable_p
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
+      // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定ONのタイミングで本譜を消す
       // これは投了せずに対局を終了した人が前の対局の本譜を参照して混乱しているのを見かけたために入れてある
@@ -96,10 +97,12 @@ export const mod_order_main = {
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
       this.sp_viewpoint_set_by_self_location() // 自分の場所を調べて正面をその視点にする
+      // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
-      this.illegal_behavior_key = params.illegal_behavior_key
-      this.auto_resign_key = params.auto_resign_key
-      this.change_per            = params.change_per
+      this.illegal_behavior_key         = params.illegal_behavior_key
+      this.auto_resign_key              = params.auto_resign_key
+      this.think_mark_receive_scope_key = params.think_mark_receive_scope_key
+      this.change_per                   = params.change_per
 
       this.ac_log({subject: "順情受信", body: `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`})
     },
@@ -114,6 +117,8 @@ export const mod_order_main = {
       }
     },
 
+    // user_name に対応する対局者情報を返す
+    // なければ対局者ではない
     order_lookup_from_name(user_name) {
       if (this.order_enable_p) {
         return this.order_unit.name_to_object_hash[user_name]
@@ -121,6 +126,28 @@ export const mod_order_main = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    // user_name は自分と同じチームか？
+    user_name_is_same_team_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      if (location && this.my_location) {
+        return location.key === this.my_location.key
+      }
+    },
+
+    // user_name は自分の対戦相手か？
+    user_name_is_opponent_team_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      if (location && this.my_location) {
+        return location.key !== this.my_location.key
+      }
+    },
+
+    // user_name は自分と同じ観戦者か？
+    user_name_is_same_watcher_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      return location == null && this.my_location == null
+    }
   },
 
   computed: {
@@ -131,6 +158,7 @@ export const mod_order_main = {
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
         illegal_behavior_key: this.illegal_behavior_key,
         auto_resign_key: this.auto_resign_key,
+        think_mark_receive_scope_key: this.think_mark_receive_scope_key,
         change_per:            this.change_per,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
@@ -142,6 +170,11 @@ export const mod_order_main = {
     // 条件 メンバーリストが揃っている
     // 条件 自分の手番はないとき
     sp_human_side() {
+      // マークモードでは駒を動かせないようにする
+      if (this.think_mark_mode_p) {
+        return "none"
+      }
+
       let retv = "both"                                          // デフォルトは誰でも動かせる
       if (this.order_enable_p) {                                 // 順番設定が有効かつ
         if (this.ac_room) {                                      // 部屋が立てられていて
@@ -180,8 +213,8 @@ export const mod_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
-    self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
+    i_am_member_p()          { return this.order_enable_p && !!this.order_lookup_from_name(this.user_name) }, // 自分はメンバーに含まれているか？
+    i_am_watcher_p()         { return this.order_enable_p && !this.order_lookup_from_name(this.user_name)  }, // 自分は観戦者か？
     my_location()               { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +272,11 @@ export const mod_order_main = {
     // 自分のチームは二人以上いるか？
     my_team_member_is_many_p() {
       return (this.my_team_member_count ?? 0) >= 2
+    },
+
+    // 自分のチームは自分だけか？
+    my_team_member_is_one_p() {
+      return (this.my_team_member_count ?? 0) === 1
     },
   },
 }

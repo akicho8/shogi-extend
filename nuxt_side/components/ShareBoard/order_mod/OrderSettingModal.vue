@@ -55,6 +55,8 @@
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
           SimpleRadioButton.illegal_behavior(:base="SB" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="SB.new_v.illegal_behavior_key")
+        .column.is-12
+          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_v.think_mark_receive_scope_key")
         .column.is-12(v-if="SB.debug_mode_p || true")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12
@@ -64,6 +66,8 @@
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="SB.order_enable_p")
       b-button.apply_button(@click="apply_handle" :type="submit_button_color") 確定
+      template(v-if="SB.debug_mode_p")
+        b-button.os_modal_force_submit_button(@click="os_modal_force_submit_handle") 確定(force)
 </template>
 
 <script>
@@ -196,6 +200,11 @@ export default {
       }
       this.SB.new_order_share("順番設定を反映しました")
       this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.SB.cc_next_message())
+    },
+
+    // バリデーションなしで反映する
+    os_modal_force_submit_handle() {
+      this.SB.new_order_share("バリデーションなしで順番設定を反映しました")
     },
 
     hint_handle(model) {

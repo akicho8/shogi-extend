@@ -42,7 +42,7 @@ export default {
   computed: {
     message() {
       let s = null
-      if (this.SB.self_is_member_p) {
+      if (this.SB.i_am_member_p) {
         if (this.SB.current_turn_self_p) {
           s = "本当に投了しますか？"
         } else {

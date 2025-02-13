@@ -3,7 +3,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       NavbarItemSidebarClose(@click="SB.sidebar_toggle")
-      template(v-if="$gs.blank_p(SB.ac_room) || !SB.self_is_member_p")
+      template(v-if="$gs.blank_p(SB.ac_room) || !SB.i_am_member_p")
         NavbarItemLogin(component="a")
         NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
     .mt-4

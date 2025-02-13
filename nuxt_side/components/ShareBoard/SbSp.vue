@@ -56,6 +56,7 @@ export default {
       hv.sp_body                     = this.SB.current_sfen
       hv.sp_player_info              = this.SB.sp_player_info
       hv.sp_human_side               = this.SB.sp_human_side
+      hv.sp_think_mark_list          = this.SB.sp_think_mark_list
       hv.sp_legal_move_only          = this.SB.legal_strict_p
       hv.sp_my_piece_only_move       = this.SB.legal_strict_p
       hv.sp_my_piece_kill_disabled   = this.SB.legal_strict_p
@@ -130,11 +131,14 @@ export default {
       hv["ev_action_piece_cancel"]         = this.SB.ev_action_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["ev_illegal_click_but_self_is_not_turn"] = this.SB.ev_illegal_click_but_self_is_not_turn
-      hv["ev_illegal_my_turn_but_oside_click"]    = this.SB.ev_illegal_my_turn_but_oside_click
+      hv["ev_illegal_click_but_self_is_not_turn"] = this.SB.ev_illegal_click_but_self_is_not_turn // 手番が違うのに操作しようとした
+      hv["ev_illegal_my_turn_but_oside_click"]    = this.SB.ev_illegal_my_turn_but_oside_click    // 自分が手番だが相手の駒を動かそうとした
 
       // 反則系
       hv["ev_illegal_illegal_accident"] = this.SB.ev_illegal_illegal_accident
+
+      // マークできる箇所をタップした
+      hv["ev_action_markable_pointerdown"] = this.SB.ev_action_markable_pointerdown
 
       return hv
     },

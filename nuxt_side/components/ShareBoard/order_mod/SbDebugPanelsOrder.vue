@@ -59,10 +59,11 @@
       .panel-block 次は自分の手番か？ {{SB.next_turn_self_p}}
       .panel-block 前の局面のメンバーの名前 {{SB.previous_turn_user_name}}
       .panel-block 前は自分の手番か？ {{SB.previous_turn_self_p}}
-      .panel-block 自分はメンバーに含まれているか？ {{SB.self_is_member_p}}
-      .panel-block 自分は観戦者か？ {{SB.self_is_watcher_p}}
+      .panel-block 自分はメンバーに含まれているか？ {{SB.i_am_member_p}}
+      .panel-block 自分は観戦者か？ {{SB.i_am_watcher_p}}
       .panel-block 自分チームのメンバー数 {{SB.my_team_member_count}}
       .panel-block 自分チームのメンバーは2人以上いる？ {{SB.my_team_member_is_many_p}}
+      .panel-block 自分チームのメンバーは自分だけか？ {{SB.my_team_member_is_one_p}}
 
   .column.is-4(v-if="SB.new_v.order_unit")
     .panel

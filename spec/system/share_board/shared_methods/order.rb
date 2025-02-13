@@ -46,6 +46,10 @@ module SharedMethods
     first(".apply_button").click
   end
 
+  def os_modal_force_submit
+    first(".os_modal_force_submit_button").click
+  end
+
   def modal_close_handle
     first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
