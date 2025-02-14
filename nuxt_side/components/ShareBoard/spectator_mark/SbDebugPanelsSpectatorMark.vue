@@ -2,7 +2,7 @@
 .SbDebugPanelsSpectatorMark.column.is-3
   .panel
     .panel-heading
-      | 千日手指摘
+      | 印
   //-   a.panel-block(@click="SB.spectator_mark_cop.increment('x')") 同局面カウント +1
   //-   a.panel-block(@click="SB.spectator_mark_cop.reset()") リセット
   //- .panel.assert_system_variable

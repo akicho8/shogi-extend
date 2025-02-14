@@ -116,6 +116,13 @@ export const mod_spectator_mark = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    spectator_mark_toggle_button_click_handle() {
+      if (this.spectator_mark_use_p) {
+        this.spectator_mark_use_p = false
+      } else {
+        this.spectator_mark_use_p = true
+      }
+    },
   },
   computed: {
     spectator_mark_func_p() { return spectator_mark_func_p },
@@ -127,5 +134,15 @@ export const mod_spectator_mark = {
       return Gs.imodulo(hash_number, SS_MARK_COLOR_COUNT)
     },
 
+    spectator_mark_button_show_p() { return true },
+
+    spectator_mark_button_icon() {
+      if (this.spectator_mark_use_p) {
+        // return "pencil-circle-outline"
+        return "pencil"
+      } else {
+        return "pencil"
+      }
+    },
   },
 }
