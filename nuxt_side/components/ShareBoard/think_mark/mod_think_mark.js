@@ -10,13 +10,17 @@ export const mod_think_mark = {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     ev_action_markable_pointerdown(params, event) {
       if (this.i_can_mark_send_p(event)) {
-        const mark_attrs = this._tm_mark_attrs_from(params.mark_pos_key)
-        // this.sp_call(e => e.mut_think_mark_list.toggle(mark_attrs))
-        this.single_mark_share(mark_attrs)
+        const think_mark_command = this.think_mark_command_from(params.mark_pos_key)
+        this.think_mark_share(think_mark_command)
       }
     },
 
-    _tm_mark_attrs_from(mark_pos_key) {
+    think_mark_command_from(mark_pos_key) {
+      const think_mark_attrs = this.think_mark_attrs_from(mark_pos_key)
+      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
+    },
+
+    think_mark_attrs_from(mark_pos_key) {
       return {
         mark_pos_key: mark_pos_key,              // 位置
         mark_user_name: this.user_name,          // 名前
@@ -27,24 +31,24 @@ export const mod_think_mark = {
     //////////////////////////////////////////////////////////////////////////////// 共有
 
     // 共有
-    single_mark_share(mark_attrs) {
+    think_mark_share(think_mark_command) {
       const params = {
-        mark_attrs: mark_attrs,
+        think_mark_command: think_mark_command,
       }
 
       if (this.ac_room == null) {
-        this.single_mark_share_broadcasted({
+        this.think_mark_share_broadcasted({
           ...this.ac_room_perform_default_params(),
           ...params,
         })
         return
       }
 
-      this.ac_room_perform("single_mark_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("think_mark_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    single_mark_share_broadcasted(params) {
+    think_mark_share_broadcasted(params) {
       if (this.i_can_mark_receive_p(params)) {
-        this.sp_call(e => e.mut_think_mark_list.toggle(params.mark_attrs))
+        this.sp_call(e => e.mut_think_mark_list.toggle_command_apply(params.think_mark_command))
       }
     },
 
@@ -73,22 +77,7 @@ export const mod_think_mark = {
         return true
       }
 
-      // 観戦者なら受信できる
-      if (this.think_mark_receive_scope_info.key === "tmrs_watcher_only") {
-        if (this.i_am_watcher_p) {
-          return true
-        }
-      }
-
-      // 観戦者と対戦相手が受信できる
-      if (this.think_mark_receive_scope_info.key === "tmrs_watcher_with_opponent") {
-        if (this.i_am_watcher_p || this.user_name_is_opponent_team_p(params.from_user_name)) {
-          return true
-        }
-      }
-
-      // 誰でも受信できる
-      if (this.think_mark_receive_scope_info.key === "tmrs_everyone") {
+      if (this.think_mark_receive_scope_info.condition(this, params)) {
         return true
       }
 

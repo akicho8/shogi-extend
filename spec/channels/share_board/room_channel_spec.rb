@@ -233,8 +233,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
           # ],
         })
       expect {
-        subscription.single_mark_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "single_mark_share_broadcasted", bc_params: data)
+        subscription.think_mark_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_share_broadcasted", bc_params: data)
     end
   end
 
