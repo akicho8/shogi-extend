@@ -142,6 +142,11 @@ export const mod_order_main = {
     // 条件 メンバーリストが揃っている
     // 条件 自分の手番はないとき
     sp_human_side() {
+      // マークモードでは駒を動かせないようにする
+      if (this.spectator_mark_mode_p) {
+        return "none"
+      }
+
       let retv = "both"                                          // デフォルトは誰でも動かせる
       if (this.order_enable_p) {                                 // 順番設定が有効かつ
         if (this.ac_room) {                                      // 部屋が立てられていて

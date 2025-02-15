@@ -1,7 +1,6 @@
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
-const spectator_mark_func_p = true // 有効にするか？
 const SS_MARK_COLOR_COUNT   = 12   // shogi-player 側で12色用意している
 const PEPPER_DATE_FORMAT    = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
@@ -9,14 +8,14 @@ export const mod_spectator_mark = {
   methods: {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     ev_action_markable_pointerdown(params, event) {
-      if (this.current_user_is_makrable_p(event)) {
-        const mark_attrs = this.mark_attrs_from(params.mark_pos_key)
+      if (this.current_user_is_markable_p(event)) {
+        const mark_attrs = this.sm_mark_attrs_from(params.mark_pos_key)
         // this.sp_call(e => e.mut_mark_list.toggle(mark_attrs))
         this.single_mark_share(mark_attrs)
       }
     },
 
-    mark_attrs_from(mark_pos_key) {
+    sm_mark_attrs_from(mark_pos_key) {
       return {
         mark_pos_key: mark_pos_key,              // 位置
         mark_user_name: this.user_name,          // 名前
@@ -25,10 +24,20 @@ export const mod_spectator_mark = {
     },
 
     // マークできる？
-    current_user_is_makrable_p(event) {
+    current_user_is_markable_p(event) {
+      if (!this.spectator_mark_mode_global_p) {
+        return false
+      }
+
       // return true
 
-      if (this.self_is_watcher_p) {           // 観戦者か？
+      // 観戦者ならマークできる
+      if (this.self_is_watcher_p) {
+        return true
+      }
+
+      // 対局者でもマークモードONならマークできる
+      if (this.spectator_mark_mode_p) {
         return true
       }
 
@@ -37,6 +46,7 @@ export const mod_spectator_mark = {
       if (this.keyboard_meta_p(event)) {
         return true
       }
+
       // }
 
       // if (this.self_is_member_p) {            // 対局メンバーかつ
@@ -116,29 +126,59 @@ export const mod_spectator_mark = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 全部消す
+    // 指し終わったときに呼ばれる
+    spectator_mark_all_clear() {
+      this.sp_call(e => e.mut_mark_list.clear())
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     spectator_mark_toggle_button_click_handle() {
-      if (this.spectator_mark_use_p) {
-        this.spectator_mark_use_p = false
+      this.$sound.play_click()
+      if (this.spectator_mark_mode_p) {
+        this.spectator_mark_mode_p = false
       } else {
-        this.spectator_mark_use_p = true
+        this.spectator_mark_mode_p = true
       }
     },
   },
   computed: {
-    spectator_mark_func_p() { return spectator_mark_func_p },
-
-    // 色は名前から決める
+    // 現在の利用者の名前に対応する色番号を得る
     mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
       const hash_number = Gs.str_to_hash_number([pepper, this.user_name].join("-"))
       return Gs.imodulo(hash_number, SS_MARK_COLOR_COUNT)
     },
 
-    spectator_mark_button_show_p() { return true },
+    // 切り替えボタンを表示するか？
+    spectator_mark_button_show_p() {
+      if (!this.spectator_mark_mode_global_p) {
+        return false
+      }
 
+      // 対局者のとき
+      if (this.self_is_member_p) {
+        return true
+      }
+
+      // 順番設定をしていないとき
+      if (!this.order_enable_p) {
+        return true
+      }
+
+      // 部屋を作っていないとき
+      if (!this.ac_room) {
+        return true
+      }
+
+      return false
+    },
+
+    // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
+    // 中のペンの大きさが変わって非常に違和感があったため、pencil は表示したままで自力で円を重ねる方法に変更した
     spectator_mark_button_icon() {
-      if (this.spectator_mark_use_p) {
-        // return "pencil-circle-outline"
+      if (this.spectator_mark_mode_p) {
         return "pencil"
       } else {
         return "pencil"

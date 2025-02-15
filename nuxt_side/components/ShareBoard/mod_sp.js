@@ -91,13 +91,17 @@ export const mod_sp = {
 
     // 手番が違うのに操作しようとした
     ev_illegal_click_but_self_is_not_turn() {
-      this.debug_alert("手番が違うのに操作しようとした")
-      // if (this.spectator_mark_func_p) {
+      if (this.spectator_mark_mode_p) {
+        return
+      }
+
+      // if (this.spectator_mark_mode_global_p) {
       //   if (this.self_is_member_p) {
       //     this.debug_alert("手番ではないが対局メンバー")
       //   }
       // } else {
       if (this.order_enable_p) {
+        this.debug_alert("手番が違うのに操作しようとした")
         this.$sound.play("x")
         const messages = []
         const name = this.current_turn_user_name
@@ -109,7 +113,7 @@ export const mod_sp = {
           }
 
           if (this.self_is_watcher_p) {
-            if (this.spectator_mark_func_p) {
+            if (this.spectator_mark_mode_global_p) {
               // 観戦者はマークできるのでエラーメッセージは出さない
             } else {
               messages.push(`あなたは観戦者なので操作できません`)
