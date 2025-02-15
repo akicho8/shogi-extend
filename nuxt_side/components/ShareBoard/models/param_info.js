@@ -58,6 +58,7 @@ export class ParamInfo extends ParamBase {
 
       { key: "spectator_mark_mode_global_p",  type: "boolean", name: "観戦者のマーク機能",                  defaults: { development: null,                      production: true,                                }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
       { key: "spectator_mark_mode_p",         type: "boolean", name: "一時的なマーク機能有効化",            defaults: { development: null,                      production: false,                               }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
+      { key: "mark_receive_scope_key",      type: "string",  name: "マークのスコープ",                    defaults: { development: null,                      production: "watcher_only",                          }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
     ]
   }
 }

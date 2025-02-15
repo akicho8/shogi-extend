@@ -111,13 +111,12 @@ export const mod_sp = {
           if (this.self_is_member_p) {
             messages.push(`今は${this.user_call_name(name)}の手番です`)
           }
-
           if (this.self_is_watcher_p) {
-            if (this.spectator_mark_mode_global_p) {
-              // 観戦者はマークできるのでエラーメッセージは出さない
-            } else {
-              messages.push(`あなたは観戦者なので操作できません`)
-            }
+            messages.push(`あなたは観戦者なので操作できません`)
+            // if (this.spectator_mark_mode_p) {
+            //   // 観戦者はマークできるのでエラーメッセージは出さない
+            // } else {
+            // }
           }
 
           if (this.clock_box && this.clock_box.play_p) {

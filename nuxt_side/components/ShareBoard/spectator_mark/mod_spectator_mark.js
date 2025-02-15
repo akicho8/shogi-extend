@@ -1,8 +1,9 @@
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
+import { MarkReceiveScopeInfo } from "./mark_receive_scope_info.js"
 
-const SS_MARK_COLOR_COUNT   = 12   // shogi-player 側で12色用意している
-const PEPPER_DATE_FORMAT    = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
+const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で12色用意している
+const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
 export const mod_spectator_mark = {
   methods: {
@@ -69,18 +70,21 @@ export const mod_spectator_mark = {
 
     //////////////////////////////////////////////////////////////////////////////// 共有
 
+    // 共有
     single_mark_share(mark_attrs) {
       const params = {
         mark_attrs: mark_attrs,
       }
-      if (this.ac_room) {
-        this.ac_room_perform("single_mark_share", params) // --> app/channels/share_board/room_channel.rb
-      } else {
+
+      if (this.ac_room == null) {
         this.single_mark_share_broadcasted({
           ...this.ac_room_perform_default_params(),
           ...params,
         })
+        return
       }
+
+      this.ac_room_perform("single_mark_share", params) // --> app/channels/share_board/room_channel.rb
     },
     single_mark_share_broadcasted(params) {
       if (this.mark_receive_p(params)) {
@@ -146,8 +150,27 @@ export const mod_spectator_mark = {
       }
       return true
     },
+
+    // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+    spectator_mark_auto_set() {
+      if (!this.spectator_mark_mode_global_p) {
+        return
+      }
+      this.debug_alert("自動印設定")
+      // 対局者ならOFF
+      if (this.self_is_member_p) {
+        this.spectator_mark_mode_p = false
+      }
+      // 観戦者ならON
+      if (this.self_is_watcher_p) {
+        this.spectator_mark_mode_p = true
+      }
+    },
   },
   computed: {
+    MarkReceiveScopeInfo()    { return MarkReceiveScopeInfo },
+    mark_receive_scope_info() { return this.MarkReceiveScopeInfo.fetch(this.mark_receive_scope_key) },
+
     // 現在の利用者の名前に対応する色番号を得る
     mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
@@ -161,22 +184,29 @@ export const mod_spectator_mark = {
         return false
       }
 
-      // 部屋を作っていないとき
-      if (!this.ac_room) {
-        return true
-      }
+      return true
 
-      // 順番設定をしていないとき
-      if (!this.order_enable_p) {
-        return true
-      }
-
-      // 対局者のとき
-      if (this.self_is_member_p) {
-        return true
-      }
-
-      return false
+      // // 部屋を作っていないとき
+      // if (!this.ac_room) {
+      //   return true
+      // }
+      //
+      // // 順番設定をしていないとき
+      // if (!this.order_enable_p) {
+      //   return true
+      // }
+      //
+      // // 対局者のとき
+      // if (this.self_is_member_p) {
+      //   return true
+      // }
+      //
+      // // 観戦者のとき
+      // if (this.self_is_watcher_p) {
+      //   return true
+      // }
+      //
+      // return false
     },
 
     // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
