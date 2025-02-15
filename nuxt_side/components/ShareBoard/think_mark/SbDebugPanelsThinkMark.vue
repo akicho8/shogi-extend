@@ -9,7 +9,7 @@
     .panel-heading
       | [assert_system_variable]
     .panel-block think_mark_mode_p:{{SB.think_mark_mode_p}}
-    .panel-block think_mark_mode_global_p:{{SB.think_mark_mode_global_p}}
+    //- .panel-block think_mark_mode_global_p:{{SB.think_mark_mode_global_p}}
     .panel-block think_mark_receive_scope_key:{{SB.think_mark_receive_scope_key}}
 </template>
 

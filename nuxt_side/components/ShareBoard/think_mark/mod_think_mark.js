@@ -59,14 +59,16 @@ export const mod_think_mark = {
     // 自分はマークを送れる？
     // マーク自体は役割に関係なく think_mark_mode_p を有効にすれば送ることができる、とする
     i_can_mark_send_p(event) {
-      // マークモードONならマークできる
-      if (this.think_mark_mode_p) {
-        return true
-      }
+      if (this.play_mode_p) {
+        // マークモードONならマークできる
+        if (this.think_mark_mode_p) {
+          return true
+        }
 
-      // 誰でもメタキーを押しながらでもマークできる
-      if (this.keyboard_meta_p(event)) {
-        return true
+        // 誰でもメタキーを押しながらでもマークできる
+        if (this.keyboard_meta_p(event)) {
+          return true
+        }
       }
 
       return false
@@ -97,23 +99,23 @@ export const mod_think_mark = {
     ////////////////////////////////////////////////////////////////////////////////
 
     think_mark_toggle_button_click_handle() {
-      if (!this.think_mark_mode_global_p) {
-        return
-      }
-      this.$sound.play_click()
+      // if (!this.think_mark_mode_global_p) {
+      //   return
+      // }
       if (this.think_mark_mode_p) {
         this.think_mark_mode_p = false
       } else {
         this.think_mark_mode_p = true
       }
+      this.$sound.play_toggle(this.think_mark_mode_p)
       return true
     },
 
     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
     think_mark_auto_set() {
-      if (!this.think_mark_mode_global_p) {
-        return
-      }
+      // if (!this.think_mark_mode_global_p) {
+      //   return
+      // }
       this.debug_alert("自動印設定")
       // 対局者ならOFF
       if (this.i_am_member_p) {
@@ -136,13 +138,15 @@ export const mod_think_mark = {
       return Gs.imodulo(hash_number, SS_MARK_COLOR_COUNT)
     },
 
-    // 切り替えボタンを表示するか？
+    // 思考マークモード有効/無効ボタンを表示するか？
     think_mark_button_show_p() {
-      if (!this.think_mark_mode_global_p) {
-        return false
+      if (this.play_mode_p) {
+        // if (!this.think_mark_mode_global_p) {
+        //   return false
+        // }
+        return true
       }
-
-      return true
+      return false
     },
 
     // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
