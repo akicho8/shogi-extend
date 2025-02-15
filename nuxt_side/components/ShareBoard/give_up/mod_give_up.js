@@ -123,8 +123,8 @@ export const mod_give_up = {
     // ・対局メンバーに含まれる
     // ・時計が PLAY 状態 ← やめ
     give_up_button_show_p() {
-      // return this.self_is_member_p && this.cc_play_p
-      return this.self_is_member_p
+      // return this.i_am_member_p && this.cc_play_p
+      return this.i_am_member_p
     },
 
     // 投了ボタンを押した瞬間の勝った側を返す

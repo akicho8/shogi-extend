@@ -156,7 +156,7 @@ export const mod_chore = {
     // Home 表示条件
     // ・対局メンバーではない
     home_display_p() {
-      return !this.self_is_member_p
+      return !this.i_am_member_p
     },
   },
 }

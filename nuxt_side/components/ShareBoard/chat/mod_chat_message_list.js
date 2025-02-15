@@ -74,7 +74,7 @@ export const mod_chat_message_list = {
       if (record.message_scope_key === "ms_public") {  // 公開スコープなら許可
         return true
       }
-      if (this.self_is_watcher_p) {                    // 自分が観戦者なら許可
+      if (this.i_am_watcher_p) {                    // 自分が観戦者なら許可
         return true
       }
       if (this.received_from_self(record)) {           // 自分が送信者なら許可

@@ -91,12 +91,12 @@ export const mod_sp = {
 
     // 手番が違うのに操作しようとした
     ev_illegal_click_but_self_is_not_turn() {
-      if (this.spectator_mark_mode_p) {
+      if (this.mark_mode_p) {
         return
       }
 
-      // if (this.spectator_mark_mode_global_p) {
-      //   if (this.self_is_member_p) {
+      // if (this.mark_mode_global_p) {
+      //   if (this.i_am_member_p) {
       //     this.debug_alert("手番ではないが対局メンバー")
       //   }
       // } else {
@@ -108,12 +108,12 @@ export const mod_sp = {
         if (Gs.blank_p(name)) {
           messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
         } else {
-          if (this.self_is_member_p) {
+          if (this.i_am_member_p) {
             messages.push(`今は${this.user_call_name(name)}の手番です`)
           }
-          if (this.self_is_watcher_p) {
+          if (this.i_am_watcher_p) {
             messages.push(`あなたは観戦者なので操作できません`)
-            // if (this.spectator_mark_mode_p) {
+            // if (this.mark_mode_p) {
             //   // 観戦者はマークできるのでエラーメッセージは出さない
             // } else {
             // }

@@ -26,19 +26,19 @@ export const mod_spectator_mark = {
 
     // マークできる？
     current_user_is_markable_p(event) {
-      if (!this.spectator_mark_mode_global_p) {
+      if (!this.mark_mode_global_p) {
         return false
       }
 
       // return true
 
       // 観戦者ならマークできる
-      if (this.self_is_watcher_p) {
+      if (this.i_am_watcher_p) {
         return true
       }
 
       // 対局者でもマークモードONならマークできる
-      if (this.spectator_mark_mode_p) {
+      if (this.mark_mode_p) {
         return true
       }
 
@@ -50,7 +50,7 @@ export const mod_spectator_mark = {
 
       // }
 
-      // if (this.self_is_member_p) {            // 対局メンバーかつ
+      // if (this.i_am_member_p) {            // 対局メンバーかつ
       //   if (!this.current_turn_self_p) {      // 自分の手番ではないとき
       //     // if (this.my_team_member_is_one_p) { // 仲間は自分だけである (マークを受けとる仲間がいないのでよしとする)
       //     return true
@@ -94,36 +94,31 @@ export const mod_spectator_mark = {
     // 受信できる？
     mark_receive_p(params) {
       // 部屋を作っていないので受信できる
-      if (!this.ac_room) {
+      if (this.ac_room == null) {
         return true
       }
 
-      // 自分のマークは受信できる
-      // 自分のマークであってもチャットのようにサーバーを仲介して受信させる
+      // 自分から自分へは受信できる
       if (this.received_from_self(params)) {
         return true
       }
 
       // 観戦者なら問答無用で受信できる
-      if (this.self_is_watcher_p) {
+      if (this.i_am_watcher_p) {
         return true
       }
 
-      // マークを送ってきた相手が自分と同じチームであれば受信しない (リーダーの指示になるため)
-      // const from_location = this.user_name_to_initial_location(params.from_user_name)
-      // if (from_location && this.my_location) {
-      //   if (from_location.key === this.my_location.key) {
-      //     return false
-      //   }
-      // }
+      // 対戦相手も受信できる
+      if (this.mark_receive_scope_info.key === "mrs_watcher_with_opponent") {
+        if (this.user_name_is_opponent_team_p(params.from_user_name)) {
+          return true
+        }
+      }
 
-      // // 「自分→自分」はすでに自分側で操作し終わっているので無視する
-      // if (this.received_from_self(params)) {
-      //   return false
-      // }
-      // if (this.self_is_watcher_p) {           // 観戦者か？
-      //   return true
-      // }
+      // 誰でも受信できる
+      if (this.mark_receive_scope_info.key === "mrs_everyone") {
+        return true
+      }
 
       return false
     },
@@ -139,31 +134,31 @@ export const mod_spectator_mark = {
     ////////////////////////////////////////////////////////////////////////////////
 
     spectator_mark_toggle_button_click_handle() {
-      if (!this.spectator_mark_mode_global_p) {
+      if (!this.mark_mode_global_p) {
         return
       }
       this.$sound.play_click()
-      if (this.spectator_mark_mode_p) {
-        this.spectator_mark_mode_p = false
+      if (this.mark_mode_p) {
+        this.mark_mode_p = false
       } else {
-        this.spectator_mark_mode_p = true
+        this.mark_mode_p = true
       }
       return true
     },
 
     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
     spectator_mark_auto_set() {
-      if (!this.spectator_mark_mode_global_p) {
+      if (!this.mark_mode_global_p) {
         return
       }
       this.debug_alert("自動印設定")
       // 対局者ならOFF
-      if (this.self_is_member_p) {
-        this.spectator_mark_mode_p = false
+      if (this.i_am_member_p) {
+        this.mark_mode_p = false
       }
       // 観戦者ならON
-      if (this.self_is_watcher_p) {
-        this.spectator_mark_mode_p = true
+      if (this.i_am_watcher_p) {
+        this.mark_mode_p = true
       }
     },
   },
@@ -180,14 +175,14 @@ export const mod_spectator_mark = {
 
     // 切り替えボタンを表示するか？
     spectator_mark_button_show_p() {
-      if (!this.spectator_mark_mode_global_p) {
+      if (!this.mark_mode_global_p) {
         return false
       }
 
       return true
 
       // // 部屋を作っていないとき
-      // if (!this.ac_room) {
+      // if (this.ac_room == null) {
       //   return true
       // }
       //
@@ -197,12 +192,12 @@ export const mod_spectator_mark = {
       // }
       //
       // // 対局者のとき
-      // if (this.self_is_member_p) {
+      // if (this.i_am_member_p) {
       //   return true
       // }
       //
       // // 観戦者のとき
-      // if (this.self_is_watcher_p) {
+      // if (this.i_am_watcher_p) {
       //   return true
       // }
       //
@@ -212,7 +207,7 @@ export const mod_spectator_mark = {
     // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
     // 中のペンの大きさが変わって非常に違和感があったため、pencil は表示したままで自力で円を重ねる方法に変更した
     spectator_mark_button_icon() {
-      if (this.spectator_mark_mode_p) {
+      if (this.mark_mode_p) {
         return "pencil"
       } else {
         return "pencil"

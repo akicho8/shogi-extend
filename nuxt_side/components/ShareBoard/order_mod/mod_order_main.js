@@ -116,6 +116,8 @@ export const mod_order_main = {
       }
     },
 
+    // user_name に対応する対局者情報を返す
+    // なければ対局者ではない
     order_lookup_from_name(user_name) {
       if (this.order_enable_p) {
         return this.order_unit.name_to_object_hash[user_name]
@@ -123,6 +125,28 @@ export const mod_order_main = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    // user_name は自分と同じチームか？
+    user_name_is_same_team_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      if (location && this.my_location) {
+        return location.key === this.my_location.key
+      }
+    },
+
+    // user_name は自分の対戦相手か？
+    user_name_is_opponent_team_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      if (location && this.my_location) {
+        return location.key !== this.my_location.key
+      }
+    },
+
+    // user_name は自分と同じ観戦者か？
+    user_name_is_same_watcher_p(user_name) {
+      const location = this.user_name_to_initial_location(user_name)
+      return location == null && this.my_location == null
+    }
   },
 
   computed: {
@@ -145,7 +169,7 @@ export const mod_order_main = {
     // 条件 自分の手番はないとき
     sp_human_side() {
       // マークモードでは駒を動かせないようにする
-      if (this.spectator_mark_mode_p) {
+      if (this.mark_mode_p) {
         return "none"
       }
 
@@ -187,8 +211,8 @@ export const mod_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    self_is_member_p()          { return this.order_enable_p && !!this.order_lookup_from_name(this.user_name) }, // 自分はメンバーに含まれているか？
-    self_is_watcher_p()         { return this.order_enable_p && !this.order_lookup_from_name(this.user_name)  }, // 自分は観戦者か？
+    i_am_member_p()          { return this.order_enable_p && !!this.order_lookup_from_name(this.user_name) }, // 自分はメンバーに含まれているか？
+    i_am_watcher_p()         { return this.order_enable_p && !this.order_lookup_from_name(this.user_name)  }, // 自分は観戦者か？
     my_location()               { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
 
     ////////////////////////////////////////////////////////////////////////////////

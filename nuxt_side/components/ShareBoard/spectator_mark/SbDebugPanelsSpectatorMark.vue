@@ -3,15 +3,14 @@
   .panel
     .panel-heading
       | 印
-  //-   a.panel-block(@click="SB.spectator_mark_cop.increment('x')") 同局面カウント +1
-  //-   a.panel-block(@click="SB.spectator_mark_cop.reset()") リセット
-  //- .panel.assert_system_variable
-  //-   .panel-heading
-  //-     | [assert_system_variable]
-  //-   .panel-block spectator_mark_cop.keys_count:{{SB.spectator_mark_cop.keys_count}}
-  //-   .panel-block spectator_mark_cop.count:{{SB.spectator_mark_cop.count}}
-  //-   .panel-block spectator_mark_cop.available_p:{{SB.spectator_mark_cop.available_p('x')}}
-  //-   .panel-block spectator_mark_check_p:{{SB.illegal_behavior_info.spectator_mark_check_p}}
+    a.panel-block(@click="SB.spectator_mark_toggle_button_click_handle") 切り替え
+    a.panel-block(@click="SB.spectator_mark_all_clear") 全消し
+  .panel.assert_system_variable
+    .panel-heading
+      | [assert_system_variable]
+    .panel-block mark_mode_p:{{SB.mark_mode_p}}
+    .panel-block mark_mode_global_p:{{SB.mark_mode_global_p}}
+    .panel-block mark_receive_scope_info.key:{{SB.mark_receive_scope_info.key}}
 </template>
 
 <script>

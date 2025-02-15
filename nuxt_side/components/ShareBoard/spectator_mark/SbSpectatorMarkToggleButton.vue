@@ -5,7 +5,7 @@ b-navbar-item.SbSpectatorMarkToggleButton.has-text-weight-bold.px_5_if_tablet.sp
   )
   .icon_container
     b-icon.icon_pencil(:icon="SB.spectator_mark_button_icon" type="is-white")
-    b-icon.icon_circle(icon="circle-outline" type="is-white" v-if="SB.spectator_mark_mode_p")
+    b-icon.icon_circle(icon="circle-outline" type="is-white" v-if="SB.mark_mode_p")
 </template>
 
 <script>
