@@ -9,7 +9,7 @@ export const mod_think_mark = {
   methods: {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     ev_action_markable_pointerdown(params, event) {
-      if (this.i_can_mark_p(event)) {
+      if (this.i_can_mark_send_p(event)) {
         const mark_attrs = this._tm_mark_attrs_from(params.mark_pos_key)
         // this.sp_call(e => e.mut_think_mark_list.toggle(mark_attrs))
         this.single_mark_share(mark_attrs)
@@ -22,30 +22,6 @@ export const mod_think_mark = {
         mark_user_name: this.user_name,          // 名前
         mark_color_index: this.mark_color_index, // 色
       }
-    },
-
-    // 自分はマークできる？
-    i_can_mark_p(event) {
-      if (!this.think_mark_mode_global_p) {
-        return false
-      }
-
-      // 観戦者ならマークできる
-      if (this.i_am_watcher_p) {
-        return true
-      }
-
-      // 対局者でもマークモードONならマークできる
-      if (this.think_mark_mode_p) {
-        return true
-      }
-
-      // 誰でもメタキーを押しながらでもマークできる
-      if (this.keyboard_meta_p(event)) {
-        return true
-      }
-
-      return false
     },
 
     //////////////////////////////////////////////////////////////////////////////// 共有
@@ -72,26 +48,41 @@ export const mod_think_mark = {
       }
     },
 
-    // 自分は受信できる？
-    i_can_mark_receive_p(params) {
-      // 部屋を作っていないので受信できる
-      if (this.ac_room == null) {
+    //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
+
+    // 自分はマークを送れる？
+    // マーク自体は役割に関係なく think_mark_mode_p を有効にすれば送ることができる、とする
+    i_can_mark_send_p(event) {
+      // マークモードONならマークできる
+      if (this.think_mark_mode_p) {
         return true
       }
 
+      // 誰でもメタキーを押しながらでもマークできる
+      if (this.keyboard_meta_p(event)) {
+        return true
+      }
+
+      return false
+    },
+
+    // 自分は受信できる？
+    i_can_mark_receive_p(params) {
       // 自分から自分へは受信できる
       if (this.received_from_self(params)) {
         return true
       }
 
-      // 観戦者なら問答無用で受信できる
-      if (this.i_am_watcher_p) {
-        return true
+      // 観戦者なら受信できる
+      if (this.think_mark_receive_scope_info.key === "tmrs_watcher_only") {
+        if (this.i_am_watcher_p) {
+          return true
+        }
       }
 
-      // 対戦相手も受信できる
+      // 観戦者と対戦相手が受信できる
       if (this.think_mark_receive_scope_info.key === "tmrs_watcher_with_opponent") {
-        if (this.user_name_is_opponent_team_p(params.from_user_name)) {
+        if (this.i_am_watcher_p || this.user_name_is_opponent_team_p(params.from_user_name)) {
           return true
         }
       }
