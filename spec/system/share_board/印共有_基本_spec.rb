@@ -30,6 +30,22 @@ RSpec.describe "印共有_基本", type: :system, share_board_spec: true do
     assert_selector(".place_7_6 .ThinkMark")
   end
 
+  it "持駒にもマークを設定できる" do
+    # TODO
+  end
+
+  it "駒操作したらマークは消える" do
+    # TODO
+  end
+
+  it "編集モードでは発動しない" do
+    # TODO
+  end
+
+  it "シフトを押しながらでもマークを指定できる" do
+    # TODO
+  end
+
   # it "main" do
   #   # visit_app({
   #   #     :room_key             => :test_room,
