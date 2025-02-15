@@ -6,17 +6,17 @@ export class ThinkMarkReceiveScopeInfo extends ApplicationMemoryRecord {
       {
         key: "tmrs_watcher_only",
         name: "観戦者のみ",
-        condition: (context, params) => context.i_am_watcher_p,
+        _if: (context, params) => context.i_am_watcher_p,
       },
       {
         key: "tmrs_watcher_with_opponent",
         name: "観戦者と対局者",
-        condition: (context, params) => context.i_am_watcher_p || context.user_name_is_opponent_team_p(params.from_user_name),
+        _if: (context, params) => context.i_am_watcher_p || context.user_name_is_opponent_team_p(params.from_user_name),
       },
       {
         key: "tmrs_everyone",
         name: "つつぬけ",
-        condition: (context, params) => true,
+        _if: (context, params) => true,
       },
     ]
   }

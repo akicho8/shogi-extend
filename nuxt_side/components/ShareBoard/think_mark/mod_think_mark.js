@@ -30,7 +30,6 @@ export const mod_think_mark = {
 
     //////////////////////////////////////////////////////////////////////////////// 共有
 
-    // 共有
     think_mark_share(think_mark_command) {
       const params = {
         think_mark_command: think_mark_command,
@@ -77,7 +76,7 @@ export const mod_think_mark = {
         return true
       }
 
-      if (this.think_mark_receive_scope_info.condition(this, params)) {
+      if (this.think_mark_receive_scope_info._if(this, params)) {
         return true
       }
 
