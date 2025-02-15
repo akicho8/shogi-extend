@@ -135,12 +135,16 @@ export const mod_spectator_mark = {
     ////////////////////////////////////////////////////////////////////////////////
 
     spectator_mark_toggle_button_click_handle() {
+      if (!this.spectator_mark_mode_global_p) {
+        return
+      }
       this.$sound.play_click()
       if (this.spectator_mark_mode_p) {
         this.spectator_mark_mode_p = false
       } else {
         this.spectator_mark_mode_p = true
       }
+      return true
     },
   },
   computed: {
@@ -157,8 +161,8 @@ export const mod_spectator_mark = {
         return false
       }
 
-      // 対局者のとき
-      if (this.self_is_member_p) {
+      // 部屋を作っていないとき
+      if (!this.ac_room) {
         return true
       }
 
@@ -167,8 +171,8 @@ export const mod_spectator_mark = {
         return true
       }
 
-      // 部屋を作っていないとき
-      if (!this.ac_room) {
+      // 対局者のとき
+      if (this.self_is_member_p) {
         return true
       }
 

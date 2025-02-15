@@ -17,6 +17,10 @@
         td
           b-tag(type="is-primary") c
       tr
+        th 目印モードのトグル
+        td
+          b-tag(type="is-primary") m
+      tr
         th チャットを開く
         td
           b-tag(type="is-primary") Enter

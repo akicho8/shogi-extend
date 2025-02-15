@@ -24,6 +24,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.cc_modal_shortcut_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "m"),
+        call: c => c.spectator_mark_toggle_button_click_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.keyboard_shift_p(e),
         call: c => c.edit_mode_handle(),
       },
