@@ -15,6 +15,7 @@ export const mod_order_new = {
         order_unit:        null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
         illegal_behavior_key: null, // 反則をどうするか
         auto_resign_key:  null, // 投了のタイミング
+        auto_resign2_key:  null, // 投了のタイミング
         change_per:            null, // N手毎交代
         os_change:         null, // OsChange のインスタンス
         os_dnd_count:         0, // ドラッグ中なら 1 以上
@@ -93,6 +94,7 @@ export const mod_order_new = {
       {
         this.new_v.illegal_behavior_key = this.illegal_behavior_key
         this.new_v.auto_resign_key = this.auto_resign_key
+        this.new_v.auto_resign2_key = this.auto_resign2_key
         this.new_v.change_per            = this.change_per
       }
 
@@ -137,6 +139,7 @@ export const mod_order_new = {
         //
         illegal_behavior_key: this.new_v.illegal_behavior_key,
         auto_resign_key: this.new_v.auto_resign_key,
+        auto_resign2_key: this.new_v.auto_resign2_key,
         change_per:            this.new_v.change_per,
         //
         message:           message,

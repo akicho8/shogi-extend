@@ -59,6 +59,8 @@
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12
           SimpleRadioButton.change_per(:base="SB" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="SB.new_v.change_per")
+        .column.is-12
+          SimpleRadioButton.auto_resign2(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResign2Info" :sync_value.sync="SB.new_v.auto_resign2_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

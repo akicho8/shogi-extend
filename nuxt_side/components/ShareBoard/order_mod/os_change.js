@@ -33,6 +33,7 @@ export class OsChange {
       [
         this.context.illegal_behavior_key,
         this.context.auto_resign_key,
+        this.context.auto_resign2_key,
         this.context.change_per,
       ]
     ])

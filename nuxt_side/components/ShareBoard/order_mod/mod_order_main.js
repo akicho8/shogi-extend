@@ -101,6 +101,7 @@ export const mod_order_main = {
 
       this.illegal_behavior_key = params.illegal_behavior_key
       this.auto_resign_key = params.auto_resign_key
+      this.auto_resign2_key = params.auto_resign2_key
       this.change_per            = params.change_per
 
       this.ac_log({subject: "順情受信", body: `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`})
@@ -157,6 +158,7 @@ export const mod_order_main = {
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
         illegal_behavior_key: this.illegal_behavior_key,
         auto_resign_key: this.auto_resign_key,
+        auto_resign2_key: this.auto_resign2_key,
         change_per:            this.change_per,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
