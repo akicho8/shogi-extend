@@ -59,7 +59,7 @@ export const mod_order_main = {
       }
       this.order_enable_p = params.order_enable_p
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
-      this.spectator_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+      this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定ONのタイミングで本譜を消す
       // これは投了せずに対局を終了した人が前の対局の本譜を参照して混乱しているのを見かけたために入れてある
@@ -97,7 +97,7 @@ export const mod_order_main = {
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
       this.sp_viewpoint_set_by_self_location() // 自分の場所を調べて正面をその視点にする
-      this.spectator_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+      this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       this.illegal_behavior_key = params.illegal_behavior_key
       this.auto_resign_key = params.auto_resign_key
@@ -169,7 +169,7 @@ export const mod_order_main = {
     // 条件 自分の手番はないとき
     sp_human_side() {
       // マークモードでは駒を動かせないようにする
-      if (this.mark_mode_p) {
+      if (this.think_mark_mode_p) {
         return "none"
       }
 

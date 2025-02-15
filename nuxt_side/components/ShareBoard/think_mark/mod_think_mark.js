@@ -1,22 +1,22 @@
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
-import { MarkReceiveScopeInfo } from "./mark_receive_scope_info.js"
+import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 
 const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で12色用意している
 const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
-export const mod_spectator_mark = {
+export const mod_think_mark = {
   methods: {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     ev_action_markable_pointerdown(params, event) {
-      if (this.current_user_is_markable_p(event)) {
-        const mark_attrs = this.sm_mark_attrs_from(params.mark_pos_key)
-        // this.sp_call(e => e.mut_mark_list.toggle(mark_attrs))
+      if (this.i_can_mark_p(event)) {
+        const mark_attrs = this._tm_mark_attrs_from(params.mark_pos_key)
+        // this.sp_call(e => e.mut_think_mark_list.toggle(mark_attrs))
         this.single_mark_share(mark_attrs)
       }
     },
 
-    sm_mark_attrs_from(mark_pos_key) {
+    _tm_mark_attrs_from(mark_pos_key) {
       return {
         mark_pos_key: mark_pos_key,              // 位置
         mark_user_name: this.user_name,          // 名前
@@ -24,13 +24,11 @@ export const mod_spectator_mark = {
       }
     },
 
-    // マークできる？
-    current_user_is_markable_p(event) {
-      if (!this.mark_mode_global_p) {
+    // 自分はマークできる？
+    i_can_mark_p(event) {
+      if (!this.think_mark_mode_global_p) {
         return false
       }
-
-      // return true
 
       // 観戦者ならマークできる
       if (this.i_am_watcher_p) {
@@ -38,33 +36,15 @@ export const mod_spectator_mark = {
       }
 
       // 対局者でもマークモードONならマークできる
-      if (this.mark_mode_p) {
+      if (this.think_mark_mode_p) {
         return true
       }
 
-      // 誰でもメタキーを押しながらであればマークできる
-      // if (this.debug_mode_p) {
+      // 誰でもメタキーを押しながらでもマークできる
       if (this.keyboard_meta_p(event)) {
         return true
       }
 
-      // }
-
-      // if (this.i_am_member_p) {            // 対局メンバーかつ
-      //   if (!this.current_turn_self_p) {      // 自分の手番ではないとき
-      //     // if (this.my_team_member_is_one_p) { // 仲間は自分だけである (マークを受けとる仲間がいないのでよしとする)
-      //     return true
-      //     // }
-      //   }
-      // }
-
-      // if (this.current_turn_self_p) {       // 現在自分の手番でかつ、
-      //   if (this.my_team_member_is_one_p) { // 仲間は自分だけなら、マークを受けとる仲間がいないのでよしとする
-      //     if (event && event.shiftKey) {    // ただそれだと駒操作できないので shiftKey を押しているときだけとする
-      //       return true                     // TODO: これが true になるときは操作も禁止しないといけない → ややこしいのであと
-      //     }
-      //   }
-      // }
       return false
     },
 
@@ -87,12 +67,13 @@ export const mod_spectator_mark = {
       this.ac_room_perform("single_mark_share", params) // --> app/channels/share_board/room_channel.rb
     },
     single_mark_share_broadcasted(params) {
-      if (this.mark_receive_p(params)) {
-        this.sp_call(e => e.mut_mark_list.toggle(params.mark_attrs))
+      if (this.i_can_mark_receive_p(params)) {
+        this.sp_call(e => e.mut_think_mark_list.toggle(params.mark_attrs))
       }
     },
-    // 受信できる？
-    mark_receive_p(params) {
+
+    // 自分は受信できる？
+    i_can_mark_receive_p(params) {
       // 部屋を作っていないので受信できる
       if (this.ac_room == null) {
         return true
@@ -109,14 +90,14 @@ export const mod_spectator_mark = {
       }
 
       // 対戦相手も受信できる
-      if (this.mark_receive_scope_info.key === "mrs_watcher_with_opponent") {
+      if (this.think_mark_receive_scope_info.key === "tmrs_watcher_with_opponent") {
         if (this.user_name_is_opponent_team_p(params.from_user_name)) {
           return true
         }
       }
 
       // 誰でも受信できる
-      if (this.mark_receive_scope_info.key === "mrs_everyone") {
+      if (this.think_mark_receive_scope_info.key === "tmrs_everyone") {
         return true
       }
 
@@ -127,44 +108,44 @@ export const mod_spectator_mark = {
 
     // 全部消す
     // 指し終わったときに呼ばれる
-    spectator_mark_all_clear() {
-      this.sp_call(e => e.mut_mark_list.clear())
+    think_mark_all_clear() {
+      this.sp_call(e => e.mut_think_mark_list.clear())
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    spectator_mark_toggle_button_click_handle() {
-      if (!this.mark_mode_global_p) {
+    think_mark_toggle_button_click_handle() {
+      if (!this.think_mark_mode_global_p) {
         return
       }
       this.$sound.play_click()
-      if (this.mark_mode_p) {
-        this.mark_mode_p = false
+      if (this.think_mark_mode_p) {
+        this.think_mark_mode_p = false
       } else {
-        this.mark_mode_p = true
+        this.think_mark_mode_p = true
       }
       return true
     },
 
     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
-    spectator_mark_auto_set() {
-      if (!this.mark_mode_global_p) {
+    think_mark_auto_set() {
+      if (!this.think_mark_mode_global_p) {
         return
       }
       this.debug_alert("自動印設定")
       // 対局者ならOFF
       if (this.i_am_member_p) {
-        this.mark_mode_p = false
+        this.think_mark_mode_p = false
       }
       // 観戦者ならON
       if (this.i_am_watcher_p) {
-        this.mark_mode_p = true
+        this.think_mark_mode_p = true
       }
     },
   },
   computed: {
-    MarkReceiveScopeInfo()    { return MarkReceiveScopeInfo },
-    mark_receive_scope_info() { return this.MarkReceiveScopeInfo.fetch(this.mark_receive_scope_key) },
+    ThinkMarkReceiveScopeInfo()    { return ThinkMarkReceiveScopeInfo },
+    think_mark_receive_scope_info() { return this.ThinkMarkReceiveScopeInfo.fetch(this.think_mark_receive_scope_key) },
 
     // 現在の利用者の名前に対応する色番号を得る
     mark_color_index() {
@@ -174,40 +155,18 @@ export const mod_spectator_mark = {
     },
 
     // 切り替えボタンを表示するか？
-    spectator_mark_button_show_p() {
-      if (!this.mark_mode_global_p) {
+    think_mark_button_show_p() {
+      if (!this.think_mark_mode_global_p) {
         return false
       }
 
       return true
-
-      // // 部屋を作っていないとき
-      // if (this.ac_room == null) {
-      //   return true
-      // }
-      //
-      // // 順番設定をしていないとき
-      // if (!this.order_enable_p) {
-      //   return true
-      // }
-      //
-      // // 対局者のとき
-      // if (this.i_am_member_p) {
-      //   return true
-      // }
-      //
-      // // 観戦者のとき
-      // if (this.i_am_watcher_p) {
-      //   return true
-      // }
-      //
-      // return false
     },
 
     // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
     // 中のペンの大きさが変わって非常に違和感があったため、pencil は表示したままで自力で円を重ねる方法に変更した
-    spectator_mark_button_icon() {
-      if (this.mark_mode_p) {
+    think_mark_button_icon() {
+      if (this.think_mark_mode_p) {
         return "pencil"
       } else {
         return "pencil"

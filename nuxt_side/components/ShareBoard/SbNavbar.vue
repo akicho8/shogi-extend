@@ -36,7 +36,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           .has-text-primary {{SB.member_infos.length}}
 
   template(slot="end")
-    SbSpectatorMarkToggleButton
+    SbThinkMarkToggleButton
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle" v-if="SB.otasuke_button_show_p")
       b-icon(:icon="SB.otasuke_button_icon")
@@ -62,7 +62,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
 
 <script>
 import { support_child } from "./support_child.js"
-// import SbSpectatorMarkToggleButton from "./spectator_mark/SbSpectatorMarkToggleButton.vue"
+// import SbThinkMarkToggleButton from "./think_mark/SbThinkMarkToggleButton.vue"
 
 export default {
   name: "SbNavbar",

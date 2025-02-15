@@ -91,11 +91,11 @@ export const mod_sp = {
 
     // 手番が違うのに操作しようとした
     ev_illegal_click_but_self_is_not_turn() {
-      if (this.mark_mode_p) {
+      if (this.think_mark_mode_p) {
         return
       }
 
-      // if (this.mark_mode_global_p) {
+      // if (this.think_mark_mode_global_p) {
       //   if (this.i_am_member_p) {
       //     this.debug_alert("手番ではないが対局メンバー")
       //   }
@@ -113,7 +113,7 @@ export const mod_sp = {
           }
           if (this.i_am_watcher_p) {
             messages.push(`あなたは観戦者なので操作できません`)
-            // if (this.mark_mode_p) {
+            // if (this.think_mark_mode_p) {
             //   // 観戦者はマークできるのでエラーメッセージは出さない
             // } else {
             // }

@@ -84,7 +84,7 @@ export const mod_sfen_share = {
           ...this.sfen_share_params,
         }
         this.illegal_modal_handle(params.illegal_names)
-        this.spectator_mark_all_clear()                         // マークを消す
+        this.think_mark_all_clear()                         // マークを消す
         this.al_add(params)
       }
     },
@@ -144,7 +144,7 @@ export const mod_sfen_share = {
         this.from_user_toast(params)                    // 誰が操作したかを表示する
         this.sfen_shared_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
         this.rs_receive_success_send(params)            // 受信OKを指し手に通知する
-        this.spectator_mark_all_clear()                         // マークを消す
+        this.think_mark_all_clear()                         // マークを消す
       }
 
       this.ai_say_case_turn(params)
