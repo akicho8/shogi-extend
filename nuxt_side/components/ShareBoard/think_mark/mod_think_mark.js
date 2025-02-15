@@ -47,7 +47,10 @@ export const mod_think_mark = {
     },
     think_mark_share_broadcasted(params) {
       if (this.i_can_mark_receive_p(params)) {
-        this.sp_call(e => e.mut_think_mark_list.toggle_command_apply(params.think_mark_command))
+        this.sp_call(e => {
+          e.mut_think_mark_list.toggle_command_apply(params.think_mark_command)
+          this.$sound.play_toggle(params.think_mark_command.method === "push")
+        })
       }
     },
 

@@ -55,12 +55,12 @@
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
           SimpleRadioButton.illegal_behavior(:base="SB" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="SB.new_v.illegal_behavior_key")
+        .column.is-12
+          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_v.think_mark_receive_scope_key")
         .column.is-12(v-if="SB.debug_mode_p || true")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12
           SimpleRadioButton.change_per(:base="SB" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="SB.new_v.change_per")
-        .column.is-12
-          SimpleRadioButton.auto_resign2(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResign2Info" :sync_value.sync="SB.new_v.auto_resign2_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
