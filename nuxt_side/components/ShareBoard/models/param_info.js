@@ -58,7 +58,8 @@ export class ParamInfo extends ParamBase {
 
       // { key: "think_mark_mode_global_p",  type: "boolean", name: "観戦者のマーク機能",                  defaults: { development: null,                      production: true,                                }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
       { key: "think_mark_mode_p",             type: "boolean", name: "一時的なマーク機能有効化",            defaults: { development: null,                      production: false,                               }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
-      { key: "think_mark_receive_scope_key",  type: "string",  name: "マークの受信スコープ",                defaults: { development: null,                      production: "tmrs_watcher_only",                          }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
+      { key: "think_mark_receive_scope_key",  type: "string",  name: "印の受信スコープ",                defaults: { development: null,                      production: "tmrs_watcher_only",                          }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
+      { key: "think_mark_list_str",           type: "string",  name: "印の初期値",                         defaults: { development: null,                      production: "",                                  }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                 },
     ]
   }
 }

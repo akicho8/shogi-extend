@@ -6,7 +6,13 @@ const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で12色用意している
 const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
 export const mod_think_mark = {
+  mounted() {
+    this.think_mark_setup()
+  },
   methods: {
+    think_mark_setup() {
+    },
+
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     ev_action_markable_pointerdown(params, event) {
       if (this.i_can_mark_send_p(event)) {
@@ -167,5 +173,20 @@ export const mod_think_mark = {
         return "pencil"
       }
     },
+
+    // 引数から印の配列を作る
+    // 動作確認やデモ用
+    // http://localhost:4000/share-board?think_mark_list_str=7_7,alice,0,7_6,bob,1
+    sp_think_mark_list() {
+      const ary = Gs.str_split(this.think_mark_list_str ?? "", /,/)
+      return Gs.ary_each_slice_to_a(ary, 3).map(([mark_pos_key, mark_user_name, mark_color_index]) => {
+        return {
+          mark_pos_key: mark_pos_key,
+          mark_user_name: mark_user_name,
+          mark_color_index: mark_color_index,
+        }
+      })
+    },
   },
 }
+
