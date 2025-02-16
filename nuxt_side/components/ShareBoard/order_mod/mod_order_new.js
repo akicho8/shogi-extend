@@ -129,6 +129,7 @@ export const mod_order_new = {
       })
     },
 
+    // 反映ボタンを押したときに呼ぶ
     // 「順番設定(仮)」の値を全体送信する
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
@@ -137,10 +138,10 @@ export const mod_order_new = {
       const params = {
         order_unit:        this.new_v.order_unit.attributes,
         //
-        illegal_behavior_key: this.new_v.illegal_behavior_key,
-        auto_resign_key: this.new_v.auto_resign_key,
+        illegal_behavior_key:         this.new_v.illegal_behavior_key,
+        auto_resign_key:              this.new_v.auto_resign_key,
         think_mark_receive_scope_key: this.new_v.think_mark_receive_scope_key,
-        change_per:            this.new_v.change_per,
+        change_per:                   this.new_v.change_per,
         //
         message:           message,
       }
@@ -158,6 +159,8 @@ export const mod_order_new = {
 
       // new_v.order_unit のパラメータを order_unit に反映する
       this.order_copy_from_bc(params)
+
+      this.think_mark_auto_set() // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // 新しくなった order_unit を new_v.order_unit に反映する

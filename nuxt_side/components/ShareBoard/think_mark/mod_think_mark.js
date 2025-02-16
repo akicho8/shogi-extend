@@ -119,10 +119,11 @@ export const mod_think_mark = {
 
     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
     think_mark_auto_set() {
+      const before_value = this.think_mark_mode_p
       // if (!this.think_mark_mode_global_p) {
       //   return
       // }
-      this.debug_alert("自動印設定")
+      // this.debug_alert("自動印設定")
       // 対局者ならOFF
       if (this.i_am_member_p) {
         this.think_mark_mode_p = false
@@ -131,6 +132,8 @@ export const mod_think_mark = {
       if (this.i_am_watcher_p) {
         this.think_mark_mode_p = true
       }
+      // alert(`think_mark_auto_set: ${this.think_mark_mode_p}`)
+      this.tl_add("思考印", `(think_mark_auto_set) think_mark_mode_p: ${before_value} -> ${this.think_mark_mode_p}`)
     },
   },
   computed: {
