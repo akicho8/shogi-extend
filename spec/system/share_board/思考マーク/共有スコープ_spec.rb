@@ -1,6 +1,6 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/..shared_methods"
 
-RSpec.describe "印共有_共有スコープ", type: :system, share_board_spec: true do
+RSpec.describe "共有スコープ", type: :system, share_board_spec: true do
   def case1(user_name, think_mark_receive_scope_key)
     visit_app({
         :room_key                     => :test_room,

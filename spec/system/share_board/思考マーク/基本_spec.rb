@@ -1,6 +1,6 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/../shared_methods"
 
-RSpec.describe "印共有_基本", type: :system, share_board_spec: true do
+RSpec.describe "基本", type: :system, share_board_spec: true do
   it "右上のペンマークをクリックすると有効になる" do
     visit_app(user_name: "alice")
     assert_system_variable("think_mark_mode_p", "false")
