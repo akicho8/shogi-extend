@@ -3,15 +3,15 @@ require "#{__dir__}/helper"
 RSpec.describe "基本", type: :system, share_board_spec: true do
   it "右上のペンマークをクリックすると有効になる" do
     visit_app(user_name: "alice")
-    assert_system_variable("think_mark_mode_p", "false")
+    assert_system_variable :think_mark_mode_p, "false"
     find(".think_mark_toggle_button_click_handle").click
-    assert_system_variable("think_mark_mode_p", "true")
+    assert_system_variable :think_mark_mode_p, "true"
   end
 
   it "クリックした場所に円と名前が出る" do
     visit_app(user_name: "alice", think_mark_mode_p: true)
     place_click("76")
-    assert_selector(".place_7_6 .ThinkMark", text: "alice")
+    assert_selector(".place_7_6 .ThinkMark", text: "alice", exact_text: true)
   end
 
   it "同じ場所を二度クリックすると印が消える" do
