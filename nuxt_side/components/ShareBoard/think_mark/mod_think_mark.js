@@ -56,19 +56,17 @@ export const mod_think_mark = {
 
     //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
 
-    // 自分はマークを送れる？
+    // 自分はマークできるか？ (送れるか？)
     // マーク自体は役割に関係なく think_mark_mode_p を有効にすれば送ることができる、とする
     i_can_mark_send_p(event) {
-      if (this.play_mode_p) {
-        // マークモードONならマークできる
-        if (this.think_mark_mode_p) {
-          return true
-        }
+      // マークモードONならマークできる
+      if (this.play_mode_p && this.think_mark_mode_p) {
+        return true
+      }
 
-        // 誰でもメタキーを押しながらでもマークできる
-        if (this.keyboard_meta_p(event)) {
-          return true
-        }
+      // 誰でもメタキーを押しながらでもマークできる
+      if (this.play_mode_p && this.keyboard_meta_p(event)) {
+        return true
       }
 
       return false

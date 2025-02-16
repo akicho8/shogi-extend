@@ -1,61 +1,66 @@
 require "#{__dir__}/helper"
 
 RSpec.describe "基本", type: :system, share_board_spec: true do
-  it "右上のペンマークをクリックすると有効になる" do
-    visit_app(user_name: "alice")
+  it "印モードの初期値は無効だが右上のペン印をクリックすると有効になる" do
+    visit_app
     assert_system_variable :think_mark_mode_p, "false"
-    find(".think_mark_toggle_button_click_handle").click
+    think_mark_toggle_button_click
     assert_system_variable :think_mark_mode_p, "true"
   end
 
-  it "クリックした場所に円と名前が出る" do
+  it "クリックした升目に円と名前が出る" do
     visit_app(user_name: "alice", think_mark_mode_p: true)
-    place_click("76")
+    click_try_at_76
+    assert_selector(".place_7_6 .ThinkMark .think_mark_circle_container")
     assert_selector(".place_7_6 .ThinkMark", text: "alice", exact_text: true)
   end
 
-  it "同じ場所を二度クリックすると印が消える" do
-    visit_app(user_name: "alice", think_mark_mode_p: true)
-    place_click("76")
+  it "印モードは無効でもシフトを押しながらであれば印が出る" do
+    visit_app
+    find(".place_7_6").click(:shift)
     assert_selector(".place_7_6 .ThinkMark")
-    place_click("76")
+  end
+
+  it "持駒に印が出る" do
+    visit_app(think_mark_mode_p: true, body: king_vs_king_sfen)
+    find(".Membership.is_black .piece_P").click
+    assert_selector(".Membership.is_black .ThinkMark")
+  end
+
+  it "名前が空なら円だけでる" do
+    visit_app(user_name: "", think_mark_mode_p: true)
+    click_try_at_76
+    assert_selector(".place_7_6 .ThinkMark .think_mark_circle_container") # 円はあるが名前はない
+    assert_no_selector(".place_7_6 .ThinkMark .think_mark_user_name")     # 名前が空ではなく名前欄自体がない
+  end
+
+  it "同じ場所を二度クリックすると印が消える" do
+    visit_app(think_mark_mode_p: true)
+    click_try_at_76
+    assert_selector(".place_7_6 .ThinkMark")
+    click_try_at_76
     assert_no_selector(".place_7_6 .ThinkMark")
   end
 
-  it "複数の箇所に印を出せる" do
-    visit_app(user_name: "alice", think_mark_mode_p: true)
+  it "複数の箇所に印が出る" do
+    visit_app(think_mark_mode_p: true)
     place_click("77")
     place_click("76")
     assert_selector(".place_7_7 .ThinkMark")
     assert_selector(".place_7_6 .ThinkMark")
   end
 
-  it "持駒にもマークを設定できる" do
-    # TODO
+  it "駒操作したら印が消える" do
+    visit_app(think_mark_mode_p: true)
+    assert_click_then_mark
+    think_mark_toggle_button_click
+    piece_move_o("77", "76", "☗7六歩")
+    assert_no_selector(".place_7_6 .ThinkMark")
   end
 
-  it "駒操作したらマークは消える" do
-    # TODO
+  it "編集モードでは印が出ない" do
+    visit_app(think_mark_mode_p: true, sp_mode: "edit")
+    click_try_at_76
+    assert_no_selector(".place_7_6 .ThinkMark")
   end
-
-  it "編集モードでは発動しない" do
-    # TODO
-  end
-
-  it "シフトを押しながらでもマークを指定できる" do
-    # TODO
-  end
-
-  # it "main" do
-  #   # visit_app({
-  #   #     :room_key             => :test_room,
-  #   #     :user_name            => "a",
-  #   #     :fixed_member_names   => "a,b,c",
-  #   #     :fixed_order_names    => "a,b",
-  #   #     :handle_name_validate => "false",
-  #   #     :fixed_order_state    => "to_o2_state",
-  #   #     :think_mark_mode_p    => true,
-  #   #   })
-  #   # debugger
-  # end
 end
