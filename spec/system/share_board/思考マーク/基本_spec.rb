@@ -1,4 +1,4 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/helper"
 
 RSpec.describe "基本", type: :system, share_board_spec: true do
   it "右上のペンマークをクリックすると有効になる" do

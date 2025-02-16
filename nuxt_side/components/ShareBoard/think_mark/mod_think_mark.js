@@ -81,8 +81,16 @@ export const mod_think_mark = {
         return true
       }
 
-      if (this.think_mark_receive_scope_info._if(this, params)) {
+      // 順番設定をしていない状態では誰でも受信できる
+      if (!this.order_enable_p) {
         return true
+      }
+
+      // 順番設定をしている状態では設定に従う
+      if (this.order_enable_p) {
+        if (this.think_mark_receive_scope_info._if(this, params)) {
+          return true
+        }
       }
 
       return false

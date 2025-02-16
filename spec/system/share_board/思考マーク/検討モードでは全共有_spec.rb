@@ -1,15 +1,13 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "同じセルに重ねて名前が出る", type: :system, share_board_spec: true do
+RSpec.describe "検討モードでは全共有", type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
-        :user_name            => user_name,
-        # :fixed_member_names   => "a,b,c",
-        # :fixed_order_names    => "a,b",
-        :handle_name_validate => "false",
-        # :fixed_order_state    => :to_o2_state,
-        :think_mark_mode_p    => "true",
-        :think_mark_receive_scope_key => :tmrs_everyone,
+        :room_key                     => :test_room,
+        :user_name                    => user_name,
+        :handle_name_validate         => "false",
+        :think_mark_mode_p            => "true",
+        :think_mark_receive_scope_key => :tmrs_watcher_only,
       })
   end
 
