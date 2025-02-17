@@ -71,13 +71,16 @@ export const mod_chat_message_list = {
 
     // 表示してもよいか？
     ml_show_p(record) {
-      if (record.message_scope_key === "ms_public") {  // 公開スコープなら許可
+      if (!this.order_enable_p) {                      // そもそも順番設定をしてないなら見える
         return true
       }
-      if (this.i_am_watcher_p) {                    // 自分が観戦者なら許可
+      if (this.received_from_self(record)) {           // 自分が送信者なら状況に限らず見える
         return true
       }
-      if (this.received_from_self(record)) {           // 自分が送信者なら許可
+      if (this.i_am_watcher_p) {                       // 自分が観戦者なら見える
+        return true
+      }
+      if (record.message_scope_key === "ms_public") {  // この条件までくるのは対局者で公開スコープなら見える
         return true
       }
       return false

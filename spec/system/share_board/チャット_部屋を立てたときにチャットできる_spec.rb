@@ -28,14 +28,14 @@ RSpec.describe type: :system, share_board_spec: true do
     c_block { visit_app(room_key: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
 
     b_block { scoped_message_send(:ms_private, message1) } # 観戦者の bob が観戦者送信した
-    b_block { assert_message_received_o(message1) } # 自分には (観戦者かに関係なく本人だから) 届いている
-    a_block { assert_message_received_x(message1) } # alice には対局者なので届いていない
-    c_block { assert_message_received_o(message1) } # carol には観戦者なので届いている
+    b_block { assert_message_received_o(message1)        } # 自分には (観戦者かに関係なく本人だから) 届いている
+    a_block { assert_message_received_x(message1)        } # alice には対局者なので届いていない
+    c_block { assert_message_received_o(message1)        } # carol には観戦者なので届いている
 
     a_block { scoped_message_send(:ms_private, message2) } # 対局者の alice が送信した
-    a_block { assert_message_received_o(message2) } # 自分には (観戦者かに関係なく本人だから) 届いている
-    b_block { assert_message_received_o(message2) } # bob   には観戦者なので届いている
-    c_block { assert_message_received_o(message2) } # carol には観戦者なので届いている
+    a_block { assert_message_received_o(message2)        } # 自分には (観戦者かに関係なく本人だから) 届いている
+    b_block { assert_message_received_o(message2)        } # bob   には観戦者なので届いている
+    c_block { assert_message_received_o(message2)        } # carol には観戦者なので届いている
 
     b_block do
       chat_modal_close
@@ -44,7 +44,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
     # bobが順番設定を解除したことで
     a_block do
-      assert_message_received_o(message1)                             # bob の送信を alice は見えるようになった
+      assert_message_received_o(message1)                      # bob の送信を alice は見えるようになった
       assert_no_selector(".ChatModal .message_scope_dropdown") # 順番設定を解除したためスコープ選択は表示されていない
     end
   end
