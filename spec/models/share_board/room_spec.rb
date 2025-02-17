@@ -77,7 +77,7 @@ module ShareBoard
       end
 
       describe "GPTに発言を促す" do
-        it "DBには入らない発言に応答させる" do
+        it "DBには入らない発言に応答させる", chat_gpt_spec: true do
           Room.something_say({room_key: "dev_room", message_scope_key: "ms_private", content: "3.14159 とは何ですか？(漢字三文字で)"})
           chat_message = Room.fetch("dev_room").chat_messages.sole
           assert { chat_message.content.include?("円周率") }
@@ -87,7 +87,7 @@ module ShareBoard
           assert { chat_message.session_user == ::User.bot }
         end
 
-        it "主に直前の発言に対して応答させる" do
+        it "主に直前の発言に対して応答させる", chat_gpt_spec: true do
           Room.something_say({room_key: "dev_room", message_scope_key: "ms_private"})
           chat_message = Room.fetch("dev_room").chat_messages.sole
           assert { chat_message.content.match?(/\p{Hiragana}+/) }

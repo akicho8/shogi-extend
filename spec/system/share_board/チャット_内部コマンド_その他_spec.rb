@@ -44,7 +44,7 @@ RSpec.describe type: :system, share_board_spec: true do
     chat_message_send("/debug")
   end
 
-  it "/gpt" do
+  it "/gpt", chat_gpt_spec: true do
     chat_message_send("/gpt こんにちは")
     assert_message_latest_from("GPT", wait: 30)
   end

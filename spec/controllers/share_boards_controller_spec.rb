@@ -1,12 +1,11 @@
 require "rails_helper"
 
-RSpec.describe ShareBoardsController, type: :controller do
+RSpec.describe ShareBoardsController, type: :controller, share_board_spec: true do
   it "HTMLの要求はNuxt側にリダイレクト" do
     get :show, params: { }
     assert { response.status == 302 }
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/controllers/share_boards_controller_spec.rb -e '基本「58玉」'
   describe "基本「58玉」" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }

@@ -71,6 +71,9 @@ RSpec.configure do |config|
     config.filter_run_excluding :share_board_spec => true
   end
 
+  # ChatGPT 関連のテストを除外する
+  config.filter_run_excluding chat_gpt_spec: true
+
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   # These two settings work together to allow you to limit a spec run
