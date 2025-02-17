@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
     chat_message_send("1+2は？")
   end
 
-  it "必ず返答する" do
+  it "必ず返答する", chat_gpt_spec: true do
     case1(1)
     assert_message_latest_from("GPT", wait: 5)
   end

@@ -6,7 +6,7 @@ module ShareBoard
       ShareBoard.setup
     end
 
-    it "works" do
+    it "works", chat_gpt_spec: true do
       history = ChatAi::MessageHistory.new
       history.clear
 
@@ -19,7 +19,7 @@ module ShareBoard
       assert { history.to_topic[0].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
     end
 
-    it "一人称を把握している" do
+    it "一人称を把握している", chat_gpt_spec: true do
       history = ChatAi::MessageHistory.new
       history.clear
 
