@@ -51,8 +51,9 @@ module Swars
       it "my_technique_items" do
         assert do
           @user.stat.matrix_stat.my_technique_items == [
-            {:tag=>:"3段ロケット", :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:垂れ歩, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag => :"下段の香",    :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :"3段ロケット", :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :"垂れ歩",      :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
@@ -66,19 +67,25 @@ module Swars
       it "my_note_items" do
         assert do
           @user.stat.matrix_stat.my_note_items == [
-            {:tag=>:居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:対振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:ロケット, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag => :居飛車,     :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :対振り飛車, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :対抗形,     :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :ロケット,   :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :急戦,       :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :短手数,     :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
 
       it "vs_note_items" do
         assert do
-          @user.stat.matrix_stat.vs_note_items == [{:tag=>:対居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}]
+          @user.stat.matrix_stat.vs_note_items == [
+            {:tag => :対抗形,   :appear_ratio => 1.0,:judge_counts => {:win => 1,:lose => 0}},
+            {:tag => :急戦,     :appear_ratio => 1.0,:judge_counts => {:win => 1,:lose => 0}},
+            {:tag => :短手数,   :appear_ratio => 1.0,:judge_counts => {:win => 1,:lose => 0}},
+            {:tag => :振り飛車, :appear_ratio => 1.0,:judge_counts => {:win => 1,:lose => 0}},
+            {:tag => :対居飛車, :appear_ratio => 1.0,:judge_counts => {:win => 1,:lose => 0}},
+          ]
         end
       end
     end
