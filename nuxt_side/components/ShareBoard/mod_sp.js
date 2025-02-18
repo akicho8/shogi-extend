@@ -112,18 +112,14 @@ export const mod_sp = {
             messages.push(`今は${this.user_call_name(name)}の手番です`)
           }
           if (this.i_am_watcher_p) {
-            messages.push(`あなたは観戦者なので操作できません`)
-            // if (this.think_mark_mode_p) {
-            //   // 観戦者はマークできるのでエラーメッセージは出さない
-            // } else {
-            // }
+            messages.push(`今は${this.user_call_name(name)}の手番です`)
+            messages.push(`それにあなたは観戦者なんで触らんといてください`)
           }
-
           if (this.clock_box && this.clock_box.play_p) {
             // 対局中と思われる
           } else {
             // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
-            messages.push(`検討する場合は順番設定を解除してください`)
+            messages.push(`みんなで盤をつついて検討する場合は順番設定を解除してください`)
           }
         }
         if (Gs.present_p(messages)) {
