@@ -2,7 +2,7 @@ import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 
-const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で12色用意している
+const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
 export const mod_think_mark = {
@@ -14,31 +14,18 @@ export const mod_think_mark = {
     },
 
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
-    ev_action_markable_pointerdown(params, event) {
+    // ここでは直接操作せずにコマンドを作り (自分であっても) サーバーを介してから反映する
+    ev_action_markable_pointerdown(ev_params, event) {
       if (this.i_can_mark_send_p(event)) {
-        const think_mark_command = this.think_mark_command_from(params.mark_pos_key)
-        this.think_mark_share(think_mark_command)
-      }
-    },
-
-    think_mark_command_from(mark_pos_key) {
-      const think_mark_attrs = this.think_mark_attrs_from(mark_pos_key)
-      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
-    },
-
-    think_mark_attrs_from(mark_pos_key) {
-      return {
-        mark_pos_key: mark_pos_key,              // 位置
-        mark_user_name: this.user_name,          // 名前
-        mark_color_index: this.mark_color_index, // 色
+        this.think_mark_share(ev_params)
       }
     },
 
     //////////////////////////////////////////////////////////////////////////////// 共有
 
-    think_mark_share(think_mark_command) {
+    think_mark_share(ev_params) {
       const params = {
-        think_mark_command: think_mark_command,
+        think_mark_command: this.__think_mark_command_from(ev_params.mark_pos_key),
       }
 
       if (this.ac_room == null) {
@@ -58,6 +45,21 @@ export const mod_think_mark = {
           this.$sound.play_toggle(params.think_mark_command.method === "push")
         })
       }
+    },
+
+    // コマンド発行のための引数を作る
+    __think_mark_attrs_from(mark_pos_key) {
+      return {
+        mark_pos_key: mark_pos_key,              // 位置 (必須)
+        mark_user_name: this.user_name,          // 名前
+        mark_color_index: this.mark_color_index, // 色 (名前から自動的に決めている)
+      }
+    },
+
+    // コマンド発行
+    __think_mark_command_from(mark_pos_key) {
+      const think_mark_attrs = this.__think_mark_attrs_from(mark_pos_key)
+      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
     },
 
     //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
@@ -141,6 +143,18 @@ export const mod_think_mark = {
       // alert(`think_mark_auto_set: ${this.think_mark_mode_p}`)
       this.tl_add("思考印", `(think_mark_auto_set) think_mark_mode_p: ${before_value} -> ${this.think_mark_mode_p}`)
     },
+
+    // 現在の状態から think_mark_list_str を作る
+    // デバッグ用
+    to_sp_think_mark_list_str() {
+      const mut_think_mark_list = this.sp_call(e => e.mut_think_mark_list)
+      const think_mark_list_str = mut_think_mark_list.to_a.map(e => [
+        e.mark_pos_key,
+        e.mark_user_name,
+        e.mark_color_index,
+      ].join(",")).join(",")
+      console.log({think_mark_list_str})
+    },
   },
   computed: {
     ThinkMarkReceiveScopeInfo()    { return ThinkMarkReceiveScopeInfo },
@@ -176,6 +190,7 @@ export const mod_think_mark = {
 
     // 引数から印の配列を作る
     // 動作確認やデモ用
+    // カンマで区切って3つずつ取り出す
     // http://localhost:4000/share-board?think_mark_list_str=7_7,alice,0,7_6,bob,1
     sp_think_mark_list() {
       const ary = Gs.str_split(this.think_mark_list_str ?? "", /,/)
@@ -189,4 +204,3 @@ export const mod_think_mark = {
     },
   },
 }
-
