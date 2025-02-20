@@ -42,7 +42,7 @@ export const mod_think_mark = {
       if (this.i_can_mark_receive_p(params)) {
         this.sp_call(e => {
           e.mut_think_mark_list.toggle_command_apply(params.think_mark_command)
-          this.$sound.play_toggle(params.think_mark_command.method === "push")
+          this.think_mark_se_call(params.think_mark_command)
         })
       }
     },
@@ -62,6 +62,18 @@ export const mod_think_mark = {
       return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
     },
 
+    // 効果音
+    think_mark_se_call(think_mark_command) {
+      const push_trigger = (think_mark_command.method === "push")
+      let se_key = null
+      if (push_trigger) {
+        se_key = "think_mark_at_cell_on"
+      } else {
+        se_key = "think_mark_at_cell_off"
+      }
+      this.$sound.play(se_key)
+    },
+
     //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
 
     // 自分はマークできるか？ (送れるか？)
@@ -73,7 +85,7 @@ export const mod_think_mark = {
       }
 
       // 誰でもメタキーを押しながらでもマークできる
-      if (this.play_mode_p && this.keyboard_meta_p(event)) {
+      if (this.play_mode_p && event && this.keyboard_meta_p(event)) {
         return true
       }
 

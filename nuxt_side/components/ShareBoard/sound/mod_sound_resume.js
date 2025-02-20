@@ -55,7 +55,7 @@ export const mod_sound_resume = {
 
     sound_resume_all_with_rooster() {
       this.$sound.resume_all()
-      this.$sound.play("rooster")
+      this.$sound.play("se_niwatori")
     },
   },
 }

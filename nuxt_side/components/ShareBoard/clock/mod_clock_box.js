@@ -423,7 +423,7 @@ export const mod_clock_box = {
           // this.tn_notify()                 // 牛
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
-        this.$sound.play("rooster")
+        this.$sound.play("se_niwatori")
       }
     },
 
