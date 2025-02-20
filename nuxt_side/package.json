@@ -1,4 +1,10 @@
 {
+  "pnpm": {
+    "overrides": {
+      "shogi-player": "github:akicho8/shogi-player#develop"
+    }
+  },
+
   "name": "SHOGI-EXTEND",
   "version": "1.0.0",
   "description": "将棋に関連するツールを提供するサイトです",

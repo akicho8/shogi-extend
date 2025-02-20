@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  shogi-player: github:akicho8/shogi-player#develop
+
 dependencies:
   marked:
     specifier: ^13.0.2
@@ -110,8 +113,8 @@ devDependencies:
     specifier: ^1.2.6
     version: 1.2.6
   shogi-player:
-    specifier: ^1.1.20
-    version: 1.1.20
+    specifier: github:akicho8/shogi-player#develop
+    version: github.com/akicho8/shogi-player/233a03867739da1b3cdf94f5b88e9efaea201b27
   strict-uri-encode:
     specifier: ^2.0.0
     version: 2.0.0
@@ -10716,16 +10719,6 @@ packages:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
 
-  /shogi-player@1.1.20:
-    resolution: {integrity: sha512-v/ll+YHZ3DuIgNNFh4IvtLfnk0K56Bmw+G/VBZ/7a4LLiR7JpLgrpaszTDIBcPo9CDgYjUsYGHGF/H7xrsMvAw==}
-    dependencies:
-      beetleshine: 0.0.14
-      chroma-js: 2.4.2
-      ismobilejs: 1.1.1
-      js-memory-record: 0.0.28
-      xregexp: 5.1.1
-    dev: true
-
   /side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
     dependencies:
@@ -12427,4 +12420,16 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  github.com/akicho8/shogi-player/233a03867739da1b3cdf94f5b88e9efaea201b27:
+    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/233a03867739da1b3cdf94f5b88e9efaea201b27}
+    name: shogi-player
+    version: 1.1.20
+    dependencies:
+      beetleshine: 0.0.14
+      chroma-js: 2.4.2
+      ismobilejs: 1.1.1
+      js-memory-record: 0.0.28
+      xregexp: 5.1.1
     dev: true
