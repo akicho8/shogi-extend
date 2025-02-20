@@ -12,7 +12,7 @@ export const mod_sound_effect = {
     ev_play_mode_move() {
       this.$nextTick(() => {
         this.$sound.play_click()
-        // this.$sound.play("piece_put"),
+        // this.$sound.play("se_piece_put"),
       })
     },
     // スライダーを自分が動かしたときの音

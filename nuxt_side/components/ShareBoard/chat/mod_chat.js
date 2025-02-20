@@ -89,7 +89,7 @@ export const mod_chat = {
       const message_record = MessageRecord.create(params)
       this.ml_push_record(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
-        this.$sound.play("patxu")                           // 「パッ」
+        this.$sound.play("se_chat_message_receive")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
         if (message_record.content_valid_p) {               // 荒らし判定されていなければ
           this.sb_talk(message_record.content)              // しゃべる

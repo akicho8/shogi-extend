@@ -20,7 +20,7 @@ export const mod_queue_self = {
         }
         if (this.done_record.successed_at) {
           if (false) {
-            this.$sound.play("rooster")
+            this.$sound.play("se_niwatori")
             this.$gs.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
           } else {
             this.$sound.play("o")

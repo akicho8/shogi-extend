@@ -15,7 +15,7 @@ export const mod_sound_effect = {
     // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす)
     se_piece_move() {
       this.$nextTick(() => {
-        this.$sound.play("piece_put")
+        this.$sound.play("se_piece_put")
         this.beat_call("short")
       })
     },
@@ -25,7 +25,7 @@ export const mod_sound_effect = {
     },
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
     se_force_sync() {
-      this.$sound.play("piece_put")
+      this.$sound.play("se_piece_put")
       this.beat_call("short")
     },
     // ☗☖をタップして反転したときの音
