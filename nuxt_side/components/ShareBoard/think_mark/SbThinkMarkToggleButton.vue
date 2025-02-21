@@ -22,7 +22,6 @@ export default {
 .SbThinkMarkToggleButton
   border: 1px solid red
   .icon_container
-    width: 2rem                 // モバイル時にめっちゃ細くなって押せなくなるのを防ぐため
     position: relative
     display: flex
     justify-content: center

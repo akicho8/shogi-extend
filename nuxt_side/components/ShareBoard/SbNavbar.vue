@@ -36,7 +36,6 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           .has-text-primary {{SB.member_infos.length}}
 
   template(slot="end")
-    SbThinkMarkToggleButton
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle" v-if="SB.otasuke_button_show_p")
       b-icon(:icon="SB.otasuke_button_icon")
@@ -52,9 +51,8 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="SB.honpu_log_click_handle" v-if="SB.honpu_button_show_p")
       | 本譜
 
-    b-navbar-item.px_5_if_tablet.is-unselectable.chat_modal_open_handle(tag="a" @click="SB.chat_modal_open_handle" v-if="SB.ac_room || true")
-      b-icon.account_icon(icon="account")
-      b-icon.message_icon(icon="chat-processing")
+    SbThinkMarkToggleButton
+    SbChatOpenbutton
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
     NavbarItemSidebarOpen(@click="SB.sidebar_toggle" v-if="SB.play_mode_p")
@@ -106,18 +104,6 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.SbNavbar
-  // チャットアイコンは2つをずらして組み合わせる
-  .chat_modal_open_handle
-    .icon
-      position: relative
-      &.account_icon
-        top: 5px
-        left: 3px
-      &.message_icon
-        top: -7px
-        left: -3px
-
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
 // .SbApp
