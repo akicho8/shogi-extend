@@ -23,7 +23,7 @@ export const mod_sound_effect = {
     ev_action_turn_change_se() {
       this.$sound.play_click()
     },
-    // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
+    // スライダーを動かして数秒立って同期したときの音(自分にも伝えている→やめ)
     se_force_sync() {
       this.$sound.play("se_piece_put")
       this.beat_call("short")
