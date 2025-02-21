@@ -13,8 +13,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       // { key: "click",                                source: require("@/assets/USF/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),       volume: 0.40, },
       { key: "click",                                source: require("@/assets/SND01_sine/tap_03.wav"),       volume: 0.40, },
-      { key: "toggle_on",                            source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.40, },
-      { key: "toggle_off",                           source: require("@/assets/SND01_sine/toggle_off.wav"),       volume: 0.40, },
+      { key: "toggle_on",                            source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.20, },
+      { key: "toggle_off",                           source: require("@/assets/SND01_sine/toggle_off.wav"),       volume: 0.20, },
       { key: "notification",                         source: require("@/assets/SND01_sine/notification.wav"),       volume: 0.40, },
 
       // { key: "click2",                               source: require("@/assets/USF/IMPACTS/Wood/IMPACT_Wood_Plank_On_Wood_Pile_06_Short_mono.wav"),      volume: 0.40, },
@@ -41,14 +41,14 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",    source: require("@/static/sound_effect/soundeffect_lab/shogi_piece_puton.mp3"),               volume: 0.8, },
       // { key: "se_piece_put", source: require("@/assets/USF/IMPACTS/Stone/IMPACT_Stone_On_Stone_05_mono.wav"), volume: 0.4, },
       // { key: "se_piece_put", source: require("@/assets/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),           volume: 0.8, },
-      { key: "se_piece_put", source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),       volume: 0.5, },
+      { key: "se_piece_put", source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),       volume: 0.3, },
 
       // ▼思考印をセルに付ける / 外す
 
       // 8BIT
       // { key: "think_mark_at_cell_on", source: require("@/assets/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),               volume: 0.30, },
-      { key: "think_mark_at_cell_on",   name: "思考印描画", source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),      volume: 0.2, },
-      { key: "think_mark_at_cell_off",  name: "思考印消去", source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"), volume: 0.2, },
+      { key: "think_mark_at_cell_on",   name: "思考印描画", source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),      volume: 0.15, },
+      { key: "think_mark_at_cell_off",  name: "思考印消去", source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"), volume: 0.15, },
 
       // Factoio 搬送ベルト風
       // { key: "think_mark_at_cell_on",                source: require("@/assets/USF/IMPACTS/Snappy/IMPACT_Snappy_01_mono.wav"),               volume: 0.30, },
@@ -59,8 +59,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "think_mark_at_cell_off",               source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Zap_Fast_mono.wav"),                    volume: 0.30, },
 
       // { key: "se_tebanjanainoni_sawaruna", name: "手番違い",   source: require("@/assets/USF/ALARMS/Digital/ALARM_Short_Distorted_loop_stereo.wav"),                    volume: 0.30, },
-      { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_07_mono.wav"), volume: 0.3, },
-      { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_01_mono.wav"), volume: 0.3, },
+      { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_01_mono.wav"), volume: 0.2, },
+      { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_07_mono.wav"), volume: 0.2, },
 
       { key: "se_room_entry",           name: "入室",          source: require("@/assets/USF/ANIMALS/ANIMAL_Bird_Crow_01_mono.wav"),                  volume: 0.50, },
       { key: "se_room_leave",           name: "退室 (未使用)", source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Indoor_Wood_Close_stereo.wav"), volume: 0.50, },
@@ -71,7 +71,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       { key: "se_niwatori",             name: "にわとり (対局開始)", source: require("@/assets/USF/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"), volume: 0.30, },
 
-      { key: "se_chat_message_receive", name: "チャットの発言受信", source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"),                                              volume: 0.50, },
+      { key: "se_chat_message_receive", name: "チャットの発言受信", source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"), volume: 0.50, },
     ]
   }
 }
