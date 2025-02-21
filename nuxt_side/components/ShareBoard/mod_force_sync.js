@@ -140,7 +140,7 @@ export const mod_force_sync = {
         message: message,
         sfen: this.current_sfen,
         turn: this.current_turn,
-        silent_notify: false,   // 読み上げないようにする
+        notify_mode: "fs_notify_all",
         ...options,
       }
       this.perpetual_cop.reset()
@@ -150,22 +150,41 @@ export const mod_force_sync = {
       {
         this.perpetual_cop.reset()
         this.sfen_share_data_receive(params)       // これで current_location が更新される
-        this.se_force_sync()             // 他者は盤面変化に気付かないため音を出す→自分も含めて音出した方が自分にも親切だった
-        if (this.received_from_self(params)) {
-        } else {
-        }
       }
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }
+
+      // 他者は盤面変化に気付かないため音を出す？
+      // →自分も含めて音出した方が自分にも親切だった
+      // →やっぱやめ
+      // →自分で操作した場合、自分はわかっているので通知しない
+      // if (this.received_from_self(params)) {
+      //   // 自分→自分
+      // } else {
+      //   // 自分→他者
+      // }
+
+      // if (this.received_from_self(params)) {
+      //   // 自分→自分
+      // } else {
+      //   // 自分→他者
       if (params.message) {
-        if (params.silent_notify) {
-          this.debug_alert("silent_notify")
-          this.toast_ok(params.message, {talk: false, duration: 1000})
-        } else {
+        if (params.notify_mode === "fs_notify_all") { // 全員
+          this.se_force_sync()
           this.toast_ok(params.message)
+        } else if (params.notify_mode === "fs_notify_without_self") { // 自分を除く
+          if (!this.received_from_self(params)) {
+            this.se_force_sync()
+            this.toast_ok(params.message)
+          }
+          // this.debug_alert("fs_notify_without_self")
+          // this.toast_ok(params.message, {talk: false, duration: 1000})
+        } else {
+          throw new Error("must not happen")
         }
       }
+
       this.al_add({...params, label: `局面転送 #${params.turn}`})
     },
   },
