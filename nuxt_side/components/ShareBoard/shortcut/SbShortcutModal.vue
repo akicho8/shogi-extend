@@ -17,10 +17,6 @@
         td
           b-tag(type="is-primary") c
       tr
-        th 目印モードのトグル
-        td
-          b-tag(type="is-primary") m
-      tr
         th チャットを開く
         td
           b-tag(type="is-primary") Enter
@@ -41,6 +37,14 @@
         th 局面編集・完了
         td
           b-tag(type="is-primary") ⇧ e
+      tr
+        th 目印モードのトグル
+        td
+          b-tag(type="is-primary") m
+      tr
+        th 目印 (セルに合わせて)
+        td
+          b-tag(type="is-primary") ⇧ Click
       tr
         th 設定
         td
