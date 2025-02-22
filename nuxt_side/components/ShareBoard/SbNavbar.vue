@@ -38,7 +38,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     SbThinkMarkToggleButton
 
     template(v-if="SB.otasuke_button_show_p")
-      b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle")
+      b-navbar-item.is-hidden-mobile.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle")
         b-icon(:icon="SB.otasuke_button_icon")
 
     template(v-if="SB.tweet_button_show_p")
