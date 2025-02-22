@@ -5,7 +5,7 @@ set :rbenv_ruby, '3.2.2'
 set :keep_releases, 1
 
 # 最初にアプリ削除する？
-if ENV["APP_RESET"] == "1" || true
+if ENV["APP_RESET"] == "1"
   before 'deploy:starting', 'deploy:app_clean'
 end
 
