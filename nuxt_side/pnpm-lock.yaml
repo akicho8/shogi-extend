@@ -13,7 +13,7 @@ dependencies:
     version: 1.4.1
   shogi-player:
     specifier: github:akicho8/shogi-player#develop
-    version: github.com/akicho8/shogi-player/0daa9bcfc1d0d1c33bcf7747a8747c4ef92e24a8
+    version: github.com/akicho8/shogi-player/724a71e18dad0fde278a62e350e443a3bfab4d7a
 
 devDependencies:
   '@babel/plugin-proposal-private-property-in-object':
@@ -12298,8 +12298,8 @@ packages:
     engines: {node: '>=6.0'}
     dev: true
 
-  /xregexp@5.1.1:
-    resolution: {integrity: sha512-fKXeVorD+CzWvFs7VBuKTYIW63YD1e1osxwQ8caZ6o1jg6pDAbABDG54LCIq0j5cy7PjRvGIq6sef9DYPXpncg==}
+  /xregexp@5.1.2:
+    resolution: {integrity: sha512-6hGgEMCGhqCTFEJbqmWrNIPqfpdirdGWkqshu7fFZddmTSfgv5Sn9D2SaKloR79s5VUiUlpwzg3CM3G6D3VIlw==}
     dependencies:
       '@babel/runtime-corejs3': 7.26.9
     dev: false
@@ -12408,8 +12408,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/akicho8/shogi-player/0daa9bcfc1d0d1c33bcf7747a8747c4ef92e24a8:
-    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/0daa9bcfc1d0d1c33bcf7747a8747c4ef92e24a8}
+  github.com/akicho8/shogi-player/724a71e18dad0fde278a62e350e443a3bfab4d7a:
+    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/724a71e18dad0fde278a62e350e443a3bfab4d7a}
     name: shogi-player
     version: 1.1.20
     dependencies:
@@ -12417,5 +12417,5 @@ packages:
       chroma-js: 2.4.2
       ismobilejs: 1.1.1
       js-memory-record: 0.0.28
-      xregexp: 5.1.1
+      xregexp: 5.1.2
     dev: false
