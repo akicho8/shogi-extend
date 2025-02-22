@@ -67,9 +67,9 @@ export const mod_think_mark = {
       const push_trigger = (think_mark_command.method === "push")
       let se_key = null
       if (push_trigger) {
-        se_key = "think_mark_at_cell_on"
+        se_key = "se_think_mark_at_cell_on"
       } else {
-        se_key = "think_mark_at_cell_off"
+        se_key = "se_think_mark_at_cell_off"
       }
       this.$sound.play(se_key)
     },

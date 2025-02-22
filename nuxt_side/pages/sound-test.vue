@@ -26,7 +26,8 @@
         @click="row_play"
         narrowed
         )
-        b-table-column(v-slot="{row}" field="key" label="名前" sortable) {{row.key}}
+        b-table-column(v-slot="{row}" field="key" label="KEY" sortable) {{row.key}}
+        b-table-column(v-slot="{row}" field="name" label="名前" sortable) {{row.name}}
         b-table-column(v-slot="{row}" field="volume" label="初期" sortable numeric)
           span(:class="{'has-text-weight-bold': row.volume != volumes[row.key]}")
             | {{row.volume}}
