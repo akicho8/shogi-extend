@@ -1,7 +1,7 @@
 // |---------------------------------------------+---------------------------------------------|
 // | Method                                      | 意味                                        |
 // |---------------------------------------------+---------------------------------------------|
-// | room_create_if_exist_room_key_in_url()      | URLに合言葉の指定があればそのまま部屋に入る |
+// | room_create_if_exist_room_key_in_url()      | URLに合言葉の指定があればそのまま入退室 |
 // | rsm_open_handle()                           | モーダル起動                                |
 // | room_create_by(new_room_key, new_user_name) | モーダル内で入力したものを渡す              |
 // | room_create()                               | 入室                                        |
@@ -26,7 +26,7 @@ export const mod_room_cable = {
     this.room_destroy()
   },
   methods: {
-    // URLに合言葉の指定があればそのまま部屋に入る
+    // URLに合言葉の指定があればそのまま入退室
     room_create_if_exist_room_key_in_url() {
       if (true) {
         // URLに合言葉がない場合は何もしない
@@ -46,7 +46,7 @@ export const mod_room_cable = {
         }
       }
 
-      // 合言葉と名前は問題ないので部屋に入る
+      // 合言葉と名前は問題ないので入退室
       this.room_create()
     },
 
