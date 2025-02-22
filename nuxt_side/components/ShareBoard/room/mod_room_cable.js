@@ -94,9 +94,16 @@ export const mod_room_cable = {
           this.ac_events_hash_inc("initialized")
           this.tl_add("HOOK", "initialized", e)
         },
-        connected: e => {       // FIXME: 初回チェック
-          this.ac_events_hash_inc("connected")
-          this.tl_add("HOOK", "connected", e)
+        connected: e => {
+          if (!e.reconnected) {
+            // 初回
+            this.ac_events_hash_inc("connected")
+            this.tl_add("HOOK", "connected", e)
+          } else {
+            // 次から
+            this.ac_events_hash_inc("reconnected")
+            this.tl_add("HOOK", "reconnected", e)
+          }
           this.ua_notify_once()                       // USER_AGENT を記録
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()

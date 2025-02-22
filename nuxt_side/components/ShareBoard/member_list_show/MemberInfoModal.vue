@@ -79,7 +79,7 @@ export default {
         {
           enabled: true,
           label: "接続",
-          value: `${this.member_info.ac_events_hash.connected || 0}回`,
+          value: `${this.member_info.ac_events_hash.connected || 0}回 (再接続: ${this.member_info.ac_events_hash.reconnected || 0}回)`,
         },
         {
           enabled: true,
