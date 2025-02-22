@@ -20,42 +20,46 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
 
   template(slot="start")
     template(v-if="SB.debug_mode_p")
-      b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold
+      b-navbar-item.is-hidden-mobile
         b-tag.has-text-weight-bold(rounded)
-          .has-text-primary
-            | {{SB.perpetual_cop.count}}
+          .has-text-primary {{SB.perpetual_cop.count}}
 
-      b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="SB.tl_modal_handle")
-        b-tag.has-text-weight-bold(rounded)
-          .has-text-primary
-            | {{SB.track_logs.length}}
+      b-navbar-item.is-hidden-mobile(@click="SB.tl_modal_handle")
+        b-tag(rounded)
+          .has-text-primary {{SB.track_logs.length}}
 
-      b-navbar-item.is-unselectable(tag="div" v-if="SB.ac_room && development_p")
+      b-navbar-item.is-hidden-mobile(tag="div" v-if="SB.ac_room && development_p")
         b-icon(icon="account")
-        b-tag.has-text-weight-bold(rounded)
+        b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
   template(slot="end")
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle" v-if="SB.otasuke_button_show_p")
-      b-icon(:icon="SB.otasuke_button_icon")
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="SB.tweet_modal_handle" v-if="SB.tweet_button_show_p")
-      b-icon(icon="twitter" type="is-white")
-
-    b-navbar-item.has-text-weight-bold(tag="div" v-if="SB.edit_mode_p")
-      .buttons
-        .button.is-primary(@click="SB.play_mode_handle")
-          | 編集完了
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="SB.honpu_log_click_handle" v-if="SB.honpu_button_show_p")
-      | 本譜
-
     SbThinkMarkToggleButton
+
+    template(v-if="SB.otasuke_button_show_p")
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle")
+        b-icon(:icon="SB.otasuke_button_icon")
+
+    template(v-if="SB.tweet_button_show_p")
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="SB.tweet_modal_handle")
+        b-icon(icon="twitter" type="is-white")
+
+    template(v-if="SB.edit_mode_p")
+      b-navbar-item.has-text-weight-bold(tag="div")
+        .buttons
+          .button.is-primary(@click="SB.play_mode_handle")
+            | 編集完了
+
+    template(v-if="SB.honpu_button_show_p")
+      b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="SB.honpu_log_click_handle")
+        | 本譜
+
     SbChatOpenbutton
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
-    NavbarItemSidebarOpen(@click="SB.sidebar_toggle" v-if="SB.play_mode_p")
+    template(v-if="SB.play_mode_p")
+      NavbarItemSidebarOpen(@click="SB.sidebar_toggle")
 </template>
 
 <script>

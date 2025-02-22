@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item.SbChatOpenButton.mobile_then_padding_add.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
+b-navbar-item.SbChatOpenButton.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
   tag="a"
   @click="SB.chat_modal_open_handle"
   v-if="SB.ac_room || true"

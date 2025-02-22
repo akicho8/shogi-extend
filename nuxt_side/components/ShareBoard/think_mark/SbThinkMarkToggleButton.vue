@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item.SbThinkMarkToggleButton.has-text-weight-bold.mobile_then_padding_add.px_5_if_tablet.think_mark_toggle_button_click_handle(
+b-navbar-item.SbThinkMarkToggleButton.has-text-weight-bold.px_5_if_tablet.think_mark_toggle_button_click_handle(
   @click="SB.think_mark_toggle_button_click_handle"
   v-if="SB.think_mark_button_show_p"
   )
