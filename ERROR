@@ -13,7 +13,7 @@ rspec ./spec/system/share_board/反則_挙動_spec.rb:43 # {:type=>:system, :sha
 rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:23 # {:type=>:system, :share_board_spec=>true} 当事者側(自分は即座に起動してBC)
 rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:38 # {:type=>:system, :share_board_spec=>true} 他者側(予約するがBCの方が速いのでキャンセルされる)
 rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:55 # {:type=>:system, :share_board_spec=>true} 他者側(予約待ち0なので他者側で即発動)
-rspec ./spec/system/share_board/同期_後から部屋に入ると古参からさまざまな情報を受け取って同期する_spec.rb:31 # {:type=>:system, :share_board_spec=>true} 時計 works
+rspec ./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb:31 # {:type=>:system, :share_board_spec=>true} 時計 works
 rspec ./spec/system/share_board/対局時計_基本_spec.rb:8 # 対局時計_基本 works
 rspec ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
 rspec ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb:19 # {:type=>:system, :share_board_spec=>true} 無効だと順番設定は解除されていない

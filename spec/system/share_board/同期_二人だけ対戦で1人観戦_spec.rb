@@ -6,10 +6,10 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "alice")                   # aliceが部屋を作る
     end
     b_block do
-      room_setup("test_room", "bob")                     # bobも同じ部屋に入る
+      room_setup("test_room", "bob")                     # bobも同じ入退室
     end
     c_block do
-      room_setup("test_room", "carol")                   # carolは観戦目的で同じ部屋に入る
+      room_setup("test_room", "carol")                   # carolは観戦目的で同じ入退室
     end
     a_block do
       global_menu_open

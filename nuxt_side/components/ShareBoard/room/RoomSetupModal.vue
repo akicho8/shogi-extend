@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 部屋に入る
+      | 入退室
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="SB.ac_room && false") 入室中
     b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.ac_room") 部屋のリンク
   .modal-card-body

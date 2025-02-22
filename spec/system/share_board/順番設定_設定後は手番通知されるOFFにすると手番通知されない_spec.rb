@@ -6,7 +6,7 @@ RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手
       room_setup("test_room", "alice")          # aliceが部屋を作る
     end
     b_block do
-      room_setup("test_room", "bob")            # bobも同じ部屋に入る
+      room_setup("test_room", "bob")            # bobも同じ入退室
     end
     a_block do
       order_set_on                            # 順番設定ON

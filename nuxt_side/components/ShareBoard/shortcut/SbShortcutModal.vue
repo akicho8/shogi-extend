@@ -5,7 +5,7 @@
   table.modal-card-body.table.is-fullwidth.is-narrow
     tbody
       tr
-        th 部屋に入る
+        th 入退室
         td
           b-tag(type="is-primary") i
       tr

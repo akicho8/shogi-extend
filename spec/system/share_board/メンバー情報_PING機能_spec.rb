@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "alice") # alice先輩が部屋を作る
     end
     b_block do
-      room_setup("test_room", "bob") # bob後輩が同じ部屋に入る
+      room_setup("test_room", "bob") # bob後輩が同じ入退室
     end
     a_block do
       member_list_name_click("bob")

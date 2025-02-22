@@ -6,7 +6,7 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
       room_setup("test_room", "alice")                    # aliceが部屋を作る
     end
     b_block do
-      room_setup("test_room", "bob")                      # bobも同じ部屋に入る
+      room_setup("test_room", "bob")                      # bobも同じ入退室
       global_menu_open
       os_modal_handle                                   # 「順番設定」モーダルを開く (まだ無効の状態)
     end
