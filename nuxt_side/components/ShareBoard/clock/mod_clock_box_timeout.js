@@ -86,6 +86,7 @@ export const mod_clock_box_timeout = {
       Gs.assert(Gs.present_p(this.clock_box), "Gs.present_p(this.clock_box)")
 
       this.tl_alert("時間切れモーダル起動完了")
+      this.$sound.stop_all()
       this.$sound.play("lose")         // ちーん
 
       this.cc_timeout_modal_close()
