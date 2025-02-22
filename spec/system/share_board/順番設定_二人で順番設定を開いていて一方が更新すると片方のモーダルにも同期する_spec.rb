@@ -19,7 +19,7 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { os_modal_open }        # b が順番設定を開いた
     a_block do
       find(".swap_handle").click     # a が先後反転した
-      apply_button                   # a が確定を押した
+      os_submit_button_click                   # a が確定を押した
     end
     b_block do
       assert_order_team_one "b", "a" # b に反映されている

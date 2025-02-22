@@ -14,7 +14,7 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
       global_menu_open
       os_modal_handle                                   # 「順番設定」モーダルを開く
       os_switch_toggle                                  # 有効スイッチをクリック
-      apply_button                                      # 確定
+      os_submit_button_click                                      # 確定
       modal_close_handle                                # 閉じる (ヘッダーに置いている)
       assert_action("alice", "順番 ON")                # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
       clock_start                                       # 時計も開始する(これは手番通知条件に時計が動いていることを含むため)

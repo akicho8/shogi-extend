@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
       os_modal_handle                                  # 「順番設定」モーダルを開く
       os_switch_toggle                                 # 有効スイッチをクリック
       drag_to_watch("dnd_black", 1)                    # 黒の[1]にいる carol を観戦に移動する
-      apply_button                                     # 適用クリック
+      os_submit_button_click                                    # 適用クリック
       modal_close_handle                               # 閉じる (ヘッダーに置いている)
     end
     c_block do

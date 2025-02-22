@@ -12,12 +12,12 @@ RSpec.describe type: :system, share_board_spec: true do
         :autoexec             => "os_modal_handle",
       })
 
-    apply_button
+    os_submit_button_click
     assert_text "各チームに最低1人入れてください"
 
     drag_to_watch("dnd_black", 0) # a を観戦に移動
 
-    apply_button
+    os_submit_button_click
     assert_text "誰も参加していません"
   end
 end

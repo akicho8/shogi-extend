@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
       global_menu_open
       os_modal_handle            # 「順番設定」モーダルを開く(すでに有効になっている)
       find(".swap_handle").click # 先後入替
-      apply_button               # 適用
+      os_submit_button_click               # 適用
       modal_close_handle         # 閉じる
     end
     a_block do

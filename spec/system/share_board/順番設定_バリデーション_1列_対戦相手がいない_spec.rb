@@ -14,7 +14,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
     drag_to_watch("dnd_both", 0) # a を観戦に移動
 
-    apply_button
+    os_submit_button_click
     assert_text "誰も参加していません"
   end
 end

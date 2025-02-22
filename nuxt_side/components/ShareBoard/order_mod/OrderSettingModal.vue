@@ -8,10 +8,13 @@
         span.ml-1.has-text-grey.has-text-weight-normal
           | 参加者{{SB.new_v.order_unit.main_user_count}}人
 
+    b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
+
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="SB.order_enable_p" @input="main_switch_handle") 有効
+
   .modal-card-body(@click="!SB.order_enable_p && main_switch_handle(true)")
     .start_message.has-text-centered.has-text-grey.my-6(v-if="!SB.order_enable_p")
       | 右上のスイッチで有効にしよう
