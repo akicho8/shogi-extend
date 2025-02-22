@@ -27,7 +27,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_newbie",
         name: "できない",
-        message: "初心者向け (将棋ウォーズ風)",
+        message: "超初心者向け。面白味に欠ける。(将棋ウォーズ風)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
@@ -36,7 +36,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_throw",
         name: "関与しない",
-        message: "リアル対面対局と同じ",
+        message: "リアル対面対局と同じ (非推奨)",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
