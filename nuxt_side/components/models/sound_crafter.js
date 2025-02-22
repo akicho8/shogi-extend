@@ -38,15 +38,15 @@ export const SoundCrafter = {
   },
 
   play_click(options = {}) {
-    this.play("click", options)
+    this.play("se_click", options)
   },
 
   play_toggle(enabled, options = {}) {
     let key = null
     if (enabled) {
-      key = "toggle_on"
+      key = "se_toggle_on"
     } else {
-      key = "toggle_off"
+      key = "se_toggle_off"
     }
     this.play(key, options)
   },

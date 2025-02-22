@@ -3,21 +3,21 @@ export const mod_sound_effect = {
     // 意図して持ち上げた
     ev_action_piece_lift() {
       if (this.sp_mode === "play") {
-        this.$sound.play_click()
+        this.$sound.play("se_piece_lift")
       }
     },
     // 意図してキャンセルした
     ev_action_piece_cancel() {
       if (this.sp_mode === "play") {
-        this.$sound.play_click()
+        this.$sound.play("se_piece_lift_cancel")
       }
     },
-    // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす)
+    // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす→やめ)
     se_piece_move() {
-      this.$nextTick(() => {
-        this.$sound.play("se_piece_put")
-        this.beat_call("short")
-      })
+      // this.$nextTick(() => {
+      this.$sound.play("se_piece_put")
+      this.beat_call("short")
+      // })
     },
     // スライダーを自分が動かしたときの音
     ev_action_turn_change_se() {
