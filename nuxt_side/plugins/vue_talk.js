@@ -8,7 +8,7 @@ const HOWL_TALK_OPTIONS_DEFAULT = {
   rate: 1.5,
 }
 
-import { SoundUtil } from "@/components/models/sound_util.js"
+import { SoundCrafter } from "@/components/models/sound_crafter.js"
 import { Gs } from "@/components/models/gs.js"
 
 export const vue_talk = {
@@ -33,7 +33,7 @@ export const vue_talk = {
         }
       }
       if (this.$route.query.__system_test_now__) {
-        SoundUtil.play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
+        SoundCrafter.play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
         return
       }
       const params = {
@@ -65,7 +65,7 @@ export const vue_talk = {
         ...options,
       }
       Gs.assert(options.volume != null, "options.volume != null")
-      SoundUtil.play_now(options) // 戻値不要
+      SoundCrafter.play_now(options) // 戻値不要
     },
   },
 }

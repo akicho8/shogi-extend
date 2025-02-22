@@ -19,7 +19,7 @@ import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
 const QueryString = require("query-string")
 
-export const SoundUtil = {
+export const SoundCrafter = {
   play(key, options = {}) {
     if (key) {
       const e = SoundPresetInfo.fetch(key)
