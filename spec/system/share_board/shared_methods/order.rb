@@ -30,7 +30,7 @@ module SharedMethods
   def order_set_on
     os_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    apply_button                           # 明示的に適用する
+    os_submit_button_click                 # 明示的に適用する
     os_modal_close
     assert_action_text("順番 ON")
   end
@@ -40,6 +40,10 @@ module SharedMethods
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     os_modal_close
     assert_action_text("順番 OFF")
+  end
+
+  def os_submit_button_click
+    first(".os_submit_button_for_capybara").click
   end
 
   def apply_button

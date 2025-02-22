@@ -22,7 +22,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     a_block do
       find(".swap_handle").click     # a が先後反転した
-      apply_button                   # a が確定を押した
+      os_submit_button_click                  # a が確定を押した
     end
     b_block do
       assert_order_team_one "a", "b" # b に反映されていない

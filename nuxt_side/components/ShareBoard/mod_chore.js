@@ -26,7 +26,10 @@ export const mod_chore = {
         }
       }
 
-      this.debug_alert(`画面:${focus_p}`)
+      if (this.$route.query.__system_test_now__) {
+      } else {
+        this.debug_alert(`画面:${focus_p}`)
+      }
 
       if (this.debug_mode_p) {
         this.tl_add("画面焦点", focus_p ? "ON" : "OFF")

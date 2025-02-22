@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
     global_menu_open
     os_modal_handle
     os_switch_toggle
-    apply_button
+    os_submit_button_click
     assert_text "次は時計を設置してください"
   end
 end
