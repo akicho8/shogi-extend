@@ -32,7 +32,8 @@
         b-input(v-model="SB.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.send_handle(:class="[SB.message_scope_info.class, SB.message_scope_info.key]" :key="SB.message_scope_info.key" @click="send_handle" :icon-left="SB.message_scope_info.icon" :type="SB.message_scope_info.type") {{SB.message_scope_info.label}}
+    b-button.send_handle(:class="[SB.message_scope_info.class, SB.message_scope_info.key]" :key="SB.message_scope_info.key" @click="send_handle" :icon-left="SB.message_scope_info.icon" :type="SB.message_scope_info.type")
+      // {{SB.message_scope_info.label}}
 </template>
 
 <script>
