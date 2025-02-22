@@ -5,10 +5,12 @@ b-field.SimpleRadioButton(
   :class="{'is_scroll_x': buttons_p}"
   )
   template(#label)
-    span(:class="{'is-clickable': $gs.present_p(hint_str)}" @click="label_click_handle")
-      | {{label}}
-      template(v-if="permanent_mark_append")
-        span.has-text-danger ＊
+    span {{label}}
+    template(v-if="permanent_mark_append")
+      span.has-text-danger ＊
+    template(v-if="hint_exist_p")
+      span.hint_icon(@click="label_click_handle")
+        b-icon(icon="help-circle-outline" size="is-small")
 
   template(v-if="real_model.input_type === 'numberinput'")
     b-numberinput(
@@ -50,6 +52,8 @@ b-field.SimpleRadioButton(
 </template>
 
 <script>
+import { Gs } from "@/components/models/gs.js"
+
 // 使い方
 //  SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
 export default {
@@ -102,6 +106,7 @@ export default {
     current()    { return this.real_model.fetch(this.real_value)                        },
     label()      { return this.real_model.field_label                                   },
     hint_str()   { return (this.real_model.hint_messages || []).join("")                },
+    hint_exist_p() { return Gs.present_p(this.hint_str) },
     field_message() {
       let str = null
       if (this.numeric_p) {

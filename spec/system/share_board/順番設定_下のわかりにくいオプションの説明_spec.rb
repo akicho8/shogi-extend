@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(label, message)
-    find(".OrderSettingModal span", text: label, exact_text: true).click
+    find(".OrderSettingModal span", text: label, exact_text: true).find(:xpath, "..").find(".hint_icon").click
     assert_text(message, wait: 10)
     assert_no_text(message, wait: 30)
   end
