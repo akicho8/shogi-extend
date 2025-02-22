@@ -13,6 +13,13 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       { key: "notification",                         source: require("@/assets/SND01_sine/notification.wav"),       volume: 0.40, },
 
+      // { key: "bgm_battle_start",                     source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.50, },
+      { key: "bgm_battle_toryo1",                     source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.50, },
+      { key: "bgm_battle_toryo2",                     source: require("@/assets/bgm/bgm2.mp3"),       volume: 0.50, },
+      { key: "bgm_battle_toryo3",                     source: require("@/assets/bgm/bgm3.mp3"),       volume: 0.50, },
+      { key: "bgm_battle_toryo4",                     source: require("@/assets/bgm/bgm4.mp3"),       volume: 0.50, },
+      { key: "bgm_battle_toryo5",                     source: require("@/assets/bgm/bgm5.mp3"),       volume: 0.50, },
+
       // 基本UI
       // { key: "se_click",      source: require("@/assets/USF/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),  volume: 0.40, },
       // { key: "se_click",      source: require("@/assets/SND01_sine/tap_03.wav"),                                             volume: 0.40, },
