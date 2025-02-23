@@ -22,8 +22,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       // 基本UI
       // { key: "se_click",      source: require("@/assets/USF/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),  volume: 0.40, },
-      // { key: "se_click",      source: require("@/assets/SND01_sine/tap_03.wav"),                                             volume: 0.40, },
-      { key: "se_click",         source: require("@/assets/USF/BUTTONS/BUTTON_Very_Bright_Click_mono.wav"),                     volume: 0.2, },
+      { key: "se_click",      source: require("@/assets/SND01_sine/tap_03.wav"),                                             volume: 0.40, },
+      // { key: "se_click",         source: require("@/assets/USF/BUTTONS/BUTTON_Very_Bright_Click_mono.wav"),                     volume: 0.2, },
       // { key: "se_toggle_on",  source: require("@/assets/SND01_sine/se_toggle_on.wav"),                                       volume: 0.20, },
       // { key: "se_toggle_off", source: require("@/assets/SND01_sine/se_toggle_off.wav"),                                      volume: 0.20, },
       { key: "se_toggle_on",     source: require("@/assets/USF/BUTTONS/BUTTON_Plastic_Light_Switch_On_mono.wav"),               volume: 0.3, },
@@ -50,9 +50,10 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",    source: require("@/static/sound_effect/soundeffect_lab/shogi_piece_puton.mp3"),               volume: 0.8, },
       // { key: "se_piece_put", source: require("@/assets/USF/IMPACTS/Stone/IMPACT_Stone_On_Stone_05_mono.wav"), volume: 0.4, },
       // { key: "se_piece_put", source: require("@/assets/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),           volume: 0.8, },
-      { key: "se_piece_lift",        source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.1, },
-      { key: "se_piece_lift_cancel", source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.1, },
-      { key: "se_piece_put",         source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.2, },
+      { key: "se_piece_lift",            source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.2, },
+      { key: "se_piece_lift_cancel",     source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.2, },
+      { key: "se_piece_put",             source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.2, },
+      { key: "se_piece_select",          source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"), volume: 0.2, },
 
       // ▼思考印をセルに付ける / 外す
 
@@ -70,8 +71,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_think_mark_at_cell_off",               source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Zap_Fast_mono.wav"),                    volume: 0.30, },
 
       // { key: "se_tebanjanainoni_sawaruna", name: "手番違い",   source: require("@/assets/USF/ALARMS/Digital/ALARM_Short_Distorted_loop_stereo.wav"),                    volume: 0.30, },
-      { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_01_mono.wav"), volume: 0.2, },
-      { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_07_mono.wav"), volume: 0.2, },
+      { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_01_mono.wav"), volume: 0.1, },
+      { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_07_mono.wav"), volume: 0.1, },
 
       { key: "se_room_entry",           name: "入室",  source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Metal_Open_Creak_stereo.wav"), volume: 0.50, },
       { key: "se_room_leave",           name: "退室",  source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Owen_Close_stereo.wav"),       volume: 0.50, },
