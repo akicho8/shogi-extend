@@ -1,0 +1,51 @@
+<!-- -*- compile-command: "scp devise_click_test.html i:/var/www/shogi_web_production/current/public/system/; open https://www.shogi-extend.com/system/devise_click_test" -*- -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=0" />
+    <title>スマホで押せない原因を調べる用</title>
+    <style>
+      * {
+        font-size: 1.5rem;
+      }
+      .my_app {
+        /* user-select: auto; */
+        /* pointer-events: auto; */
+        /* touch-action: manipulation; */
+        /* pointer-events: none; */
+
+        /* user-select: none; */
+        /* -webkit-user-select: none; */
+
+        /* touch-action: none; */
+        /* -webkit-user-select: none; */
+        /* pointer-events: none; */
+        /* -webkit-touch-callout: none; */
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <p>スマホで押せない原因を調べる用 (4)</p>
+    <p>何も設定していないので長押しで選択可能</p>
+    <div class="my_app">
+      <p>テキスト</p>
+      <button id="my_button">ボタン</button>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const my_app = document.querySelector(".my_app")
+        // my_app.addEventListener("contextmenu", function(event) { event.preventDefault() }) // コンテキストメニュー禁止
+        // my_app.addEventListener("dragstart",   function(event) { event.preventDefault() }) // ドラッグ禁止
+        // my_app.addEventListener("touchstart",  function(event) { event.preventDefault() }) // 長押し禁止
+        document.getElementById("my_button").addEventListener("click", function() { alert("ボタンが押されました") })
+      })
+    </script>
+  </body>
+</html>

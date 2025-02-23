@@ -35,7 +35,7 @@
                     | No. {{page_index + 1}} / {{new_info.page_count}}
 
                 ////////////////////////////////////////////////////////////////////////////////
-                table.is_head1
+                table.is-unselectable.is_head1
                   tr
                     td.b_b.b_r.td_players(rowspan="4")
                       .value
@@ -103,7 +103,7 @@
                         | {{new_info.yuukyuu}}
                 ////////////////////////////////////////////////////////////////////////////////
 
-                table.is_head2
+                table.is-unselectable.is_head2
                   tr
                     td.b_b.b_r.td_preset
                       .value
@@ -159,7 +159,7 @@
                     td.b_b(@click="edit_to(page_index, 'umpire_name')" :class="{editable: page_index === 0}")
                       | {{new_info.umpire_name}}
 
-                table.is_body
+                table.is-unselectable.is_body
                   thead
                     tr
                       template(v-for="(_, x) in new_info.outer_columns")
