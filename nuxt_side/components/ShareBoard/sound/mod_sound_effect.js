@@ -34,6 +34,13 @@ export const mod_sound_effect = {
         this.$sound.play_click()
       }
     },
+    // 成 or 不成 選択モードに入る
+    ev_promote_selector_open() {
+      this.$sound.play("se_piece_select")
+    },
+    // 成 or 不成 選択モードから出る
+    ev_promote_selector_close() {
+    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
