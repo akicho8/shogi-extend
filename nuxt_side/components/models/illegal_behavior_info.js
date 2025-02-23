@@ -1,3 +1,13 @@
+// |----------------+-------+-------+--------------------------------------------------+--------|
+// | props          | check | break |                                                  |        |
+// |----------------+-------+-------+--------------------------------------------------+--------|
+// | リレー将棋向け | o     |       | 反則になりそうでも指させてシステム側で指摘する   | 初期値 |
+// | 初心者向け     | o     | o     | 反則になりそうなら emit して動作をキャンセルする |        |
+// | 上級者向け     |       |       | 反則かどうかは人が判断する                       |        |
+// |----------------+-------+-------+--------------------------------------------------+--------|
+
+// 千日手は shogi-player の中から判定するのが難しいためシンプルに is_illegal_behavior_auto の場合のみ有効とする
+
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
@@ -7,14 +17,6 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      // |----------------+-------+-------+--------------------------------------------------+--------|
-      // | props          | check | break |                                                  |        |
-      // |----------------+-------+-------+--------------------------------------------------+--------|
-      // | リレー将棋向け | o     |       | 反則になりそうでも指させてシステム側で指摘する   | 初期値 |
-      // | 初心者向け     | o     | o     | 反則になりそうなら emit して動作をキャンセルする |        |
-      // | 上級者向け     |       |       | 反則かどうかは人が判断する                       |        |
-      // |----------------+-------+-------+--------------------------------------------------+--------|
-      // 千日手は shogi-player の中から判定するのが難しいためシンプルに is_illegal_behavior_auto の場合のみ有効とする
       {
         key: "is_illegal_behavior_auto",
         name: "したら負け",
@@ -27,7 +29,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_newbie",
         name: "できない",
-        message: "超初心者向け。面白味に欠ける。(将棋ウォーズ風)",
+        message: "超初心者向け (接待用)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
