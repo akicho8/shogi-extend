@@ -111,7 +111,7 @@ devDependencies:
     version: 1.2.6
   shogi-player:
     specifier: github:akicho8/shogi-player#develop
-    version: github.com/akicho8/shogi-player/632994e2746ab444d345fda6205c0083f3e7c278
+    version: github.com/akicho8/shogi-player/973ca34783c8b9aa60d95f6870f24c1b06a82d9c
   strict-uri-encode:
     specifier: ^2.0.0
     version: 2.0.0
@@ -12423,8 +12423,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/akicho8/shogi-player/632994e2746ab444d345fda6205c0083f3e7c278:
-    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/632994e2746ab444d345fda6205c0083f3e7c278}
+  github.com/akicho8/shogi-player/973ca34783c8b9aa60d95f6870f24c1b06a82d9c:
+    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/973ca34783c8b9aa60d95f6870f24c1b06a82d9c}
     name: shogi-player
     version: 1.1.20
     dependencies:
