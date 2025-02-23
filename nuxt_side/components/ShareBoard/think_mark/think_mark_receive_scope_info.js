@@ -17,7 +17,7 @@ export class ThinkMarkReceiveScopeInfo extends ApplicationMemoryRecord {
       },
       {
         key: "tmrs_watcher_with_opponent",
-        name: "対局者を含む",
+        name: "対局相手を含む",
         type: "is-warning",
         message: "対局者の印が対局相手にも見える (指導対局向け)",
         environment: ["development", "staging", "production"],
