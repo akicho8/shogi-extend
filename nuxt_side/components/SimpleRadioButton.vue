@@ -9,7 +9,7 @@ b-field.SimpleRadioButton(
     template(v-if="permanent_mark_append")
       span.has-text-danger ＊
     template(v-if="hint_exist_p")
-      span.hint_icon(@click="label_click_handle")
+      a.hint_icon(@click="label_click_handle")
         b-icon(icon="help-circle-outline" size="is-small")
 
   template(v-if="real_model.input_type === 'numberinput'")
