@@ -28,7 +28,7 @@ export const mod_room_entry_leave = {
     // 退室時の通知
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
-      if (false) {
+      if (true) {
         this.$sound.play("se_room_leave")
         Gs.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
       } else {

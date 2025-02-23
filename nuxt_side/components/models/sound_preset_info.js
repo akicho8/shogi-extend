@@ -73,8 +73,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_01_mono.wav"), volume: 0.2, },
       { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/USF/ANIMALS/ANIMAL_Duck_07_mono.wav"), volume: 0.2, },
 
-      { key: "se_room_entry",           name: "入室",          source: require("@/assets/USF/ANIMALS/ANIMAL_Bird_Crow_01_mono.wav"),                  volume: 0.50, },
-      { key: "se_room_leave",           name: "退室 (未使用)", source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Indoor_Wood_Close_stereo.wav"), volume: 0.50, },
+      { key: "se_room_entry",           name: "入室",  source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Metal_Open_Creak_stereo.wav"), volume: 0.50, },
+      { key: "se_room_leave",           name: "退室",  source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Owen_Close_stereo.wav"),       volume: 0.50, },
 
       { key: "se_moo1",                 name: "牛1", source: require("@/assets/USF/ANIMALS/ANIMAL_Cow_Moo_01_mono.wav"), volume: 0.4, },
       { key: "se_moo2",                 name: "牛2", source: require("@/assets/USF/ANIMALS/ANIMAL_Cow_Moo_02_mono.wav"), volume: 0.4, },
@@ -83,6 +83,9 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "se_niwatori",             name: "にわとり (対局開始)", source: require("@/assets/USF/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"), volume: 0.30, },
 
       { key: "se_chat_message_receive", name: "チャットの発言受信", source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"), volume: 0.50, },
+
+      // { key: "se_ping", name: "PING", source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_01_mono.wav"), volume: 0.50, },
+      // { key: "se_pong", name: "PONG", source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_02_mono.wav"), volume: 0.50, },
     ]
   }
 }
