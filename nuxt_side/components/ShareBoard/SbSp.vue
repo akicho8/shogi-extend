@@ -129,8 +129,8 @@ export default {
       hv["ev_action_turn_change"]          = this.SB.ev_action_turn_change    // スライダーを動かしたとき
       hv["ev_action_piece_lift"]           = this.SB.ev_action_piece_lift     // 意図して持ち上げた
       hv["ev_action_piece_cancel"]         = this.SB.ev_action_piece_cancel   // 意図してキャンセルした
-      hv["ev_promote_selector_open"]       = this.SB.ev_promote_selector_open  // 成 or 不成 選択モードに入る
-      hv["ev_promote_selector_close"]      = this.SB.ev_promote_selector_close // 成 or 不成 選択モードから出る
+      hv["ev_action_promote_select_open"]       = this.SB.ev_action_promote_select_open  // 成 or 不成 選択モードに入る
+      hv["ev_action_promote_select_close"]      = this.SB.ev_action_promote_select_close // 成 or 不成 選択モードから出る
 
       // 手番 or 先後違い系
       hv["ev_illegal_click_but_self_is_not_turn"] = this.SB.ev_illegal_click_but_self_is_not_turn // 手番が違うのに操作しようとした
@@ -140,7 +140,7 @@ export default {
       hv["ev_illegal_illegal_accident"] = this.SB.ev_illegal_illegal_accident
 
       // マークできる箇所をタップした
-      hv["ev_action_markable_pointerdown"] = this.SB.ev_action_markable_pointerdown
+      hv["ev_action_click_for_think_mark"] = this.SB.ev_action_click_for_think_mark
 
       return hv
     },

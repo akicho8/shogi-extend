@@ -15,7 +15,7 @@ export const mod_think_mark = {
 
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     // ここでは直接操作せずにコマンドを作り (自分であっても) サーバーを介してから反映する
-    ev_action_markable_pointerdown(ev_params, event) {
+    ev_action_click_for_think_mark(ev_params, event) {
       if (this.i_can_mark_send_p(event)) {
         this.think_mark_share(ev_params)
       }
