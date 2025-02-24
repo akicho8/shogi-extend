@@ -7,8 +7,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
     return [
       // 基本UI
       { key: "se_click",                      name: "クリック",                 source: require("@/assets/SND01_sine/tap_03.wav"),          volume: 0.5, },
-      { key: "se_toggle_on",                  name: "トグルON",                 source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.5, },
-      { key: "se_toggle_off",                 name: "トグルOFF",                source: require("@/assets/SND01_sine/toggle_off.wav"),      volume: 0.5, },
+      { key: "se_toggle_on",                  name: "トグルON",                 source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.3, },
+      { key: "se_toggle_off",                 name: "トグルOFF",                source: require("@/assets/SND01_sine/toggle_off.wav"),      volume: 0.3, },
       { key: "se_select",                     name: "ラジオボタン選択",         source: require("@/assets/SND01_sine/select.wav"),          volume: 0.5, },
       { key: "se_disabled",                   name: "禁止",                     source: require("@/assets/SND01_sine/disabled.wav"),        volume: 0.5, },
       { key: "se_notification",               name: "通知",                     source: require("@/assets/SND01_sine/notification.wav"),    volume: 0.5, },

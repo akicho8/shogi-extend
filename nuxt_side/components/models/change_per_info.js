@@ -7,7 +7,7 @@ export class ChangePerInfo extends ApplicationMemoryRecord {
   static min = 1
   static max = 100
   static hint_messages = [
-    "N回指したら交代します",
+    "N回指したら交代します。リアル対局と違って移動の手間がかからないので1回にしておくのが無難です。",
   ]
   static get define() {
     return [
