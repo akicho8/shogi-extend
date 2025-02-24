@@ -16,5 +16,5 @@ export const AppConfig = {
 
 if (process.env.NODE_ENV === "development") {
   AppConfig.CLOCK_PRESET_USE             = true
-  AppConfig.NAVBAR_COLOR_CHANGE          = true
+  // AppConfig.NAVBAR_COLOR_CHANGE          = true
 }
