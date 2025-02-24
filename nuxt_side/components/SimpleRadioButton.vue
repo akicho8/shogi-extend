@@ -81,7 +81,11 @@ export default {
   },
   methods: {
     input_handle(e) {
-      this.$sound.play_click()
+      if (this.buttons_p) {
+        this.$sound.play("se_select")
+      } else {
+        this.$sound.play_click()
+      }
       if (this.real_model.input_handle_callback) {
         this.real_model.input_handle_callback(this, e)
       }

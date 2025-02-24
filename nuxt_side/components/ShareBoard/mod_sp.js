@@ -135,9 +135,9 @@ export const mod_sp = {
     ev_illegal_my_turn_but_oside_click() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.$sound.play("se_aitenokoma_ugokasouto_suna")
-      if (this.development_p) {
-        this.toast_ok("それは相手の駒です")
-      }
+      // if (this.development_p) {
+      //   this.toast_ok("それは相手の駒です")
+      // }
     },
 
     // ShogiPlayer コンポーネント自体を実行したいとき用
