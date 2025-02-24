@@ -18,7 +18,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     template(v-if="SB.give_up_button_show_p")
       b-navbar-item.has-text-weight-bold(tag="div")
         .buttons
-          .button.give_up_modal_open(@click="SB.give_up_modal_open" :class="SB.appearance_theme_info.navibar_button_color")
+          a.button.give_up_modal_open(@click="SB.give_up_modal_open" :class="SB.appearance_theme_info.navibar_button_color")
             | 投了
 
   template(slot="start")
@@ -51,7 +51,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     template(v-if="SB.edit_mode_p")
       b-navbar-item.has-text-weight-bold(tag="div")
         .buttons
-          .button.is-primary(@click="SB.play_mode_handle")
+          a.button.is-primary(@click="SB.play_mode_handle")
             | 編集完了
 
     template(v-if="SB.honpu_button_show_p")
