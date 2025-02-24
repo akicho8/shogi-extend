@@ -89,7 +89,7 @@ export default {
         {
           enabled: true,
           label: "生存通知",
-          value: `直近${this.seconds_ago(this.member_info.performed_at)} 計${this.member_info.alive_notice_count}回`,
+          value: `直近${this.seconds_ago(this.member_info.performed_at)} (計${this.member_info.alive_notice_count}回)`,
         },
         {
           enabled: true,
@@ -124,7 +124,7 @@ export default {
         {
           enabled: true,
           label: "イベント受信",
-          value: `${this.member_info.ac_events_hash.received || 0}回 リジェクト${this.member_info.ac_events_hash.rejected || 0}回`,
+          value: `${this.member_info.ac_events_hash.received || 0}回 (リジェクト${this.member_info.ac_events_hash.rejected || 0}回)`,
         },
         {
           enabled: true,
