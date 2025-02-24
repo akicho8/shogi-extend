@@ -36,6 +36,12 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
+    template(v-if="SB.honpu_button_show_p")
+      b-navbar-item.has-text-weight-bold(tag="div")
+        .buttons
+          a.button.honpu_log_click_handle(@click="SB.honpu_log_click_handle" :class="SB.appearance_theme_info.navibar_button_color")
+            | 本譜
+
   template(slot="end")
 
     SbThinkMarkToggleButton
@@ -53,10 +59,6 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         .buttons
           a.button.is-primary(@click="SB.play_mode_handle")
             | 編集完了
-
-    template(v-if="SB.honpu_button_show_p")
-      b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="SB.honpu_log_click_handle")
-        | 本譜
 
     SbChatOpenbutton
 
