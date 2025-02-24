@@ -20,7 +20,7 @@ export default {
   name: "RoomUrlCopyModal",
   mixins: [support_child],
   mounted() {
-    this.$sound.play("notification")
+    this.$sound.play("se_notification")
     this.SB.sb_talk("部屋のリンクをコピーしますか？")
   },
   methods: {
