@@ -11,7 +11,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "postinstall": "command -v patch-package && patch-package",
+    "postinstall": "command -v patch-package && patch-package || true",
     "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
