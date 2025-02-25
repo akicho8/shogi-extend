@@ -47,7 +47,7 @@ export const mod_sound_effect = {
     toryo_bgm_call() {
       this.$sound.play_random([
         "bgm_battle_toryo1",
-        // "bgm_battle_toryo2",
+        "bgm_battle_toryo2",
         // "bgm_battle_toryo3",
         "bgm_battle_toryo4",
         // "bgm_battle_toryo5",
