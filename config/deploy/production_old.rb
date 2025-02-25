@@ -4,15 +4,15 @@ set :rbenv_ruby, '2.6.5'
 
 set :keep_releases, 5
 
-# 最初にアプリ削除する？
-if ENV["APP_RESET"] == "1"
-  before 'deploy:starting', 'deploy:app_clean'
-end
-
-# DBを作り直す？
-if ENV["DB_RESET"] == "1"
-  before 'deploy:migrate', 'deploy:db_reset'
-end
+# # 最初にアプリ削除する？
+# if ENV["APP_RESET"] == "1"
+#   before 'deploy:starting', 'deploy:app_clean'
+# end
+# 
+# # DBを作り直す？
+# if ENV["DB_RESET"] == "1"
+#   before 'deploy:migrate', 'deploy:db_reset'
+# end
 
 set :rails_env, 'production'    # 必要
 
