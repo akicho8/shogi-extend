@@ -21,6 +21,10 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "jest": "^29.5.0",
+    "patch-package": "^7.0.0"
+  },
+  "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/proxy": "^2.0.1",
@@ -36,13 +40,13 @@
     "css-loader": "^5.2.0",
     "dayjs": "^1.11.7",
     "howler": "^2.2.4",
-    "jest": "^29.5.0",
     "lzma": "^2.3.2",
+    "marked": "^13.0.2",
     "node-emoji": "^1.11.0",
     "node-sass": "^8.0.0",
     "nuxt": "^2.16.3",
     "nuxt-buefy": "^0.4.29",
-    "patch-package": "^7.0.0",
+    "nuxt-basic-auth-module": "^1.4.1",
     "pattern.css": "^1.0.0",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
@@ -60,9 +64,5 @@
     "util": "^0.12.5",
     "vue-scrollto": "^2.20.0",
     "vuedraggable": "^2.24.3"
-  },
-  "dependencies": {
-    "marked": "^13.0.2",
-    "nuxt-basic-auth-module": "^1.4.1"
   }
 }
