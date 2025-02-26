@@ -16,6 +16,7 @@ module QuickScript
           :x_location_keys => "black",
           :x_grade_keys    => "30級",
           :xmode_keys      => "野良",
+          :imode_keys      => "通常",
           :rule_keys       => "10分",
           :final_keys      => "投了",
           :preset_keys     => "平手"
