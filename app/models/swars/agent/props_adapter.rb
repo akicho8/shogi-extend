@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+
 module Swars
   module Agent
     class PropsAdapter
