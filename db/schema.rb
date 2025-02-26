@@ -416,7 +416,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_000001) do
     t.bigint "final_id", null: false, comment: "結末"
     t.integer "analysis_version", default: 0, null: false, comment: "戦法解析バージョン"
     t.string "starting_position", comment: "初期配置"
-    t.bigint "imode_id", default: 1, null: false, comment: "開始局面"
+    t.bigint "imode_id", null: false, comment: "開始モード"
     t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
