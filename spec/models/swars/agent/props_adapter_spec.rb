@@ -70,8 +70,8 @@ module Swars
         assert { object.winner_location == Bioshogi::Location.fetch(:black) }
       end
 
-      it "done?" do
-        assert { object.done? }
+      it "battle_done?" do
+        assert { object.battle_done? }
       end
 
       it "battling?" do
