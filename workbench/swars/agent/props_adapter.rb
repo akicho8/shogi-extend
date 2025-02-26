@@ -1,5 +1,6 @@
 require "./setup"
-info = Swars::Agent::Record.new(remote_run: true, key: Swars::BattleKey["raminitk-nakkunnBoy-20240823_213402"]).fetch
+key = Swars::BattleKey["raminitk-nakkunnBoy-20240823_213402"]
+info = Swars::Agent::Record.new(remote_run: true, key: key).fetch
 pa = Swars::Agent::PropsAdapter.new(info)
 tp pa.memberships
 tp pa.props
@@ -14,6 +15,7 @@ tp pa.to_h
 # >> |               name | raminitk-nakkunnBoy-20240823_213402                                                                                                                                                                                                                                 |
 # >> |              gtype |                                                                                                                                                                                                                                                                     |
 # >> |      opponent_type | 0                                                                                                                                                                                                                                                                   |
+# >> |      init_pos_type | 0                                                                                                                                                                                                                                                                   |
 # >> |              sente | raminitk                                                                                                                                                                                                                                                            |
 # >> |               gote | nakkunnBoy                                                                                                                                                                                                                                                          |
 # >> |          sente_dan | 0                                                                                                                                                                                                                                                                   |
