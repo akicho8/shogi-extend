@@ -1,6 +1,8 @@
 module Swars
   module Agent
     class History < Base
+      HISTORY_BASE_URL = "https://shogiwars.heroz.jp/games/history"
+
       def default_params
         super.merge({
             :user_key   => nil,
@@ -23,17 +25,35 @@ module Swars
       end
 
       def history_url
+        "#{HISTORY_BASE_URL}?#{sw_side_url_params.to_query}"
+      end
+
+      private
+
+      def sw_side_url_params
+        {
+          :user_id => sw_side_user_id,
+          :gtype   => sw_side_gtype,
+          :page    => sw_side_page,
+        }
+      end
+
+      def sw_side_user_id
         user_key = params.fetch(:user_key)
         if user_key.blank?
           raise "must not happen"
         end
-        q = {}
-        q[:user_id] = user_key
-        q[:gtype]   = RuleInfo.fetch(params.fetch(:rule_key)).swars_magic_key
+        user_key
+      end
+
+      def sw_side_gtype
+        RuleInfo.fetch(params.fetch(:rule_key)).swars_magic_key
+      end
+
+      def sw_side_page
         if v = params[:page_index]
-          q[:page] = v.next
+          v.next
         end
-        "https://shogiwars.heroz.jp/games/history?#{q.to_query}"
       end
     end
   end
