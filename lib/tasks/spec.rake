@@ -24,6 +24,12 @@ if defined?(RSpec)
       t.rspec_opts = "-f p"
     end
 
+    desc "将棋ウォーズ関連すべて"
+    RSpec::Core::RakeTask.new(:swars_all => "spec:prepare") do |t|
+      t.pattern = "spec/**/swars/**/*_spec.rb"
+      t.rspec_opts = "-f p"
+    end
+
     desc "QuickScript 以下のテストすべて"
     RSpec::Core::RakeTask.new(:quick_script => "spec:prepare") do |t|
       t.pattern = "spec/models/quick_script/**/*_spec.rb"
