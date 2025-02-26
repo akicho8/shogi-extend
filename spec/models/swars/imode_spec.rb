@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Xmode2 (swars_xmode2s as Swars::Xmode2)
+# Xmode (swars_xmodes as Swars::Xmode)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -13,17 +13,24 @@
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
 
-module Swars
-  class Xmode2 < ApplicationRecord
-    include MemoryRecordBind::Basic
+require "rails_helper"
 
-    with_options dependent: :destroy do
-      has_many :battles
-      has_many :memberships, through: :battles
+module Swars
+  RSpec.describe Imode, type: :model, swars_spec: true do
+    it "name" do
+      assert { Imode.fetch("通常").name == "通常" }
+      assert { Imode.fetch("スプリント").name == "スプリント" }
     end
 
-    # def name
-    #   key
-    # end
+    it "relation" do
+      imode = Imode.fetch("スプリント")
+      user1 = User.create!(user_key: "user1")
+      user2 = User.create!(user_key: "user2")
+      battle = Battle.create_with_members!([user1, user2], imode: imode)
+      assert { battle.imode == imode }
+
+      assert { imode.battles == [battle] }
+      assert { imode.memberships == battle.memberships }
+    end
   end
 end

@@ -24,8 +24,8 @@ module Swars
         scope :coaching_only,   -> { xmode_only("指導")   }                                                    # 指導対局のみ
         scope :coaching_except, -> { xmode_except("指導") }                                                    # 指導対局を除く
 
-        scope :xmode2_only,   -> xmode2_keys {     where(xmode2: Xmode2.where(key: xmode2_keys)) }                  # 特定の開始モードのみ
-        scope :xmode2_except, -> xmode2_keys { where.not(xmode2: Xmode2.where(key: xmode2_keys)) }                  # 特定の開始モードを除く
+        scope :imode_only,   -> imode_keys {     where(imode: Imode.where(key: imode_keys)) }                  # 特定の開始モードのみ
+        scope :imode_except, -> imode_keys { where.not(imode: Imode.where(key: imode_keys)) }                  # 特定の開始モードを除く
 
         # 削除対象
         scope :cleaner_scope, -> (options = {}) {

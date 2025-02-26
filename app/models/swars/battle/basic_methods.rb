@@ -157,7 +157,7 @@ module Swars
             "ID"       => id,
             "ルール"   => rule_info.name,
             "結末"     => final_info.name,
-            "開始局面" => xmode2_info.name,
+            "開始局面" => imode_info.name,
             "モード"   => xmode_info.name,
             "手合割"   => preset_info.name,
             "開戦"     => critical_turn,
@@ -201,7 +201,7 @@ module Swars
         included do
           EVEN_MATCH_STARTING_POSITION = "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
 
-          custom_belongs_to :xmode2, ar_model: Xmode2, st_model: Xmode2Info, default: "通常"
+          custom_belongs_to :imode, ar_model: Imode, st_model: ImodeInfo, default: "通常"
 
           before_validation do
             if changes_to_save[:starting_position]

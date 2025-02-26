@@ -20,7 +20,7 @@ module Swars
         # ActiveRecord
         Grade,
         Xmode,
-        Xmode2,
+        Imode,
         Rule,
         Final,
       ].each do |e|
@@ -36,7 +36,7 @@ module Swars
         Judge,
         Grade,
         Xmode,
-        Xmode2,
+        Imode,
         Rule,
         Final,
         User,

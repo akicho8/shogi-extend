@@ -1,5 +1,5 @@
 module Swars
-  class Xmode2Info
+  class ImodeInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: :normal, name: "通常",       swars_magic_key: :normal, },

@@ -97,7 +97,7 @@ module Swars
         if @battle.xmode == Xmode.fetch("指導")
           av << "指導対局"
         end
-        if @battle.xmode2 == Xmode2.fetch("スプリント")
+        if @battle.imode == Imode.fetch("スプリント")
           av << "スプリント"
         end
         if @battle.preset_info.handicap
