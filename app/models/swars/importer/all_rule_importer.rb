@@ -17,7 +17,7 @@ module Swars
           OneRuleImporter.new(params.merge(rule_key: e.key)).run
         end
         if WITH_SPRINT
-          OneRuleImporter.new(params.merge(xmode2_key: :sprint)).run
+          OneRuleImporter.new(params.merge(imode_key: :sprint)).run
         end
         after_process
       end

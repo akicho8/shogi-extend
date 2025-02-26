@@ -7,7 +7,7 @@ module Swars
         { :key => e.key, :yomiage => e.long_name }
       end
 
-      hv[:xmode2_infos] = Xmode2Info.collect do |e|
+      hv[:imode_infos] = ImodeInfo.collect do |e|
         { :key => e.name, :yomiage => e.long_name }
       end
 

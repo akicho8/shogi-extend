@@ -1,9 +1,9 @@
 module Swars
-  class Xmode2MagicNumberInfo
+  class ImodeMagicNumberInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "magic_number:0", xmode2_key: :normal, },
-      { key: "magic_number:1", xmode2_key: :sprint, },
+      { key: "magic_number:0", imode_key: :normal, },
+      { key: "magic_number:1", imode_key: :sprint, },
     ]
 
     class << self
@@ -16,8 +16,8 @@ module Swars
       end
     end
 
-    def xmode2_info
-      Xmode2Info.fetch(xmode2_key)
+    def imode_info
+      ImodeInfo.fetch(imode_key)
     end
   end
 end

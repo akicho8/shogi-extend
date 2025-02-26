@@ -67,7 +67,7 @@ module Swars
             :csa_seq    => @info.csa_seq, # FIXME: SFEN を渡す。時間は別にする
             :preset_key => @info.preset_info.key,
             :xmode_key  => @info.xmode_info.key,
-            :xmode2_key => @info.xmode2_info.key,
+            :imode_key => @info.imode_info.key,
             :battled_at => @info.battled_at,
             :starting_position => @info.starting_position,
           }) do |battle|

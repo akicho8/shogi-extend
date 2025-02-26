@@ -17,7 +17,7 @@ module Swars
           "対局日時"  => battled_at.strftime("%F %T"),
           "ルール"    => rule_info,
           "種類"      => xmode_info,
-          "開始局面"  => xmode2_info,
+          "開始局面"  => imode_info,
           "手合割"    => preset_info,
           "結末"      => final_info,
           "両者名前"  => memberships.collect { |e| [e[:user_key], e[:grade_info].name].join(":") }.join(" vs "),
@@ -57,10 +57,10 @@ module Swars
       end
 
       # 開始モード
-      def xmode2_info
-        @xmode2_info ||= yield_self do
-          if info = Xmode2MagicNumberInfo.lookup_by_magic_number(props.fetch("init_pos_type"))
-            info.xmode2_info
+      def imode_info
+        @imode_info ||= yield_self do
+          if info = ImodeMagicNumberInfo.lookup_by_magic_number(props.fetch("init_pos_type"))
+            info.imode_info
           end
         end
       end

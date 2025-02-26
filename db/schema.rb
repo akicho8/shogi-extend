@@ -416,18 +416,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_000001) do
     t.bigint "final_id", null: false, comment: "結末"
     t.integer "analysis_version", default: 0, null: false, comment: "戦法解析バージョン"
     t.string "starting_position", comment: "初期配置"
-    t.bigint "xmode2_id", default: 1, null: false, comment: "開始局面"
+    t.bigint "imode_id", default: 1, null: false, comment: "開始局面"
     t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_id"], name: "index_swars_battles_on_final_id"
+    t.index ["imode_id"], name: "index_swars_battles_on_imode_id"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["preset_id"], name: "index_swars_battles_on_preset_id"
     t.index ["rule_id"], name: "index_swars_battles_on_rule_id"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
-    t.index ["xmode2_id"], name: "index_swars_battles_on_xmode2_id"
     t.index ["xmode_id"], name: "index_swars_battles_on_xmode_id"
   end
 
@@ -458,6 +458,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_000001) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_grades_on_key", unique: true
     t.index ["priority"], name: "index_swars_grades_on_priority"
+  end
+
+  create_table "swars_imodes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["key"], name: "index_swars_imodes_on_key", unique: true
+    t.index ["position"], name: "index_swars_imodes_on_position"
   end
 
   create_table "swars_membership_extras", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -559,15 +568,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_000001) do
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
-  end
-
-  create_table "swars_xmode2s", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false
-    t.integer "position", comment: "順序"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["key"], name: "index_swars_xmode2s_on_key", unique: true
-    t.index ["position"], name: "index_swars_xmode2s_on_position"
   end
 
   create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

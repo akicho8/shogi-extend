@@ -1,6 +1,6 @@
 require "./setup"
 
-tp Xmode2Info
+tp ImodeInfo
 # >> |------------|
 # >> | 通常       |
 # >> | スプリント |
