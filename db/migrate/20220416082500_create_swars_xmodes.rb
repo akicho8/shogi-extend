@@ -15,7 +15,7 @@ class CreateSwarsXmodes < ActiveRecord::Migration[5.1]
     tp xmode
 
     change_table :swars_battles do |t|
-      t.belongs_to :xmode, null: false, default: xmode.id, comment: "対局モード"
+      t.belongs_to :xmode, null: false, default: xmode.id, comment: "対局モード" # FIXME: 初期値は update_all で埋めるのが正しい
     end
   end
 end
