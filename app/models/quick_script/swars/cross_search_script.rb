@@ -213,7 +213,7 @@ module QuickScript
           },
 
           {
-            :label        => "開始局面",
+            :label        => "開始モード",
             :key          => :imode_keys,
             :type         => :checkbox_button,
             :session_sync => true,
@@ -765,7 +765,7 @@ module QuickScript
         @xmode_infos ||= ::Swars::XmodeInfo.lookup_from_array(xmode_keys)
       end
 
-      ################################################################################ 開始局面
+      ################################################################################ 開始モード
 
       def imode_keys
         tag_string_split(params[:imode_keys])
@@ -998,7 +998,7 @@ module QuickScript
           "相手のウォーズIDs"    => y_user_keys,
           # -------------------------------------------------------------------------------- バトルに対して
           "モード"               => xmode_infos.collect(&:name),
-          "開始局面"             => imode_infos.collect(&:name),
+          "開始モード"           => imode_infos.collect(&:name),
           "持ち時間"             => rule_infos.collect(&:name),
           "手合割"               => preset_infos.collect(&:name),
           "結末"                 => final_infos.collect(&:name),
