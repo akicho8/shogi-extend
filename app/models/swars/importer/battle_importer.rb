@@ -67,7 +67,9 @@ module Swars
             :csa_seq    => @info.csa_seq, # FIXME: SFEN を渡す。時間は別にする
             :preset_key => @info.preset_info.key,
             :xmode_key  => @info.xmode_info.key,
+            :xmode2_key => @info.xmode2_info.key,
             :battled_at => @info.battled_at,
+            :starting_position => @info.starting_position,
           }) do |battle|
           # なかに入れれば Battle.create! の transaction のなかに入る
           @info.memberships.each.with_index do |e, i|

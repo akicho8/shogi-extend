@@ -89,6 +89,10 @@ module Swars
       it "invalid?" do
         assert { !object.invalid? }
       end
+
+      it "starting_position" do
+        assert { object.starting_position }
+      end
     end
   end
 end

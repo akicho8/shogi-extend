@@ -69,6 +69,9 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="xmode_id" :label="APP.ColumnInfo.fetch('xmode_key').name" :visible="APP.column_visible_p('xmode_key')" sortable centered)
     | {{row.xmode_info.name}}
 
+  b-table-column(v-slot="{row}" field="xmode2_id" :label="APP.ColumnInfo.fetch('xmode2_key').name" :visible="APP.column_visible_p('xmode2_key')" sortable centered)
+    | {{row.xmode2_info.name}}
+
   b-table-column(v-slot="{row}" field="preset_id" :label="APP.ColumnInfo.fetch('preset_key').name" :visible="APP.column_visible_p('preset_key')" sortable centered)
     | {{row.preset_info.name}}
 

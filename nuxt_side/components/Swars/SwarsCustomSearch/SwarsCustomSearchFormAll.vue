@@ -24,6 +24,9 @@
       ScsCheckbox(label1="対局モード" :records="TheApp.xi.xmode_infos" var_name="xmode_keys")
 
     .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="開始局面" :records="TheApp.xi.xmode2_infos" var_name="xmode2_keys")
+
+    .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="勝敗"       :records="TheApp.xi.judge_infos"  var_name="judge_keys")
 
     .column.is-6-tablet.is-4-desktop

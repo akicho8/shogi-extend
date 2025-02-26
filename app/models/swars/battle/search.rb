@@ -19,6 +19,7 @@ module Swars
 
       CONDITION_BATTLE_RELATION = [
         { belongs_to: :xmode,  query_key: ["xmode", "モード", "対局モード"],                    },
+        { belongs_to: :xmode2,  query_key: ["xmode2", "開始", "開始局面", "開始モード"],            },
         { belongs_to: :rule,   query_key: ["rule", "持ち時間", "種類"],                         },
         { belongs_to: :final,  query_key: ["final", "結末", "最後"],                            },
         { belongs_to: :preset, query_key: ["preset", "手合割", "手合"],                         },
@@ -79,6 +80,7 @@ module Swars
       RELATED_TABLES_TO_BE_RETRIEVED_AT_ONCE = [
         :win_user,
         :xmode,
+        :xmode2,
         :rule,
         :final,
         :preset,

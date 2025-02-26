@@ -213,6 +213,19 @@ module QuickScript
           },
 
           {
+            :label        => "開始局面",
+            :key          => :xmode2_keys,
+            :type         => :checkbox_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => ::Swars::Xmode2Info.form_part_elems,
+                :default => xmode2_infos.collect(&:key),
+              }
+            },
+          },
+
+          {
             :label        => "持ち時間",
             :key          => :rule_keys,
             :type         => :checkbox_button,
@@ -455,6 +468,7 @@ module QuickScript
           # { name: "相手の勝敗", model: ::JudgeInfo,                  infos: y_judge_infos, },
           # ----
           { name: "モード",     model: ::Swars::XmodeInfo,             infos: xmode_infos,   },
+          { name: "開始局面",   mode2l: ::Swars::Xmode2Info,             infos: xmode2_infos,   },
           { name: "持ち時間",   model: ::Swars::RuleInfo,              infos: rule_infos,    },
           { name: "手合割",     model: PresetInfo.swars_preset_infos,  infos: preset_infos,  },
           { name: "結末",       model: ::Swars::FinalInfo,             infos: final_infos,   },
@@ -541,6 +555,9 @@ module QuickScript
         scope.then do |s|
           if v = xmode_infos.presence
             s = s.xmode_eq(v.collect(&:key))
+          end
+          if v = xmode2_infos.presence
+            s = s.xmode2_eq(v.collect(&:key))
           end
           if v = rule_infos.presence
             s = s.rule_eq(v.collect(&:key))
@@ -746,6 +763,16 @@ module QuickScript
 
       def xmode_infos
         @xmode_infos ||= ::Swars::XmodeInfo.lookup_from_array(xmode_keys)
+      end
+
+      ################################################################################ 開始局面
+
+      def xmode2_keys
+        tag_string_split(params[:xmode2_keys])
+      end
+
+      def xmode2_infos
+        @xmode2_infos ||= ::Swars::Xmode2Info.lookup_from_array(xmode2_keys)
       end
 
       ################################################################################ 持ち時間
@@ -971,6 +998,7 @@ module QuickScript
           "相手のウォーズIDs"    => y_user_keys,
           # -------------------------------------------------------------------------------- バトルに対して
           "モード"               => xmode_infos.collect(&:name),
+          "開始局面"             => xmode2_infos.collect(&:name),
           "持ち時間"             => rule_infos.collect(&:name),
           "手合割"               => preset_infos.collect(&:name),
           "結末"                 => final_infos.collect(&:name),

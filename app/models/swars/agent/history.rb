@@ -7,6 +7,7 @@ module Swars
         super.merge({
             :user_key   => nil,
             :rule_key   => :ten_min,
+            :xmode2_key => nil,
             :page_index => 0,
           })
       end
@@ -35,7 +36,8 @@ module Swars
           :user_id => sw_side_user_id,
           :gtype   => sw_side_gtype,
           :page    => sw_side_page,
-        }
+          :init_pos_type => sw_side_init_pos_type,
+        }.compact_blank
       end
 
       def sw_side_user_id
@@ -53,6 +55,12 @@ module Swars
       def sw_side_page
         if v = params[:page_index]
           v.next
+        end
+      end
+
+      def sw_side_init_pos_type
+        if v = params.fetch(:xmode2_key)
+          Xmode2Info.fetch(v).swars_magic_key
         end
       end
     end

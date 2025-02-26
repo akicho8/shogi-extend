@@ -8,6 +8,7 @@ export class ParamInfo extends ParamBase {
       { key: "remember_vs_user_keys",      type: "array",   name: "相手のウォーズID入力履歴",           defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: false, resetable: true,  desc: null, },
 
       { key: "xmode_keys",                 type: "array",  name: "対局モード",                          defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "xmode2_keys",                type: "array",  name: "開始局面",                            defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "rule_keys",                  type: "array",  name: "持ち時間",                            defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "final_keys",                 type: "array",  name: "結果",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "preset_keys",                type: "array",  name: "手合割",                              defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },

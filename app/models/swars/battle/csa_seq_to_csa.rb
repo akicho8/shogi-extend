@@ -35,9 +35,15 @@ module Swars
           end
         end
 
-        if @battle.preset_info.handicap
+        case
+        when @battle.preset_info.handicap
+          # MEMO: 初期配置(starting_position)を優先的に見るならここはいらなくなるのだけどいまはそのままにしとこう
           @lines << @battle.preset_info.to_board.to_csa.strip
           @lines << "-"
+        when s = @battle.starting_position
+          # FIXME: 一行目の V2.2 と最後の %TORYO がいらん。最初から必要などこだけ取得する。
+          board_and_captured_piece = Bioshogi::Parser.parse(s).to_csa.lines[1..-2].join.strip
+          @lines << board_and_captured_piece
         else
           @lines << "+"
         end
@@ -90,6 +96,9 @@ module Swars
         av << @battle.rule_info.long_name
         if @battle.xmode == Xmode.fetch("指導")
           av << "指導対局"
+        end
+        if @battle.xmode2 == Xmode2.fetch("スプリント")
+          av << "スプリント"
         end
         if @battle.preset_info.handicap
           av << @battle.preset_info.name
