@@ -21,7 +21,7 @@ module Swars
           "結末"      => final_info,
           "両者名前"  => memberships.collect { |e| [e[:user_key], e[:grade_info].name].join(":") }.join(" vs "),
           "勝った側"  => winner_location,
-          "対局後か?" => done?,
+          "対局後か?" => battle_done?,
           "対局中か?" => battling?,
           "正常終了?" => valid?,
           "棋譜有り?" => !!csa_seq,
@@ -90,13 +90,13 @@ module Swars
       end
 
       # 対局後か？
-      def done?
+      def battle_done?
         props["result"].present?
       end
 
       # 対局中か？
       def battling?
-        !done?
+        !battle_done?
       end
 
       # 亜流の棋譜
