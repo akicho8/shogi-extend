@@ -22,7 +22,7 @@ module Swars
           "両者名前"  => memberships.collect { |e| [e[:user_key], e[:grade_info].name].join(":") }.join(" vs "),
           "勝った側"  => winner_location,
           "対局後か?" => battle_done?,
-          "対局中か?" => battling?,
+          "対局中か?" => battle_now?,
           "正常終了?" => valid?,
           "棋譜有り?" => !!csa_seq,
           "棋譜手数"  => csa_seq ? csa_seq.length : "",
@@ -95,7 +95,7 @@ module Swars
       end
 
       # 対局中か？
-      def battling?
+      def battle_now?
         !battle_done?
       end
 

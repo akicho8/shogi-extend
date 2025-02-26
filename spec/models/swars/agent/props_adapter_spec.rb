@@ -74,8 +74,8 @@ module Swars
         assert { object.battle_done? }
       end
 
-      it "battling?" do
-        assert { !object.battling? }
+      it "battle_now?" do
+        assert { !object.battle_now? }
       end
 
       it "csa_seq" do
