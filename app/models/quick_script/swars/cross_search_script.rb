@@ -468,7 +468,7 @@ module QuickScript
           # { name: "相手の勝敗", model: ::JudgeInfo,                  infos: y_judge_infos, },
           # ----
           { name: "モード",     model: ::Swars::XmodeInfo,             infos: xmode_infos,   },
-          { name: "開始局面",   mode2l: ::Swars::ImodeInfo,             infos: imode_infos,   },
+          { name: "開始モード",   model: ::Swars::ImodeInfo,             infos: imode_infos,   },
           { name: "持ち時間",   model: ::Swars::RuleInfo,              infos: rule_infos,    },
           { name: "手合割",     model: PresetInfo.swars_preset_infos,  infos: preset_infos,  },
           { name: "結末",       model: ::Swars::FinalInfo,             infos: final_infos,   },
