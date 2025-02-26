@@ -42,6 +42,7 @@ module Swars
     include CleanerMethods
     include CoreMethods
     include BasicMethods
+    include ImodeMethods
     include StatMethods
     include Stat2Methods
     include HelperMethods

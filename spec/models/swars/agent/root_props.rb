@@ -2,6 +2,7 @@
   {"name"=>"alice-bob-20000101_112233",
     "gtype"=>"",
     "opponent_type"=>0,
+    "init_pos_type"=>0,
     "sente"=>"alice",
     "gote"=>"bob",
     "sente_dan"=>-1,

@@ -5,6 +5,7 @@ RSpec.configure do |config|
     Judge.setup
     Swars::Grade.setup
     Swars::Xmode.setup
+    Swars::Imode.setup
     Swars::Rule.setup
     Swars::Final.setup
   end

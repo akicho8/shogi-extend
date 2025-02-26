@@ -18,7 +18,7 @@ class CreateSwarsImodes < ActiveRecord::Migration[5.1]
     tp imode
 
     change_table :swars_battles do |t|
-      t.belongs_to :imode, null: false, default: imode.id, comment: "開始局面"
+      t.belongs_to :imode, comment: "開始モード"
     end
 
     Swars::Battle.reset_column_information
