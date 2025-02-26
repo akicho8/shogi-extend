@@ -17,6 +17,7 @@ module Swars
           "対局日時"  => battled_at.strftime("%F %T"),
           "ルール"    => rule_info,
           "種類"      => xmode_info,
+          "開始局面"  => xmode2_info,
           "手合割"    => preset_info,
           "結末"      => final_info,
           "両者名前"  => memberships.collect { |e| [e[:user_key], e[:grade_info].name].join(":") }.join(" vs "),
@@ -26,6 +27,7 @@ module Swars
           "正常終了?" => valid?,
           "棋譜有り?" => !!csa_seq,
           "棋譜手数"  => csa_seq ? csa_seq.length : "",
+          "初期配置"  => starting_position,
         }
       end
 
@@ -54,9 +56,24 @@ module Swars
         end
       end
 
+      # 開始モード
+      def xmode2_info
+        @xmode2_info ||= yield_self do
+          if info = Xmode2MagicNumberInfo.lookup_by_magic_number(props.fetch("init_pos_type"))
+            info.xmode2_info
+          end
+        end
+      end
+
       # 手合割
       def preset_info
         @preset_info ||= PresetMagicNumberInfo.fetch_by_magic_number(props.fetch("handicap")).preset_info
+      end
+
+      # 初期配置
+      # 平手でも入ってる。必ず入ってる。
+      def starting_position
+        @starting_position ||= props.fetch("init_sfen_position")
       end
 
       # 結末

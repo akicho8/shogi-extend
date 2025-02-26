@@ -52,6 +52,7 @@ import { mod_filter_modal    } from "./mod_filter_modal.js"
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
 import { XmodeSelectInfo  } from "./models/xmode_select_info.js"
+import { Xmode2SelectInfo  } from "./models/xmode2_select_info.js"
 import { ParamInfo } from "./models/param_info.js"
 
 import _ from "lodash"

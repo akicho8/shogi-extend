@@ -24,6 +24,7 @@ module Swars
       a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap_shift }
       a[:rule_info]   = { name: e.rule_info.name                                                 }
       a[:xmode_info]  = { key: e.xmode.key, name: e.xmode.name }
+      a[:xmode2_info]  = { key: e.xmode2.key, name: e.xmode2.name }
 
       # memberships
 

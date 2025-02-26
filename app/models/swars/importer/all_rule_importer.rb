@@ -3,6 +3,8 @@
 module Swars
   module Importer
     class AllRuleImporter
+      WITH_SPRINT = true
+
       attr_accessor :params
 
       def initialize(params = {})
@@ -13,6 +15,9 @@ module Swars
       def run
         RuleInfo.each do |e|
           OneRuleImporter.new(params.merge(rule_key: e.key)).run
+        end
+        if WITH_SPRINT
+          OneRuleImporter.new(params.merge(xmode2_key: :sprint)).run
         end
         after_process
       end

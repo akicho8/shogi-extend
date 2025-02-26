@@ -17,6 +17,7 @@ export class ColumnInfo extends ApplicationMemoryRecord {
       { key: "grade_diff",           name: "力差",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "rule_key",             name: "持ち時間",         visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "xmode_key",            name: "モード",           visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "xmode2_key",           name: "開始局面",         visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "preset_key",           name: "手合",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "battled_at",           name: "日時",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
 

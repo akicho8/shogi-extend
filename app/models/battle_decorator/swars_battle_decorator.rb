@@ -26,6 +26,9 @@ module BattleDecorator
       if battle.xmode == Swars::Xmode.fetch("指導")
         s << "指導対局"
       end
+      if battle.xmode2 == Swars::Xmode2.fetch("スプリント")
+        s << "スプリント"
+      end
 
       # s << "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"
 

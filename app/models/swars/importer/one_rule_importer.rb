@@ -27,7 +27,7 @@ module Swars
         new_keys = Set.new
         page_max.times do |i|
           result = Agent::History.new(params.merge(page_index: i)).fetch
-          log_puts { [params[:user_key], "P#{i.next}", rule_info.name, result.inspect].join(" ") }
+          log_puts { [params[:user_key], "P#{i.next}", rule_name, result.inspect].join(" ") }
           new_keys += result.new_keys
           if params[:last_page_break]
             if result.last_page?
@@ -62,8 +62,12 @@ module Swars
         end
       end
 
-      def rule_info
-        @rule_info ||= RuleInfo.fetch(params[:rule_key])
+      def rule_name
+        if v = params[:rule_key]
+          RuleInfo.fetch(v).name
+        else
+          "ルール未指定"
+        end
       end
 
       def log_puts

@@ -157,6 +157,7 @@ module Swars
             "ID"       => id,
             "ルール"   => rule_info.name,
             "結末"     => final_info.name,
+            "開始局面" => xmode2_info.name,
             "モード"   => xmode_info.name,
             "手合割"   => preset_info.name,
             "開戦"     => critical_turn,
@@ -193,6 +194,29 @@ module Swars
 
         def time_chart_sec_list_of(location_info)
           memberships[location_info.code].sec_list
+        end
+      end
+
+      concerning :SprintMethods do
+        included do
+          EVEN_MATCH_STARTING_POSITION = "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+
+          custom_belongs_to :xmode2, ar_model: Xmode2, st_model: Xmode2Info, default: "通常"
+
+          before_validation do
+            if changes_to_save[:starting_position]
+              # ほとんどが平手なので基本 DB に入れない
+              if self.starting_position == EVEN_MATCH_STARTING_POSITION
+                self.starting_position = nil
+              end
+              # 空文字列は nil にしておく
+              self.starting_position = starting_position.presence
+            end
+          end
+        end
+
+        def starting_position_or_default
+          starting_position || "position sfen #{EVEN_MATCH_STARTING_POSITION}"
         end
       end
     end

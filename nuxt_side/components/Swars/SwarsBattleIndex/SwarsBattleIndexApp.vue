@@ -175,6 +175,9 @@ export default {
       if (row.xmode_info) {
         list.push(`is-xmode-${row.xmode_info.key}`)
       }
+      if (row.xmode2_info) {
+        list.push(`is-xmode2-${row.xmode2_info.key}`)
+      }
       return list.join(" ")
     },
 
