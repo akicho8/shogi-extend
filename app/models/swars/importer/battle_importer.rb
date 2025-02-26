@@ -13,7 +13,7 @@ module Swars
           :skip_if_exist => true,
         }.merge(params)
 
-        @battles = []
+        @battles = []           # FIXME: なんで配列？
       end
 
       def run
