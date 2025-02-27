@@ -59,7 +59,7 @@ module Swars
       # 開始モード
       def imode_info
         @imode_info ||= yield_self do
-          if info = ImodeMagicNumberInfo.lookup_by_magic_number(props.fetch("init_pos_type", 0)) # FIXME: 0 を取る
+          if info = ImodeMagicNumberInfo.lookup_by_magic_number(props.fetch("init_pos_type"))
             info.imode_info
           end
         end

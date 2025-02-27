@@ -19,8 +19,12 @@ require "rails_helper"
 module Swars
   module Agent
     RSpec.describe PropsAdapter, type: :model, swars_spec: true do
-      let(:root_props) { eval(Pathname(__dir__).join("root_props.rb").read) }
-      let(:object) { PropsAdapter.new(root_props) }
+      def props_from(file)
+        props = eval(Pathname(__dir__).join(file).read)
+        PropsAdapter.new(props)
+      end
+
+      let(:object) { props_from("battle_sprint_props.rb") }
 
       it "to_h" do
         assert { object.to_h }
@@ -35,7 +39,7 @@ module Swars
       end
 
       it "rule_info" do
-        assert { object.rule_info == RuleInfo.fetch(:ten_min) }
+        assert { object.rule_info == RuleInfo.fetch(:three_min) }
       end
 
       it "xmode_info" do
@@ -55,19 +59,19 @@ module Swars
           {
             :user_key   => UserKey["alice"],
             :grade_info => GradeInfo.fetch("1級"),
-            :judge_info => JudgeInfo.fetch(:win),
+            :judge_info => JudgeInfo.fetch(:lose),
           },
           {
             :user_key   => UserKey["bob"],
             :grade_info => GradeInfo.fetch("二段"),
-            :judge_info => JudgeInfo.fetch(:lose),
+            :judge_info => JudgeInfo.fetch(:win),
           },
         ]
         assert { object.memberships == expected }
       end
 
       it "winner_location" do
-        assert { object.winner_location == Bioshogi::Location.fetch(:black) }
+        assert { object.winner_location == Bioshogi::Location.fetch(:white) }
       end
 
       it "battle_done?" do
@@ -79,7 +83,7 @@ module Swars
       end
 
       it "csa_seq" do
-        assert { object.csa_seq[0] == ["+7776FU", 591] }
+        assert { object.csa_seq[0] == ["+0026GI", 140] }
       end
 
       it "valid?" do
