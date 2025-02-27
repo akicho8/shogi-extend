@@ -1,13 +1,13 @@
 {
   "gameHash" => {
-    "name" => "shogi_GPT-yukky1119-20250226_161410",
+    "name" => "alice-bob-20000101_112233",
     "gtype" => "sb",
     "opponent_type" => 0,
     "init_pos_type" => 1,
-    "sente" => "shogi_GPT",
-    "gote" => "yukky1119",
-    "sente_dan" => -28,
-    "gote_dan" => -29,
+    "sente" => "alice",
+    "gote" => "bob",
+    "sente_dan"=>-1,
+    "gote_dan"=>1,
     "sente_avatar" => "_",
     "gote_avatar" => "_e2004s2b",
     "result" => "GOTE_WIN_TORYO",
