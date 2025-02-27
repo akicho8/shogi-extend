@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsUserShowHeadBadge(v-if="TheApp.info.badge_items.length >= 1")
   .badges_line.is_scroll_x.is_scrollbar_invisible
-    XemojiWrap.raw(v-for="e in TheApp.info.badge_items" @click="TheApp.badge_click_handle(e)" :class="{'is-clickable': e.message}" :str="e.icon")
+    XemojiWrap.raw(v-for="(e, i) in TheApp.info.badge_items" @click="TheApp.badge_click_handle(e)" :class="{'is-clickable': e.message}" :str="e.icon" :key="i")
 </template>
 
 <script>
