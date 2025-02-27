@@ -11,19 +11,58 @@ require "./setup"
 # Swars::Importer::AllRuleImporter.new(user_key: "slowstep3210", remote_run: true, page_max: 1).run
 # Swars::User["slowstep3210"].hard_crawled_at # => Sun, 24 Nov 2024 01:26:58.000000000 JST +09:00
 
-tp Swars::User["asa2yoru"].battles.last(10).collect(&:info)
+Swars::Importer::AllRuleImporter.new(user_key: "akihiko810", remote_run: true, page_max: 1).run
+Swars::User["akihiko810"].hard_crawled_at # => Sat, 23 Nov 2024 01:12:46.000000000 JST +09:00
 
-# >> |----------+--------+----------+------------+--------+--------+------+------+------+------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+---------------------+----------+---------------------+-------------+---------------------|
-# >> | ID       | ルール | 結末     | 開始局面   | モード | 手合割 | 開戦 | 中盤 | 手数 | ▲                                                                                                                                             | △                                                                                                                                  | 対局日時            | 対局秒数 | 終了日時            | 勝者        | 最終参照            |
-# >> |----------+--------+----------+------------+--------+--------+------+------+------+------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+---------------------+----------+---------------------+-------------+---------------------|
-# >> | 58007291 | 3分    | 時間切れ | 通常       | 野良   | 平手   |   16 |   49 |   97 | kazuki29sb 初段 勝ち (力戦 垂れ歩 頭金 遠見の角 たたきの歩 居飛車 対振り飛車 名人に定跡なし 対抗形 持久戦 長手数)                              | asa2yoru 初段 負け (三間飛車 角交換振り飛車 たたきの歩 肩金 腹金 振り飛車 対居飛車 対抗形 持久戦 長手数)                            | 2025-02-23 20:31:53 |      349 | 2025-02-23 20:37:42 | kazuki29sb  | 2025-02-27 00:52:18 |
-# >> | 58007292 | 10秒   | 時間切れ | 通常       | 野良   | 平手   |   24 |   54 |  110 | punkpunk 三段 負け (力戦 位の確保 金底の歩 たたきの歩 対振り飛車 居飛車 対抗形 持久戦 長手数)                                                  | asa2yoru 二段 勝ち (2手目△3ニ飛戦法 早石田 垂れ歩 振り飛車 対居飛車 対抗形 持久戦 長手数)                                          | 2025-02-11 21:09:56 |      349 | 2025-02-11 21:15:45 | asa2yoru    | 2025-02-27 00:52:18 |
-# >> | 58007293 | 10秒   | 投了     | 通常       | 野良   | 平手   |   26 |   46 |   56 | asa2yoru 二段 負け (居玉 早石田 5筋位取り こびん攻め 位の確保 振り飛車 対振り飛車 相振り飛車 持久戦 短手数)                                    | kamokamo87 三段 勝ち (向かい飛車 対振り飛車 振り飛車 相振り飛車 持久戦 短手数)                                                      | 2025-02-11 21:05:56 |      209 | 2025-02-11 21:09:25 | kamokamo87  | 2025-02-27 00:52:19 |
-# >> | 58007294 | 10秒   | 投了     | 通常       | 野良   | 平手   |    8 |   64 |   89 | Super212 四段 勝ち (英春流かまいたち戦法 位の確保 桂頭の銀 土下座の歩 歩頭の桂 頭銀 対振り飛車 手損角交換型 振り飛車 相振り飛車 持久戦 短手数) | asa2yoru 二段 負け (2手目△3ニ飛戦法 土下座の歩 垂れ歩 銀ばさみ 桂頭の銀 振り飛車 手得角交換型 対振り飛車 相振り飛車 持久戦 短手数) | 2025-02-11 21:01:05 |      248 | 2025-02-11 21:05:13 | Super212    | 2025-02-27 00:52:19 |
-# >> | 58007295 | 10秒   | 投了     | 通常       | 野良   | 平手   |   25 |   28 |   36 | mukeiisan 三段 負け (居玉 英春流かまいたち戦法 向かい飛車 対振り飛車 振り飛車 相振り飛車 相居玉 急戦 短手数)                                   | asa2yoru 二段 勝ち (居玉 2手目△3ニ飛戦法 ふんどしの桂 振り飛車 対振り飛車 相振り飛車 相居玉 急戦 短手数)                           | 2025-02-10 22:32:22 |       66 | 2025-02-10 22:33:28 | asa2yoru    | 2025-02-27 00:52:20 |
-# >> | 58007296 | 10秒   | 時間切れ | 通常       | 野良   | 平手   |    9 |   49 |   55 | s_yaiba 二段 勝ち (角換わり腰掛け銀 桂頭の銀 居飛車 対振り飛車 角交換型 対抗形 持久戦 短手数)                                                  | asa2yoru 二段 負け (三間飛車 角交換振り飛車 振り飛車 角交換型 対居飛車 対抗形 持久戦 短手数)                                        | 2025-02-10 22:29:36 |      123 | 2025-02-10 22:31:39 | s_yaiba     | 2025-02-27 00:52:20 |
-# >> | 58007297 | 10秒   | 投了     | 通常       | 野良   | 平手   |   12 |   66 |  105 | chiyanagi 四段 勝ち (中住まい 目くらまし戦法 ふんどしの桂 肩金 頭銀 居飛車 対振り飛車 角交換型 対抗形 持久戦 長手数)                           | asa2yoru 二段 負け (三間飛車 こびん攻め 垂れ歩 桂頭の銀 肩金 振り飛車 角交換型 対居飛車 対抗形 持久戦 長手数)                       | 2025-02-10 22:12:49 |      377 | 2025-02-10 22:19:06 | chiyanagi   | 2025-02-27 00:52:21 |
-# >> | 58007298 | 3分    | 投了     | スプリント | 野良   | 平手   |    1 |    4 |   21 | asa2yoru 30級 勝ち (居玉 力戦 金頭の桂 頭金 裾銀 名人に定跡なし 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                                   | aaaammd 30級 負け (居玉 力戦 一間竜 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                                                    | 2025-02-26 22:14:28 |      192 | 2025-02-26 22:17:40 | asa2yoru    | 2025-02-27 00:52:22 |
-# >> | 58007299 | 3分    | 詰み     | スプリント | 野良   | 平手   |    0 |    2 |   48 | asa2yoru 30級 負け (居玉 力戦 腹金 継ぎ桂 肩銀 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                                                    | yukiwarisou 30級 勝ち (居玉 力戦 控えの桂 肩金 裾銀 名人に定跡なし 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                     | 2025-02-26 22:05:52 |      280 | 2025-02-26 22:10:32 | yukiwarisou | 2025-02-27 00:52:22 |
-# >> | 58007300 | 3分    | 投了     | スプリント | 野良   | 平手   |    1 |    1 |   19 | gaba_tuber 30級 勝ち (居玉 力戦 一間竜 名人に定跡なし 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                                             | asa2yoru 30級 負け (居玉 力戦 裾銀 端玉には端歩 居飛車 相居飛車 対居飛車 相居玉 急戦 短手数)                                        | 2025-02-26 22:03:12 |      129 | 2025-02-26 22:05:21 | gaba_tuber  | 2025-02-27 00:52:23 |
-# >> |----------+--------+----------+------------+--------+--------+------+------+------+------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+---------------------+----------+---------------------+-------------+---------------------|
+# tp Swars::User["asa2yoru"].battles.last(10).collect(&:info)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 P1 10分 [全10件][新10件][続く]
+# >> [fetch][record] https://shogiwars.heroz.jp/games/don5200-akihiko810-20250223_002913
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-Bouyatatsu_Lion-20250223_002313
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-qpwo-20250223_001402
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-kairoyama-20250220_235944
+# >> [fetch][record] https://shogiwars.heroz.jp/games/KAIHEN-akihiko810-20250220_234427
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-shingo4068-20250220_233201
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-Urig-20250220_003701
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-tanaka_kero-20250220_002430
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-gonfoxx-20250220_001424
+# >> [fetch][record] https://shogiwars.heroz.jp/games/satoyan0318Boy-akihiko810-20250217_000324
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 P1 3分 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 P1 10秒 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 P1 10分 [全10件][新10件][続く]
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-ssympaty-20250227_225618
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-ssympaty-20250227_224922
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-hide_yuki_kun-20250227_222503
+# >> [fetch][record] https://shogiwars.heroz.jp/games/hide_yuki_kun-akihiko810-20250227_220259
+# >> [fetch][record] https://shogiwars.heroz.jp/games/hide_yuki_kun-akihiko810-20250227_215809
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-suneko222-20250227_203704
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-ssympaty-20250223_223144
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-ssympaty-20250223_221151
+# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-ssympaty-20250223_220115
+# >> [fetch][record] https://shogiwars.heroz.jp/games/ssympaty-akihiko810-20250223_213922
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 P1 3分 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 P1 10秒 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=coach&page=1&user_id=akihiko810
+# >> akihiko810 P1 10分 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 P1 10分 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 P1 3分 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 P1 10秒 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=sprint&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 P1 ルール未指定 [全0件][新0件][最後]
+# >> 最後のページと思われるので終わる

@@ -7,7 +7,8 @@ module Swars
         super.merge({
             :user_key   => nil,
             :rule_key   => :ten_min,
-            :imode_key => nil,
+            :xmode_key  => "野良",
+            :imode_key  => :normal,
             :page_index => 0,
           })
       end
@@ -37,7 +38,8 @@ module Swars
           :gtype   => sw_side_gtype,
           :page    => sw_side_page,
           :init_pos_type => sw_side_init_pos_type,
-        }.compact_blank
+          :opponent_type => sw_side_opponent_type,
+        }.compact
       end
 
       def sw_side_user_id
@@ -58,10 +60,12 @@ module Swars
         end
       end
 
+      def sw_side_opponent_type
+        XmodeInfo.fetch(params.fetch(:xmode_key)).sw_side_key
+      end
+
       def sw_side_init_pos_type
-        if v = params.fetch(:imode_key)
-          ImodeInfo.fetch(v).swars_magic_key
-        end
+        ImodeInfo.fetch(params.fetch(:imode_key)).swars_magic_key # FIXME: swars_magic_key を sw_side_key にする。ほかの swars_magic_key も置換する。
       end
     end
   end

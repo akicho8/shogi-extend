@@ -5,7 +5,7 @@ history_result = Swars::Agent::History.new(user_key: "kinakom0chi", remote_run: 
 tp history_result.all_keys
 # history_result = Swars::Agent::History.new(user_key: "yukky1119", remote_run: true, verbose: true).fetch # => [全0件][新0件][最後]
 # tp history_result.all_keys
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=kinakom0chi
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?init_pos_type=normal&opponent_type=normal&page=1&user_id=kinakom0chi
 # >> |---------------------------------------------|
 # >> | sumisuu1234-kinakom0chi-20250203_232745     |
 # >> | kinakom0chi-Takumi1993-20250203_225511      |
