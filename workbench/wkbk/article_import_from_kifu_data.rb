@@ -8,7 +8,7 @@ module Wkbk
       @params = params
     end
 
-    def run
+    def call
       user = User.admin
 
       # Wkbk.destroy_all
@@ -64,7 +64,7 @@ module Wkbk
   end
 end
 
-Wkbk::KifuDataImport.new.run
+Wkbk::KifuDataImport.new.call
 tp Wkbk.info
 
 # >> 雑に攻める

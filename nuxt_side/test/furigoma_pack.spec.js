@@ -9,6 +9,6 @@ describe("FurigomaPack", () => {
   })
 
   test("本当のランダム", () => {
-    FurigomaPack.run()
+    FurigomaPack.call()
   })
 })

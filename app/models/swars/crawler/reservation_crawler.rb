@@ -1,6 +1,6 @@
 module Swars
   module Crawler
-    # rails r Swars::Crawler::ReservationCrawler.new.run
+    # rails r Swars::Crawler::ReservationCrawler.new.call
     class ReservationCrawler < Base
       def default_params
         super.merge({

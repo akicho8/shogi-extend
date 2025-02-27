@@ -16,7 +16,7 @@ module Swars
         @battles = []           # FIXME: なんで配列？
       end
 
-      def run
+      def call
         # すでに登録済みなら何もしない
         if params[:skip_if_exist]
           if Battle.exists?(key: key.to_s)

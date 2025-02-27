@@ -4,7 +4,7 @@ require File.expand_path('../../../config/environment', __FILE__)
 ENV["RUN_REMOTE"] = "true"
 key = Swars::BattleKey["paniniBoy-nnmmso-20230913_212637"]
 Swars::Battle.find_by(key: key.to_s)&.destroy!
-Swars::Importer::BattleImporter.new(key: key).run
+Swars::Importer::BattleImporter.new(key: key).call
 tp Swars::Battle.last
 # >> [fetch][record] https://shogiwars.heroz.jp/games/paniniBoy-nnmmso-20230913_212637?locale=ja
 # >> |--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

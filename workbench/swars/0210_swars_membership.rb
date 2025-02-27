@@ -5,7 +5,7 @@ ForeignKey.disabled
 Swars::Battle.destroy_all
 Swars::User.destroy_all
 
-Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
+Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
 
 tp Swars::Membership
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=DevUser1

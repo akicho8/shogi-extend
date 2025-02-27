@@ -39,7 +39,7 @@ class App
     "正解率 #{r} % (#{o}/#{t})"
   end
 
-  def run
+  def call
     book = current_user.wkbk_books.create!
     book.articles << current_user.wkbk_articles.create!
     book.articles << current_user.wkbk_articles.create!
@@ -74,7 +74,7 @@ class App
   end
 end
 
-App.new.run
+App.new.call
 # >> |-----+------------+----------------+---------+---------+-----------+---------------------------|
 # >> | id  | article_id | answer_kind_id | book_id | user_id | spent_sec | created_at                |
 # >> |-----+------------+----------------+---------+---------+-----------+---------------------------|

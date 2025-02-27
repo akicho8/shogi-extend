@@ -12,7 +12,7 @@ module Swars
 
       current_user.swars_crawl_reservations.create!(target_user_key: swars_user.key)
       assert { CrawlReservation.active_only.count == 1 }
-      Crawler::ReservationCrawler.new.run
+      Crawler::ReservationCrawler.new.call
       assert { CrawlReservation.active_only.count == 0 }
     end
   end

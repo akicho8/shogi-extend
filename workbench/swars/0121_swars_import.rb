@@ -3,16 +3,16 @@ require File.expand_path('../../../config/environment', __FILE__)
 ForeignKey.disabled
 Swars::Battle.destroy_all
 Swars::User.destroy_all
-# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true,  hard_crawl: true, page_max: 2).run
-# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, hard_crawl: true, page_max: 2).run
-# Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).run
-# Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).run
-# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true, hard_crawl: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true,  hard_crawl: true, page_max: 2).call
+# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, hard_crawl: true, page_max: 2).call
+# Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).call
+# Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).call
+# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true, hard_crawl: true).call
 
-# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, hard_crawl: true, page_max: 3).run
+# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, hard_crawl: true, page_max: 3).call
 # Swars::Battle.count             # => 3
 
-Swars::Importer::AllRuleImporter.new(user_key: "muaqua2023", last_page_break: false, hard_crawl: true, page_max: 1, remote_run: true).run
+Swars::Importer::AllRuleImporter.new(user_key: "muaqua2023", last_page_break: false, hard_crawl: true, page_max: 1, remote_run: true).call
 Swars::Battle.count             # => 0
 
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=muaqua2023

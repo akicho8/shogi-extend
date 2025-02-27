@@ -9,7 +9,7 @@ module Swars
         }.merge(params)
       end
 
-      def run
+      def call
         if params[:throttle_cache_clear]
           Rails.cache.delete(cache_key)
         end
@@ -17,7 +17,7 @@ module Swars
           return false
         end
         Rails.cache.write(cache_key, true, expires_in: params[:interval])
-        AllRuleImporter.new(params).run
+        AllRuleImporter.new(params).call
         true
       end
 

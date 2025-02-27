@@ -1,2 +1,2 @@
 require "./setup"
-Swars::Crawler::NotableCrawler.new.run.rows.to_t
+Swars::Crawler::NotableCrawler.new.call.rows.to_t

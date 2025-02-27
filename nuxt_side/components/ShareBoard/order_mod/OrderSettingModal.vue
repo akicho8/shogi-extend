@@ -152,7 +152,7 @@ export default {
     furigoma_handle() {
       if (this.invalid_case1()) { return }
       if (this.invalid_case2("振り駒")) { return }
-      const furigoma_pack = FurigomaPack.run({
+      const furigoma_pack = FurigomaPack.call({
         furigoma_random_key: this.$route.query.furigoma_random_key,
         shakashaka_count: this.$route.query.shakashaka_count,
       })

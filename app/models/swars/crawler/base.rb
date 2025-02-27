@@ -4,8 +4,8 @@ module Swars
       attr_accessor :params
 
       class << self
-        def run(...)
-          new(...).run
+        def call(...)
+          new(...).call
         end
       end
 
@@ -17,7 +17,7 @@ module Swars
         }.merge(default_params, params)
       end
 
-      def run
+      def call
         perform
         mail_send
         if Rails.env.development?

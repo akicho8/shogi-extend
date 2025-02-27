@@ -6,7 +6,7 @@ module Swars
       user = User.create!
       instance = Crawler::NotableCrawler.new(user_keys: [user.key])
       assert { User["YamadaTaro"] == nil }
-      instance.run
+      instance.call
       assert { User["YamadaTaro"].battles.count >= 1 }
       assert { instance.mail_body }
     end

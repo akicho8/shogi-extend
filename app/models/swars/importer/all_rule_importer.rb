@@ -1,4 +1,4 @@
-# AllRuleImporter.new(user_key: "alice", page_max: 3).run
+# AllRuleImporter.new(user_key: "alice", page_max: 3).call
 # ~/src/shogi-extend/workbench/swars/all_rule_importer.rb
 module Swars
   module Importer
@@ -25,12 +25,12 @@ module Swars
         }.merge(params)
       end
 
-      def run
+      def call
         AccessPattern.each do |options|
           OneRuleImporter.new(params.merge(options)).run
         end
         if WITH_SPRINT
-          OneRuleImporter.new(params.merge(imode_key: :sprint)).run
+          OneRuleImporter.new(params.merge(imode_key: :sprint)).call
         end
         after_process
       end

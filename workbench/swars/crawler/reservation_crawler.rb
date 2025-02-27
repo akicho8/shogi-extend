@@ -1,6 +1,6 @@
 require "./setup"
 tp Swars::CrawlReservation
-Swars::Crawler::ReservationCrawler.new.run
+Swars::Crawler::ReservationCrawler.new.call
 tp Swars::CrawlReservation
 # >> |------+---------+-----------------+-----------------+--------------+---------------------------+---------------------------|
 # >> | id   | user_id | target_user_key | attachment_mode | processed_at | created_at                | updated_at                |
