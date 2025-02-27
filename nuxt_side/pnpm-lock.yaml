@@ -4759,7 +4759,7 @@ packages:
       iferr: 0.1.5
       mkdirp: 0.5.6
       rimraf: 2.7.1
-      run-queue: 1.0.3
+      call-queue: 1.0.3
     dev: false
 
   /copy-descriptor@0.1.1:
@@ -5592,7 +5592,7 @@ packages:
       human-signals: 1.1.1
       is-stream: 2.0.1
       merge-stream: 2.0.0
-      npm-run-path: 4.0.1
+      npm-call-path: 4.0.1
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
@@ -5607,7 +5607,7 @@ packages:
       human-signals: 2.1.0
       is-stream: 2.0.1
       merge-stream: 2.0.0
-      npm-run-path: 4.0.1
+      npm-call-path: 4.0.1
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
@@ -6610,7 +6610,7 @@ packages:
       figures: 3.2.0
       lodash: 4.17.21
       mute-stream: 0.0.8
-      run-async: 2.4.1
+      call-async: 2.4.1
       rxjs: 6.6.7
       string-width: 4.2.3
       strip-ansi: 6.0.1
@@ -8147,7 +8147,7 @@ packages:
       fs-write-stream-atomic: 1.0.10
       mkdirp: 0.5.6
       rimraf: 2.7.1
-      run-queue: 1.0.3
+      call-queue: 1.0.3
     dev: false
 
   /mrmime@1.0.1:
@@ -8415,7 +8415,7 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /npm-run-path@4.0.1:
+  /npm-call-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
     dependencies:
@@ -10266,18 +10266,18 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /run-async@2.4.1:
+  /call-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
     engines: {node: '>=0.12.0'}
     dev: false
 
-  /run-parallel@1.2.0:
+  /call-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
       queue-microtask: 1.2.3
     dev: false
 
-  /run-queue@1.0.3:
+  /call-queue@1.0.3:
     resolution: {integrity: sha512-ntymy489o0/QQplUDnpYAYUsO50K9SBrIVaKCWDOJzYJts0f9WH9RFJkyagebkw5+y1oi00R7ynNW/d12GBumg==}
     dependencies:
       aproba: 1.2.0

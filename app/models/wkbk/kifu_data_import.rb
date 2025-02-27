@@ -1,5 +1,5 @@
-# cap staging    rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).run'
-# cap production rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).run'
+# cap staging    rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).call'
+# cap production rails:runner CODE='Wkbk::KifuDataImport.new(user: User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")).call'
 module Wkbk
   class KifuDataImport
     attr_accessor :params
@@ -8,7 +8,7 @@ module Wkbk
       @params = params
     end
 
-    def run
+    def call
       user = params[:user] || User.admin
       # user.wkbk_articles.destroy_all
 
@@ -61,5 +61,5 @@ module Wkbk
 end
 
 if $0 == __FILE__
-  Wkbk::KifuDataImport.new.run
+  Wkbk::KifuDataImport.new.call
 end

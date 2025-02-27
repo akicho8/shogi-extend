@@ -1,6 +1,6 @@
 module Swars
   module Crawler
-    # Swars::Crawler::NotableCrawler.new(page_max: 3, sleep: 5).run
+    # Swars::Crawler::NotableCrawler.new(page_max: 3, sleep: 5).call
     class NotableCrawler < Base
       def default_params
         super.merge({
@@ -13,7 +13,7 @@ module Swars
       def perform
         params[:user_keys].each do |user_key|
           report_for(user_key) do
-            Importer::AllRuleImporter.new(params.merge(user_key: user_key)).run
+            Importer::AllRuleImporter.new(params.merge(user_key: user_key)).call
           end
         end
       end

@@ -8,7 +8,7 @@ tp Swars::User
 tp Swars::Agent.new.record_get(key: "MinoriChihara-YamadaTaro-20190111_084942")
 
 Swars::Battle.destroy_all
-Swars::Importer::BattleImporter.new(key: "MinoriChihara-YamadaTaro-20190111_084942").run
+Swars::Importer::BattleImporter.new(key: "MinoriChihara-YamadaTaro-20190111_084942").call
 record = Swars::Battle.first
 tp record
 puts record.kifu_body

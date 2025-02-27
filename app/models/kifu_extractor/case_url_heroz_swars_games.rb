@@ -11,7 +11,7 @@ module KifuExtractor
       if url_type? || swars_battle_url_match?
         if battle_url = Swars::BattleUrlExtractor.new(item.source).battle_url
           battle_key = battle_url.battle_key
-          Swars::Importer::BattleImporter.new(key: battle_key).run
+          Swars::Importer::BattleImporter.new(key: battle_key).call
           if battle = Swars::Battle.find_by(key: battle_key.to_s)
             @body = battle.kifu_body
           end

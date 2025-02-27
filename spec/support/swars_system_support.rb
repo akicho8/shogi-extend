@@ -7,7 +7,7 @@ module SwarsSystemSupport
       command = <<~EOT
         Swars::Battle.destroy_all
         Swars.setup
-        Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
+        Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
       EOT
       %x(rails runner -e development '#{command}')
       # system "rails runner -e development 'tp Swars.info'"

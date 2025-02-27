@@ -11,12 +11,12 @@ module Swars
         :bs_error_capture_fake  => false, # trueならわざと例外
       }
 
-      # Importer::OneRuleImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).run
+      # Importer::OneRuleImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
       def initialize(params = {})
         @params = default_options.merge(params)
       end
 
-      def run
+      def call
         new_keys.each(&method(:import_process))
       end
 
@@ -52,7 +52,7 @@ module Swars
           if params[:bs_error_capture_fake]
             raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
           end
-          BattleImporter.new(params.merge(key: key, skip_if_exist: false)).run
+          BattleImporter.new(params.merge(key: key, skip_if_exist: false)).call
         rescue Bioshogi::BioshogiError => error
           if f = params[:bs_error_capture_block]
             f.call({key: key, error: error})

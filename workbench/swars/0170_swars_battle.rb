@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../../config/environment', __FILE__)
 
-Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
+Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
 
 # Swars::Battle.destroy_all
 # Swars::Battle.destroy_all

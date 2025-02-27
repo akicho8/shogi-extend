@@ -2,7 +2,7 @@ import { Gs } from "@/components/models/gs.js"
 import { FurigomaPawn } from "./furigoma_pawn.js"
 
 export class FurigomaPack {
-  static run(...args) {
+  static call(...args) {
     const object = new this(...args)
     object.shaka_and_shaka()
     return object

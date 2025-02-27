@@ -7,7 +7,7 @@ module Swars
       user.search_logs.create!
       instance = Crawler::MomentumCrawler.new(period: 0, at_least: 1, hard_crawled_old: -1.seconds)
       assert { Battle.none? }
-      instance.run
+      instance.call
       assert { Battle.exists? }
       assert { instance.mail_body }
     end

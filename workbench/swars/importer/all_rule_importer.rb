@@ -1,14 +1,14 @@
 require "./setup"
-# Swars::Importer::AllRuleImporter.new(user_key: "bsplive").run
+# Swars::Importer::AllRuleImporter.new(user_key: "bsplive").call
 # Swars::User["bsplive"].hard_crawled_at # => Tue, 26 Nov 2024 18:17:42.000000000 JST +09:00
 
-# Swars::Importer::AllRuleImporter.new(user_key: "th_1230", remote_run: true, page_max: 1).run
+# Swars::Importer::AllRuleImporter.new(user_key: "th_1230", remote_run: true, page_max: 1).call
 # Swars::User["th_1230"].hard_crawled_at # => Wed, 27 Nov 2024 07:43:49.000000000 JST +09:00
 
-# Swars::Importer::AllRuleImporter.new(user_key: "yukky1119", remote_run: true, page_max: 1).run
+# Swars::Importer::AllRuleImporter.new(user_key: "yukky1119", remote_run: true, page_max: 1).call
 # Swars::User["yukky1119"].hard_crawled_at # => Sun, 24 Nov 2024 14:14:45.000000000 JST +09:00
 
-# Swars::Importer::AllRuleImporter.new(user_key: "slowstep3210", remote_run: true, page_max: 1).run
+# Swars::Importer::AllRuleImporter.new(user_key: "slowstep3210", remote_run: true, page_max: 1).call
 # Swars::User["slowstep3210"].hard_crawled_at # => Sun, 24 Nov 2024 01:26:58.000000000 JST +09:00
 
 Swars::Importer::AllRuleImporter.new(user_key: "akihiko810", remote_run: true, page_max: 1).run

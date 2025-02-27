@@ -4,7 +4,7 @@
 require "slack-notifier"
 
 class App
-  def run
+  def call
     client.post(text: "#{icon_emoji} #{name} #{command} #{oneline}")
   end
 
@@ -63,5 +63,5 @@ class App
     "/etc/sysconfig/systemd_secret_env"
   end
 
-  new.run
+  new.call
 end

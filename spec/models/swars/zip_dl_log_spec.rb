@@ -22,7 +22,7 @@ module Swars
       stack = []
       stack << ZipDlLog.recent_period
       stack << ZipDlLog.recent_count_max
-      e.run
+      e.call
       ZipDlLog.recent_count_max = stack.pop
       ZipDlLog.recent_period    = stack.pop
     end

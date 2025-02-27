@@ -67,7 +67,7 @@ module Swars
 
     def import_process_any
       if primary_battle_key
-        Swars::Importer::BattleImporter.new(key: primary_battle_key).run
+        Swars::Importer::BattleImporter.new(key: primary_battle_key).call
       else
         many_import_process
       end
@@ -91,7 +91,7 @@ module Swars
           # 失敗時は current_swars_user ある場合にのみスキップする
           # そうしないと「もしかして」メッセージの2度目が表示されない
           @import_errors = []
-          @import_success = Importer::ThrottleImporter.new(import_params).run
+          @import_success = Importer::ThrottleImporter.new(import_params).call
           import_error_message_build
           if !@import_success && current_swars_user
             @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)

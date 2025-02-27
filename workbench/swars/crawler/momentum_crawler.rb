@@ -4,7 +4,7 @@ user = Swars::User.create!
 user.search_logs.create!
 instance = Swars::Crawler::MomentumCrawler.new(period: 100.days, at_least: 1, limit: 2)
 Swars::Battle.count                    # => 1895538
-instance.run
+instance.call
 Swars::Battle.count                    # => 1895538
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=raminitk
 # >> raminitk P1 10分 [全3件][新0件][最後]

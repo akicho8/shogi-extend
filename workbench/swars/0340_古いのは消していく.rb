@@ -2,7 +2,7 @@
 require File.expand_path('../../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
+Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
 Swars::Battle.count             # => 3
 Swars::Battle.cleanup(expires_in: 0.seconds)
 Swars::Battle.count             # => 1

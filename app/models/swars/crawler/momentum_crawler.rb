@@ -16,7 +16,7 @@
 #
 module Swars
   module Crawler
-    # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).run
+    # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).call
     class MomentumCrawler < Base
       def default_params
         super.merge({
@@ -38,7 +38,7 @@ module Swars
         s = s.limit(params[:limit])
         s.find_each do |user|
           report_for(user.key) do
-            Importer::AllRuleImporter.new(params.merge(user_key: user.key)).run
+            Importer::AllRuleImporter.new(params.merge(user_key: user.key)).call
           end
         end
       end

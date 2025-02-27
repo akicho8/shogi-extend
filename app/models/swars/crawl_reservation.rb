@@ -76,7 +76,7 @@ module Swars
       }.merge(params)
 
       other_options = BattleCountDiff.new.call(target_user_key) do
-        Importer::AllRuleImporter.new(params.merge(user_key: target_user_key)).run
+        Importer::AllRuleImporter.new(params.merge(user_key: target_user_key)).call
       end
 
       update!(processed_at: Time.current)
