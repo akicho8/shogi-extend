@@ -5,6 +5,19 @@ module Swars
     class AllRuleImporter
       WITH_SPRINT = true
 
+      AccessPattern = [
+        { xmode_key: "野良", rule_key: :ten_min,   },
+        { xmode_key: "野良", rule_key: :three_min, },
+        { xmode_key: "野良", rule_key: :ten_sec,   },
+        { xmode_key: "友達", rule_key: :ten_min,   },
+        { xmode_key: "友達", rule_key: :three_min, },
+        { xmode_key: "友達", rule_key: :ten_sec,   },
+        { xmode_key: "指導", rule_key: :ten_min,   },
+        { xmode_key: "大会", rule_key: :ten_min,   },
+        { xmode_key: "大会", rule_key: :three_min, },
+        { xmode_key: "大会", rule_key: :ten_sec,   },
+      ]
+
       attr_accessor :params
 
       def initialize(params = {})
@@ -13,8 +26,8 @@ module Swars
       end
 
       def run
-        RuleInfo.each do |e|
-          OneRuleImporter.new(params.merge(rule_key: e.key)).run
+        AccessPattern.each do |options|
+          OneRuleImporter.new(params.merge(options)).run
         end
         if WITH_SPRINT
           OneRuleImporter.new(params.merge(imode_key: :sprint)).run

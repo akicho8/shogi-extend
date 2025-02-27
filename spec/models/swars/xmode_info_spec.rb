@@ -20,5 +20,9 @@ module Swars
     it "alias" do
       assert { XmodeInfo.fetch("通常").name == "野良" }
     end
+
+    it "将棋ウォーズ側のキー(sw_side_key)で引ける" do
+      assert { XmodeInfo.fetch("normal").name == "野良" }
+    end
   end
 end
