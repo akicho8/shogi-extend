@@ -10,7 +10,7 @@ module Swars
           end
 
           if Rails.env.development?
-            Importer::AllRuleImporter.new(user_key: "DevUser1").call
+            Importer::FullHistoryImporter.new(user_key: "DevUser1").call
             if ENV["IT_IS_CALLED_THE_CRAWLER_AT_THE_TIME_OF_SETUP"]
               puts Crawler::NotableCrawler.new.call.rows.to_t
             end

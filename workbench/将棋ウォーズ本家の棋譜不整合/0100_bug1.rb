@@ -2,7 +2,7 @@
 require File.expand_path('../../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-# Swars::Importer::AllRuleImporter.new(remote_run: true, user_key: "StarCerisier", page_max: 2).call
+# Swars::Importer::FullHistoryImporter.new(remote_run: true, user_key: "StarCerisier", page_max: 2).call
 
 # Swars::Importer::BattleImporter.new(remote_run: true, key: "fap34-StarCerisier-20200831_215840").call
 # Swars::Importer::BattleImporter.new(remote_run: true, key: "deefstar-StarCerisier-20200822_181008").call

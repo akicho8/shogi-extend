@@ -38,7 +38,7 @@ module Swars
         s = s.limit(params[:limit])
         s.find_each do |user|
           report_for(user.key) do
-            Importer::AllRuleImporter.new(params.merge(user_key: user.key)).call
+            Importer::FullHistoryImporter.new(params.merge(user_key: user.key)).call
           end
         end
       end

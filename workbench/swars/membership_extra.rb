@@ -2,7 +2,7 @@
 require File.expand_path('../../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Importer::AllRuleImporter.new(user_key: "itoshinTV", verbose: false).call
+Swars::Importer::FullHistoryImporter.new(user_key: "itoshinTV", verbose: false).call
 tp Swars::MembershipExtra
 tp Swars.info
 
