@@ -72,6 +72,7 @@ module Swars
 
       params = {
         :page_max => Rails.env.local? ? 1 : 256,
+        :hard_crawl => true,   # true: 全体クロール
       }.merge(params)
 
       other_options = BattleCountDiff.new.call(target_user_key) do
