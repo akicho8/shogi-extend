@@ -1,6 +1,6 @@
 module Swars
   module Importer
-    class OneRuleImporter
+    class SingleHistoryImporter
       attr_reader :params
 
       class_attribute :default_options, default: {
@@ -11,7 +11,7 @@ module Swars
         :bs_error_capture_fake  => false, # trueならわざと例外
       }
 
-      # Importer::OneRuleImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
+      # Importer::SingleHistoryImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
       def initialize(params = {})
         @params = default_options.merge(params)
       end

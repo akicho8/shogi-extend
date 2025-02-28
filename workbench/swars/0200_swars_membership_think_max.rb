@@ -1,7 +1,7 @@
 require File.expand_path('../../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
+Swars::Importer::FullHistoryImporter.new(user_key: "DevUser1").call
 tp Swars::Membership
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=DevUser1
 # >> DevUser1 P1 10分 [全3件][新3件][最後]

@@ -17,7 +17,7 @@ module Swars
           return false
         end
         Rails.cache.write(cache_key, true, expires_in: params[:interval])
-        AllRuleImporter.new(params).call
+        FullHistoryImporter.new(params).call
         true
       end
 

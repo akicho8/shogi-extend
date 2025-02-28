@@ -1,6 +1,6 @@
 require "./setup"
 
-Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").call
+Swars::Importer::FullHistoryImporter.new(user_key: "DevUser1").call
 Swars::Battle.count             # => 1895517
 
 puts Swars::Crawler::NotableCrawler.new.call.rows.to_t
