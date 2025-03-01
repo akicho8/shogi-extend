@@ -13,7 +13,7 @@ module Swars
           body = ""
         end
         all_keys = body.scan(/\b(?:game_id)=([\w-]+)/).flatten.collect { |e| BattleKey.create(e) }
-        HistoryResult.new(all_keys)
+        HistoryBox.new(all_keys)
       end
 
       def history_url

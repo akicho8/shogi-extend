@@ -1,6 +1,6 @@
 module Swars
   module Agent
-    class HistoryResult
+    class HistoryBox
       KEYS_PER_PAGE = 10        # 1ページあたりN件
 
       attr_accessor :all_keys
