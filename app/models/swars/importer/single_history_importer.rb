@@ -1,16 +1,10 @@
-# Importer::SingleHistoryImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
-
 module Swars
   module Importer
     class SingleHistoryImporter < Base
-      def self.default_params
+      def default_params
         {
           :verbose => Rails.env.development?,
         }
-      end
-
-      def default_params
-        self.class.default_params
       end
 
       def call
