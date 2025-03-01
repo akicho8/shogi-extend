@@ -2,7 +2,7 @@ require "./setup"
 # ENV["EXECUTE_ERROR_PURPOSE"] = "1"
 user = Swars::User.create!
 user.search_logs.create!
-instance = Swars::Crawler::MomentumCrawler.new(period: 100.days, at_least: 1, limit: 2)
+instance = Swars::Crawler::SemiActiveUserCrawler.new(period: 100.days, at_least: 1, limit: 2)
 Swars::Battle.count                    # => 1895538
 instance.call
 Swars::Battle.count                    # => 1895538

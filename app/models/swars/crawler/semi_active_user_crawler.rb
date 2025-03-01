@@ -3,7 +3,7 @@
 # cap production rails:runner CODE="p Swars::User.vip_except.momentum_only(period: 3.days, at_least: 3).hard_crawled_old_only(3.days).count"
 #
 # ▼即反映
-# cap production deploy:upload FILES=app/models/swars/crawler/momentum_crawler.rb
+# cap production deploy:upload FILES=app/models/swars/crawler/semi_active_user_crawler.rb
 #
 # ▼対象人数
 # |--------+----------+------|
@@ -16,8 +16,8 @@
 #
 module Swars
   module Crawler
-    # Swars::Crawler::MomentumCrawler.new(look_up_to_page_x: 3, sleep: 5).call
-    class MomentumCrawler < Base
+    # Swars::Crawler::SemiActiveUserCrawler.new(look_up_to_page_x: 3, sleep: 5).call
+    class SemiActiveUserCrawler < Base
       def default_params
         super.merge({
             :subject          => "直近数日で注目されているユーザー",
