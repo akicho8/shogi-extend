@@ -11,7 +11,7 @@ module Swars
         assert { Battle.count == 3 }
       end
 
-      describe "hard_crawl に対応して hard_crawled_at と soft_crawled_at を更新する" do
+      describe "eager_to_next_page に対応して hard_crawled_at と soft_crawled_at を更新する" do
         it "見ているページに新しい対局がない場合はすぐに終わる (デフォルト)" do
           user = Swars::User.create!(user_key: "DevUser1")
           Timecop.freeze("2001-01-01") do
@@ -24,7 +24,7 @@ module Swars
         it "全体の場合は hard_crawled_at も更新する" do
           user = Swars::User.create!(user_key: "DevUser1")
           Timecop.freeze("2001-01-01") do
-            FullHistoryImporter.new(user_key: "DevUser1", hard_crawl: true).call
+            FullHistoryImporter.new(user_key: "DevUser1", eager_to_next_page: true).call
           end
           assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time } # ← 両方を
           assert { Swars::User["DevUser1"].hard_crawled_at == "2001-01-01".to_time } # ← 更新している

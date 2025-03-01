@@ -17,10 +17,6 @@ module Swars
         new_keys.each(&method(:import_process))
       end
 
-      def hard_crawl
-        params[:hard_crawl]
-      end
-
       private
 
       # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
@@ -35,7 +31,7 @@ module Swars
               break
             end
             if look_up_to_page_x > 1
-              if hard_crawl
+              if params[:eager_to_next_page]
                 # 新しい対局が見つからなくても次のページに進む (遅いが過去の棋譜を落とせる)
               else
                 if history_box.new_keys.empty?
