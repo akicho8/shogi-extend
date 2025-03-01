@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Crawler::ReservationCrawler, type: :model do
+  RSpec.describe Crawler::ReserveUserCrawler, type: :model do
     it "works" do
       current_user = ::User.admin
       swars_user = User.create!
@@ -12,7 +12,7 @@ module Swars
 
       current_user.swars_crawl_reservations.create!(target_user_key: swars_user.key)
       assert { CrawlReservation.active_only.count == 1 }
-      Crawler::ReservationCrawler.new.call
+      Crawler::ReserveUserCrawler.new.call
       assert { CrawlReservation.active_only.count == 0 }
     end
   end

@@ -11,7 +11,7 @@ class MainBatch
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
 
     # 将棋ウォーズ棋譜検索クロール
-    Swars::Crawler::ReservationCrawler.call
+    Swars::Crawler::ReserveUserCrawler.call
     Swars::Crawler::ActiveUserCrawler.call
     Swars::Crawler::MomentumCrawler.call
 
@@ -37,6 +37,6 @@ class MainBatch
   end
 
   def staging
-    Swars::Crawler::ReservationCrawler.call
+    Swars::Crawler::ReserveUserCrawler.call
   end
 end
