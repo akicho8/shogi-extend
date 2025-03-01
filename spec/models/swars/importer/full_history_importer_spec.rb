@@ -24,7 +24,7 @@ module Swars
         it "全体の場合は hard_crawled_at も更新する" do
           user = Swars::User.create!(user_key: "DevUser1")
           Timecop.freeze("2001-01-01") do
-            FullHistoryImporter.new(user_key: "DevUser1", eager_to_next_page: true).call
+            FullHistoryImporter.new(user_key: "DevUser1", eager_to_next_page: true, look_up_to_page_x: 2).call
           end
           assert { Swars::User["DevUser1"].soft_crawled_at == "2001-01-01".to_time } # ← 両方を
           assert { Swars::User["DevUser1"].hard_crawled_at == "2001-01-01".to_time } # ← 更新している

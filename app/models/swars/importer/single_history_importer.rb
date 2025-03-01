@@ -8,10 +8,17 @@ module Swars
       end
 
       def call
+        validate!
         new_keys.each(&method(:import_process))
       end
 
       private
+
+      def validate!
+        if params[:eager_to_next_page] && look_up_to_page_x <= 1
+          raise ArgumentError, "「取り込むべき棋譜が0件のページがあっても次のページを見る」としているのに参照する最大ページ数が 2 以上になっていない"
+        end
+      end
 
       # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
       def new_keys
