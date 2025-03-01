@@ -25,11 +25,11 @@ module Swars
 
       # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
       def new_keys
-        @new_keys ||= Set.new.tap do |new_keys|
+        @new_keys ||= [].tap do |new_keys|
           page_max.times do |i|
             history_box = Agent::History.new(params.merge(page_index: i)).fetch
             log_puts { [params[:user_key], "P#{i.next}", rule_name, history_box.inspect].join(" ") }
-            new_keys += history_box.new_keys
+            new_keys.concat(history_box.new_keys)
             if params[:last_page_break]
               if history_box.last_page?
                 log_puts { "最後のページと思われるので終わる" }
