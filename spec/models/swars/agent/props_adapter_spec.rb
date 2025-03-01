@@ -30,8 +30,22 @@ module Swars
         assert { object.to_h }
       end
 
+      it "to_battle_attributes" do
+        assert { object.to_battle_attributes }
+      end
+
+      it "to_battle_membership_attributes" do
+        User.create!(key: "alice")
+        User.create!(key: "bob")
+        assert { object.to_battle_membership_attributes }
+      end
+
       it "key" do
         assert { object.key.to_s == "alice-bob-20000101_112233" }
+      end
+
+      it "battle_exist?" do
+        assert { !object.battle_exist? }
       end
 
       it "battled_at" do

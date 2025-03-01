@@ -31,6 +31,31 @@ module Swars
         }
       end
 
+      def to_battle_attributes
+        {
+          :key               => key.to_s,
+          :rule_key          => rule_info.key,
+          :final_key         => final_info.key,
+          :csa_seq           => csa_seq, # FIXME: SFEN を渡す。時間は別にする
+          :preset_key        => preset_info.key,
+          :xmode_key         => xmode_info.key,
+          :imode_key         => imode_info.key,
+          :battled_at        => battled_at,
+          :starting_position => starting_position,
+        }
+      end
+
+      def to_battle_membership_attributes
+        memberships.collect.with_index do |e, i|
+          {
+            :user         => User.find_by!(user_key: e[:user_key]),
+            :grade_key    => e[:grade_info].key,
+            :judge_key    => e[:judge_info].key,
+            :location_key => LocationInfo.fetch(i).key,
+          }
+        end
+      end
+
       # 対局KEY
       def key
         @key ||= options[:key] || BattleKey.create(props.fetch("name"))
@@ -156,6 +181,11 @@ module Swars
       # 取り込まないべきか？
       def invalid?
         !valid?
+      end
+
+      # すでに登録済み？
+      def battle_exist?
+        Battle.exists?(key: key.to_s)
       end
 
       private

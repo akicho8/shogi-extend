@@ -21,7 +21,7 @@ if defined?(RSpec)
     desc "将棋ウォーズのモデルのテストすべて"
     RSpec::Core::RakeTask.new(:swars => "spec:prepare") do |t|
       t.pattern = "spec/models/swars/**/*_spec.rb"
-      t.rspec_opts = "-f d"
+      t.rspec_opts = "-f p --fail-fast"
     end
 
     desc "将棋ウォーズ関連すべて"

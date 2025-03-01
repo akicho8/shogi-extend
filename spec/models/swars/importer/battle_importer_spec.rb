@@ -17,6 +17,12 @@ module Swars
         assert { Battle.count == 1 }
         assert { Battle.first.final.key == "TIMEOUT" }
       end
+
+      it "メンバーが2人いる" do
+        key = BattleKeyGenerator.new.generate
+        BattleImporter.new(key: key).call
+        assert { Battle.first.memberships.count == 2 }
+      end
     end
   end
 end

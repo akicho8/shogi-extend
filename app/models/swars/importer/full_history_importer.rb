@@ -2,7 +2,7 @@
 # ~/src/shogi-extend/workbench/swars/full_history_importer.rb
 module Swars
   module Importer
-    class FullHistoryImporter
+    class FullHistoryImporter < Base
       AccessList = [
         { imode_key: "通常",       xmode_key: "野良", rule_key: "10分", },
         { imode_key: "通常",       xmode_key: "野良", rule_key: "3分",  },
@@ -17,16 +17,9 @@ module Swars
         { imode_key: "スプリント", xmode_key: nil,    rule_key: nil,    },
       ]
 
-      attr_accessor :params
-
-      def initialize(params = {})
-        @params = {
-        }.merge(params)
-      end
-
       def call
         AccessList.each do |pattern|
-          SingleHistoryImporter.new(params.merge(pattern)).run
+          SingleHistoryImporter.new(params.merge(pattern)).call
         end
         latest_crawl_timestamps_update
       end
@@ -54,7 +47,7 @@ module Swars
       end
 
       def hard_crawl
-        SingleHistoryImporter.default_options.merge(params)[:hard_crawl]
+        SingleHistoryImporter.default_params.merge(params)[:hard_crawl]
       end
     end
   end

@@ -1,12 +1,10 @@
 module Swars
   module Importer
-    class ThrottleImporter
-      attr_accessor :params
-
-      def initialize(params = {})
-        @params = {
+    class ThrottleImporter < Base
+      def default_params
+        {
           interval: default_interval,
-        }.merge(params)
+        }
       end
 
       def call
@@ -24,15 +22,15 @@ module Swars
       private
 
       def cache_key
-        @cache_key ||= [self.class.name, params[:user_key], params[:page_max]].join("/")
+        @cache_key ||= [
+          self.class.name,
+          params[:user_key],
+          params[:page_max],
+        ].join("/")
       end
 
       def default_interval
-        if Rails.env.local?
-          return 10.seconds
-        end
-
-        3.minutes
+        Rails.env.local? ? 10.seconds : 3.minutes
       end
     end
   end
