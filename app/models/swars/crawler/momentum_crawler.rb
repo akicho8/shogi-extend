@@ -21,12 +21,12 @@ module Swars
       def default_params
         super.merge({
             :subject          => "直近数日で注目されているユーザー",
-            :page_max         => Rails.env.production? ? 100 : 1,
-            :hard_crawl       => true,   # true: 全体クロール
-            :period           => 3.days, # この期間で
-            :at_least         => 5,      # N件以上検索されている(多い順)
-            :limit            => 150,    # ユーザーを最大N件
-            :hard_crawled_old => 3.days, # 全体クロールしてN日以上経過している人たち
+            :page_max         => Rails.env.production? ? 100 : 1, # どこまで捲るか？
+            :hard_crawl       => true,                            # 1ページ内の対局がすべて登録済みでも次を捲る
+            :period           => 3.days,                          # この期間で
+            :at_least         => 5,                               # N件以上検索されている(多い順)
+            :limit            => 150,                             # ユーザーを最大N件
+            :hard_crawled_old => 3.days,                          # 全体クロールしてN日以上経過している人たち
           })
       end
 

@@ -2,31 +2,31 @@ require "./setup"
 # Swars::Battle["fap34-StarCerisier-20200831_215840"]&.destroy!
 # battle_importer = Swars::Importer::BattleImporter.new(key: Swars::BattleKey["fap34-StarCerisier-20200831_215840"], skip_if_exist: false)
 # battle_importer.call
-# tp battle_importer.battles.first.memberships
+# tp battle_importer.battle.memberships
 
 # Swars::Battle["raminitk-nakkunnBoy-20240823_213402"]&.destroy!
 # battle_importer = Swars::Importer::BattleImporter.new(key: Swars::BattleKey["raminitk-nakkunnBoy-20240823_213402"], skip_if_exist: false, remote_run: false)
 # battle_importer.call
-# tp battle_importer.battles.first.memberships
+# tp battle_importer.battle.memberships
 
 # key = Swars::BattleKey["KKKRRRYYY-th_1230-20241225_205830"]
 # Swars::Battle[key]&.destroy!
 # battle_importer = Swars::Importer::BattleImporter.new(key: key, skip_if_exist: false, remote_run: true)
 # battle_importer.call
-# tp battle_importer.battles.first.memberships
-# tp battle_importer.battles.first
+# tp battle_importer.battle.memberships
+# tp battle_importer.battle
 
 key = Swars::BattleKey["shogi_GPT-yukky1119-20250226_161410"]
 Swars::Battle[key]&.destroy!
 battle_importer = Swars::Importer::BattleImporter.new(key: key, skip_if_exist: false, remote_run: true)
 battle_importer.call
-battle = battle_importer.battles.first
+battle = battle_importer.battle
 puts battle.kifu_body
 # >> [fetch][record] https://shogiwars.heroz.jp/games/shogi_GPT-yukky1119-20250226_161410
 # >> N+shogi_GPT 28級
 # >> N-yukky1119 29級
 # >> $START_TIME:2025/02/26 16:14:10
-# >> $EVENT:将棋ウォーズ(3分切れ負け)
+# >> $EVENT:将棋ウォーズ(3分切れ負け スプリント)
 # >> $TIME_LIMIT:00:03+00
 # >> $X_FINAL:投了
 # >> $X_WINNER:△

@@ -1,19 +1,20 @@
+# Importer::SingleHistoryImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
+
 module Swars
   module Importer
-    class SingleHistoryImporter
-      attr_reader :params
+    class SingleHistoryImporter < Base
+      def self.default_params
+        {
+          :verbose                => Rails.env.development?,
+          :hard_crawl             => false, # true: 新しい対局が見つからなくても次のページに進む(遅いが過去の棋譜を落とせる)
+          :last_page_break        => true,  # 最後のページと思われるときは終わる
+          :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
+          :bs_error_capture_fake  => false, # trueならわざと例外
+        }
+      end
 
-      class_attribute :default_options, default: {
-        :verbose                => Rails.env.development?,
-        :hard_crawl             => false, # true: 新しい対局が見つからなくても次のページに進む(遅いが過去の棋譜を落とせる)
-        :last_page_break        => true,  # 最後のページと思われるときは終わる
-        :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
-        :bs_error_capture_fake  => false, # trueならわざと例外
-      }
-
-      # Importer::SingleHistoryImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).call
-      def initialize(params = {})
-        @params = default_options.merge(params)
+      def default_params
+        self.class.default_params
       end
 
       def call
@@ -52,7 +53,7 @@ module Swars
           if params[:bs_error_capture_fake]
             raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
           end
-          BattleImporter.new(params.merge(key: key, skip_if_exist: false)).call
+          BattleImporter.new(params.merge(key: key)).call
         rescue Bioshogi::BioshogiError => error
           if f = params[:bs_error_capture_block]
             f.call({key: key, error: error})

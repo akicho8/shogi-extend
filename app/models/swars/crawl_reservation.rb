@@ -70,13 +70,8 @@ module Swars
         raise "すでにクローズ済み"
       end
 
-      params = {
-        :page_max => Rails.env.local? ? 1 : 256,
-        :hard_crawl => true,   # true: 全体クロール
-      }.merge(params)
-
       other_options = BattleCountDiff.new.call(target_user_key) do
-        Importer::FullHistoryImporter.new(params.merge(user_key: target_user_key)).call
+        Importer::CompleteImporter.new(params.merge(user_key: target_user_key)).call
       end
 
       update!(processed_at: Time.current)
