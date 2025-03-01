@@ -16,7 +16,7 @@
 #
 module Swars
   module Crawler
-    # Swars::Crawler::MomentumCrawler.new(page_max: 3, sleep: 5).call
+    # Swars::Crawler::MomentumCrawler.new(look_up_to_page_x: 3, sleep: 5).call
     class MomentumCrawler < Base
       def default_params
         super.merge({

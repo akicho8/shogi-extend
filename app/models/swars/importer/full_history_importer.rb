@@ -1,4 +1,4 @@
-# FullHistoryImporter.new(user_key: "alice", page_max: 3).call
+# FullHistoryImporter.new(user_key: "alice", look_up_to_page_x: 3).call
 # ~/src/shogi-extend/workbench/swars/full_history_importer.rb
 module Swars
   module Importer
