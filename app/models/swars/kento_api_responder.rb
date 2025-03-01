@@ -65,7 +65,7 @@ module Swars
 
     def to_h
       if white_user?
-        @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).call
+        @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, look_up_to_page_x: 1).call
       end
       {
         "api_version" => "2020-02-02",                     # (required) 固定値

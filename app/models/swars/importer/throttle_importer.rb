@@ -25,7 +25,7 @@ module Swars
         @cache_key ||= [
           self.class.name,
           params[:user_key],
-          params[:page_max],
+          params[:look_up_to_page_x],
         ].join("/")
       end
 

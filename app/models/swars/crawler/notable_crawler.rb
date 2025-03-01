@@ -1,11 +1,11 @@
 module Swars
   module Crawler
-    # Swars::Crawler::NotableCrawler.new(page_max: 3, sleep: 5).call
+    # Swars::Crawler::NotableCrawler.new(look_up_to_page_x: 3, sleep: 5).call
     class NotableCrawler < Base
       def default_params
         super.merge({
             :user_keys => default_user_keys,
-            :page_max  => Rails.env.production? ? 100 : 1,
+            :look_up_to_page_x  => Rails.env.production? ? 100 : 1,
             :subject   => "活動的なプレイヤー",
           })
       end
