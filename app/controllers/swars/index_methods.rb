@@ -122,8 +122,8 @@ module Swars
       end
     end
 
-    def import_look_up_to_page_x
-      @import_look_up_to_page_x ||= (params[:look_up_to_page_x].presence || 1).to_i
+    def look_up_to_page_x
+      @look_up_to_page_x ||= (params[:look_up_to_page_x].presence || 1).to_i
     end
 
     def current_musers
@@ -178,7 +178,7 @@ module Swars
     def import_params
       {
         :user_key                => current_swars_user_key,
-        :look_up_to_page_x       => import_look_up_to_page_x,
+        :look_up_to_page_x       => look_up_to_page_x,
         # :hard_crawl              => (params[:hard_crawl].presence || "false") == "true",
         :throttle_cache_clear    => params[:throttle_cache_clear],
         :bs_error_capture_fake   => params[:bs_error_capture_fake],

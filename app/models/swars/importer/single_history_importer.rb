@@ -19,6 +19,11 @@ module Swars
 
       def call
         new_keys.each(&method(:import_process))
+        self
+      end
+
+      def hard_crawl
+        params[:hard_crawl]
       end
 
       private
@@ -28,18 +33,19 @@ module Swars
         @new_keys ||= [].tap do |new_keys|
           look_up_to_page_x.times do |i|
             history_box = Agent::History.new(params.merge(page_index: i)).fetch
-            log_puts { [params[:user_key], "P#{i.next}", rule_name, history_box.inspect].join(" ") }
+            log_puts { [params[:user_key], "Page#{i.next}", rule_name, history_box.inspect].join(" ") }
             new_keys.concat(history_box.new_keys)
             if params[:last_page_break]
               if history_box.last_page?
-                log_puts { "最後のページと思われるので終わる" }
+                log_puts { "  BREAK (最後のページと思われるので終わる)" }
                 break
               end
             end
             if look_up_to_page_x > 1
-              if !params[:hard_crawl]
+              if hard_crawl
+              else
                 if history_box.new_keys.empty?
-                  log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
+                  log_puts { "  BREAK (このページには新しい対局が見つからなかったので以降のページには新しい対局がないものと考えて終わる)" }
                   break
                 end
               end

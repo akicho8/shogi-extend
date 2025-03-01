@@ -15,37 +15,34 @@ Swars::Importer::FullHistoryImporter.new(user_key: "akihiko810", remote_run: tru
 Swars::User["akihiko810"].hard_crawled_at # => Sat, 23 Nov 2024 01:12:46.000000000 JST +09:00
 
 # tp Swars::User["asa2yoru"].battles.last(10).collect(&:info)
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
-# >> akihiko810 P1 10分 [全10件][新3件][続く]
-# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-Chiediverita-20250228_005206
-# >> [fetch][record] https://shogiwars.heroz.jp/games/akihiko810-sanatorium05-20250228_004600
-# >> [fetch][record] https://shogiwars.heroz.jp/games/WhiteRice-akihiko810-20250228_003014
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
-# >> akihiko810 P1 3分 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=normal&page=1&user_id=akihiko810
-# >> akihiko810 P1 10秒 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
-# >> akihiko810 P1 10分 [全10件][新0件][続く]
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
-# >> akihiko810 P1 3分 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=friend&page=1&user_id=akihiko810
-# >> akihiko810 P1 10秒 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=coach&page=1&user_id=akihiko810
-# >> akihiko810 P1 10分 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
-# >> akihiko810 P1 10分 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
-# >> akihiko810 P1 3分 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&init_pos_type=normal&opponent_type=closed_event&page=1&user_id=akihiko810
-# >> akihiko810 P1 10秒 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10分 [全10件][新0件][続く]
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 Page1 3分 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&opponent_type=normal&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10秒 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10分 [全10件][新0件][続く]
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 Page1 3分 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&opponent_type=friend&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10秒 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&opponent_type=coach&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10分 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10分 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 Page1 3分 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&opponent_type=closed_event&page=1&user_id=akihiko810
+# >> akihiko810 Page1 10秒 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?init_pos_type=sprint&page=1&user_id=akihiko810
-# >> akihiko810 P1 ルール未指定 [全0件][新0件][最後]
-# >> 最後のページと思われるので終わる
+# >> akihiko810 Page1 ルール未指定 [全0件][新0件][最後]
+# >>   BREAK (最後のページと思われるので終わる)

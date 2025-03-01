@@ -61,12 +61,6 @@ end
 #   end
 # end
 
-# every("30 6 * * *")   { runner "Swars::Battle.import(:expert_import, sleep: 5)"                                                                  }
-# every("*/30 * * * *") { runner "Swars::Battle.import(:conditional_import, sleep: 5, limit: 3, look_up_to_page_x: 1, grade_key_gteq: '三段')" }
-# every("30 5 * * *")    { runner "Swars::Battle.import(:rebuild)"                                                                                   }
-# every("0 */3 * * *")  { runner "General::Battle.import(:all_import, sample: 100)"                                                                }
-# every("0 6 * * *")    { runner "General::Battle.import(:cleanup)"                                                                     }
-
 ################################################################################ 証明書更新
 #
 # 時間を無視して取得するテストをするときは --dry-run をつける
