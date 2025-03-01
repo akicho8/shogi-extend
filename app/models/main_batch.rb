@@ -13,7 +13,7 @@ class MainBatch
     # 将棋ウォーズ棋譜検索クロール
     Swars::Crawler::ReserveUserCrawler.call
     Swars::Crawler::MainActiveUserCrawler.call
-    Swars::Crawler::MomentumCrawler.call
+    Swars::Crawler::SemiActiveUserCrawler.call
 
     # 削除シリーズ
     Kiwi::Lemon.cleanup(execute: true)   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
