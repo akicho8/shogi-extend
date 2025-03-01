@@ -17,7 +17,7 @@ module Swars
             Retryable.retryable(on: ActiveRecord::Deadlocked) do
               now = Time.current
               attrs = { soft_crawled_at: now }
-              if hard_crawl
+              if eager_to_next_page
                 attrs[:hard_crawled_at] = now
               end
               user.update_columns(attrs)
@@ -32,8 +32,8 @@ module Swars
         @user ||= User[params[:user_key]]
       end
 
-      def hard_crawl
-        params[:hard_crawl]
+      def eager_to_next_page
+        params[:eager_to_next_page]
       end
     end
   end
