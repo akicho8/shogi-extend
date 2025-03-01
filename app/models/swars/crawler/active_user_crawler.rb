@@ -1,7 +1,7 @@
 module Swars
   module Crawler
-    # Swars::Crawler::NotableCrawler.new(look_up_to_page_x: 3, sleep: 5).call
-    class NotableCrawler < Base
+    # Swars::Crawler::ActiveUserCrawler.new(look_up_to_page_x: 3, sleep: 5).call
+    class ActiveUserCrawler < Base
       def default_params
         super.merge({
             :subject           => "活動的なプレイヤー",
