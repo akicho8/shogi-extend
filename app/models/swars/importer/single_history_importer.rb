@@ -25,27 +25,27 @@ module Swars
 
       # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
       def new_keys
-        new_keys = Set.new
-        page_max.times do |i|
-          result = Agent::History.new(params.merge(page_index: i)).fetch
-          log_puts { [params[:user_key], "P#{i.next}", rule_name, result.inspect].join(" ") }
-          new_keys += result.new_keys
-          if params[:last_page_break]
-            if result.last_page?
-              log_puts { "最後のページと思われるので終わる" }
-              break
-            end
-          end
-          if page_max > 1
-            if !params[:hard_crawl]
-              if result.new_keys.empty?
-                log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
+        @new_keys ||= Set.new.tap do |new_keys|
+          page_max.times do |i|
+            history_box = Agent::History.new(params.merge(page_index: i)).fetch
+            log_puts { [params[:user_key], "P#{i.next}", rule_name, history_box.inspect].join(" ") }
+            new_keys += history_box.new_keys
+            if params[:last_page_break]
+              if history_box.last_page?
+                log_puts { "最後のページと思われるので終わる" }
                 break
+              end
+            end
+            if page_max > 1
+              if !params[:hard_crawl]
+                if history_box.new_keys.empty?
+                  log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
+                  break
+                end
               end
             end
           end
         end
-        new_keys
       end
 
       def import_process(key)
