@@ -4,7 +4,7 @@ module Swars
       def default_params
         {
           :eager_to_next_page => true,                            # 1ページ内の対局がすべて登録済みでも次を捲る
-          :look_up_to_page_x => Rails.env.production? ? 100 : 1, # どこまで捲るか？
+          :look_up_to_page_x  => Rails.env.production? ? 100 : 1, # どこまで捲るか？
         }
       end
     end
