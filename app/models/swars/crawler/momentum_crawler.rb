@@ -21,8 +21,6 @@ module Swars
       def default_params
         super.merge({
             :subject          => "直近数日で注目されているユーザー",
-            :page_max         => Rails.env.production? ? 100 : 1, # どこまで捲るか？
-            :hard_crawl       => true,                            # 1ページ内の対局がすべて登録済みでも次を捲る
             :period           => 3.days,                          # この期間で
             :at_least         => 5,                               # N件以上検索されている(多い順)
             :limit            => 150,                             # ユーザーを最大N件
@@ -38,7 +36,7 @@ module Swars
         s = s.limit(params[:limit])
         s.find_each do |user|
           report_for(user.key) do
-            Importer::FullHistoryImporter.new(params.merge(user_key: user.key)).call
+            Importer::CompleteImporter.new(params.merge(user_key: user.key)).call
           end
         end
       end
