@@ -1,7 +1,7 @@
 module Swars
   module Crawler
-    # rails r Swars::Crawler::ReservationCrawler.new.call
-    class ReservationCrawler < Base
+    # rails r Swars::Crawler::ReserveUserCrawler.new.call
+    class ReserveUserCrawler < Base
       def default_params
         super.merge({
             :subject => "棋譜取得の予約者",

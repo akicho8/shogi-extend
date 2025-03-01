@@ -19,7 +19,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 # every("0 1 * * *") do
 #   runner [
 #     "ActiveRecord::Base.logger = nil",
-#     "Swars::Crawler::ReservationCrawler.call",
+#     "Swars::Crawler::ReserveUserCrawler.call",
 #     "Swars::Battle.cleanup(time_limit: nil)",
 #   ].join(";")
 # end
