@@ -2,8 +2,8 @@ module Swars
   class ImodeInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :normal, name: "通常",       swars_magic_key: :normal, },
-      { key: :sprint, name: "スプリント", swars_magic_key: :sprint, },
+      { key: :normal, name: "通常",       },
+      { key: :sprint, name: "スプリント", },
     ]
 
     class << self
@@ -14,12 +14,18 @@ module Swars
       private
 
       def invert_table
-        @invert_table ||= inject({}) { |a, e| a.merge(e.name => e) }
+        @invert_table ||= inject({}) do |a, e|
+          a.merge(e.name => e)
+        end
       end
     end
 
     def long_name
       "#{name}対局"
+    end
+
+    def sw_side_key
+      key
     end
   end
 end

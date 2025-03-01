@@ -3,13 +3,6 @@ module Swars
     class History < Base
       HISTORY_BASE_URL = "https://shogiwars.heroz.jp/games/history"
 
-      def default_params
-        super.merge({
-            :imode_key  => :normal,
-            :page_index => 0,
-          })
-      end
-
       def fetch
         if params[:verbose]
           puts "[fetch][history] #{history_url}"
@@ -40,14 +33,12 @@ module Swars
       end
 
       def sw_side_user_id
-        user_key = params.fetch(:user_key)
-        user_key.present? or raise "must not happen"
-        user_key
+        params[:user_key]
       end
 
       def sw_side_gtype
         if v = params[:rule_key]
-          RuleInfo.fetch(v).swars_magic_key
+          RuleInfo[v].sw_side_key
         end
       end
 
@@ -58,14 +49,14 @@ module Swars
       end
 
       def sw_side_opponent_type
-        if v = (params[:xmode_key] || "野良")
-          XmodeInfo.fetch(v).sw_side_key
+        if v = params[:xmode_key]
+          XmodeInfo[v].sw_side_key
         end
       end
 
       def sw_side_init_pos_type
         if v = params[:imode_key]
-          ImodeInfo.fetch(v).swars_magic_key # FIXME: swars_magic_key を sw_side_key にする。ほかの swars_magic_key も置換する。
+          ImodeInfo[v].sw_side_key
         end
       end
     end
