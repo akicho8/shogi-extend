@@ -3,11 +3,12 @@
 module Swars
   module Importer
     class SingleHistoryImporter < Base
+      BREAK_IF_LAST_PAGE = true # 最後のページと思われるときは終わるか？
+
       def self.default_params
         {
           :verbose                => Rails.env.development?,
           :hard_crawl             => false, # true: 新しい対局が見つからなくても次のページに進む(遅いが過去の棋譜を落とせる)
-          :last_page_break        => true,  # 最後のページと思われるときは終わる
           :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
           :bs_error_capture_fake  => false, # trueならわざと例外
         }
@@ -35,7 +36,7 @@ module Swars
             history_box = Agent::History.new(params.merge(page_index: i)).fetch
             log_puts { [params[:user_key], "Page#{i.next}", rule_name, history_box.inspect].join(" ") }
             new_keys.concat(history_box.new_keys)
-            if params[:last_page_break]
+            if BREAK_IF_LAST_PAGE
               if history_box.last_page?
                 log_puts { "  BREAK (最後のページと思われるので終わる)" }
                 break
