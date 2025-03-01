@@ -12,7 +12,7 @@ class MainBatch
 
     # 将棋ウォーズ棋譜検索クロール
     Swars::Crawler::ReserveUserCrawler.call
-    Swars::Crawler::ActiveUserCrawler.call
+    Swars::Crawler::MainActiveUserCrawler.call
     Swars::Crawler::MomentumCrawler.call
 
     # 削除シリーズ

@@ -12,7 +12,7 @@ module Swars
           if Rails.env.development?
             Importer::FullHistoryImporter.new(user_key: "DevUser1").call
             if ENV["IT_IS_CALLED_THE_CRAWLER_AT_THE_TIME_OF_SETUP"]
-              puts Crawler::ActiveUserCrawler.new.call.rows.to_t
+              puts Crawler::MainActiveUserCrawler.new.call.rows.to_t
             end
             find_each(&:rebuild)
           end
