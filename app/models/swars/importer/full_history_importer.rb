@@ -3,22 +3,8 @@
 module Swars
   module Importer
     class FullHistoryImporter < Base
-      AccessList = [
-        { imode_key: "通常",       xmode_key: "野良", rule_key: "10分", },
-        { imode_key: "通常",       xmode_key: "野良", rule_key: "3分",  },
-        { imode_key: "通常",       xmode_key: "野良", rule_key: "10秒", },
-        { imode_key: "通常",       xmode_key: "友達", rule_key: "10分", },
-        { imode_key: "通常",       xmode_key: "友達", rule_key: "3分",  },
-        { imode_key: "通常",       xmode_key: "友達", rule_key: "10秒", },
-        { imode_key: "通常",       xmode_key: "指導", rule_key: "10分", },
-        { imode_key: "通常",       xmode_key: "大会", rule_key: "10分", },
-        { imode_key: "通常",       xmode_key: "大会", rule_key: "3分",  },
-        { imode_key: "通常",       xmode_key: "大会", rule_key: "10秒", },
-        { imode_key: "スプリント", xmode_key: nil,    rule_key: nil,    },
-      ]
-
       def call
-        AccessList.each do |pattern|
+        HistoryAccessPatterns.each do |pattern|
           SingleHistoryImporter.new(params.merge(pattern)).call
         end
         latest_crawl_timestamps_update
