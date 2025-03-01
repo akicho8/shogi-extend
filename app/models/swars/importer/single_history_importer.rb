@@ -3,8 +3,6 @@
 module Swars
   module Importer
     class SingleHistoryImporter < Base
-      BREAK_IF_LAST_PAGE = true # 最後のページと思われるときは終わるか？
-
       def self.default_params
         {
           :verbose                => Rails.env.development?,
@@ -36,11 +34,9 @@ module Swars
             history_box = Agent::History.new(params.merge(page_index: i)).fetch
             log_puts { [params[:user_key], "Page#{i.next}", rule_name, history_box.inspect].join(" ") }
             new_keys.concat(history_box.new_keys)
-            if BREAK_IF_LAST_PAGE
-              if history_box.last_page?
-                log_puts { "  BREAK (最後のページと思われるので終わる)" }
-                break
-              end
+            if history_box.last_page?
+              log_puts { "  BREAK (最後のページと思われるので終わる)" }
+              break
             end
             if look_up_to_page_x > 1
               if hard_crawl
