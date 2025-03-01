@@ -3,7 +3,7 @@ require "./setup"
 Swars::Importer::FullHistoryImporter.new(user_key: "DevUser1").call
 Swars::Battle.count             # => 1895517
 
-puts Swars::Crawler::NotableCrawler.new.call.rows.to_t
+puts Swars::Crawler::ActiveUserCrawler.new.call.rows.to_t
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=DevUser1
 # >> DevUser1 P1 10分 [全3件][新0件][最後]
 # >> 最後のページと思われるので終わる
