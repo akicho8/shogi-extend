@@ -11,13 +11,13 @@ require File.expand_path('../../../config/environment', __FILE__)
 
 # https://shogiwars.heroz.jp/games/history?locale=ja&user_id=muaqua2023
 
-# history_result = Swars::Agent::History.new(remote_run: true, user_key: "testarossa00", page_index: 0, rule_key: :ten_min).fetch
-# tp history_result.all_keys
+# history_box = Swars::Agent::History.new(remote_run: true, user_key: "testarossa00", page_index: 0, rule_key: :ten_min).fetch
+# tp history_box.all_keys
 
-history_result = Swars::Agent::History.new(remote_run: true, user_key: "muaqua2023", page_index: 0, rule_key: :ten_min).fetch
-tp history_result.all_keys
+history_box = Swars::Agent::History.new(remote_run: true, user_key: "muaqua2023", page_index: 0, rule_key: :ten_min).fetch
+tp history_box.all_keys
 
-# tp history_result.all_keys.collect { |key| Swars::Agent::Record.new(remote_run: true, key: key).fetch }
+# tp history_box.all_keys.collect { |key| Swars::Agent::Record.new(remote_run: true, key: key).fetch }
 # >> |-------------------------------------------|
 # >> | tosssy-muaqua2023-20231101_204103         |
 # >> | SuperBeber-muaqua2023-20231029_164245     |
