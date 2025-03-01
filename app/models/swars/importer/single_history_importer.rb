@@ -5,10 +5,7 @@ module Swars
     class SingleHistoryImporter < Base
       def self.default_params
         {
-          :verbose                => Rails.env.development?,
-          :hard_crawl             => false, # true: 新しい対局が見つからなくても次のページに進む(遅いが過去の棋譜を落とせる)
-          :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
-          :bs_error_capture_fake  => false, # trueならわざと例外
+          :verbose => Rails.env.development?,
         }
       end
 
@@ -18,7 +15,6 @@ module Swars
 
       def call
         new_keys.each(&method(:import_process))
-        self
       end
 
       def hard_crawl
@@ -40,6 +36,7 @@ module Swars
             end
             if look_up_to_page_x > 1
               if hard_crawl
+                # 新しい対局が見つからなくても次のページに進む (遅いが過去の棋譜を落とせる)
               else
                 if history_box.new_keys.empty?
                   log_puts { "  BREAK (このページには新しい対局が見つからなかったので以降のページには新しい対局がないものと考えて終わる)" }

@@ -3,9 +3,8 @@ module Swars
   module Importer
     class FullHistoryImporter < Base
       def call
-        @hard_crawl = false
         HistoryAccessPatterns.each do |pattern|
-          @hard_crawl ||= SingleHistoryImporter.new(params.merge(pattern)).call.hard_crawl
+          SingleHistoryImporter.new(params.merge(pattern)).call
         end
         latest_crawl_timestamps_update
       end
@@ -18,7 +17,7 @@ module Swars
             Retryable.retryable(on: ActiveRecord::Deadlocked) do
               now = Time.current
               attrs = { soft_crawled_at: now }
-              if @hard_crawl
+              if hard_crawl
                 attrs[:hard_crawled_at] = now
               end
               user.update_columns(attrs)
@@ -31,6 +30,10 @@ module Swars
 
       def user
         @user ||= User[params[:user_key]]
+      end
+
+      def hard_crawl
+        params[:hard_crawl]
       end
     end
   end
