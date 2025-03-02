@@ -7,7 +7,7 @@
   .column.is-2
     .panel
       .panel-heading
-        | 本譜 ({{SB.honpu_log ? `手数:${SB.honpu_log.turn}` : `無`}})
+        | 本譜 ({{SB.honpu_log1 ? `手数:${SB.honpu_log1.turn}` : `無`}})
       a.panel-block.honpu_log_set(@click="SB.honpu_log_set") 作成
       a.panel-block.honpu_log_click_handle(@click="SB.honpu_log_click_handle") 開く
       a.panel-block.honpu_log_clear(@click="SB.honpu_log_clear") 削除

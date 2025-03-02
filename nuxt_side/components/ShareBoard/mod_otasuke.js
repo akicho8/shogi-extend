@@ -61,13 +61,13 @@ export const mod_otasuke = {
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log == null) {
+        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log1 == null) {
           message = "対局時計をセットしてから対局しよう"
           // icon = "play"
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log) {
+        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log1) {
           message = "検討する場合は順番設定も解除しよう"
           // icon = "play"
         }
