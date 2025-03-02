@@ -144,7 +144,8 @@ import { mod_give_up                       } from "./give_up/mod_give_up.js"
 import { mod_kifu_mail                     } from "./give_up/mod_kifu_mail.js"
 import { mod_battle_save                   } from "./give_up/mod_battle_save.js"
 
-import { mod_honpu                         } from "./honpu/mod_honpu.js"
+import { mod_honpu_core                         } from "./honpu/mod_honpu_core.js"
+import { mod_honpu_share                   } from "./honpu/mod_honpu_share.js"
 
 import { mod_odai_maker                    } from "./fes/mod_odai_maker.js"
 import { mod_client_vote                   } from "./fes/mod_client_vote.js"
@@ -225,7 +226,8 @@ export default {
     mod_back_to,
     mod_shortcut,
     mod_give_up,
-    mod_honpu,
+    mod_honpu_core,
+    mod_honpu_share,
     mod_badge,
     mod_badge_plus,
 

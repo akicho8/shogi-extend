@@ -74,6 +74,7 @@ export const mod_sfen_share = {
         this.illegal_modal_handle(params.illegal_names)
         this.think_mark_all_clear()                         // マークを消す
         this.al_add(params)
+        this.honpu_branch_setup(params)
         return
       }
 
@@ -150,6 +151,7 @@ export const mod_sfen_share = {
 
       this.ai_say_case_turn(params)
       this.al_add(params)
+      this.honpu_branch_setup(params)
     },
     from_user_name_valid(params) {
       if (this.development_p) {

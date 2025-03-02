@@ -68,7 +68,7 @@ export const mod_edit_mode = {
         this.current_sfen = this.edit_mode_sfen
         this.edit_mode_sfen = null
 
-        this.honpu_log_set()           // 読み込んだ棋譜を本譜とする
+        this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
         this.honpu_share()             // それを他の人に共有する
       }
       this.sp_mode = "play"
