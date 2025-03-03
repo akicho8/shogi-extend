@@ -8,8 +8,8 @@
     .panel-block 直近の指し手は本譜をなぞっている？ {{SB.honpu_branch_is_same_route_p}}
     .panel-block 直近の指し手は本譜から外れた？ {{SB.honpu_branch_exist_p}}
     a.panel-block.honpu_main_setup(@click="SB.honpu_main_setup") 作成
-    a.panel-block.honpu_jump_click_handle(@click="SB.honpu_jump_click_handle") 開く
-    a.panel-block.honpu_clear(@click="SB.honpu_clear") 削除
+    a.panel-block.honpu_open_click_handle(@click="SB.honpu_open_click_handle") 開く
+    a.panel-block.honpu_all_clear(@click="SB.honpu_all_clear") 削除
 
   //-   a.panel-block(@click="SB.think_mark_toggle_button_click_handle") 切り替え
   //-   a.panel-block(@click="SB.think_mark_all_clear") 全消し

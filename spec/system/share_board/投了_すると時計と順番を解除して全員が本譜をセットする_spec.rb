@@ -18,11 +18,11 @@ RSpec.describe type: :system, share_board_spec: true do
       clock_start
       give_up_run
       assert_order_off_and_clock_stop # 順番がOFFになり、時計はSTOPになる
-      assert_honpu_link_on         # 本譜のリンクがある
+      assert_honpu_open_on         # 本譜のリンクがある
     end
     b_block do
       assert_order_off_and_clock_stop # bob 側も同様の状態になっている
-      assert_honpu_link_on         # 本譜のリンクがある
+      assert_honpu_open_on         # 本譜のリンクがある
     end
   end
 end

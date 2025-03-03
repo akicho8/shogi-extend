@@ -110,12 +110,20 @@ module SharedMethods
     find(".AnySourceReadModal .submit_handle").click
   end
 
-  def assert_honpu_link_on
-    assert_selector(".SbNavbar a", text: "本譜", exact_text: true, wait: 10)
+  def assert_honpu_open_on
+    assert_selector(".SbNavbar .honpu_open_button", wait: 10)
   end
 
-  def assert_honpu_link_off
-    assert_no_selector(".SbNavbar a", text: "本譜", exact_text: true)
+  def assert_honpu_open_off
+    assert_no_selector(".SbNavbar .honpu_open_button")
+  end
+
+  def assert_honpu_return_on
+    assert_selector(".SbNavbar .honpu_return_button", wait: 10)
+  end
+
+  def assert_honpu_return_off
+    assert_no_selector(".SbNavbar .honpu_return_button")
   end
 
   # 「投了」を押してモーダルを表示する

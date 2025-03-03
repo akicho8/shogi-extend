@@ -36,9 +36,8 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
-    SbHonpuButton
-
   template(slot="end")
+    SbHonpuButton
 
     SbThinkMarkToggleButton
 

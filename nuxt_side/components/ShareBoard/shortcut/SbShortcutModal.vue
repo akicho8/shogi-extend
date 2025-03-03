@@ -46,6 +46,10 @@
         td
           b-tag(type="is-primary") ⇧ Click
       tr
+        th 本譜に戻る
+        td
+          b-tag(type="is-primary") z
+      tr
         th 設定
         td
           b-tag(type="is-primary") ,

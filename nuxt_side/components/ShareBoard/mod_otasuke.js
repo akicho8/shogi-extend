@@ -74,7 +74,7 @@ export const mod_otasuke = {
       }
 
       // if (message == null) {
-      //   if (this.ac_room && this.honpu_jump_button_show_p && this.current_turn >= 1) {
+      //   if (this.ac_room && this.honpu_open_button_show_p && this.current_turn >= 1) {
       //     message = "初期配置に戻そう"
       //     icon = "play"
       //   }

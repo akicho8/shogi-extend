@@ -2,6 +2,7 @@ export const mod_share_data = {
   methods: {
     // 他者からの受信を自分に反映する
     share_data_receive(params) {
+      this.tl_add("全共有", "他者からの受信を自分に反映する", params)
       this.title_share_data_receive(params.title_share_data)
       this.badge_share_data_receive(params.badge_share_data)
       this.sfen_share_data_receive(params.sfen_share_data)

@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/helper"
 
 RSpec.describe type: :system, share_board_spec: true do
   it do

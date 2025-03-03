@@ -64,7 +64,7 @@ export const mod_order_main = {
       // 順番設定ONのタイミングで本譜を消す
       // これは投了せずに対局を終了した人が前の対局の本譜を参照して混乱しているのを見かけたために入れてある
       if (this.order_enable_p) {
-        this.honpu_clear()
+        this.honpu_all_clear()
       }
 
       if (params.message) {

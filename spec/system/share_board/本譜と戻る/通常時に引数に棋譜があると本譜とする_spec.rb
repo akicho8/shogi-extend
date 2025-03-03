@@ -1,9 +1,9 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/helper"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "body" do
     visit_app(body: "position startpos")
-    assert_honpu_link_on
+    assert_honpu_open_on
   end
 
   it "ただし合言葉がある場合は登録しない" do
@@ -13,6 +13,6 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "xbody" do
     visit_app(xbody: SafeSfen.encode("position startpos"))
-    assert_honpu_link_on
+    assert_honpu_open_on
   end
 end
