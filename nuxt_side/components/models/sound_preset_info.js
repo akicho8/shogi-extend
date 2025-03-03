@@ -5,6 +5,17 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class SoundPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
+      // BGM系
+      { key: "bgm_opening1",  name: "開始BGM1", source: require("@/assets/bgm/bgm_opening1.mp3"), volume: 0.30, },
+      { key: "bgm_ending1",   name: "終局BGM1", source: require("@/assets/bgm/bgm_ending1.mp3"),  volume: 0.30, },
+      { key: "bgm_ending2",   name: "終局BGM2", source: require("@/assets/bgm/bgm_ending2.mp3"),  volume: 0.60, },
+      { key: "bgm_ending3",   name: "終局BGM3", source: require("@/assets/bgm/bgm_ending3.mp3"),  volume: 0.40, },
+      { key: "bgm_ending4",   name: "終局BGM4", source: require("@/assets/bgm/bgm_ending4.mp3"),  volume: 0.30, },
+      { key: "bgm_ending5",   name: "終局BGM5", source: require("@/assets/bgm/bgm_ending5.mp3"),  volume: 0.40, },
+      { key: "bgm_ending6",   name: "終局BGM6", source: require("@/assets/bgm/bgm_ending6.mp3"),  volume: 0.30, },
+
+      ////////////////////////////////////////////////////////////////////////////////
+
       // 基本UI
       { key: "se_click",                      name: "クリック",                 source: require("@/assets/SND01_sine/tap_03.wav"),          volume: 0.3, },
       { key: "se_toggle_on",                  name: "トグルON",                 source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.2, },
@@ -37,21 +48,14 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "lose",          name: "負け",                                     source: require("@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"),                                           volume: 0.40, },
       { key: "win",           name: "勝ち",                                     source: require("@/static/sound_effect/soundeffect_lab/kansei.mp3"),                                             volume: 0.20, },
 
-      // { key: "bgm_battle_start",                                             source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo1",   name: "終局BGM1",                           source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo2",   name: "終局BGM2",                           source: require("@/assets/bgm/bgm2.mp3"),       volume: 0.50, },
-      { key: "bgm_battle_toryo3",   name: "終局BGM3",                           source: require("@/assets/bgm/bgm3.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo4",   name: "終局BGM4",                           source: require("@/assets/bgm/bgm4.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo5",   name: "終局BGM5",                           source: require("@/assets/bgm/bgm5.mp3"),       volume: 0.30, },
-
       { key: "se_pon",  name: "ポン",                                           source: require("@/assets/USF/CARTOON/POP_Mouth_mono.wav"),                                         volume: 0.40, },
       { key: "se_poon", name: "綺麗なポォーン",                                 source: require("@/assets/USF/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"), volume: 0.10, },
 
-      { key: "deden",                                                           source: require("@/static/sound_effect/soundeffect_lab/deden.mp3"),                    volume: 0.20, },
-      { key: "pipopipo",                                                        source: require("@/static/sound_effect/soundeffect_lab/pipopipo.mp3"),                 volume: 0.20, },
+      { key: "se_deden",    name: "デデン",                                     source: require("@/static/sound_effect/soundeffect_lab/deden.mp3"),                    volume: 0.30, },
+      { key: "se_pipopipo", name: "ピポピポピポン",                             source: require("@/static/sound_effect/soundeffect_lab/pipopipo.mp3"),                 volume: 0.20, },
       { key: "correct",                                                         source: require("@/static/sound_effect/oto_logic/Quiz-Correct_Answer02-1.mp3"),        volume: 0.20, },
       { key: "mistake",                                                         source: require("@/static/sound_effect/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"),          volume: 0.20, },
-      { key: "timeout",                                                         source: require("@/static/sound_effect/soundeffect_lab/bubuu.mp3"),                    volume: 0.20, },
+      { key: "se_bubuu",  name: "ブブー",                                       source: require("@/static/sound_effect/soundeffect_lab/bubuu.mp3"),                    volume: 0.20, },
       { key: "draw",                                                            source: require("@/static/sound_effect/soundeffect_lab/stupid5.mp3"),                  volume: 0.20, },
       { key: "new_challenge",                                                   source: require("@/static/sound_effect/soundeffect_lab/decision5.mp3"),                volume: 0.30, },
       { key: "notify",                                                          source: require("@/static/sound_effect/soundeffect_lab/decision29.mp3"),               volume: 0.30, },
@@ -81,10 +85,10 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_think_mark_at_cell_off",                                    source: require("@/assets/USF/8BIT/Hits_Bumps/8BIT_RETRO_Hit_Bump_Distorted_Tap_mono.wav"),                    volume: 0.10, },
       // { key: "se_think_mark_at_cell_off",                                    source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Zap_Fast_mono.wav"),                    volume: 0.30, },
 
-      // { key: "se_tebanjanainoni_sawaruna", name: "手番違い",                 source: require("@/assets/USF/ALARMS/Digital/ALARM_Short_Distorted_loop_stereo.wav"),                    volume: 0.30, },
+      // { key: "se_tebanjanainoni_sawanna", name: "手番違い",                 source: require("@/assets/USF/ALARMS/Digital/ALARM_Short_Distorted_loop_stereo.wav"),                    volume: 0.30, },
 
-      { key: "se_aitenokoma_ugokasouto_suna", name: "相手の駒を動かそうとした", source: require("@/assets/SND01_sine/disabled.wav"), volume: 0.3, },
-      { key: "se_tebanjanainoni_sawaruna",    name: "手番違い",                 source: require("@/assets/SND01_sine/disabled.wav"), volume: 0.3, },
+      { key: "se_aitenokoma_sawannna",       name: "相手の駒を動かそうとした", source: require("@/assets/SND01_sine/disabled.wav"), volume: 0.3, },
+      { key: "se_tebanjanainoni_sawanna",    name: "手番違い",                 source: require("@/assets/SND01_sine/disabled.wav"), volume: 0.3, },
 
       { key: "se_room_entry",                 name: "入室",                     source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Metal_Open_Creak_stereo.wav"), volume: 0.50, },
       { key: "se_room_leave",                 name: "退室",                     source: require("@/assets/USF/DOORS_GATES_DRAWERS/DOOR_Owen_Close_stereo.wav"),       volume: 0.50, },
@@ -93,7 +97,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "se_moo2",                       name: "牛2",                      source: require("@/assets/USF/ANIMALS/ANIMAL_Cow_Moo_02_mono.wav"), volume: 0.5, },
       { key: "se_moo3",                       name: "牛3",                      source: require("@/assets/USF/ANIMALS/ANIMAL_Cow_Moo_03_mono.wav"), volume: 0.5, },
 
-      { key: "se_niwatori",                   name: "にわとり (対局開始)",      source: require("@/assets/USF/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"), volume: 0.5, },
+      { key: "se_niwatori",                   name: "コケコッコー",             source: require("@/assets/USF/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"), volume: 0.5, },
 
       { key: "se_chat_message_receive",       name: "チャットの発言受信",       source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"), volume: 0.50, },
 

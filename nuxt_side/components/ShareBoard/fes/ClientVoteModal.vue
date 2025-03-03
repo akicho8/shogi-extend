@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title.is-flex-shrink-1
-      | どのチームに参加する？
+      | どっちのチームに参加する？
       template(v-if="SB.voted_result.already_vote_p(SB.user_name)")
         span.mx-1.has-text-grey.has-text-weight-normal
           | 投票済み
@@ -51,8 +51,8 @@ export default {
     },
     // このチームに参加する
     submit_handle() {
-      this.$sound.play_click()
       if (this.SB.voted_latest_index == null) {
+        this.$sound.play("se_bubuu")
         this.toast_warn("選択してから投票してください")
         return
       }

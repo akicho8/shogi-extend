@@ -424,7 +424,7 @@ export const mod_clock_box = {
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
         this.$sound.play("se_niwatori")
-        // this.$sound.play("bgm_battle_start")
+        Gs.delay_block(1.6, () => this.$sound.play("bgm_opening1"))
       }
     },
 
