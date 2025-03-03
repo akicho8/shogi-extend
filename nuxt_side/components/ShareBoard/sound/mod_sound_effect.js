@@ -51,7 +51,7 @@ export const mod_sound_effect = {
         // "bgm_ending3",
         "bgm_ending4",
         // "bgm_ending5",
-        "bgm_ending6",
+        // "bgm_ending6",
       ])
     },
 
