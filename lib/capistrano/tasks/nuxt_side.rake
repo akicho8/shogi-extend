@@ -60,7 +60,7 @@ namespace :nuxt_side do
         upload! "nuxt_side/static/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/robots.txt"
 
         within "#{release_path}/nuxt_side" do
-          execute :pnpm, "install --frozen-lockfile"
+          execute :pnpm, "install"
         end
         execute :ls, "-al #{release_path}/nuxt_side"
       end
