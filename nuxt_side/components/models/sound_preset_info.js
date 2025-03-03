@@ -5,6 +5,15 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class SoundPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
+      // BGM系
+      { key: "bgm_start1",    name: "開始BGM1", source: require("@/assets/bgm/bgm_start1.mp3"),  volume: 0.30, },
+      { key: "bgm_ending1",   name: "終局BGM1", source: require("@/assets/bgm/bgm_ending1.mp3"), volume: 0.30, },
+      { key: "bgm_ending2",   name: "終局BGM2", source: require("@/assets/bgm/bgm_ending2.mp3"), volume: 0.60, },
+      { key: "bgm_ending3",   name: "終局BGM3", source: require("@/assets/bgm/bgm_ending3.mp3"), volume: 0.40, },
+      { key: "bgm_ending4",   name: "終局BGM4", source: require("@/assets/bgm/bgm_ending4.mp3"), volume: 0.30, },
+      { key: "bgm_ending5",   name: "終局BGM5", source: require("@/assets/bgm/bgm_ending5.mp3"), volume: 0.40, },
+      { key: "bgm_ending6",   name: "終局BGM6", source: require("@/assets/bgm/bgm_ending6.mp3"), volume: 0.30, },
+
       // 基本UI
       { key: "se_click",                      name: "クリック",                 source: require("@/assets/SND01_sine/tap_03.wav"),          volume: 0.3, },
       { key: "se_toggle_on",                  name: "トグルON",                 source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.2, },
@@ -36,13 +45,6 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "start",         name: "開始",                                     source: require("@/static/sound_effect/oto_logic/Quiz-Question03-1.mp3"),                                        volume: 0.15, },
       { key: "lose",          name: "負け",                                     source: require("@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"),                                           volume: 0.40, },
       { key: "win",           name: "勝ち",                                     source: require("@/static/sound_effect/soundeffect_lab/kansei.mp3"),                                             volume: 0.20, },
-
-      // { key: "bgm_battle_start",                                             source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo1",   name: "終局BGM1",                           source: require("@/assets/bgm/bgm1.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo2",   name: "終局BGM2",                           source: require("@/assets/bgm/bgm2.mp3"),       volume: 0.50, },
-      { key: "bgm_battle_toryo3",   name: "終局BGM3",                           source: require("@/assets/bgm/bgm3.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo4",   name: "終局BGM4",                           source: require("@/assets/bgm/bgm4.mp3"),       volume: 0.30, },
-      { key: "bgm_battle_toryo5",   name: "終局BGM5",                           source: require("@/assets/bgm/bgm5.mp3"),       volume: 0.30, },
 
       { key: "se_pon",  name: "ポン",                                           source: require("@/assets/USF/CARTOON/POP_Mouth_mono.wav"),                                         volume: 0.40, },
       { key: "se_poon", name: "綺麗なポォーン",                                 source: require("@/assets/USF/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"), volume: 0.10, },
@@ -99,6 +101,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       // { key: "se_ping",                    name: "PING",                     source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_01_mono.wav"), volume: 0.50, },
       // { key: "se_pong",                    name: "PONG",                     source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_02_mono.wav"), volume: 0.50, },
+
     ]
   }
 }
