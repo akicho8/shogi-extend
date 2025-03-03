@@ -61,20 +61,20 @@ export const mod_otasuke = {
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log == null) {
+        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main == null) {
           message = "対局時計をセットしてから対局しよう"
           // icon = "play"
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log) {
+        if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main) {
           message = "検討する場合は順番設定も解除しよう"
           // icon = "play"
         }
       }
 
       // if (message == null) {
-      //   if (this.ac_room && this.honpu_button_show_p && this.current_turn >= 1) {
+      //   if (this.ac_room && this.honpu_jump_button_show_p && this.current_turn >= 1) {
       //     message = "初期配置に戻そう"
       //     icon = "play"
       //   }

@@ -64,19 +64,7 @@ export const mod_sfen_share = {
 
     // 指し手の配信
     sfen_share() {
-      if (this.ac_room) { // ac_room が有効でないときに rs_sfen_share_after_hook を呼ばないようにするため
-        this.rs_send_success_p = false // 数ms後に相手から応答があると true になる
-        const params = {
-          ...this.sfen_share_params,
-          rs_failed_count: this.rs_failed_count, // 1以上:再送回数
-        }
-        if (this.rs_failed_count >= 1) {
-          params.label = `再送${this.rs_failed_count}`
-          params.label_type = "is-warning"
-        }
-        this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
-        this.rs_sfen_share_after_hook()
-      } else {
+      if (this.ac_room == null) {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
         const params = {
@@ -86,7 +74,21 @@ export const mod_sfen_share = {
         this.illegal_modal_handle(params.illegal_names)
         this.think_mark_all_clear()                         // マークを消す
         this.al_add(params)
+        this.honpu_branch_setup(params)
+        return
       }
+
+      this.rs_send_success_p = false // 数ms後に相手から応答があると true になる
+      const params = {
+        ...this.sfen_share_params,
+        rs_failed_count: this.rs_failed_count, // 1以上:再送回数
+      }
+      if (this.rs_failed_count >= 1) {
+        params.label = `再送${this.rs_failed_count}`
+        params.label_type = "is-warning"
+      }
+      this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
+      this.rs_sfen_share_after_hook()  // もちろん ac_room が有効でないときは呼ばない
     },
 
     // 指し手を受信
@@ -149,6 +151,7 @@ export const mod_sfen_share = {
 
       this.ai_say_case_turn(params)
       this.al_add(params)
+      this.honpu_branch_setup(params)
     },
     from_user_name_valid(params) {
       if (this.development_p) {

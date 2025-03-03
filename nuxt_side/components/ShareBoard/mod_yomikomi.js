@@ -68,7 +68,7 @@ export const mod_yomikomi = {
 
           this.current_sfen = e.body
           this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-          this.honpu_log_set()           // 読み込んだ棋譜を本譜とする
+          this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
           this.honpu_share()             // それを他の人に共有する
 
           this.viewpoint = "black"

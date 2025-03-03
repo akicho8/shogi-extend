@@ -67,7 +67,7 @@ export const mod_give_up = {
     },
     give_up_share_broadcasted(params) {
       this.al_add({...params, label: "投了", label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
-      this.honpu_log_set()                    // 本譜を作る。すでにあれば上書き
+      this.honpu_main_setup()                    // 本譜を作る。すでにあれば上書き
       this.give_up_modal_close()              // もし味方が投了しようとしていればモーダルを閉じる
 
       // 投了を押した本人が時計と順番を解除する

@@ -103,7 +103,6 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       // { key: "se_ping",                    name: "PING",                     source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_01_mono.wav"), volume: 0.50, },
       // { key: "se_pong",                    name: "PONG",                     source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_02_mono.wav"), volume: 0.50, },
-
     ]
   }
 }

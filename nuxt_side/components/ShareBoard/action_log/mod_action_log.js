@@ -97,6 +97,8 @@ export const mod_action_log = {
       this.current_sfen = action_log.sfen
       this.current_turn = action_log.turn
 
+      this.honpu_branch_clear()
+
       if (this.ac_room) {
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が戻した局面を転送しました`))
       }

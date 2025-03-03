@@ -36,11 +36,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
-    template(v-if="SB.honpu_button_show_p")
-      b-navbar-item.has-text-weight-bold(tag="div")
-        .buttons
-          a.button.honpu_log_click_handle(@click="SB.honpu_log_click_handle" :class="SB.appearance_theme_info.navibar_button_color")
-            | 本譜
+    SbHonpuButton
 
   template(slot="end")
 
