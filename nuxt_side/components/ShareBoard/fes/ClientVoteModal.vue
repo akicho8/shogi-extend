@@ -51,8 +51,8 @@ export default {
     },
     // このチームに参加する
     submit_handle() {
-      this.$sound.play_click()
       if (this.SB.voted_latest_index == null) {
+        this.$sound.play("se_bubuu")
         this.toast_warn("選択してから投票してください")
         return
       }
