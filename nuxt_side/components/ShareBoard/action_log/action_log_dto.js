@@ -20,7 +20,7 @@ export class ActionLogDto {
   }
 
   get modal_title_or_default() {
-    return this.modal_title ?? "履歴"
+    return this.modal_title ?? "局面"
   }
 
   // private
