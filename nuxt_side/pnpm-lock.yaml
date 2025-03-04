@@ -3050,7 +3050,7 @@ packages:
   /@types/sax@1.2.7:
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
     dependencies:
-      '@types/node': 12.20.55
+      '@types/node': 22.13.9
     dev: false
 
   /@types/source-list-map@0.1.6:
