@@ -52,10 +52,14 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".KifCopyButton").click           # 「コピー」
       assert_action_text("棋譜コピー")
 
-      find(".KentoButton").click             # 「KENTO」
+      return_to_current_window do
+        find(".KentoButton").click             # 「KENTO」
+      end
       assert_action_text("KENTO起動")
 
-      find(".PiyoShogiButton").click         # 「ぴよ将棋」
+      return_to_current_window do
+        find(".PiyoShogiButton").click         # 「ぴよ将棋」
+      end
       assert_action_text("ぴよ将棋起動")
 
       find(".current_url_copy_handle").click # 「リンク」

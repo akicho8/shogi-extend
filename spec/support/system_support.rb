@@ -31,6 +31,16 @@ module Capybara::DSL
   def window_max
     current_window.maximize
   end
+
+  def return_to_current_window(&block)
+    window = current_window
+    begin
+      yield
+    ensure
+      switch_to_window(window)
+    end
+  end
+
   #
   # def confirm_function_kill!
   #   execute_script("window.confirm = () => true")
