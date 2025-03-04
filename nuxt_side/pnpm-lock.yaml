@@ -132,7 +132,7 @@ devDependencies:
     version: 7.0.0
   shogi-player:
     specifier: github:akicho8/shogi-player#develop
-    version: github.com/akicho8/shogi-player/578ed28587cb26a98af987a8f02b23abf5d9871c
+    version: github.com/akicho8/shogi-player/ba2497119a92cda7106841ab21e8249512eb29d0
 
 packages:
 
@@ -1408,7 +1408,7 @@ packages:
     resolution: {integrity: sha512-5EVjbTegqN7RSJle6hMWYxO4voo4rI+9krITk+DWR+diJgGrjZjrIBnJhjrHYYQsFgI7j1w1QnrvV7YSKBfYGg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      core-js-pure: 3.40.0
+      core-js-pure: 3.41.0
       regenerator-runtime: 0.14.1
     dev: true
 
@@ -4165,11 +4165,22 @@ packages:
       webpack: 4.46.0
     dev: false
 
+  /call-async@2.4.1:
+    resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
+    engines: {node: '>=0.12.0'}
+    dev: false
+
   /call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
     dependencies:
       function-bind: 1.1.1
       get-intrinsic: 1.2.1
+    dev: false
+
+  /call-queue@1.0.3:
+    resolution: {integrity: sha512-ntymy489o0/QQplUDnpYAYUsO50K9SBrIVaKCWDOJzYJts0f9WH9RFJkyagebkw5+y1oi00R7ynNW/d12GBumg==}
+    dependencies:
+      aproba: 1.2.0
     dev: false
 
   /callsites@3.1.0:
@@ -4755,11 +4766,12 @@ packages:
     resolution: {integrity: sha512-f2domd9fsVDFtaFcbaRZuYXwtdmnzqbADSwhSWYxYB/Q8zsdUUFMXVRwXGDMWmbEzAn1kdRrtI1T/KTFOL4X2A==}
     dependencies:
       aproba: 1.2.0
+      call-queue: 1.0.3
       fs-write-stream-atomic: 1.0.10
       iferr: 0.1.5
       mkdirp: 0.5.6
       rimraf: 2.7.1
-      call-queue: 1.0.3
+      run-queue: 1.0.3
     dev: false
 
   /copy-descriptor@0.1.1:
@@ -4773,8 +4785,8 @@ packages:
       browserslist: 4.21.7
     dev: false
 
-  /core-js-pure@3.40.0:
-    resolution: {integrity: sha512-AtDzVIgRrmRKQai62yuSIN5vNiQjcJakJb4fbhVw3ehxx7Lohphvw9SGNWKhLFqSxC4ilD0g/L1huAYFQU3Q6A==}
+  /core-js-pure@3.41.0:
+    resolution: {integrity: sha512-71Gzp96T9YPk63aUvE5Q5qP+DryB4ZloUZPSOebGM88VNw8VNfvdA7z6kGA8iGOTEzAomsRidp4jXSmUIJsL+Q==}
     requiresBuild: true
     dev: true
 
@@ -5593,6 +5605,7 @@ packages:
       is-stream: 2.0.1
       merge-stream: 2.0.0
       npm-call-path: 4.0.1
+      npm-run-path: 4.0.1
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
@@ -5608,6 +5621,7 @@ packages:
       is-stream: 2.0.1
       merge-stream: 2.0.0
       npm-call-path: 4.0.1
+      npm-run-path: 4.0.1
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
@@ -6603,6 +6617,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       ansi-escapes: 4.3.2
+      call-async: 2.4.1
       chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-width: 3.0.0
@@ -6610,7 +6625,7 @@ packages:
       figures: 3.2.0
       lodash: 4.17.21
       mute-stream: 0.0.8
-      call-async: 2.4.1
+      run-async: 2.4.1
       rxjs: 6.6.7
       string-width: 4.2.3
       strip-ansi: 6.0.1
@@ -8143,11 +8158,12 @@ packages:
     resolution: {integrity: sha512-hdrFxZOycD/g6A6SoI2bB5NA/5NEqD0569+S47WZhPvm46sD50ZHdYaFmnua5lndde9rCHGjmfK7Z8BuCt/PcQ==}
     dependencies:
       aproba: 1.2.0
+      call-queue: 1.0.3
       copy-concurrently: 1.0.5
       fs-write-stream-atomic: 1.0.10
       mkdirp: 0.5.6
       rimraf: 2.7.1
-      call-queue: 1.0.3
+      run-queue: 1.0.3
     dev: false
 
   /mrmime@1.0.1:
@@ -8416,6 +8432,12 @@ packages:
     dev: false
 
   /npm-call-path@4.0.1:
+    resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
+    engines: {node: '>=8'}
+    dependencies:
+      path-key: 3.1.1
+
+  /npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
     dependencies:
@@ -10266,18 +10288,18 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /call-async@2.4.1:
+  /run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
     engines: {node: '>=0.12.0'}
     dev: false
 
-  /call-parallel@1.2.0:
+  /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
       queue-microtask: 1.2.3
     dev: false
 
-  /call-queue@1.0.3:
+  /run-queue@1.0.3:
     resolution: {integrity: sha512-ntymy489o0/QQplUDnpYAYUsO50K9SBrIVaKCWDOJzYJts0f9WH9RFJkyagebkw5+y1oi00R7ynNW/d12GBumg==}
     dependencies:
       aproba: 1.2.0
@@ -12234,8 +12256,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  github.com/akicho8/shogi-player/578ed28587cb26a98af987a8f02b23abf5d9871c:
-    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/578ed28587cb26a98af987a8f02b23abf5d9871c}
+  github.com/akicho8/shogi-player/ba2497119a92cda7106841ab21e8249512eb29d0:
+    resolution: {tarball: https://codeload.github.com/akicho8/shogi-player/tar.gz/ba2497119a92cda7106841ab21e8249512eb29d0}
     name: shogi-player
     version: 1.1.20
     dependencies:
