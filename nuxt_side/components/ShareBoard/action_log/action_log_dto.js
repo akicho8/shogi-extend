@@ -19,6 +19,10 @@ export class ActionLogDto {
     return TimeUtil.format_hhmmss(this.performed_at)
   }
 
+  get modal_title_or_default() {
+    return this.modal_title ?? "履歴"
+  }
+
   // private
 
   unique_key_generate() {

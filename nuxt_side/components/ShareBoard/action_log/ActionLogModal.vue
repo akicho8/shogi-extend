@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{modal_title}} \#{{new_turn}}
+      | {{action_log.modal_title_or_default}} \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -96,9 +96,6 @@ export default {
   computed: {
     current_format_type_info() {
       return this.SB.FormatTypeInfo.fetch("kif_utf8")
-    },
-    modal_title() {
-      return this.action_log.modal_title ?? "履歴"
     },
   },
 }
