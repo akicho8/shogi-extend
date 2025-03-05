@@ -14,5 +14,6 @@ ncu /js-memory-record/ -u
 # 更新するとやばいもの
 # ncu /chart/ -u
 # ncu /pug/ -u
+# pnpm i
 
-pnpm i
+npm install

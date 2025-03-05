@@ -7,9 +7,9 @@ task "spec" do
   Rake::Task["jest"].invoke
 end
 
-# rake nuxt_side:pnpm:reset
 namespace :nuxt_side do
   namespace :pnpm do
+    # rake nuxt_side:pnpm:reset
     desc "pnpm で nuxt_side/node_modules を作り直す"
     task :reset do
       system "rm -rf $(pnpm store path)" # rm -rf /Users/ikeda/Library/pnpm/store/v3
@@ -19,6 +19,7 @@ namespace :nuxt_side do
   end
 
   namespace :npm do
+    # rake nuxt_side:npm:reset
     desc "npm で nuxt_side/node_modules を作り直す"
     task :reset do
       system "cd nuxt_side && rm -fr node_modules && npm install"

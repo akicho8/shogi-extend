@@ -6,7 +6,7 @@ namespace :shogi_player do
 
   namespace :install do
     def install_shogi_player(version)
-      cmd = "(cd ~/src/shogi-extend/nuxt_side; pnpm remove shogi-player; pnpm add #{version}; pnpm run clean)"
+      cmd = "(cd ~/src/shogi-extend/nuxt_side; npm remove shogi-player; npm i -D #{version}; npm run clean)"
       puts cmd
       system cmd
     end
