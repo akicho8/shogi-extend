@@ -7,6 +7,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
     return [
       // BGM系
       { key: "bgm_opening1",  name: "開始BGM1", source: require("@/assets/bgm/bgm_opening1.mp3"), volume: 0.30, },
+      { key: "bgm_opening2",  name: "開始BGM2", source: require("@/assets/bgm/bgm_opening2.mp3"), volume: 0.30, },
       { key: "bgm_ending1",   name: "終局BGM1", source: require("@/assets/bgm/bgm_ending1.mp3"),  volume: 0.30, },
       { key: "bgm_ending2",   name: "終局BGM2", source: require("@/assets/bgm/bgm_ending2.mp3"),  volume: 0.60, },
       { key: "bgm_ending3",   name: "終局BGM3", source: require("@/assets/bgm/bgm_ending3.mp3"),  volume: 0.40, },
