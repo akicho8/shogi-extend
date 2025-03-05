@@ -1,3 +1,4 @@
+
 namespace :shogi_player do
   desc "パッケージ版"
   task :install do
@@ -6,11 +7,12 @@ namespace :shogi_player do
 
   namespace :install do
     def install_shogi_player(version)
-      cmd = "(cd ~/src/shogi-extend/nuxt_side; npm remove shogi-player; npm i -D #{version}; npm run clean)"
+      cmd = "(cd ~/src/shogi-extend/nuxt_side; npm remove shogi-player; npm install #{version}; npm run clean)"
       puts cmd
       system cmd
     end
 
+    # rake shogi_player:install:develop
     desc "開発版"
     task :develop do
       install_shogi_player("github:akicho8/shogi-player#develop")
