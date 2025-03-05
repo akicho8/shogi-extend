@@ -31,7 +31,7 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import Vue from 'vue'
-const QueryString = require("query-string")
+import QueryString from "query-string"
 import isMobile from "ismobilejs"
 
 import { mod_value_type  } from "./mod_value_type.js"

@@ -1,6 +1,6 @@
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export class AnyLinkCreator {
   static url_for(...args) {

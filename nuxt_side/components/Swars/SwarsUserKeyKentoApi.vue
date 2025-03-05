@@ -25,7 +25,7 @@ client-only
 </template>
 
 <script>
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export default {
   name: "SwarsUserKeyKentoApi",

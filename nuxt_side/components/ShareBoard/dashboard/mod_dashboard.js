@@ -1,4 +1,4 @@
-const QueryString = require("query-string")
+import QueryString from "query-string"
 import SbDashboardModal from "./SbDashboardModal.vue"
 
 export const mod_dashboard = {

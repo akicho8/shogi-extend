@@ -5,7 +5,7 @@ import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 const TinyURL = require("tinyurl")
 import _ from "lodash"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 const OWN_SHORTENED_URL_FUNCTION = true // 自前の短縮URL機能を使うか？
 

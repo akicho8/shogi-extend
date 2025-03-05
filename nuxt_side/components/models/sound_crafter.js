@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "development") {
 
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export const SoundCrafter = {
   play(key, options = {}) {

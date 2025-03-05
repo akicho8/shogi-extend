@@ -64,7 +64,7 @@ import { mod_chore      } from "./mod_chore.js"
 import { mod_sidebar    } from "./mod_sidebar.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 import _ from "lodash"
 

@@ -1,7 +1,7 @@
 import { Gs } from "@/components/models/gs.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export const mod_chore = {
   methods: {

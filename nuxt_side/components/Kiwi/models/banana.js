@@ -1,7 +1,7 @@
 import { Model } from "./model.js"
 import { Lemon } from "./lemon.js"
 import { FolderInfo } from "./folder_info.js"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export class Banana extends Model {
   constructor(context, attributes) {

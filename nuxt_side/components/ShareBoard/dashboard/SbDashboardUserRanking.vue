@@ -26,7 +26,7 @@
 </template>
 
 <script>
-const QueryString = require("query-string")
+import QueryString from "query-string"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"

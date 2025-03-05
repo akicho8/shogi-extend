@@ -89,7 +89,7 @@ import { SceneInfo } from "../models/scene_info.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export default {
   name: "SwarsBattleShowApp",

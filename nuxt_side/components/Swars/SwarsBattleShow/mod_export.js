@@ -11,7 +11,7 @@
 
 import _ from "lodash"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export const mod_export = {
   methods: {

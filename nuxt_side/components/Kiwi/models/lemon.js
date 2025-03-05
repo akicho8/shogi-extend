@@ -4,7 +4,7 @@ import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"
 import dayjs from "dayjs"
 import _ from "lodash"
-const QueryString = require("query-string")
+import QueryString from "query-string"
 
 export class Lemon extends Model {
   get status_info() {
