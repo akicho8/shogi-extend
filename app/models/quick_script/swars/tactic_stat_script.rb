@@ -195,7 +195,7 @@ module QuickScript
       def current_agg
         @current_agg ||= aggregated_all[:period_based_agg].fetch(period_info.key)
       end
-      
+
       ################################################################################
 
       def chart_bar_max
@@ -249,7 +249,7 @@ module QuickScript
       def period_info
         PeriodInfo.fetch(period_key)
       end
-      
+
       ################################################################################
 
       def freq_count_gteq
