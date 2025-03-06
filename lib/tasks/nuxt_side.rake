@@ -24,5 +24,11 @@ namespace :nuxt_side do
     task :reset do
       system "cd nuxt_side && rm -fr node_modules && npm install"
     end
+
+    # rake nuxt_side:npm:update
+    desc "更新できるパッケージを確認する"
+    task :update do
+      system "cd nuxt_side && npx npm-check -u"
+    end
   end
 end
