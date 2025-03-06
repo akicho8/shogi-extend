@@ -51,22 +51,23 @@ module BattleDecorator
     #   str = player_name_for(location_info)
     # end
     def battle_result_str
-      str = heavy_parsed_info.formatter.judgment_message
-      str = str.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
-      str = str.remove(/^まで/)
+      if str = heavy_parsed_info.formatter.judgment_message # "まで55手で先手の勝ち"
+        str = str.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
+        str = str.remove(/^まで/)
 
-      if true
-        # 「先手」を実際の名前に置き換える場合
-        LocationInfo.each do |location_info|
-          if name = player_name_for(location_info).presence
-            # grade = grade_name_for(location_info) # FreeBattle の場合、常に空なので意味ない
-            grade = nil
-            str = str.gsub(/#{location_info.call_names.join("|")}/, " #{grade}#{name} ")
+        if true
+          # 「先手」を実際の名前に置き換える場合
+          LocationInfo.each do |location_info|
+            if name = player_name_for(location_info).presence
+              # grade = grade_name_for(location_info) # FreeBattle の場合、常に空なので意味ない
+              grade = nil
+              str = str.gsub(/#{location_info.call_names.join("|")}/, " #{grade}#{name} ")
+            end
           end
         end
-      end
 
-      str
+        str
+      end
     end
 
     def total_seconds_for(location_info)
