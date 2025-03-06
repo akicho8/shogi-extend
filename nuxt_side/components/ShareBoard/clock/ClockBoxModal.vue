@@ -56,7 +56,7 @@
         template(v-if="instance.pause_or_play_p && !instance.timer")
           b-button.resume_button(@click="resume_handle" icon-left="play-pause")
         template(v-if="!instance.pause_or_play_p")
-          b-button.play_button(@click="play_handle" icon-left="play") 対局開始
+          b-button.play_button(@click="play_handle" icon-left="play")
 </template>
 
 <script>
