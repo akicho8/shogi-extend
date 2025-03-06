@@ -1,5 +1,5 @@
 import _ from "lodash"
-const NodeEmoji = require("node-emoji")
+import NodeEmoji from "node-emoji"
 import { Gs } from "@/components/models/gs.js"
 
 const CLEAN_TRY_COUNT = 2
