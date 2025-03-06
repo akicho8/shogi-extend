@@ -1,6 +1,7 @@
 module QuickScript
   module Swars
     OrderedIndex = [
+      SprintStatScript,
       SearchScript,
       CrossSearchScript,
       CrawlerBatchScript,

@@ -12,6 +12,13 @@ module Assertion
     end
   end
 
+  def assert_imode_key(imode_key)
+    if Rails.env.local?
+      assert_symbol(imode_key)
+      Swars::ImodeInfo.fetch(imode_key)
+    end
+  end
+
   def assert_xmode_key(xmode_key)
     if Rails.env.local?
       assert_symbol(xmode_key)
