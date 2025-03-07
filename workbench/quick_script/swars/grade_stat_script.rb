@@ -1,5 +1,5 @@
 require "./setup"
-QuickScript::Swars::GradeStatScript.primary_aggregate_run
+QuickScript::Swars::GradeStatScript.primary_aggregate_call
 
 # Swars::Membership.in_batches do |e|
 #   c = 0

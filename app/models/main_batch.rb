@@ -29,8 +29,8 @@ class MainBatch
     AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
 
     # 集計
-    QuickScript::Swars::GradeStatScript.primary_aggregate_run
-    QuickScript::Swars::TacticStatScript.primary_aggregate_run
+    QuickScript::Swars::GradeStatScript.primary_aggregate_call
+    QuickScript::Swars::TacticStatScript.primary_aggregate_call
 
     # チェック
     Swars::SystemValidator.new.call

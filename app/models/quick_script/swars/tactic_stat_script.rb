@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 #
 # 一次集計
-# QuickScript::Swars::TacticStatScript.primary_aggregate_run
+# QuickScript::Swars::TacticStatScript.primary_aggregate_call
 #
 module QuickScript
   module Swars
@@ -15,7 +15,7 @@ module QuickScript
       FREQ_RATIO_GTEQ_DEFAULT = 0.03
 
       class << self
-        def primary_aggregate_run(options = {})
+        def primary_aggregate_call(options = {})
           AggregateCache[name].write PrimaryAggregator.new(options).call
         end
       end

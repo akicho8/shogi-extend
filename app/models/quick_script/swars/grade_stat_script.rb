@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 #
 # 一次集計
-# QuickScript::Swars::GradeStatScript.primary_aggregate_run
+# QuickScript::Swars::GradeStatScript.primary_aggregate_call
 #
 module QuickScript
   module Swars
@@ -12,7 +12,7 @@ module QuickScript
       self.button_label = "集計"
 
       class << self
-        def primary_aggregate_run(options = {})
+        def primary_aggregate_call(options = {})
           AggregateCache[name].write PrimaryAggregator.new(options).call
         end
       end

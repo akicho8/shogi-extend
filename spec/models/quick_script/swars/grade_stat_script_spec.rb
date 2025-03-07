@@ -11,7 +11,7 @@ module QuickScript
 
       it "works" do
         GradeStatScript::PrimaryAggregator.mock_setup
-        GradeStatScript.primary_aggregate_run
+        GradeStatScript.primary_aggregate_call
 
         assert { case1({}) == 2 }
         assert { case1(tag: "居飛車") == 2 }

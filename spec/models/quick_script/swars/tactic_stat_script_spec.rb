@@ -11,7 +11,7 @@ module QuickScript
 
       it "works" do
         TacticStatScript::PrimaryAggregator.mock_setup
-        TacticStatScript.primary_aggregate_run
+        TacticStatScript.primary_aggregate_call
 
         assert { case1(scope_key: :attack)             }
         assert { case1(scope_key: :attack_and_defense) }
