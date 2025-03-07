@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    class SprintStatScript < Base
+    class BasicStatScript < Base
       self.title = "スプリントの先後勝率"
       self.description = "将棋ウォーズのスプリントの先後勝率を調べる"
 
