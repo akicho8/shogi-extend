@@ -75,6 +75,8 @@ export default {
 
 <style lang="sass">
 .QuickScriptViewValueAsTable.b-table
+  // .table
+  //   width: auto
   margin-top: 0rem
   // margin-bottom: 2rem
   +mobile

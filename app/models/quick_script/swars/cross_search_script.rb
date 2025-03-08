@@ -1094,3 +1094,6 @@ module QuickScript
     end
   end
 end
+# ~> -:3:in `<module:Swars>': uninitialized constant QuickScript::Swars::Base (NameError)
+# ~> 	from -:2:in `<module:QuickScript>'
+# ~> 	from -:1:in `<main>'

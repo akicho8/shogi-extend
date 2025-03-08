@@ -32,6 +32,9 @@ class MainBatch
     QuickScript::Swars::GradeStatScript.primary_aggregate_call
     QuickScript::Swars::TacticStatScript.primary_aggregate_call
 
+    # 統計
+    QuickScript::Swars::BasicStatScript.new.cache_all
+
     # チェック
     Swars::SystemValidator.new.call
   end
