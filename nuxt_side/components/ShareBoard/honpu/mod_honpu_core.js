@@ -1,6 +1,6 @@
 // 本譜機能
 
-const HONPU_SHOW_ALWAYS = true
+const HONPU_SHOW_ALWAYS = false
 
 import { Gs } from "@/components/models/gs.js"
 
@@ -76,6 +76,7 @@ export const mod_honpu_core = {
       if (this.honpu_button_show_share_condition) {
         if (HONPU_SHOW_ALWAYS) {
           // 本譜は常に表示する場合
+          // スマホだとヘッダ内の表示が多すぎてずれる場合がある
           return this.honpu_main
         } else {
           // 本譜に戻るがある場合は本譜は表示しない場合
