@@ -265,7 +265,7 @@ module QuickScript
           },
 
           {
-            :label        => "おまけクエリ",
+            :label        => "追加クエリ",
             :key          => :query,
             :type         => :string,
             :session_sync => true,
@@ -1002,7 +1002,7 @@ module QuickScript
           "持ち時間"             => rule_infos.collect(&:name),
           "手合割"               => preset_infos.collect(&:name),
           "結末"                 => final_infos.collect(&:name),
-          "おまけクエリ"         => query,
+          "追加クエリ"         => query,
           # -------------------------------------------------------------------------------- フォーム
           "検索対象件数"         => range_size,
           "抽出希望件数"         => request_size,
