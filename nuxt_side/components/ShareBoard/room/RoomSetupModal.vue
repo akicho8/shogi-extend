@@ -35,7 +35,7 @@
       b-input.new_user_name(v-model.trim="SB.new_user_name" :disabled="SB.ac_room" autocomplete="on")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="SB.rsm_close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="SB.rsm_close_handle" icon-left="chevron-left")
     template(v-if="SB.ac_room")
       b-button.leave_button(@click="SB.rsm_leave_handle" type="is-danger") 退室
     template(v-else)

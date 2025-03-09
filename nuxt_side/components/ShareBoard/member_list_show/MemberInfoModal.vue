@@ -22,7 +22,7 @@
     pre(v-if="SB.debug_mode_p")
       | {{$gs.pretty_inspect(member_info)}}
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     template(v-if="SB.debug_mode_p")
       template(v-if="SB.order_lookup_from_name(member_info.from_user_name)")
         b-button.reject_handle(@click="reject_handle" type="is-warning") 順番除外

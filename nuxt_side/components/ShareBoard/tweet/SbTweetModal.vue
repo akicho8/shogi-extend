@@ -11,7 +11,7 @@
           | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
         b-image(:src="ogp_image_url" @load="SB.color_theme_image_load_handle" @error="SB.color_theme_image_error_handle" :loading="true")
   .modal-card-foot
-    b-button(@click="close_handle") キャンセル
+    b-button.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button(@click="submit_handle" :type="SB.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この局面をツイート
 </template>
 

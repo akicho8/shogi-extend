@@ -19,7 +19,7 @@
       b-field(label="選択肢2" label-position="on-border")
         b-input.odai_right(v-model="SB.master_odai.right_value" :placeholder="example.right_value" expanded)
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button(@click="submit_handle" type="is-primary")
       | 出題する
       //- template(v-if="SB.odai_new_p") 送信する

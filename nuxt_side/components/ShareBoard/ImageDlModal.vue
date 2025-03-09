@@ -23,7 +23,7 @@
       .preview_image.is-flex
         b-image(:src="preview_url" @load="SB.color_theme_image_load_handle" @error="SB.color_theme_image_error_handle" :loading="true")
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.download_handle(@click="download_handle" type="is-primary") ダウンロード
 </template>
 
