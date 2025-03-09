@@ -20,7 +20,6 @@ Capybara.configure do |config|
   # config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
   # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = false
-  config.save_path = nil        # エラー時の画像を生成しない
 end
 
 module Capybara::DSL
