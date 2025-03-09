@@ -164,6 +164,11 @@ if true
       Capybara.windows.drop(1).each(&:close)
       Capybara.switch_to_window(Capybara.windows.first)
     end
+
+    # 明示的に呼んでみる
+    config.after(:example, type: :system) do
+      Capybara.reset_sessions!
+    end
   end
 end
 
