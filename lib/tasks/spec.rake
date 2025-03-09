@@ -55,5 +55,29 @@ if defined?(RSpec)
         t.rspec_opts = "-f p"
       end
     end
+
+    namespace :retry do
+      desc "リトライしまくって不安定なシステムテストを通す(裏で動く Google Chrome をぶっころす)"
+      task :nightly do
+        system %(k -x "Google Chrome")
+        system %(k -x "chromedriver")
+        system {"BROWSER_DEBUG" => "1"}, "rake"
+        3.times do
+          system %(k -x "Google Chrome")
+          system %(k -x "chromedriver")
+          sleep 120
+          system {"BROWSER_DEBUG" => "1"}, "rspec --only-failures"
+        end
+      end
+
+      desc "リトライしまくって不安定なシステムテストを通す(Google Chrome をぶっころさない)"
+      task :soft do
+        system "rake"
+        2.times do
+          sleep 120
+          system "rspec --only-failures"
+        end
+      end
+    end
   end
 end
