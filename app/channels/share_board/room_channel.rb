@@ -104,12 +104,7 @@ module ShareBoard
     end
 
     def think_mark_share(data)
-      # user_names = []
-      # # user_names = data["order_unit"]["order_state"].collect { |e| e["user_name"] }.join(" → ")
-      # # user_names = data["order_unit"]["order_state"] # 動的にかわる
-      # config = ["illegal_behavior_key", "auto_resign_key"].collect { |e| data[e] }.join(" ")
-      # message = "オーダー配布 #{user_names} (#{config})"
-      # track(data, subject: "マーク設定", body: message, emoji: ":マーク設定:")
+      track(data, subject: "思考印", body: data["think_mark_command"], emoji: ":思考印:")
       broadcast(:think_mark_share_broadcasted, data)
     end
 

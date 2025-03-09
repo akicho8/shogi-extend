@@ -220,17 +220,12 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "マーク設定" do
+  describe "思考印" do
     before do
       subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory({
-          # "order_unit" => [
-          #   # FIXME
-          #   { "user_name" => "alice", },
-          #   { "user_name" => "bob",   },
-          # ],
         })
       expect {
         subscription.think_mark_share(data)
