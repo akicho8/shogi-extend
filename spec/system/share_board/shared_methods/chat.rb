@@ -70,6 +70,11 @@ module SharedMethods
     Capybara.execute_script(%(document.querySelector(".SbMessageBox").scrollTop = 0))
   end
 
+  # 読み込みが終わるまで待つ。これがないと assert_mh_page_index_in_modal が不安定になる
+  def chat_scroll_read_wait
+    sleep 1.0
+  end
+
   # 下スクロールさせて上に行く
   def chat_scroll_to_top_with_wait
     chat_scroll_to_top
@@ -99,6 +104,8 @@ module SharedMethods
 
   # API実行回数
   def assert_mh_page_index_in_modal(index, **options)
+    # options = { wait: 2.0 }.merge(options)
+    chat_scroll_read_wait
     assert_selector(".ChatModal .mh_page_index", text: index.to_s, exact_text: true, **options)
   end
 
