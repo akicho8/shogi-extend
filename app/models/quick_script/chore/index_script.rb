@@ -29,10 +29,10 @@ module QuickScript
         # 表示に拘ると QuickScript を作った意味がなくなる
         if params[:user_agent_key] == "mobile" && false
           # values = rows.collect { |e|
-          #   { _component: "QuickScriptViewValueAsH", _v_bind: { value: [e["項目"], e["内容"]] }, style: {"gap" => "0.5rem"} }
+          #   h_stack([e["項目"], e["内容"]], style: {"gap" => "0.5rem"})
           # }
           values = rows.collect { |e| e["項目"] }
-          return { _component: "QuickScriptViewValueAsV", _v_bind: { value: values }, style: {"gap" => "0.5rem"} }
+          return v_stack(values, style: {"gap" => "0.5rem"})
         end
 
         rows

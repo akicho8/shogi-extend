@@ -99,7 +99,7 @@ module QuickScript
             simple_table(table_rows, always_table: true),
             status,
           ]
-          { _component: "QuickScriptViewValueAsV", _v_bind: { value: values, }, style: {"gap" => "1rem"} }
+          v_stack(values, style: {"gap" => "1rem"})
         end
       end
 

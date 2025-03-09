@@ -7,8 +7,8 @@ module QuickScript
       def call
         [
           { name: "テキスト(そのまま)",     type: "value_type_is_text",         value: "<b>foo</b>", },
-          { name: "テキスト(v-text相当)",   type: "value_type_is_v_text",       value: { _v_text: "<b>foo</b>" }, },
-          { name: "テキスト(v-html相当)",   type: "value_type_is_v_html",       value: { _v_html: "<b>foo</b>" }, },
+          { name: "テキスト(v-text相当)",   type: "value_type_is_v_text",       value: { _v_text: "<b>foo</b>", style: "color: blue" }, },
+          { name: "テキスト(v-html相当)",   type: "value_type_is_v_html",       value: { _v_html: "<b>foo</b>", :class => "box" }, },
           { name: "タグで始まる",           type: "value_type_is_html",         value: "<b>foo</b>", },
           { name: "テキスト(preで囲む)",    type: "value_type_is_pre",          value: { _pre: "<b>foo</b>" }, },
           { name: "テキスト(自動リンク)",   type: "value_type_is_autolink",     value: { _autolink: "URL は http://example.com/ です" }, },
@@ -19,6 +19,7 @@ module QuickScript
           { name: "ハッシュ",               type: "value_type_is_any_hash",     value: { id: 1, name: "alice" }, },
           { name: "文字列配列",             type: "value_type_is_string_array", value: ["alice", "bob"], },
           { name: "テーブル",               type: "value_type_is_hash_array",   value: [{ id: 1, name: "alice" }], },
+          { name: ".box",                   type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsBox", _v_bind: { value: "(value)" } }, },
           { name: "コンポーネント指定",     type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsPre", _v_bind: { value: "(value)" } }, },
           { name: "横並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsH",   _v_bind: { value: ["a", "b"], }, style: {"gap" => "1.0rem"} }, },
           { name: "縦並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsV",   _v_bind: { value: ["a", "b"], }, style: {"gap" => "1.0rem"} }, },

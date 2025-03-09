@@ -53,7 +53,7 @@ class QuickScript::Swars::BasicStatScript
         { :_v_html => base.tag.h1(component_title, :class => "is-size-5") },
         component_body,
       ]
-      v = { _component: "QuickScriptViewValueAsV", _v_bind: { value: v }, style: {"gap" => "0rem"} }
+      v = base.v_stack(v, style: {"gap" => "0rem"})
       if false
         v = { _component: "QuickScriptViewValueAsBox", _v_bind: { value: v } }
       end

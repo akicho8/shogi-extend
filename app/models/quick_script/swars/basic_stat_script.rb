@@ -9,8 +9,7 @@ module QuickScript
         if Rails.env.local?
           cache_clear
         end
-        values = delegate_objects.collect(&:to_component)
-        { _component: "QuickScriptViewValueAsV", _v_bind: { value: values }, style: {"gap" => "0rem"} }
+        v_stack(delegate_objects.collect(&:to_component))
       end
 
       def sprintha_gotegatuyoi_noka

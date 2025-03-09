@@ -40,7 +40,7 @@ module QuickScript
           values = current_emoji_text.chars.collect do |str|
             { _component: "XemojiWrap", _v_bind: { str: str } }
           end
-          { _component: "QuickScriptViewValueAsH", _v_bind: { value: values }, :style => {"gap" => "0"} }
+          h_stack(values, :style => {"gap" => "0"})
         else
           rows = current_emoji_text.chars.collect do |str|
             {

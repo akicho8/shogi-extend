@@ -63,7 +63,7 @@ module QuickScript
           { _component: "CustomShogiPlayer", _v_bind: sp_params, style: {"max-width" => "640px", margin: "auto"}, :class => "is-unselectable is-centered", },
           { _component: "QuickScriptViewValueAsPre", _v_bind: { value: sp_body }, :class => "is-size-7" },
         ]
-        { _component: "QuickScriptViewValueAsV", _v_bind: { value: values, }, style: {"gap" => "1rem"} }
+        v_stack(values, style: {"gap" => "1rem"})
       end
 
       ################################################################################
