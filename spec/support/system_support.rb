@@ -1,5 +1,7 @@
 # スクリーンショット画像がコンソールに吐かれるのを停止
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
+# 失敗時にHTMLを保存する
+ENV["RAILS_SYSTEM_TESTING_SCREENSHOT_HTML"] = "1"
 
 if false
   chromedriver_pids = `pgrep -f chromedriver`.split
