@@ -1,7 +1,11 @@
 # スクリーンショット画像がコンソールに吐かれるのを停止
-ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
+ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] = "simple"
+
 # 失敗時にHTMLを保存する
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT_HTML"] = "1"
+
+# headありか？
+BROWSER_DEBUG = ENV["BROWSER_DEBUG"].to_s.in?(["1", "true"])
 
 if false
   chromedriver_pids = `pgrep -f chromedriver`.split
@@ -22,7 +26,6 @@ Capybara.configure do |config|
   # config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
   # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = false
-  config.save_path = nil        # エラー時の画像を生成しない
 end
 
 module Capybara::DSL
@@ -149,8 +152,7 @@ RSpec.configure do |config|
     # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
     # これにしてテストが落ちなくなったところもある
     # 前の書き方だとサイズが効いていなかったと思われる
-    driven = ENV["BROWSER_DEBUG"].to_s.in?(["1", "true"]) ? :chrome : :headless_chrome
-    driven_by :selenium, using: driven # screen_size: [1400, 1400]
+    driven_by :selenium, using: (BROWSER_DEBUG ? :chrome : :headless_chrome) # screen_size: [1400, 1400]
   end
 end
 
@@ -176,6 +178,15 @@ end
 
 if true
   module SystemSupport
+    if BROWSER_DEBUG
+      # headありの場合はスクショに映っている
+    else
+      # headless の場合は何も映らないのでスクショを取らない
+      # /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/actionpack-7.0.7/lib/action_dispatch/system_testing/test_helpers/screenshot_helper.rb
+      def take_screenshot
+      end
+    end
+
     def pause
       puts "[PAUSE]"
       $stdin.gets
