@@ -66,7 +66,7 @@
           SimpleRadioButton.change_per(:base="SB" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="SB.new_v.change_per")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
       b-button.apply_button(@click="apply_handle" :type="submit_button_color") 確定
       template(v-if="SB.debug_mode_p")

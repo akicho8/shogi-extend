@@ -15,7 +15,7 @@
       b-button.rs_next_member_delete(size="is-small" @click="SB.rs_next_member_delete" type="is-danger")
         | {{SB.user_call_name(SB.rs_next_user_name)}}を順番から外す
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.resend_handle(@click="resend_handle" type="is-warning") 再送する
 </template>
 

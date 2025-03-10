@@ -7,7 +7,7 @@
     b-field
       b-input(v-model.trim="new_name" ref="main_input_tag")
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.save_handle(@click="save_handle" type="is-primary") 保存
 </template>
 
