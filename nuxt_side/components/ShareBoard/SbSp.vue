@@ -100,20 +100,12 @@ export default {
 
     // 対局中にコントローラーは隠す
     sp_controller() {
-      if (this.SB.controller_disabled_p) {
-        return false
-      } else {
-        return true
-      }
+      return this.SB.controller_show_p
     },
 
     // 対局中はスライダーも隠す
     sp_slider() {
-      if (this.SB.controller_disabled_p) {
-        return false
-      } else {
-        return true
-      }
+      return this.SB.controller_show_p
     },
 
     // 動作を受け取るやつら

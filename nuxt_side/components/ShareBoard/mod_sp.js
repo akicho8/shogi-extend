@@ -197,14 +197,10 @@ export const mod_sp = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 将棋盤の下のコントローラーを表示しない条件
-    // 対局時計が設置されていて STOP または PAUSE 状態のとき
-    controller_disabled_p() {
-      if (this.ctrl_mode_info.key === "is_ctrl_mode_hidden") {
-        if (this.clock_box) {
-          return this.clock_box.play_p
-        }
-      }
-    },
+    // 盤の下のコントローラーを表示しない条件
+    // ・順番設定をしたとき
+    // ・時計を動かしているときとする
+    controller_hide_p() { return this.order_enable_p || this.cc_play_p },
+    controller_show_p() { return !this.controller_hide_p               },
   },
 }

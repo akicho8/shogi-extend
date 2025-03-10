@@ -6,7 +6,7 @@ export class SettingCategoryLevel3 extends SettingCategoryBase {
       { key: "ai_mode_key",         },
       { key: "vibration_mode_key",   },
       { key: "lift_cancel_action",   },
-      { key: "ctrl_mode_key",        },
+      // { key: "ctrl_mode_key",        },
     ]
   }
 }

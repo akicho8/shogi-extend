@@ -111,25 +111,6 @@ export default {
     // sp_layer() {
     //   return this.development_p
     // },
-    //
-    // // 対局中にコントローラーは隠す
-    // sp_controller() {
-    //   if (this.base.controller_disabled_p) {
-    //     return false
-    //   } else {
-    //     return true
-    //   }
-    // },
-    //
-    // // 対局中はスライダーも隠す
-    // sp_slider() {
-    //   if (this.base.controller_disabled_p) {
-    //     return false
-    //   } else {
-    //     return true
-    //   }
-    // },
-    //
 
     // 動作を受け取るやつら
     sp_hook() {
