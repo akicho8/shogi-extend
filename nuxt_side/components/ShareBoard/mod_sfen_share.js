@@ -112,7 +112,7 @@ export const mod_sfen_share = {
         // 自分の時計は変更しない
       } else {
         // 他者の時計の内部情報を更新する
-        Gs.assert(params.clock_box_params.cc_behavior_key == "cc_behavior_silent", 'params.clock_box_params.cc_behavior_key == "cc_behavior_silent"')
+        Gs.assert(params.clock_box_params.cc_behavior_key === "cc_behavior_silent", 'params.clock_box_params.cc_behavior_key === "cc_behavior_silent"')
         if (true) {
           this.clock_box_share_broadcasted(params.clock_box_params)
         } else {

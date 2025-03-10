@@ -11,7 +11,7 @@ export class O2Strategy {
 
     Gs.assert(change_per >= 1, "change_per >= 1")
     Gs.assert(_.isArray(sizes), "_.isArray(sizes)")
-    Gs.assert(sizes.length == 2, "sizes.length == 2")
+    Gs.assert(sizes.length === 2, "sizes.length === 2")
 
     this.sizes  = sizes  // [2, 3] のような形式
     this.turn   = turn   // N手目
