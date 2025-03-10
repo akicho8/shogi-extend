@@ -13,8 +13,10 @@ RSpec.describe type: :system, share_board_spec: true do
         find(:button, text: "この局面をツイート", exact_text: true).click
       end
       switch_to_window(window)
+      assert { Capybara.current_url.include?("x.com") }
+      # headless と head で LANG が変わる
       # assert_text("ツイートを共有するにはログインしてください", wait: 10)
-      assert_text("x.com", wait: 10) # headless だと英語になってしまう
+      # assert_text("x.com", wait: 10) # headless だと英語になってしまう
     end
   end
 end
