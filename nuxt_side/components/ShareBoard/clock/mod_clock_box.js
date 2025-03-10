@@ -490,10 +490,10 @@ export const mod_clock_box = {
   },
 
   computed: {
-    CcRuleInfo() { return CcRuleInfo },
-    CcBehaviorInfo()     { return CcBehaviorInfo     },
+    CcRuleInfo()     { return CcRuleInfo     },
+    CcBehaviorInfo() { return CcBehaviorInfo },
 
-    cc_play_p()  { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
+    cc_play_p() { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
 
     cc_common_p()  { return this.cc_params.length === 1 }, // 共通設定か？
     cc_unique_p()  { return this.cc_params.length === 2 }, // 個別設定か？
