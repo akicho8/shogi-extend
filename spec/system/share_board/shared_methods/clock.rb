@@ -50,15 +50,15 @@ module SharedMethods
     assert_clock_on             # 時計が設置された
   end
 
-  def clock_modal_close
-    find(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
+  def cc_modal_close
+    find(".ClockBoxModal .close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
   end
 
   # 順番設定済みの状態で対局時計を設置してPLAY押して閉じる
   def clock_start
     clock_open                               # 対局時計を開いて
     find(".play_button").click               # 開始
-    clock_modal_close
+    cc_modal_close
   end
 
   # 順番設定をしてください状態で対局時計を設置してPLAY押して閉じる
@@ -67,7 +67,7 @@ module SharedMethods
     clock_open                                     # 対局時計を開いて
     find(".play_button").click                     # 開始
     find(".dialog.modal .button.is-warning").click # 「無視して開始する」
-    clock_modal_close
+    cc_modal_close
   end
 
   # URLにする時計のパラメータ

@@ -22,7 +22,7 @@ RSpec.describe "対局時計_基本", type: :system, share_board_spec: true do
       clock_box_form_set(:black, 0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
       find(:button, :class => "play_button").click # 開始
       find(:button, :text => "無視して開始する", exact_text: true).click
-      modal_close_handle                           # 閉じる (ヘッダーに置いている)
+      cc_modal_close                           # 閉じる (ヘッダーに置いている)
     end
     b_block do
       assert_white_read_sec(@INITIAL_SEC)          # bob側は秒読みが満タン

@@ -84,7 +84,7 @@ module SharedMethods
   end
 
   def cc_timeout_modal_close
-    find(".TimeoutModal button", text: "閉じる", exact_text: true).click
+    find(".TimeoutModal .close_handle").click
   end
 
   def assert_var(key, value)

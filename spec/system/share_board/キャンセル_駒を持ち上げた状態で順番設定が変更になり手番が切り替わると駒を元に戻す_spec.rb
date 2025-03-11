@@ -17,7 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
       os_modal_handle            # 「順番設定」モーダルを開く(すでに有効になっている)
       find(".swap_handle").click # 先後入替
       os_submit_button_click               # 適用
-      modal_close_handle         # 閉じる
+      os_modal_close         # 閉じる
     end
     a_block do
       no_lifted_from("77")       # alice は77の駒を持っていたはずだが手番が変わったため駒を元に戻した

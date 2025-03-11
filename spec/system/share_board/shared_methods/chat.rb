@@ -38,24 +38,19 @@ module SharedMethods
 
   # message を受信した
   def assert_message_received_o(message, options = {})
-    within(".ChatModal") do
-      assert_selector(".message_body", {text: message, exact_text: true}.merge(options))
-    end
+    assert_selector(".ChatModal .message_body")
+    assert_selector(".ChatModal .message_body", {text: message, exact_text: true}.merge(options))
   end
 
   # message を受信していない
   def assert_message_received_x(message)
-    within(".ChatModal") do
-      assert_no_selector(".message_body", text: message, exact_text: true)
-    end
+    assert_no_selector(".ChatModal .message_body", text: message, exact_text: true)
   end
 
   # 指定のスコープに変更する
   def message_scope_key_set(message_scope_key)
-    within(".ChatModal") do
-      find(".message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
-      find(".dropdown .#{message_scope_key}").click  # スコープ選択
-    end
+    find(".ChatModal .message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
+    find(".ChatModal .dropdown .#{message_scope_key}").click  # スコープ選択
     assert_message_scope_key(message_scope_key)    # 指定のスコープになっている
   end
 

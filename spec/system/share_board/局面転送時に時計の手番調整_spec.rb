@@ -17,7 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
       clock_box_form_set(:black, 0, @INITIAL_SEC, 0, 0)   # 秒読みだけを設定
       find(:button, :class => "play_button").click   # 開始
       find(:button, :text => "無視して開始する", exact_text: true).click
-      modal_close_handle                             # 閉じる (ヘッダーに置いている)
+      cc_modal_close                             # 閉じる (ヘッダーに置いている)
     end
     a_block do
       piece_move_o("77", "76", "☗7六歩")             # 初手を指す

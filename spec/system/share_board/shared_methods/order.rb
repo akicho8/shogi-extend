@@ -15,7 +15,7 @@ module SharedMethods
   end
 
   def os_modal_close
-    find(".OrderSettingModal button", text: "閉じる", exact_text: true).click
+    find(".OrderSettingModal .close_handle_for_capybara").click
   end
 
   def os_modal_close_force
@@ -52,10 +52,6 @@ module SharedMethods
 
   def os_modal_force_submit
     first(".os_modal_force_submit_button").click
-  end
-
-  def modal_close_handle
-    first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 
   # klass の上からn番目のメンバーを観戦に移動する

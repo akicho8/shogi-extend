@@ -17,7 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
       os_switch_toggle                                 # 有効スイッチをクリック
       drag_to_watch("dnd_black", 1)                    # 黒の[1]にいる carol を観戦に移動する
       os_submit_button_click                                    # 適用クリック
-      modal_close_handle                               # 閉じる (ヘッダーに置いている)
+      os_modal_close                                   # 閉じる (ヘッダーに置いている)
     end
     c_block do
       assert_member_status("alice", :is_turn_active)     # 1人目(alice)に丸がついている
