@@ -28,7 +28,7 @@ RSpec.describe type: :system, share_board_spec: true do
       sleep(1)                                       # bobは1秒考えていた
     end
     a_block do
-      sp_controller_click("previous")                # 1手戻す
+      turn_minus_one
       assert_turn(0)                                 # 0手目に戻せてる
 
       global_menu_open

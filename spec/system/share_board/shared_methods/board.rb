@@ -17,4 +17,10 @@ module SharedMethods
     piece_move(from, to)
     assert_no_text(human)
   end
+
+  def turn_minus_one
+    global_menu_open
+    menu_item_click("1手戻す (待った)") # 「1手戻す」モーダルを開く
+    find(".apply_button").click         # 「N手目まで戻る」
+  end
 end

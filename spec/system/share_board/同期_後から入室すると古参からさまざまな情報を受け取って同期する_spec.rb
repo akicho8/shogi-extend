@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   describe "盤面" do
     it "最大2手まである棋譜の1手目を指している部屋に入ったとき1手目になる" do
       a_block do
-        visit_app(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob", body: "76歩34歩")
+        visit_app(room_key: :test_room, user_name: "alice", body: "76歩34歩")
         sp_controller_click(:previous)      # 最長2手まである棋譜の1手目に戻す
         assert_turn(1)                      # 0手目に戻っている
         sleep(2)                            # 1秒後に転送するためそれが切れるまで待つ
