@@ -171,7 +171,7 @@ if true
 
     # 明示的に呼んでみる
     config.after(:example, type: :system) do
-      # Capybara.reset_sessions!
+      Capybara.reset_sessions!
     end
   end
 end

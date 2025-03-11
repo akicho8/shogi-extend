@@ -69,6 +69,14 @@ export const mod_chat_message_list = {
       return el
     },
 
+    // ml_root_el があるときだけそれを引数にして処理を行う
+    ml_root_el_block(block) {
+      const el = this.ml_root_el()
+      if (el) {
+        return block(el)
+      }
+    },
+
     // 表示してもよいか？
     ml_show_p(record) {
       if (!this.order_enable_p) {                      // そもそも順番設定をしてないなら見える

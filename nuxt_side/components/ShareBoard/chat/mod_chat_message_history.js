@@ -146,7 +146,9 @@ export const mod_chat_message_history = {
           this.ml_scroll_to_bottom()
         } else {
           // 次回: 0.5 あたりに位置する
-          this.ml_root_el_fetch().scrollTop = this.ml_root_el_fetch().scrollHeight - this.mh_scroll_height + PADDING
+          this.ml_root_el_block(el => {
+            el.scrollTop = el.scrollHeight - this.mh_scroll_height + PADDING
+          })
         }
       }
     },
@@ -167,12 +169,13 @@ export const mod_chat_message_history = {
       if (this.mh_has_next_p) {
         if (this.mh_observer) {
           this.$nextTick(() => {    // 確実に最上位が見えなくなるまで待つため (一応なくても動く)
-            this.ml_root_el_fetch() // .SbMessageBox が参照できることを確証する
-            const el = document.querySelector(".SbMessageBox .SbAvatarLine:first-child")
-            if (el) {
-              this.mh_observer.observe(el)
-            } else {
-              this.tl_add("MH", "チャットメッセージの最上位の要素が存在しません")
+            if (this.ml_root_el()) {
+              const el = document.querySelector(".SbMessageBox .SbAvatarLine:first-child")
+              if (el) {
+                this.mh_observer.observe(el)
+              } else {
+                this.tl_add("MH", "チャットメッセージの最上位の要素が存在しません")
+              }
             }
           })
         }
@@ -191,18 +194,20 @@ export const mod_chat_message_history = {
     mh_start() {
       this.tl_add("MH", "mh_start")
 
-      Gs.assert(this.mh_observer == null, "this.mh_observer == null")
-      const options = {
-        root: this.ml_root_el_fetch(),  // なくても動作に影響なかったが指定しておいたほうが良さそう
-        rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
-        threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
-      }
+      this.ml_root_el_block(el => {
+        Gs.assert(this.mh_observer == null, "this.mh_observer == null")
+        const options = {
+          root: el,                       // なくても動作に影響なかったが指定しておいたほうが良さそう
+          rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
+          threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
+        }
 
-      this.mh_observer = new IntersectionObserver((entries, observer) => {
-        Gs.assert(entries.length === 1, "entries.length === 1")
-        entries.forEach(e => this.mh_visible_changed(observer, e))
-      }, options)
-      this.clog(this.mh_observer)
+        this.mh_observer = new IntersectionObserver((entries, observer) => {
+          Gs.assert(entries.length === 1, "entries.length === 1")
+          entries.forEach(e => this.mh_visible_changed(observer, e))
+        }, options)
+        this.clog(this.mh_observer)
+      })
     },
 
     // 表示状態が変化したときに呼ぶ
@@ -220,10 +225,12 @@ export const mod_chat_message_history = {
         observer.unobserve(e.target)
 
         // 差し込む前の領域の高さを保持しておく
-        this.clog(this.ml_root_el_fetch())
-        this.mh_scroll_height = this.ml_root_el_fetch().scrollHeight
+        this.ml_root_el_block(el => {
+          this.clog(el)
+          this.mh_scroll_height = el.scrollHeight
 
-        this.mh_read()
+          this.mh_read()
+        })
       }
     },
 
