@@ -196,4 +196,7 @@ export default {
 .STAGE-development
   .CustomChart
     border: 1px dashed change_color($primary, $alpha: 0.1)
+    &.is_auto_resize
+      +desktop
+        max-width: 50%
 </style>

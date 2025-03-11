@@ -16,9 +16,14 @@ module QuickScript
         @sprintha_gotegatuyoi_noka ||= SprinthaGotegatuyoiNoka.new(self)
       end
 
+      def grade_each_sprint_win_rate
+        @grade_each_sprint_win_rate ||= GradeEachSprintWinRate.new(self)
+      end
+
       def delegate_objects
         [
           sprintha_gotegatuyoi_noka,
+          grade_each_sprint_win_rate,
         ]
       end
 

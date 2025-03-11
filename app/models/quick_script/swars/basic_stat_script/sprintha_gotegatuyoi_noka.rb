@@ -1,18 +1,11 @@
 class QuickScript::Swars::BasicStatScript
-  class SprinthaGotegatuyoiNoka
-    attr_reader :base
-
-    def initialize(base)
-      @base = base
-    end
-
-    def cache_write
-      AggregateCache[self.class.name].write(__counts_hash)
-    end
-
-    def cache_clear
-      AggregateCache[self.class.name].destroy_all
-    end
+  class SprinthaGotegatuyoiNoka < Base
+    CONDITIONS = [
+      { name: "通常 野良 10分",  imode_key: :normal, rule_key: :ten_min,   short_name: "10分", },
+      { name: "通常 野良 3分",   imode_key: :normal, rule_key: :three_min, short_name: "3分",  },
+      { name: "通常 野良 10秒",  imode_key: :normal, rule_key: :ten_sec,   short_name: "10秒", },
+      { name: "ｽﾌﾟﾘﾝﾄ 野良 3分", imode_key: :sprint, rule_key: :three_min, short_name: "ス",   },
+    ]
 
     # >> |-----------------+----------+----------+--------+--------+------|
     # >> | 種類            | ▲勝率   | △勝率   | ▲勝数 | △勝数 | 分母 |
@@ -41,23 +34,18 @@ class QuickScript::Swars::BasicStatScript
     end
 
     def component_title
-      "先後勝率"
+      "種類毎の先後勝率"
     end
 
     def component_body
-      base.simple_table(call, always_table: true)
+      [
+        { _component: "CustomChart", _v_bind: { params: custom_chart_params }, :class => "is_auto_resize", },
+        base.simple_table(call, always_table: true),
+      ]
     end
 
-    def to_component
-      v = [
-        { :_v_html => base.tag.h1(component_title, :class => "is-size-5") },
-        component_body,
-      ]
-      v = base.v_stack(v, style: {"gap" => "0rem"})
-      if false
-        v = { _component: "QuickScriptViewValueAsBox", _v_bind: { value: v } }
-      end
-      v
+    def hash_key(e, location_key)
+      [e[:imode_key], e[:rule_key], location_key, :win].join("/").to_sym
     end
 
     # >> {:normal_three_min_black_win=>64,
@@ -69,12 +57,7 @@ class QuickScript::Swars::BasicStatScript
     # >>  :normal_ten_sec_black_win=>22,
     # >>  :normal_ten_sec_white_win=>21}
     def count_by(e, location_key)
-      key = [
-        e[:imode_key],
-        e[:rule_key],
-        location_key,
-        :win,
-      ].join("_").to_sym
+      key = hash_key(e, location_key)
       counts_hash[key] || 0
     end
 
@@ -90,15 +73,11 @@ class QuickScript::Swars::BasicStatScript
       count_by(e, :black) + count_by(e, :white)
     end
 
-    def main_scope
-      base.params[:scope] || base.main_scope_on_development || ::Swars::Membership.all
-    end
-
     def counts_hash
-      @counts_hash ||= AggregateCache[self.class.name].read || __counts_hash
+      aggregate
     end
 
-    def __counts_hash
+    def aggregate_now
       s = main_scope
       s = s.joins(:battle => [:imode, :xmode, :rule])
       s = s.joins(:location)
@@ -109,7 +88,20 @@ class QuickScript::Swars::BasicStatScript
       s = s.group(::Swars::Rule.arel_table[:key])
       s = s.group(Location.arel_table[:key])
       s = s.group(Judge.arel_table[:key])
-      s.count.transform_keys { |e| e.join("_").to_sym } # JSON化するときキーを配列にはできないため文字列化する
+      s.count.transform_keys { |e| e.join("/").to_sym } # JSON化するときキーを配列にはできないため文字列化する
+    end
+
+    def custom_chart_params
+      {
+        data: {
+          labels: CONDITIONS.collect { |e| e[:short_name] },
+          datasets: [
+            { data: CONDITIONS.collect { |e| (ratio_by(e, :black) || 0) * 100.0 }, },
+            { data: CONDITIONS.collect { |e| (ratio_by(e, :white) || 0) * 100.0 }, },
+          ],
+        },
+        **custom_chart_options,
+      }
     end
   end
 end
