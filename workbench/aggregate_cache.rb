@@ -10,20 +10,19 @@ AggregateCache["X"].write({:x => 1, "y" => 2})
 AggregateCache["X"].read        # => {:x=>1, :y=>2}
 
 AggregateCache["Y"].write("A")
-AggregateCache["Y"].read        # => 
+AggregateCache["Y"].read rescue $! # => #<NameError: undefined local variable or method `deep_symbolize_keys' for "A":String>
 
+AggregateCache["Z"].fetch { {:x => 1} } # => {:x=>1}
+AggregateCache["Z"].fetch { {:x => 2} } # => {:x=>1}
+tp AggregateCache
 
-
-# ~> /Users/ikeda/src/shogi-extend/app/models/aggregate_cache.rb:28:in `block in read': undefined local variable or method `deep_symbolize_keys' for "A":String (NameError)
-# ~> 
-# ~>       where(generation: latest_generation).pick(:aggregated_value).presence.try { deep_symbolize_keys }
-# ~>                                                                                   ^^^^^^^^^^^^^^^^^^^
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activesupport-7.1.3.4/lib/active_support/core_ext/object/try.rb:10:in `instance_eval'
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activesupport-7.1.3.4/lib/active_support/core_ext/object/try.rb:10:in `try'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/aggregate_cache.rb:28:in `read'
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activerecord-7.1.3.4/lib/active_record/relation/delegation.rb:79:in `block in read'
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activerecord-7.1.3.4/lib/active_record/relation.rb:929:in `_scoping'
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activerecord-7.1.3.4/lib/active_record/relation.rb:467:in `scoping'
-# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/activerecord-7.1.3.4/lib/active_record/relation/delegation.rb:79:in `read'
-# ~> 	from -:13:in `<main>'
-# >> 2024-11-27T09:50:12.079Z pid=2253 tid=5y5 INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >> 2025-03-12T00:54:52.775Z pid=46548 tid=w8g INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
+# >> |-----+------------+------------+------------------+---------------------------+---------------------------|
+# >> | id  | group_name | generation | aggregated_value | created_at                | updated_at                |
+# >> |-----+------------+------------+------------------+---------------------------+---------------------------|
+# >> | 129 | A          |          0 | {}               | 2025-03-12 09:54:52 +0900 | 2025-03-12 09:54:52 +0900 |
+# >> | 131 | C          |          0 | {}               | 2025-03-12 09:54:52 +0900 | 2025-03-12 09:54:52 +0900 |
+# >> | 132 | X          |          0 | {"x"=>1, "y"=>2} | 2025-03-12 09:54:52 +0900 | 2025-03-12 09:54:52 +0900 |
+# >> | 133 | Y          |          0 | A                | 2025-03-12 09:54:52 +0900 | 2025-03-12 09:54:52 +0900 |
+# >> | 134 | Z          |          0 | {"x"=>1}         | 2025-03-12 09:54:52 +0900 | 2025-03-12 09:54:52 +0900 |
+# >> |-----+------------+------------+------------------+---------------------------+---------------------------|

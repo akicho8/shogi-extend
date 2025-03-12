@@ -23,6 +23,17 @@ class AggregateCache < ApplicationRecord
     def write(aggregated_value = nil)
       create!(generation: next_generation, aggregated_value: aggregated_value)
       old_only.destroy_all
+      aggregated_value
+    end
+
+    # なければブロックの結果を書き込んで読み出す
+    def fetch(&block)
+      value = read
+      unless value
+        write(yield)
+        value = read
+      end
+      value
     end
 
     # DBから最新を取り出す

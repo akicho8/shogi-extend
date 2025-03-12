@@ -41,17 +41,14 @@ class QuickScript::Swars::BasicStatScript
       s.count.transform_keys { |e| e.join("/").to_sym } # JSON化するときキーを配列にはできないため文字列化する
     end
 
-    def custom_chart_params
+    def custom_chart_data
       items = grade_infos.reverse
       {
-        data: {
-          labels: items.collect { |e| e.name.remove(/[段級]/) },
-          datasets: [
-            { data: items.collect { |e| (ratio_by(e, :black) || 0) * 100.0 }, },
-            { data: items.collect { |e| (ratio_by(e, :white) || 0) * 100.0 }, },
-          ],
-        },
-        **custom_chart_options,
+        labels: items.collect { |e| e.name.remove(/[段級]/) },
+        datasets: [
+          { data: items.collect { |e| (ratio_by(e, :black) || 0) * 100.0 }, },
+          { data: items.collect { |e| (ratio_by(e, :white) || 0) * 100.0 }, },
+        ],
       }
     end
 

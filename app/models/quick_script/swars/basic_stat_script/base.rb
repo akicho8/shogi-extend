@@ -10,6 +10,10 @@ class QuickScript::Swars::BasicStatScript
       AggregateCache[self.class.name].write(aggregate_now)
     end
 
+    def cache_fetch
+      AggregateCache[self.class.name].fetch { aggregate_now }
+    end
+
     def cache_clear
       AggregateCache[self.class.name].destroy_all
     end
@@ -39,7 +43,7 @@ class QuickScript::Swars::BasicStatScript
     end
 
     def main_scope
-      base.params[:scope] || base.main_scope_on_development || ::Swars::Membership.all
+      base.params[:scope] || ::Swars::Membership.all
     end
 
     def aggregate
@@ -48,13 +52,6 @@ class QuickScript::Swars::BasicStatScript
 
     def aggregate_now
       {}
-    end
-
-    def custom_chart_options
-      {
-        scales_y_axes_ticks: nil,
-        scales_y_axes_display: false,
-      }
     end
   end
 end

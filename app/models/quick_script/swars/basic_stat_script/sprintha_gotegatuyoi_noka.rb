@@ -92,15 +92,23 @@ class QuickScript::Swars::BasicStatScript
     end
 
     def custom_chart_params
+      { data: custom_chart_data, **custom_chart_options }
+    end
+
+    def custom_chart_options
       {
-        data: {
-          labels: CONDITIONS.collect { |e| e[:short_name] },
-          datasets: [
-            { data: CONDITIONS.collect { |e| (ratio_by(e, :black) || 0) * 100.0 }, },
-            { data: CONDITIONS.collect { |e| (ratio_by(e, :white) || 0) * 100.0 }, },
-          ],
-        },
-        **custom_chart_options,
+        :scales_y_axes_ticks   => nil,
+        :scales_y_axes_display => false,
+      }
+    end
+
+    def custom_chart_data
+      {
+        labels: CONDITIONS.collect { |e| e[:short_name] },
+        datasets: [
+          { data: CONDITIONS.collect { |e| (ratio_by(e, :black) || 0) * 100.0 }, },
+          { data: CONDITIONS.collect { |e| (ratio_by(e, :white) || 0) * 100.0 }, },
+        ],
       }
     end
   end
