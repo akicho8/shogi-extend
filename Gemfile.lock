@@ -1,14 +1,16 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 1a4a02b6db5e8a59c29f498f08053ab9f5bd29a6
+  revision: 04945dfb88a3b78f051c19b8ee1c1def09281834
   branch: main
   specs:
     bioshogi (0.0.15)
       actionview
       activesupport (>= 7.1.0)
+      benchmark
       color
       faraday
       memory_record
+      nkf
       rmagick (>= 5.0.0)
       rubyzip (>= 2.3.0)
       systemu
@@ -122,6 +124,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.18)
+    benchmark (0.4.0)
     bigdecimal (3.1.9)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -311,7 +314,7 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
-    minitest (5.25.4)
+    minitest (5.25.5)
     minitest-power_assert (0.3.1)
       minitest
       power_assert (>= 1.1)
@@ -334,7 +337,7 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.7.3)
     nkf (0.1.2)
-    nokogiri (1.18.2)
+    nokogiri (1.18.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (1.4.9)
@@ -367,7 +370,7 @@ GEM
       omniauth-oauth2 (~> 1.0)
     orm_adapter (0.5.0)
     os (1.1.4)
-    pkg-config (1.5.9)
+    pkg-config (1.6.0)
     power_assert (2.0.3)
     pp (0.4.0)
       prettyprint
@@ -586,7 +589,7 @@ GEM
     woothee (1.13.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.1)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   arm64-darwin-22
