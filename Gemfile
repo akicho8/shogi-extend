@@ -199,7 +199,7 @@ gem "git-version-bump", require: false
 gem "retryable"
 
 # ChatGPT
-gem "ruby-openai", require: "openai"
+gem "ruby-openai"
 
 gem "psych", "~> 3" # Psych::BadAlias: Unknown alias: default 対策 ← 新しい Rails では不要 ← 嘘だった
 
