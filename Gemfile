@@ -64,9 +64,8 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem "capybara"
   gem "selenium-webdriver", ">= 4.11" # 4.11 以上であれば webdrivers gem が不要になる
-  # Easy installation and use of web drivers to run system tests with browsers
+  gem "capybara", ">= 3.40"
 end
 
 # ################################################################################
