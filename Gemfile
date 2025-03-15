@@ -133,8 +133,8 @@ gem "bioshogi", github: "akicho8/bioshogi", branch: "main"
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
-gem "nokogiri"
-# gem "nokogiri", force_ruby_platform: true # for Swars::Agent
+# gem "nokogiri"
+gem "nokogiri", force_ruby_platform: true
 # gem "nokogiri", platforms: :ruby # for Swars::Agent
 # gem "nokogiri", platforms: [:arm64_darwin, :x86_64_darwin, :x86_64_linux] # ← 動かない
 
