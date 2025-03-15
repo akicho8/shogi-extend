@@ -16,6 +16,9 @@ end
 
 set :rails_env, 'staging'    # 必要
 
+set :bundle_env_variables, { force_ruby_platform: true } # nokogiri を native build する (しかし、これをやるとすべてが native build になってしまう)
+set :bundle_flags, "--deployment"                        # --quiet を外して動作状況を確認する
+
 # append :linked_files, 'config/database.yml'
 
 # 専用の database.yml を転送
