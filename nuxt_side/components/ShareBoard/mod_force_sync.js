@@ -81,7 +81,7 @@ export const mod_force_sync = {
 
     force_sync_direct() {
       this.ac_log({subject: "局面操作", body: `直接${this.current_turn}手目`})
-      this.force_sync(`${this.user_call_name(this.user_name)}が現在の局面(${this.current_turn}手目)の局面を転送しました`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が局面を共有しました`)
     },
 
     force_sync_turn_zero() {
