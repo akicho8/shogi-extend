@@ -4,7 +4,7 @@ set :rbenv_ruby, '3.4.2'
 
 set :keep_releases, 1
 
-# 最初にアプリ削除する？
+# 最初にアプリ削除する？ (APP_RESET=1 cap staging deploy)
 if ENV["APP_RESET"] == "1"
   before 'deploy:starting', 'deploy:app_clean'
 end
@@ -18,6 +18,7 @@ set :rails_env, 'staging'    # 必要
 
 # set :bundle_env_variables, { force_ruby_platform: true } # nokogiri を native build する (しかし、これをやるとすべてが native build になってしまう)
 set :bundle_config, { deployment: true, force_ruby_platform: true }
+# set :bundle_config, { deployment: true }
 set :bundle_flags, "--redownload"                        # --quiet を外して動作状況を確認する
 
 # append :linked_files, 'config/database.yml'
