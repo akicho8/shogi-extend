@@ -23,7 +23,9 @@ module ShareBoard
           AppLog.info(subject: "チャット (GPT)", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT_IN:")
         end
 
-        client = OpenAI::Client.new
+        client = OpenAI::Client.new do |f|
+          f.response :logger, Rails.logger, bodies: true
+        end
         response = nil
 
         seconds = Benchmark.realtime do
@@ -39,6 +41,7 @@ module ShareBoard
         seconds = "[%.1f s]" % seconds
         Rails.logger.debug { response.pretty_inspect }
 
+        # 昔はここでエラーが取れたが最近のは例外に変わった
         if error_message = response.dig("error", "message")
           AppLog.error(subject: "チャット (GPT)", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
           return
@@ -55,6 +58,10 @@ module ShareBoard
         end
 
         text
+      rescue => error
+        # https://platform.openai.com/docs/guides/error-codes/api-errors
+        AppLog.error(subject: "チャット (GPT)", body: "[ERROR][例外] #{error}", emoji: ":ChatGPT_ERR:")
+        nil
       end
     end
   end
