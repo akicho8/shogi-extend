@@ -18,7 +18,7 @@ class RequestInfo
     o << params.to_unsafe_h.to_t
     o << "* Environment"
     o << env_hash.to_t
-    o.join("\n")
+    o.collect { |e| e.force_encoding("UTF-8") }.join("\n")
   end
 
   private
