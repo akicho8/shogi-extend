@@ -680,7 +680,7 @@ DEPENDENCIES
   memory_record
   minitest-power_assert
   nkf
-  nokogiri
+  nokogiri (>= 1.18.4)
   omniauth-github
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
