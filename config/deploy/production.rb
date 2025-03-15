@@ -16,6 +16,10 @@ set :keep_releases, 5
 
 set :rails_env, 'production'    # 必要
 
+# 超重要
+set :bundle_config, { deployment: true, force_ruby_platform: true } # 「force_ruby_platform: true」をつけないと bigdecimal, nokogiri 等が install できない
+set :bundle_flags, "--clean"                                        # --quiet を外して動作状況を確認するの重要。必要なら --redownload を指定する。
+
 # append :linked_files, 'config/database.yml'
 
 # 専用の database.yml を転送
