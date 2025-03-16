@@ -3,12 +3,12 @@
   nuxt-link.item(:to="{name: 'index'}" @click.native="$sound.play_click()")
     b-icon(icon="home")
 
-  b-dropdown(position="is-top-left" @active-change="e => base.dropdown_active_change(e)" ref="preset_menu_pull_down")
+  b-dropdown.cc_preset_dropdown(position="is-top-left" @active-change="e => base.dropdown_active_change(e)" ref="preset_menu_pull_down")
     .item(slot="trigger")
       b-icon(icon="menu")
 
     template(v-for="e in base.CcRuleInfo.values")
-      b-dropdown-item(@click="base.rule_set(e.cc_params)") {{e.name}}
+      b-dropdown-item(@click="base.rule_set(e.cc_params_one)") {{e.name}}
 
     template(v-if="development_p")
       b-dropdown-item(:separator="true")
