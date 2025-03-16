@@ -1,11 +1,10 @@
 # frozen-string-literal: true
 
-# app/models/swars/badge_info.rb
 module Swars
   class MembershipBadgeInfo
     include ApplicationMemoryRecord
     memory_record [
-      # マッチしたら break なので順序重要
+      # マッチしたら break なので上にあるほど優先度が高い
       {
         key: "不安定マン",
         message: "不安定な環境で対局を開始して迷惑をかけた",
@@ -13,31 +12,30 @@ module Swars
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.turn_max < Config.establish_gteq
-              if m.battle.final_info.key == :DISCONNECT
-                true
-              end
+              m.battle.final_info.key == :DISCONNECT
             end
           end
         },
-      }, {
+      },
+      {
         key: "切断マン",
         message: "悔しかったので切断した",
         badge_params: "💩",
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.turn_max >= Config.establish_gteq
-              if m.battle.final_info.key == :DISCONNECT
-                true
-              end
+              m.battle.final_info.key == :DISCONNECT
             end
           end
         },
-      }, {
+      },
+      {
         key: "運営支えマン",
         message: "将棋ウォーズの運営を支える力がある",
         badge_params: "🧙‍♂️",
         if_cond: -> m { m.fraud? },
-      }, {
+      },
+      {
         key: "1手詰焦らしマン",
         message: -> m { "1手詰を#{m.think_last_s}焦らして歪んだ優越感に浸った" },
         badge_params: "😈",
@@ -45,14 +43,13 @@ module Swars
           if m.judge_key == "win"
             if m.battle.final_info.key == :CHECKMATE
               if t = m.battle.rule_info.ittezume_jirasi_sec
-                if (m.think_last || 0) >= t
-                  true
-                end
+                (m.think_last || 0) >= t
               end
             end
           end
         },
-      }, {
+      },
+      {
         key: "必勝形焦らしマン",
         message: -> m { "必勝形から#{m.think_last_s}焦らして歪んだ優越感に浸った" },
         badge_params: "😈",
@@ -60,14 +57,13 @@ module Swars
           if m.judge_key == "win"
             if m.battle.final_info.key == :TIMEOUT
               if t = m.battle.rule_info.ittezume_jirasi_sec
-                if (m.think_last || 0) >= t
-                  true
-                end
+                (m.think_last || 0) >= t
               end
             end
           end
         },
-      }, {
+      },
+      {
         key: "絶対投了しないマン",
         message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },
         badge_params: "🪳",
@@ -76,31 +72,40 @@ module Swars
             if m.battle.final_info.key == :TIMEOUT
               if m.battle.turn_max >= Config.seiritsu_gteq
                 if t = m.battle.rule_info.toryo_houti_sec
-                  if (m.think_last || 0) >= t
-                    true
-                  end
+                  (m.think_last || 0) >= t
                 end
               end
             end
           end
         },
-      }, {
+      },
+      {
         # 「絶対投了しないマン」より後に判定すること
         key: "相手退席待ちマン",
         message: -> m { "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗した" },
         badge_params: "🧌",
         if_cond: -> m {
-          m.judge_key == "lose" &&
-            m.battle.turn_max >= Config.seiritsu_gteq &&
-            m.think_last && m.think_max != m.think_last &&
-            (t = m.battle.rule_info.taisekimati_sec) && m.think_max >= t
+          if m.judge_key == "lose"
+            if m.battle.turn_max >= Config.seiritsu_gteq
+              if m.think_last && m.think_max != m.think_last
+                if t = m.battle.rule_info.taisekimati_sec
+                  m.think_max >= t
+                end
+              end
+            end
+          end
         },
-      }, {
+      },
+      {
         key: "背水マン",
         message: "大駒すべて捨てたのに勝った",
         badge_params: "🧠",
         if_cond: -> m {
-          m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi && m.tag_names_for(:note).include?("背水の陣")
+          if m.judge_key == "win"
+            if m.battle.final_info.toryo_or_tsumi
+              m.tag_names_for(:note).include?("背水の陣")
+            end
+          end
         },
       },
       # {
@@ -108,7 +113,11 @@ module Swars
       #   message: "大駒すべて取られて負けた",
       #   badge_params: "💢",
       #   if_cond: -> m {
-      #     m.judge_key == "lose" && m.battle.final_info.toryo_or_tsumi && m.tag_names_for(:note).include?("背水の陣")
+      #     if m.judge_key == "lose"
+      #       if m.battle.final_info.toryo_or_tsumi
+      #         m.tag_names_for(:note).include?("背水の陣")
+      #       end
+      #     end
       #   },
       # },
       {
@@ -116,37 +125,58 @@ module Swars
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をしたあげく負けた" },
         badge_params: "😴",
         if_cond: -> m {
-          m.judge_key == "lose" && (t = m.battle.rule_info.kangaesugi_like_houti_sec) && m.think_max >= t
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "lose"
+              if t = m.battle.rule_info.kangaesugi_like_houti_sec
+                m.think_max >= t
+              end
+            end
+          end
         },
-      }, {
+      },
+      {
         key: "大長考マン",
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をした" },
         badge_params: "⚠",
         if_cond: -> m {
-          (t = m.battle.rule_info.kangaesugi_like_houti_sec) && m.think_max >= t
+          if m.battle.imode_info.key == :normal
+            if t = m.battle.rule_info.kangaesugi_like_houti_sec
+              m.think_max >= t
+            end
+          end
         },
-      }, {
+      },
+      {
         key: "長考マン",
         message: -> m { "考えすぎて負けた。ちなみにいちばん長かったのは#{m.think_max_s}" },
         badge_params: "🤯",
         if_cond: -> m {
-          (t = m.battle.rule_info.kangaesugi_sec) && m.think_max >= t && m.judge_key == "lose"
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "lose"
+              if t = m.battle.rule_info.kangaesugi_sec
+                m.think_max >= t
+              end
+            end
+          end
         },
-      }, {
+      },
+      {
         key: "角不成マン",
         message: "角成らずで舐めプした",
         badge_params: "🤡",
         if_cond: -> m {
           m.tag_names_for(:note).include?("角不成")
         }
-      }, {
+      },
+      {
         key: "飛車不成マン",
         message: "飛車成らずで舐めプした",
         badge_params: "🤡",
         if_cond: -> m {
           m.tag_names_for(:note).include?("飛車不成")
         },
-      }, {
+      },
+      {
         key: "切れ負けマン",
         message: "時間切れで負けた",
         badge_params: "⌛",
@@ -172,7 +202,8 @@ module Swars
             end
           end
         },
-      }, {
+      },
+      {
         key: "千日手逃げマン",
         message: "先手なのに千日手",
         badge_params: "🍌",
@@ -185,7 +216,8 @@ module Swars
             end
           end
         },
-      }, {
+      },
+      {
         key: "ただの千日手",
         message: "千日手",
         badge_params: "🍌",
@@ -205,37 +237,46 @@ module Swars
         message: "わざと負けて棋力を調整した",
         badge_params: "🦇",
         if_cond: -> m {
-          if m.judge_key == "lose"
-            if m.battle.turn_max < Config.seiritsu_gteq
-              if m.battle.final_info.toryo_or_tsumi
-                true
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "lose"
+              if m.battle.turn_max < Config.seiritsu_gteq
+                if m.battle.final_info.toryo_or_tsumi
+                  true
+                end
               end
             end
           end
         },
-      }, {
+      },
+      {
         key: "無気力マン",
         message: "無気力な対局をした",
         badge_params: "🦥",
         if_cond: -> m {
-          if m.judge_key == "lose"
-            if m.battle.turn_max.between?(Config.seiritsu_gteq, Config.mukiryoku_lteq)
-              if m.battle.final_info.toryo_or_tsumi
-                true
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "lose"
+              if m.battle.turn_max.between?(Config.seiritsu_gteq, Config.mukiryoku_lteq)
+                if m.battle.final_info.toryo_or_tsumi
+                  true
+                end
               end
             end
           end
         },
-      }, {
+      },
+      {
         key: "入玉勝ちマン",
         message: "入玉で勝った",
         badge_params: "🏈",
         if_cond: -> m {
-          m.tag_names_for(:note).include?("入玉") &&
-            m.judge_key == "win" &&
-            m.battle.final_info.toryo_or_tsumi
+          if m.judge_key == "win"
+            if m.tag_names_for(:note).include?("入玉")
+              m.battle.final_info.toryo_or_tsumi
+            end
+          end
         },
-      }, {
+      },
+      {
         key: "段級位差",
         message: nil,
         badge_params: nil,
@@ -283,11 +324,7 @@ module Swars
               v = { message: "格上の人に当然のように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
             end
           end
-          # if Rails.env.local?
-          #   v[:message] = "(#{d})#{v[:message]}"
-          # end
           v
-          # end
         },
       },
     ]
