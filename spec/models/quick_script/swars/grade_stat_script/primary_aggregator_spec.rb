@@ -1,14 +1,8 @@
 require "rails_helper"
 
-module QuickScript
-  module Swars
-    class GradeStatScript
-      RSpec.describe PrimaryAggregator, type: :model do
-        it "works" do
-          PrimaryAggregator.mock_setup
-          assert { PrimaryAggregator.new.call[:total_user_count] == 2 }
-        end
-      end
-    end
+RSpec.describe QuickScript::Swars::GradeStatScript::PrimaryAggregator, type: :model do
+  it "works" do
+    QuickScript::Swars::GradeStatScript::PrimaryAggregator.mock_setup
+    assert { QuickScript::Swars::GradeStatScript::PrimaryAggregator.new.call[:total_user_count] == 2 }
   end
 end

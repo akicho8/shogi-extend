@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# == Schema Information ==
+# == Swars::Schema Swars::Information ==
 #
-# Preset (presets as Preset)
+# Swars::Preset (presets as Swars::Preset)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -15,16 +15,14 @@
 
 require "rails_helper"
 
-module Swars
-  RSpec.describe "手合割", type: :model, swars_spec: true do
-    it "works" do
-      battle = Battle.create!
-      assert { battle.preset_info.name == "平手" }
-    end
+RSpec.describe "手合割", type: :model, swars_spec: true do
+  it "works" do
+    battle = Swars::Battle.create!
+    assert { battle.preset_info.name == "平手" }
+  end
 
-    it "scope" do
-      assert { Battle.preset_eq("平手") }
-      assert { Battle.preset_not_eq("平手") }
-    end
+  it "scope" do
+    assert { Swars::Battle.preset_eq("平手") }
+    assert { Swars::Battle.preset_not_eq("平手") }
   end
 end

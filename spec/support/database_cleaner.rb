@@ -6,11 +6,11 @@ if defined?(DatabaseCleaner)
     end
 
     # デフォルト
-    config.before(:example) do |e|
+    config.before(:suite) do |e|
       # if e.metadata[:type] == :system
       # else
       DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.clean_with(:transaction)
+      DatabaseCleaner.clean_with(:truncation)
       # end
     end
 

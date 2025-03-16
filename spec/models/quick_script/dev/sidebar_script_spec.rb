@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::SidebarScript, type: :model do
-    it "works" do
-      assert { Dev::SidebarScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::SidebarScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::SidebarScript.new.as_json }
   end
 end

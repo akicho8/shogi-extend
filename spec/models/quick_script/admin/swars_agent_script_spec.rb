@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Admin::SwarsAgentScript, type: :model do
-    it "works" do
-      assert { Admin::SwarsAgentScript.new.call }
-    end
+RSpec.describe QuickScript::Admin::SwarsAgentScript, type: :model do
+  it "works" do
+    assert { QuickScript::Admin::SwarsAgentScript.new.call }
   end
 end

@@ -1,11 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  module Account
-    RSpec.describe "OrderedIndex", type: :model do
-      it "works" do
-        assert { OrderedIndex.size == 8 }
-      end
-    end
+RSpec.describe QuickScript::Account::OrderedIndex, type: :model do
+  it "works" do
+    assert { QuickScript::Account::OrderedIndex.size == 8 }
   end
 end

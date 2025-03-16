@@ -1,11 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  module Swars
-    RSpec.describe SearchScript, type: :model do
-      it "works" do
-        assert { SearchScript.new.as_json }
-      end
-    end
+RSpec.describe QuickScript::Swars::SearchScript, type: :model do
+  it "works" do
+    assert { QuickScript::Swars::SearchScript.new.as_json }
   end
 end

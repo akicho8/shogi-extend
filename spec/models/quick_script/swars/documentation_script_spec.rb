@@ -1,13 +1,11 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Swars::DocumentationScript, type: :model do
-    it "works" do
-      assert { Swars::DocumentationScript.new.call }
-    end
+RSpec.describe QuickScript::Swars::DocumentationScript, type: :model do
+  it "works" do
+    assert { QuickScript::Swars::DocumentationScript.new.call }
+  end
 
-    it "継承の継承だけど Dispatcher.all に出てくる" do
-      assert { Dispatcher.all.include?(Swars::DocumentationScript) }
-    end
+  it "継承の継承だけど Dispatcher.all に出てくる" do
+    assert { QuickScript::Dispatcher.all.include?(QuickScript::Swars::DocumentationScript) }
   end
 end

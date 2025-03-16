@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lineage (wkbk_lineages as Wkbk::Lineage)
+# Wkbk::Lineage (wkbk_lineages as Wkbk::Lineage)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -15,19 +15,11 @@
 
 require "rails_helper"
 
-module Wkbk
-  RSpec.describe Lineage, type: :model do
-    include WkbkSupportMethods
+RSpec.describe Wkbk::Lineage, type: :model do
+  include WkbkSupportMethods
 
-    it "works" do
-      Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
-      assert { Lineage.all.count >= 1 }
-    end
+  it "works" do
+    Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
+    assert { Wkbk::Lineage.all.count >= 1 }
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >> 
-# >> Finished in 0.33905 seconds (files took 2.26 seconds to load)
-# >> 1 example, 0 failures
-# >> 

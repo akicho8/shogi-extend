@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe MarkdownInfo, type: :model do
-    it "works" do
-      assert { MarkdownInfo.values.all?(&:markdown_text) }
-    end
+RSpec.describe QuickScript::MarkdownInfo, type: :model do
+  it "works" do
+    assert { QuickScript::MarkdownInfo.values.all?(&:markdown_text) }
   end
 end

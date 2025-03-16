@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::SessionScript, type: :model do
-    it "works" do
-      assert { Dev::SessionScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::SessionScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::SessionScript.new.as_json }
   end
 end

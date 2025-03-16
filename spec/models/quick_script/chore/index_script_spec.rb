@@ -1,24 +1,22 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Chore::IndexScript, type: :model do
-    it "works" do
-      assert { Chore::IndexScript.new.call }
-    end
+RSpec.describe QuickScript::Chore::IndexScript, type: :model do
+  it "works" do
+    assert { QuickScript::Chore::IndexScript.new.call }
+  end
 
-    it "指定のグループで絞る" do
-      Chore::IndexScript.new(qs_group_only: "dev").all.all? { |e| e.qs_group_info.key == :dev }
-    end
+  it "指定のグループで絞る" do
+    QuickScript::Chore::IndexScript.new(qs_group_only: "dev").all.all? { |e| e.qs_group_info.key == :dev }
+  end
 
-    it "指定のグループで絞っているときタイトルはそのグループになる" do
-      assert { Chore::IndexScript.new.title == "Index" }
-      assert { Chore::IndexScript.new(qs_group_only: "dev").title == "*開発用*" }
-    end
+  it "指定のグループで絞っているときタイトルはそのグループになる" do
+    assert { QuickScript::Chore::IndexScript.new.title == "Index" }
+    assert { QuickScript::Chore::IndexScript.new(qs_group_only: "dev").title == "*開発用*" }
+  end
 
-    it "qs_invisible を有効にしているスクリプトは見えないが「*」で検索すると見える" do
-      assert { Chore::IndexScript.new(query: " ").all.include?(Dev::InvisibleScript) == false }
-      assert { Chore::IndexScript.new(query: "*").all.include?(Dev::InvisibleScript) == true  }
-    end
+  it "qs_invisible を有効にしているスクリプトは見えないが「*」で検索すると見える" do
+    assert { QuickScript::Chore::IndexScript.new(query: " ").all.include?(QuickScript::Dev::InvisibleScript) == false }
+    assert { QuickScript::Chore::IndexScript.new(query: "*").all.include?(QuickScript::Dev::InvisibleScript) == true  }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

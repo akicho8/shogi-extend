@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::EmojiScript, type: :model do
-    it "works" do
-      assert { Dev::EmojiScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::EmojiScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::EmojiScript.new.as_json }
   end
 end

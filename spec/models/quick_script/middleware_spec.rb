@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Middleware, type: :model do
-    it "works" do
-      assert { Middleware }
-    end
+RSpec.describe QuickScript::Middleware, type: :model do
+  it "works" do
+    assert { QuickScript::Middleware }
   end
 end

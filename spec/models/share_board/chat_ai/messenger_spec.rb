@@ -1,13 +1,11 @@
 require "rails_helper"
 
-module ShareBoard
-  RSpec.describe ChatAi::Messenger do
-    before do
-      ShareBoard.setup
-    end
+RSpec.describe ShareBoard::ChatAi::Messenger do
+  before do
+    ShareBoard.setup
+  end
 
-    it "works" do
-      ChatAi::Messenger.new.call("TEST OK")
-    end
+  it "works" do
+    ShareBoard::ChatAi::Messenger.new.call("TEST OK")
   end
 end

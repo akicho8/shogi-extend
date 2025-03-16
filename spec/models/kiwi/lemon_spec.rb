@@ -32,94 +32,92 @@
 
 require "rails_helper"
 
-module Kiwi
-  RSpec.describe Lemon, type: :model, kiwi: true do
-    include KiwiSupport
+RSpec.describe Kiwi::Lemon, type: :model, kiwi: true do
+  include KiwiSupport
 
-    it "動画作成" do
-      lemon1.main_process
-      lemon1.reload
+  it "動画作成" do
+    lemon1.main_process
+    lemon1.reload
 
-      assert { lemon1.status_key == "成功" }
+    assert { lemon1.status_key == "成功" }
 
-      assert { lemon1.real_path.to_s.match?(/public/) }
-      assert { lemon1.browser_path.match?(/system.*mp4/) }
+    assert { lemon1.real_path.to_s.match?(/public/) }
+    assert { lemon1.browser_path.match?(/system.*mp4/) }
 
-      assert { lemon1.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
-      assert { lemon1.thumbnail_browser_path.match?(/system.*thumbnail/) }
-      assert { lemon1.thumbnail_real_path.exist? == false }
-    end
+    assert { lemon1.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
+    assert { lemon1.thumbnail_browser_path.match?(/system.*thumbnail/) }
+    assert { lemon1.thumbnail_real_path.exist? == false }
+  end
 
-    it "指定の時間内にワーカーが動いてなかったら動かす" do
-      lemon1
-      Lemon.background_job_kick_if_period(notify: true)
-    end
+  it "指定の時間内にワーカーが動いてなかったら動かす" do
+    lemon1
+    Kiwi::Lemon.background_job_kick_if_period(notify: true)
+  end
 
-    it "ワーカーが動いてなかったら動かす" do
-      lemon1
-      Lemon.background_job_kick
-    end
+  it "ワーカーが動いてなかったら動かす" do
+    lemon1
+    Kiwi::Lemon.background_job_kick
+  end
 
-    it "ワーカー関係なく全処理実行" do
-      lemon1
-      Lemon.background_job
-    end
+  it "ワーカー関係なく全処理実行" do
+    lemon1
+    Kiwi::Lemon.background_job
+  end
 
-    it "ゾンビを成仏させる" do
-      Lemon.zombie_kill
-    end
+  it "ゾンビを成仏させる" do
+    Kiwi::Lemon.zombie_kill
+  end
 
-    it "info" do
-      lemon1
-      assert { Lemon.info }
-    end
+  it "info" do
+    lemon1
+    assert { Kiwi::Lemon.info }
+  end
 
-    it "「みんな」の反映" do
-      lemon1
-      Lemon.everyone_broadcast
-    end
+  it "「みんな」の反映" do
+    lemon1
+    Kiwi::Lemon.everyone_broadcast
+  end
 
-    it "Bananaと結び付いていないレコードたち" do
-      lemon1
-      assert { Lemon.single_only == [lemon1] } # Banana と結び付いていないものたち
-      banana1
-      assert { Lemon.single_only == [] } # Banana と結び付いたので空
-    end
+  it "Bananaと結び付いていないレコードたち" do
+    lemon1
+    assert { Kiwi::Lemon.single_only == [lemon1] } # Banana と結び付いていないものたち
+    banana1
+    assert { Kiwi::Lemon.single_only == [] } # Banana と結び付いたので空
+  end
 
-    it "reset" do
-      expect { lemon1.reset }.not_to raise_error
-    end
+  it "reset" do
+    expect { lemon1.reset }.not_to raise_error
+  end
 
-    it "advanced_kif_info" do
-      assert { lemon1.advanced_kif_info }
-    end
+  it "advanced_kif_info" do
+    assert { lemon1.advanced_kif_info }
+  end
 
-    it "jsonでBananaと結び付いているかわかる" do
-      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] == nil }
-      banana1
-      lemon1.reload
-      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] }
-    end
+  it "jsonでBananaと結び付いているかわかる" do
+    assert { lemon1.as_json(Kiwi::Lemon.json_struct_for_list)["banana"] == nil }
+    banana1
+    lemon1.reload
+    assert { lemon1.as_json(Kiwi::Lemon.json_struct_for_list)["banana"] }
+  end
 
-    it "ffmpegのssオプションで動画の長さを指定すると失敗するため「長さ-1」でclampする" do
-      lemon1.main_process
-      lemon1.reload
-      assert { lemon1.duration == 6 }
-      assert { lemon1.ffmpeg_ss_option_max == 5 }
-      assert { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
-    end
+  it "ffmpegのssオプションで動画の長さを指定すると失敗するため「長さ-1」でclampする" do
+    lemon1.main_process
+    lemon1.reload
+    assert { lemon1.duration == 6 }
+    assert { lemon1.ffmpeg_ss_option_max == 5 }
+    assert { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
+  end
 
-    it "tag_list" do
-      assert { lemon1.tag_list == ["対居飛車", "居飛車"] }
-    end
+  it "tag_list" do
+    assert { lemon1.tag_list == ["対居飛車", "居飛車"] }
+  end
 
-    it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do
-      lemon1.main_process
-      lemon1.reload
-      assert { lemon1.real_path.exist? }
-      Lemon.cleanup(expires_in: 0, execute: true)
-      assert { !lemon1.real_path.exist? }
-      assert { !Lemon.exists?(lemon1.id) }
-    end
+  it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do
+    lemon1.main_process
+    lemon1.reload
+    assert { lemon1.real_path.exist? }
+    Kiwi::Lemon.cleanup(expires_in: 0, execute: true)
+    assert { !lemon1.real_path.exist? }
+    assert { !Kiwi::Lemon.exists?(lemon1.id) }
   end
 end

@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::FetchIndexScript, type: :model do
-    it "works" do
-      assert { Dev::FetchIndexScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::FetchIndexScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::FetchIndexScript.new.as_json }
   end
 end

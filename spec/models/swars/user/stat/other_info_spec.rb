@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module Swars
-  RSpec.describe User::Stat::OtherInfo, type: :model, swars_spec: true do
-    it "works" do
-      assert { User::Stat::OtherInfo.values }
-    end
+RSpec.describe Swars::User::Stat::OtherInfo, type: :model, swars_spec: true do
+  it "works" do
+    assert { Swars::User::Stat::OtherInfo.values }
   end
 end

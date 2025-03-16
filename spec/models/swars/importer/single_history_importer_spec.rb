@@ -1,13 +1,9 @@
 require "rails_helper"
 
-module Swars
-  module Importer
-    RSpec.describe SingleHistoryImporter, type: :model, swars_spec: true do
-      it "works" do
-        assert { Battle.count == 0 }
-        SingleHistoryImporter.new(user_key: "DevUser1", gtype: "").call
-        assert { Battle.count == 3 }
-      end
-    end
+RSpec.describe Swars::Importer::SingleHistoryImporter, type: :model, swars_spec: true do
+  it "works" do
+    assert { Swars::Battle.count == 0 }
+    Swars::Importer::SingleHistoryImporter.new(user_key: "DevUser1", gtype: "").call
+    assert { Swars::Battle.count == 3 }
   end
 end

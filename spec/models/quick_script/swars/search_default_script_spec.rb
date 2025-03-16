@@ -1,11 +1,9 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Swars::SearchDefaultScript, type: :model do
-    it "works" do
-      assert { Swars::SearchDefaultScript.new.as_json }
-      assert { Swars::SearchDefaultScript.new({swars_search_default_key: "alice"}, {_method: "post"}).as_json[:flash][:notice] == "記憶しました" }
-      assert { Swars::SearchDefaultScript.new({swars_search_default_key: ""}, {_method: "post"}).as_json[:flash][:notice]      == "忘れました"   }
-    end
+RSpec.describe QuickScript::Swars::SearchDefaultScript, type: :model do
+  it "works" do
+    assert { QuickScript::Swars::SearchDefaultScript.new.as_json }
+    assert { QuickScript::Swars::SearchDefaultScript.new({swars_search_default_key: "alice"}, {_method: "post"}).as_json[:flash][:notice] == "記憶しました" }
+    assert { QuickScript::Swars::SearchDefaultScript.new({swars_search_default_key: ""}, {_method: "post"}).as_json[:flash][:notice]      == "忘れました"   }
   end
 end

@@ -1,11 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  module Swars
-    RSpec.describe ProScript, type: :model do
-      it "works" do
-        assert { ProScript.new.as_json[:redirect_to] }
-      end
-    end
+RSpec.describe QuickScript::Swars::ProScript, type: :model do
+  it "works" do
+    assert { QuickScript::Swars::ProScript.new.as_json[:redirect_to] }
   end
 end

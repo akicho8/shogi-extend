@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::SleepScript, type: :model do
-    it "works" do
-      assert { Dev::SleepScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::SleepScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::SleepScript.new.as_json }
   end
 end

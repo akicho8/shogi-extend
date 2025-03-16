@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module Swars
-  RSpec.describe BattleKeyGenerator, type: :model, swars_spec: true do
-    it "generate" do
-      assert { BattleKeyGenerator.new.generate.kind_of? BattleKey }
-    end
+RSpec.describe Swars::BattleKeyGenerator, type: :model, swars_spec: true do
+  it "generate" do
+    assert { Swars::BattleKeyGenerator.new.generate.kind_of? Swars::BattleKey }
   end
 end

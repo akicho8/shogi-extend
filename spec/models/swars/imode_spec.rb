@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# == Schema Information ==
+# == Swars::Schema Swars::Information ==
 #
-# Xmode (swars_xmodes as Swars::Xmode)
+# Swars::Xmode (swars_xmodes as Swars::Xmode)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -15,22 +15,20 @@
 
 require "rails_helper"
 
-module Swars
-  RSpec.describe Imode, type: :model, swars_spec: true do
-    it "name" do
-      assert { Imode.fetch("通常").name == "通常" }
-      assert { Imode.fetch("スプリント").name == "スプリント" }
-    end
+RSpec.describe Swars::Imode, type: :model, swars_spec: true do
+  it "name" do
+    assert { Swars::Imode.fetch("通常").name == "通常" }
+    assert { Swars::Imode.fetch("スプリント").name == "スプリント" }
+  end
 
-    it "relation" do
-      imode = Imode.fetch("スプリント")
-      user1 = User.create!(user_key: "user1")
-      user2 = User.create!(user_key: "user2")
-      battle = Battle.create_with_members!([user1, user2], imode: imode)
-      assert { battle.imode == imode }
+  it "relation" do
+    imode = Swars::Imode.fetch("スプリント")
+    user1 = Swars::User.create!(user_key: "user1")
+    user2 = Swars::User.create!(user_key: "user2")
+    battle = Swars::Battle.create_with_members!([user1, user2], imode: imode)
+    assert { battle.imode == imode }
 
-      assert { imode.battles == [battle] }
-      assert { imode.memberships == battle.memberships }
-    end
+    assert { imode.battles == [battle] }
+    assert { imode.memberships == battle.memberships }
   end
 end

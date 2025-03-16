@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::NullScript, type: :model do
-    it "works" do
-      assert { Dev::NullScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::NullScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::NullScript.new.as_json }
   end
 end

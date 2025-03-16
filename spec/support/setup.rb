@@ -10,12 +10,17 @@ RSpec.configure do |config|
     Swars::Final.setup
   end
 
-  config.before(:context) do
-    Swars::Battle.destroy_all
-    Swars::User.destroy_all
-  end
+  # config.before(:context) do
+  # end
 
   config.before(:example) do
+    ForeignKey.disabled
+    Swars::Battle.destroy_all
+    Swars::User.destroy_all
+
     ActionMailer::Base.deliveries.clear
   end
+
+  # config.after(:example) do
+  # end
 end

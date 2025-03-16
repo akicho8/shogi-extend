@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# == Schema Information ==
+# == Swars::Schema Swars::Information ==
 #
-# Xmode (swars_xmodes as Swars::Xmode)
+# Swars::Xmode (swars_xmodes as Swars::Xmode)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -15,14 +15,12 @@
 
 require "rails_helper"
 
-module Swars
-  RSpec.describe XmodeInfo, type: :model, swars_spec: true do
-    it "alias" do
-      assert { XmodeInfo.fetch("通常").name == "野良" }
-    end
+RSpec.describe Swars::XmodeInfo, type: :model, swars_spec: true do
+  it "alias" do
+    assert { Swars::XmodeInfo.fetch("通常").name == "野良" }
+  end
 
-    it "将棋ウォーズ側のキー(sw_side_key)で引ける" do
-      assert { XmodeInfo.fetch("normal").name == "野良" }
-    end
+  it "将棋ウォーズ側のキー(sw_side_key)で引ける" do
+    assert { Swars::XmodeInfo.fetch("normal").name == "野良" }
   end
 end

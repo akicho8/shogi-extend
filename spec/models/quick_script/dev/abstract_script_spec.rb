@@ -1,10 +1,8 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::AbstractScript, type: :model do
-    it "works" do
-      assert { Dispatcher.all.include?(Dev::NullScript) }
-      assert { Dispatcher.all.exclude?(Dev::AbstractScript) }
-    end
+RSpec.describe QuickScript::Dev::AbstractScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dispatcher.all.include?(QuickScript::Dev::NullScript) }
+    assert { QuickScript::Dispatcher.all.exclude?(QuickScript::Dev::AbstractScript) }
   end
 end

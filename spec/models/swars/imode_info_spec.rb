@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# == Schema Information ==
+# == Swars::Schema Swars::Information ==
 #
-# Imode (swars_imodes as Swars::Imode)
+# Swars::Imode (swars_imodes as Swars::Imode)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -15,11 +15,9 @@
 
 require "rails_helper"
 
-module Swars
-  RSpec.describe ImodeInfo, type: :model, swars_spec: true do
-    it "works" do
-      assert { ImodeInfo.fetch(:sprint).name == "スプリント" }
-      assert { ImodeInfo.fetch("スプリント").name == "スプリント" }
-    end
+RSpec.describe Swars::ImodeInfo, type: :model, swars_spec: true do
+  it "works" do
+    assert { Swars::ImodeInfo.fetch(:sprint).name == "スプリント" }
+    assert { Swars::ImodeInfo.fetch("スプリント").name == "スプリント" }
   end
 end

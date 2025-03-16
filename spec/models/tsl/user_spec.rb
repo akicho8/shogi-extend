@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# == Schema Information ==
+# == Tsl::Schema Tsl::Information ==
 #
-# ユーザー (users as User)
+# ユーザー (users as Tsl::User)
 #
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 # | name                   | desc                       | type        | opts                | refs | index |
@@ -10,12 +10,12 @@
 # | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
+# | name_input_at          | Tsl::Name input at              | datetime    |                     |      |       |
 # | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
 # | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
 # | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
+# | reset_password_token   | Tsl::Reset password token       | string(255) |                     |      | C!    |
 # | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
 # | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
 # | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
@@ -28,24 +28,22 @@
 # | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
 # | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
 # | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
+# | unlock_token           | Tsl::Unlock token               | string(255) |                     |      | E!    |
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 require "rails_helper"
 
-module Tsl
-  RSpec.describe User, type: :model do
-    before do
-      Tsl.setup
-    end
+RSpec.describe Tsl::User, type: :model do
+  before do
+    Tsl.setup
+  end
 
-    let :record do
-      User.first
-    end
+  let :record do
+    Tsl::User.first
+  end
 
-    it "works" do
-      assert { record.valid? }
-    end
+  it "works" do
+    assert { record.valid? }
   end
 end

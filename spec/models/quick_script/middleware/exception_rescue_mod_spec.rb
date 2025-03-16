@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Middleware::ExceptionRescueMod, type: :model do
-    it "works" do
-      assert { Middleware::ExceptionRescueMod }
-    end
+RSpec.describe QuickScript::Middleware::ExceptionRescueMod, type: :model do
+  it "works" do
+    assert { QuickScript::Middleware::ExceptionRescueMod }
   end
 end

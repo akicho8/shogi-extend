@@ -1,10 +1,8 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Middleware::ThrottleMod, type: :model do
-    it "works" do
-      object = Dev::NullScript.new
-      assert { object.throttle }
-    end
+RSpec.describe QuickScript::Middleware::ThrottleMod, type: :model do
+  it "works" do
+    object = QuickScript::Dev::NullScript.new
+    assert { object.throttle }
   end
 end

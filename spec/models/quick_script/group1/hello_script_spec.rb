@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Group1::HelloScript, type: :model do
-    it "works" do
-      assert { Group1::HelloScript.new.call }
-    end
+RSpec.describe QuickScript::Group1::HelloScript, type: :model do
+  it "works" do
+    assert { QuickScript::Group1::HelloScript.new.call }
   end
 end

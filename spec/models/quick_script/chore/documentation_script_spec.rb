@@ -1,11 +1,9 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Chore::DocumentationScript, type: :model do
-    it "works" do
-      assert { Chore::DocumentationScript.new(page_layout: :pl_content_with_padding).call }
-      assert { Chore::DocumentationScript.new(page_layout: :pl_stripped_content).call     }
-      assert { Chore::DocumentationScript.new(page_layout: :pl_default).call              }
-    end
+RSpec.describe QuickScript::Chore::DocumentationScript, type: :model do
+  it "works" do
+    assert { QuickScript::Chore::DocumentationScript.new(page_layout: :pl_content_with_padding).call }
+    assert { QuickScript::Chore::DocumentationScript.new(page_layout: :pl_stripped_content).call     }
+    assert { QuickScript::Chore::DocumentationScript.new(page_layout: :pl_default).call              }
   end
 end

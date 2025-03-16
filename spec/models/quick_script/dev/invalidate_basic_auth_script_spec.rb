@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::InvalidateBasicAuthScript, type: :model do
-    it "works" do
-      assert { Dev::InvalidateBasicAuthScript.new.as_json }
-    end
+RSpec.describe QuickScript::Dev::InvalidateBasicAuthScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::InvalidateBasicAuthScript.new.as_json }
   end
 end

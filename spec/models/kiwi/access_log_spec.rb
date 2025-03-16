@@ -18,28 +18,26 @@
 
 require "rails_helper"
 
-module Kiwi
-  RSpec.describe AccessLog, type: :model, kiwi: true do
-    include KiwiSupport
+RSpec.describe Kiwi::AccessLog, type: :model, kiwi: true do
+  include KiwiSupport
 
-    it "ログインユーザーのアクセス" do
-      assert { access_log1.user }
-      assert { access_log1.banana }
+  it "ログインユーザーのアクセス" do
+    assert { access_log1.user }
+    assert { access_log1.banana }
 
-      assert { access_log1.user.kiwi_access_logs == [access_log1] }
-      assert { access_log1.user.kiwi_access_bananas == [banana1]      }
-      assert { access_log1.user.kiwi_access_logs.uniq_histories == [banana1] }
+    assert { access_log1.user.kiwi_access_logs == [access_log1] }
+    assert { access_log1.user.kiwi_access_bananas == [banana1]      }
+    assert { access_log1.user.kiwi_access_logs.uniq_histories == [banana1] }
 
-      assert { access_log1.banana.access_logs == [access_log1]      }
-      assert { access_log1.banana.access_logs_count == 1            }
-      assert { access_log1.banana.access_log_users == [user1]       }
+    assert { access_log1.banana.access_logs == [access_log1]      }
+    assert { access_log1.banana.access_logs_count == 1            }
+    assert { access_log1.banana.access_log_users == [user1]       }
 
-      assert { access_log1.banana.access_logs == [access_log1]      }
-      assert { access_log1.banana.access_log_users == [user1]       }
-    end
+    assert { access_log1.banana.access_logs == [access_log1]      }
+    assert { access_log1.banana.access_log_users == [user1]       }
+  end
 
-    it "非ログインユーザーのアクセス" do
-      assert { access_log1 = banana1.access_logs.create! }
-    end
+  it "非ログインユーザーのアクセス" do
+    assert { access_log1 = banana1.access_logs.create! }
   end
 end

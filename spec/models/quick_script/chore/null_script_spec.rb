@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Chore::NullScript, type: :model do
-    it "works" do
-      assert { Chore::NullScript.new.call == nil }
-    end
+RSpec.describe QuickScript::Chore::NullScript, type: :model do
+  it "works" do
+    assert { QuickScript::Chore::NullScript.new.call == nil }
   end
 end

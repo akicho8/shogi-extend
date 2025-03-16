@@ -1,9 +1,7 @@
 require "rails_helper"
 
-module QuickScript
-  RSpec.describe Dev::DelegateScript, type: :model do
-    it "works" do
-      assert { Dev::DelegateScript.new.call }
-    end
+RSpec.describe QuickScript::Dev::DelegateScript, type: :model do
+  it "works" do
+    assert { QuickScript::Dev::DelegateScript.new.call }
   end
 end
