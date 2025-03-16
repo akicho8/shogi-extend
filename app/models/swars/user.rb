@@ -57,7 +57,7 @@ module Swars
     has_many :battles, through: :memberships   # 対局(複数)
 
     has_many :op_memberships, class_name: "Membership", foreign_key: "op_user_id", dependent: :destroy # (対戦相手の)対局時の情報(複数)
-    has_many :op_users, through: :op_memberships, source: :user
+    has_many :op_users, through: :op_memberships, source: :user, class_name: "Swars::User" # Rails 8 以上では class_name 必須
 
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 

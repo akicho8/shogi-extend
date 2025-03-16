@@ -79,6 +79,14 @@ module Swars
         assert { user.profile.ban_crawled_count == 0 }
         assert { user.profile.ban_crawled_at }
       end
+
+      it "op_users が互いを参照できる(重要)" do
+        battle = Battle.create!
+        black = battle.memberships.black.user
+        white = battle.memberships.white.user
+        assert { black.op_users == [white] }
+        assert { white.op_users == [black] }
+      end
     end
 
     it "対局作成時にその対局の対局日時の方が新しければユーザーが1つ保持している最終対局日時を更新する" do
