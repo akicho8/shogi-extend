@@ -54,9 +54,7 @@ set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 #   append :linked_dirs, "storage"
 # end
 
-after "deploy:published", "puma:restart"
-after "deploy:published", "sidekiq:restart"
-after "deploy:published", "nuxt:restart"
+after "deploy:published", "system:restart"
 
 tp({
     :application    => fetch(:application),

@@ -40,3 +40,19 @@
     end
   end
 end
+
+namespace :system do
+  desc "nuxt, sidekiq, puma を停止する"
+  task :stop do
+    invoke "nuxt:stop"
+    invoke "sidekiq:stop"
+    invoke "puma:stop"
+  end
+
+  desc "nuxt, sidekiq, puma を再起動する"
+  task :restart do
+    invoke "nuxt:restart"
+    invoke "sidekiq:restart"
+    invoke "puma:restart"
+  end
+end
