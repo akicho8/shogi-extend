@@ -11,7 +11,7 @@ module BattleModelMethods
 
     cattr_accessor(:fixed_defaut_time) { Time.zone.parse("0001/01/01") }
 
-    serialize :meta_info
+    serialize :meta_info, coder: YAML
 
     before_validation do
       self.meta_info ||= {}

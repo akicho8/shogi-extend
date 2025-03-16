@@ -63,6 +63,7 @@ module Swars
         ImodeInfo.each { |e| Battle.create!(imode_key: e.key) }
         assert { Battle.find_all_by_query("imode:スプリント").count == 1 }
       end
+
       it "rule" do
         RuleInfo.each { |e| Battle.create!(rule_key: e.key) }
         assert { Battle.find_all_by_query("rule:10分,3分").count == 2 }

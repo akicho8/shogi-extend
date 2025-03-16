@@ -22,8 +22,8 @@ module Kiwi
         # BUG: Hash を指定すると {} が null になるため、偶然空になったとき NOT NULL 制約でDB保存できない → 仕様らしい
         # https://github.com/rails/rails/issues/42928
         # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html#method-i-serialize
-        serialize :all_params
-        serialize :ffprobe_info
+        serialize :all_params, coder: YAML
+        serialize :ffprobe_info, coder: YAML
 
         before_validation do
           self.all_params ||= {}

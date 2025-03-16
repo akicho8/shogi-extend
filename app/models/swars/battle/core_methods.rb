@@ -2,7 +2,7 @@ module Swars
   class Battle
     concern :CoreMethods do
       included do
-        serialize :csa_seq
+        serialize :csa_seq, coder: YAML
         attr_accessor :kifu_body_for_test
         attr_accessor :strike_plan
         # attr_accessor :kifu_generator
