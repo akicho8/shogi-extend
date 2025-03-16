@@ -23,6 +23,8 @@
 require "rails_helper"
 
 RSpec.describe AppLog, type: :model do
+  before { AppLog.destroy_all }
+
   describe "DB保存" do
     describe "ログレベル" do
       it "デフォルトはinfoになっている" do
@@ -45,8 +47,9 @@ RSpec.describe AppLog, type: :model do
     end
 
     it "DBに入れないオプションがある" do
+      assert { AppLog.none? }
       assert { AppLog.debug(database: false) == nil }
-      assert { !AppLog.exists? }
+      assert { AppLog.none? }
     end
 
     it "空でも作成できる" do

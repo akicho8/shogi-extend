@@ -1,11 +1,12 @@
 if defined?(DatabaseCleaner)
   RSpec.configure do |config|
     config.before(:suite) do |e|
+      # tp AppLog
       # ForeignKey.disabled
     end
 
     # デフォルト
-    config.before(:context) do |e|
+    config.before(:example) do |e|
       # if e.metadata[:type] == :system
       # else
       DatabaseCleaner.strategy = :transaction
