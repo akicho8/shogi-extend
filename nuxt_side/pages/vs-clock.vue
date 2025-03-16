@@ -1,5 +1,6 @@
 <template lang="pug">
-XclockApp
+client-only
+  XclockApp
 </template>
 
 <script>
