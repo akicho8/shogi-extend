@@ -22,6 +22,8 @@ module Swars
       def count
         @count ||= yield_self do
           s = ids_scope.lose_only
+          s = s.joins(:battle => :imode)
+          s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.where(Membership.arel_table[:think_max].between(range))
           s.count
         end

@@ -6,8 +6,9 @@ module Swars
       class << self
         def search_params
           {
-            "勝敗" => "負け",
-            "手数" => ["<", Config.seiritsu_gteq].join,
+            "開始モード" => "通常",
+            "勝敗"       => "負け",
+            "手数"       => ["<", Config.seiritsu_gteq].join,
           }
         end
       end
@@ -19,7 +20,8 @@ module Swars
       def count
         @count ||= yield_self do
           s = ids_scope.lose_only
-          s = s.joins(:battle => :final)
+          s = s.joins(:battle => [:imode, :final])
+          s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.where(Final.arel_table[:key].eq_any([:TORYO, :CHECKMATE]))
           s = s.where(Battle.arel_table[:turn_max].lt(Config.seiritsu_gteq))
           s.count

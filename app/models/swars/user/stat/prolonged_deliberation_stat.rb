@@ -6,7 +6,8 @@ module Swars
       class << self
         def search_params
           {
-            "最大思考" => [">=", threshold].join,
+            "開始モード" => "通常",
+            "最大思考"   => [">=", threshold].join,
           }
         end
       end
@@ -23,6 +24,8 @@ module Swars
       def count
         @count ||= yield_self do
           s = ids_scope
+          s = s.joins(:battle => :imode)
+          s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.where(Membership.arel_table[:think_max].gteq(threshold))
           s.count
         end
