@@ -58,6 +58,7 @@ export class ClockBox {
 
   reset() {
     this.timer_stop()
+    Gs.assert(this.params.initial_turn != null, "this.params.initial_turn != null")
     this.turn = this.params.initial_turn // インクリメントしていく
     this.single_clocks = Location.values.map((e, i) => new SingleClock(this, i))
     this._var_init()

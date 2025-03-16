@@ -92,7 +92,7 @@ export default {
   },
   created() {
     this.clock_box = new ClockBox({
-      turn: 0,
+      initial_turn: 0,
       switched_fn: () => {
         this.$sound.play_click()
       },
