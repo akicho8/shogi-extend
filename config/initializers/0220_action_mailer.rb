@@ -1,3 +1,5 @@
+# 本来は config/environments/* のなかで個別に設定するべきだが、わかりにくいのでこちらでまとめている
+
 if Rails.env.production? || Rails.env.staging? || Rails.env.development?
   Rails.application.configure do
     case
