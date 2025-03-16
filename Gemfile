@@ -78,7 +78,7 @@ group :development do
   gem "rack-mini-profiler"
   # gem "listen", "~> 3.3"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring", ">= 4" # https://qiita.com/kanon_ayuayu/items/e5d330d1bbda68a3c82a
+  # gem "spring", ">= 4" # https://qiita.com/kanon_ayuayu/items/e5d330d1bbda68a3c82a
 end
 
 group :test do
@@ -91,7 +91,7 @@ end
 
 group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring-commands-rspec"
+  # gem "spring-commands-rspec"
 
   gem "capistrano"
   gem "capistrano-rails"        # capistrano + capistrano-bundler
