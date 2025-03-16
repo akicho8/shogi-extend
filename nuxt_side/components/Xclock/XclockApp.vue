@@ -62,17 +62,19 @@
 </template>
 
 <script>
-import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
-import { DeviseAngle  } from "@/components/models/devise_angle.js"
-import { MyMobile     } from "@/components/models/my_mobile.js"
-import { FullScreenController   } from "@/components/models/full_screen_controller.js"
-import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
+import { ClockBox                   } from "@/components/models/clock_box/clock_box.js"
+import { DeviseAngle                } from "@/components/models/devise_angle.js"
+import { MyMobile                   } from "@/components/models/my_mobile.js"
+import { FullScreenController       } from "@/components/models/full_screen_controller.js"
+import { CcRuleInfo                 } from "@/components/models/cc_rule_info.js"
 
-import { support      } from "./support.js"
+import { support                    } from "./support.js"
 
-import { mouse_cursor_hidden_mixin         } from "../models/mouse_cursor_hidden_mixin.js"
+import { mouse_cursor_hidden_mixin  } from "../models/mouse_cursor_hidden_mixin.js"
 import { mobile_screen_adjust_mixin } from "../models/mobile_screen_adjust_mixin.js"
-import { mod_keyboard_shortcut    } from "./mod_keyboard_shortcut.js"
+import { mod_keyboard_shortcut      } from "./mod_keyboard_shortcut.js"
+
+import { Gs                         } from "@/components/models/gs.js"
 
 export default {
   name: "XclockApp",
@@ -275,7 +277,7 @@ export default {
     },
     rule_set(params) {
       params = {...params}
-      this.$gs.assert("initial_main_min" in params, '"initial_main_min" in params')
+      Gs.assert("initial_main_min" in params, '"initial_main_min" in params')
       params.initial_main_sec = params.initial_main_min * 60
       this.clock_box.rule_set_all(params)
     },
@@ -284,11 +286,9 @@ export default {
     },
   },
   computed: {
-    base() { return this },
-    CcRuleInfo() { return CcRuleInfo },
-    mouse_cursor_hidden_p() {
-      return this.clock_box.timer && !this.mouse_cursor_p
-    },
+    base()                  { return this                                         },
+    CcRuleInfo()            { return CcRuleInfo                                   },
+    mouse_cursor_hidden_p() { return this.clock_box.timer && !this.mouse_cursor_p },
   },
 }
 </script>
