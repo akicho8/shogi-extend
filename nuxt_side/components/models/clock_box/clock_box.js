@@ -36,12 +36,13 @@ export class ClockBox {
     this.turn            = null   // 0または1が手番。null:手番が設定されていない。順番ではなく 0:黒 1:白 と決まっているため駒落ちの場合1にすること
     this.single_clocks   = null   // それぞれの時計
 
+    // _var_init で初期値を入れる
     this.pause_or_play_p = null   // [PLAY] で true になり [STOP] で false になる
     this.play_count      = null   // stop で 0 になり play のたびに +1
     this.pause_count     = null   // stop で 0 になり pause のたびに +1
     this.resume_count    = null   // stop で 0 になり resume のたびに +1
     this.switch_count    = null   // 時計を切り替えた回数
-    this.elapsed_sec     = 0      // 直近の経過時間
+    this.elapsed_sec     = null   // 直近の経過時間
 
     this.speed = 1.0
 
