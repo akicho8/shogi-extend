@@ -44,7 +44,7 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block do
       sleep(@initial_read_sec)                      # alice 側が切れ負けるのでそれまで待つ
       nil                                           # bob は 4 秒後に「時間切れでbobの勝ち」モーダルを表示予約する
-      sleep(@CC_TIMEOUT_BC_DELAY)                # alice 側から 2 秒後に
+      sleep(@CC_TIMEOUT_BC_DELAY)                   # alice 側から 2 秒後に
       assert_timeout_modal_exist                    # 通知が来て、その予約はキャンセルされて「時間切れでbobの勝ち」モーダルを表示する
       cc_timeout_modal_close                           # assert_text のためにモーダルを閉じる
       assert_text("BC受信によってモーダル起動開始") # alice からの通知によってモーダル起動したことがわかる
@@ -60,11 +60,10 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { case1("bob")   }
     a_block { clock_start    }
     b_block do
-      sleep(@initial_read_sec)       # alice 側が切れ負けるのでそれまで待つ
-      assert_timeout_modal_exist     # bob 側が CC_TIMEOUT_JUDGE_DELAY (0) なので即座にモーダル(bobの勝ち)が表示される
-      sleep(@CC_TIMEOUT_BC_DELAY) # その直後に @CC_TIMEOUT_BC_DELAY (3) 秒後に alice から通知がくる
-      sleep(1)                       # 通知が来た瞬間にモーダルを消えていてはいけないので残しておく
-      cc_timeout_modal_close            # assert_text が動くようにいったんモーダルを除去する
+      sleep(@initial_read_sec)         # alice 側が切れ負けるのでそれまで待つ
+      assert_timeout_modal_exist       # bob 側が CC_TIMEOUT_JUDGE_DELAY (0) なので即座にモーダル(bobの勝ち)が表示される
+      sleep(@CC_TIMEOUT_BC_DELAY * 2)  # その直後に @CC_TIMEOUT_BC_DELAY (3) 秒後に alice から通知がくる (余裕をもって2倍待つ)
+      cc_timeout_modal_close           # assert_text が動くようにいったんモーダルを除去する
       assert_text("BC受信時にはすでにモーダル起動済み")
     end
     a_block { assert_timeout_modal_exist }
