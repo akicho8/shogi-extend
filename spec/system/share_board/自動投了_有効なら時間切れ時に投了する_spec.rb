@@ -14,7 +14,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :auto_resign_key      => auto_resign_key,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })
-    debugger
     sleep(initial_read_sec)
     assert_timeout_modal_exist
     cc_timeout_modal_close
