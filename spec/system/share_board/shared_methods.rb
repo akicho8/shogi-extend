@@ -95,8 +95,8 @@ module SharedMethods
     find(".rsm_open_handle").click
   end
 
-  def assert_system_variable(key, value)
-    assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
+  def assert_system_variable(key, value, **options)
+    assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
   def assert_no_system_variable(key, value)

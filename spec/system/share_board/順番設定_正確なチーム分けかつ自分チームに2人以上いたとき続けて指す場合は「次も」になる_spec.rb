@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe "次も", type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
         :room_key            => :test_room,
