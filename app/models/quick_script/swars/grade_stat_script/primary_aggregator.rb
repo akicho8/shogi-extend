@@ -16,7 +16,7 @@ class QuickScript::Swars::GradeStatScript
     end
 
     def call
-      primary_aggregation_second = Benchmark.realtime { aggregate }
+      primary_aggregation_second = TimeTrial.realtime { aggregate }
       {
         :counts_hash                => aggregate,
         :total_user_count           => aggregate.values.sum { |e| e[:user][:__tag_nothing__] },

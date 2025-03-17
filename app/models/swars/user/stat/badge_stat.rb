@@ -67,7 +67,7 @@ module Swars
       def execution_time_explain(sort: true)
         av = BadgeInfo.values.shuffle.collect { |e|
           if_cond = nil
-          ms = Benchmark.ms { if_cond = !!stat.instance_eval(&e.if_cond) }
+          ms = TimeTrial.ms { if_cond = !!stat.instance_eval(&e.if_cond) }
           [ms, e, if_cond]
         }
         if sort

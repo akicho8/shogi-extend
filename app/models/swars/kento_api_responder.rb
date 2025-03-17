@@ -55,7 +55,7 @@ module Swars
     def to_h_with_benchmark
       count = @user.battles.count
       response = nil
-      sec = Benchmark.realtime { response = to_h }
+      sec = TimeTrial.realtime { response = to_h }
       diff = @user.battles.count - count
       emoji = @crawled ? ":KENTO_SOME:" : ":KENTO_NONE:"
       body = [@user.key, "%+d" % diff, "%.1f s" % sec, *@notify_params.values].compact.inspect

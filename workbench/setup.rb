@@ -3,7 +3,7 @@ ActiveRecord::Base.connection.disable_query_cache!
 
 module WorkbenchExtension
   def _(n = 1)
-    "%.2f ms" % Benchmark.ms { n.times { yield } }
+    "%.2f ms" % TimeTrial.ms { n.times { yield } }
   end
 
   def sql(&block)

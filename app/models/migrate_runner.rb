@@ -15,7 +15,7 @@ class MigrateRunner
     public_methods.grep(/\A(step\w+)/).sort.each do |e|
       p [Time.now.to_s, e, :begin]
       AppLog.important("[#{e}][開始]")
-      ms = Benchmark.ms { public_send(e) }
+      ms = TimeTrial.ms { public_send(e) }
       AppLog.important("[#{e}][完了] #{ms}")
       p [Time.now.to_s, e, :end]
     end

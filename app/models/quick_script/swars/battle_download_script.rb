@@ -168,7 +168,7 @@ module QuickScript
       def to_zip
         @to_zip ||= yield_self do
           io = nil
-          @processed_second = Benchmark.realtime { io = zip_builder.to_blob }
+          @processed_second = TimeTrial.realtime { io = zip_builder.to_blob }
           AppLog.important(subject: "将棋ウォーズ棋譜ダウンロード", body: summary)
           log_create!
           io

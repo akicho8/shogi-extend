@@ -18,7 +18,7 @@ class QuickScript::Swars::TacticStatScript
     end
 
     def call
-      primary_aggregation_second = Benchmark.realtime { aggregate }
+      primary_aggregation_second = TimeTrial.realtime { aggregate }
       {
         :period_based_agg           => period_based_agg,
         :primary_aggregated_at      => Time.current,

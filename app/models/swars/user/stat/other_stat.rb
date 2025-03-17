@@ -37,7 +37,7 @@ module Swars
       def execution_time_explain(sort: true)
         av = OtherInfo.collect { |e|
           body = nil
-          ms = Benchmark.ms { body = @stat.instance_eval(&e.body) }
+          ms = TimeTrial.ms { body = @stat.instance_eval(&e.body) }
           [ms, e, body]
         }
         if sort

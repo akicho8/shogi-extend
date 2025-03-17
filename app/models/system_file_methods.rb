@@ -100,7 +100,7 @@ module SystemFileMethods
       begin
         counter = Rails.cache.increment(unique_key)
         log! "[再入:#{counter}][begin]" # もし2になっていたらAPI実行中に同じAPIが再度呼ばれていて危険
-        ms = "%.2f ms" % Benchmark.ms { force_build_core }
+        ms = "%.2f ms" % TimeTrial.ms { force_build_core }
         log! "[再入:#{counter}][end][#{ms}]"
       ensure
         Rails.cache.decrement(unique_key)

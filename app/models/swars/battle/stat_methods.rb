@@ -1,5 +1,3 @@
-require "active_support/core_ext/benchmark"
-
 module Swars
   class Battle
     concern :StatMethods do
@@ -12,7 +10,7 @@ module Swars
       class_methods do
         def stat
           {}.tap do |hv|
-            hv[:elapsed] = Benchmark.ms { hv.update(stat_without_elapsed) }
+            hv[:elapsed] = TimeTrial.ms { hv.update(stat_without_elapsed) }
           end
         end
 
