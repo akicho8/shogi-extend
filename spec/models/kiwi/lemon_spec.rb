@@ -35,6 +35,10 @@ require "rails_helper"
 RSpec.describe Kiwi::Lemon, type: :model, kiwi: true do
   include KiwiSupport
 
+  before do
+    MediaBuilder.cache_delete_all   # => public/system/x-files/test を削除しておく
+  end
+
   it "動画作成" do
     lemon1.main_process
     lemon1.reload
