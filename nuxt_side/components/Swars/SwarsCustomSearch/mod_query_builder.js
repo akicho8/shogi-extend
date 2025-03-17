@@ -70,7 +70,7 @@ export const mod_query_builder = {
       av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
       av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
       av.push(this.values_as_query("対局モード", this.xmode_keys))
-      av.push(this.values_as_query("開始局面", this.imode_keys))
+      av.push(this.values_as_query("開始モード", this.imode_keys))
       av.push(this.values_as_query("手合割", this.preset_keys))
       av.push(this.date_range_as_query("日付", this.battled_at_range))
       av.push(this.values_as_query("対戦相手", this.vs_user_keys))
