@@ -111,8 +111,10 @@ export default {
           if (s.includes("shogiwars.heroz.jp/games/")) {
             this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めます")
           }
-          if (s.includes("/kifu.questgames.net/shogi/games/")) {
-            this.toast_warn("将棋クエストのURLには対応していません")
+          if (false) {
+            if (s.includes("/kifu.questgames.net/shogi/games/")) {
+              this.toast_warn("将棋クエストのURLには対応していません")
+            }
           }
         }
       }
