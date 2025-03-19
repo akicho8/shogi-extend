@@ -12,6 +12,7 @@ module KifuExtractor
 
     def initialize(item, options = {})
       @item = item
+
       @options = {
         url_check_head_lines: 4,
       }.merge(options)
@@ -31,7 +32,7 @@ module KifuExtractor
         info = Bioshogi::Parser.parse(str, {
             :analyzer_enable           => false,
             :analyzer_technique_enable => false,
-            :ki2_function          => false,
+            :ki2_function              => false,
             :validate_enable           => false, # 二歩を許可するため
           })
         info.formatter.container_run_once
@@ -45,7 +46,7 @@ module KifuExtractor
     # uri から取得して人間が書き込んだ問題の多いKIFを綺麗にする
     # uri は必ず KIF になっていること
     def human_very_dirty_kif_fetch_and_clean(uri)
-      v = WebAgent2.fetch(uri)           # 元が Shift_JIS なので内部で toutf8 している
+      v = WebAgent2.fetch(uri)          # 元が Shift_JIS なので内部で toutf8 している
       v = v.gsub(/\\n/, "")             # なぜか '\n' の「文字」が入っているので削除
       v = Bioshogi::Source.wrap(v).to_s # 右端の謎の全角スペースなどを削除
       v = v.remove(/^\*.*\R/)           # 観戦記者の膨大なコメントを削除
