@@ -47,7 +47,7 @@ if @environment == "production"
     # every("6 9 * * *") do
     command [
       %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction shogi_web_production | gzip > /data/shogi_extend_production/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql.gz),
-      %(ruby -r fileutils -e 'files = Dir["/var/backup/*.gz"].sort; FileUtils.rm(files - files.last(3))'),
+      %(ruby -r fileutils -e 'files = Dir["/data/shogi_extend_production/backup/*.gz"].sort; FileUtils.rm(files - files.last(3))'),
     ].join(";")
   end
 end
