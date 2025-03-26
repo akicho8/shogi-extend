@@ -49,6 +49,7 @@ class ErrorInfo
       unless v.kind_of?(String)
         v = v.pretty_inspect
       end
+      v = v.force_encoding("UTF-8") # rstripo で (Encoding::CompatibilityError) "invalid byte sequence in UTF-8" になる場合がある対策
       av << [
         "[DATA]",
         v.rstrip,
