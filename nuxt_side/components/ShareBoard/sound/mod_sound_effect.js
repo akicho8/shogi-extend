@@ -1,3 +1,14 @@
+import { Gs } from "@/components/models/gs.js"
+
+const TORYO_BGM_KEYS = [
+  "bgm_ending1",
+  "bgm_ending2",
+  // "bgm_ending3",
+  "bgm_ending4",
+  // "bgm_ending5",
+  // "bgm_ending6",
+]
+
 export const mod_sound_effect = {
   methods: {
     // 意図して持ち上げた
@@ -45,14 +56,11 @@ export const mod_sound_effect = {
     ////////////////////////////////////////////////////////////////////////////////
 
     toryo_bgm_call() {
-      this.$sound.play_random([
-        "bgm_ending1",
-        "bgm_ending2",
-        // "bgm_ending3",
-        "bgm_ending4",
-        // "bgm_ending5",
-        // "bgm_ending6",
-      ])
+      if (TORYO_BGM_KEYS.length > 0) {
+        Gs.assert(this.current_turn != null, "this.current_turn != null")
+        const index = Gs.imodulo(this.current_turn, TORYO_BGM_KEYS.length)
+        this.$sound.play(TORYO_BGM_KEYS[index])
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
