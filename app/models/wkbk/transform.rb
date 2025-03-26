@@ -19,8 +19,8 @@ module Wkbk
 
     def parse(body)
       Bioshogi::Parser.parse(body, {
-          :analyzer_enable           => false,
-          :analyzer_technique_enable => false,
+          :analysis_feature           => false,
+          :analysis_technique_feature => false,
         })
     end
   end

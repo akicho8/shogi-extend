@@ -175,7 +175,7 @@ class FreeBattle < ApplicationRecord
       # めちゃくちゃな操作でもエラーにしない
       {
         :ki2_function => false,
-        :validate_enable  => false,
+        :validate_feature  => false,
       }
     else
       {}

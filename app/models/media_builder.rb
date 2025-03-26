@@ -269,11 +269,11 @@ class MediaBuilder
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
   def parser_options
     {
-      # :analyzer_enable           => false,
-      # :analyzer_technique_enable => false,
-      :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
+      # :analysis_feature           => false,
+      # :analysis_technique_feature => false,
+      :typical_error_case => :embed, # validate_feature しているのでこのオプションは使わない？
       :ki2_function   => false,
-      :validate_enable    => false,
+      :validate_feature    => false,
       :container_class     => Bioshogi::Container::Fast,
       :turn_limit         => turn,
     }

@@ -30,10 +30,10 @@ module KifuExtractor
     def legal_valid?(str)
       begin
         info = Bioshogi::Parser.parse(str, {
-            :analyzer_enable           => false,
-            :analyzer_technique_enable => false,
+            :analysis_feature           => false,
+            :analysis_technique_feature => false,
             :ki2_function              => false,
-            :validate_enable           => false, # 二歩を許可するため
+            :validate_feature           => false, # 二歩を許可するため
           })
         info.formatter.container_run_once
         true
