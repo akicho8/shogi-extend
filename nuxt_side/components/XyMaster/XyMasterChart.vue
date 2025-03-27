@@ -22,7 +22,7 @@
                 | {{e.name}}
     .columns.is-centered
       .column.is-half
-        canvas#main_canvas(ref="main_canvas")
+        canvas(ref="main_canvas")
         template(v-if="TheApp.config.count_all_gteq > 1")
           .has-text-centered
             | {{TheApp.config.count_all_gteq}}回以上やるとチャートに登場します
@@ -179,6 +179,6 @@ export default {
   .chart_box_container
     margin-top: $xy_master_common_gap
 
-  #main_canvas
+  .main_canvas
     margin: 0 auto
 </style>

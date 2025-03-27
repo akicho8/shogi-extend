@@ -2,7 +2,7 @@
 .SwarsBattleShowTimeChart.is-unselectable
   .canvas_center
     .canvas_wrap
-      canvas#main_canvas(ref="main_canvas")
+      canvas(ref="main_canvas")
   b-field(grouped position="is-centered")
     b-field.time_chart_variant
       template(v-for="e in TheShow.TimeChartVariantInfo.values")
@@ -104,8 +104,8 @@ const CHART_CONFIG_DEFAULT = {
             //   id: "y-axis-0"
             //   type: "linear"
             //   options: {display: true, position: "left", offset: false, gridLines: {…}, scaleLabel: {…}, …}
-            //   ctx: CanvasRenderingContext2D {canvas: canvas#main_canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
-            //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 695, …}
+            //   ctx: CanvasRenderingContext2D {canvas: canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
+            //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 695, …}
             //   hidden: false
             //   fullWidth: false
             //   position: "left"
@@ -200,8 +200,8 @@ const CHART_CONFIG_DEFAULT = {
 
           // this:
           //   ChartElement {_chart: Chart, _chartInstance: Chart, _data: {…}, _options: {…}, _model: {…}, …}
-          //   _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 457, …}
-          //   _chartInstance: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 457, …}
+          //   _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 457, …}
+          //   _chartInstance: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 457, …}
           //   _data: {labels: Array(109), datasets: Array(2)}
           //   _options: {enabled: true, custom: null, mode: "nearest", position: "average", intersect: true, …}
           //   _model: {xPadding: 6, yPadding: 6, xAlign: "center", yAlign: "top", bodyFontColor: "#fff", …}
@@ -272,7 +272,7 @@ const CHART_CONFIG_DEFAULT = {
     // onHover(event, chart_elements) {
     //   // console.log("chart_elements", chart_elements)
     //   // 0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
-    //   //     _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+    //   //     _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
     //   //     _datasetIndex: 1
     //   //     _index: 8
     //   //     hidden: false
@@ -326,8 +326,8 @@ const CHART_CONFIG_DEFAULT = {
       //   Chart
       //   data: (...)
       //   id: 0
-      //   ctx: CanvasRenderingContext2D {canvas: canvas#main_canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
-      //   canvas: canvas#main_canvas.chartjs-render-monitor
+      //   ctx: CanvasRenderingContext2D {canvas: canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
+      //   canvas: canvas.chartjs-render-monitor
       //   config: {type: "line", options: {…}, __vm__: VueComponent, plugins: Array(1), chart_turn: 9, …}
       //   width: 375
       //   height: 187
@@ -335,8 +335,8 @@ const CHART_CONFIG_DEFAULT = {
       //   options: {defaultColor: "hsla(0, 0%, 0%, 0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
       //   _bufferedRender: false
       //   _layers: (4) [{…}, {…}, {…}, {…}]
-      //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
-      //   controller: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //   controller: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
       //   boxes: (4) [ChartElement, ChartElement, ChartElement, ChartElement]
       //   legend: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), _hoveredItem: null, …}
       //   titleBlock: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), fullWidth: true, …}
@@ -356,7 +356,7 @@ const CHART_CONFIG_DEFAULT = {
 
       // console.log("chart_elements", chart_elements)
       //   0: ChartElement {_chart: Chart, _datasetIndex: 1, _index: 7, hidden: false, _xScale: ChartElement, …}
-      //       _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+      //       _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
       //       _datasetIndex: 1
       //       _index: 8
       //       hidden: false
@@ -431,11 +431,11 @@ export default {
         console.log(window.chart_instance.getDatasetAtEvent(event))
         console.log(window.chart_instance.getDatasetMeta(0))
         console.log(window.chart_instance)
-        // Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+        // Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
         // data: (...)
         // id: 0
-        // ctx: CanvasRenderingContext2D {canvas: canvas#main_canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
-        // canvas: canvas#main_canvas.chartjs-render-monitor
+        // ctx: CanvasRenderingContext2D {canvas: canvas.chartjs-render-monitor, globalAlpha: 1, globalCompositeOperation: "source-over", filter: "none", imageSmoothingEnabled: true, …}
+        // canvas: canvas.chartjs-render-monitor
         // config: {type: "line", options: {…}, __vm__: VueComponent, plugins: Array(1), chart_turn: 34, …}
         // width: 375
         // height: 187
@@ -443,8 +443,8 @@ export default {
         // options: {defaultColor: "hsla(0, 0%, 0%, 0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
         // _bufferedRender: false
         // _layers: (4) [{…}, {…}, {…}, {…}]
-        // : Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
-        // controller: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+        // : Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+        // controller: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
         // boxes: (4) [ChartElement, ChartElement, ChartElement, ChartElement]
         // legend: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), _hoveredItem: null, …}
         // titleBlock: ChartElement {ctx: CanvasRenderingContext2D, options: {…}, chart: Chart, legendHitBoxes: Array(0), fullWidth: true, …}
@@ -463,7 +463,7 @@ export default {
 
         // lastActive: Array(2)
         // 0: ChartElement
-        //   _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
+        //   _chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas.chartjs-render-monitor, config: {…}, width: 375, …}
         //   _datasetIndex: 0
         //   _index: 17
         //   hidden: false

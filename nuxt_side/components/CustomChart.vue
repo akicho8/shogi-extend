@@ -1,5 +1,5 @@
 <template lang="pug">
-canvas#main_canvas.CustomChart(ref="main_canvas")
+canvas.CustomChart(ref="main_canvas")
 </template>
 
 <script>

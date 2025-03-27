@@ -2,7 +2,7 @@
 .ThreeStageLeaguePlayerChart
   .columns.is-unselectable
     .column.is-half
-      canvas#main_canvas.is-clickable(ref="main_canvas")
+      canvas.is-clickable(ref="main_canvas")
   template(v-if="development_p && false")
     | {{config}}
 </template>
