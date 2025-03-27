@@ -20,7 +20,10 @@ class AggregateCache < ApplicationRecord
     end
 
     # まとめてDBに入れる
-    def write(aggregated_value = nil)
+    def write(aggregated_value = {})
+      unless aggregated_value.kind_of?(Hash)
+        raise TypeError, "aggregated_value は Hash にしてください : #{aggregated_value.inspect}"
+      end
       create!(generation: next_generation, aggregated_value: aggregated_value)
       old_only.destroy_all
       aggregated_value
