@@ -30,7 +30,7 @@ module Swars
           return
         end
 
-        html = resp.body.force_encoding("UTF-8")
+        html = resp.body.toutf8
         record_the_most_recently_html_file_on_local(type, html)
         html
       end
