@@ -49,10 +49,11 @@ class ErrorInfo
       unless v.kind_of?(String)
         v = v.pretty_inspect
       end
-      v = v.force_encoding("UTF-8") # rstripo で (Encoding::CompatibilityError) "invalid byte sequence in UTF-8" になる場合がある対策
+      v = v.toutf8 # rstrip で (Encoding::CompatibilityError) "invalid byte sequence in UTF-8" になる場合がある対策
+      v = v.rstrip
       av << [
         "[DATA]",
-        v.rstrip,
+        v,
       ].join("\n")
     end
     av.compact.join("\n\n")
