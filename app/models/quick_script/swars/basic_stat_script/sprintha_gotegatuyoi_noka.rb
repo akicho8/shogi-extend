@@ -16,12 +16,7 @@ class QuickScript::Swars::BasicStatScript
     # >> | ｽﾌﾟﾘﾝﾄ 野良 3分 | 47.727 % | 52.273 % |     42 |     46 |   88 |
     # >> |-----------------+----------+----------+--------+--------+------|
     def call
-      [
-        { name: "通常 野良 10分",  imode_key: :normal, rule_key: :ten_min,   },
-        { name: "通常 野良 3分",   imode_key: :normal, rule_key: :three_min, },
-        { name: "通常 野良 10秒",  imode_key: :normal, rule_key: :ten_sec,   },
-        { name: "ｽﾌﾟﾘﾝﾄ 野良 3分", imode_key: :sprint, rule_key: :three_min, },
-      ].collect do |e|
+      CONDITIONS.collect do |e|
         {
           "種類"   => e[:name],
           "▲勝率" => ratio_by(e, :black).try { "%.3f %%" % (self * 100) },
