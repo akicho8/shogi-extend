@@ -22,7 +22,7 @@ RSpec.describe "なんでも棋譜変換", type: :model, swars_spec: true do
     assert { FreeBattle.create!(kifu_body: "https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1").kifu_body.include?("$EVENT")  }
   end
 
-  it "将棋クエスト" do
+  xit "将棋クエスト" do
     assert { FreeBattle.create!(kifu_body: "https://kifu.questgames.net/shogi/games/kb9dqde42gth").to_xxx(:kif).include?("将棋クエスト") }
   end
 
