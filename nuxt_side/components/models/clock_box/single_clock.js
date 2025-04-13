@@ -23,10 +23,10 @@ export class SingleClock {
     this.base  = base
     this.index = index
 
-    this.initial_main_sec  = base.params.initial_main_sec || SEC_PER_MIN * 3
-    this.initial_extra_sec = base.params.initial_extra_sec || 0
-    this.initial_read_sec  = base.params.initial_read_sec || 0
-    this.every_plus        = base.params.every_plus || 0
+    this.initial_main_sec  = base.params.initial_main_sec ?? SEC_PER_MIN * 3
+    this.initial_extra_sec = base.params.initial_extra_sec ?? 0
+    this.initial_read_sec  = base.params.initial_read_sec ?? 0
+    this.every_plus        = base.params.every_plus ?? 0
 
     this.variable_reset()
   }
