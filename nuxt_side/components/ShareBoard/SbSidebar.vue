@@ -40,9 +40,9 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="SB.room_url_copy_handle")
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="SB.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="SB.room_recreate_modal_handle" v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset(icon="home" label="部屋の情報 (対局履歴)" @click="SB.general_dashboard_modal_handle" :disabled="$gs.blank_p(SB.ac_room)")
-          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="部屋の情報(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
-          b-menu-item.is_active_unset(icon="trophy" label="部屋の情報(hrefで別タブ)" :href="SB.dashboard_url" target="_blank" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="home" label="対局履歴" @click="SB.general_dashboard_modal_handle" :disabled="$gs.blank_p(SB.ac_room)")
+          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="対局履歴(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="trophy" label="対局履歴(hrefで別タブ)" :href="SB.dashboard_url" target="_blank" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
 
         b-menu-list(label="検討")
           b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="SB.kifu_copy_handle('kif_utf8')")

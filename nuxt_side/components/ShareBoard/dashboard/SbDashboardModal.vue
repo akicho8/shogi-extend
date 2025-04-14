@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 部屋の情報
+      | 対局履歴
     b-tooltip(position="is-left" label="パーマリンク")
       a.permalink(:href="SB.dashboard_url" target="_blank")
         b-icon(icon="link")

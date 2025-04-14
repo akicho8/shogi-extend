@@ -2,7 +2,7 @@
 .SbDebugPanelsDashboard.column.is-3
   .panel
     .panel-heading
-      | 部屋の情報
+      | 対局履歴
     a.panel-block(@click="SB.general_dashboard_modal_handle") モーダル版
     a.panel-block(:href="SB.dashboard_url") LINK
   .panel.assert_system_variable
