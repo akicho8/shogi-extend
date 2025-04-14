@@ -12,6 +12,8 @@ export const AppConfig = {
   CLOCK_PRESET_USE: false,                    // 対局時計の初期設定リストを(CcRuleInfo)を表示するか？
 
   NAVBAR_COLOR_CHANGE: false,                 // 時間によってバーの色を変更するか？
+
+  GPT_FUNCTION: false,                        // ChatGPT を有効にするか？
 }
 
 if (process.env.NODE_ENV === "development") {

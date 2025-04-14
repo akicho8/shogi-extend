@@ -72,7 +72,7 @@ RSpec.configure do |config|
   end
 
   # ChatGPT 関連のテストを除外する
-  config.filter_run_excluding chat_gpt_spec: true
+  config.filter_run_excluding chat_gpt_spec: true # !AppConfig[:GPT_FUNCTION] と合わせるのが望ましい
 
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.

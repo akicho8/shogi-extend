@@ -1,3 +1,6 @@
+const ARASHI_THRESHOLD = 3      // 荒らし判定閾値
+const ARASHI_RE_RATE   = 4      // 1/n の確率で反応する
+
 // AIが発動する条件を書く
 
 import { AiResponseInfo } from "./ai_response_info.js"
@@ -5,9 +8,6 @@ import { MessageRecord } from "./message_record.js"
 import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
-
-const ARASHI_THRESHOLD = 3  // 荒らし判定閾値
-const ARASHI_RE_RATE   = 4  // 1/n の確率で反応する
 
 export const mod_chat_ai_trigger_rule = {
   data() {
@@ -34,7 +34,7 @@ export const mod_chat_ai_trigger_rule = {
 
     // /gpt xxx の xxx を自動で作る
     ai_say_for(delay, key, params) {
-      if (this.ai_mode_info.key === "ai_mode_off") { return }
+      if (!this.GPT_FUNCTION) { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
         content = [content, "返答は短かく簡潔にすること。"].join("")
@@ -50,7 +50,7 @@ export const mod_chat_ai_trigger_rule = {
     // ときどき自動で /gpt を実行する
     // このとき直前に送った人のスコープを真似する
     ai_random_say(params) {
-      if (this.ai_mode_info.key === "ai_mode_off") { return }
+      if (!this.GPT_FUNCTION) { return }
       if (this.$route.query.__system_test_now__) { return }
 
       if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
@@ -159,5 +159,7 @@ export const mod_chat_ai_trigger_rule = {
   computed: {
     ARASHI_THRESHOLD() { return parseInt(this.$route.query.ARASHI_THRESHOLD ?? ARASHI_THRESHOLD) },
     ARASHI_RE_RATE()   { return parseInt(this.$route.query.ARASHI_RE_RATE ?? ARASHI_RE_RATE) },
+
+    GPT_FUNCTION() { return this.ai_mode_info.key === "ai_mode_on" && this.AppConfig.GPT_FUNCTION },
   },
 }
