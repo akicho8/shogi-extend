@@ -27,7 +27,7 @@ class CreateSwarsBanAndProfile3 < ActiveRecord::Migration[5.1]
         t.datetime :latest_battled_at, null: true, comment: "直近の対局日時" rescue nil
       end
     end
-    
+
     Swars::User.reset_column_information
     AppLog.info(subject: self.class.name, body: [Swars::User.count, Swars::Profile.count], mail_notify: true)
     Swars::User.where.missing(:profile).find_each(&:create_profile)

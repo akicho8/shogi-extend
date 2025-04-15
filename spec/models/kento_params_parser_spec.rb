@@ -17,7 +17,7 @@ RSpec.describe KentoParamsParser, type: :model do
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..
-# >> 
+# >>
 # >> Finished in 0.23187 seconds (files took 5.24 seconds to load)
 # >> 2 examples, 0 failures
-# >> 
+# >>

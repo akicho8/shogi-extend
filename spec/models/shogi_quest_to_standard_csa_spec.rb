@@ -19,14 +19,14 @@ EOT
   end
 end
 # >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
-# >> 
+# >>
 # >> ShogiQuestToStandardCsa
 # >>   works
-# >> 
+# >>
 # >> Top 1 slowest examples (0.17042 seconds, 6.0% of total time):
 # >>   ShogiQuestToStandardCsa works
 # >>     0.17042 seconds -:4
-# >> 
+# >>
 # >> Finished in 2.83 seconds (files took 3.76 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

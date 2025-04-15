@@ -51,7 +51,7 @@ RSpec.describe MediaBuilder, type: :model do
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ....
-# >> 
+# >>
 # >> Finished in 2.63 seconds (files took 2.54 seconds to load)
 # >> 4 examples, 0 failures
-# >> 
+# >>

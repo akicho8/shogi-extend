@@ -21,29 +21,29 @@ RSpec.describe DateRange, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> DateRange
 # >>   works (FAILED - 1)
 # >>   数字っぽいものだけ見ている
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) DateRange works
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:16:in `block (2 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Top 2 slowest examples (0.11972 seconds, 6.0% of total time):
 # >>   DateRange works
 # >>     0.11845 seconds -:4
 # >>   DateRange 数字っぽいものだけ見ている
 # >>     0.00127 seconds -:19
-# >> 
+# >>
 # >> Finished in 1.98 seconds (files took 6.67 seconds to load)
 # >> 2 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:4 # DateRange works
-# >> 
+# >>

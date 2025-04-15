@@ -29,14 +29,14 @@ RSpec.describe JudgeInfo do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> JudgeInfo
 # >>   .fetch
 # >>   .zero_default_hash
 # >>   .zero_default_hash_wrap
 # >>   #flip
 # >>   winをWinと入力する人がいる対策
-# >> 
+# >>
 # >> Top 5 slowest examples (0.10867 seconds, 5.0% of total time):
 # >>   JudgeInfo .fetch
 # >>     0.07195 seconds -:4
@@ -48,7 +48,7 @@ end
 # >>     0.0055 seconds -:11
 # >>   JudgeInfo .zero_default_hash_wrap
 # >>     0.00535 seconds -:15
-# >> 
+# >>
 # >> Finished in 2.18 seconds (files took 1.57 seconds to load)
 # >> 5 examples, 0 failures
-# >> 
+# >>

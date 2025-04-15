@@ -13,14 +13,14 @@ RSpec.describe ErrorInfo do
   end
 end
 # >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
-# >> 
+# >>
 # >> ErrorInfo
 # >>   works
-# >> 
+# >>
 # >> Top 1 slowest examples (0.12096 seconds, 4.7% of total time):
 # >>   ErrorInfo works
 # >>     0.12096 seconds -:4
-# >> 
+# >>
 # >> Finished in 2.57 seconds (files took 2.52 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

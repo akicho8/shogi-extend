@@ -68,7 +68,7 @@ RSpec.describe UsersController, type: :controller do
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ...
-# >> 
+# >>
 # >> Finished in 1.57 seconds (files took 2.51 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>

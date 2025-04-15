@@ -45,7 +45,7 @@ RSpec.describe AuthInfo, type: :model do
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ..
-# >> 
+# >>
 # >> Finished in 1.55 seconds (files took 2.33 seconds to load)
 # >> 2 examples, 0 failures
-# >> 
+# >>

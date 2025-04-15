@@ -40,7 +40,7 @@ RSpec.describe DataUri, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> DataUri
 # >>   参照系
 # >>     to_blob
@@ -51,7 +51,7 @@ end
 # >>     extension
 # >>     stream
 # >>     inspect
-# >> 
+# >>
 # >> Top 5 slowest examples (1.05 seconds, 35.0% of total time):
 # >>   DataUri 参照系 content_type
 # >>     0.25021 seconds -:25
@@ -63,7 +63,7 @@ end
 # >>     0.18591 seconds -:17
 # >>   DataUri 参照系 to_data_uri
 # >>     0.17259 seconds -:13
-# >> 
+# >>
 # >> Finished in 3.01 seconds (files took 6.03 seconds to load)
 # >> 8 examples, 0 failures
-# >> 
+# >>

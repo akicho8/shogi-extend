@@ -11,10 +11,10 @@ RSpec.describe ScriptsController, type: :controller do
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
-# >> 
+# >>
 # >> All examples were filtered out
-# >> 
-# >> 
+# >>
+# >>
 # >> Finished in 0.7345 seconds (files took 2.43 seconds to load)
 # >> 0 examples, 0 failures
-# >> 
+# >>

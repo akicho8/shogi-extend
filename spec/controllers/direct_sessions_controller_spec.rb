@@ -11,9 +11,3 @@ RSpec.describe DirectSessionsController, type: :controller do
     assert { response.status == 302 }
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ..
-# >> 
-# >> Finished in 1.13 seconds (files took 2.75 seconds to load)
-# >> 2 examples, 0 failures
-# >> 

@@ -43,18 +43,18 @@ RSpec.describe do
   end
 end
 # >> .F..
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) staging
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      Test::Unit::AssertionFailedError:
 # >>      # -:25:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Finished in 0.45543 seconds (files took 0.4586 seconds to load)
 # >> 4 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:24 # staging
-# >> 
+# >>

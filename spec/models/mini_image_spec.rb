@@ -10,17 +10,17 @@ RSpec.describe MiniImage, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> MiniImage
 # >>   デフォルト画像
 # >>   カスタマイズ
-# >> 
+# >>
 # >> Top 2 slowest examples (0.1291 seconds, 10.8% of total time):
 # >>   MiniImage デフォルト画像
 # >>     0.08162 seconds -:4
 # >>   MiniImage カスタマイズ
 # >>     0.04748 seconds -:8
-# >> 
+# >>
 # >> Finished in 1.2 seconds (files took 0.95782 seconds to load)
 # >> 2 examples, 0 failures
-# >> 
+# >>

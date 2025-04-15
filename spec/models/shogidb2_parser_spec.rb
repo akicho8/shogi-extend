@@ -134,14 +134,14 @@ RSpec.describe Shogidb2Parser, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Shogidb2Parser
 # >>   works
-# >> 
+# >>
 # >> Top 1 slowest examples (0.21737 seconds, 10.4% of total time):
 # >>   Shogidb2Parser works
 # >>     0.21737 seconds -:4
-# >> 
+# >>
 # >> Finished in 2.08 seconds (files took 3.54 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>
