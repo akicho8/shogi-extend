@@ -21,7 +21,7 @@ module QuickScript
             :menu_items => [
               { :label => "アカウント連携",   :href => url_helpers.edit_user_url(current_user&.id || 1), },
               { :label => "ログアウト",       :tag => "nuxt-link", :to => {path: "/lab/account/logout"}, },
-              { :label => "退会",             :tag => "nuxt-link", :to => {path: "/lab/account/destroy"},},
+              { :label => "退会",             :tag => "nuxt-link", :to => {path: "/lab/account/destroy"}, },
             ],
           },
         ]

@@ -67,7 +67,7 @@ RSpec.describe Xsetting, type: :model do
     assert_type_convertion(:t_integer_var, [[1,    1], ["str",     0], [0.5,      0], [true,      0], [false,       0], [nil, nil], ["2000-01-01 01:02:03", 2000]])
     assert_type_convertion(:t_float_var,   [[1,    1], ["str",     0], [0.5,    0.5], [true,    0.0], [false,     0.0], [nil, nil], ["2000-01-01 01:02:03", 2000.0]])
     assert_type_convertion(:t_boolean_var, [[1, true], ["str",  true], [0.5,   true], [true,   true], [false,   false], [nil, nil], ["2000-01-01 01:02:03", true]])
-    assert_type_convertion(:t_datetime_var,[[1, nil],  ["str",   nil], [0.5,    nil], [true,    nil], [false,     nil], [nil, nil], ["2000-01-01 01:02:03", Time.zone.parse("2000-01-01 01:02:03")]])
+    assert_type_convertion(:t_datetime_var, [[1, nil],  ["str",   nil], [0.5,    nil], [true,    nil], [false,     nil], [nil, nil], ["2000-01-01 01:02:03", Time.zone.parse("2000-01-01 01:02:03")]])
     assert_type_convertion(:t_date_var,    [[1,  nil], ["str",   nil], [0.5,    nil], [true,    nil], [false,     nil], [nil, nil], ["2000-01-01 01:02:03", Date.parse("2000-01-01")]])
   end
 
