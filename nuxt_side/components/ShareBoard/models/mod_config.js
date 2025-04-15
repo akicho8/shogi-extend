@@ -13,7 +13,7 @@ export const AppConfig = {
 
   NAVBAR_COLOR_CHANGE: false,                 // 時間によってバーの色を変更するか？
 
-  GPT_FUNCTION: false,                        // ChatGPT を有効にするか？
+  GPT_FUNCTION: true,                         // ChatGPT を有効にするか？
 }
 
 if (process.env.NODE_ENV === "development") {

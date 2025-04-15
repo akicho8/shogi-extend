@@ -29,5 +29,5 @@ AppConfig.deep_merge!({
     :redis_db_for_share_board_lobby => 8,    # 共有将棋盤ロビー
 
     ################################################################################ 他
-    :GPT_FUNCTION                   => false, # ChatGPT を有効にするか？
+    :GPT_FUNCTION                   => true, # ChatGPT を有効にするか？
   })
