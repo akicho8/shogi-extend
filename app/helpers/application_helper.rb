@@ -21,10 +21,10 @@ module ApplicationHelper
   end
 
   def bulma_devise_error_messages!
-    return '' if resource.errors.empty?
+    return "" if resource.errors.empty?
 
     messages = resource.errors.full_messages.map { |e| content_tag(:li, e) }.join.html_safe
-    sentence = I18n.t('errors.messages.not_saved', count: resource.errors.count, resource: resource.class.model_name.human.downcase)
+    sentence = I18n.t("errors.messages.not_saved", count: resource.errors.count, resource: resource.class.model_name.human.downcase)
 
     tag.div(:class => ["notification", "is-warning"]) { |;out|
       out = []

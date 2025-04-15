@@ -84,7 +84,7 @@ quiet false
 # https://re-engines.com/2018/08/13/rails-puma-performance-tuning/
 if false
   before_fork do
-    require 'puma_worker_killer'
+    require "puma_worker_killer"
     PumaWorkerKiller.config do |config|
       # メモリ使用率で再起動
       config.ram           = 512      # 512MBのメモリがあって

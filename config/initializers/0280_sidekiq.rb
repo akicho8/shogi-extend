@@ -90,7 +90,7 @@ if defined? AppConfig
   # Sidekiq::Logging.logger.formatter = JSTTimestampFormatter.new
 
   if Rails.env.test?
-    require 'sidekiq/testing/inline'
+    require "sidekiq/testing/inline"
   end
 end
 

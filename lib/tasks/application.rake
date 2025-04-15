@@ -1,4 +1,4 @@
-require 'git-version-bump/rake-tasks'
+require "git-version-bump/rake-tasks"
 
 desc "なんかしらのエラー画像の生成"
 task "my:nankasirano_error_image_generate" do

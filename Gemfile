@@ -21,7 +21,7 @@ gem "puma", ">= 6"
 gem "jbuilder"
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
+gem "webpacker", "~> 5.0"
 
 # Use SCSS for stylesheets
 gem "sass-rails", ">= 6"
@@ -52,7 +52,7 @@ gem "redis", ">= 4.0.1"
 # gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
+gem "bootsnap", require: false
 
 # # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 # gem "kamal", require: false

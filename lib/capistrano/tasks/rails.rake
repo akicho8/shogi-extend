@@ -100,7 +100,7 @@ namespace :rails do
   desc "DBのインデックスの表示"
   task :index do
     on roles(:all) do
-      command = 'ActiveRecord::Base.connection.tables.sort.each { |e| tp ActiveRecord::Base.connection.indexes(e).collect(&:to_h) }'
+      command = "ActiveRecord::Base.connection.tables.sort.each { |e| tp ActiveRecord::Base.connection.indexes(e).collect(&:to_h) }"
       execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner '#{command}'"
     end
   end

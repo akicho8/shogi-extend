@@ -63,7 +63,7 @@ module GoogleApi
               },
             }
           },
-          fields: 'userEnteredFormat.backgroundColor,userEnteredFormat.textFormat.bold',
+          fields: "userEnteredFormat.backgroundColor,userEnteredFormat.textFormat.bold",
         },
       }
     end
@@ -84,7 +84,7 @@ module GoogleApi
         auto_resize_dimensions: {
           dimensions: {
             sheet_id: 0,  # シートID（通常は最初のシートは0）
-            dimension: 'COLUMNS',  # 列を指定
+            dimension: "COLUMNS",  # 列を指定
             # start_index: 0,  # 最初の列から
             # end_indexを指定しないことで、すべての列が対象になります
             # start_index: 0,  # 最初の列から
@@ -119,7 +119,7 @@ module GoogleApi
               :start_column_index => 0,            # 開始列 (0 から始まる)
               :end_column_index   => 1,            # 終了列 (0 から始まる、A列からC列まで) ← 省略しても動いたけどちゃんと合わせたほうがよさそう
             },
-            fields: '*',
+            fields: "*",
             rows: [
               {
                 values: [
@@ -152,7 +152,7 @@ module GoogleApi
               }
             }
           },
-          fields: 'userEnteredFormat.padding'
+          fields: "userEnteredFormat.padding"
         }
       }
     end

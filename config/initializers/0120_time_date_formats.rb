@@ -38,7 +38,7 @@ Time::DATE_FORMATS.update({
 
     :distance => proc { |time|
       d = time - Time.current
-      suffix = d.negative? ? '前' : '後'
+      suffix = d.negative? ? "前" : "後"
       t = d.abs
       case
         # when time >= Time.current.midnight

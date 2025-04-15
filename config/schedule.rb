@@ -8,8 +8,8 @@ puts "Dir.pwd          --> #{Dir.pwd.inspect}"
 puts "================"
 
 # env 'MAILTO', "shogi.extend@gmail.com" # ← こっちにしたら届かないのは謎
-env 'MAILTO', "pinpon.ikeda@gmail.com"
-env 'LANG', "ja_JP.UTF-8"
+env "MAILTO", "pinpon.ikeda@gmail.com"
+env "LANG", "ja_JP.UTF-8"
 
 # set :output, {standard: "log/#{@environment}_cron.log"}
 

@@ -1,6 +1,6 @@
-server 'shogi-extend.com', user: 'deploy', roles: %w{app db web}
+server "shogi-extend.com", user: "deploy", roles: %w{app db web}
 
-set :rbenv_ruby, '3.4.2'
+set :rbenv_ruby, "3.4.2"
 
 set :keep_releases, 5
 
@@ -14,7 +14,7 @@ set :keep_releases, 5
 #   before 'deploy:migrate', 'deploy:db_reset'
 # end
 
-set :rails_env, 'production'    # 必要
+set :rails_env, "production"    # 必要
 
 # 超重要
 set :bundle_config, { deployment: true, force_ruby_platform: true } # 「force_ruby_platform: true」をつけないと bigdecimal, nokogiri 等が install できない
@@ -23,7 +23,7 @@ set :bundle_flags, ""                                               # --quiet �
 # append :linked_files, 'config/database.yml'
 
 # 専用の database.yml を転送
-before 'deploy:check:linked_files', 'deploy:database_yml_upload'
+before "deploy:check:linked_files", "deploy:database_yml_upload"
 
 # さくらサーバーの容量がないため yarn のパッケージのキャッシュはクリアする (そもそもサーバー側でビルドしてない)
 # after "deploy:finished", :yarn_cache_clean

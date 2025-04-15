@@ -268,7 +268,7 @@ class Xsetting < ApplicationRecord
     private
 
     def mail_subject(diff)
-      who = by_staff ? "#{by_staff.name}さん" : '誰か'
+      who = by_staff ? "#{by_staff.name}さん" : "誰か"
       "【設定】#{who}が「#{meta.name}」を変更 (#{oneline_diff(diff)})"
     end
 

@@ -1,20 +1,20 @@
-server 'shogi-flow.xyz', user: 'deploy', roles: %w{app db web}
+server "shogi-flow.xyz", user: "deploy", roles: %w{app db web}
 
-set :rbenv_ruby, '3.4.2'
+set :rbenv_ruby, "3.4.2"
 
 set :keep_releases, 1
 
 # 最初にアプリ削除する？ (APP_RESET=1 cap staging deploy)
 if ENV["APP_RESET"] == "1"
-  before 'deploy:starting', 'deploy:app_clean'
+  before "deploy:starting", "deploy:app_clean"
 end
 
 # DBを作り直す？
 if ENV["DB_RESET"] == "1"
-  before 'deploy:migrate', 'deploy:db_reset'
+  before "deploy:migrate", "deploy:db_reset"
 end
 
-set :rails_env, 'staging'    # 必要
+set :rails_env, "staging"    # 必要
 
 # 超重要
 set :bundle_config, { deployment: true, force_ruby_platform: true } # 「force_ruby_platform: true」をつけないと bigdecimal, nokogiri 等が install できない
@@ -23,7 +23,7 @@ set :bundle_flags, ""                                               # --quiet �
 # append :linked_files, 'config/database.yml'
 
 # 専用の database.yml を転送
-before 'deploy:check:linked_files', 'deploy:database_yml_upload'
+before "deploy:check:linked_files", "deploy:database_yml_upload"
 
 # さくらサーバーの容量がないため yarn のパッケージのキャッシュはクリアする (そもそもサーバー側でビルドしてない)
 # after "deploy:finished", :yarn_cache_clean
