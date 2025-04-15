@@ -6,7 +6,7 @@ RSpec.describe MiniImage, type: :model do
   end
 
   it "カスタマイズ" do
-    assert { MiniImage.generate(width: 1, height: 1, color: "red", format: :jpg).match?(%{data:image/jpeg;base64,/9j/.*}) }
+    assert { MiniImage.generate(width: 1, height: 1, color: "red", format: :jpg).match?(%(data:image/jpeg;base64,/9j/.*)) }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

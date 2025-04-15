@@ -59,7 +59,7 @@ RSpec.describe Kiwi::Banana, type: :model, kiwi: true do
 
     # 登録実行
     # サムネ位置が nil -> 0.5 になることでサムネ作成される
-    banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "タイトル#{user1.kiwi_bananas.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉), thumbnail_pos: 0.5)
+    banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "タイトル#{user1.kiwi_bananas.count.next}" * 4, description: "description" * 4, tag_list: %w[居飛車 嬉野流 右玉], thumbnail_pos: 0.5)
     assert { banana1.thumbnail_pos == 0.5 }
     assert { lemon1.real_path.exist? }
     assert { lemon1.browser_path }

@@ -1,4 +1,4 @@
-server "shogi-flow.xyz", user: "deploy", roles: %w{app db web}
+server "shogi-flow.xyz", user: "deploy", roles: %w[app db web]
 
 set :rbenv_ruby, "3.4.2"
 

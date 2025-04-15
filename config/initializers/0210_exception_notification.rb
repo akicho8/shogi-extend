@@ -18,7 +18,7 @@ if Rails.env.production? || Rails.env.staging? || ENV["EXCEPTION_NOTIFICATION_EN
       email: {
         :email_prefix         => "[shogi-extend-#{Rails.env}] ",
         :sender_address       => "pinpon.ikeda@gmail.com",
-        :exception_recipients => %w{pinpon.ikeda@gmail.com},
+        :exception_recipients => %w[pinpon.ikeda@gmail.com],
         #
         # Sidekiq では実行できない問題
         #

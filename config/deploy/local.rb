@@ -1,7 +1,7 @@
 # 開発環境自体にデプロイする
 # /var/www/shogi_web_local (RAILS_ENV: production)
 
-server "localhost", user: "deploy", roles: %w{app db web}
+server "localhost", user: "deploy", roles: %w[app db web]
 
 # yarnpkg がないと言われるため deploy でも yarnpkg が見えるようにする
 # また、これとは別で /Users/deploy/.bashrc に以下も設定している

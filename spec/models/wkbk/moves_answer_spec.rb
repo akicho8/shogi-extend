@@ -102,7 +102,7 @@ RSpec.describe Wkbk::Article, type: :model do
 
   it "moves" do
     article = user1.wkbk_articles.create!(init_sfen: "position startpos")
-    moves_answer = article.moves_answers.create!(moves: %w(7g7f 8c8d))
+    moves_answer = article.moves_answers.create!(moves: %w[7g7f 8c8d])
     assert { moves_answer.moves == ["7g7f", "8c8d"] }
   end
 end

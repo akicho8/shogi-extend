@@ -20,7 +20,7 @@ RSpec.describe SystemMailer, type: :mailer do
     end
 
     it "固定幅にするため pre タグで囲んでいる" do
-      assert { mail.body.to_s.match?(%r[<pre.*</pre>]) }
+      assert { mail.body.to_s.match?(%r{<pre.*</pre>}) }
     end
   end
 end
