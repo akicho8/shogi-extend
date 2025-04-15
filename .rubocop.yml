@@ -13,6 +13,11 @@ AllCops:
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 
+# Style/TrailingCommaInArrayLiteral:
+#   EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
@@ -23,9 +28,6 @@ Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
-  Enabled: false
-
-Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
 Style/StabbyLambdaParentheses:
