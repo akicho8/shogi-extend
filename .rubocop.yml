@@ -37,3 +37,6 @@ Layout/SpaceInLambdaLiteral:
 
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
