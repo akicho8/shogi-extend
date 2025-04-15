@@ -15,7 +15,7 @@ module Swars
 
       def invert_table
         @invert_table ||= inject({}) do |a, record|
-          record.all_alias.inject(a) {|a, e| a.merge(e => record) }
+          record.all_alias.inject(a) { |a, e| a.merge(e => record) }
         end
       end
     end
