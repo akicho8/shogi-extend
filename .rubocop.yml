@@ -40,3 +40,6 @@ Layout/EmptyLineAfterMagicComment:
 
 Style/RedundantReturn:
   Enabled: false
+
+Layout/LeadingCommentSpace:
+  Enabled: false

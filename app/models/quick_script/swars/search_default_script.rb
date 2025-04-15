@@ -18,29 +18,29 @@ module QuickScript
                 :default => swars_search_default_key, # nil で送ったときだけ復帰するのでつまり URL 引数を優先する
               }
             },
-        },
-      ]
-    end
-
-    def call
-      if request_post?
-        flash[:notice] = notice_message
-        redirect_to "/swars/search"
+          },
+        ]
       end
-      nil
-    end
 
-    def swars_search_default_key
-      params[:swars_search_default_key].to_s.strip.presence
-    end
+      def call
+        if request_post?
+          flash[:notice] = notice_message
+          redirect_to "/swars/search"
+        end
+        nil
+      end
 
-    def notice_message
-      if swars_search_default_key
-        "記憶しました"
-      else
-        "忘れました"
+      def swars_search_default_key
+        params[:swars_search_default_key].to_s.strip.presence
+      end
+
+      def notice_message
+        if swars_search_default_key
+          "記憶しました"
+        else
+          "忘れました"
+        end
       end
     end
   end
-end
 end

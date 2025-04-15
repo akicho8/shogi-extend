@@ -17,7 +17,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default     => params[:swars_user_key].to_s.presence,
-                :placeholder => "BOUYATETSU5" ,
+                :placeholder => "BOUYATETSU5",
               }
             },
           },

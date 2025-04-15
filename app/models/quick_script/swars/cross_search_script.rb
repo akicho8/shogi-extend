@@ -272,7 +272,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => query,
-                :placeholder =>  "開戦:>=21 中盤:>=42 手数:>=89" ,
+                :placeholder =>  "開戦:>=21 中盤:>=42 手数:>=89",
                 :help_message => "棋譜検索と似た検索クエリを指定する。指定できるのは両対局者の共通の情報のみ。",
               }
             },

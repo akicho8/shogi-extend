@@ -21,6 +21,5 @@ module Api
     ] do |exception|
       render json: {}           # browser_path がなければフロント側は何もしない
     end
-
   end
 end

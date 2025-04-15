@@ -42,7 +42,7 @@ module XyMaster
       end
     end
 
-    scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.hour.ago) ) }
+    scope :entry_name_blank_scope, -> { where(entry_name: nil).where(arel_table[:created_at].lt(1.hour.ago)) }
 
     belongs_to :user, class_name: "::User", required: false
     belongs_to :rule

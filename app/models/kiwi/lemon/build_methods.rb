@@ -138,10 +138,8 @@ module Kiwi
           error_count = 0
 
           logger.tagged("zombie_kill") do
-
             processing_only.where(arel_table[:process_begin_at].lteq(options[:expires_in].ago)).find_each do |e|
               logger.tagged(e.to_param) do
-
                 e.process_end_at = Time.current
                 e.errored_at = Time.current
 

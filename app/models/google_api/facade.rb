@@ -105,7 +105,6 @@ module GoogleApi
       #     }
       #   }
       # }
-
     end
 
     def cell_write_sample

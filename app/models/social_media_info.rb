@@ -6,4 +6,3 @@ class SocialMediaInfo
     { key: :github,  name: "GitHub",  },
   ]
 end
-

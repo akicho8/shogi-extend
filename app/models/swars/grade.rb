@@ -53,7 +53,7 @@ module Swars
       class_methods do
         # Range にすると 5..1 になってしまうため sort で数値的な順序にしている
         def god_priority_range
-          @god_priority_range ||= Range.new(*god_key_range.collect { |e| GradeInfo.fetch(e).priority }.sort )
+          @god_priority_range ||= Range.new(*god_key_range.collect { |e| GradeInfo.fetch(e).priority }.sort)
         end
       end
 

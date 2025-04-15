@@ -4,7 +4,7 @@ module BackendScript
     self.script_name = "スクリプト一覧"
 
     def script_body
-      BackendScript.bundle_scripts.group_by{ |e|e.category }.values.flatten.collect do |e|
+      BackendScript.bundle_scripts.group_by { |e| e.category }.values.flatten.collect do |e|
         {
           "スクリプト" => script_link_to(e.script_name, :id => e.key),
           "キー"       => e.key,

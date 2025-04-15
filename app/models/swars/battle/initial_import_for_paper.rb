@@ -43,4 +43,3 @@ module Swars
     end
   end
 end
-

@@ -9,7 +9,7 @@ module QuickScript
       self.debug_mode      = Rails.env.local?
 
       STAT_OPTIONS            = { sample_max: 500 }
-      LIMIT_MAX               = 1000 
+      LIMIT_MAX               = 1000
       USER_ITEMS_TEXT_DEFAULT = <<~EOS
 藤森哲也 BOUYATETSU5
 伊藤真吾 itoshinTV
@@ -218,7 +218,7 @@ EOS
       def user_item_columns
         [:name, :swars_key]
       end
-      
+
       def user_items
         @user_items ||= params[:user_items_text].to_s.strip.lines.collect { |e|
           if values = e.strip.split(/[[:space:],|]+/).presence

@@ -87,14 +87,14 @@ module QuickScript
           end
 
           total_count = av.sum { |e| e["度数"] }                                               # => 48014
-          av = av.collect { |e| e.merge("相対度数" => e["度数"].fdiv(total_count) ) }
+          av = av.collect { |e| e.merge("相対度数" => e["度数"].fdiv(total_count)) }
           t = 0; av = av.collect { |e| t += e["相対度数"]; e.merge("累計相対度数" => t) }
           av = av.collect.with_index { |e, i| e.merge("階級値" => -i) }
           score_total = av.sum { |e| e["度数"] * e["階級値"] }                                     # => 378281
           score_average = score_total.fdiv(total_count)                                          # => 7.878556254425792
           variance = av.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / total_count.pred # => 5.099197349097279
           standard_deviation = Math.sqrt(variance)                                                  # => 2.258140241237749
-          av = av.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(standard_deviation) ) }
+          av = av.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(standard_deviation)) }
           standard_value_average = av.sum { |e| e["基準値"] } / av.count
           av = av.collect { |e| e.merge("偏差値" => (e["基準値"] * 10 + 50)) }
 

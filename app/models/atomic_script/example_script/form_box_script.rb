@@ -13,4 +13,3 @@ module AtomicScript
     end
   end
 end
-

@@ -34,7 +34,6 @@ module Swars
           s.count
         end
       end
-
     end
   end
 end
