@@ -36,7 +36,7 @@ class EvalController < ApplicationController
       retv
     rescue => error
       backtrace = Array(error.backtrace) - caller
-      ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n"}].join
+      ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n" }].join
     end
   end
 end

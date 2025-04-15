@@ -88,7 +88,7 @@ module ViewSupportHelper
     }.merge(options)
     out = "".html_safe
     out << content_tag(:ul, options) do
-      list.collect {|e| content_tag(:li, e)}.join.html_safe
+      list.collect { |e| content_tag(:li, e) }.join.html_safe
     end
     out
   end
@@ -118,7 +118,7 @@ module ViewSupportHelper
 
     fixed_width = options.delete(:fixed_width) ? "fa-fw" : ""
 
-    klass = names.join(" ").gsub("_", "-").split(/\s+/).collect {|e| "fa-#{e}"}
+    klass = names.join(" ").gsub("_", "-").split(/\s+/).collect { |e| "fa-#{e}" }
     if klass.present?
       options[:class] = [:fa, *klass, size, fixed_width, options[:class]].join(" ").squish
       (" " + content_tag(:i, "", options) + " ").html_safe
@@ -129,7 +129,7 @@ module ViewSupportHelper
     {:name => :bootstrap_page_header,   :tag => :div, :options => {:class => "page-header" }, },
     {:name => :bootstrap_controls,      :tag => :div, :options => {:class => "controls"    }, },
     {:name => :bootstrap_control_group, :tag => :div, :options => {:class => "form-group"  }, },
-  ].each {|attrs|
+  ].each { |attrs|
     define_method(attrs[:name]) do |content = nil, options = {}, &block|
       if block
         options = content || {}

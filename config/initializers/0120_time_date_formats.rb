@@ -114,7 +114,7 @@ end
 
 if $0 == __FILE__
   current_time = Time.current
-  Time::DATE_FORMATS.keys.sort_by {|key| key.to_s}.each {|key|
+  Time::DATE_FORMATS.keys.sort_by { |key| key.to_s }.each { |key|
     puts "%-40s %s" % [key, current_time.to_s(key)]
   }
 end

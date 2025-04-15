@@ -44,7 +44,7 @@ class KentoParamsParser
       :branch_from,
       :branch,
       :moves,
-    ].inject({}) {|a, e| a.merge(e => send(e)) }
+    ].inject({}) { |a, e| a.merge(e => send(e)) }
   end
 
   private

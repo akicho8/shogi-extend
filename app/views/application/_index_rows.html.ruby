@@ -1,4 +1,4 @@
-current_records.collect {|e|
+current_records.collect { |e|
   row = {
     "id" => link_to(e.id, [ns_prefix, e]),
   }

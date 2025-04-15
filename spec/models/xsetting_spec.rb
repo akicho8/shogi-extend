@@ -53,7 +53,7 @@ RSpec.describe Xsetting, type: :model do
   end
 
   def assert_type_convertion(var_key, values)
-    after_vlaues = values.collect{|a, b|
+    after_vlaues = values.collect{ |a, b|
       Xsetting[var_key] = a
       [a, Xsetting[var_key]]
     }
@@ -102,7 +102,7 @@ RSpec.describe Xsetting, type: :model do
     Xsetting.count.should == 2
 
     begin
-      AvailableXsetting.memory_record_reset(AvailableXsetting.app_data.reject{|e|e[:key] == :t_integer_var})
+      AvailableXsetting.memory_record_reset(AvailableXsetting.app_data.reject{ |e|e[:key] == :t_integer_var })
       proc {
         Xsetting.undefined_remove         # ので1件削除される
       }.should change(Xsetting, :count).by(-1)

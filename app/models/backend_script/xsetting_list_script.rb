@@ -4,7 +4,7 @@ module BackendScript
     self.script_name = "システム設定一覧"
 
     def script_body
-      AvailableXsetting.collect {|e|
+      AvailableXsetting.collect { |e|
         {
           :name  => script_link_to(e.name, :id => "xsetting_edit", :xsetting_key => e.key),
           :key   => e.key,

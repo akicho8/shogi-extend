@@ -29,7 +29,7 @@ class JudgeInfo
     private
 
     def invert_table
-      @invert_table ||= inject({}) {|a, e| a.merge(e.name => e, e.ox_mark => e, e.one_char => e) }
+      @invert_table ||= inject({}) { |a, e| a.merge(e.name => e, e.ox_mark => e, e.one_char => e) }
     end
   end
 

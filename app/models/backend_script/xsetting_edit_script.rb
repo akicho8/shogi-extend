@@ -13,7 +13,7 @@ module BackendScript
       if v = params[:xsetting_tag].presence
         list = list.find_all { |e| e.tags.include?(v) }
       end
-      elems = list.collect {|e|
+      elems = list.collect { |e|
         v = e.form_part
         if true
           # エラーになったときに不具合の内容を入れる
@@ -96,7 +96,7 @@ module BackendScript
             Timecop.return { func.call }
           end
           a = Xsetting[var_key]
-          if [b, a].collect {|v| v.to_s.lines.to_a.collect(&:rstrip) }.uniq.count != 1
+          if [b, a].collect { |v| v.to_s.lines.to_a.collect(&:rstrip) }.uniq.count != 1
             {"項目" => AvailableXsetting[var_key].name, "変更前" => b.inspect, "変更後" => a.inspect}
           end
         }.compact

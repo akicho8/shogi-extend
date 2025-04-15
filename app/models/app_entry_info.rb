@@ -271,6 +271,6 @@ class AppEntryInfo
   end
 
   def og_meta
-    [:title, :description, :og_image_key].inject({}) {|a, e| a.merge(e => public_send(e)) }
+    [:title, :description, :og_image_key].inject({}) { |a, e| a.merge(e => public_send(e)) }
   end
 end

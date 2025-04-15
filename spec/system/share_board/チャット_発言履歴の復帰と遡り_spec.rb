@@ -34,7 +34,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
       assert_ml_count_in_modal(0)                                         # 0件になるが、
     end
     if false
-      b_block {}                                                          # タブを切り替えて戻る (headless だと visibilitychange が効かないため)
+      b_block { }                                                          # タブを切り替えて戻る (headless だと visibilitychange が効かないため)
     else
       a_block { find(".ChatModal .mh_reload").click }                     # デバッグ用の「よそ見から復帰」をクリックすると
     end

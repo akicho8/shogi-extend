@@ -212,7 +212,7 @@ module Wkbk
     #   end
     #
     def bookships_order_by_ids(ids)
-      table = bookships.inject({}) {|a, e| a.merge(e.id => e) }
+      table = bookships.inject({}) { |a, e| a.merge(e.id => e) }
       Bookship.acts_as_list_no_update do
         ids.each.with_index do |id, i|
           e = table.fetch(id)

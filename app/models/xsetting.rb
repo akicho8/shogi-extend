@@ -189,7 +189,7 @@ class Xsetting < ApplicationRecord
 
         # すべてをDBに入れる
         def store_all
-          AvailableXsetting.each {|e| var_set(e.key, var_get(e.key), :force => true) }
+          AvailableXsetting.each { |e| var_set(e.key, var_get(e.key), :force => true) }
         end
 
         # DBに入っているが、実際にはもう使われていない、古い変数一覧
@@ -257,7 +257,7 @@ class Xsetting < ApplicationRecord
       after_save do
         if instance_variable_defined?(:@before_value)
           original = [@before_value, value]
-          diff = original.collect {|v| v.to_s.lines.to_a.collect(&:rstrip) } # 行は配列化
+          diff = original.collect { |v| v.to_s.lines.to_a.collect(&:rstrip) } # 行は配列化
           if diff.first != diff.last
             AppLog.important(subject: mail_subject(original), body: mail_body(diff))
           end
