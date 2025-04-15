@@ -87,7 +87,7 @@ RSpec.describe FreeBattle, type: :model do
 
     it "adjust_turn" do
       assert { record.adjust_turn(-1) == 5 }
-      assert { record.adjust_turn( 6) == 5 }
+      assert { record.adjust_turn(6) == 5 }
       assert { record.adjust_turn(-9) == 0 }
     end
 

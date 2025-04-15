@@ -8,7 +8,7 @@ RSpec.describe ShareBoardsController, type: :controller, share_board_spec: true 
 
   describe "基本「58玉」" do
     def test(format, status)
-      get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
+      get :show, params: { body: "position startpos moves 5i5h", turn: 1, title: "(title)", format: format }
       assert { response.status == status }
     end
     it "works" do

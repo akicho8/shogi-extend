@@ -32,6 +32,5 @@ class Fix2 < ActiveRecord::Migration[6.0]
 
     ActsAsTaggableOn::Tag.find_by(name: "右玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
     ActsAsTaggableOn::Tag.find_by(name: "高田流左玉")&.taggings&.where(context: "attack_tags")&.update_all("context = 'defense_tags'")
-
   end
 end

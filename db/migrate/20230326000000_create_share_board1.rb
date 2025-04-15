@@ -12,7 +12,7 @@ class CreateShareBoard1 < ActiveRecord::Migration[5.1]
     create_table :share_board_users, force: true do |t|
       t.string :name, null: false, index: { unique: true }, comment: "対局者名"
       t.integer :memberships_count, :default => 0
-      t.timestamps    null: false
+      t.timestamps null: false
     end
 
     create_table :share_board_battles, force: true do |t|
@@ -41,7 +41,7 @@ class CreateShareBoard1 < ActiveRecord::Migration[5.1]
     create_table :share_board_rooms, force: true do |t|
       t.string :key,       null: false, index: { unique: true }, comment: "部屋識別子"
       t.integer :battles_count, :default => 0
-      t.timestamps         null: false
+      t.timestamps null: false
     end
   end
 end
