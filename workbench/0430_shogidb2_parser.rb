@@ -119,13 +119,13 @@ puts Shogidb2Parser.parse(json_params)
 # >> $START_TIME:2021/12/21 21:00:02
 # >> $END_TIME:2021/12/21 21:07:04
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-# >> P2 * -HI *  *  *  *  * -KA * 
+# >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-# >> P4 *  *  *  *  *  *  *  *  * 
-# >> P5 *  *  *  *  *  *  *  *  * 
-# >> P6 *  *  *  *  *  *  *  *  * 
+# >> P4 *  *  *  *  *  *  *  *  *
+# >> P5 *  *  *  *  *  *  *  *  *
+# >> P6 *  *  *  *  *  *  *  *  *
 # >> P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-# >> P8 * +KA *  *  *  *  * +HI * 
+# >> P8 * +KA *  *  *  *  * +HI *
 # >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 # >> +
 # >> +7776FU,-8384FU,+6978KI,-4132KI,+2726FU,-8485FU,+8877KA,-3334FU,+7988GI,-2277UM

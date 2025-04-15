@@ -17,18 +17,18 @@ exit
 # Swars::Battle.order(id: :desc).limit(30).destroy_all
 
 s = Swars::Membership.where(id: Swars::Membership.unscoped.last(5).collect(&:id))
-s.group("user_id").count # => 
+s.group("user_id").count # =>
 tp s.collect(&:info)
 
-s.count # => 
-s.joins(:grade).group("swars_grades.key").count # => 
-tp s.joins(:grade).group("swars_grades.key").joins(:taggings => :tag).group("tags.name").count # => 
+s.count # =>
+s.joins(:grade).group("swars_grades.key").count # =>
+tp s.joins(:grade).group("swars_grades.key").joins(:taggings => :tag).group("tags.name").count # =>
 
 # sql
-s.joins(:grade).select(:user_id, "swars_grades.key").distinct.count # => 
+s.joins(:grade).select(:user_id, "swars_grades.key").distinct.count # =>
 
-s.joins(:grade).select(:user_id, "swars_grades.key").distinct.group("swars_grades.key").count # => 
-tp s.joins(:grade).select(:user_id, "swars_grades.key").distinct.group("swars_grades.key").joins(:taggings => :tag).group("tags.name").count # => 
+s.joins(:grade).select(:user_id, "swars_grades.key").distinct.group("swars_grades.key").count # =>
+tp s.joins(:grade).select(:user_id, "swars_grades.key").distinct.group("swars_grades.key").joins(:taggings => :tag).group("tags.name").count # =>
 # >> [2024-10-27 19:09:26][QuickScript::Swars::GradeStatScript::PrimaryAggregator] Processing relation #0
 # >> |------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> | 10級 | {:user=>{:__tag_nothing__=>2, "対居飛車"=>2, "居玉"=>1, "居飛車"=>2, "急戦"=>1, "持久戦"=>1, "相居飛車"=>2, "矢倉早囲い"=>1, "短手数"=>1, "総矢倉"=>1, "角換わり"=>1, "長手数"=>1}, :membership=>{:__tag_nothing__=>2, "角換わり"=>1, "居玉"=>1, "居飛車"=>2, "相居飛車"=>2, "対居飛車"=>2, "急戦"=>1, "長手数"=>1, "矢倉早囲い...                                  |

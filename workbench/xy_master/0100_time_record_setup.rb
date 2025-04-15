@@ -16,8 +16,8 @@ RuleInfo.rebuild
 
 r = TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 2, x_count: 0)
 
-r.rank(scope_key: "scope_today", entry_name_uniq_p: "true")    # => 
-r.rank_info                     # => 
+r.rank(scope_key: "scope_today", entry_name_uniq_p: "true")    # =>
+r.rank_info                     # =>
 
 tp TimeRecord
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/mysql2-0.5.3/lib/mysql2/client.rb:131:in `_query': Mysql2::Error: Field 'rule_key' doesn't have a default value (ActiveRecord::NotNullViolation)

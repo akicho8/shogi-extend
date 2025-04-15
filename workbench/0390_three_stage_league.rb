@@ -20,11 +20,11 @@ end
 
 # # Tsl.destroy_all
 # Tsl::League.setup
-# 
+#
 # Tsl::User.count                 # => 177
 # Tsl::Membership.count           # => 1272
 # Tsl::League.count               # => 40
-# 
+#
 # tp Tsl::Membership.count
 
 # Tsl::Membership.all.collect(&:ox).collect(&:size).minmax # => [0, 18]

@@ -60,7 +60,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 # user1 = User.create!
 # user2 = User.create!
-# 
+#
 # battle = Wkbk::Battle.create! do |e|
 #   e.memberships.build(user: user1, judge_key: "win")
 #   e.memberships.build(user: user2, judge_key: "lose")
@@ -71,7 +71,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # tp user1.wkbk_season_xrecord
 
 # def initialize(connection, identifier, params = {})
-# Wkbk::BattleChannel.new(nil, nil, a: 1) # => 
+# Wkbk::BattleChannel.new(nil, nil, a: 1) # =>
 
 
 article = Wkbk::Article.first

@@ -1,7 +1,7 @@
 require "./setup"
-QuickScript::Tool::ShortUrlScript.new(_method: :post, original_url: "http://localhost:3000/").call # => 
+QuickScript::Tool::ShortUrlScript.new(_method: :post, original_url: "http://localhost:3000/").call # =>
 # ~> /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/zeitwerk-2.6.16/lib/zeitwerk/loader/callbacks.rb:32:in `on_file_autoloaded': expected file /Users/ikeda/src/shogi-extend/app/models/quick_script/middleware/redirect_mod.rb to define constant QuickScript::Middleware::RedirectMod, but didn't (Zeitwerk::NameError)
-# ~> 
+# ~>
 # ~>       raise Zeitwerk::NameError.new(msg, cref.cname)
 # ~>       ^^^^^
 # ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/zeitwerk-2.6.16/lib/zeitwerk/kernel.rb:27:in `require'

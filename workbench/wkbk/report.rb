@@ -93,7 +93,7 @@ App.new.call
 # >> ▼p1hjbgnYagI
 # >> http://localhost:4000/rack/books/p1hjbgnYagI
 # >> 正解率 66 % (2/3)
-# >> 
+# >>
 # >> ▼P4A0b37rg2i
 # >> http://localhost:4000/rack/books/P4A0b37rg2i
 # >> 正解率 100 % (2/2)

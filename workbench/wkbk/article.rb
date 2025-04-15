@@ -15,7 +15,7 @@ params = {
 
 article = user.wkbk_articles.build
 article.update_from_action(params)
-article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
+article.moves_answers.collect { |e|e.moves_str } # => ["4c5b"]
 
 article = user.wkbk_articles.build
 begin

@@ -5,7 +5,7 @@ Swars::Importer::FullHistoryImporter.new(user_key: "DevUser1").call
 
 # Swars::Battle.destroy_all
 # Swars::Battle.destroy_all
-# 
+#
 # Swars::Battle.import(:rebuild)
 
 tp Swars::Battle.all.last(10).collect(&:attributes)

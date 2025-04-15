@@ -20,7 +20,7 @@ def create(recipe_key)
   free_battle = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
   lemon1 = user1.kiwi_lemons.create!(recordable: free_battle, all_params: params1[:all_params])
   lemon1.main_process
-  banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "#{user1.name} - #{recipe_info.name}(#{user1.kiwi_bananas.count.next})", description: "あいうえお" * 40, tag_list: %w(居飛車 嬉野流 右玉), folder_key: "public")
+  banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "#{user1.name} - #{recipe_info.name}(#{user1.kiwi_bananas.count.next})", description: "あいうえお" * 40, tag_list: %w[居飛車 嬉野流 右玉], folder_key: "public")
   banana1.banana_messages.create!(user: user1, body: "#{recipe_info.name}に対するコメント")
   puts recipe_info
 end

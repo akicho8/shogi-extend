@@ -10,7 +10,7 @@ Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.win_with?(:"飛車不�
 # op_tag_stat.ratios_hash[:"角不成"] # => 0.3076923076923077
 # op_tag_stat.ratios_hash[:"角不成"] # => 0.3076923076923077
 # exit
-# 
+#
 # tp Swars::User["BOUYATETSU5"].stat.badge_stat.execution_time_explain
 # tp Swars::User["anpirika"].stat.badge_stat.execution_time_explain
 

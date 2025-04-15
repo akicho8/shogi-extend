@@ -1,6 +1,6 @@
 require "./setup"
-_ { QuickScript::Dev::ErrorScript.new.call } # => 
-s { QuickScript::Dev::ErrorScript.new.call } # => 
+_ { QuickScript::Dev::ErrorScript.new.call } # =>
+s { QuickScript::Dev::ErrorScript.new.call } # =>
 # ~> /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/error_script.rb:8:in `/': divided by 0 (ZeroDivisionError)
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/quick_script/dev/error_script.rb:8:in `call'
 # ~> 	from -:2:in `block in <dispatcher>'

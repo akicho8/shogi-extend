@@ -1,6 +1,6 @@
 require "./setup"
-_ { QuickScript::Middleware::PaginationMod.new.call } # => 
-s { QuickScript::Middleware::PaginationMod.new.call } # => 
+_ { QuickScript::Middleware::PaginationMod.new.call } # =>
+s { QuickScript::Middleware::PaginationMod.new.call } # =>
 # ~> -:2:in 'block in <main>': undefined method 'new' for module QuickScript::Middleware::PaginationMod (NoMethodError)
 # ~> 	from /Users/ikeda/src/shogi-extend/workbench/setup.rb:6:in 'block (2 levels) in WorkbenchExtension#_'
 # ~> 	from <internal:numeric>:257:in 'Integer#times'

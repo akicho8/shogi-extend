@@ -10,6 +10,3 @@ my_controller.request = ActionDispatch::Request.new({})
 my_controller.response = ActionDispatch::Response.new
 my_controller.foo
 my_controller.response.body
-
-
-

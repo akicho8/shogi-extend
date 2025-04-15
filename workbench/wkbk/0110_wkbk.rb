@@ -19,7 +19,7 @@ user = User.admin
     e.source_author_link = "(source_author_link)"
   end
 end
-Wkbk::Article.count           # => 
+Wkbk::Article.count           # =>
 exit
 
 # user = User.admin

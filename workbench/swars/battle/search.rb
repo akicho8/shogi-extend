@@ -12,7 +12,7 @@ user.battles.find_all_by_query("垢BAN:絞る", target_owner: user).count       
 user.battles.find_all_by_query("垢BAN:除外", target_owner: user).count                    # => 297
 
 user = Swars::User["slowstep3210"]
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).ids } # => "82.64 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true).ids } # => "82.64 ms"
 _ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).ids } # => "15.33 ms"
 _ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: false).to_a } # => "15.71 ms"
-_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true ).to_a } # => "339.63 ms"
+_ { user.reload.battles.find_all_by_query("勝敗:勝ち", target_owner: user, with_includes: true).to_a } # => "339.63 ms"

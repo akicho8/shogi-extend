@@ -8,5 +8,3 @@ record.memberships[0].defense_tag_list # => []
 record.memberships[1].defense_tag_list # => []
 record.memberships[0].note_tag_list    # => ["居飛車", "居玉"]
 record.memberships[1].note_tag_list    # => ["振り飛車", "居玉"]
-
-

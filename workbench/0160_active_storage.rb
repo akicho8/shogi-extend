@@ -14,5 +14,5 @@ puts `tree ../storage`
 # >> └── Bi
 # >>     └── iD
 # >>         └── BiiDAJK61GHQwCvc2LHgZUm7
-# >> 
+# >>
 # >> 2 directories, 1 file
