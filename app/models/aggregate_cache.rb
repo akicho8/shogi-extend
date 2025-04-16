@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Aggregate cache (aggregate_caches as AggregateCache)
+#
+# |------------------+------------------+-------------+-------------+------+-------|
+# | name             | desc             | type        | opts        | refs | index |
+# |------------------+------------------+-------------+-------------+------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |      |       |
+# | group_name       | Group name       | string(255) | NOT NULL    |      | A! B  |
+# | generation       | Generation       | integer(4)  | NOT NULL    |      | A! C  |
+# | aggregated_value | Aggregated value | json        | NOT NULL    |      |       |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |      |       |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |      |       |
+# |------------------+------------------+-------------+-------------+------+-------|
+
 # インターフェイスはこの2つだけ
 #
 # |----------+----------------------------------------|

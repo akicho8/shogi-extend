@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Wkbk::Article (wkbk_articles as Wkbk::Article)
+# Article (wkbk_articles as Wkbk::Article)
 #
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 # | name                | desc                | type        | opts                | refs | index |
@@ -9,8 +9,8 @@
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
 # | key                 | キー                | string(255) | NOT NULL            |      | A!    |
 # | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
-# | folder_id           | Wkbk::Folder              | integer(8)  | NOT NULL            |      | C     |
-# | lineage_id          | Wkbk::Lineage             | integer(8)  | NOT NULL            |      | D     |
+# | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
+# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
 # | init_sfen           | Init sfen           | string(255) | NOT NULL            |      | E     |
 # | viewpoint           | Viewpoint           | string(255) | NOT NULL            |      |       |
 # | title               | タイトル            | string(100) | NOT NULL            |      |       |
@@ -25,10 +25,10 @@
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
-#- Remarks ----------------------------------------------------------------------
+# - Remarks ---------------------------------------------------------------------
 # [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
 # [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
-#--------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 require "rails_helper"
 

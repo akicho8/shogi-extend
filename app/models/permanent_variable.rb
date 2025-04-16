@@ -1,3 +1,18 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Permanent variable (permanent_variables as PermanentVariable)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | value      | Value    | json        | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
 # インターフェイスはこの2つだけ
 #
 # |----------+-------------------------------------------|

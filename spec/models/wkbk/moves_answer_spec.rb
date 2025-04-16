@@ -7,7 +7,7 @@
 # | name            | desc            | type        | opts        | refs | index |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 # | id              | ID              | integer(8)  | NOT NULL PK |      |       |
-# | article_id      | Wkbk::Article         | integer(8)  | NOT NULL    |      | A     |
+# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
 # | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
 # | moves_str       | 指し手          | text(65535) |             |      |       |
 # | moves_human_str | Moves human str | text(65535) |             |      |       |
@@ -16,9 +16,9 @@
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
 #
-#- Remarks ----------------------------------------------------------------------
+# - Remarks ---------------------------------------------------------------------
 # [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
-#--------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 require "rails_helper"
 

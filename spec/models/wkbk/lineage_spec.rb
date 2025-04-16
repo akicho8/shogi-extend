@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Wkbk::Lineage (wkbk_lineages as Wkbk::Lineage)
+# Lineage (wkbk_lineages as Wkbk::Lineage)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |

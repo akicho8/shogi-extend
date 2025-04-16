@@ -9,16 +9,15 @@
 # | id              | ID              | integer(8)  | NOT NULL PK |              |       |
 # | user_id         | User            | integer(8)  | NOT NULL    | => ::User#id | A     |
 # | target_user_key | Target user key | string(255) | NOT NULL    |              |       |
-# | to_email        | To email        | string(255) | NOT NULL    |              |       |
 # | attachment_mode | Attachment mode | string(255) | NOT NULL    |              | B     |
 # | processed_at    | Processed at    | datetime    |             |              |       |
 # | created_at      | 作成日時        | datetime    | NOT NULL    |              |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |              |       |
 # |-----------------+-----------------+-------------+-------------+--------------+-------|
 #
-#- Remarks ----------------------------------------------------------------------
+# - Remarks ---------------------------------------------------------------------
 # User.has_one :profile
-#--------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 module Swars
   class CrawlReservation < ApplicationRecord

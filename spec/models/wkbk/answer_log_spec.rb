@@ -7,17 +7,17 @@
 # | name           | desc        | type       | opts        | refs         | index |
 # |----------------+-------------+------------+-------------+--------------+-------|
 # | id             | ID          | integer(8) | NOT NULL PK |              |       |
-# | article_id     | Wkbk::Article     | integer(8) | NOT NULL    |              | A     |
+# | article_id     | Article     | integer(8) | NOT NULL    |              | A     |
 # | answer_kind_id | Answer kind | integer(8) | NOT NULL    |              | B     |
-# | book_id        | Wkbk::Book        | integer(8) | NOT NULL    |              | C     |
+# | book_id        | Book        | integer(8) | NOT NULL    |              | C     |
 # | user_id        | User        | integer(8) | NOT NULL    | => ::User#id | D     |
 # | spent_sec      | Spent sec   | integer(4) | NOT NULL    |              | E     |
 # | created_at     | 作成日時    | datetime   | NOT NULL    |              | F     |
 # |----------------+-------------+------------+-------------+--------------+-------|
 #
-#- Remarks ----------------------------------------------------------------------
+# - Remarks ---------------------------------------------------------------------
 # User.has_one :profile
-#--------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 require "rails_helper"
 
