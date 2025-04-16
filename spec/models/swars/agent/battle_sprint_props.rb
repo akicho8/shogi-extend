@@ -13,8 +13,7 @@
     "result" => "GOTE_WIN_TORYO",
     "handicap" => 0,
     "init_sfen_position" => "4+L2nl/4+R2g1/p1+bp3g1/2p1p1ppp/5pk2/2P5P/PPNPP1S2/2G1G4/L2KS2+rL b S4p2nsb 1",
-    "moves" =>
-    [
+    "moves" => [
       {"t" => 140, "n" => 0, "m" => "+0026GI"},
       {"t" => 177, "n" => 1, "m" => "-3544OU"},
       {"t" => 132, "n" => 2, "m" => "+7765KE"},
@@ -38,7 +37,9 @@
       {"t" => 63, "n" => 20, "m" => "+6958OU"},
       {"t" => 36, "n" => 21, "m" => "-0057GI"},
       {"t" => 59, "n" => 22, "m" => "+5869OU"},
-      {"t" => 33, "n" => 23, "m" => "-2959RY"}]},
+      {"t" => 33, "n" => 23, "m" => "-2959RY"},
+    ],
+  },
   "userConfig" =>
   {"imgPieceType" => "ja_single",
     "soundEnable" => true,

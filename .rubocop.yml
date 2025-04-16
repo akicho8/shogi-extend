@@ -13,10 +13,8 @@ AllCops:
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 
-# Style/TrailingCommaInArrayLiteral:
-#   EnforcedStyleForMultiline: consistent_comma
 Style/TrailingCommaInArrayLiteral:
-  Enabled: false
+  EnforcedStyleForMultiline: consistent_comma
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false

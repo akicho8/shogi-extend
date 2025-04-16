@@ -33,7 +33,7 @@ module BackendScript
             :default      => current_reset,
             :collapse     => !current_reset,
             :help_message => "DBにレコードがあった場合はDBから削除します",
-          }
+          },
         ]
       end
       elems += [

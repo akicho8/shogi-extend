@@ -7,7 +7,7 @@ module AtomicScript
         [
           {
             :type => :hidden,
-          }
+          },
         ]
       end
 

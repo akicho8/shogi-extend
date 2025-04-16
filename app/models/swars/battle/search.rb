@@ -95,7 +95,7 @@ module Swars
               :taggings => :tag,
             },
           ],
-        }
+        },
       ]
 
       attr_reader :params

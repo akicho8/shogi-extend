@@ -11,7 +11,7 @@ module BackendScript
           :type    => :check_box,
           :elems   => ["ウォーズID"],
           :default => current_custom.to_a,
-        }
+        },
       ]
     end
 

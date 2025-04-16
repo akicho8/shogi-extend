@@ -131,7 +131,7 @@ module GoogleApi
               },
             ]
           }
-        }
+        },
       ]
     end
 

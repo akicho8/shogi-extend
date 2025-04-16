@@ -9,8 +9,8 @@ class LogLevelInfo
     { key: :warning,   help: "ユーザー起因で正常に処理ができなかったようなもの",                         database: true, mail_notify: true,  slack_notify: true,  available_environments: [:test, :development, :staging, :production], },
     { key: :notice,    help: "正常に処理しているが、記録しておきたい重要なもの",                         database: true, mail_notify: false, slack_notify: true,  available_environments: [:test, :development, :staging, :production], },
     { key: :info,      help: "そこまで重要じゃないが記録しておきたいもの",                               database: true, mail_notify: false, slack_notify: false, available_environments: [:test, :development, :staging, :production], },
-    { key: :debug,     help: "開発のデバッグ時に必要な情報",                                             database: true, mail_notify: false, slack_notify: false, available_environments: [:test, :development,                      ], },
-    { key: :trace,     help: "最も詳細なメッセージを含むログ",                                           database: true, mail_notify: false, slack_notify: false, available_environments: [:test, :development,                      ], },
+    { key: :debug,     help: "開発のデバッグ時に必要な情報",                                             database: true, mail_notify: false, slack_notify: false, available_environments: [:test, :development                      ], },
+    { key: :trace,     help: "最も詳細なメッセージを含むログ",                                           database: true, mail_notify: false, slack_notify: false, available_environments: [:test, :development                      ], },
   ]
 
   def available_environments
