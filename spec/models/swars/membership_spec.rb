@@ -40,45 +40,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == Swars::Schema Swars::Information ==
-#
-# 対局と対局者の対応 (swars_memberships as Swars::Membership)
-#
-# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
-# | name                  | desc                  | type       | opts        | refs              | index      |
-# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
-# | id                    | ID                    | integer(8) | NOT NULL PK |                   |            |
-# | battle_id             | 対局共通情報          | integer(8) | NOT NULL    |                   | A! B! C! D |
-# | user_id               | ユーザー              | integer(8) | NOT NULL    | => Swars::User#id        | A! E       |
-# | grade_id              | 棋力                  | integer(8) | NOT NULL    |                   | F          |
-# | position              | 順序                  | integer(4) |             |                   | G          |
-# | created_at            | 作成日時              | datetime   | NOT NULL    |                   |            |
-# | updated_at            | 更新日時              | datetime   | NOT NULL    |                   |            |
-# | grade_diff            | Swars::Grade diff            | integer(4) | NOT NULL    |                   | H          |
-# | think_max             | Swars::Think max             | integer(4) |             |                   |            |
-# | op_user_id            | Op user               | integer(8) |             | => Swars::User#id | C! I       |
-# | think_last            | Swars::Think last            | integer(4) |             |                   |            |
-# | think_all_avg         | Swars::Think all avg         | integer(4) |             |                   |            |
-# | think_end_avg         | Swars::Think end avg         | integer(4) |             |                   |            |
-# | ai_drop_total         | Ai drop total         | integer(4) |             |                   |            |
-# | judge_id              | Swars::Judge                 | integer(8) | NOT NULL    | => Swars::Judge#id       | J          |
-# | location_id           | Swars::Location              | integer(8) | NOT NULL    | => Swars::Location#id    | B! K       |
-# | style_id              | Swars::Style                 | integer(8) |             |                   | L          |
-# | ek_score_without_cond | Ek score without cond | integer(4) |             |                   |            |
-# | ek_score_with_cond    | Ek score with cond    | integer(4) |             |                   |            |
-# | ai_wave_count         | Ai wave count         | integer(4) |             |                   |            |
-# | ai_two_freq           | Ai two freq           | float(24)  |             |                   |            |
-# | ai_noizy_two_max      | Ai noizy two max      | integer(4) |             |                   |            |
-# | ai_gear_freq          | Ai gear freq          | float(24)  |             |                   |            |
-# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
-#
-#- Swars::Remarks ----------------------------------------------------------------------
-# Swars::Judge.has_many :swars_memberships
-# Swars::Location.has_many :swars_memberships
-# Swars::User.has_many :op_memberships, foreign_key: :op_user_id
-# Swars::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe Swars::Membership, type: :model, swars_spec: true do

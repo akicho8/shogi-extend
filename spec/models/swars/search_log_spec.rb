@@ -16,23 +16,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == Swars::Schema Swars::Information ==
-#
-# Swars::Search log (swars_search_logs as Swars::SearchLog)
-#
-# |------------+----------+------------+-------------+------------+-------|
-# | name       | desc     | type       | opts        | refs       | index |
-# |------------+----------+------------+-------------+------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |            |       |
-# | user_id    | Swars::User     | integer(8) | NOT NULL    | => Swars::User#id | A     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |            |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |            |       |
-# |------------+----------+------------+-------------+------------+-------|
-#
-#- Swars::Remarks ----------------------------------------------------------------------
-# Swars::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe Swars::SearchLog, type: :model, swars_spec: true do

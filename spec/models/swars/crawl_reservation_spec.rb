@@ -19,27 +19,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == Swars::Schema Swars::Information ==
-#
-# Swars::Crawl reservation (swars_crawl_reservations as Swars::CrawlReservation)
-#
-# |-----------------+-----------------+-------------+-------------+--------------+-------|
-# | name            | desc            | type        | opts        | refs         | index |
-# |-----------------+-----------------+-------------+-------------+--------------+-------|
-# | id              | ID              | integer(8)  | NOT NULL PK |              |       |
-# | user_id         | Swars::User            | integer(8)  | NOT NULL    | => ::User#id | A     |
-# | target_user_key | Swars::Target user key | string(255) | NOT NULL    |              |       |
-# | to_email        | To email        | string(255) | NOT NULL    |              |       |
-# | attachment_mode | Swars::Attachment mode | string(255) | NOT NULL    |              | B     |
-# | processed_at    | Swars::Processed at    | datetime    |             |              |       |
-# | created_at      | 作成日時        | datetime    | NOT NULL    |              |       |
-# | updated_at      | 更新日時        | datetime    | NOT NULL    |              |       |
-# |-----------------+-----------------+-------------+-------------+--------------+-------|
-#
-#- Swars::Remarks ----------------------------------------------------------------------
-# Swars::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe Swars::CrawlReservation, type: :model, swars_spec: true do

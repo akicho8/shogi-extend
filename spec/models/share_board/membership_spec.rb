@@ -22,29 +22,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == ShareBoard::Schema ShareBoard::Information ==
-#
-# ShareBoard::Membership (share_board_memberships as ShareBoard::Membership)
-#
-# |-------------+----------+------------+-------------+----------------+-------|
-# | name        | desc     | type       | opts        | refs           | index |
-# |-------------+----------+------------+-------------+----------------+-------|
-# | id          | ID       | integer(8) | NOT NULL PK |                |       |
-# | battle_id   | ShareBoard::Battle   | integer(8) | NOT NULL    |                | A     |
-# | user_id     | ShareBoard::User     | integer(8) | NOT NULL    | => ShareBoard::User#id     | B     |
-# | judge_id    | ShareBoard::Judge    | integer(8) | NOT NULL    | => ShareBoard::Judge#id    | C     |
-# | location_id | ShareBoard::Location | integer(8) | NOT NULL    | => ShareBoard::Location#id | D     |
-# | position    | 順序     | integer(4) |             |                | E     |
-# | created_at  | 作成日時 | datetime   | NOT NULL    |                |       |
-# | updated_at  | 更新日時 | datetime   | NOT NULL    |                |       |
-# |-------------+----------+------------+-------------+----------------+-------|
-#
-#- ShareBoard::Remarks ----------------------------------------------------------------------
-# ShareBoard::Judge.has_many :swars_memberships
-# ShareBoard::Location.has_many :swars_memberships
-# ShareBoard::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe ShareBoard::Membership do

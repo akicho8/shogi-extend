@@ -21,28 +21,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == XyMaster::Schema XyMaster::Information ==
-#
-# XyMaster::Time record (xy_master_time_records as XyMaster::TimeRecord)
-#
-# |------------+------------+-------------+-------------+--------------+-------|
-# | name       | desc       | type        | opts        | refs         | index |
-# |------------+------------+-------------+-------------+--------------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | XyMaster::User       | integer(8)  |             | => ::User#id | A     |
-# | rule_id    | XyMaster::Rule       | integer(8)  | NOT NULL    |              | B     |
-# | entry_name | XyMaster::Entry name | string(255) | NOT NULL    |              | C     |
-# | summary    | XyMaster::Summary    | string(255) |             |              |       |
-# | x_count    | X count    | integer(4)  | NOT NULL    |              |       |
-# | spent_sec  | XyMaster::Spent sec  | float(24)   | NOT NULL    |              |       |
-# | created_at | 作成日時   | datetime    | NOT NULL    |              |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |              |       |
-# |------------+------------+-------------+-------------+--------------+-------|
-#
-#- XyMaster::Remarks ----------------------------------------------------------------------
-# XyMaster::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe XyMaster::TimeRecord, type: :model do

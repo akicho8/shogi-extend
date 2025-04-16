@@ -19,26 +19,6 @@
 # User.has_one :profile
 # -------------------------------------------------------------------------------
 
-# == Swars::Schema Swars::Information ==
-#
-# Swars::Profile (swars_profiles as Swars::Profile)
-#
-# |-------------------+-------------------+------------+-------------+------------+-------|
-# | name              | desc              | type       | opts        | refs       | index |
-# |-------------------+-------------------+------------+-------------+------------+-------|
-# | id                | ID                | integer(8) | NOT NULL PK |            |       |
-# | user_id           | Swars::User              | integer(8) | NOT NULL    | => Swars::User#id | A     |
-# | ban_at            | Swars::Ban at            | datetime   |             |            | B     |
-# | ban_crawled_at    | Swars::Ban crawled at    | datetime   | NOT NULL    |            |       |
-# | ban_crawled_count | Swars::Ban crawled count | integer(4) |             |            |       |
-# | created_at        | 作成日時          | datetime   | NOT NULL    |            |       |
-# | updated_at        | 更新日時          | datetime   | NOT NULL    |            |       |
-# |-------------------+-------------------+------------+-------------+------------+-------|
-#
-#- Swars::Remarks ----------------------------------------------------------------------
-# Swars::User.has_one :profile
-#--------------------------------------------------------------------------------
-
 require "rails_helper"
 
 RSpec.describe Swars::Profile, type: :model, swars_spec: true do

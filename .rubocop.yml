@@ -53,6 +53,3 @@ Layout/EmptyLineAfterMagicComment:
 # 最後に return を書いてもよい
 Style/RedundantReturn:
   Enabled: false
-
-Layout/LeadingCommentSpace:
-  Enabled: false
