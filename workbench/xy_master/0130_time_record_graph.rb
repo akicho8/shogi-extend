@@ -11,7 +11,7 @@ rows = names.collect { |name|
   if !v.empty?
     {
       name: name,
-      data: v.collect { |e| {x: e.created_on, y: e.spent_sec } }.as_json,
+      data: v.collect { |e| { x: e.created_on, y: e.spent_sec } }.as_json,
     }
   end
 }.compact

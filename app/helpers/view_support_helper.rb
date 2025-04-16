@@ -38,7 +38,7 @@ module ViewSupportHelper
     attrs = {}
     if info[:tooltip]
       if info[:toolbody]
-        attrs.update(:rel => "popover", :title => info[:tooltip], :data => {:content => info[:toolbody]})
+        attrs.update(:rel => "popover", :title => info[:tooltip], :data => { :content => info[:toolbody] })
       else
         attrs.update(:rel => "tooltip", :title => info[:tooltip])
       end
@@ -126,9 +126,9 @@ module ViewSupportHelper
   end
 
   [
-    {:name => :bootstrap_page_header,   :tag => :div, :options => {:class => "page-header" }, },
-    {:name => :bootstrap_controls,      :tag => :div, :options => {:class => "controls"    }, },
-    {:name => :bootstrap_control_group, :tag => :div, :options => {:class => "form-group"  }, },
+    { :name => :bootstrap_page_header,   :tag => :div, :options => { :class => "page-header" }, },
+    { :name => :bootstrap_controls,      :tag => :div, :options => { :class => "controls"    }, },
+    { :name => :bootstrap_control_group, :tag => :div, :options => { :class => "form-group"  }, },
   ].each { |attrs|
     define_method(attrs[:name]) do |content = nil, options = {}, &block|
       if block

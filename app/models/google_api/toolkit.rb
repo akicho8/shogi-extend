@@ -33,7 +33,7 @@ module GoogleApi
     end
 
     def authorize
-      authorizer = Google::Auth::ServiceAccountCredentials.make_creds({json_key_io: StringIO.new(json_content), scope: SCOPE})
+      authorizer = Google::Auth::ServiceAccountCredentials.make_creds({ json_key_io: StringIO.new(json_content), scope: SCOPE })
       authorizer.fetch_access_token!
       authorizer
     end

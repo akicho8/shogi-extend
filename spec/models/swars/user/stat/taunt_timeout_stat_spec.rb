@@ -16,9 +16,9 @@ RSpec.describe Swars::User::Stat::TauntTimeoutStat, type: :model, swars_spec: tr
 
     it "works" do
       assert { case1(44) == [nil, nil] }
-      assert { case1(45) == [45, [{name: "45秒", value: 1}]] }
-      assert { case1(60) == [60, [{name: "1分",  value: 1}]] }
-      assert { case1(61) == [61, [{name: "1分",  value: 1}]] }
+      assert { case1(45) == [45, [{ name: "45秒", value: 1 }]] }
+      assert { case1(60) == [60, [{ name: "1分",  value: 1 }]] }
+      assert { case1(61) == [61, [{ name: "1分",  value: 1 }]] }
     end
 
     describe "バッジ" do

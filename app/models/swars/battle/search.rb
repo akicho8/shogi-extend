@@ -41,10 +41,10 @@ module Swars
       ]
 
       CONDITION_MEMBERSHIP_TAG = [
-        { target: :my, query_key: ["tag"],                       tagged_with_options: {                    }, },
+        { target: :my, query_key: ["tag"],                       tagged_with_options: {}, },
         { target: :my, query_key: ["or-tag", "any-tag"],         tagged_with_options: { any: true          }, },
         { target: :my, query_key: ["-tag", "exclude-tag"],       tagged_with_options: { exclude: true      }, },
-        { target: :op, query_key: ["vs-tag"],                    tagged_with_options: {                    }, },
+        { target: :op, query_key: ["vs-tag"],                    tagged_with_options: {}, },
         { target: :op, query_key: ["vs-or-tag", "vs-any-tag"],   tagged_with_options: { any: true          }, },
         { target: :op, query_key: ["-vs-tag", "vs-exclude-tag"], tagged_with_options: { exclude: true      }, },
       ]

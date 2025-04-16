@@ -35,9 +35,9 @@ require "rails_helper"
 RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
   include WkbkSupportMethods
   [
-    { action: :index, params: {                  },               status: 200, },
-    { action: :edit,  params: {                  },               status: 403, },
-    { action: :edit,  params: {                  }, user: :admin, status: 200, },
+    { action: :index, params: {},                                 status: 200, },
+    { action: :edit,  params: {},                                 status: 403, },
+    { action: :edit,  params: {},                   user: :admin, status: 200, },
     { action: :show,  params: { article_key: 1,  },               status: 200, },
     { action: :show,  params: { article_key: 2,  },               status: 403, },
     { action: :show,  params: { article_key: :x, },               status: 404, },

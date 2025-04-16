@@ -35,7 +35,7 @@ module Swars
           end
           yield
         rescue => error
-          AppLog.error(error, data: {user_key: @user_key})
+          AppLog.error(error, data: { user_key: @user_key })
           row["エラー"] = error.class.name
         end
 

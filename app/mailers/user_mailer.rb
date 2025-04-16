@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
     body << ""
 
     body << "▼#{record.target_user.key}さんの棋譜"
-    body << UrlProxy.full_url_for(path: "/swars/search", query: {query: record.target_user_key})
+    body << UrlProxy.full_url_for(path: "/swars/search", query: { query: record.target_user_key })
     body << ""
 
     if record.attachment_mode == "nothing" || Rails.env.development?

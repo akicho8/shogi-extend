@@ -6,7 +6,7 @@ ActiveSupport::LogSubscriber.colorize_logging = false
 
 s = Swars::Battle.all
 s = s.limit(2)
-s = s.includes(win_user: nil, memberships: {taggings: :tag})
+s = s.includes(win_user: nil, memberships: { taggings: :tag })
 s.each do |e|
   e.memberships.each do |m|
     m.taggings.loaded?          # => true, true, true, true

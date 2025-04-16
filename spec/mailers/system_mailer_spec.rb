@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SystemMailer, type: :mailer do
   describe "notify" do
     let(:mail) do
-      SystemMailer.notify(fixed: true, subject: "(subject)", body: {foo: 1}, table_format: true)
+      SystemMailer.notify(fixed: true, subject: "(subject)", body: { foo: 1 }, table_format: true)
     end
 
     it "送信元と送信先が正しい" do

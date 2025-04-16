@@ -32,7 +32,7 @@ module QuickScript
           #   h_stack([e["項目"], e["内容"]], style: {"gap" => "0.5rem"})
           # }
           values = rows.collect { |e| e["項目"] }
-          return v_stack(values, style: {"gap" => "0.5rem"})
+          return v_stack(values, style: { "gap" => "0.5rem" })
         end
 
         rows

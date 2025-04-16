@@ -54,11 +54,11 @@ module QuickScript
         end
         if total_count.positive?
           values = [
-            { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: {"max-width" => "800px", margin: "auto"}, :class => "is-unselectable is-centered", },
+            { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: { "max-width" => "800px", margin: "auto" }, :class => "is-unselectable is-centered", },
             simple_table(table_rows, always_table: true),
             status,
           ]
-          v_stack(values, style: {"gap" => "1rem"})
+          v_stack(values, style: { "gap" => "1rem" })
         end
       end
 

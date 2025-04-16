@@ -13,11 +13,11 @@ module ShareBoard
           "turn"=>81,
           "win_location_key"=>"white",
           "memberships"=>[
-            {"user_name"=>"コンソメ",   "location_key"=>"black", "judge_key"=>"lose"},
-            {"user_name"=>"きなこもち", "location_key"=>"white", "judge_key"=>"win"},
-            {"user_name"=>"sei",        "location_key"=>"black", "judge_key"=>"lose"},
-            {"user_name"=>"かべがみ",   "location_key"=>"white", "judge_key"=>"win"},
-            {"user_name"=>"ロカボ",     "location_key"=>"black", "judge_key"=>"lose"},
+            { "user_name"=>"コンソメ",   "location_key"=>"black", "judge_key"=>"lose" },
+            { "user_name"=>"きなこもち", "location_key"=>"white", "judge_key"=>"win" },
+            { "user_name"=>"sei",        "location_key"=>"black", "judge_key"=>"lose" },
+            { "user_name"=>"かべがみ",   "location_key"=>"white", "judge_key"=>"win" },
+            { "user_name"=>"ロカボ",     "location_key"=>"black", "judge_key"=>"lose" },
           ],
         },
 
@@ -30,10 +30,10 @@ module ShareBoard
           "turn"        => 115,
           "win_location_key" => "black",
           "memberships" => [
-            {"user_name"=>"かべがみ",   "location_key"=>"black", "judge_key"=>"win"},
-            {"user_name"=>"コンソメ",   "location_key"=>"white", "judge_key"=>"lose"},
-            {"user_name"=>"きなこもち", "location_key"=>"black", "judge_key"=>"win"},
-            {"user_name"=>"sei",        "location_key"=>"white", "judge_key"=>"lose"},
+            { "user_name"=>"かべがみ",   "location_key"=>"black", "judge_key"=>"win" },
+            { "user_name"=>"コンソメ",   "location_key"=>"white", "judge_key"=>"lose" },
+            { "user_name"=>"きなこもち", "location_key"=>"black", "judge_key"=>"win" },
+            { "user_name"=>"sei",        "location_key"=>"white", "judge_key"=>"lose" },
           ],
         },
       ].each do |params|

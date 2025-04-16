@@ -22,7 +22,7 @@ module BackendScript
 
     def row_build(component)
       {
-        "ID"       => script_link_to(component.id, {:component_id => component.id}, {:target => "_blank"}),
+        "ID"       => script_link_to(component.id, { :component_id => component.id }, { :target => "_blank" }),
         "作成日時" => component.created_at.to_fs(:ymdhms),
         "更新日時" => component.updated_at.to_fs(:ymdhms),
         "利用回数" => component.access_logs_count,

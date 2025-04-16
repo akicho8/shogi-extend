@@ -18,8 +18,8 @@ RSpec.describe Swars::User::Stat::VsStat, type: :model, swars_spec: true do
       case1("九段", :lose)
 
       outcome = [
-        {:grade_name => "九段", :judge_counts => {:win => 2, :lose => 1}, :appear_ratio => 0.75},
-        {:grade_name => "初段", :judge_counts => {:win => 1,           }, :appear_ratio => 0.25},
+        { :grade_name => "九段", :judge_counts => { :win => 2, :lose => 1 }, :appear_ratio => 0.75 },
+        { :grade_name => "初段", :judge_counts => { :win => 1,           }, :appear_ratio => 0.25 },
       ]
       assert { @user.stat.vs_stat.to_chart == outcome }
     end

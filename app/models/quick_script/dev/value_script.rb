@@ -13,7 +13,7 @@ module QuickScript
           { name: "テキスト(preで囲む)",    type: "value_type_is_pre",          value: { _pre: "<b>foo</b>" }, },
           { name: "テキスト(自動リンク)",   type: "value_type_is_autolink",     value: { _autolink: "URL は http://example.com/ です" }, },
           { name: "Aタグ",                  type: "value_type_is_link_to",      value: { _link_to:   { name: "(name)", url: "http://example.com/" }, }, },
-          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "dev", qs_page_key: "calc"}, query: {lhv: 100}}, }, }, },
+          { name: "nuxt-link",              type: "value_type_is_nuxt_link",    value: { _nuxt_link: { name: "(name)", to: { name: "lab-qs_group_key-qs_page_key", params: { qs_group_key: "dev", qs_page_key: "calc" }, query: { lhv: 100 } }, }, }, },
           { name: "数字",                   type: "value_type_is_unknown",      value: 1,   },
           { name: "nil",                    type: "value_type_is_unknown",      value: nil, },
           { name: "ハッシュ",               type: "value_type_is_any_hash",     value: { id: 1, name: "alice" }, },
@@ -21,8 +21,8 @@ module QuickScript
           { name: "テーブル",               type: "value_type_is_hash_array",   value: [{ id: 1, name: "alice" }], },
           { name: ".box",                   type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsBox", _v_bind: { value: "(value)" } }, },
           { name: "コンポーネント指定",     type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsPre", _v_bind: { value: "(value)" } }, },
-          { name: "横並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsH",   _v_bind: { value: ["a", "b"], }, style: {"gap" => "1.0rem"} }, },
-          { name: "縦並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsV",   _v_bind: { value: ["a", "b"], }, style: {"gap" => "1.0rem"} }, },
+          { name: "横並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsH",   _v_bind: { value: ["a", "b"], }, style: { "gap" => "1.0rem" } }, },
+          { name: "縦並び",                 type: "value_type_is_component",    value: { _component: "QuickScriptViewValueAsV",   _v_bind: { value: ["a", "b"], }, style: { "gap" => "1.0rem" } }, },
         ].collect do |e|
           {
             :name  => e[:name],

@@ -10,7 +10,7 @@ module Api
 
       s = main_user.memberships
       s = s.joins(:league).order(Tsl::League.arel_table[:generation].asc)
-      s = s.includes({:user => :memberships}, :league)
+      s = s.includes({ :user => :memberships }, :league)
 
       memberships = s
 
@@ -30,7 +30,7 @@ module Api
         memberships: s.as_json({
             include: [
               :user,
-              league: {only: [:generation]},
+              league: { only: [:generation] },
             ],
             methods: [
               :ox_human,

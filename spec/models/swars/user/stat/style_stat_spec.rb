@@ -14,8 +14,8 @@ RSpec.describe Swars::User::Stat::StyleStat, type: :model, swars_spec: true do
 
     it "works" do
       style_stat = case1("新米長玉")
-      assert { style_stat.counts_hash  == {:"変態" => 1} }
-      assert { style_stat.ratios_hash  == {:"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 0.0, :"変態" => 1.0} }
+      assert { style_stat.counts_hash  == { :"変態" => 1 } }
+      assert { style_stat.ratios_hash  == { :"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 0.0, :"変態" => 1.0 } }
       assert { style_stat.denominator  == 1 }
       assert { style_stat.majority_ratio == 0.0 }
       assert { style_stat.minority_ratio == 1.0 }

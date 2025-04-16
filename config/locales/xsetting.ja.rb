@@ -11,8 +11,7 @@
       :models => {
         :xsetting    => "設定",
       },
-      :attributes => {
-      },
+      :attributes => {},
     },
   },
 }

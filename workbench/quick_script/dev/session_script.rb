@@ -5,7 +5,7 @@ redis = Rails.cache.redis.with(&:itself)
 session_data = {}
 
 controller = Api::QuickScriptsController.new
-controller.params = ActionController::Parameters.new({foo: 1})
+controller.params = ActionController::Parameters.new({ foo: 1 })
 
 request = ActionDispatch::TestRequest.create
 controller.request = request

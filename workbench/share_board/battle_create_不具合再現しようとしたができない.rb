@@ -9,8 +9,8 @@ params = {
   :turn             => 91,
   :win_location_key => "black",
   :memberships => [
-    {:user_name => "電子れいず",   :location_key => "black", :judge_key => "win",  },
-    {:user_name => "都賀町えいだ", :location_key => "white", :judge_key => "lose", },
+    { :user_name => "電子れいず",   :location_key => "black", :judge_key => "win",  },
+    { :user_name => "都賀町えいだ", :location_key => "white", :judge_key => "lose", },
   ],
 }
 

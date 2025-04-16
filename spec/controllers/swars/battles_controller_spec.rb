@@ -89,7 +89,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
-      get :index, params: {query: "__unknown__", sort_column: "membership.judge_id" }
+      get :index, params: { query: "__unknown__", sort_column: "membership.judge_id" }
       assert { response.status == 200 }
     end
   end
@@ -98,13 +98,13 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "詳細検索" do
     describe "手合割" do
       it "平手" do
-        get :index, params: {query: "DevUser1 手合割:平手"}
+        get :index, params: { query: "DevUser1 手合割:平手" }
         assert { controller.current_scope.count == 1 }
         assert { response.status == 200 }
       end
 
       it "駒落ち" do
-        get :index, params: {query: "DevUser1 手合割:-平手"}
+        get :index, params: { query: "DevUser1 手合割:-平手" }
         assert { controller.current_scope.count == 0 }
         assert { response.status == 200 }
       end
@@ -118,7 +118,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "index + query" do
-      get :index, params: {query: "DevUser1"}
+      get :index, params: { query: "DevUser1" }
       assert { response.status == 200 }
       assert { assigns(:current_records).size == 1 }
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
@@ -126,12 +126,12 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
     describe "ウォーズの対局キーが含まれるURLで検索" do
       it "レコードあり" do
-        get :index, params: {query: "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401?tw=1"}
+        get :index, params: { query: "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401?tw=1" }
         assert { controller.current_scope.count == 1 }
         assert { response.status == 200 }
       end
       it "レコードなし" do
-        get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
+        get :index, params: { query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1" }
         assert { controller.current_scope.count == 0 }
         assert { response.status == 200 }
       end
@@ -158,7 +158,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
       describe "ダウンロードしたZIPファイルの内容が正しい" do
         def case_ng(body_encode)
-          get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
+          get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode }
           assert { response.status == 200 }
           assert { controller.current_scope.count == 1 }
           assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
@@ -178,7 +178,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       end
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
-        get :index, params: {query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
+        get :index, params: { query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
         json = JSON.parse(response.body, symbolize_names: true)
         assert { json[:form_params_default] }
       end

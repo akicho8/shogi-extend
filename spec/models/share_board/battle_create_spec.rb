@@ -9,9 +9,9 @@ RSpec.describe ShareBoard::Room do
       "turn"     => 142,
       "win_location_key" => "white",
       "memberships" => [
-        {"user_name" => "こみつ",       "location_key" => "black", "judge_key" => "lose", },
-        {"user_name" => "ぬん！",       "location_key" => "white", "judge_key" => "win",  },
-        {"user_name" => "シュワーバー", "location_key" => "black", "judge_key" => "lose", },
+        { "user_name" => "こみつ",       "location_key" => "black", "judge_key" => "lose", },
+        { "user_name" => "ぬん！",       "location_key" => "white", "judge_key" => "win",  },
+        { "user_name" => "シュワーバー", "location_key" => "black", "judge_key" => "lose", },
       ],
     }.deep_symbolize_keys
   }

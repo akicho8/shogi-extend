@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ShogiQuestToStandardCsa, type: :model do
   it "works" do
-    moves = [{"m" => "7776FU", "t" => 383}, {"m" => "3334FU", "t" => 1492}, {"s" => "LOSE:RESIGN", "t" => 4274}]
+    moves = [{ "m" => "7776FU", "t" => 383 }, { "m" => "3334FU", "t" => 1492 }, { "s" => "LOSE:RESIGN", "t" => 4274 }]
     object = ShogiQuestToStandardCsa.new(moves: moves, created: Time.current, user_names: [:a, :b])
     csa = object.call
     assert { csa == <<~EOT }

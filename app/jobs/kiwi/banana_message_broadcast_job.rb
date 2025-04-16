@@ -3,7 +3,7 @@ module Kiwi
     queue_as :default
 
     def perform(banana_message)
-      ActionCable.server.broadcast("kiwi/banana_room_channel/#{banana_message.banana_id}", {bc_action: :speak_broadcasted, bc_params: {banana_message: render_message(banana_message)}})
+      ActionCable.server.broadcast("kiwi/banana_room_channel/#{banana_message.banana_id}", { bc_action: :speak_broadcasted, bc_params: { banana_message: render_message(banana_message) } })
     end
 
     private

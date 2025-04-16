@@ -9,7 +9,7 @@ user = User.admin
 params = {
   "title"            => "(title)",
   "init_sfen"        => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
-  "moves_answers"    =>[{"moves_str"=>"4c5b"}],
+  "moves_answers"    =>[{ "moves_str"=>"4c5b" }],
   "time_limit_clock" =>"1999-12-31T15:03:00.000Z",
 }.deep_symbolize_keys
 

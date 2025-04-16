@@ -21,8 +21,7 @@ module Api
     end
 
     def sp_params
-      {
-      }.merge(params.to_unsafe_h.to_options)
+      {}.merge(params.to_unsafe_h.to_options)
     end
 
     # curl -s "http://localhost:3000/api/cpu_battle?config_fetch=true" | jq .
@@ -262,7 +261,7 @@ module Api
         @candidate_records = brain.iterative_deepening(time_limit: time_limit, depth_max_range: current_cpu_brain_info.depth_max_range)
       rescue Bioshogi::BrainProcessingHeavy
         time_limit += 1
-        Rails.logger.info([:retry, {time_limit: time_limit}])
+        Rails.logger.info([:retry, { time_limit: time_limit }])
         retry
       end
     end
@@ -281,7 +280,7 @@ module Api
     end
 
     def evaluation_value_generation
-      @score_list << {x: @container.turn_info.turn_offset, y: @container.player_at(:black).evaluator.score}
+      @score_list << { x: @container.turn_info.turn_offset, y: @container.player_at(:black).evaluator.score }
     end
 
     # 最後の手があれば読み上げる

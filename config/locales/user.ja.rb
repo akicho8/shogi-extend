@@ -1,11 +1,9 @@
 {
   ja: {
-    attributes: {
-    },
+    attributes: {},
     helpers: {
       submit: {
-        battle: {
-        },
+        battle: {},
       },
     },
     activerecord: {

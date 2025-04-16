@@ -106,7 +106,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         if auth.info.image
           filename = Pathname(image_uri.path).basename.to_s
           io = image_uri.open
-          @user.avatar = {io: io, filename: filename, content_type: "image/png"}
+          @user.avatar = { io: io, filename: filename, content_type: "image/png" }
           @user.save
         else
           AppLog.info(subject: "auth.info.image is blank")

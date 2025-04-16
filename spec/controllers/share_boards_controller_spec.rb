@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ShareBoardsController, type: :controller, share_board_spec: true do
   it "HTMLの要求はNuxt側にリダイレクト" do
-    get :show, params: { }
+    get :show, params: {}
     assert { response.status == 302 }
   end
 

@@ -24,8 +24,7 @@ class SlackSender
   attr_reader :params
 
   def initialize(params = {})
-    @params = {
-    }.merge(params)
+    @params = {}.merge(params)
   end
 
   def call

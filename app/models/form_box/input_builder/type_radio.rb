@@ -11,7 +11,7 @@ module FormBox
         elsms.collect { |right_label, v|
           h.content_tag(:label, :class => "radio-inline") do
             checked = (v.to_s == default.to_s)
-            h.radio_button_tag("#{key}[#{right_label}]", v, checked, {:name => key}.merge(html_options)) + right_label
+            h.radio_button_tag("#{key}[#{right_label}]", v, checked, { :name => key }.merge(html_options)) + right_label
           end
         }.join.html_safe
       end

@@ -16,7 +16,7 @@ module QuickScript
             :type            => :radio_button,
             :dynamic_part => -> {
               {
-                :elems   => {"false" => "A", "true" => "B"},
+                :elems   => { "false" => "A", "true" => "B" },
                 :default => params[:key1].presence || "false",
               }
             },
@@ -27,7 +27,7 @@ module QuickScript
             :type            => :radio_button,
             :dynamic_part => -> {
               {
-                :elems   => {"false" => "A", "true" => "B"},
+                :elems   => { "false" => "A", "true" => "B" },
                 :default => "false",   # 毎回元に戻したい場合
                 :hidden_on_query => true,      # URLからも隠したい場合
               }

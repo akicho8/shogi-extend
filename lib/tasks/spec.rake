@@ -61,12 +61,12 @@ if defined?(RSpec)
       task :nightly do
         system %(k -x "Google Chrome")
         system %(k -x "chromedriver")
-        system({"BROWSER_DEBUG" => "1"}, "rake")
+        system({ "BROWSER_DEBUG" => "1" }, "rake")
         3.times do
           system %(k -x "Google Chrome")
           system %(k -x "chromedriver")
           sleep 120
-          system({"BROWSER_DEBUG" => "1"}, "rspec --only-failures")
+          system({ "BROWSER_DEBUG" => "1" }, "rspec --only-failures")
         end
       end
 

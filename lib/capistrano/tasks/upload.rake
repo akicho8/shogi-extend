@@ -8,7 +8,7 @@ namespace :deploy do
       rows = files.collect do |file|
         server_file = release_path.join(file)
         upload! file.open, server_file.to_s
-        {"Host" => host.hostname, "転送元" => file, "転送先" => server_file}
+        { "Host" => host.hostname, "転送元" => file, "転送先" => server_file }
       end
       tp rows
     end

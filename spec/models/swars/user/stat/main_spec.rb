@@ -12,13 +12,13 @@ RSpec.describe Swars::User::Stat::Main, type: :model, swars_spec: true do
 
     describe "ヘッダー" do
       it "名前" do
-        assert { @as_json["user"] == {"key" => "user1", "ban_at" => nil} }
+        assert { @as_json["user"] == { "key" => "user1", "ban_at" => nil } }
       end
       it "ルール別の段級位" do
-        assert { @as_json["rule_items"] == [{"rule_key" => "ten_min", "rule_name" => "10分", "grade_name" => "30級"}, {"rule_key" => "three_min", "rule_name" => "3分", "grade_name" => nil}, {"rule_key" => "ten_sec", "rule_name" => "10秒", "grade_name" => nil}] }
+        assert { @as_json["rule_items"] == [{ "rule_key" => "ten_min", "rule_name" => "10分", "grade_name" => "30級" }, { "rule_key" => "three_min", "rule_name" => "3分", "grade_name" => nil }, { "rule_key" => "ten_sec", "rule_name" => "10秒", "grade_name" => nil }] }
       end
       it "勝敗数" do
-        assert { @as_json["judge_counts"] == {"win" => 1} }
+        assert { @as_json["judge_counts"] == { "win" => 1 } }
       end
       it "直近N件の勝敗履歴" do
         assert { @as_json["judge_keys"]  == ["win"] }
@@ -29,15 +29,15 @@ RSpec.describe Swars::User::Stat::Main, type: :model, swars_spec: true do
     end
 
     it "各タブの情報" do
-      assert { @as_json["day_items"]       == [{"battled_on" => "1999-12-31", "day_type" => nil, "judge_counts" => {"win" => 1, "lose" => 0}}] }
-      assert { @as_json["vs_grade_items"]  == [{"grade_name" => "30級", "judge_counts" => {"win" => 1}, "appear_ratio" => 1.0}] }
-      assert { @as_json["my_attack_items"] == [{"tag" => "新嬉野流", "appear_ratio" => 1.0, "judge_counts" => {"win" => 1, "lose" => 0}}] }
-      assert { @as_json["vs_attack_items"] == [{"tag" => "2手目△3ニ飛戦法", "appear_ratio" => 1.0, "judge_counts" => {"lose" => 0, "win" => 1}}] }
+      assert { @as_json["day_items"]       == [{ "battled_on" => "1999-12-31", "day_type" => nil, "judge_counts" => { "win" => 1, "lose" => 0 } }] }
+      assert { @as_json["vs_grade_items"]  == [{ "grade_name" => "30級", "judge_counts" => { "win" => 1 }, "appear_ratio" => 1.0 }] }
+      assert { @as_json["my_attack_items"] == [{ "tag" => "新嬉野流", "appear_ratio" => 1.0, "judge_counts" => { "win" => 1, "lose" => 0 } }] }
+      assert { @as_json["vs_attack_items"] == [{ "tag" => "2手目△3ニ飛戦法", "appear_ratio" => 1.0, "judge_counts" => { "lose" => 0, "win" => 1 } }] }
       assert { @as_json["my_defense_items"] == [] }
       assert { @as_json["vs_defense_items"] == [] }
       assert { @as_json["my_technique_items"] == [] }
       assert { @as_json["vs_technique_items"] == [] }
-      assert { @as_json["my_note_items"] == [{"tag"=>"対抗形", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}, {"tag"=>"対振り飛車", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+      assert { @as_json["my_note_items"] == [{ "tag"=>"対抗形", "appear_ratio"=>1.0, "judge_counts"=>{ "win"=>1, "lose"=>0 } }, { "tag"=>"対振り飛車", "appear_ratio"=>1.0, "judge_counts"=>{ "win"=>1, "lose"=>0 } }] }
       assert { @as_json["vs_note_items"] }
     end
 

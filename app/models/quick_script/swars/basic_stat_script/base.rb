@@ -35,7 +35,7 @@ class QuickScript::Swars::BasicStatScript
         v << { :_v_html => base.tag.div(component_title, :class => "title is-5 my-5") }
       end
       v += Array.wrap(component_body)
-      v = base.v_stack(v, style: {"gap" => "0rem"})
+      v = base.v_stack(v, style: { "gap" => "0rem" })
       if false
         v = { _component: "QuickScriptViewValueAsBox", _v_bind: { value: v } }
       end

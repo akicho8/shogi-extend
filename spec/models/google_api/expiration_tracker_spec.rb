@@ -15,7 +15,7 @@ RSpec.describe GoogleApi::ExpirationTracker, type: :model do
 
   it "プレッドシートを作ったあとで削除する" do
     Timecop.return do
-      GoogleApi::Facade.new(rows: [{id: 1}]).call
+      GoogleApi::Facade.new(rows: [{ id: 1 }]).call
       assert { GoogleApi::ExpirationTracker.count == 1 }
     end
   end

@@ -38,7 +38,7 @@ EOS
             :session_sync    => true,
             :dynamic_part => -> {
               {
-                :elems   => {"grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま"},
+                :elems   => { "grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま" },
                 :default => params[:order_by].presence || "grade",
                 :help_message => "上で記入した通りの並びでいいなら「そのまま」にしてください",
               }
@@ -50,7 +50,7 @@ EOS
             :type  => debug_mode ? :radio_button : :hidden,
             :dynamic_part => -> {
               {
-                :elems        => {"false" => "しない", "true" => "する"},
+                :elems        => { "false" => "しない", "true" => "する" },
                 :default      => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
               }
             },
@@ -61,7 +61,7 @@ EOS
             :type        => debug_mode ? :radio_button : :hidden,
             :dynamic_part => -> {
               {
-                :elems   => {"false" => "しない", "true" => "する"},
+                :elems   => { "false" => "しない", "true" => "する" },
                 :default => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
               }
             },
@@ -120,7 +120,7 @@ EOS
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
               row["名前"] = user_items_hash[e.key][:name]
-              row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: {name: "swars-search", query: { query: e.user_key } }, }, }
+              row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: { name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
               row.update(grade_per_rule(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
@@ -132,8 +132,8 @@ EOS
               row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
               row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
               if Rails.env.local?
-                row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: {name: "swars-search", query: { query: e.user_key } }, }, }
-                row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+                row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: { name: "swars-search", query: { query: e.user_key } }, }, }
+                row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: { name: "swars-users-key", params: { key: e.user_key } }, }, }
                 row["リンク3"] = tag.a("本家", href: e.official_mypage_url, target: "_blank")
                 row["リンク4"] = tag.a("ググる", href: e.google_search_url, target: "_blank")
               end

@@ -21,7 +21,7 @@ module Kiwi
             :main_volume              => 0.8,
             :width                    => 2,
             :height                   => 2,
-            :renderer_override_params => { },
+            :renderer_override_params => {},
           },
         },
       }
@@ -46,7 +46,7 @@ module Kiwi
             :main_volume              => 0.8,
             :width                    => 2,
             :height                   => 2,
-            :renderer_override_params => { },
+            :renderer_override_params => {},
           },
         },
       }

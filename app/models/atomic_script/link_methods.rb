@@ -12,7 +12,7 @@ module AtomicScript
 
     class_methods do
       def script_link_path(params = {})
-        [*url_prefix, {:id => key}.merge(params)]
+        [*url_prefix, { :id => key }.merge(params)]
       end
     end
 

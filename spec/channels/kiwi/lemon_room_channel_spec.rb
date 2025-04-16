@@ -23,8 +23,7 @@ RSpec.describe Kiwi::LemonRoomChannel, type: :channel do
   end
 
   def data_factory(params)
-    {
-    }.merge(params)
+    {}.merge(params)
   end
 
   describe "接続後に1回だけ呼ぶ" do

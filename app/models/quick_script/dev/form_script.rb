@@ -100,7 +100,7 @@ module QuickScript
             :type    => :select,
             :dynamic_part => -> {
               {
-                :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
+                :elems   => { "a" => "選択1", "b" => "選択2", "c" => "選択3" },
                 :default => params[:select2].presence || "a",
               }
             }
@@ -190,7 +190,7 @@ module QuickScript
             :type    => :radio_button,
             :dynamic_part => -> {
               {
-                :elems   => {"a" => "選択1", "b" => "選択2", "c" => "選択3"},
+                :elems   => { "a" => "選択1", "b" => "選択2", "c" => "選択3" },
                 :default => params[:radio2].presence || "a",
               }
             },

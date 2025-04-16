@@ -51,14 +51,14 @@ RSpec.describe Api::Kiwi::BananasController, type: :controller, kiwi: true do
   end
 
   [
-    { action:  :index, params: {                            },                  status: 200, }, # トップは誰でも見れる
+    { action:  :index, params: {},                  status: 200, }, # トップは誰でも見れる
 
     { action:  :show,  params: { banana_key: "alice-public",  },  login: "alice", status: 200, }, # 自分のなので見れる
     { action:  :show,  params: { banana_key: "alice-private", },  login: "alice", status: 200, }, # 自分のなので見れる
     { action:  :show,  params: { banana_key: "bob-public",    },  login: "alice", status: 200, }, # 他者のpublicなので見れる
     { action:  :show,  params: { banana_key: "bob-private",   },  login: "alice", status: 403, }, # 他者のprivateなので見れない
 
-    { action:  :edit,  params: {                            },  login: "alice", status: 200, }, # 新規なのでキーはない
+    { action:  :edit,  params: {},  login: "alice", status: 200, }, # 新規なのでキーはない
     { action:  :edit,  params: { banana_key: "alice-public",  },  login: "alice", status: 200, }, # 自分のなので編集できる
     { action:  :edit,  params: { banana_key: "alice-private", },  login: "alice", status: 200, }, # 自分のなので編集できる
 
@@ -71,7 +71,7 @@ RSpec.describe Api::Kiwi::BananasController, type: :controller, kiwi: true do
     { action:  :edit,  params: { banana_key: "bob-private",   },  login: "alice", status: 404, }, # 他者の編集ページには行けない
 
     # 権限に関わらずログインしていないので編集には行けない
-    { action:  :edit,  params: {                            },                  status: 403, },
+    { action:  :edit,  params: {},                  status: 403, },
     { action:  :edit,  params: { banana_key: "alice-public",  },                  status: 403, },
     { action:  :edit,  params: { banana_key: "alice-private", },                  status: 403, },
     { action:  :edit,  params: { banana_key: "bob-public",    },                  status: 403, },

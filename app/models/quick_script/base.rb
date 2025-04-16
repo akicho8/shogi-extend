@@ -94,8 +94,7 @@ module QuickScript
 
     def initialize(params = {}, options = {})
       @params = params_deserialize(params)
-      @options = {
-      }.merge(options)
+      @options = {}.merge(options)
     end
 
     def as_json(*)

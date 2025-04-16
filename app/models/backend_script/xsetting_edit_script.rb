@@ -97,7 +97,7 @@ module BackendScript
           end
           a = Xsetting[var_key]
           if [b, a].collect { |v| v.to_s.lines.to_a.collect(&:rstrip) }.uniq.count != 1
-            {"項目" => AvailableXsetting[var_key].name, "変更前" => b.inspect, "変更後" => a.inspect}
+            { "項目" => AvailableXsetting[var_key].name, "変更前" => b.inspect, "変更後" => a.inspect }
           end
         }.compact
       end

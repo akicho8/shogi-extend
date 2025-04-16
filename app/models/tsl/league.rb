@@ -31,7 +31,7 @@ module Tsl
         }.merge(options)
 
         if options[:verbose]
-          tp({"三段リーグ取得": generation})
+          tp({ "三段リーグ取得": generation })
         end
 
         scraping = Scraping.new(options.merge(generation: generation))

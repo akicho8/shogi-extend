@@ -15,8 +15,8 @@ RSpec.describe Swars::User::Stat::LeaveAloneStat, type: :model, swars_spec: true
 
     it "works" do
       @black = Swars::User.create!
-      assert { case1 == [600, [{name: "10分", value: 1}]] }
-      assert { case1 == [600, [{name: "10分", value: 2}]] }
+      assert { case1 == [600, [{ name: "10分", value: 1 }]] }
+      assert { case1 == [600, [{ name: "10分", value: 2 }]] }
     end
 
     describe "バッジ" do

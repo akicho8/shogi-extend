@@ -14,7 +14,7 @@ file = "spec/rails.png"
 # file2 = {io: StringIO.new(Base64.encode64(Pathname(file).read)), filename: "foo.png", content_type: "image/png"}
 
 # どの方法でもよい。
-file2 = {io: StringIO.open(Pathname(file).read), filename: "foo.png" }
+file2 = { io: StringIO.open(Pathname(file).read), filename: "foo.png" }
 # file2 = {io: StringIO.open(Pathname(file).read), filename: "foo.png"} # content_type はなくてもいい。, content_type: "image/png"
 # file2 = {io: File.open(file), filename: "foo.png", content_type: "image/png"}
 # file2 = Rack::Test::UploadedFile.new(file, "image/png", :binary)

@@ -6,7 +6,7 @@ module Kiwi
         belongs_to :recordable, polymorphic: true # 棋譜情報
         has_one :banana, dependent: :destroy      # アーカイブしたときに結びつく
 
-        scope :single_only,      -> { left_joins(:banana).where(banana: {id: nil})                } # Bananaと結びついていないもの
+        scope :single_only,      -> { left_joins(:banana).where(banana: { id: nil })                } # Bananaと結びついていないもの
         scope :old_only,         -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
         scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理

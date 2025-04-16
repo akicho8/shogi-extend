@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe QuickScript::Swars::TacticStatScript, type: :model do
   def case1(params)
-    instance = QuickScript::Swars::TacticStatScript.new({freq_ratio_gteq: 0, **params})
+    instance = QuickScript::Swars::TacticStatScript.new({ freq_ratio_gteq: 0, **params })
     instance.as_json
     !instance.table_rows.empty?
   end

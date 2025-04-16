@@ -30,16 +30,16 @@ require "rails_helper"
 RSpec.describe Api::Wkbk::BooksController, type: :controller do
   include WkbkSupportMethods
   [
-    { action: :index, params: {                 },               status: 200, },
+    { action: :index, params: {},               status: 200, },
     { action: :show,  params: { book_key: 1,    },               status: 200, },
     { action: :show,  params: { book_key: 2,    },               status: 403, },
     { action: :show,  params: { book_key: :x,   },               status: 404, },
     { action: :edit,  params: { book_key: 2,    }, user: :admin, status: 200, },
     { action: :show,  params: { book_key: 4,    }, user: :admin, status: 403, },
-    { action: :edit,  params: {                 },               status: 403, },
-    { action: :edit,  params: {                 }, user: :admin, status: 200, },
-    { action: :edit,  params: {                 },               status: 403, },
-    { action: :edit,  params: {                 }, user: :admin, status: 200, },
+    { action: :edit,  params: {},               status: 403, },
+    { action: :edit,  params: {}, user: :admin, status: 200, },
+    { action: :edit,  params: {},               status: 403, },
+    { action: :edit,  params: {}, user: :admin, status: 200, },
     { action: :edit,  params: { book_key: 1,    },               status: 403, },
     { action: :edit,  params: { book_key: 2,    },               status: 403, },
     { action: :edit,  params: { book_key: 3,    },               status: 403, },

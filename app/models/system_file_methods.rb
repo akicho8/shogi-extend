@@ -21,8 +21,7 @@ module SystemFileMethods
 
     # 実際の変換処理に渡すようなパラメータ
     def default_params
-      {
-      }
+      {}
     end
 
     # SystemFileMethods 用のパラメータ

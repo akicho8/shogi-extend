@@ -38,7 +38,7 @@ module ApplicationCable
 
         counter = values.first
 
-        Rails.logger.debug([__method__, {key: key, counter: counter, expires_in: redis.ttl(key)}])
+        Rails.logger.debug([__method__, { key: key, counter: counter, expires_in: redis.ttl(key) }])
 
         counter == 1
       end

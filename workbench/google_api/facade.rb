@@ -1,6 +1,6 @@
 require "./setup"
 # GoogleApi::ExpirationTracker.delete_all
-facade = GoogleApi::Facade.new(rows: [{id: 1}])
+facade = GoogleApi::Facade.new(rows: [{ id: 1 }])
 facade.rows               # => [[:id], [1]]
 facade.call               # => "https://docs.google.com/spreadsheets/d/1IVyhvkya4KSvlYBh78Ua-dtKgy3X2AGYPRQkXOi7t_A/edit"
 # GoogleApi::ExpirationTracker.find_each do |e|

@@ -60,10 +60,10 @@ module QuickScript
           return "#{tag}に該当するものが見つかりません"
         end
         values = [
-          { _component: "CustomShogiPlayer", _v_bind: sp_params, style: {"max-width" => "640px", margin: "auto"}, :class => "is-unselectable is-centered", },
+          { _component: "CustomShogiPlayer", _v_bind: sp_params, style: { "max-width" => "640px", margin: "auto" }, :class => "is-unselectable is-centered", },
           { _component: "QuickScriptViewValueAsPre", _v_bind: { value: sp_body }, :class => "is-size-7" },
         ]
-        v_stack(values, style: {"gap" => "1rem"})
+        v_stack(values, style: { "gap" => "1rem" })
       end
 
       ################################################################################

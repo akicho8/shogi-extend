@@ -10,7 +10,7 @@ RSpec.describe QuickScript::Swars::BattleDownloadScript, type: :model do
 
   it "methods" do
     case1
-    instance = QuickScript::Swars::BattleDownloadScript.new({query: "SWARS_USER_KEY", max_key: "200"}, {current_user: @current_user})
+    instance = QuickScript::Swars::BattleDownloadScript.new({ query: "SWARS_USER_KEY", max_key: "200" }, { current_user: @current_user })
     assert { instance.download_content  }
     assert { instance.download_filename }
     assert { instance.download_url      }
@@ -26,11 +26,11 @@ RSpec.describe QuickScript::Swars::BattleDownloadScript, type: :model do
     case1
 
     # ブラウザでダウンロード (開発時のみ可)
-    instance = QuickScript::Swars::BattleDownloadScript.new({query: "SWARS_USER_KEY"}, {current_user: @current_user, _method: "post"})
+    instance = QuickScript::Swars::BattleDownloadScript.new({ query: "SWARS_USER_KEY" }, { current_user: @current_user, _method: "post" })
     assert { instance.as_json[:flash][:notice] == "ダウンロードを開始しました" }
 
     # バックグラウンド実行予約 (本番)
-    instance = QuickScript::Swars::BattleDownloadScript.new({query: "SWARS_USER_KEY", bg_request_key: :on}, {current_user: @current_user, _method: "post"})
+    instance = QuickScript::Swars::BattleDownloadScript.new({ query: "SWARS_USER_KEY", bg_request_key: :on }, { current_user: @current_user, _method: "post" })
     assert { instance.as_json[:flash][:notice].include?("ZIPで送ります") }
     assert { ActionMailer::Base.deliveries.count == 2 } # テスト環境では即座に実行され、管理者と本人にメールされた
   end

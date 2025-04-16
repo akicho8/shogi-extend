@@ -1,5 +1,5 @@
 require "../setup"
-tp QuickScript::Account::ProfileImageUploadScript.new({ avatar: { data_uri: MiniImage.generate } }, {current_user: User.create!, _method: :post}).as_json
+tp QuickScript::Account::ProfileImageUploadScript.new({ avatar: { data_uri: MiniImage.generate } }, { current_user: User.create!, _method: :post }).as_json
 # >> 2024-07-28T02:48:40.658Z pid=5825 tid=3h INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
 # >> |-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |                          body |                                                                                                                                                                                                                                                                 |

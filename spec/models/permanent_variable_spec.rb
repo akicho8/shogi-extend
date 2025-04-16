@@ -9,7 +9,7 @@ RSpec.describe PermanentVariable, type: :model, swars_spec: true do
     PermanentVariable["A"] = "x"
     assert { PermanentVariable["A"] == "x" }
 
-    PermanentVariable["A"] = {"x" => 1}
+    PermanentVariable["A"] = { "x" => 1 }
     assert { PermanentVariable["A"] == { x: 1 } }
   end
 end

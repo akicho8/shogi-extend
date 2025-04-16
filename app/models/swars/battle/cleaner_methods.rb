@@ -29,8 +29,7 @@ module Swars
 
         # 削除対象
         scope :cleaner_scope, -> (options = {}) {
-          options = {
-          }.merge(options)
+          options = {}.merge(options)
 
           s = all
 
@@ -91,12 +90,12 @@ module Swars
       class_methods do
         # rails r 'Swars::Battle.cleaner1.call'
         def cleaner1(options = {})
-          drop_scope1(options).cleaner({subject: "一般"}.merge(options))
+          drop_scope1(options).cleaner({ subject: "一般" }.merge(options))
         end
 
         # rails r 'Swars::Battle.cleaner2.call'
         def cleaner2(options = {})
-          drop_scope2(options).cleaner({subject: "VIP"}.merge(options))
+          drop_scope2(options).cleaner({ subject: "VIP" }.merge(options))
         end
       end
     end

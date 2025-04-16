@@ -1,14 +1,11 @@
 {
   ja: {
-    attributes: {
-    },
+    attributes: {},
     helpers: {
-      submit: {
-      },
+      submit: {},
     },
     activemodel: {
-      models: {
-      },
+      models: {},
     },
     activerecord: {
       models: {

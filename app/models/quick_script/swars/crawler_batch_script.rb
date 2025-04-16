@@ -28,7 +28,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => {"nothing" => "しない", "with_zip" => "する"},
+                :elems   => { "nothing" => "しない", "with_zip" => "する" },
                 :default => params[:attachment_mode].to_s.presence || "nothing",
               }
             },

@@ -7,8 +7,8 @@ RSpec.describe QuickScript::Swars::BattleDownloadScript::ScopeInfo, type: :model
     ::Swars::Battle.create! do |e|
       e.memberships.build(user: swars_user)
     end
-    params = {query: "SWARS_USER_KEY", scope_key: scope_key}
-    options = {current_user: current_user}
+    params = { query: "SWARS_USER_KEY", scope_key: scope_key }
+    options = { current_user: current_user }
     instance = QuickScript::Swars::BattleDownloadScript.new(params, options)
     instance.main_scope.count == 1
   end

@@ -52,27 +52,27 @@ RSpec.describe FreeBattlesController, type: :controller do
   # end
 
   it "kif" do
-    get :show, params: {id: @free_battle.to_param, format: "kif"}
+    get :show, params: { id: @free_battle.to_param, format: "kif" }
     assert { response.status == 200 }
   end
 
   it "ki2" do
-    get :show, params: {id: @free_battle.to_param, format: "ki2"}
+    get :show, params: { id: @free_battle.to_param, format: "ki2" }
     assert { response.status == 200 }
   end
 
   it "sfen" do
-    get :show, params: {id: @free_battle.to_param, format: "sfen"}
+    get :show, params: { id: @free_battle.to_param, format: "sfen" }
     assert { response.status == 200 }
   end
 
   it "csa" do
-    get :show, params: {id: @free_battle.to_param, format: "csa"}
+    get :show, params: { id: @free_battle.to_param, format: "csa" }
     assert { response.status == 200 }
   end
 
   it "png" do
-    get :show, params: {id: @free_battle.to_param, format: "png" }
+    get :show, params: { id: @free_battle.to_param, format: "png" }
     assert { response.status == 302 }
   end
 

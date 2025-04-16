@@ -11,7 +11,7 @@ RSpec.describe Swars::User::Stat::PieceStat, type: :model, swars_spec: true do
   end
 
   it "駒の使用頻度" do
-    assert { case1 == [{name: "玉", value: 1.0}] }
+    assert { case1 == [{ name: "玉", value: 1.0 }] }
   end
 end
 

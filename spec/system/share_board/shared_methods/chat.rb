@@ -28,18 +28,18 @@ module SharedMethods
 
   # 最後に送信した人の名前
   def assert_message_latest_from(name, options = {})
-    assert_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))
+    assert_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", { text: name, exact_text: true }.merge(options))
   end
 
   # 最後に送信した人の名前
   def assert_no_message_latest_from(name, options = {})
-    assert_no_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))
+    assert_no_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", { text: name, exact_text: true }.merge(options))
   end
 
   # message を受信した
   def assert_message_received_o(message, options = {})
     assert_selector(".ChatModal .message_body")
-    assert_selector(".ChatModal .message_body", {text: message, exact_text: true}.merge(options))
+    assert_selector(".ChatModal .message_body", { text: message, exact_text: true }.merge(options))
   end
 
   # message を受信していない

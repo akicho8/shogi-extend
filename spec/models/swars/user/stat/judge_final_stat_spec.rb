@@ -15,9 +15,9 @@ RSpec.describe Swars::User::Stat::JudgeFinalStat, type: :model, swars_spec: true
       case1(:lose, :CHECKMATE)
       assert do
         @black.stat.judge_final_stat.to_chart(:win) == [
-          {:key => :TORYO,     :name => "投了",     :value => 1},
-          {:key => :TIMEOUT,   :name => "時間切れ", :value => 0},
-          {:key => :CHECKMATE, :name => "詰み",     :value => 1},
+          { :key => :TORYO,     :name => "投了",     :value => 1 },
+          { :key => :TIMEOUT,   :name => "時間切れ", :value => 0 },
+          { :key => :CHECKMATE, :name => "詰み",     :value => 1 },
         ]
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe Swars::User::Stat::JudgeFinalStat, type: :model, swars_spec: true
     it "counts_hash" do
       @black = Swars::User.create!
       case1(:win, :CHECKMATE)
-      assert { @black.stat.judge_final_stat.counts_hash == { [:win, :CHECKMATE] => 1} }
+      assert { @black.stat.judge_final_stat.counts_hash == { [:win, :CHECKMATE] => 1 } }
     end
 
     describe "対戦成立条件は最低2手指すこと" do

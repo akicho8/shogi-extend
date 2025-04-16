@@ -34,7 +34,7 @@ module Swars
           end
         }.compact
 
-        tp({"対象人数" => rows.size})
+        tp({ "対象人数" => rows.size })
 
         if rows.blank?
           return

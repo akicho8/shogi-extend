@@ -1,7 +1,7 @@
 require "./setup"
 Swars::ZipDlLog.destroy_all
 User.admin.swars_zip_dl_logs.destroy_all
-instance = QuickScript::Swars::BattleDownloadScript.new({query: "bsplive 勝敗:勝ち", scope_key: "recent", max_key: "1"}, {current_user: User.admin, running_in_background: true})
+instance = QuickScript::Swars::BattleDownloadScript.new({ query: "bsplive 勝敗:勝ち", scope_key: "recent", max_key: "1" }, { current_user: User.admin, running_in_background: true })
 instance.dl_rest_count          # => 1
 instance.call                   # => #<Mail::Message:25700, Multipart: true, Headers: <Date: Sat, 14 Sep 2024 22:15:24 +0900>, <From: SHOGI-EXTEND <shogi.extend@gmail.com>>, <To: shogi.extend@gmail.com>, <Bcc: shogi.extend@gmail.com>, <Message-ID: <66e58c6c6b4d4_1088916d0866c5@ikemac2023.local.mail>>, <Subject: [development] bsplive 八段の将棋ウォーズ棋譜ダウンロード(直近1件)>, <Mime-Version: 1.0>, <Content-Type: multipart/mixed; charset=UTF-8; boundary="--==_mimepart_66e58c6c6b082_1088916d0865c6">, <Content-Transfer-Encoding: 7bit>>
 instance.download_content.size  # => 1744

@@ -65,7 +65,7 @@ RSpec.describe XyMaster::TimeRecord, type: :model do
   it "自己ベスト更新" do
     assert { XyMaster::TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
     assert { XyMaster::TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
-    assert { XyMaster::TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
+    assert { XyMaster::TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == { updated_spent_sec: 0.001 }  }
   end
 
   def build(*args)

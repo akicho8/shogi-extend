@@ -107,14 +107,14 @@ class AppLog < ApplicationRecord
     # AppLog.info("x")
     LogLevelInfo.keys.each do |key|
       define_method(key) do |body = nil, **params|
-        call(body, **{level: key}.merge(params))
+        call(body, **{ level: key }.merge(params))
       end
     end
 
     private
 
     def mail_notify(params)
-      SystemMailer.notify({fixed: true, rails_env_required: true}.merge(params)).deliver_later
+      SystemMailer.notify({ fixed: true, rails_env_required: true }.merge(params)).deliver_later
     end
 
     def slack_notify(params)

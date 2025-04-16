@@ -6,7 +6,7 @@ RSpec.describe QuickScript::Dispatcher, type: :model do
   end
 
   it "バックグラウンド実行用" do
-    action = QuickScript::Dispatcher.background_dispatch({qs_group_key: "dev", qs_page_key: "null"}, {current_user_id: User.create!.id})
+    action = QuickScript::Dispatcher.background_dispatch({ qs_group_key: "dev", qs_page_key: "null" }, { current_user_id: User.create!.id })
     assert { action.current_user }
   end
 

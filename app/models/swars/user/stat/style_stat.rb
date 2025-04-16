@@ -18,7 +18,7 @@ module Swars
               scope = scope.where(Battle.arel_table[:updated_at].lt("2024/06/28 13:00".to_time))
               scope = scope.limit(options[:max])
               AppLog.important("#{user.key} #{scope.count}")
-              tp({user.key => scope.count})
+              tp({ user.key => scope.count })
               scope.in_batches.each_record do |e|
                 p e.id
                 e.rebuild

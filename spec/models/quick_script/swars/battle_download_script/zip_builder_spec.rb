@@ -8,8 +8,8 @@ RSpec.describe QuickScript::Swars::BattleDownloadScript::ZipBuilder, type: :mode
     ::Swars::Battle.create! do |e|
       e.memberships.build(user: swars_user)
     end
-    params = {query: "SWARS_USER_KEY", **params}
-    options = {current_user: @current_user}
+    params = { query: "SWARS_USER_KEY", **params }
+    options = { current_user: @current_user }
     instance = QuickScript::Swars::BattleDownloadScript.new(params, options)
     blob = instance.zip_builder.to_blob
     Zip::InputStream.open(blob) do |zis|

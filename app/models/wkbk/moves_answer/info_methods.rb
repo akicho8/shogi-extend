@@ -28,11 +28,11 @@ module Wkbk
       private
 
       def share_board_png_url
-        Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
+        Rails.application.routes.url_helpers.url_for([:share_board, { only_path: false, format: "png", **share_board_params }])
       end
 
       def share_board_url
-        Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, title: article.title, **share_board_params}])
+        Rails.application.routes.url_helpers.url_for([:share_board, { only_path: false, title: article.title, **share_board_params }])
       end
 
       def share_board_params

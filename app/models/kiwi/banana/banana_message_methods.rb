@@ -7,7 +7,7 @@ module Kiwi
       end
 
       def kiwi_banana_message_pong_broadcast
-        ActionCable.server.broadcast("kiwi/banana_room_channel/#{id}", {bc_action: :kiwi_banana_message_pong_broadcast, bc_params: { pong: "OK" }})
+        ActionCable.server.broadcast("kiwi/banana_room_channel/#{id}", { bc_action: :kiwi_banana_message_pong_broadcast, bc_params: { pong: "OK" } })
       end
     end
   end

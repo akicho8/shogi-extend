@@ -18,8 +18,8 @@ HealthResponder = Proc.new do |env|
       raise "Redis is not running"
     end
     Rails.cache.delete(key)
-    [200, {"Content-Type" => "text/plain"}, ["I'm fine\n"]]
+    [200, { "Content-Type" => "text/plain" }, ["I'm fine\n"]]
   rescue => e
-    [500, {"Content-Type" => "text/plain"}, ["#{e.message} (#{e.class.name})\n"]]
+    [500, { "Content-Type" => "text/plain" }, ["#{e.message} (#{e.class.name})\n"]]
   end
 end

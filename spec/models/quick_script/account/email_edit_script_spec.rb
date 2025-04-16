@@ -4,7 +4,7 @@ RSpec.describe QuickScript::Account::EmailEditScript, type: :model do
   it "works" do
     user = User.create!
     new_email = "#{SecureRandom.hex}@localhost"
-    json = QuickScript::Account::EmailEditScript.new({email: new_email}, {current_user: user, _method: :post}).as_json
+    json = QuickScript::Account::EmailEditScript.new({ email: new_email }, { current_user: user, _method: :post }).as_json
     assert { user.unconfirmed_email == new_email }
     assert { json.dig(:body, :_autolink) }
   end

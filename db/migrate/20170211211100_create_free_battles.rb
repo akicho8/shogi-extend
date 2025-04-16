@@ -37,7 +37,7 @@
 class CreateFreeBattles < ActiveRecord::Migration[5.1]
   def up
     create_table :free_battles, force: true do |t|
-      t.string :key,            null: false, index: {unique: true}, charset: 'utf8', collation: 'utf8_bin', comment: "URL識別子"
+      t.string :key,            null: false, index: { unique: true }, charset: 'utf8', collation: 'utf8_bin', comment: "URL識別子"
       t.string :kifu_url,       null: true,                                                                 comment: "入力した棋譜URL"
       t.string :title,          null: true
       t.text :kifu_body,        null: false, limit: 65535,                                               comment: "棋譜本文"

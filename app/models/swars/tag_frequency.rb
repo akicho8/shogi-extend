@@ -10,8 +10,7 @@ module Swars
     BATCH_SIZE = 1000
 
     def initialize(options = {})
-      @options = {
-      }.merge(options)
+      @options = {}.merge(options)
     end
 
     def as_json(*)

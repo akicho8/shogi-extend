@@ -43,7 +43,7 @@ module ShareBoard
         end
       end
       bc_params = bc_params.merge("API_VERSION" => AppConfig[:share_board_api_version])
-      ActionCable.server.broadcast("share_board/lobby_channel", {bc_action: bc_action, bc_params: bc_params})
+      ActionCable.server.broadcast("share_board/lobby_channel", { bc_action: bc_action, bc_params: bc_params })
     end
 
     def track(data, action, body)

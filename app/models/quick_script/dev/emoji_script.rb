@@ -24,7 +24,7 @@ module QuickScript
             :type    => :radio_button,
             :dynamic_part => -> {
               {
-                :elems   => {"grapheme_cluster" => "結合", "single_code_point" => "分解", "info" => "詳細"},
+                :elems   => { "grapheme_cluster" => "結合", "single_code_point" => "分解", "info" => "詳細" },
                 :default => current_mode,
               }
             },
@@ -40,7 +40,7 @@ module QuickScript
           values = current_emoji_text.chars.collect do |str|
             { _component: "XemojiWrap", _v_bind: { str: str } }
           end
-          h_stack(values, :style => {"gap" => "0"})
+          h_stack(values, :style => { "gap" => "0" })
         else
           rows = current_emoji_text.chars.collect do |str|
             {

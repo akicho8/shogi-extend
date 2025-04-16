@@ -28,7 +28,7 @@ module Kiwi
         bc_params = {
           :my_records => kiwi_lemons.limit(max).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list),
         }
-        Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_my_lemons_singlecasted, bc_params: bc_params})
+        Kiwi::LemonRoomChannel.broadcast_to(self, { bc_action: :kiwi_my_lemons_singlecasted, bc_params: bc_params })
       end
 
       # 管理者用の全体情報
@@ -38,7 +38,7 @@ module Kiwi
           :sidekiq_queue_count => Kiwi::Lemon.sidekiq_queue_count, # 待ち数
           :sidekiq_run_count   => Kiwi::Lemon.sidekiq_run_count,   # 実行中数
         }
-        Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_admin_info_singlecasted, bc_params: bc_params})
+        Kiwi::LemonRoomChannel.broadcast_to(self, { bc_action: :kiwi_admin_info_singlecasted, bc_params: bc_params })
       end
 
       # 終了したもの
@@ -48,12 +48,12 @@ module Kiwi
           :noisy => true,
           **params,
         }
-        Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_done_lemon_singlecasted, bc_params: bc_params})
+        Kiwi::LemonRoomChannel.broadcast_to(self, { bc_action: :kiwi_done_lemon_singlecasted, bc_params: bc_params })
       end
 
       # 進捗
       def kiwi_progress_singlecast(bc_params)
-        Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_progress_singlecasted, bc_params: bc_params})
+        Kiwi::LemonRoomChannel.broadcast_to(self, { bc_action: :kiwi_progress_singlecasted, bc_params: bc_params })
       end
     end
 
@@ -78,11 +78,11 @@ module Kiwi
 
       # rails r 'User.admin.kiwi_banana_message_speak(Kiwi::Banana.first, Time.current)'
       def kiwi_banana_message_speak(banana, body, options = {})
-        kiwi_banana_messages.create!({banana: banana, body: body}.merge(options))
+        kiwi_banana_messages.create!({ banana: banana, body: body }.merge(options))
       end
 
       def kiwi_banana_message_pong_singlecast
-        Kiwi::BananaRoomChannel.broadcast_to(self, {bc_action: :kiwi_banana_message_pong_singlecast, bc_params: {pong: "OK"}})
+        Kiwi::BananaRoomChannel.broadcast_to(self, { bc_action: :kiwi_banana_message_pong_singlecast, bc_params: { pong: "OK" } })
       end
     end
 
@@ -110,7 +110,7 @@ module Kiwi
       end
 
       def kiwi_access_log_pong_singlecast
-        Kiwi::BananaRoomChannel.broadcast_to(self, {bc_action: :kiwi_access_log_pong_singlecast, bc_params: {pong: "OK"}})
+        Kiwi::BananaRoomChannel.broadcast_to(self, { bc_action: :kiwi_access_log_pong_singlecast, bc_params: { pong: "OK" } })
       end
     end
   end

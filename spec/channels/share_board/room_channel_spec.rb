@@ -225,8 +225,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory({
-        })
+      data = data_factory({})
       expect {
         subscription.think_mark_share(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_share_broadcasted", bc_params: data)
@@ -330,7 +329,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "個数共有" do
-      data = data_factory("badge_counts_hash" => {"alice" => 1})
+      data = data_factory("badge_counts_hash" => { "alice" => 1 })
       expect {
         subscription.acquire_badge_count_share(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "acquire_badge_count_share_broadcasted", bc_params: data)

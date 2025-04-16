@@ -25,7 +25,7 @@ RSpec.describe Swars::MembershipExtra, type: :model, swars_spec: true do
   end
 
   it "駒の使用頻度が正しい" do
-    assert { membership.membership_extra.used_piece_counts == {"S0" => 2, "P0" => 1} }
+    assert { membership.membership_extra.used_piece_counts == { "S0" => 2, "P0" => 1 } }
   end
 
   it "membership_extraを持っていないレコードもremakeで生やせる" do

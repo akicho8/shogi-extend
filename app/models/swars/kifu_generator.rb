@@ -19,7 +19,7 @@ module Swars
 
     class << self
       def generate_n(size, options = {})
-        generate({size: size}.merge(options))
+        generate({ size: size }.merge(options))
       end
 
       def kiremake
@@ -56,13 +56,13 @@ module Swars
 
       def ibis_pattern(n = 2, options = {})
         av = []
-        av += generate({size: 2, hand_list: ["+2726FU", "-8384FU"]}.merge(options))
+        av += generate({ size: 2, hand_list: ["+2726FU", "-8384FU"] }.merge(options))
         av += generate_n(n)
         av.take(n)
       end
 
       def furi_pattern(n = 2, options = {})
-        ibis_pattern(n, {hand_list: ["+2878HI", "-8232HI"]}.merge(options))
+        ibis_pattern(n, { hand_list: ["+2878HI", "-8232HI"] }.merge(options))
       end
 
       def generate(...)
@@ -75,8 +75,7 @@ module Swars
     end
 
     def initialize(options = {})
-      @options = {
-      }.merge(options)
+      @options = {}.merge(options)
     end
 
     def generate

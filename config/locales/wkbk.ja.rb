@@ -1,16 +1,13 @@
 {
   ja: {
-    attributes: {
-    },
+    attributes: {},
     helpers: {
       submit: {
-        emotion: {
-        },
+        emotion: {},
       },
     },
     activemodel: {
-      models: {
-      },
+      models: {},
     },
     activerecord: {
       models: {

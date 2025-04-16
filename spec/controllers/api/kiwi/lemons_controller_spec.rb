@@ -55,12 +55,12 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
   end
 
   it "retry_run" do
-    post :retry_run, params: {id: lemon1.id}.as_json, as: :json
+    post :retry_run, params: { id: lemon1.id }.as_json, as: :json
     assert { response.status == 200 }
   end
 
   it "destroy_run" do
-    post :destroy_run, params: {id: lemon1.id}.as_json, as: :json
+    post :destroy_run, params: { id: lemon1.id }.as_json, as: :json
     assert { response.status == 200 }
   end
 

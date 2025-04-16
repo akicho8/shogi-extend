@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-tp User.all.find_all { |e| e.valid_password?("password") }.collect { |e| {name: e.name, auth_infos_count: e.auth_infos.count, password: e.valid_password?("password")} }
+tp User.all.find_all { |e| e.valid_password?("password") }.collect { |e| { name: e.name, auth_infos_count: e.auth_infos.count, password: e.valid_password?("password") } }
 
 tp User.all.find_all { |e| e.valid_password?("password") }.collect { |e| e.name }
 User.all.each do |user|
@@ -10,7 +10,7 @@ User.all.each do |user|
     user.save!
   end
 end
-tp User.all.collect { |e| {name: e.name, password: e.valid_password?("password")} }
+tp User.all.collect { |e| { name: e.name, password: e.valid_password?("password") } }
 
 # >> |-----------------------+----------|
 # >> | name                  | password |

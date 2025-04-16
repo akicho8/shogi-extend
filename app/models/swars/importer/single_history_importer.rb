@@ -53,7 +53,7 @@ module Swars
           BattleImporter.new(params.merge(key: key)).call
         rescue Bioshogi::BioshogiError => error
           if f = params[:bs_error_capture_block]
-            f.call({key: key, error: error})
+            f.call({ key: key, error: error })
           else
             raise error
           end

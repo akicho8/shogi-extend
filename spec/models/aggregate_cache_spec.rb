@@ -16,18 +16,18 @@ RSpec.describe AggregateCache, type: :model, swars_spec: true do
   end
 
   it "write" do
-    assert { AggregateCache["A"].write(foo: 1) == {foo: 1} }
+    assert { AggregateCache["A"].write(foo: 1) == { foo: 1 } }
     AggregateCache.group(:group_name).count == { "A" => 1 }
   end
 
   it "read" do
-    AggregateCache["A"].write({"foo" => 1})
-    AggregateCache["A"].read == {:foo => 1}
+    AggregateCache["A"].write({ "foo" => 1 })
+    AggregateCache["A"].read == { :foo => 1 }
   end
 
   it "読み出し時にはすべてのキーをシンボルにする" do
-    AggregateCache["A"].write({"a" => {"b" => "c"}})
-    assert { AggregateCache["A"].read == {:a => {:b => "c"}} }
+    AggregateCache["A"].write({ "a" => { "b" => "c" } })
+    assert { AggregateCache["A"].read == { :a => { :b => "c" } } }
   end
 
   it "値がハッシュではない場合にエラーとする" do
@@ -35,7 +35,7 @@ RSpec.describe AggregateCache, type: :model, swars_spec: true do
   end
 
   it "fetch" do
-    assert { AggregateCache["A"].fetch { {"x" => 1} } == {x: 1} }
-    assert { AggregateCache["A"].fetch { {"x" => 2} } == {x: 1} }
+    assert { AggregateCache["A"].fetch { { "x" => 1 } } == { x: 1 } }
+    assert { AggregateCache["A"].fetch { { "x" => 2 } } == { x: 1 } }
   end
 end

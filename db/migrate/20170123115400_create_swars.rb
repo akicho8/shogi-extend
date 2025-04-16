@@ -1,7 +1,7 @@
 class CreateSwars < ActiveRecord::Migration[5.1]
   def change
     create_table :swars_users, force: true do |t|
-      t.string :user_key,            null: false, index: {unique: true}, comment: "対局者名"
+      t.string :user_key,            null: false, index: { unique: true }, comment: "対局者名"
       t.belongs_to :grade,           null: false,                        comment: "最高段級"
       t.datetime :last_reception_at, null: true, index: true,            comment: "受容日時"
       t.integer :search_logs_count,  null: true, default: 0
@@ -11,7 +11,7 @@ class CreateSwars < ActiveRecord::Migration[5.1]
     end
 
     create_table :swars_battles, force: true do |t|
-      t.string :key,            null: false, index: {unique: true}, comment: "対局識別子"
+      t.string :key,            null: false, index: { unique: true }, comment: "対局識別子"
       t.datetime :battled_at,   null: false, index: true,           comment: "対局開始日時"
       t.string :rule_key,       null: false, index: true,           comment: "ルール"
       t.text :csa_seq,          null: false,                        comment: "棋譜の断片"
@@ -60,7 +60,7 @@ class CreateSwars < ActiveRecord::Migration[5.1]
     end
 
     create_table :swars_grades, force: true do |t|
-      t.string :key,       null: false, index: {unique: true}
+      t.string :key,       null: false, index: { unique: true }
       t.integer :priority, null: false, index: true, comment: "優劣"
       t.timestamps         null: false
     end

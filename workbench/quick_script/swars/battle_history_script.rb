@@ -1,6 +1,6 @@
 require "./setup"
 sql
-QuickScript::Swars::BattleHistoryScript.new({swars_user_key: "bsplive", google_sheet: "true"}, {_method: "post", current_user: User.admin}).call
+QuickScript::Swars::BattleHistoryScript.new({ swars_user_key: "bsplive", google_sheet: "true" }, { _method: "post", current_user: User.admin }).call
 # >>   User Load (0.5ms)  SELECT `users`.* FROM `users` WHERE `users`.`key` = 'admin' LIMIT 1
 # >>   ↳ app/models/user/staff_methods.rb:18:in `staff_create!'
 # >>   Swars::User Load (0.5ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'bsplive' LIMIT 1

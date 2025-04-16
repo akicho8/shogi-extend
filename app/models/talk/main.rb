@@ -51,7 +51,7 @@ module Talk
     end
 
     def api_params
-      @api_params ||= TransformApi::API_DEFAULT_PARAMS.merge({voice_id: voice_id}, params[:api_params])
+      @api_params ||= TransformApi::API_DEFAULT_PARAMS.merge({ voice_id: voice_id }, params[:api_params])
     end
 
     def voice_id

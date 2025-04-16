@@ -142,7 +142,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => {"" => ""}.merge(GradeDiffInfo.form_part_elems),
+                :elems   => { "" => "" }.merge(GradeDiffInfo.form_part_elems),
                 :default => x_grade_diff_info.try { key },
               }
             },

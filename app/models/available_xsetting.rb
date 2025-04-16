@@ -12,15 +12,15 @@ class AvailableXsetting
         { :key => :t_symbol_var,   :var_type => :symbol,   :name => "(symbol)",   :default => :value,                   :form_type => nil, :form_enable => true, },
         { :key => :t_datetime_var, :var_type => :datetime, :name => "(datetime)", :default => "2000-01-02 12:34",       :form_type => nil, :form_enable => true, },
         { :key => :t_date_var,     :var_type => :date,     :name => "(date)",     :default => "2000-01-02",             :form_type => nil, :form_enable => true, },
-        { :key => :t_presece_var,  :var_type => :string,   :name => "(required)", :default => "required",               :form_type => nil, :form_enable => true, :other_form_options => {:required => true}, },
+        { :key => :t_presece_var,  :var_type => :string,   :name => "(required)", :default => "required",               :form_type => nil, :form_enable => true, :other_form_options => { :required => true }, },
       ]
     end
     if true
       list += [
-        {:key => :xsetting_lock_version,                  :var_type => :integer, :name => "管理ツールの設定の排他制御用", :default => 0, :form_type => nil, :form_enable => false, :other_form_options => {:required => true}},
-        {:key => :kiwi_lemon_background_job_active_begin, :var_type => :integer, :name => "動画変換開始(hour)",           :default => 2, :form_type => nil, :form_enable => true},
-        {:key => :kiwi_lemon_background_job_active_end,   :var_type => :integer, :name => "動画変換終了(hour)",           :default => 6, :form_type => nil, :form_enable => true},
-        {:key => :user_lemon_queue_max,                   :var_type => :integer, :name => "動画未処理投入最大件数",       :default => 5, :form_type => nil, :form_enable => true},
+        { :key => :xsetting_lock_version,                  :var_type => :integer, :name => "管理ツールの設定の排他制御用", :default => 0, :form_type => nil, :form_enable => false, :other_form_options => { :required => true } },
+        { :key => :kiwi_lemon_background_job_active_begin, :var_type => :integer, :name => "動画変換開始(hour)",           :default => 2, :form_type => nil, :form_enable => true },
+        { :key => :kiwi_lemon_background_job_active_end,   :var_type => :integer, :name => "動画変換終了(hour)",           :default => 6, :form_type => nil, :form_enable => true },
+        { :key => :user_lemon_queue_max,                   :var_type => :integer, :name => "動画未処理投入最大件数",       :default => 5, :form_type => nil, :form_enable => true },
       ]
     end
     list

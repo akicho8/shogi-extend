@@ -13,19 +13,37 @@ AllCops:
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 
+# ↓これが理想だけど強制的に [1,2,] が [1,2] になってしまうため役に立たない
+#
+# Style/TrailingCommaInArrayLiteral
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+#
+# Style/TrailingCommaInHashLiteral
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+#
+# Style/TrailingCommaInArguments
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+
+################################################################################ しょうがないので無効にしている
+
 Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: consistent_comma
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+################################################################################
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
 Style/HashSyntax:
-  Enabled: false
-
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-Style/TrailingCommaInHashLiteral:
   Enabled: false
 
 Style/StabbyLambdaParentheses:

@@ -42,7 +42,7 @@ RSpec.describe AppLog, type: :model do
 
     it "ハッシュをそのまま渡すと警告がでる" do
       silence_stream(STDERR) do
-        assert { AppLog.info({subject: "a"}).subject == "" }
+        assert { AppLog.info({ subject: "a" }).subject == "" }
       end
     end
 
@@ -94,7 +94,7 @@ RSpec.describe AppLog, type: :model do
     end
 
     it "送信先を変更したり添付ファイルを付与できる" do
-      AppLog.alert(to: "xxx@xxx", attachments: {"a" => "b"})
+      AppLog.alert(to: "xxx@xxx", attachments: { "a" => "b" })
       mail = ActionMailer::Base.deliveries.last
       assert { mail.to == ["xxx@xxx"] }
       assert { mail.attachments["a"] }

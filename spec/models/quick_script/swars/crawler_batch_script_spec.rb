@@ -10,8 +10,8 @@ RSpec.describe QuickScript::Swars::CrawlerBatchScript, type: :model do
     ::Swars::CrawlReservation.destroy_all
 
     # 棋譜取得の予約
-    params = {swars_user_key: swars_user.key, attachment_mode: "with_zip"}
-    json = QuickScript::Swars::CrawlerBatchScript.new(params, {_method: "post", current_user: current_user}).as_json
+    params = { swars_user_key: swars_user.key, attachment_mode: "with_zip" }
+    json = QuickScript::Swars::CrawlerBatchScript.new(params, { _method: "post", current_user: current_user }).as_json
     assert { json[:flash][:notice] == "予約しました" }
     assert { ::Swars::CrawlReservation.active_only.exists? }
 

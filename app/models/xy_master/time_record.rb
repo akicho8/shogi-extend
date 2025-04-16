@@ -107,7 +107,7 @@ module XyMaster
 
     def rank_info
       ScopeInfo.inject({}) do |a, e|
-        args = {scope_key: e.key, entry_name_uniq_p: false}
+        args = { scope_key: e.key, entry_name_uniq_p: false }
         a.merge(e.key => { rank: rank(args), page: ranking_page(args) })
       end
     end

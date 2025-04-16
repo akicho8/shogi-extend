@@ -13,7 +13,7 @@ RSpec.describe JudgeInfo do
   end
 
   it ".zero_default_hash_wrap" do
-    assert { JudgeInfo.zero_default_hash_wrap({"win" => 1}) == { win: 1, lose: 0, draw: 0 } }
+    assert { JudgeInfo.zero_default_hash_wrap({ "win" => 1 }) == { win: 1, lose: 0, draw: 0 } }
   end
 
   it "#flip" do

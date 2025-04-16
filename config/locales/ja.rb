@@ -8,10 +8,8 @@
       destroy: "削除",
     },
     activerecord: {
-      models: {
-      },
-      attributes: {
-      },
+      models: {},
+      attributes: {},
     },
   },
 }

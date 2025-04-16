@@ -1,7 +1,7 @@
 require "./setup"
 GoogleApi::ExpirationTracker.delete_all
 GoogleApi::ExpirationTracker.count          # => 0
-GoogleApi::Facade.new(rows: [{id: 1}]).call # => "https://docs.google.com/spreadsheets/d/1M0VsErGIZQpezy4lOUEmZvJaLJyhhBilGrhygePGnJI/edit"
+GoogleApi::Facade.new(rows: [{ id: 1 }]).call # => "https://docs.google.com/spreadsheets/d/1M0VsErGIZQpezy4lOUEmZvJaLJyhhBilGrhygePGnJI/edit"
 GoogleApi::ExpirationTracker.count          # => 1
 GoogleApi::ExpirationTracker.destroy_all
 GoogleApi::ExpirationTracker.count          # => 0

@@ -14,12 +14,12 @@ RSpec.describe MediaBuilder, type: :model do
       obj.build_options
     end
     it "works" do
-      assert { case1({})                 == {width: 1200, height:  630} }
-      assert { case1("width" => "")      == {width: 1200, height:  630} }
-      assert { case1("width" => "800")   == {width:  800, height:  630} }
-      assert { case1("height" => "9999") == {width: 1200, height: 4096} }
-      assert { case1("other" => "12.34") == {width: 1200, height:  630} }
-      assert { case1("other" => "true")  == {width: 1200, height:  630} }
+      assert { case1({})                 == { width: 1200, height:  630 } }
+      assert { case1("width" => "")      == { width: 1200, height:  630 } }
+      assert { case1("width" => "800")   == { width:  800, height:  630 } }
+      assert { case1("height" => "9999") == { width: 1200, height: 4096 } }
+      assert { case1("other" => "12.34") == { width: 1200, height:  630 } }
+      assert { case1("other" => "true")  == { width: 1200, height:  630 } }
     end
   end
 

@@ -148,11 +148,11 @@ module BattleModelMethods
   def twitter_card_image_url(options = {})
     turn = adjust_turn(options[:turn])
     viewpoint = adjust_viewpoint(options[:viewpoint])
-    Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, viewpoint: viewpoint})
+    Rails.application.routes.url_helpers.polymorphic_url(self, { format: "png", turn: turn, viewpoint: viewpoint })
   end
 
   def kif_url(options = {})
-    Rails.application.routes.url_helpers.full_url_for([self, {only_path: false, format: :kif, **options}])
+    Rails.application.routes.url_helpers.full_url_for([self, { only_path: false, format: :kif, **options }])
   end
 
   def battle_decorator(params = {})
@@ -182,7 +182,7 @@ module BattleModelMethods
     # バリデーションをはずして KI2 への変換もしない前提の軽い版
     # ヘッダーやタグが欲しいとき用
     def fast_parsed_info
-      @fast_parsed_info ||= parser_class.parse(kifu_body, {typical_error_case: :embed}.merge(fast_parser_options))
+      @fast_parsed_info ||= parser_class.parse(kifu_body, { typical_error_case: :embed }.merge(fast_parser_options))
     end
 
     def sfen_info

@@ -7,7 +7,7 @@ alice = Swars::User.create!(key: user_key)
     e.memberships.build(user: alice)
   end
 end
-instance = QuickScript::Swars::UserGroupScript.new({user_items_text: "(xname) #{user_key}"}, {_method: "post"})
+instance = QuickScript::Swars::UserGroupScript.new({ user_items_text: "(xname) #{user_key}" }, { _method: "post" })
 instance.current_user_keys   # => ["af573f28cae329bd938e60b2d3887056"]
 instance.db_exist_user_keys  # => ["af573f28cae329bd938e60b2d3887056"]
 tp instance.rows

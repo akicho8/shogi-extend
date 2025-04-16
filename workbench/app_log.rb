@@ -13,7 +13,7 @@ AppLog.none?                    # => true
 
 LogLevelInfo.keys                          # => [:emergency, :alert, :critical, :important, :error, :warning, :notice, :info, :debug, :trace]
 AppLog.debug([])                           # => #<AppLog id: 636685, level: "debug", emoji: "", subject: "", body: "[]", process_id: 58258, created_at: "2025-03-16 16:09:21.000000000 +0900">
-AppLog.debug({a: 1})                       # => #<AppLog id: 636686, level: "debug", emoji: "", subject: "", body: "{a: 1}", process_id: 58258, created_at: "2025-03-16 16:09:21.000000000 +0900">
+AppLog.debug({ a: 1 })                       # => #<AppLog id: 636686, level: "debug", emoji: "", subject: "", body: "{a: 1}", process_id: 58258, created_at: "2025-03-16 16:09:21.000000000 +0900">
 AppLog.debug                               # => #<AppLog id: 636687, level: "debug", emoji: "", subject: "", body: "", process_id: 58258, created_at: "2025-03-16 16:09:21.000000000 +0900">
 AppLog.debug(body: "xxx")                  # => #<AppLog id: 636688, level: "debug", emoji: "", subject: "", body: "xxx", process_id: 58258, created_at: "2025-03-16 16:09:21.000000000 +0900">
 AppLog.debug("xxx", body: "xxx") rescue $! # => #<ArgumentError: AppLog.call("...", body: "...") 形式は受け付けません>

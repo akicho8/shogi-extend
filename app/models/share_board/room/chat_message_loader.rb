@@ -40,7 +40,7 @@ module ShareBoard
     end
 
     def root_attributes
-      @room.as_json({only: [:id, :key, :chat_messages_count]}) # どれも確認のためだけに入れている
+      @room.as_json({ only: [:id, :key, :chat_messages_count] }) # どれも確認のためだけに入れている
     end
 
     def chat_messages

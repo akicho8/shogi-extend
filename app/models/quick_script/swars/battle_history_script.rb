@@ -22,7 +22,7 @@ module QuickScript
             :type        => debug_mode ? :radio_button : :hidden,
             :dynamic_part => -> {
               {
-                :elems       => {"false" => "しない", "true" => "する"},
+                :elems       => { "false" => "しない", "true" => "する" },
                 :default => params[:google_sheet].to_s.presence || (debug_mode ? "false" : "true"),
               }
             },
@@ -33,7 +33,7 @@ module QuickScript
             :type        => debug_mode ? :radio_button : :hidden,
             :dynamic_part => -> {
               {
-                :elems       => {"false" => "しない", "true" => "する"},
+                :elems       => { "false" => "しない", "true" => "する" },
                 :default => params[:bg_request].to_s.presence || (debug_mode ? "false" : "true"),
               }
             },

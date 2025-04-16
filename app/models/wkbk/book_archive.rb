@@ -5,8 +5,7 @@ module Wkbk
 
     def initialize(params, options = {}, &block)
       @params = params
-      @options = {
-      }.merge(options)
+      @options = {}.merge(options)
 
       if block_given?
         yield self

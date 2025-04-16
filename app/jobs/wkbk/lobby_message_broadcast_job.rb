@@ -3,7 +3,7 @@ module Wkbk
     queue_as :default
 
     def perform(message)
-      ActionCable.server.broadcast("wkbk/lobby_channel", bc_action: :lobby_speak_broadcasted, bc_params: {message: render_message(message)})
+      ActionCable.server.broadcast("wkbk/lobby_channel", bc_action: :lobby_speak_broadcasted, bc_params: { message: render_message(message) })
     end
 
     private

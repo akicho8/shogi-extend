@@ -1,7 +1,6 @@
 {
   ja: {
-    attributes: {
-    },
+    attributes: {},
     helpers: {
       submit: {
         free_battle: {
