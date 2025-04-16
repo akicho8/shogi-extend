@@ -7,12 +7,6 @@ AllCops:
     - "nuxt_side_small/**/*"
     - "share_board_order_setting_modal_ui_mock_experiment/**/*"
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
-
 # ↓これが理想だけど強制的に [1,2,] が [1,2] になってしまうため役に立たない
 #
 # Style/TrailingCommaInArrayLiteral
@@ -49,12 +43,14 @@ Style/HashSyntax:
 Style/StabbyLambdaParentheses:
   Enabled: false
 
+# a = -> (x, y) { x + y }
 Layout/SpaceInLambdaLiteral:
-  Enabled: false
+  EnforcedStyle: require_space
 
 Layout/EmptyLineAfterMagicComment:
   Enabled: false
 
+# 最後に return を書いてもよい
 Style/RedundantReturn:
   Enabled: false
 
