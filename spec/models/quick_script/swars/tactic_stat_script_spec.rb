@@ -22,7 +22,7 @@ RSpec.describe QuickScript::Swars::TacticStatScript, type: :model do
     assert { case1(order_key: :win_rate) }
     assert { case1(order_key: :popular)  }
 
-    assert { case1(period_key: :day1)  }
-    assert { case1(period_key: :year1) }
+    assert { case1(period_key: :day7)  }
+    assert { case1(period_key: :day30) }
   end
 end
