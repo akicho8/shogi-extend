@@ -241,7 +241,6 @@ GEM
     get_process_mem (1.0.0)
       bigdecimal (>= 2.0)
       ffi (~> 1.0)
-    git-version-bump (0.19.1)
     gli (2.22.2)
       ostruct
     globalid (1.2.1)
@@ -727,7 +726,6 @@ DEPENDENCIES
   faraday
   faraday_middleware
   foreman
-  git-version-bump
   google-api-client
   holiday_jp
   html_format

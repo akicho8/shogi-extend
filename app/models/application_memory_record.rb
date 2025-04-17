@@ -26,9 +26,15 @@ module ApplicationMemoryRecord
     end
 
     def form_part_elems(...)
-      inject({}) do |a, e|
+      available_form_elems.inject({}) do |a, e|
         a.merge(e.key => e.to_form_elem(...))
       end
+    end
+
+    private
+
+    def available_form_elems
+      find_all { |e| e.form_available_envs.include?(Rails.env.to_sym) }
     end
   end
 
@@ -58,6 +64,19 @@ module ApplicationMemoryRecord
         v = v.call(context)
       end
       v
+    end
+  end
+
+  # form_available_envs: [:production, :staging, :development, :test]
+  # と書けばその環境だけで form_part_elems を有効にする
+  def form_available_envs
+    @form_available_envs ||= yield_self do
+      if defined? super
+        av = super
+      else
+        av = [:production, :staging, :development, :test]
+      end
+      av.to_set
     end
   end
 end

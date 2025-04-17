@@ -31,13 +31,17 @@ tp hv[:period_based_agg][:term_none]
 # s = s.group("judges.key")
 # s.count
 
-# >> [2025-01-20 20:49:25][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
-# >> [2025-01-20 20:49:25][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
-# >> |-----------|
-# >> | term1     |
-# >> | term_none |
-# >> |-----------|
-# >> |------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |          records | [{:tag_name=>"右四間飛車", :win_count=>4, :win_ratio=>1.0, :lose_count=>0, :draw_count=>0, :freq_count=>4, :win_lose_count=>4, :freq_ratio=>0.04}, {:tag_name=>"片穴熊", :win_count=>1, :win_ratio=>1.0, :lose_count=>0, :draw_count=>0, :freq_count=>1, :win_lose_count... |
-# >> | population_count | 100                                                                                                                                                                                                                                                                         |
-# >> |------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> [2025-04-17 21:07:18][QuickScript::Swars::TacticStatScript::PrimaryAggregator] Processing relation #0
+# >> |-------|
+# >> | day1  |
+# >> | day3  |
+# >> | day7  |
+# >> | day30 |
+# >> | day60 |
+# >> | year1 |
+# >> |-------|
