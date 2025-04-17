@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Book (wkbk_books as Wkbk::Book)
@@ -20,10 +21,10 @@
 # | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |      | E     |
 # |-------------------+-------------------+-------------+---------------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
 # [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module Api
   module Wkbk

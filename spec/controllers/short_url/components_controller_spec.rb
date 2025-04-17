@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Component (short_url_components as ShortUrl::Component)

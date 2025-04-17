@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # 動画 (kiwi_lemons as Kiwi::Lemon)
@@ -25,10 +26,10 @@
 # | updated_at       | 更新日時                 | datetime    | NOT NULL    |      |       |
 # |------------------+--------------------------+-------------+-------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
 # [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module Kiwi
   class Lemon < ApplicationRecord

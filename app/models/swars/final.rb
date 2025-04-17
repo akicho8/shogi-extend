@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Final (swars_finals as Swars::Final)

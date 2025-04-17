@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Membership extra (swars_membership_extras as Swars::MembershipExtra)

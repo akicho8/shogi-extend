@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 一次集計
 # QuickScript::Swars::GradeStatScript.primary_aggregate_call

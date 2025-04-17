@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Chat message (share_board_chat_messages as ShareBoard::ChatMessage)
@@ -19,12 +20,12 @@
 # | primary_emoji      | Primary emoji   | string(255) |             |              |       |
 # |--------------------+-----------------+-------------+-------------+--------------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # User.has_many :share_board_chat_messages, foreign_key: :session_user_id
 # User.has_one :profile
 # [Warning: Need to add index] create_share_board_chat_messages マイグレーションに add_index :share_board_chat_messages, :from_connection_id を追加してください
 # [Warning: Need to add relation] ShareBoard::ChatMessage モデルに belongs_to :from_connection を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 require "rails_helper"
 

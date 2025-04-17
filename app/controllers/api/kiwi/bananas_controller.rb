@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # ライブラリ (kiwi_bananas as Kiwi::Banana)
@@ -20,11 +21,11 @@
 # | updated_at            | 更新日時       | datetime    | NOT NULL            |      |       |
 # |-----------------------+----------------+-------------+---------------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :folder を追加してください
 # [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :lemon を追加してください
 # [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :user を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module Api
   module Kiwi

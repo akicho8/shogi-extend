@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # App log (app_logs as AppLog)
@@ -15,10 +16,10 @@
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add index] create_app_logs マイグレーションに add_index :app_logs, :process_id を追加してください
 # [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 class CreateAppLogs < ActiveRecord::Migration[6.0]
   def up

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Lineage (wkbk_lineages as Wkbk::Lineage)

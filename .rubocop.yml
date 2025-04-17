@@ -32,24 +32,27 @@ Style/TrailingCommaInHashLiteral:
 Style/TrailingCommaInArguments:
   Enabled: false
 
-################################################################################
+################################################################################ こだわりルール
 
-Layout/SpaceInsideArrayLiteralBrackets:
+# 最後に return を書いてもよい。rubocop は最後より内側の return まで判定してしまうので仕方なく無効にする。
+Style/RedundantReturn:
   Enabled: false
 
-Style/HashSyntax:
-  Enabled: false
-
-Style/StabbyLambdaParentheses:
-  Enabled: false
-
-# a = -> (x, y) { x + y }
+# Rails では ->(x) とするルールらしいが、かなり気持ちわるいので -> (x) とする
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
 
-Layout/EmptyLineAfterMagicComment:
+# [ 1, 2 ] は冗長なので [1, 2] でもよい
+Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
-# 最後に return を書いてもよい
-Style/RedundantReturn:
+# { :a => 1, b: 2 } のように混在は避けよ、なら EnforcedStyle: no_mixed_keys でいいらしいのだが、
+# class: だけは :class => と書かないと ruby-mode.el がおかしくなるので混在は意図的なもの。
+# なので無効化する
+Style/HashSyntax:
+  # EnforcedStyle: no_mixed_keys
+  Enabled: false
+
+# -> x {} を -> (x) {} にされたくない
+Style/StabbyLambdaParentheses:
   Enabled: false

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Article (wkbk_articles as Wkbk::Article)
@@ -25,10 +26,10 @@
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
 # [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module Wkbk
   class Article < ApplicationRecord

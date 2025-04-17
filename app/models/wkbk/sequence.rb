@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Sequence (wkbk_sequences as Wkbk::Sequence)

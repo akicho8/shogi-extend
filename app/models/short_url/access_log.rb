@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Access log (short_url_access_logs as ShortUrl::AccessLog)

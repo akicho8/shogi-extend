@@ -1,4 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec cap production deploy:upload FILES=config/schedule.rb whenever:update_crontab crontab" -*-
+
 # cap production rails:cron_log
 
 puts "=== 環境確認 ==="

@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 一次集計
 # QuickScript::Swars::TacticStatScript.primary_aggregate_call

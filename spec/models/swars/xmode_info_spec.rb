@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Swars::Schema Swars::Information ==
 #
 # Swars::Xmode (swars_xmodes as Swars::Xmode)

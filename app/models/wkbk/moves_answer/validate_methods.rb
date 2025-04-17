@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)

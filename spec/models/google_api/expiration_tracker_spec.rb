@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Expiration tracker (google_api_expiration_trackers as GoogleApi::ExpirationTracker)
@@ -12,10 +13,10 @@
 # | updated_at     | 更新日時    | datetime    | NOT NULL    |      |       |
 # |----------------+-------------+-------------+-------------+------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # [Warning: Need to add index] create_google_api_expiration_trackers マイグレーションに add_index :google_api_expiration_trackers, :spreadsheet_id を追加してください
 # [Warning: Need to add relation] GoogleApi::ExpirationTracker モデルに belongs_to :spreadsheet を追加してください
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 require "rails_helper"
 

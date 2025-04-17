@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # 棋譜投稿 (free_battles as FreeBattle)
@@ -29,10 +30,10 @@
 # | preset_id     | Preset        | integer(8)     |             | => Preset#id | J     |
 # |---------------+---------------+----------------+-------------+--------------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # Preset.has_many :swars_battles
 # User.has_one :profile
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All

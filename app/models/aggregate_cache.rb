@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Aggregate cache (aggregate_caches as AggregateCache)

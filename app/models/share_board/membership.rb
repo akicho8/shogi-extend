@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Membership (share_board_memberships as ShareBoard::Membership)
@@ -16,11 +17,11 @@
 # | updated_at  | 更新日時 | datetime   | NOT NULL    |                |       |
 # |-------------+----------+------------+-------------+----------------+-------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # Judge.has_many :swars_memberships
 # Location.has_many :swars_memberships
 # User.has_one :profile
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module ShareBoard
   class Membership < ApplicationRecord

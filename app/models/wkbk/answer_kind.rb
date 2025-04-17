@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Answer kind (wkbk_answer_kinds as Wkbk::AnswerKind)

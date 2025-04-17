@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # Message scope (share_board_message_scopes as ShareBoard::MessageScope)

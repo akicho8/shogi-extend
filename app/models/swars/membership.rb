@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 # == Schema Information ==
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
@@ -32,13 +33,13 @@
 # | opponent_id           | Opponent              | integer(8) |             | => Swars::Membership#id | D!         |
 # |-----------------------+-----------------------+------------+-------------+-------------------------+------------|
 #
-# - Remarks ---------------------------------------------------------------------
+# - Remarks ----------------------------------------------------------------------
 # Judge.has_many :swars_memberships
 # Location.has_many :swars_memberships
 # Swars::Membership.belongs_to :opponent
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
-# -------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 
 module Swars
   class Membership < ApplicationRecord
