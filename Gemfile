@@ -150,13 +150,14 @@ group :development do
   gem "aam" # , github: "akicho8/aam", branch: "main"
 end
 
+# gem "bioshogi", ">= 0.0.3"
 # gem "bioshogi", path: "~/src/bioshogi"
 gem "bioshogi", github: "akicho8/bioshogi", branch: "main"
-# gem "bioshogi", ">= 0.0.3"
+
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
-gem "nokogiri", ">= 1.18.4" # 「force_ruby_platform: true」を指定してない理由は nokogiri だけじゃにから。bigdecimal なども native build しないといけないので capistrano 側で全体適用している。
+gem "nokogiri", ">= 1.18.4" # 「force_ruby_platform: true」を指定してない理由は nokogiri だけじゃないから。bigdecimal なども native build しないといけないので capistrano 側で全体適用している。
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
@@ -205,16 +206,10 @@ gem "holiday_jp"
 # DiffCop
 gem "diff-lcs"
 
-# Rails Cache
-# たいして速くないのとCのビルドしたのがロードされないので使うのをやめた
-# gem "hiredis"
-
 # ActiveJob
 gem "sidekiq", "~> 7" # Redis 6.2.0 以上が必要
 
 gem "puma_worker_killer"
-
-gem "git-version-bump", require: false
 
 gem "retryable"
 
@@ -230,6 +225,3 @@ gem "matrix"
 
 # Google Sheet / Google Drive
 gem "google-api-client"
-
-# 一時的に AuthInfo を直すため (User#meta_info を参照するため)
-# gem "oauth"

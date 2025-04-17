@@ -1,5 +1,3 @@
-require "git-version-bump/rake-tasks"
-
 desc "なんかしらのエラー画像の生成"
 task "my:nankasirano_error_image_generate" do
   system "convert -background '#fff' -fill '#999' -size 1200x630 -gravity center -font /Library/Fonts/Ricty-Regular.ttf -pointsize 80 label:'なんかしらのエラーです\nたぶん反則です' app/assets/images/fallback.png"
