@@ -244,7 +244,7 @@ module QuickScript
       ################################################################################
 
       def period_key
-        params[:period_key].presence || :day7
+        PeriodInfo.lookup_key_or_first(params[:period_key])
       end
 
       def period_info
