@@ -615,7 +615,7 @@ module QuickScript
 
       def tag_string_split(str)
         unless str.kind_of?(Array)
-          str = str.to_s.split(/[,[:blank:]]+/)
+          str = StringToolkit.split(str.to_s)
         end
         str.uniq
       end
@@ -1095,5 +1095,5 @@ module QuickScript
   end
 end
 # ~> -:3:in `<module:Swars>': uninitialized constant QuickScript::Swars::Base (NameError)
-# ~> 	from -:2:in `<module:QuickScript>'
-# ~> 	from -:1:in `<main>'
+# ~>    from -:2:in `<module:QuickScript>'
+# ~>    from -:1:in `<main>'

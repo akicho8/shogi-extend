@@ -6,7 +6,7 @@ RSpec.describe "カスタム検索", type: :system, swars_spec: true do
   it "サイドバーから遷移" do
     visit2 "/swars/search", query: "YamadaTaro"
     global_menu_open
-    find(".swars_custom_search_handle").click
+    find(".swars_search_custom_handle").click
     assert_current_path "/swars/search/custom?user_key=YamadaTaro"
   end
 

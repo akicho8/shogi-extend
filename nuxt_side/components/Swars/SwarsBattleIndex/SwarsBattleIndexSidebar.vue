@@ -14,7 +14,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled"
           )
 
-          b-menu-item.is_active_unset.swars_custom_search_handle(
+          b-menu-item.is_active_unset.swars_search_custom_handle(
             label="カスタム検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
@@ -26,6 +26,13 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             @click.native="$sound.play_click()"
             tag="nuxt-link"
             :to="{path: '/lab/swars/cross-search', query: {back_to: $route.fullPath}}"
+            )
+
+          b-menu-item.is_active_unset.swars_tactic_list_handle(
+            label="戦法一覧"
+            @click.native="$sound.play_click()"
+            tag="nuxt-link"
+            :to="{path: '/lab/swars/tactic-list' query: {back_to: $route.fullPath}}"
             )
 
           b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")

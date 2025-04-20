@@ -1,21 +1,11 @@
 class QuickScript::Swars::BasicStatScript
   class Base
+    include QuickScript::Swars::CacheMod
+
     attr_reader :base
 
     def initialize(base)
       @base = base
-    end
-
-    def cache_write
-      AggregateCache[self.class.name].write(aggregate_now)
-    end
-
-    def cache_fetch
-      AggregateCache[self.class.name].fetch { aggregate_now }
-    end
-
-    def cache_clear
-      AggregateCache[self.class.name].destroy_all
     end
 
     def call
@@ -44,14 +34,6 @@ class QuickScript::Swars::BasicStatScript
 
     def main_scope
       base.params[:scope] || ::Swars::Membership.all
-    end
-
-    def aggregate
-      @aggregate ||= AggregateCache[self.class.name].read || aggregate_now
-    end
-
-    def aggregate_now
-      {}
     end
   end
 end

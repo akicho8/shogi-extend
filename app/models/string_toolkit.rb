@@ -11,6 +11,10 @@ module StringToolkit
     s = s.strip
   end
 
+  def split(s)
+    s.split(/[,[:blank:]]+/)
+  end
+
   # タグを取る
   def strip_tags(s)
     ActionController::Base.helpers.strip_tags(s)

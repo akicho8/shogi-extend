@@ -31,9 +31,8 @@ class MainBatch
     # 集計
     QuickScript::Swars::GradeStatScript.primary_aggregate_call
     QuickScript::Swars::TacticStatScript.primary_aggregate_call
-
-    # 統計
     QuickScript::Swars::BasicStatScript.new.cache_write
+    QuickScript::Swars::TacticListScript.new.cache_write
 
     # チェック
     Swars::SystemValidator.new.call

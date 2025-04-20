@@ -102,10 +102,15 @@ export default {
 
   fetch() {
     // 初回以降も呼ばれるため attributes をまぜる
-    // $route.query は初回のときに使い、this.attributes は次からのときに使う
+    // $route.query は初回のときに使い、this.attributes は次からのときに使う → これは間違いで同じページに飛ぶとき $route.query を常に優先しないとだめ
     // axios 古すぎて paramsSerializer が効かない
+
     this.fetch_index ??= 0
-    const new_params2 = {...this.invisible_params, ...this.new_params, fetch_index: this.fetch_index}
+    let params = this.new_params
+    if (this.$route.query["__prefer_url_params__"]) {
+      params = this.prefer_url_params
+    }
+    const new_params2 = {...this.invisible_params, ...params, fetch_index: this.fetch_index}
     this.$axios.$get(this.current_api_path, {
       params: this.params_serialize(new_params2),
     }).then(params => { // post にする？
@@ -253,7 +258,7 @@ export default {
         this.$axios.$get(this.current_api_path, {params: this.params_serialize(new_params2)}).then(params => this.params_receive(params))
       } else {
         // $router.push でクエリ引数を変更することで再度 fetch() が実行したい場合
-        this.router_push()
+        this.router_push({})
       }
     },
 
@@ -322,36 +327,67 @@ export default {
         return
       }
     },
-  },
-  computed: {
-    current_qs_group_key() { return this.qs_group_key ?? this.$route.params.qs_group_key },
-    current_qs_page_key()  { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
-    current_api_path() { return `/api/lab/${this.current_qs_group_key ?? '__qs_group_key_is_blank__'}/${this.current_qs_page_key ?? '__qs_page_key_is_blank__'}.json` },
-    meta()             { return this.params ? this.params.meta : null                                                                  },
-    showable_form_parts() { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
-    main_component()  { return this.params?.main_component },
-    user_agent_key() { return this.$user_agent_info.any ? "mobile" : "desktop" },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     // Vue.js 側は URL の "foo[]=1" を {"foo" => [1]} ではなく {"foo[]": [1]} として解釈しているため
     // そのまま Rails 側に送ると foo[][]=1 となり、{foo: [[1]]} としてネストが深くなってしまう。
     // したがって "foo[]" を "foo" に直す。
     // nuxt.config.js の router.queryParser でやるのが正しいらしいが QueryString ライブラリが参照できないというしょうもない理由で諦めた。
-    bracket_deleted_route_query() {
+    params_bracket_replace(params) {
       const hv = {}
-      _.each(this.$route.query, (value, key) => {
+      _.each(params, (value, key) => {
         const bracket_deleted_key = key.replace(/\[\]/, "") // "foo[]" => "foo"
         hv[bracket_deleted_key] = value
       })
       return hv
     },
 
+    // 不要なパラメータを削除したパラメーター
+    params_reject(params) {
+      const hv = {}
+      _.each(params, (value, key) => {
+        if (key === "__prefer_url_params__") {
+        } else {
+          hv[key] = value
+        }
+      })
+      return hv
+    },
+  },
+  computed: {
+    current_qs_group_key() { return this.qs_group_key ?? this.$route.params.qs_group_key },
+    current_qs_page_key()  { return this.qs_page_key  ?? this.$route.params.qs_page_key  },
+    current_api_path()     { return `/api/lab/${this.current_qs_group_key ?? '__qs_group_key_is_blank__'}/${this.current_qs_page_key ?? '__qs_page_key_is_blank__'}.json` },
+    meta()                 { return this.params ? this.params.meta : null                                                                  },
+    showable_form_parts()  { return this.params ? this.params["form_parts"].filter(e => e.type !== "hidden") : [] }, // hidden を除いた form パーツたち
+    main_component()       { return this.params?.main_component },
+    user_agent_key()       { return this.$user_agent_info.any ? "mobile" : "desktop" },
+
+    normalized_url_params() {
+      let params = this.$route.query
+      params = this.params_bracket_replace(params)
+      params = this.params_reject(params)
+      return params
+    },
+
+    // attributes を優先したパラメーター
     new_params() {
       return {
         ...this.submit_key_params,
         // ...this.$route.query,      // ← このままGETで送ると危険。このなかには {"foo[]" => 1} という形式で入っているため Rails 側に foo[][]=1 で渡ってしまう
-        ...this.bracket_deleted_route_query,
+        ...this.normalized_url_params,
         ...this.qs_override_params,
         ...this.attributes,
+      }
+    },
+
+    // URLパラメーターを優先したパラメーター
+    // __prefer_url_params__ 引数が入っていれば優先してこちらを使う
+    prefer_url_params() {
+      return {
+        ...this.qs_override_params,
+        ...this.normalized_url_params,
       }
     },
 
