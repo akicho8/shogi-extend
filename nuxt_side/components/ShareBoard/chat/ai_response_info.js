@@ -19,6 +19,8 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
       {
         key: "お題に答える",
         command_fn: (context, params) => {
+          return
+
           const odai = Odai.create(params.odai)
           if (odai.invalid_p) {
             return
