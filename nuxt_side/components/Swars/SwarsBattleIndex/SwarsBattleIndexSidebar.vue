@@ -32,7 +32,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="戦法一覧"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/tactic-list' query: {back_to: $route.fullPath}}"
+            :to="{path: '/lab/swars/tactic-list', query: {back_to: $route.fullPath}}"
             )
 
           b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")
