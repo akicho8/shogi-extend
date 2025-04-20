@@ -70,6 +70,16 @@ if defined?(RSpec)
         end
       end
 
+      desc "リトライしまくって不安定なシステムテストを通す(裏で動く Google Chrome をぶっころす)"
+      task :nightly_continue do
+        3.times do
+          system %(k -x "Google Chrome")
+          system %(k -x "chromedriver")
+          sleep 120
+          system({ "BROWSER_DEBUG" => "1" }, "rspec --only-failures")
+        end
+      end
+
       desc "リトライしまくって不安定なシステムテストを通す(Google Chrome をぶっころさない)"
       task :soft do
         system "rake"
