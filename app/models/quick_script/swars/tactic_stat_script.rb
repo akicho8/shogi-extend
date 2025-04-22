@@ -2,7 +2,7 @@
 
 #
 # 一次集計
-# QuickScript::Swars::TacticStatScript.primary_aggregate_call
+# QuickScript::Swars::TacticAggregator.new.cache_write
 #
 module QuickScript
   module Swars
@@ -14,12 +14,6 @@ module QuickScript
       self.debug_mode   = Rails.env.local?
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.03
-
-      class << self
-        def primary_aggregate_call(options = {})
-          AggregateCache[name].write PrimaryAggregator.new(options).call
-        end
-      end
 
       def form_parts
         super + [
@@ -54,7 +48,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => PeriodInfo.form_part_elems,
+                :elems   => TacticAggregator::PeriodInfo.form_part_elems,
                 :default => period_info.key,
               }
             },
@@ -88,7 +82,7 @@ module QuickScript
       end
 
       def call
-        unless aggregated_all
+        unless aggregate
           return "一次集計データがありません"
         end
         if internal_rows.blank?
@@ -142,18 +136,16 @@ module QuickScript
       end
 
       def internal_rows
-        @internal_rows ||= aggregate[:internal_rows]
+        @internal_rows ||= aggregate2[:internal_rows]
       end
 
       def status
-        @status ||= aggregate[:status]
+        @status ||= aggregate2[:status]
       end
 
-      def aggregate
-        @aggregate ||= yield_self do
-          start_time = Time.current
-
-          av = current_agg[:records]
+      def aggregate2
+        @aggregate2 ||= yield_self do
+          av = period_agg[:records]
           av = scope_info.scope_block[av]
 
           if scope_info.key == :note
@@ -178,23 +170,20 @@ module QuickScript
           {
             :internal_rows => av,
             :status => {
-              "全体一次集計日時" => aggregated_all[:primary_aggregated_at].try { to_time.to_fs(:ymdhms) },
-              "全体一次集計処理" => aggregated_all[:primary_aggregation_second].try { ActiveSupport::Duration.build(self).inspect },
-              "二次集計処理"     => (Time.current - start_time).then { |e| ActiveSupport::Duration.build(e).inspect },
-              "対象対局数"       => current_agg[:population_count],
-              "対象タグ数"       => current_agg[:records].size,
+              "対象対局数" => period_agg[:memberships_count] / LocationInfo.count,
+              "対象タグ数" => period_agg[:records].size,
             },
           }
         end
       end
 
-      def aggregated_all
-        @aggregated_all ||= AggregateCache[self.class.name].read
+      def aggregate
+        @aggregate ||= TacticAggregator.new.aggregate
       end
 
       # 指定期間の一次集計情報
-      def current_agg
-        @current_agg ||= aggregated_all[:period_based_agg].fetch(period_info.key)
+      def period_agg
+        @period_agg ||= aggregate.fetch(period_info.key)
       end
 
       ################################################################################
@@ -244,11 +233,11 @@ module QuickScript
       ################################################################################
 
       def period_key
-        PeriodInfo.lookup_key_or_first(params[:period_key])
+        TacticAggregator::PeriodInfo.lookup_key_or_first(params[:period_key])
       end
 
       def period_info
-        PeriodInfo.fetch(period_key)
+        TacticAggregator::PeriodInfo.fetch(period_key)
       end
 
       ################################################################################

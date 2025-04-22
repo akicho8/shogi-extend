@@ -37,20 +37,27 @@ class AggregateCache < ApplicationRecord
     end
 
     # まとめてDBに入れる
-    def write(aggregated_value = {})
-      unless aggregated_value.kind_of?(Hash)
-        raise TypeError, "aggregated_value は Hash にしてください : #{aggregated_value.inspect}"
+    def write(value = nil, &block)
+      if value && block_given?
+        raise ArgumentError, "引数とブロックを同時に指定しないでください"
       end
-      create!(generation: next_generation, aggregated_value: aggregated_value)
+      if block_given?
+        value = Benchmarker.call { yield }
+      end
+      value ||= {}
+      unless value.kind_of?(Hash)
+        raise TypeError, "value は Hash にしてください : #{value.inspect}"
+      end
+      create!(generation: next_generation, aggregated_value: value)
       old_only.destroy_all
-      aggregated_value
+      value
     end
 
     # なければブロックの結果を書き込んで読み出す
     def fetch(&block)
       value = read
       unless value
-        write(yield)
+        write { yield }
         value = read
       end
       value

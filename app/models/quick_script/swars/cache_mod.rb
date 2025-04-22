@@ -1,24 +1,38 @@
 module QuickScript
   module Swars
     concern :CacheMod do
+      class_methods do
+        def aggregate_cache
+          AggregateCache[name]
+        end
+      end
+
       def cache_write
-        AggregateCache[self.class.name].write(aggregate_now)
+        aggregate_cache.write(aggregate_bm)
       end
 
       def cache_fetch
-        AggregateCache[self.class.name].fetch { aggregate_now }
+        aggregate_cache.fetch { aggregate_bm }
       end
 
       def cache_clear
-        AggregateCache[self.class.name].destroy_all
+        aggregate_cache.destroy_all
       end
 
       def aggregate
-        @aggregate ||= AggregateCache[self.class.name].read || aggregate_now
+        @aggregate ||= aggregate_cache.read || aggregate_bm
+      end
+
+      def aggregate_bm
+        Benchmarker.call("[#{self.class.name}]") { aggregate_now }
       end
 
       def aggregate_now
         {}
+      end
+
+      def aggregate_cache
+        self.class.aggregate_cache
       end
     end
   end

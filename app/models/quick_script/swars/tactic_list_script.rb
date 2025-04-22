@@ -3,17 +3,14 @@
 #
 # 戦法一覧
 #
-# 一次集計: QuickScript::Swars::TacticListScript.new.cache_write
+# 一次集計: rails r QuickScript::Swars::TacticListScript.new.cache_write
 #
 module QuickScript
   module Swars
     class TacticListScript < Base
       class << self
         def mock_setup
-          ::Swars::Battle.create!(strike_plan: "原始棒銀") do |e|
-            e.memberships.build
-            e.memberships.build
-          end
+          ::Swars::Battle.create!(strike_plan: "原始棒銀")
         end
       end
 
@@ -49,10 +46,9 @@ module QuickScript
             row["名前"] = row_name(item)
             # row["別名"] = item.alias_names.presence.try { self * ", " } || " "
             row["別名"] = { _v_html: "<small>#{item.alias_names * "<br>"}</small>" }
-            row["親"] = ""
-            if item.parent
-              row["親"] = { _nuxt_link: { name: item.parent.name, to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, }
-            end
+            row["親"] = item.parent ? { _nuxt_link: { name: item.parent.name, to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
+            row["勝率"] = extra_hash.dig(item.key, :win_ratio).try { "%.3f" % self }
+            row["頻度"] = extra_hash.dig(item.key, :freq_count) || 0
             row["スタイル"] = item.style_info.name
             row["種類"] = item.class.human_name
             row[header_blank_column(0)] = { _nuxt_link: { name: "判定条件", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
@@ -78,6 +74,17 @@ module QuickScript
         end
         query = "id:" + ids.join(",")
         { _nuxt_link: { name: name_with_count, to: { path: "/swars/search", query: { query: query } } } }
+      end
+
+      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
+      # | tag_name             | win_count | win_ratio           | draw_count | freq_count | freq_ratio           | lose_count | win_lose_count |
+      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
+      # | 力戦                 |         7 |  0.5833333333333334 |          0 |         12 |   0.2307692307692308 |          5 |             12 |
+      # | 居玉                 |         6 |  0.4615384615384616 |          0 |         13 |                 0.25 |          7 |             13 |
+      # | 名人に定跡なし       |         7 |                 1.0 |          0 |          7 |   0.1346153846153846 |          0 |              7 |
+      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
+      def extra_hash
+        @extra_hash ||= TacticAggregator.new.exta_hash
       end
 
       concerning :FilterFunction do
@@ -110,7 +117,7 @@ module QuickScript
           [
             e.name,             # セメント囲い
             *e.alias_names,     # カタツムリ
-            e.class.human_name, # 囲い
+            e.class.human_name, # 囲い or 戦法 or 手筋 or 備考
             e.style_info.name,  # 王道
           ]
         end
@@ -120,12 +127,14 @@ module QuickScript
         include CacheMod
 
         def aggregate_now
-          Bioshogi::Analysis::TacticInfo.all_elements.inject({}) do |a, item|
-            a.merge(item.key => battle_ids_of(item))
+          Bioshogi::Analysis::TacticInfo.all_elements.each.with_index.inject({}) do |a, (item, i)|
+            a.merge(item.key => battle_ids_of(item, i, ))
           end
         end
 
-        def battle_ids_of(item)
+        def battle_ids_of(item, i)
+          p [Time.current.to_fs(:ymdhms), item, i.fdiv(Bioshogi::Analysis::TacticInfo.all_elements.size)] if false
+
           ids = []
           ids = finder(item, ids, :win_only_conditon)
           ids = finder(item, ids, :general_conditon)
@@ -134,15 +143,33 @@ module QuickScript
 
         def finder(item, ids, condition_method)
           if ids.size < need_size
-            main_scope.in_batches(of: batch_size).each_with_index do |scope, batch|
-              if debug_mode
-                p [item.key, ids.size, batch, all_block_count, batch.fdiv(all_block_count)]
-              end
-              scope = send(condition_method, scope)
-              ids += scope.tagged_with(item.key).pluck(:battle_id)
-              if ids.size >= need_size
-                ids = ids.take(need_size)
-                break
+            if tag = ActsAsTaggableOn::Tag.find_by(name: item.key)
+              taggings = tag.taggings
+              # p taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags").count
+              all_block_count = taggings.count.ceildiv(batch_size)
+              taggings.in_batches(order: :desc, of: batch_size).each_with_index do |taggings, batch|
+                if debug_mode
+                  p [Time.current.to_fs(:ymdhms), item, condition_method, batch, all_block_count, batch.fdiv(all_block_count)]
+                end
+                taggings = taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
+                taggable_ids = taggings.pluck(:taggable_id)
+                taggable_ids.size <= batch_size or raise "must not happen"
+
+                ########################################
+
+                scope = ::Swars::Membership.where(id: taggable_ids)
+                scope = send(condition_method, scope)
+                battle_ids = scope.pluck(:battle_id)         # => [57595006, 57487831]
+                battle_ids.size <= taggable_ids.size or raise "must not happen"
+                if battle_ids.present?
+                  p [Time.current.to_fs(:ymdhms), item, ids.size, "+#{battle_ids.size}"] if false
+                  ids += battle_ids
+                  if ids.size >= need_size
+                    ids = ids.take(need_size)
+                    p [Time.current.to_fs(:ymdhms), "break"] if false
+                    break
+                  end
+                end
               end
             end
           end
@@ -161,16 +188,8 @@ module QuickScript
           scope = scope.joins(:grade).order(::Swars::Grade.arel_table[:priority])
         end
 
-        def main_scope
-          params[:scope] || ::Swars::Membership.all
-        end
-
-        def all_block_count
-          @all_block_count ||= main_scope.count.ceildiv(batch_size)
-        end
-
         def need_size
-          (params[:need_size].presence || 1).to_i
+          (params[:need_size].presence || 50).to_i
         end
 
         def batch_size
