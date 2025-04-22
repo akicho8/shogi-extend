@@ -7,6 +7,7 @@ RSpec.describe QuickScript::Swars::TacticListScript, type: :model do
 
     instance = QuickScript::Swars::TacticListScript.new
     instance.as_json
+    # tp instance.table_rows
     assert { instance.table_rows.to_s.include?("原始棒銀(1)") }
   end
 end

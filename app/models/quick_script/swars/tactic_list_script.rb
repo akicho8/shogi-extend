@@ -128,7 +128,7 @@ module QuickScript
 
         def aggregate_now
           Bioshogi::Analysis::TacticInfo.all_elements.each.with_index.inject({}) do |a, (item, i)|
-            a.merge(item.key => battle_ids_of(item, i, ))
+            a.merge(item.key => battle_ids_of(item, i))
           end
         end
 
@@ -161,6 +161,7 @@ module QuickScript
                 scope = send(condition_method, scope)
                 battle_ids = scope.pluck(:battle_id)         # => [57595006, 57487831]
                 battle_ids.size <= taggable_ids.size or raise "must not happen"
+                battle_ids -= ids # 取得済みのIDは除外する
                 if battle_ids.present?
                   p [Time.current.to_fs(:ymdhms), item, ids.size, "+#{battle_ids.size}"] if false
                   ids += battle_ids
