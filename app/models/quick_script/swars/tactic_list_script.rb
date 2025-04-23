@@ -9,7 +9,7 @@ module QuickScript
   module Swars
     class TacticListScript < Base
       include LinkToNameMethods
-      include ZatuyouMethods
+      include HelperMethods
 
       class << self
         def mock_setup
@@ -74,7 +74,7 @@ module QuickScript
       # | 名人に定跡なし       |         7 |                 1.0 |          0 |          7 |   0.1346153846153846 |          0 |              7 |
       # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
       def tactics_hash
-        @tactics_hash ||= TacticAggregator.new.tactics_hash
+        @tactics_hash ||= TacticJudgeAggregator.new.tactics_hash
       end
 
       concerning :FilterFunction do

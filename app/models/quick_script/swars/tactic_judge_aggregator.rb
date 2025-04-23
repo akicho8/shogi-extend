@@ -3,19 +3,19 @@
 #
 # 戦法の集計後の情報
 #
-# 一次集計: rails r QuickScript::Swars::TacticAggregator.new.cache_write
+# 一次集計: rails r QuickScript::Swars::TacticJudgeAggregator.new.cache_write
 #
 
-# QuickScript::Swars::TacticAggregator.new.main_scope.count
-# QuickScript::Swars::TacticAggregator.new.main_scope.joins(:taggings => :tag).count
-# QuickScript::Swars::TacticAggregator.new.main_scope.joins(:taggings => :tag).joins(:judge).count
+# QuickScript::Swars::TacticJudgeAggregator.new.main_scope.count
+# QuickScript::Swars::TacticJudgeAggregator.new.main_scope.joins(:taggings => :tag).count
+# QuickScript::Swars::TacticJudgeAggregator.new.main_scope.joins(:taggings => :tag).joins(:judge).count
 # .group("tags.name").group("judges.key").count
 # Swars::Membership.joins(:taggings).count
 # Swars::Membership.joins(:taggings => :tag).count
 
 module QuickScript
   module Swars
-    class TacticAggregator
+    class TacticJudgeAggregator
       include CacheMod
 
       class << self

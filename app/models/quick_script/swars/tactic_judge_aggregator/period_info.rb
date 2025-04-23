@@ -1,4 +1,4 @@
-class QuickScript::Swars::TacticAggregator
+class QuickScript::Swars::TacticJudgeAggregator
   class PeriodInfo
     include ApplicationMemoryRecord
     memory_record [

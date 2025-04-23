@@ -34,6 +34,6 @@ class CreateAggregateCaches < ActiveRecord::Migration[6.0]
 
     AggregateCache.reset_column_information
     # QuickScript::Swars::GradeStatScript.primary_aggregate_call
-    # QuickScript::Swars::TacticAggregator.new.cache_write
+    # QuickScript::Swars::TacticJudgeAggregator.new.cache_write
   end
 end

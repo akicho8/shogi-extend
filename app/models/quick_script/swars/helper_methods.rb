@@ -1,6 +1,6 @@
 module QuickScript
   module Swars
-    module ZatuyouMethods
+    module HelperMethods
       def header_blank_column(n)
         "\u200b" * n
       end

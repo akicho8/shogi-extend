@@ -2,13 +2,13 @@
 
 #
 # 一次集計
-# QuickScript::Swars::TacticAggregator.new.cache_write
+# QuickScript::Swars::TacticJudgeAggregator.new.cache_write
 #
 module QuickScript
   module Swars
     class TacticStatScript < Base
       include LinkToNameMethods
-      include ZatuyouMethods
+      include HelperMethods
 
       self.title        = "将棋ウォーズ戦法勝率ランキング"
       self.description  = "戦法・囲いなどの勝率・頻度を調べる"
@@ -53,7 +53,7 @@ module QuickScript
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => TacticAggregator::PeriodInfo.form_part_elems,
+                :elems   => TacticJudgeAggregator::PeriodInfo.form_part_elems,
                 :default => period_info.key,
               }
             },
@@ -185,7 +185,7 @@ module QuickScript
       end
 
       def aggregate
-        @aggregate ||= TacticAggregator.new.aggregate
+        @aggregate ||= TacticJudgeAggregator.new.aggregate
       end
 
       # 指定期間の一次集計情報
@@ -240,11 +240,11 @@ module QuickScript
       ################################################################################
 
       def period_key
-        TacticAggregator::PeriodInfo.lookup_key_or_first(params[:period_key])
+        TacticJudgeAggregator::PeriodInfo.lookup_key_or_first(params[:period_key])
       end
 
       def period_info
-        TacticAggregator::PeriodInfo.fetch(period_key)
+        TacticJudgeAggregator::PeriodInfo.fetch(period_key)
       end
 
       ################################################################################

@@ -1,10 +1,10 @@
 require "./setup"
 scope = Swars::Membership.where(id: Swars::Membership.last(100).collect(&:id))
-QuickScript::Swars::TacticAggregator.new(scope: scope).cache_write
+QuickScript::Swars::TacticJudgeAggregator.new(scope: scope).cache_write
 tp QuickScript::Swars::TacticStatScript.new({scope_key: :attack}).aggregate
-# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticAggregator][1週間] Processing relation #0/1
-# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticAggregator][1ヶ月] Processing relation #0/1
-# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticAggregator][2ヶ月] Processing relation #0/1
+# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticJudgeAggregator][1週間] Processing relation #0/1
+# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticJudgeAggregator][1ヶ月] Processing relation #0/1
+# >> [2025-04-22 19:11:10][QuickScript::Swars::TacticJudgeAggregator][2ヶ月] Processing relation #0/1
 # >> 2025-04-22T10:11:10.582Z pid=17351 tid=enj INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
 # >> |-------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |  day7 | {records: [], memberships_count: 0, win_lose_draw_total: 0}                                                                                                                                                                                                             |
