@@ -3,6 +3,7 @@ module QuickScript
     OrderedIndex = [
       BasicStatScript,
       TacticListScript,
+      TacticStatScript,
       SearchScript,
       CrossSearchScript,
       CrawlerBatchScript,
@@ -13,7 +14,6 @@ module QuickScript
       ProScript,
       BattleHistoryScript,
       GradeStatScript,
-      TacticStatScript,
       PrisonAllScript,
       PrisonSearchScript,
       PrisonNewScript,
