@@ -13,7 +13,7 @@ module QuickScript
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local?
 
-      FREQ_RATIO_GTEQ_DEFAULT = 0.03
+      FREQ_RATIO_GTEQ_DEFAULT = 0.0003
 
       def form_parts
         super + [
@@ -54,13 +54,13 @@ module QuickScript
             },
           },
           {
-            :label        => "[勝率ランキング参加条件] 出現率N%以上",
+            :label        => "[勝率ランキング参加条件] 頻度N以上",
             :key          => :freq_ratio_gteq,
             :type         => :numeric,
             :session_sync => true,
             :dynamic_part => -> {
               {
-                :options      => { min: 0, step: 0.01 },
+                :options      => { min: 0, step: 0.0001 },
                 :default      => freq_ratio_gteq,
                 :help_message => "初期値: #{FREQ_RATIO_GTEQ_DEFAULT}",
               }
@@ -103,25 +103,25 @@ module QuickScript
           item = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tag_name])
 
           {}.tap do |h|
-            win_ratio  = e[:win_ratio].try  { "%.3f %%" % (self * 100.0) }
-            freq_ratio = e[:freq_ratio].try { "%.2f %%" % (self * 100.0) }
+            win_ratio  = e[:win_ratio].try  { "%.3f" % self }
+            freq_ratio = e[:freq_ratio].try { "%.4f" % self }
             if scope_info.key != :note
               h["#"] = i.next
             end
             h[scope_info.name] = e[:tag_name]
             if order_info.key == :win_rate
-              h["勝率"]     = win_ratio
-              h["出現率"] = freq_ratio
+              h["勝率"] = win_ratio
+              h["頻度"] = freq_ratio
             else
-              h["出現率"] = freq_ratio
-              h["勝率"]     = win_ratio
+              h["頻度"] = freq_ratio
+              h["勝率"] = win_ratio
             end
             h["WIN"]    = e[:win_count]
             h["LOSE"]   = e[:lose_count]
             h["DRAW"]   = e[:draw_count]
             h["出現数"] = e[:freq_count]
             h["スタイル"] = item.try { style_info.name }
-            h["種類"]     = item.try { self.class.human_name }
+            h["種類"]     = item.try { human_name }
             if admin_user
               h["リンク1"]  = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-stat",     query: { tag: e[:tag_name], }, }, }, }
               h["リンク2"]  = { _nuxt_link: { name: "戦法ミニ事典", to: { path: "/lab/general/encyclopedia", query: { tag: e[:tag_name], }, }, }, }
@@ -159,7 +159,7 @@ module QuickScript
               end
               # 勝率条件出現数N%以上
               if freq_ratio_gteq
-                pivot = freq_ratio_gteq.fdiv(100)
+                pivot = freq_ratio_gteq
                 av = av.find_all { |e| e[:freq_ratio] >= pivot }
               end
             end
