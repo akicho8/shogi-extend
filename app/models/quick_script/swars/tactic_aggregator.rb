@@ -71,7 +71,7 @@ module QuickScript
           end
 
           # さらに扱いやすい状態に調整する
-          records = counts_hash_to_records(counts_hash, win_lose_draw_total)
+          records = counts_hash_to_records(counts_hash, memberships_count)
 
           a.merge(period_info.key => {
               :records             => records,
@@ -89,7 +89,7 @@ module QuickScript
         s.count
       end
 
-      def counts_hash_to_records(counts_hash, win_lose_draw_total)
+      def counts_hash_to_records(counts_hash, memberships_count)
         counts_hash.collect do |tag_name, e|
           freq_count = e[:win_count] + e[:lose_count] + e[:draw_count]
           win_ratio  = e[:win_count].fdiv(freq_count)
@@ -100,7 +100,7 @@ module QuickScript
             :lose_count => e[:lose_count],
             :draw_count => e[:draw_count],
             :freq_count => freq_count,
-            :freq_ratio => freq_count.fdiv(win_lose_draw_total),
+            :freq_ratio => freq_count.fdiv(memberships_count),
           }
         end
       end
