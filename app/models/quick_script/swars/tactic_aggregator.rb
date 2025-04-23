@@ -35,8 +35,8 @@ module QuickScript
 
       # TacticListScript から参照するときに便利な戦法名をキーにしたハッシュ
       # 期間2ヶ月決め打ちでよい
-      def exta_hash
-        @exta_hash ||= yield_self do
+      def tactics_hash
+        @tactics_hash ||= yield_self do
           if aggregate.present?
             if records = aggregate.dig(:day60, :records)
               records.inject({}) {|a, e| a.merge(e[:tag_name].to_sym => e) }
@@ -95,12 +95,12 @@ module QuickScript
           win_ratio  = e[:win_count].fdiv(freq_count)
           {
             :tag_name   => tag_name,
-            :win_count  => e[:win_count],
             :win_ratio  => win_ratio,
+            :freq_ratio => freq_count.fdiv(memberships_count), # 分母は memberships 数でよい。freq_count を分母にしてはいけない
+            :freq_count => freq_count,
+            :win_count  => e[:win_count],
             :lose_count => e[:lose_count],
             :draw_count => e[:draw_count],
-            :freq_count => freq_count,
-            :freq_ratio => freq_count.fdiv(memberships_count),
           }
         end
       end

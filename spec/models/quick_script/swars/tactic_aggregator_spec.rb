@@ -5,6 +5,6 @@ RSpec.describe QuickScript::Swars::TacticAggregator, type: :model do
     QuickScript::Swars::TacticAggregator.mock_setup
     QuickScript::Swars::TacticAggregator.new.cache_write
     assert { QuickScript::Swars::TacticAggregator.new.aggregate }
-    assert { QuickScript::Swars::TacticAggregator.new.exta_hash[:"原始棒銀"] }
+    assert { QuickScript::Swars::TacticAggregator.new.tactics_hash[:"原始棒銀"] }
   end
 end

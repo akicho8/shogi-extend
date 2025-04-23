@@ -119,7 +119,7 @@ EOS
         @rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"] = user_exta_hash[e.key][:name]
+              row["名前"] = user_tactics_hash[e.key][:name]
               row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: { name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
               row.update(grade_per_rule(e))
@@ -233,8 +233,8 @@ EOS
       end
 
       # ウォーズIDから名前を求めるためのテーブル
-      def user_exta_hash
-        @user_exta_hash ||= user_items.inject({}) { |a, e| a.merge(e[:swars_key] => e) }
+      def user_tactics_hash
+        @user_tactics_hash ||= user_items.inject({}) { |a, e| a.merge(e[:swars_key] => e) }
       end
 
       # DBに存在するユニークなウォーズIDたち
@@ -257,7 +257,7 @@ EOS
         @sheet_rows ||= ordered_scope.collect do |e|
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
-              row["名前"]            = user_exta_hash[e.key][:name]
+              row["名前"]            = user_tactics_hash[e.key][:name]
               row["ウォーズID"]      = hyper_link(e.name_with_ban, e.swars_search_url)
               row["最高段位"]        = e.grade.name
               row.update(grade_per_rule(e))

@@ -4,16 +4,19 @@ module QuickScript
       BasicStatScript,
       TacticListScript,
       TacticStatScript,
-      SearchScript,
       CrossSearchScript,
+      GradeStatScript,
       CrawlerBatchScript,
+
       BattleDownloadScript,
       SearchDefaultScript,
       DocumentationScript,
       UserGroupScript,
       ProScript,
       BattleHistoryScript,
-      GradeStatScript,
+
+      SearchScript,
+
       PrisonAllScript,
       PrisonSearchScript,
       PrisonNewScript,

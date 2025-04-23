@@ -7,6 +7,9 @@
 module QuickScript
   module Swars
     class TacticStatScript < Base
+      include LinkToNameMethods
+      include ZatuyouMethods
+
       self.title        = "将棋ウォーズ戦法勝率ランキング"
       self.description  = "戦法・囲いなどの勝率・頻度を調べる"
       self.form_method  = :get
@@ -14,6 +17,8 @@ module QuickScript
       self.debug_mode   = Rails.env.local?
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.0003
+
+      NOTE_IS_NO_SORT = false
 
       def form_parts
         super + [
@@ -102,30 +107,32 @@ module QuickScript
         internal_rows.collect.with_index do |e, i|
           item = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tag_name])
 
-          {}.tap do |h|
-            win_ratio  = e[:win_ratio].try  { "%.3f" % self }
-            freq_ratio = e[:freq_ratio].try { "%.4f" % self }
-            if scope_info.key != :note
-              h["#"] = i.next
-            end
-            h[scope_info.name] = e[:tag_name]
-            if order_info.key == :win_rate
-              h["勝率"] = win_ratio
-              h["頻度"] = freq_ratio
+          {}.tap do |row|
+            win_ratio  = e[:win_ratio].try  { "%.3f" % self } || ""
+            freq_ratio = e[:freq_ratio].try { "%.4f" % self } || ""
+            if scope_info.key == :note && NOTE_IS_NO_SORT
             else
-              h["頻度"] = freq_ratio
-              h["勝率"] = win_ratio
+              row["#"] = i.next
             end
-            h["WIN"]    = e[:win_count]
-            h["LOSE"]   = e[:lose_count]
-            h["DRAW"]   = e[:draw_count]
-            h["出現数"] = e[:freq_count]
-            h["スタイル"] = item.try { style_info.name }
-            h["種類"]     = item.try { human_name }
+            row[scope_info.name] = row_name(item)
+            if order_info.key == :win_rate
+              row["勝率"] = win_ratio
+              row["頻度"] = freq_ratio
+            else
+              row["頻度"] = freq_ratio
+              row["勝率"] = win_ratio
+            end
+            row["WIN"]  = e[:win_count]
+            row["LOSE"] = e[:lose_count]
+            row["DRAW"] = e[:draw_count]
+            row["出現数"] = e[:freq_count]
+            row["ｽﾀｲﾙ"] = item.try { style_info.name }
+            row["種類"] = item.try { human_name }
+
             if admin_user
-              h["リンク1"]  = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-stat",     query: { tag: e[:tag_name], }, }, }, }
-              h["リンク2"]  = { _nuxt_link: { name: "戦法ミニ事典", to: { path: "/lab/general/encyclopedia", query: { tag: e[:tag_name], }, }, }, }
-              h["リンク3"]  = { _nuxt_link: { name: "採用者を探す", to: { path: "/lab/swars/cross-search",   query: { x_tags: e[:tag_name], }, }, }, }
+              row[header_blank_column(0)] = { _nuxt_link: { name: "判定条件", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
+              row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-stat",     query: { tag: item.name }, }, }, }
+              row[header_blank_column(2)] = { _nuxt_link: { name: "横断検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
             end
           end
         end
@@ -148,7 +155,7 @@ module QuickScript
           av = period_agg[:records]
           av = scope_info.scope_block[av]
 
-          if scope_info.key == :note
+          if scope_info.key == :note && NOTE_IS_NO_SORT
             # 備考は bioshogi 側の並びに合わせるのみ
             av = av.sort_by { |e| Bioshogi::Analysis::NoteInfo[e[:tag_name]].code }
           else

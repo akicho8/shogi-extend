@@ -1,8 +1,9 @@
 require "./setup"
-scope = Swars::Membership.where(id: Swars::Membership.last(100).collect(&:id))
-QuickScript::Swars::TacticAggregator.new(scope: scope).cache_write
-tp QuickScript::Swars::TacticAggregator.new.aggregate[:day60][:records]
-# QuickScript::Swars::TacticAggregator.new.cache_write
+# scope = Swars::Membership.where(id: Swars::Membership.last(100).collect(&:id))
+# QuickScript::Swars::TacticAggregator.new(scope: scope).cache_write
+# tp QuickScript::Swars::TacticAggregator.new.aggregate[:day60][:records]
+
+QuickScript::Swars::TacticAggregator.new.cache_write
 
 # >> [2025-04-22 19:12:46][QuickScript::Swars::TacticAggregator][1週間] Processing relation #0/1
 # >> [2025-04-22 19:12:46][QuickScript::Swars::TacticAggregator][1ヶ月] Processing relation #0/1
