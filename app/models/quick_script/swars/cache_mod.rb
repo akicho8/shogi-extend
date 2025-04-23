@@ -20,7 +20,7 @@ module QuickScript
       end
 
       def aggregate
-        @aggregate ||= aggregate_cache.read || aggregate_bm
+        @aggregate ||= aggregate_cache.read
       end
 
       def aggregate_bm
