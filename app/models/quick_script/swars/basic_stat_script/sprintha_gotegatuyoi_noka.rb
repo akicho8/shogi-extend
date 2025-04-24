@@ -19,10 +19,10 @@ class QuickScript::Swars::BasicStatScript
       CONDITIONS.collect do |e|
         {
           "種類"   => e[:name],
-          "▲勝率" => ratio_by(e, :black).try { "%.3f %%" % (self * 100) },
-          "△勝率" => ratio_by(e, :white).try { "%.3f %%" % (self * 100) },
-          "▲勝数" => count_by(e, :black),
-          "△勝数" => count_by(e, :white),
+          "☗勝率" => ratio_by(e, :black).try { "%.3f" % self },
+          "☖勝率" => ratio_by(e, :white).try { "%.3f" % self },
+          "☗勝数" => count_by(e, :black),
+          "☖勝数" => count_by(e, :white),
           "分母"   => denominator(e),
         }
       end
