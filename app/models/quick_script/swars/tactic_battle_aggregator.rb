@@ -25,6 +25,8 @@ module QuickScript
         aggregate
       end
 
+      private
+
       def aggregate_now
         Bioshogi::Analysis::TacticInfo.all_elements.each.with_index.inject({}) do |a, (item, i)|
           a.merge(item.key => battle_ids_of(item, i))
@@ -60,7 +62,7 @@ module QuickScript
               scope = send(condition_method, scope)
               battle_ids = scope.pluck(:battle_id)         # => [57595006, 57487831]
               battle_ids.size <= taggable_ids.size or raise "must not happen"
-              battle_ids -= ids # 取得済みのIDは除外する
+              battle_ids -= ids # 取得済みのIDを除外する
               if battle_ids.present?
                 p [Time.current.to_fs(:ymdhms), item, ids.size, "+#{battle_ids.size}"] if false
                 ids += battle_ids
@@ -76,6 +78,8 @@ module QuickScript
         ids
       end
 
+      ################################################################################
+
       # その戦法で勝った棋譜がほしいので最初の条件には「勝ち」を入れる
       def win_only_conditon(scope)
         scope = scope.joins(:judge).where(Judge.arel_table[:key].eq(:win))
@@ -84,14 +88,17 @@ module QuickScript
 
       # それで見つからない場合もあるので次は条件を緩くする
       def general_conditon(scope)
-        scope = scope.joins(battle: :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
+        scope = scope.joins(battle: :imode).where(::Swars::Xmode.arel_table[:key].not_eq(:sprint))
         scope = base_conditon(scope)
       end
 
-      # それで見つからなかったら全部とる
+      # それで見つからなかったら全部とるけど野良は絶対とする
       def base_conditon(scope)
+        scope = scope.joins(battle: :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
         scope = scope.joins(:grade).order(::Swars::Grade.arel_table[:priority])
       end
+
+      ################################################################################
 
       def need_size
         (@options[:need_size] || (Rails.env.local? ? 2 : 50)).to_i

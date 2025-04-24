@@ -115,19 +115,14 @@ module QuickScript
               row["#"] = i.next
             end
             row[scope_info.name] = row_name(item)
-            if order_info.key == :win_rate
-              row["勝率"] = win_ratio
-              row["頻度"] = freq_ratio
-            else
-              row["頻度"] = freq_ratio
-              row["勝率"] = win_ratio
-            end
+            row["勝率"] = win_ratio
+            row["頻度"] = freq_ratio
             row["WIN"]  = e[:win_count]
             row["LOSE"] = e[:lose_count]
             row["DRAW"] = e[:draw_count]
             row["出現数"] = e[:freq_count]
-            row["ｽﾀｲﾙ"] = item.try { style_info.name }
-            row["種類"] = item.try { human_name }
+            row["ｽﾀｲﾙ"] = item.style_info.name
+            row["種類"] = item.human_name
 
             if admin_user
               row[header_blank_column(0)] = { _nuxt_link: { name: "判定条件", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
