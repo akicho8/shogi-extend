@@ -31,11 +31,11 @@ module Swars
       @counts_hash ||= yield_self do
         Bioshogi::Analysis::TacticInfo.each_with_object({}) do |e, m|
           hv = Hash.new(0)
-          Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc).each_with_index do |relation, batch|
+          Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc).each_with_index do |scope, batch|
             if batch >= sample_max.ceildiv(BATCH_SIZE)
               break
             end
-            relation.tag_counts_on("#{e.key}_tags", at_least: 1).each do |tag|
+            scope.tag_counts_on("#{e.key}_tags", at_least: 1).each do |tag|
               hv[tag.name] += tag.count
             end
           end
