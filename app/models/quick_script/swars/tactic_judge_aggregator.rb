@@ -34,11 +34,11 @@ module QuickScript
       end
 
       # TacticListScript から参照するときに便利な戦法名をキーにしたハッシュ
-      # 期間2ヶ月決め打ちでよい
+      # 期間は決め打ちでよい
       def tactics_hash
         @tactics_hash ||= yield_self do
           if aggregate.present?
-            if records = aggregate.dig(:day60, :records)
+            if records = aggregate.dig(:infinite, :records)
               records.inject({}) {|a, e| a.merge(e[:tag_name].to_sym => e) }
             end
           end

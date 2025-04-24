@@ -5,38 +5,37 @@ class QuickScript::Swars::TacticStatScript
       {
         key: :attack,
         name: "戦法",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::AttackInfo[e[:tag_name]] } },
+        target_infos: Bioshogi::Analysis::AttackInfo,
       },
       {
         key: :defense,
         name: "囲い",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::DefenseInfo[e[:tag_name]] } },
+        target_infos: Bioshogi::Analysis::DefenseInfo,
       },
       {
         key: :attack_and_defense,
         name: "戦法＋囲い",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::AttackInfo[e[:tag_name]] || Bioshogi::Analysis::DefenseInfo[e[:tag_name]] } },
+        target_infos: Bioshogi::Analysis::AttackInfo.values + Bioshogi::Analysis::DefenseInfo.values,
       },
       {
         key: :right_king,
         name: "右玉",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::AttackInfo[e[:tag_name]].try { group_info&.key == :"右玉" } } },
+        target_infos: Bioshogi::Analysis::AttackInfo.find_all { |e| e.group_info && e.group_info.key == :"右玉" },
       },
       {
         key: :technique,
         name: "手筋",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::TechniqueInfo[e[:tag_name]] } },
+        target_infos: Bioshogi::Analysis::TechniqueInfo,
       },
       {
         key: :note,
         name: "備考",
-        scope_block: -> av { av.find_all { |e| Bioshogi::Analysis::NoteInfo[e[:tag_name]] } },
-        # el_message: "異なるグループが混在しているため全体での比較には意味がない。たとえば居飛車と入玉を比べても意味がない。居飛車なら振り飛車と比べる。",
+        target_infos: Bioshogi::Analysis::NoteInfo,
       },
       {
         key: :all,
         name: "全体",
-        scope_block: -> av { av },
+        target_infos: Bioshogi::Analysis::TacticInfo.all_elements,
       },
     ]
 

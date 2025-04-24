@@ -21,11 +21,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{name: 'swars-search-custom', query: $gs.hash_compact({user_key: APP.xi.current_swars_user_key})}"
             )
 
-          b-menu-item.is_active_unset.swars_cross_search_handle(
-            label="横断検索"
+          b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")
+
+        b-menu-list(label="調べる")
+          b-menu-item.is_active_unset.swars_tactic_stat_handle(
+            label="戦法勝率ランキング"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
-            :to="{path: '/lab/swars/cross-search', query: {back_to: $route.fullPath}}"
+            :to="{path: '/lab/swars/tactic-stat', query: {back_to: $route.fullPath}}"
             )
 
           b-menu-item.is_active_unset.swars_tactic_list_handle(
@@ -35,7 +38,12 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{path: '/lab/swars/tactic-list', query: {back_to: $route.fullPath}}"
             )
 
-          b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")
+          b-menu-item.is_active_unset.swars_cross_search_handle(
+            label="横断検索"
+            @click.native="$sound.play_click()"
+            tag="nuxt-link"
+            :to="{path: '/lab/swars/cross-search', query: {back_to: $route.fullPath}}"
+            )
 
         b-menu-list(label="レイアウト")
           template(v-for="e in APP.LayoutInfo.values")

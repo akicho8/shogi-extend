@@ -52,7 +52,7 @@ module QuickScript
             row["ｽﾀｲﾙ"] = item.style_info.name
             row["種類"] = item.human_name
             row["発掘"] = row_battle_ids(item)
-            row[header_blank_column(0)] = { _nuxt_link: { name: "判定条件", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
+            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
             row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-stat",     query: { tag: item.name }, }, }, }
             row[header_blank_column(2)] = { _nuxt_link: { name: "横断検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
             row["親"] = item.parent ? { _nuxt_link: { name: item.parent.name, to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""

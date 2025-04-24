@@ -18,8 +18,6 @@ module QuickScript
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.0003
 
-      NOTE_IS_NO_SORT = false
-
       def form_parts
         super + [
           {
@@ -59,7 +57,7 @@ module QuickScript
             },
           },
           {
-            :label        => "[勝率ランキング参加条件] 頻度N以上",
+            :label        => "勝率ランキング参加条件 頻度N以上",
             :key          => :freq_ratio_gteq,
             :type         => :numeric,
             :session_sync => true,
@@ -71,18 +69,6 @@ module QuickScript
               }
             },
           },
-          {
-            :label        => "[勝率ランキング参加条件] 出現数N以上",
-            :key          => :freq_count_gteq,
-            :type         => debug_mode ? :numeric : :hidden,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :options => { min: 0 },
-                :default => (params[:freq_count_gteq].presence || 0).to_i,
-              }
-            },
-          },
         ]
       end
 
@@ -90,45 +76,40 @@ module QuickScript
         unless aggregate
           return "一次集計データがありません"
         end
-        if internal_rows.blank?
+        if current_items.blank?
           return "一件も見つかりません"
         end
-        if internal_rows.present?
+        if current_items.present?
           values = [
-            { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: { "max-width" => ua_info.max_width, margin: "auto" }, :class => "is-unselectable is-centered", },
+            { _component: "CustomChart", _v_bind: { params: custom_chart_params }, style: { "max-width" => ua_info.max_width, margin: "auto" }, :class => "is-unselectable is-centered" },
             simple_table(table_rows, always_table: true),
-            status,
           ]
+          if Rails.env.local?
+            values << status
+          end
           v_stack(values, style: { "gap" => "1rem" })
         end
       end
 
       def table_rows
-        internal_rows.collect.with_index do |e, i|
-          item = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tag_name])
-
+        current_items.collect.with_index do |e, i|
           {}.tap do |row|
-            win_ratio  = e[:win_ratio].try  { "%.3f" % self } || ""
-            freq_ratio = e[:freq_ratio].try { "%.4f" % self } || ""
-            if scope_info.key == :note && NOTE_IS_NO_SORT
-            else
-              row["#"] = i.next
-            end
-            row[scope_info.name] = row_name(item)
-            row["勝率"] = win_ratio
-            row["頻度"] = freq_ratio
-            row["WIN"]  = e[:win_count]
-            row["LOSE"] = e[:lose_count]
-            row["DRAW"] = e[:draw_count]
-            row["出現数"] = e[:freq_count]
-            row["ｽﾀｲﾙ"] = item.style_info.name
-            row["種類"] = item.human_name
+            row["#"] = i.next
+            row[scope_info.name] = row_name(e.info)
+            row["勝率"] = e.win_ratio.try { "%.3f" % self } || ""
+            row["頻度"] = e.freq_ratio.try { "%.4f" % self }
 
-            if admin_user
-              row[header_blank_column(0)] = { _nuxt_link: { name: "判定条件", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
-              row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-stat",     query: { tag: item.name }, }, }, }
-              row[header_blank_column(2)] = { _nuxt_link: { name: "横断検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
-            end
+            row["WIN"]  = e.win_count
+            row["LOSE"] = e.lose_count
+            row["DRAW"] = e.draw_count
+
+            row["出現数"] = e.freq_count || 0
+            row["ｽﾀｲﾙ"]   = e.style_name
+            row["種類"]   = e.info.human_name
+
+            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面", to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-stat",     query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(2)] = { _nuxt_link: { name: "横断検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: e.info.name }, }, }, }
           end
         end
       end
@@ -137,46 +118,30 @@ module QuickScript
         "将棋ウォーズ#{scope_info.name}#{order_info.name}ランキング"
       end
 
-      def internal_rows
-        @internal_rows ||= aggregate2[:internal_rows]
-      end
-
       def status
-        @status ||= aggregate2[:status]
+        @status ||= {
+          "対象対局数" => period_agg[:memberships_count] / LocationInfo.count,
+          "対象タグ数" => period_agg[:records].size,
+        }
       end
 
-      def aggregate2
-        @aggregate2 ||= yield_self do
-          av = period_agg[:records]
-          av = scope_info.scope_block[av]
-
-          if scope_info.key == :note && NOTE_IS_NO_SORT
-            # 備考は bioshogi 側の並びに合わせるのみ
-            av = av.sort_by { |e| Bioshogi::Analysis::NoteInfo[e[:tag_name]].code }
-          else
-            if order_info.key == :win_rate
-              # 勝率条件出現数N以上
-              if freq_count_gteq
-                av = av.find_all { |e| e[:freq_count] >= freq_count_gteq }
-              end
-              # 勝率条件出現数N%以上
-              if freq_ratio_gteq
-                pivot = freq_ratio_gteq
-                av = av.find_all { |e| e[:freq_ratio] >= pivot }
-              end
-            end
-            # ランキング
-            av = av.sort_by { |e| -e[order_info.order_by] }
-          end
-
-          {
-            :internal_rows => av,
-            :status => {
-              "対象対局数" => period_agg[:memberships_count] / LocationInfo.count,
-              "対象タグ数" => period_agg[:records].size,
-            },
-          }
+      def current_items
+        @current_items ||= yield_self do
+          items = scope_info.target_infos.collect { |e| Item.new(info: e, stat: period_agg_hash[e.key] || {}) }
+          items = fliter_process(items)
+          items = items.sort_by { |e| -(e.public_send(order_info.order_by) || -1) }
         end
+      end
+
+      def fliter_process(items)
+        if order_info.key == :win_rate
+          # 勝率条件出現数N%以上
+          if freq_ratio_gteq
+            pivot = freq_ratio_gteq
+            items = items.find_all { |e| e.freq_ratio >= pivot }
+          end
+        end
+        items
       end
 
       def aggregate
@@ -188,6 +153,10 @@ module QuickScript
         @period_agg ||= aggregate.fetch(period_info.key)
       end
 
+      def period_agg_hash
+        @period_agg_hash ||= period_agg[:records].inject({}) { |a, e| a.merge(e[:tag_name].to_sym => e) }
+      end
+
       ################################################################################
 
       def chart_bar_max
@@ -195,14 +164,14 @@ module QuickScript
       end
 
       def custom_chart_params
-        e = internal_rows.take(chart_bar_max)
+        items = current_items.take(chart_bar_max)
         {
           data: {
-            labels: e.collect { |e| e[:tag_name].tr("→ー", "↓｜").chars }, # NOTE: 配列にすることで無理矢理縦表記にする
+            labels: items.collect { |e| e.info.name.tr("→ー", "↓｜").chars }, # NOTE: 配列にすることで無理矢理縦表記にする
             datasets: [
               {
                 label: nil,
-                data: e.collect { |e| e[order_info.order_by] },
+                data: items.collect { |e| e.public_send(order_info.order_by) || 0.0 },
               },
             ],
           },
@@ -244,12 +213,8 @@ module QuickScript
 
       ################################################################################
 
-      def freq_count_gteq
-        (params[:freq_count_gteq].presence || 0).to_i
-      end
-
       def freq_ratio_gteq
-        (params[:freq_ratio_gteq].presence || FREQ_RATIO_GTEQ_DEFAULT).to_f
+        @freq_ratio_gteq ||= (params[:freq_ratio_gteq].presence || FREQ_RATIO_GTEQ_DEFAULT).to_f
       end
 
       ################################################################################
@@ -263,6 +228,43 @@ module QuickScript
       end
 
       ################################################################################
+
+      Item = Data.define(:info, :stat) do
+        def initialize(info:, stat:)
+          stat ||= {}
+          super
+        end
+
+        # sort 用
+        def win_ratio
+          stat[:win_ratio]
+        end
+
+        # sort 用
+        def freq_count
+          stat[:freq_count]
+        end
+
+        def freq_ratio
+          stat[:freq_ratio] || 0.0
+        end
+
+        def win_count
+          stat[:win_count] || 0
+        end
+
+        def lose_count
+          stat[:lose_count] || 0
+        end
+
+        def draw_count
+          stat[:draw_count] || 0
+        end
+
+        def style_name
+          info.style_info.name
+        end
+      end
     end
   end
 end
