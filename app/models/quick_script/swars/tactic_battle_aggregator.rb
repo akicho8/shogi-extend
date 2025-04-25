@@ -88,7 +88,7 @@ module QuickScript
 
       # それで見つからない場合もあるので次は条件を緩くする
       def general_conditon(scope)
-        scope = scope.joins(battle: :imode).where(::Swars::Xmode.arel_table[:key].not_eq(:sprint))
+        scope = scope.joins(battle: :imode).where(::Swars::Imode.arel_table[:key].eq(:normal))
         scope = base_conditon(scope)
       end
 
