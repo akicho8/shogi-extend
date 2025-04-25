@@ -86,7 +86,7 @@ module QuickScript
         scope = general_conditon(scope)
       end
 
-      # それで見つからない場合もあるので次は条件を緩くする
+      # それで見つからない場合もあるので「負け」の対局も探す
       def general_conditon(scope)
         scope = scope.joins(battle: :imode).where(::Swars::Imode.arel_table[:key].eq(:normal))
         scope = base_conditon(scope)
