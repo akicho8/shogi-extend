@@ -1,12 +1,12 @@
 import { Gs } from "@/components/models/gs.js"
 
 const TORYO_BGM_KEYS = [
-  "bgm_ending1",
-  "bgm_ending2",
-  // "bgm_ending3",
-  "bgm_ending4",
-  // "bgm_ending5",
-  // "bgm_ending6",
+  // "bgm_ending1",
+  // "bgm_ending2",
+  // // "bgm_ending3",
+  // "bgm_ending4",
+  // // "bgm_ending5",
+  // // "bgm_ending6",
 ]
 
 export const mod_sound_effect = {
