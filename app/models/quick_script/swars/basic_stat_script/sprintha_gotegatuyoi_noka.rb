@@ -21,8 +21,8 @@ class QuickScript::Swars::BasicStatScript
           "種類"   => e[:name],
           "☗勝率" => ratio_by(e, :black).try { "%.3f" % self },
           "☖勝率" => ratio_by(e, :white).try { "%.3f" % self },
-          "☗勝数" => count_by(e, :black),
-          "☖勝数" => count_by(e, :white),
+          "☗勝数" => frequency_count(e, :black),
+          "☖勝数" => frequency_count(e, :white),
           "分母"   => denominator(e),
         }
       end
@@ -51,7 +51,7 @@ class QuickScript::Swars::BasicStatScript
     # >>  :sprint_three_min_black_win=>42,
     # >>  :normal_ten_sec_black_win=>22,
     # >>  :normal_ten_sec_white_win=>21}
-    def count_by(e, location_key)
+    def frequency_count(e, location_key)
       key = hash_key(e, location_key)
       counts_hash[key] || 0
     end
@@ -59,13 +59,13 @@ class QuickScript::Swars::BasicStatScript
     def ratio_by(e, location_key)
       d = denominator(e)
       if d.positive?
-        count = count_by(e, location_key)
+        count = frequency_count(e, location_key)
         count.fdiv(d)
       end
     end
 
     def denominator(e)
-      count_by(e, :black) + count_by(e, :white)
+      frequency_count(e, :black) + frequency_count(e, :white)
     end
 
     def counts_hash

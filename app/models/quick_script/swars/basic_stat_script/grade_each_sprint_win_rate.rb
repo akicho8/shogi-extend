@@ -11,8 +11,8 @@ class QuickScript::Swars::BasicStatScript
           "棋力"   => e.key,
           "▲勝率" => ratio_by(e, :black).try { "%.3f %%" % (self * 100) },
           "△勝率" => ratio_by(e, :white).try { "%.3f %%" % (self * 100) },
-          "▲勝数" => count_by(e, :black),
-          "△勝数" => count_by(e, :white),
+          "▲勝数" => frequency_count(e, :black),
+          "△勝数" => frequency_count(e, :white),
           "分母"   => denominator(e),
         }
       end

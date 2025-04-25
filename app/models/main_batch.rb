@@ -29,7 +29,7 @@ class MainBatch
     AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
 
     # 集計
-    QuickScript::Swars::GradeStatScript.primary_aggregate_call
+    QuickScript::Swars::GradeAggregator.new.cache_write
     QuickScript::Swars::BasicStatScript.new.cache_write
     # QuickScript::Swars::TacticFreqScript.new.cache_write
     # QuickScript::Swars::TacticListScript.new.cache_write

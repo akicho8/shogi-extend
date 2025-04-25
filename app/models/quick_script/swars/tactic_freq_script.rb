@@ -40,13 +40,13 @@ module QuickScript
 
         def aggregate_now
           Bioshogi::Analysis::TacticInfo.all_elements.inject({}) do |a, item|
-            a.merge(item.key => membership_count_by_item(item))
+            a.merge(item.key => membership_frequency_count_item(item))
           end
         end
 
         # 個数を求めるのは速い
         # しかしそこから memberships -> battle と繋げると現実的でない遅さになる
-        def membership_count_by_item(item)
+        def membership_frequency_count_item(item)
           p item
           if tag = ActsAsTaggableOn::Tag.find_by(name: item.key)
             tag.taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags").count
