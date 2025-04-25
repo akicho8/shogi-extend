@@ -120,8 +120,9 @@ module QuickScript
 
       # 激重条件はここ！(重要)
       def condition_add(s, period_info)
-        s = s.joins(:battle => :xmode)
+        s = s.joins(:battle => [:imode, :xmode])
         s = s.merge(::Swars::Battle.valid_match_only)
+        s = s.where(::Swars::Imode.arel_table[:key].eq(:normal))
         s = s.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
         s = s.where(::Swars::Battle.arel_table[:analysis_version].eq(Bioshogi::ANALYSIS_VERSION))
         if v = period_info.period_second
