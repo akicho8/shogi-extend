@@ -69,7 +69,7 @@ module QuickScript
           av = grade_infos.collect do |grade_info|
             { :grade_info => grade_info, "度数" => frequency_count(:user, grade_info) }
           end
-          sd_merge(av)
+          StandardDeviation.call(av)
         end
       end
 
