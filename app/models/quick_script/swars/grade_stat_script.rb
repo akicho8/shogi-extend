@@ -50,7 +50,7 @@ module QuickScript
       def table_rows
         sd_merged_grade_infos.collect do |e|
           {}.tap do |h|
-            h["棋力"]   = e[:grade_info].name
+            h["棋力"] = { _nuxt_link: { name: e[:grade_info].name, to: { path: "/lab/swars/cross-search", query: { x_grade_keys: e[:grade_info].key }, }, }, }
             if Rails.env.local?
               h["階級値"] = e["階級値"]
               h["基準値"] = e["基準値"].try { "%.3f" % self }
