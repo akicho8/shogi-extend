@@ -78,7 +78,12 @@ export default {
       if (this.SB.cc_start_even_though_order_is_not_enabled_p) {
         this.SB.cc_play_confirm({
           onConfirm: () => {
-            this.play_core_handle()
+            this.$sound.play_click()
+            if (this.SB.debug_mode_p) {
+              this.play_core_handle()
+            } else {
+              this.toast_ng("先に順番設定しないとだめ")
+            }
           },
         })
         return
