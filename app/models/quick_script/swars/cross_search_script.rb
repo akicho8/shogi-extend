@@ -91,7 +91,7 @@ module QuickScript
               {
                 :elems   => ::Swars::StyleInfo.form_part_elems,
                 :default => x_style_infos.collect(&:key),
-                :help_message => "「自分のタグ」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
+                :help_message => "「自分のタグ」欄を入力した場合、それでスタイルはすでに絞られているため、ここでさらにスタイルを指定するのは意味がありません",
               }
             },
           },
@@ -180,7 +180,7 @@ module QuickScript
               {
                 :elems        => ::Swars::StyleInfo.form_part_elems,
                 :default      => y_style_infos.collect(&:key),
-                :help_message => "「相手のタグ」欄で具体的な戦法を指定した場合、そこでスタイルは絞られるため、ここでスタイルは指定しない方がよい",
+                :help_message => "「相手のタグ」欄を入力した場合、そこでスタイルはすでに絞られているため、ここでさらにスタイルは指定しない方がよい",
               }
             },
           },
@@ -280,7 +280,7 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "検索対象件数 - 直近N件",
+            :label        => "検索対象件数 直近N件",
             :key          => :range_size,
             :type         => :numeric,
             :session_sync => true,
