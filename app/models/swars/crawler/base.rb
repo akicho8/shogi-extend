@@ -12,7 +12,7 @@ module Swars
       def initialize(params = {})
         @params = {
           :notify  => true,
-          :sleep   => Rails.env.local? ? 0 : 1,
+          :sleep   => Rails.env.local? ? 0 : 2,
           :subject => nil,
         }.merge(default_params, params)
       end
