@@ -49,7 +49,7 @@ module QuickScript
             taggings = tag.taggings
             batch_total = taggings.count.ceildiv(batch_size)
             taggings.in_batches(order: :desc, of: batch_size).each.with_index do |taggings, batch_index|
-              if Rails.env.development? || Rails.env.production? || Rails.env.staging?
+              if Rails.env.development? || Rails.env.staging? || Rails.env.production?
                 p [Time.current.to_fs(:ymdhms), "#{batch_index}/#{batch_total}", item, condition_method]
               end
               taggings = taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")

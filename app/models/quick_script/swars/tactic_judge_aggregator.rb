@@ -54,7 +54,9 @@ module QuickScript
 
           batch_total = main_scope.count.ceildiv(batch_size)
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{period_info}] Processing relation ##{batch_index}/#{batch_total}"
+            if Rails.env.development? || Rails.env.staging? || Rails.env.production?
+              puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{period_info}] Processing relation ##{batch_index}/#{batch_total}"
+            end
 
             scope = condition_add(scope, period_info) # 激重条件はここ！(重要)
             memberships_count += scope.count
