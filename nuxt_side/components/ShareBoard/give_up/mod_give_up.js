@@ -95,8 +95,6 @@ export const mod_give_up = {
       if (this.login_and_email_valid_p) {
         this.kifu_mail_run({silent: true, sb_judge_key: this.give_up_then_self_judge_key(params)})
       }
-
-      Gs.delay_block(1.0, () => this.toryo_bgm_call())
     },
 
     // 投了時に自分のチームは勝ったのか？

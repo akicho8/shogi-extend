@@ -55,16 +55,6 @@ export const mod_sound_effect = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    toryo_bgm_call() {
-      if (TORYO_BGM_KEYS.length > 0) {
-        Gs.assert(this.current_turn != null, "this.current_turn != null")
-        const index = Gs.imodulo(this.current_turn, TORYO_BGM_KEYS.length)
-        this.$sound.play(TORYO_BGM_KEYS[index])
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     beat_call(type) {
       if (this.vibration_mode_info.key === "vibration_mode_on") {
         this.$beat.call(type)

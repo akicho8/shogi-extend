@@ -5,16 +5,6 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class SoundPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      // BGM系
-      { key: "bgm_opening1",  name: "開始BGM1", volume: 0.30, source: require("@/assets/bgm/bgm_opening1.mp3"), },
-      { key: "bgm_opening2",  name: "開始BGM2", volume: 0.30, source: require("@/assets/bgm/bgm_opening2.mp3"), },
-      { key: "bgm_ending1",   name: "終局BGM1", volume: 0.30, source: require("@/assets/bgm/bgm_ending1.mp3"),  },
-      { key: "bgm_ending2",   name: "終局BGM2", volume: 0.60, source: require("@/assets/bgm/bgm_ending2.mp3"),  },
-      { key: "bgm_ending3",   name: "終局BGM3", volume: 0.40, source: require("@/assets/bgm/bgm_ending3.mp3"),  },
-      { key: "bgm_ending4",   name: "終局BGM4", volume: 0.30, source: require("@/assets/bgm/bgm_ending4.mp3"),  },
-      { key: "bgm_ending5",   name: "終局BGM5", volume: 0.40, source: require("@/assets/bgm/bgm_ending5.mp3"),  },
-      { key: "bgm_ending6",   name: "終局BGM6", volume: 0.30, source: require("@/assets/bgm/bgm_ending6.mp3"),  },
-
       ////////////////////////////////////////////////////////////////////////////////
 
       // 基本UI
