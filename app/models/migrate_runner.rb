@@ -246,7 +246,6 @@ class MigrateRunner
   # end
 
   def step9_集計
-    
   end
 
   private

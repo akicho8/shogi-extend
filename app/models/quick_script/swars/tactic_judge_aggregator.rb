@@ -39,7 +39,7 @@ module QuickScript
         @tactics_hash ||= yield_self do
           if aggregate.present?
             if records = aggregate.dig(:infinite, :records)
-              records.inject({}) {|a, e| a.merge(e[:tag_name].to_sym => e) }
+              records.inject({}) { |a, e| a.merge(e[:tag_name].to_sym => e) }
             end
           end
         end

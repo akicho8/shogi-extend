@@ -2,10 +2,10 @@ require "./setup"
 
 if true
   res = QuickScript::Swars::GradeAggregator.sample
-  res[:user][:plain_counts] == {:"九段" => 1, :"初段" => 2}       # => true
-  res[:user][:tag_counts][:"GAVA角"] == {:"九段" => 1}            # => true
-  res[:membership][:plain_counts] == {:"九段" => 2, :"初段" => 2} # => true
-  res[:membership][:tag_counts][:"GAVA角"] == {:"九段" => 2}      # => true
+  res[:user][:plain_counts] == { :"九段" => 1, :"初段" => 2 }       # => true
+  res[:user][:tag_counts][:"GAVA角"] == { :"九段" => 1 }            # => true
+  res[:membership][:plain_counts] == { :"九段" => 2, :"初段" => 2 } # => true
+  res[:membership][:tag_counts][:"GAVA角"] == { :"九段" => 2 }      # => true
 end
 
 if false
