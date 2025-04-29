@@ -14,21 +14,8 @@ class ApplicationRecord < ActiveRecord::Base
       human_attribute_name(*args)
     end
 
-    # r = plus_minus_query_parse(["a", "-b", "c", "-d"])
-    # r[true]  # => ["a", "c"]
-    # r[false] # => ["b", "d"]
-    #
-    # r = plus_minus_query_parse("a")
-    # r[true]  # => ["a"]
-    # r[false] # => nil
     def xquery_parse(v)
-      Array(v).collect { |e|
-        e.match(/(?<not>[!-])?(?<value>.*)/)
-      }.compact.group_by { |e|
-        !e[:not]
-      }.transform_values { |e|
-        e.collect { |e| e[:value] }
-      }
+      SimpleQueryParser.parse(v)
     end
 
     def custom_belongs_to(key, options = {})
@@ -86,7 +73,7 @@ class ApplicationRecord < ActiveRecord::Base
 
       scope "#{key}_ex".to_sym, proc { |v; s, g|       # scope :final_ex, proc { |v; s, g|
         s = all                                        #   s = all
-        g = xquery_parse(v)                            #   g = xquery_parse(v)
+        g = SimpleQueryParser.parse_array(v)           #   g = SimpleQueryParser.parse_array(v)
         if g[true]                                     #   if g[true]
           s = s.public_send("#{key}_eq", g[true])      #     s = s.final_eq(g[true])
         end                                            #   end

@@ -32,7 +32,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default     => query,
-                :placeholder => "四枚 変態 囲い",
+                :placeholder => "戦 アヒル -裏",
               }
             },
           },
@@ -44,7 +44,7 @@ module QuickScript
       end
 
       def table_rows
-        filtered_items.collect do |item|
+        current_items.collect do |item|
           {}.tap do |row|
             row["名前"] = row_name(item)
             row["勝率"] = tactics_hash.dig(item.key, :win_ratio).try { "%.3f" % self } || ""
@@ -65,7 +65,6 @@ module QuickScript
 
       ################################################################################
 
-
       # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
       # | tag_name             | win_count | win_ratio           | draw_count | freq_count | freq_ratio           | lose_count | win_lose_count |
       # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
@@ -82,34 +81,35 @@ module QuickScript
           params[:query].to_s
         end
 
-        def filtered_items
-          @filtered_items ||= yield_self do
-            av = searchable_items
-            StringToolkit.split(query).each do |q|
-              av = av.find_all { |item, str| str.include?(q) }
+        def current_items
+          @current_items ||= yield_self do
+            av = Bioshogi::Analysis::TacticInfo.all_elements.collect { |e| SearchableItem.new(e) }
+            g = SimpleQueryParser.parse(query)
+            Array(g[true]).each do |m|
+              av = av.find_all { |e| e.to_s.include?(m) }
             end
-            av.collect { |item, str| item }.sort_by(&:key)
+            Array(g[false]).each do |m|
+              av = av.reject { |e| e.to_s.include?(m) }
+            end
+            av.collect(&:item).sort_by(&:key)
           end
         end
 
-        # [
-        #   [<セメント囲い>, "セメント囲い|カタツムリ"],
-        #   [<ヒラメ戦法>,   "ヒラメ戦法|平目"],
-        # ]
-        def searchable_items
-          @searchable_items ||= yield_self do
-            items = Bioshogi::Analysis::TacticInfo.all_elements
-            items.collect { |e| [e, [e.name, *searchable_strings(e)].join("|")] }
-          end
-        end
+        class SearchableItem
+          attr_reader :item
 
-        def searchable_strings(e)
-          [
-            e.name,             # セメント囲い
-            *e.alias_names,     # カタツムリ
-            e.human_name, # 囲い or 戦法 or 手筋 or 備考
-            e.style_info.name,  # 王道
-          ]
+          def initialize(item)
+            @item = item
+          end
+
+          def to_s
+            @to_s ||= [
+              @item.name,            # セメント囲い
+              *@item.alias_names,    # カタツムリ
+              @item.human_name,      # 囲い or 戦法 or 手筋 or 備考
+              @item.style_info.name, # 王道
+            ].join(" ")
+          end
         end
       end
     end

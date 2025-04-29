@@ -9,5 +9,7 @@ RSpec.describe QuickScript::Swars::TacticListScript, type: :model do
     instance = QuickScript::Swars::TacticListScript.new
     assert { instance.as_json }
     assert { instance.table_rows }
+
+    assert { QuickScript::Swars::TacticListScript.new(query: "戦法 アヒ -裏").current_items.collect(&:name) == ["アヒル戦法"] }
   end
 end
