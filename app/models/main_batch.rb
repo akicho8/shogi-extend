@@ -29,13 +29,10 @@ class MainBatch
     AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
 
     # 集計
-    QuickScript::Swars::GradeAggregator.new.cache_write
-    QuickScript::Swars::BasicStatScript.new.cache_write
-    # QuickScript::Swars::TacticFreqScript.new.cache_write
-    # QuickScript::Swars::TacticListScript.new.cache_write
-
-    QuickScript::Swars::TacticJudgeAggregator.new.cache_write
-    QuickScript::Swars::TacticBattleAggregator.new.cache_write
+    QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布
+    QuickScript::Swars::BasicStatScript.new.cache_write        # 統計
+    QuickScript::Swars::TacticJudgeAggregator.new.cache_write  # 戦法一覧・戦法勝率ランキング
+    QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法一覧・戦法勝率ランキング
 
     # チェック
     Swars::SystemValidator.new.call
