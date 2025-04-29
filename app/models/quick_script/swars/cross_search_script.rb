@@ -1035,7 +1035,7 @@ module QuickScript
       end
 
       def bookmark_link
-        h.tag.a("横断検索", href: bookmark_url, target: "_blank", :class => "tag is-primary")
+        h.tag.a("横断棋譜検索", href: bookmark_url, target: "_blank", :class => "tag is-primary")
       end
 
       def bookmark_url

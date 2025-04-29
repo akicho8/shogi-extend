@@ -39,7 +39,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             )
 
           b-menu-item.is_active_unset.swars_cross_search_handle(
-            label="横断検索"
+            label="横断棋譜検索"
             @click.native="$sound.play_click()"
             tag="nuxt-link"
             :to="{path: '/lab/swars/cross-search', query: {back_to: $route.fullPath}}"
