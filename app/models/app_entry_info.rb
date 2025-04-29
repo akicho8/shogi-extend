@@ -129,14 +129,14 @@ class AppEntryInfo
     },
 
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/tactic-list" },
       title: "戦法一覧",
       og_image_key: "quick_script/swars/tactic_list_script",
       description: "戦法・囲い・手筋などの一覧",
       features: [
-        "戦法に対応する棋譜を探すのにもおすすめ",
+        "レアな戦法の棋譜を探すのにおすすめ",
       ],
     },
 
