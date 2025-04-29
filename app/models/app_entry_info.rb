@@ -158,7 +158,7 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/cross-search" },
-      title: "将棋ウォーズ横断検索",
+      title: "横断棋譜検索",
       og_image_key: "quick_script/swars/cross_search_script",
       description: "複雑な条件で検索したいときにどうぞ",
       # features: [

@@ -1,7 +1,7 @@
 module QuickScript
   module Swars
     class CrossSearchScript < Base
-      self.title                         = "将棋ウォーズ横断検索"
+      self.title                         = "横断棋譜検索"
       self.description                   = "ウォーズIDを指定しない検索"
       self.form_method                   = :get
       self.router_push_failed_then_fetch = true
@@ -957,7 +957,7 @@ module QuickScript
       end
 
       def mail_subject
-        "【将棋ウォーズ横断検索】抽出#{found_ids.size}件"
+        "【横断棋譜検索】抽出#{found_ids.size}件"
       end
 
       def found_message
