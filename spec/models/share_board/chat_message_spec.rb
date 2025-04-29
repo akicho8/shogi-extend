@@ -79,4 +79,12 @@ RSpec.describe ShareBoard::ChatMessage do
     chat_message = room.chat_messages.create!(user: user, content: "a" * 256.next)
     assert { chat_message.content.size == 256 }
   end
+
+  it "削除対象のレコードに絞る" do
+    user = ShareBoard::User.create!
+    room = ShareBoard::Room.create!
+    chat_message = room.chat_messages.create!(user: user)
+    assert { ShareBoard::ChatMessage.old_only(0).count == 0 }
+    assert { Timecop.freeze("2000-01-02") { ShareBoard::ChatMessage.old_only(0).count } == 1 }
+  end
 end

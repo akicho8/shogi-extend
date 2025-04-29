@@ -27,6 +27,7 @@ class MainBatch
     Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
     AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
+    ShareBoard::ChatMessage.old_only(100.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
 
     # 集計
     QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布

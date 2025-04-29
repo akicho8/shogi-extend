@@ -52,6 +52,8 @@ module ShareBoard
     belongs_to :user, counter_cache: true # 発言者
     belongs_to :room, counter_cache: true # 所属する部屋
 
+    scope :old_only, -> expires_in { where(arel_table[:created_at].lt(expires_in.seconds.ago)) } # 削除対象
+
     normalizes :content, with: -> e { column_value_db_truncate(:content, e) } # 長すぎるメッセージを途中で切る
 
     # 仮にソートするなら performed_at を参照すること
