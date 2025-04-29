@@ -79,7 +79,7 @@ class AppEntryInfo
       og_image_key: "video",
       description: "動画作成のあとで登録するとここで見れる",
       features: [
-        "こんなところより YouTube に上げた方がいいと思う",
+        "こんなところより YouTube に上げよう",
       ],
     },
     {
@@ -116,20 +116,6 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/lab/swars/cross-search" },
-      title: "将棋ウォーズ横断検索",
-      og_image_key: "quick_script/swars/cross_search_script",
-      description: "特定の戦法の棋譜を探したいときにどうぞ",
-      # features: [
-      #   "変動するように最近のだけ出してる",
-      #   "戦法や囲いの分布もある",
-      #   "人気戦法の対策をすれば勝ちやすいかも？",
-      # ],
-    },
-
-    {
-      display_p: true,
-      experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/grade-stat" },
       title: "将棋ウォーズ棋力分布",
       og_image_key: "quick_script/swars/grade_stat_script",
@@ -139,6 +125,18 @@ class AppEntryInfo
         # "変動するように最近のだけ出してる",
         # "戦法や囲いの分布もある",
         # "人気戦法の対策をすれば勝ちやすいかも？",
+      ],
+    },
+
+    {
+      display_p: false,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab/swars/tactic-list" },
+      title: "戦法一覧",
+      og_image_key: "quick_script/swars/tactic_list_script",
+      description: "戦法・囲い・手筋などの一覧",
+      features: [
+        "戦法に対応する棋譜を探すのにもおすすめ",
       ],
     },
 
@@ -158,6 +156,20 @@ class AppEntryInfo
 
     {
       display_p: true,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab/swars/cross-search" },
+      title: "将棋ウォーズ横断検索",
+      og_image_key: "quick_script/swars/cross_search_script",
+      description: "複雑な条件で検索したいときにどうぞ",
+      # features: [
+      #   "変動するように最近のだけ出してる",
+      #   "戦法や囲いの分布もある",
+      #   "人気戦法の対策をすれば勝ちやすいかも？",
+      # ],
+    },
+
+    {
+      display_p: false,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/encyclopedia" },
       title: "戦法ミニ事典",
@@ -227,6 +239,16 @@ class AppEntryInfo
       ],
     },
     {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: { path: "/lab" },
+      title: "実験室",
+      og_image_key: "lab",
+      description: nil,
+      features: [
+      ],
+    },
+    {
       key: :gallery,
       display_p: true,
       experiment_p: false,
@@ -252,16 +274,6 @@ class AppEntryInfo
       features: [
         "将棋盤の動作テスト用に作ったもの",
         "他の用途にも使えそうなので公開している",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: false,
-      nuxt_link_to: { path: "/lab" },
-      title: "実験室",
-      og_image_key: "lab",
-      description: nil,
-      features: [
       ],
     },
   ]
