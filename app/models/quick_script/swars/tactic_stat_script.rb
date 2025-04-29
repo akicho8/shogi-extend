@@ -127,7 +127,7 @@ module QuickScript
 
       def current_items
         @current_items ||= yield_self do
-          items = scope_info.target_infos.collect { |e| Item.new(info: e, stat: period_agg_hash[e.key] || {}) }
+          items = scope_info.target_infos.collect { |e| Item[info: e, stat: period_agg_hash[e.key] || {}] }
           items = fliter_process(items)
           items = items.sort_by { |e| -(e.public_send(order_info.order_by) || -1) }
         end
