@@ -16,7 +16,6 @@ RSpec.describe type: :system, share_board_spec: true do
       clock_open
       clock_box_form_set(:black, 0, @INITIAL_SEC, 0, 0)   # 秒読みだけを設定
       find(:button, :class => "play_button").click   # 開始
-      find(:button, :text => "無視して開始する", exact_text: true).click
       cc_modal_close                             # 閉じる (ヘッダーに置いている)
     end
     a_block do

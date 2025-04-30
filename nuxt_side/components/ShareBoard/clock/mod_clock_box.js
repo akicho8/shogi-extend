@@ -434,28 +434,6 @@ export const mod_clock_box = {
       return params.cc_behavior_key === "cc_behavior_start"
     },
 
-    cc_play_confirm(params = {}) {
-      this.$sound.play_click()
-      this.sb_talk("ちょっと待って。先に順番設定をしてください")
-      this.dialog_confirm({
-        title: "ちょっと待って",
-        type: "is-warning",
-        message: `
-          <div class="content">
-            <p>先に<b>順番設定</b>をしてください</p>
-            <p class="mb-0 is-size-7">設定するとどうなる？</p>
-            <ol class="mt-2 is-size-7">
-              <li>システムが手番を理解する</li>
-              <li>指し手の伝達を保証する</li>
-            </ol>
-          </div>
-        `,
-        confirmText: "無視して開始する",
-        focusOn: "cancel",
-        ...params,
-      })
-    },
-
     // 順番設定で更新を押したあとで呼ぶ
     cc_next_message() {
       let message = null

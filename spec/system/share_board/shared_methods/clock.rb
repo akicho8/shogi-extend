@@ -62,11 +62,9 @@ module SharedMethods
   end
 
   # 順番設定をしてください状態で対局時計を設置してPLAY押して閉じる
-  # 順番設定をしてくださいのダイアログが出るが「無視して開始する」
   def clock_start_force
     clock_open                                     # 対局時計を開いて
     find(".play_button").click                     # 開始
-    find(".dialog.modal .button.is-warning").click # 「無視して開始する」
     cc_modal_close
   end
 

@@ -75,17 +75,9 @@ export default {
       this.SB.cc_modal_close_handle()
     },
     play_handle() {
-      if (this.SB.cc_start_even_though_order_is_not_enabled_p) {
-        this.SB.cc_play_confirm({
-          onConfirm: () => {
-            this.$sound.play_click()
-            if (this.SB.debug_mode_p) {
-              this.play_core_handle()
-            } else {
-              this.toast_ng("先に順番設定しないとだめ")
-            }
-          },
-        })
+      this.$sound.play_click()
+      if (this.SB.cc_start_even_though_order_is_not_enabled_p && !this.SB.debug_mode_p) {
+        this.toast_ng("先に順番設定をしてください")
         return
       }
       this.play_core_handle()
