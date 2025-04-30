@@ -8,7 +8,7 @@
 
   // 段級位
   .is-flex.display_rule_container
-    template(v-for="row in TheApp.info.display_rank_items")
+    template(v-for="row in TheApp.info.display_ranks")
       nuxt-link.display_rule_one.is_decoration_off(
         v-if="row.grade_name"
         :to="TheApp.search_path(row.search_params)"

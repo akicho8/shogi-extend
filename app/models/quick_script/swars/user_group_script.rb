@@ -122,7 +122,7 @@ EOS
               row["名前"] = user_tactics_hash[e.key][:name]
               row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: { name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
-              row.update(grade_per_rule(e))
+              row.update(display_ranks_hash(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
               row["勢い"] = e.cached_stat.vitality_stat.level.try { |e| "%.0f %%" % [e * 100] }
               row["規範"] = e.cached_stat.gentleman_stat.final_score.try { "#{floor} 点" }
@@ -185,8 +185,8 @@ EOS
         end
       end
 
-      def grade_per_rule(user)
-        user.cached_stat(STAT_OPTIONS).grade_by_rules_stat.grade_per_rule
+      def display_ranks_hash(user)
+        user.cached_stat(STAT_OPTIONS).display_rank_stat.display_ranks_hash
       end
 
       def current_order_by
@@ -256,7 +256,7 @@ EOS
               row["名前"]            = user_tactics_hash[e.key][:name]
               row["ウォーズID"]      = hyper_link(e.name_with_ban, e.swars_search_url)
               row["最高段位"]        = e.grade.name
-              row.update(grade_per_rule(e))
+              row.update(display_ranks_hash(e))
               row["勝率"]            = e.cached_stat.total_judge_stat.win_ratio
               row["勢い"]            = e.cached_stat.vitality_stat.level
               row["行動規範"]        = e.cached_stat.gentleman_stat.final_score.try { floor }

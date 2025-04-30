@@ -44,7 +44,7 @@ module Swars
           ################################################################################
 
           if Rails.env.local?
-            h[:debug_hash]  = badge_stat.to_debug_hash
+            h[:debug_hash] = badge_stat.to_debug_hash
             h[:win_lose_streak_stat] = win_lose_streak_stat.to_h
           end
         end
@@ -52,11 +52,11 @@ module Swars
 
       def to_header_h
         {
-          :user               => { key: user.key, ban_at: user.ban_at }, # 対象者情報
-          :display_rank_items => grade_by_rules_stat.display_rank_items, # ルール別最高段位
-          :judge_counts       => total_judge_stat.counts_hash,           # 勝ち負け数
-          :badge_items        => badge_stat.as_json,                     # バッジ一覧
-          :judge_keys         => recent_outcome_list_stat.to_a,          # 直近勝敗リスト
+          :user          => { key: user.key, ban_at: user.ban_at }, # 対象者情報
+          :display_ranks => display_rank_stat.display_ranks,        # ルール別最高段位
+          :judge_counts  => total_judge_stat.counts_hash,           # 勝ち負け数
+          :badge_items   => badge_stat.as_json,                     # バッジ一覧
+          :judge_keys    => recent_outcome_list_stat.to_a,          # 直近勝敗リスト
         }
       end
 
@@ -249,8 +249,8 @@ module Swars
         @daily_win_lose_list_stat ||= DailyWinLoseListStat.new(self)
       end
 
-      def grade_by_rules_stat
-        @grade_by_rules_stat ||= GradeByRulesStat.new(self)
+      def display_rank_stat
+        @display_rank_stat ||= DisplayRankStat.new(self)
       end
 
       def rule_stat

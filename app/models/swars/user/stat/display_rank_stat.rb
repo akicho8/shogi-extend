@@ -2,36 +2,36 @@
 
 module Swars
   module User::Stat
-    class GradeByRulesStat < Base
+    class DisplayRankStat < Base
       delegate *[
         :ids_scope,
       ], to: :stat
 
       # for プレイヤー情報
-      def display_rank_items
-        @display_rank_items ||= ::Swars::DisplayRankInfo.collect do |e|
+      def display_ranks
+        @display_ranks ||= ::Swars::DisplayRankInfo.collect do |e|
           e.display_rank_item.merge(:grade_name => public_send(e.key)&.name)
         end
       end
 
       # for UserGroupScript
-      def grade_per_rule
-        @grade_per_rule ||= ::Swars::DisplayRankInfo.each_with_object({}) do |e, m|
-          m[e.long_name] = public_send(e.key)&.name || ""
+      def display_ranks_hash
+        @display_ranks_hash ||= ::Swars::DisplayRankInfo.each_with_object({}) do |e, m|
+          m[e.name] = public_send(e.key)&.name || ""
         end
       end
 
       ################################################################################
 
-      def dr_ten_min
+      def display_rank_ten_min
         normal_grades_hash[:ten_min]
       end
 
-      def dr_three_min
+      def display_rank_three_min
         normal_grades_hash[:three_min]
       end
 
-      def dr_ten_sec
+      def display_rank_ten_sec
         normal_grades_hash[:ten_sec]
       end
 
@@ -40,11 +40,10 @@ module Swars
       # それなら if record = s.take とする必要はない
       # と思うかもしれないが最初から 0 件の場合は s.take が nil になるためやっぱり if がいる
       # あと0件に絞られたときレコードが取れても min_priority は nil になっている
-      def dr_sprint
-        @dr_sprint ||= yield_self do
+      def display_rank_sprint
+        @display_rank_sprint ||= yield_self do
           s = ids_scope
-          s = s.joins(:battle => :imode)
-          s = s.joins(:grade)
+          s = s.joins(battle: :imode, grade: nil)
           s = s.where(Imode.arel_table[:key].eq(:sprint))
           s = s.select("MIN(#{Swars::Grade.table_name}.priority) AS min_priority")
           if record = s.take
@@ -61,8 +60,7 @@ module Swars
       def normal_grades_hash
         @normal_grades_hash ||= yield_self do
           s = ids_scope
-          s = s.joins(:battle => [:imode, :rule])
-          s = s.joins(:grade)
+          s = s.joins(battle: [:imode, :rule], grade: nil)
           s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.group(:rule_key)
           s = s.select([
