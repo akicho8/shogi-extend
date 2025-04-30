@@ -56,7 +56,10 @@ module QuickScript
 
           batch_total = main_scope.count.ceildiv(batch_size)
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{frequency_info}] Processing relation ##{batch_index.next}/#{batch_total}"
+            if Rails.env.development? || Rails.env.staging? || Rails.env.production?
+              puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{frequency_info}] Processing relation ##{batch_index.next}/#{batch_total}"
+            end
+
             scope = condition_add(scope)
             scope = frequency_info.scope_chain[scope] # scope = scope.joins(:grade).select(:user_id, "swars_grades.key").distinct
 
