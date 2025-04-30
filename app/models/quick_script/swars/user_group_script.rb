@@ -186,11 +186,7 @@ EOS
       end
 
       def grade_per_rule(user)
-        {}.tap do |row|
-          user.cached_stat(STAT_OPTIONS).grade_by_rules_stat.ruleships.each do |e|
-            row[e[:rule_info].name] = e[:grade_info].try { name } || ""
-          end
-        end
+        user.cached_stat(STAT_OPTIONS).grade_by_rules_stat.grade_per_rule
       end
 
       def current_order_by

@@ -19,15 +19,15 @@ RSpec.describe Swars::User::Stat::AverageMovesByOutcomeStat, type: :model, swars
   end
 end
 # >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
-# >> 
+# >>
 # >> Swars::User::Stat::AverageMovesByOutcomeStat
 # >>   勝敗別平均手数
 # >>     works
-# >> 
+# >>
 # >> Top 1 slowest examples (1.31 seconds, 37.0% of total time):
 # >>   Swars::User::Stat::AverageMovesByOutcomeStat 勝敗別平均手数 works
 # >>     1.31 seconds -:12
-# >> 
+# >>
 # >> Finished in 3.54 seconds (files took 1.35 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

@@ -15,7 +15,7 @@ RSpec.describe Swars::User::Stat::Main, type: :model, swars_spec: true do
         assert { @as_json["user"] == { "key" => "user1", "ban_at" => nil } }
       end
       it "ルール別の段級位" do
-        assert { @as_json["rule_items"] == [{ "rule_key" => "ten_min", "rule_name" => "10分", "grade_name" => "30級" }, { "rule_key" => "three_min", "rule_name" => "3分", "grade_name" => nil }, { "rule_key" => "ten_sec", "rule_name" => "10秒", "grade_name" => nil }] }
+        assert { @as_json["display_rank_items"] == [{ "key" => "dr_ten_min", "short_name" => "10分", "search_params" => { "開始モード" => "通常", "持ち時間" => "10分" }, "grade_name" => "30級" }, { "key" => "dr_three_min", "short_name" => "3分", "search_params" => { "開始モード" => "通常", "持ち時間" => "3分" }, "grade_name" => nil }, { "key" => "dr_ten_sec", "short_name" => "10秒", "search_params" => { "開始モード" => "通常", "持ち時間" => "10秒" }, "grade_name" => nil }, { "key" => "dr_sprint", "short_name" => "ス", "search_params" => { "開始モード" => "スプリント" }, "grade_name" => nil }] }
       end
       it "勝敗数" do
         assert { @as_json["judge_counts"] == { "win" => 1 } }

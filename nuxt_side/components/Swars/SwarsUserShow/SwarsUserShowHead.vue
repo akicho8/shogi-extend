@@ -7,16 +7,17 @@
       span.mx-1(v-if="TheApp.info.user.ban_at") 💀
 
   // 段級位
-  .is-flex.rule_container
-    template(v-for="row in TheApp.info.rule_items")
-      nuxt-link.rule_one.is_decoration_off(
-        :to="TheApp.search_path({'持ち時間': row.rule_name})"
-        :key="row.rule_key"
+  .is-flex.display_rule_container
+    template(v-for="row in TheApp.info.display_rank_items")
+      nuxt-link.display_rule_one.is_decoration_off(
+        v-if="row.grade_name"
+        :to="TheApp.search_path(row.search_params)"
+        :key="row.key"
         @click.native="$sound.play_click()"
         )
-        span.rule_name.is-size-7.has-text-grey
-          | {{row.rule_name}}
-        span.grade_name.is-size-5
+        span.display_rule_short_name.is-size-7.has-text-grey
+          | {{row.short_name}}
+        span.display_rule_grade_name.is-size-5
           template(v-if="row.grade_name")
             | {{row.grade_name}}
           template(v-else)
@@ -59,18 +60,18 @@ export default {
       border-radius: 3px
       padding: 0 0.5rem
 
-  .rule_container
+  .display_rule_container
     justify-content: center
     // 一つのルール
-    .rule_one
+    .display_rule_one
       &:hover
         background-color: $white-ter
         border-radius: 3px
       padding: 0 0.5rem
       font-weight: bold
-      .rule_name
+      .display_rule_short_name
         __css_keep__: 0
-      .grade_name
+      .display_rule_grade_name
         margin-left: 0.2rem
 
   .WinLoseCircle

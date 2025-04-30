@@ -7,31 +7,63 @@ module Swars
         :ids_scope,
       ], to: :stat
 
-      def to_chart
-        @to_chart ||= yield_self do
-          ruleships.collect do |e|
-            {
-              :rule_key   => e[:rule_info].key,
-              :rule_name  => e[:rule_info].name,
-              :grade_name => e[:grade_info]&.name,
-            }
+      # for プレイヤー情報
+      def display_rank_items
+        @display_rank_items ||= ::Swars::DisplayRankInfo.collect do |e|
+          e.display_rank_item.merge(:grade_name => public_send(e.key)&.name)
+        end
+      end
+
+      # for UserGroupScript
+      def grade_per_rule
+        @grade_per_rule ||= ::Swars::DisplayRankInfo.each_with_object({}) do |e, m|
+          m[e.long_name] = public_send(e.key)&.name || ""
+        end
+      end
+
+      ################################################################################
+
+      def dr_ten_min
+        normal_grades_hash[:ten_min]
+      end
+
+      def dr_three_min
+        normal_grades_hash[:three_min]
+      end
+
+      def dr_ten_sec
+        normal_grades_hash[:ten_sec]
+      end
+
+      # 罠ポイント
+      # 対象が0件に絞られても集約関数は必ずレコードを返す
+      # それなら if record = s.take とする必要はない
+      # と思うかもしれないが最初から 0 件の場合は s.take が nil になるためやっぱり if がいる
+      # あと0件に絞られたときレコードが取れても min_priority は nil になっている
+      def dr_sprint
+        @dr_sprint ||= yield_self do
+          s = ids_scope
+          s = s.joins(:battle => :imode)
+          s = s.joins(:grade)
+          s = s.where(Imode.arel_table[:key].eq(:sprint))
+          s = s.select("MIN(#{Swars::Grade.table_name}.priority) AS min_priority")
+          if record = s.take
+            Swars::GradeInfo.fetch_if(record.min_priority)
           end
         end
       end
 
-      def ruleships
-        @ruleships ||= ::Swars::RuleInfo.collect do |e|
-          {
-            :rule_info  => e,
-            :grade_info => grades_hash[e.key],
-          }
-        end
-      end
+      ################################################################################
 
-      def grades_hash
-        @grades_hash ||= yield_self do
+      private
+
+      # 通常専用
+      def normal_grades_hash
+        @normal_grades_hash ||= yield_self do
           s = ids_scope
-          s = s.joins(:battle => :rule).joins(:grade)
+          s = s.joins(:battle => [:imode, :rule])
+          s = s.joins(:grade)
+          s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.group(:rule_key)
           s = s.select([
               "#{Swars::Rule.table_name}.key AS rule_key",
@@ -68,7 +100,6 @@ module Swars
             # >> | three_min | 七段       |
             # >> | ten_sec   | 六段       |
             # >> |-----------+------------+
-
             g.each_with_object({}) do |e, m|
               m[e["rule_key"].to_sym] = Swars::GradeInfo.fetch(e["grade_name"])
             end

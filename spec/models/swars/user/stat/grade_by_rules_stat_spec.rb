@@ -17,25 +17,13 @@ RSpec.describe Swars::User::Stat::GradeByRulesStat, type: :model, swars_spec: tr
       case1(:three_min, "4級")
 
       assert do
-        @black.stat.grade_by_rules_stat.to_chart == [
-          { :rule_key => :ten_min,   :rule_name => "10分", :grade_name => "1級", },
-          { :rule_key => :three_min, :rule_name => "3分",  :grade_name => "3級", },
-          { :rule_key => :ten_sec,   :rule_name => "10秒", :grade_name => nil,   },
+        @black.stat.grade_by_rules_stat.display_rank_items == [
+          { key: :dr_ten_min, short_name: "10分", search_params: { "開始モード" => "通常", "持ち時間" => "10分" }, grade_name: "1級" },
+          { key: :dr_three_min, short_name: "3分", search_params: { "開始モード" => "通常", "持ち時間" => "3分" }, grade_name: "3級" },
+          { key: :dr_ten_sec, short_name: "10秒", search_params: { "開始モード" => "通常", "持ち時間" => "10秒" }, grade_name: nil },
+          { key: :dr_sprint, short_name: "ス", search_params: { "開始モード" => "スプリント" }, grade_name: nil },
         ]
       end
     end
   end
 end
-# >> Swars::Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >>
-# >> Swars::User::Stat::GradeByRulesStat
-# >>   ルール別最高段級位
-# >>     works
-# >>
-# >> Swars::Top 1 slowest examples (0.78487 seconds, 27.2% of total time):
-# >>   Swars::User::Stat::GradeByRulesStat ルール別最高段級位 works
-# >>     0.78487 seconds -:17
-# >>
-# >> Swars::Finished in 2.88 seconds (files took 1.55 seconds to load)
-# >> 1 example, 0 failures
-# >>
