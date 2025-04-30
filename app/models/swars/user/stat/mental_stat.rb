@@ -19,7 +19,7 @@ module Swars
                 :hard_brain => mental_stat.hard_brain?,
               }
             end
-          }.compact.sort_by { |e| -e[:level] }
+          }.compact.sort_by { |e| -(e[:level] || 0) }
         end
       end
 

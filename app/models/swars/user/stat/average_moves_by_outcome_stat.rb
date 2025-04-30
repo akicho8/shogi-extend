@@ -25,7 +25,8 @@ module Swars
       def averages_hash
         @averages_hash ||= yield_self do
           s = ids_scope
-          s = s.joins(:battle)
+          s = s.joins(:battle => :imode)
+          s = s.where(Imode.arel_table[:key].eq(:normal))
           s = s.s_group_judge_key
           if s = s.average(:turn_max)
             s.symbolize_keys

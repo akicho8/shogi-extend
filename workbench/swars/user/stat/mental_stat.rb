@@ -1,5 +1,17 @@
 require "./setup"
-_ { Swars::User["SugarHuuko"].stat.mental_stat.level     } # => "233.92 ms"
-s { Swars::User["SugarHuuko"].stat.mental_stat.level     } # => -3
-s { Swars::User["SugarHuuko"].stat.mental_stat.raw_level } # => -5.019
+_ { Swars::User["SugarHuuko"].stat.mental_stat.level     } # => "105.88 ms"
+s { Swars::User["SugarHuuko"].stat.mental_stat.level     } # => 19
+s { Swars::User["SugarHuuko"].stat.mental_stat.raw_level } # => 28.7754
 tp Swars::User::Stat::MentalStat.report
+# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:45:in 'Swars::User.[]'
+# >>   Swars::Membership Ids (8.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Average (0.8ms)  SELECT AVG(`turn_max`) AS `average_turn_max`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (118689399, 118689421, 118689422, 118689424, 118689426, 118689429, 118689431, 118689432, 118689435, 118738139, 118738150, 118738161, 118738164, 118738165, 118738168, 118738170, 118689445, 118738172, 118738173, 118689402, 118689403, 118689406, 118689407, 118689410, 118689411, 118689414, 118663205, 118689419, 118686043, 118664996, 118665000, 118695959, 118658894, 118702422, 118652311, 118652317, 118652321, 118649898, 118649900, 118649901, 118649903, 118649906, 118649907, 118647740, 118647742, 118647744, 118647747, 118645471, 118645476, 118645480) GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/average_moves_by_outcome_stat.rb:30:in 'block in Swars::User::Stat::AverageMovesByOutcomeStat#averages_hash'
+# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:45:in 'Swars::User.[]'
+# >>   Swars::Membership Ids (7.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Average (0.8ms)  SELECT AVG(`turn_max`) AS `average_turn_max`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (118689399, 118689421, 118689422, 118689424, 118689426, 118689429, 118689431, 118689432, 118689435, 118738139, 118738150, 118738161, 118738164, 118738165, 118738168, 118738170, 118689445, 118738172, 118738173, 118689402, 118689403, 118689406, 118689407, 118689410, 118689411, 118689414, 118663205, 118689419, 118686043, 118664996, 118665000, 118695959, 118658894, 118702422, 118652311, 118652317, 118652321, 118649898, 118649900, 118649901, 118649903, 118649906, 118649907, 118647740, 118647742, 118647744, 118647747, 118645471, 118645476, 118645480) GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/average_moves_by_outcome_stat.rb:30:in 'block in Swars::User::Stat::AverageMovesByOutcomeStat#averages_hash'
