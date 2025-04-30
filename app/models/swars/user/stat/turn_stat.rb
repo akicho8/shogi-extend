@@ -30,7 +30,8 @@ module Swars
 
       def scope
         s = @scope
-        s = s.joins(:battle)
+        s = s.joins(:battle => :imode)
+        s = s.where(Imode.arel_table[:key].eq(:normal))
       end
     end
   end

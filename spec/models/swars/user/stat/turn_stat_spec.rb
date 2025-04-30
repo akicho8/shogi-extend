@@ -22,19 +22,19 @@ RSpec.describe Swars::User::Stat::TurnStat, type: :model, swars_spec: true do
     end
   end
 end
-# >> Swars::Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
 # >>
 # >> Swars::User::Stat::TurnStat
 # >>   平均手数・最長手数
 # >>     average
 # >>     max
 # >>
-# >> Swars::Top 2 slowest examples (1.53 seconds, 42.6% of total time):
+# >> Top 2 slowest examples (1.08 seconds, 32.6% of total time):
 # >>   Swars::User::Stat::TurnStat 平均手数・最長手数 average
-# >>     1.14 seconds -:17
+# >>     0.83426 seconds -:12
 # >>   Swars::User::Stat::TurnStat 平均手数・最長手数 max
-# >>     0.39505 seconds -:22
+# >>     0.24852 seconds -:18
 # >>
-# >> Swars::Finished in 3.6 seconds (files took 1.55 seconds to load)
+# >> Finished in 3.32 seconds (files took 1.36 seconds to load)
 # >> 2 examples, 0 failures
 # >>
