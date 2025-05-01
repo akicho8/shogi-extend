@@ -220,7 +220,7 @@ module Swars
 
         ################################################################################
 
-        { key: "ルール別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
+        { key: "時間別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
         { key: "対局モード",       body: proc { xmode_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################

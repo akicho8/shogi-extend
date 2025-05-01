@@ -7,7 +7,7 @@ module Swars
         :ids_scope,
       ], to: :stat
 
-      # ルール別対局頻度
+      # 時間別対局頻度
       def to_chart
         @to_chart ||= yield_self do
           counts = ids_scope.joins(:battle => :rule).group("swars_rules.key").count
