@@ -17,16 +17,16 @@ RSpec.describe Swars::User::Stat::AverageMovesAtResignationStat, type: :model, s
     end
   end
 end
-# >> Swars::Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
 # >>
 # >> Swars::User::Stat::AverageMovesAtResignationStat
-# >>   勝敗別平均手数
+# >>   投了時の平均手数
 # >>     works
 # >>
-# >> Swars::Top 1 slowest examples (1.57 seconds, 43.0% of total time):
-# >>   Swars::User::Stat::AverageMovesAtResignationStat 勝敗別平均手数 works
-# >>     1.57 seconds -:17
+# >> Top 1 slowest examples (0.98801 seconds, 30.7% of total time):
+# >>   Swars::User::Stat::AverageMovesAtResignationStat 投了時の平均手数 works
+# >>     0.98801 seconds -:12
 # >>
-# >> Swars::Finished in 3.64 seconds (files took 1.56 seconds to load)
+# >> Finished in 3.22 seconds (files took 1.5 seconds to load)
 # >> 1 example, 0 failures
 # >>
