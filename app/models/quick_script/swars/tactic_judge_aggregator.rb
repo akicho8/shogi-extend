@@ -26,7 +26,9 @@ module QuickScript
       end
 
       def initialize(options = {})
-        @options = {}.merge(options)
+        @options = {
+          :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
+        }.merge(options)
       end
 
       def call
@@ -54,7 +56,7 @@ module QuickScript
 
           batch_total = main_scope.count.ceildiv(batch_size)
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            if Rails.env.development? || Rails.env.staging? || Rails.env.production?
+            if @options[:verbose]
               puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{period_info}] Processing relation ##{batch_index}/#{batch_total}"
             end
 

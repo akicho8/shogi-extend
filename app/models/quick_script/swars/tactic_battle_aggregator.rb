@@ -18,7 +18,9 @@ module QuickScript
       end
 
       def initialize(options = {})
-        @options = {}.merge(options)
+        @options = {
+          :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
+        }.merge(options)
       end
 
       def call
@@ -34,8 +36,6 @@ module QuickScript
       end
 
       def battle_ids_of(item, i)
-        p [Time.current.to_fs(:ymdhms), item, i.fdiv(Bioshogi::Analysis::TacticInfo.all_elements.size)] if false
-
         ids = []
         ids = finder(item, ids, :win_only_conditon)
         ids = finder(item, ids, :general_conditon)
@@ -49,7 +49,7 @@ module QuickScript
             taggings = tag.taggings
             batch_total = taggings.count.ceildiv(batch_size)
             taggings.in_batches(order: :desc, of: batch_size).each.with_index do |taggings, batch_index|
-              if Rails.env.development? || Rails.env.staging? || Rails.env.production?
+              if @options[:verbose]
                 p [Time.current.to_fs(:ymdhms), "#{batch_index}/#{batch_total}", item, condition_method]
               end
               taggings = taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
@@ -64,11 +64,9 @@ module QuickScript
               battle_ids.size <= taggable_ids.size or raise "must not happen"
               battle_ids -= ids # 取得済みのIDを除外する
               if battle_ids.present?
-                p [Time.current.to_fs(:ymdhms), item, ids.size, "+#{battle_ids.size}"] if false
                 ids += battle_ids
                 if ids.size >= need_size
                   ids = ids.take(need_size)
-                  p [Time.current.to_fs(:ymdhms), "break"] if false
                   break
                 end
               end
