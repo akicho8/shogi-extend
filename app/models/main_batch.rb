@@ -1,13 +1,15 @@
 class MainBatch
   def call
-    AppLog.important(subject: "cronを開始します", body: "OK")
+    AppLog.important(subject: "バッチ処理 開始")
     public_send(Rails.env)
-    AppLog.important(subject: "cronは正常に終了しました", body: "OK")
+    AppLog.important(subject: "バッチ処理 終了")
   end
 
   def production
-    # 動画変換
+    # 奨励会三段リーグ
     Tsl::League.setup(verbose: false)
+
+    # 動画変換
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
 
     # 将棋ウォーズ棋譜検索クロール

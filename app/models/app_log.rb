@@ -69,7 +69,7 @@ class AppLog < ApplicationRecord
         #{name}.#{__method__}(**params)
         または、
         #{name}.#{__method__}(body: params)
-        の間違いなので書き直せ
+        の間違いなので書き直してください
         EOT
       end
 
