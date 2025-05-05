@@ -13,7 +13,7 @@ RSpec.describe Swars::User::Stat::BadgeStat, type: :model, swars_spec: true do
         black = Swars::User.create!
         white = Swars::User.create!
         skill = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:strike_plan])
-        info = skill.main_reference_info
+        info = skill.static_kif_info
         player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
         e[:n_times].times do
           Swars::Battle.create!(strike_plan: e[:strike_plan]) do |e|

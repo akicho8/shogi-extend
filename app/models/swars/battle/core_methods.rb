@@ -16,7 +16,7 @@ module Swars
 
       def kifu_body
         if strike_plan
-          return Bioshogi::Analysis::TacticInfo.flat_lookup(strike_plan).main_reference_file.read
+          return Bioshogi::Analysis::TacticInfo.flat_lookup(strike_plan).static_kif_file.read
         end
         kifu_body_for_test || to_temporary_csa
       end
