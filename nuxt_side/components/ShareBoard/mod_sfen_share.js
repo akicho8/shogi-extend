@@ -266,26 +266,9 @@ export const mod_sfen_share = {
     },
   },
   computed: {
+    // どの状態のときに読み上げるか？
     yomiagable_p() {
-      // 時計が設置されてなくて読み上げOFFのときはダメ
-      // 時計が設置されている または 読み上げON はOK
-
-      // // 本番で自分vs自分は読み上げない
-      // if (this.self_vs_self_p) {
-      //   return false
-      // }
-
-      // // 順番設定 OFF なら読み上げない
-      // if (!this.order_enable_p) {
-      //   return false
-      // }
-      //
-      // return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
-      //
-      // 時計ONなら
-      // return this.cc_play_p
-
-      return this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      return this.order_enable_p && this.cc_play_p && this.yomiage_mode_info.key === "is_yomiage_mode_on"
     },
   },
 }
