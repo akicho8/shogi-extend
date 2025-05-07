@@ -22,6 +22,26 @@ class MigrateRunner
     nil
   end
 
+  def step6_rebuild_for_auto_crawl_user_keys
+    ::Swars::User::Vip.auto_crawl_user_keys.each.with_index do |user_key, i|
+      if i.modulo(50).zero?
+        AppLog.important("#{i} / #{::Swars::User::Vip.auto_crawl_user_keys.size}")
+      end
+      p user_key
+      if user = Swars::User[user_key]
+        s = user.battles
+        batch_size = 1000
+        all_count = s.count.ceildiv(batch_size)
+        s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+          p [batch, all_count, batch.fdiv(all_count)]
+          # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
+          s.each { |e| e.rebuild(tries: 1) }
+          puts
+        end
+      end
+    end
+  end
+
   # def step1
   #   Swars::Rule.unscoped.find_each do |rule|
   #     tp rule
@@ -165,23 +185,6 @@ class MigrateRunner
   #   end
   # end
 
-  # def step6_rebuild_for_auto_crawl_user_keys
-  #   ::Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
-  #     p user_key
-  #     if user = Swars::User[user_key]
-  #       s = user.battles
-  #       batch_size = 1000
-  #       all_count = s.count.ceildiv(batch_size)
-  #       s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-  #         p [batch, all_count, batch.fdiv(all_count)]
-  #         # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION)
-  #         s.each { |e| e.rebuild(tries: 1) }
-  #         puts
-  #       end
-  #     end
-  #   end
-  # end
-
   # def step7_style_update_for_auto_crawl_user_keys
   #   ::Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
   #     p user_key
@@ -245,8 +248,8 @@ class MigrateRunner
   #   end
   # end
 
-  def step9_集計
-  end
+  # def step9_集計
+  # end
 
   private
 
