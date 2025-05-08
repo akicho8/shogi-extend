@@ -5,10 +5,14 @@
 # rails r 'SlackSender.call(subject: "a", body: "b")'
 #
 class SlackSender
+  FEATURE = false
+
   class << self
     def api_call(params)
       Slack::Web::Client.new.tap do |client|
-        client.chat_postMessage(params)
+        if FEATURE
+          client.chat_postMessage(params)
+        end
         # raise ::Faraday::Error, "(fake)"
       end
     end
