@@ -406,14 +406,12 @@ export default {
       return hv
     },
 
-    // ブラウザでAPIに直アクセスして戻値を確認するためのURL (フォームの入力値付き)
-    current_api_url()  {
-      const url = `${this.$config.MY_SITE_URL}${this.current_api_path}`
-      return QueryString.stringifyUrl({url: url, query: this.new_params})
-    },
+    current_api_url()          { return `${this.$config.MY_SITE_URL}${this.current_api_path}` },                                                    // 共通の API URL
+    current_api_url_internal() { return QueryString.stringifyUrl({url: this.current_api_url, query: this.new_params}) },                            // このビュー用の API URL
+    current_api_url_general()  { return QueryString.stringifyUrl({url: this.current_api_url, query: {...this.new_params, json_type: "general"}}) }, // 汎用 JSON 用の URL
 
     // レイアウトの CSS class
-    container_class() { return this.params.container_width === "large" ? "is-fluid" : "is_layout_small" }
+    container_class() { return this.params.container_width === "large" ? "is-fluid" : "is_layout_small" },
   },
 }
 </script>

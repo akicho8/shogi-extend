@@ -22,6 +22,7 @@ module QuickScript
       self.form_method  = :get
       self.button_label = "絞り込み"
       self.debug_mode   = Rails.env.development?
+      self.general_json_link_show = true
 
       def form_parts
         super + [
@@ -41,6 +42,24 @@ module QuickScript
 
       def call
         simple_table(table_rows, always_table: true)
+      end
+
+      # http://localhost:3000/api/lab/swars/tactic-list.json?json_type=general
+      def as_general_json
+        current_items.collect do |item|
+          {}.tap do |row|
+            row["名称"]     = item.name
+            row["勝率"]     = tactics_hash.dig(item.key, :win_ratio)
+            row["相対頻度"] = tactics_hash.dig(item.key, :freq_ratio) || 0.0
+            row["勝ち"]     = tactics_hash.dig(item.key, :win_count) || 0
+            row["負け"]     = tactics_hash.dig(item.key, :lose_count) || 0
+            row["引き分け"] = tactics_hash.dig(item.key, :draw_count) || 0
+            row["棋風"]     = item.style_info.name
+            row["種類"]     = item.human_name
+            row["親"]       = item.parent&.name
+            row["別名"]     = item.alias_names.presence.try { self * " " }
+          end
+        end
       end
 
       def table_rows

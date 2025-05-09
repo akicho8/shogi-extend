@@ -13,7 +13,8 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
           h1.has-text-weight-bold {{QS.meta.title}}
 
   template(slot="end")
-    b-navbar-item(tag="a" :href="QS.current_api_url" target="_blank" v-if="development_p") API
+    b-navbar-item(tag="a" :href="QS.current_api_url_general" target="_blank" v-if="QS.params.general_json_link_show") JSON
+    b-navbar-item(tag="a" :href="QS.current_api_url_internal" target="_blank" v-if="development_p") API
     NavbarItemLogin(      v-if="QS.params.login_link_show")
     NavbarItemProfileLink(v-if="QS.params.login_link_show")
     NavbarItemSidebarOpen(@click="QS.sidebar_toggle" v-if="QS.params.sideber_menu_show")

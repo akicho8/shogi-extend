@@ -5,7 +5,7 @@
       | {{QS.attributes}}
   .column.is-12
     pre.is_line_break_on
-      | {{QS.current_api_url}}
+      | {{QS.current_api_url_internal}}
 </template>
 
 <script>

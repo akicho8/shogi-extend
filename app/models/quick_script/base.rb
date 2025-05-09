@@ -169,6 +169,7 @@ module QuickScript
     prepend Middleware::ParentLinkMod        # parent_link
     prepend Middleware::TitleLinkMod         # title_link
     prepend Middleware::ComponentWrapperMod  # for v_stack, h_stack
+    prepend Middleware::GeneralApiMod              # for as_general_json
 
     # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link
