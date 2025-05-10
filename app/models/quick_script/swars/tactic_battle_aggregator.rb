@@ -62,13 +62,10 @@ module QuickScript
               scope = send(condition_method, scope)
               battle_ids = scope.pluck(:battle_id)         # => [57595006, 57487831]
               battle_ids.size <= taggable_ids.size or raise "must not happen"
-              battle_ids -= ids # 取得済みのIDを除外する
-              if battle_ids.present?
-                ids += battle_ids
-                if ids.size >= need_size
-                  ids = ids.take(need_size)
-                  break
-                end
+              ids = (ids + battle_ids).uniq
+              if ids.size >= need_size
+                ids = ids.take(need_size)
+                break
               end
             end
           end
@@ -103,7 +100,7 @@ module QuickScript
       end
 
       # need_size なら効率は良いが段位が低い対局も拾われる可能性が高くなる
-      # したがって 本番では 1000 にすること
+      # したがって本番では 1000 にすること
       # 直近 1000 件のなかから段位の高い順に need_size 件拾われる
       def batch_size
         @options[:batch_size] || (Rails.env.local? ? need_size : 1000)
