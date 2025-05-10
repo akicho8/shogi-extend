@@ -57,7 +57,7 @@ module QuickScript
             row["棋風"]     = item.style_info.name
             row["種類"]     = item.human_name
             row["親"]       = item.parent&.name
-            row["別名"]     = item.alias_names.presence.try { self * " " }
+            row["別名"]     = item.alias_names
           end
         end
       end
