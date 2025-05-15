@@ -18,6 +18,10 @@ module QuickScript
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.0003
 
+      def header_link_items
+        super + [{ type: "t_link_to", name: "戦法囲い分布",   params: { href: "/insight/swars/tactic_stat.html", target: "_self", }, }]
+      end
+
       def form_parts
         super + [
           {

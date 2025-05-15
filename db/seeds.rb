@@ -3,6 +3,7 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
 
 [
   # 汎用
+  Holiday,
   Location,
   Preset,
   Judge,

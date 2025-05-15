@@ -5,18 +5,24 @@ module QuickScript
         class_attribute :general_json_link_show, default: false # JSON のリンクを表示するか？
       end
 
+      # このなかで params[:json_type} == "general" なら as_general_json を返す、としたのは設計ミスだった。
+      # なぜなら、as_json は中身が Nuxt 側のビュー用のパラメータ(Hash)を返すと想定しているので、
+      # as_json で as_general_json の内容(配列)を返してしまうと、続くモジュールが super.merge としてエラーになる。
+      # また as_general_json で Hash を返してしまうと、エラーがでることもなく Nuxt 用のパラメータがまざってします。
+      # したがって render_format のなかで分岐するのが正しい。
       def as_json(*)
-        if params[:json_type] == "general"
-          return as_general_json
-        end
-
-        super.merge({
-            :general_json_link_show => general_json_link_show,
-          })
+        super.merge(general_json_link_show: general_json_link_show)
       end
 
-      def as_general_json
-        raise NotImplementedError, "#{__method__} is not implemented"
+      def render_format(format)
+        if params[:json_type] == "general"
+          if respond_to?(:as_general_json)
+            format.json { controller.render json: as_general_json, status: status_code }
+            return
+          end
+        end
+
+        super
       end
     end
   end

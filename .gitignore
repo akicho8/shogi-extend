@@ -48,3 +48,8 @@ yarn-debug.log*
 /app/models/swars/agent/fetched_html/*.html
 
 /config/google_account_json
+
+# R
+/nuxt_side/static/insight/**/*_files
+/Rplots.pdf
+/*.html

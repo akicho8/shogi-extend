@@ -94,7 +94,11 @@ module QuickScript
 
     def initialize(params = {}, options = {})
       @params = params_deserialize(params)
-      @options = {}.merge(options)
+      @options = default_options.merge(options)
+    end
+
+    def default_options
+      {}
     end
 
     def as_json(*)
@@ -169,7 +173,8 @@ module QuickScript
     prepend Middleware::ParentLinkMod        # parent_link
     prepend Middleware::TitleLinkMod         # title_link
     prepend Middleware::ComponentWrapperMod  # for v_stack, h_stack
-    prepend Middleware::GeneralApiMod              # for as_general_json
+    prepend Middleware::GeneralApiMod        # for as_general_json
+    prepend Middleware::HeaerLinkMod
 
     # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link

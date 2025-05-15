@@ -20,6 +20,8 @@ module QuickScript
       PrisonAllScript,
       PrisonSearchScript,
       PrisonNewScript,
+
+      HourlyActiveUserScript,
     ]
   end
 end

@@ -7,12 +7,18 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
     template(v-if="QS.meta.title")
       template(v-if="QS.params.title_link === 'url_path_reset'")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle")
-          h1.has-text-weight-bold {{QS.meta.title}}
+          h1 {{QS.meta.title}}
       template(v-else)
         b-navbar-item(tag="span")
-          h1.has-text-weight-bold {{QS.meta.title}}
+          h1 {{QS.meta.title}}
 
   template(slot="end")
+    template(v-for="e in QS.params.header_link_items")
+      template(v-if="e.type === 't_nuxt_link'")
+        b-navbar-item(tag="nuxt-link" v-bind="e.params") {{e.name}}
+      template(v-if="e.type === 't_link_to'")
+        b-navbar-item(tag="a" v-bind="e.params") {{e.name}}
+
     b-navbar-item(tag="a" :href="QS.current_api_url_general" target="_blank" v-if="QS.params.general_json_link_show") JSON
     b-navbar-item(tag="a" :href="QS.current_api_url_internal" target="_blank" v-if="development_p") API
     NavbarItemLogin(      v-if="QS.params.login_link_show")
@@ -29,5 +35,6 @@ export default {
 
 <style lang="sass">
 .QuickScriptViewNavbar
-  __css_keep__: 0
+  h1, .navbar-item
+    font-weight: bold
 </style>

@@ -23,7 +23,7 @@ namespace :nuxt_side do
   # cap staging nuxt_side:deploy
   # cap production nuxt_side:deploy
   desc "Nuxt側のデプロイ"
-  task :deploy => [:npm_install, :build_upload]
+  task :deploy => [:npm_install, :build_upload, :static_upload]
 
   # cap staging nuxt_side:npm_install
   # cap production nuxt_side:npm_install
@@ -55,11 +55,27 @@ namespace :nuxt_side do
       on roles(:web) do |e|
         run_locally do
           within "nuxt_side" do
-            execute :rsync, %(-azh -e ssh static .nuxt #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
+            execute :rsync, %(-azh -e ssh .nuxt #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
           end
         end
         upload! "nuxt_side/.env.#{fetch(:stage)}", "#{release_path}/nuxt_side/"
-        upload! "nuxt_side/static/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/robots.txt"
+        upload! "nuxt_side/static/report/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/report/robots.txt"
+      end
+    end
+  end
+
+  # cap staging nuxt_side:static_upload
+  # cap production nuxt_side:static_upload
+  desc "static 以下をコピーする"
+  task :static_upload do
+    if dry_run?
+    else
+      on roles(:web) do |e|
+        run_locally do
+          within "nuxt_side" do
+            execute :rsync, %(-azh -e ssh static #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
+          end
+        end
       end
     end
   end

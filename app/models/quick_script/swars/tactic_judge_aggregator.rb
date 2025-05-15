@@ -25,12 +25,6 @@ module QuickScript
         end
       end
 
-      def initialize(options = {})
-        @options = {
-          :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
-        }.merge(options)
-      end
-
       def call
         aggregate
       end
