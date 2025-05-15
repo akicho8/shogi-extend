@@ -33,7 +33,7 @@ class MainBatch
 
     # 集計
     QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布
-    QuickScript::Swars::BasicStatScript.new.cache_write        # 統計
+    QuickScript::Swars::RuleWiseWinRateScript.new.cache_write        # 統計
     QuickScript::Swars::TacticJudgeAggregator.new.cache_write  # 戦法一覧・戦法勝率ランキング
     QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法一覧・戦法勝率ランキング
 

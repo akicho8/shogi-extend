@@ -1,7 +1,8 @@
 module QuickScript
   module Swars
     OrderedIndex = [
-      BasicStatScript,
+      RuleWiseWinRateScript,
+      SprintWinRateScript,
       TacticListScript,
       TacticStatScript,
       CrossSearchScript,

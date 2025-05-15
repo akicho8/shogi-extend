@@ -77,7 +77,7 @@ tp QuickScript::Base.deep_subclasses
 # >> | QuickScript::General::EncyclopediaScript          |
 # >> | QuickScript::General::PiyoShogiConfigScript       |
 # >> | QuickScript::Group1::HelloScript                  |
-# >> | QuickScript::Swars::BasicStatScript               |
+# >> | QuickScript::Swars::RuleWiseWinRateScript               |
 # >> | QuickScript::Swars::BattleDownloadScript          |
 # >> | QuickScript::Swars::BattleHistoryScript           |
 # >> | QuickScript::Swars::CrawlerBatchScript            |
@@ -170,7 +170,7 @@ tp QuickScript::Base.deep_subclasses
 # >> | QuickScript::General::EncyclopediaScript          |
 # >> | QuickScript::General::PiyoShogiConfigScript       |
 # >> | QuickScript::Group1::HelloScript                  |
-# >> | QuickScript::Swars::BasicStatScript               |
+# >> | QuickScript::Swars::RuleWiseWinRateScript               |
 # >> | QuickScript::Swars::BattleDownloadScript          |
 # >> | QuickScript::Swars::BattleHistoryScript           |
 # >> | QuickScript::Swars::CrawlerBatchScript            |

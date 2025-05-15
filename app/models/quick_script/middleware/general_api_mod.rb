@@ -10,6 +10,9 @@ module QuickScript
       # as_json で as_general_json の内容(配列)を返してしまうと、続くモジュールが super.merge としてエラーになる。
       # また as_general_json で Hash を返してしまうと、エラーがでることもなく Nuxt 用のパラメータがまざってします。
       # したがって render_format のなかで分岐するのが正しい。
+      #
+      # general_json_link_show を定義するのではなく
+      # 単に respond_to?(:as_general_json) なら general_json_link_show: true でいいような気もする
       def as_json(*)
         super.merge(general_json_link_show: general_json_link_show)
       end
