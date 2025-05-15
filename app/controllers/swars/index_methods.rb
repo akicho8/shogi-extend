@@ -185,7 +185,7 @@ module Swars
         :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
         :RaiseConnectionFailed   => params[:RaiseConnectionFailed],
         :SwarsUserNotFound       => params[:SwarsUserNotFound],
-        :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
+        :BattleNotFound     => params[:BattleNotFound],
       }
     end
 

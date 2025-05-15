@@ -282,7 +282,7 @@ EOT
     end
 
     it "本家で対局が見つからない" do
-      get :show, params: { id: "alice-bob-20200101_123403", format: :json, x_destroy_all: true, throttle_cache_clear: true, SwarsBattleNotFound: true }
+      get :show, params: { id: "alice-bob-20200101_123403", format: :json, x_destroy_all: true, throttle_cache_clear: true, BattleNotFound: true }
       assert { response.status != 200 }
       # json = JSON.parse(response.body, symbolize_names: true)
       # assert { json[:xnotice][:infos][0][:message] }

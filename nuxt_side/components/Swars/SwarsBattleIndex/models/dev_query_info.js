@@ -15,7 +15,7 @@ export class DevQueryInfo extends ApplicationMemoryRecord {
       { name: "本家の形式が変更になった", params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, SwarsFormatIncompatible: true, }, },
       { name: "本家に接続できない",       params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, RaiseConnectionFailed: true,   }, },
       { name: "対象者の履歴が空だった※", params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, SwarsUserNotFound: true,       }, },
-      { name: "対象の対局がなかった",     params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, SwarsBattleNotFound: true,     }, },
+      { name: "対象の対局がなかった",     params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, BattleNotFound: true,     }, },
       { name: "▲を左に表示",             params: { query: "YamadaTaro", viewpoint: "black",                                                             }, },
       { name: "△を左に表示",             params: { query: "YamadaTaro", viewpoint: "white",                                                             }, },
       { name: "全レコード表示",           params: { query: "",           all: true, per: 50, badge_debug: true,                                          }, },

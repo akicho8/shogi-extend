@@ -21,7 +21,7 @@ module Swars
       end
     end
 
-    class SwarsBattleNotFound < BaseError
+    class BattleNotFound < BaseError
       def initialize(message = "指定の対局が存在しません<br>URLを間違えていませんか？")
         super(404, message)
       end
