@@ -1,35 +1,22 @@
 # frozen-string-literal: true
 
+# 戦法ランキング用の一次集計
 #
-# 戦法の集計後の情報
+# rails r QuickScript::Swars::TacticJudgeAggregator.new.cache_write
 #
-# 一次集計: rails r QuickScript::Swars::TacticJudgeAggregator.new.cache_write
-#
-
 # QuickScript::Swars::TacticJudgeAggregator.new.main_scope.count
 # QuickScript::Swars::TacticJudgeAggregator.new.main_scope.joins(:taggings => :tag).count
 # QuickScript::Swars::TacticJudgeAggregator.new.main_scope.joins(:taggings => :tag).joins(:judge).count
 # .group("tags.name").group("judges.key").count
 # Swars::Membership.joins(:taggings).count
 # Swars::Membership.joins(:taggings => :tag).count
-
 module QuickScript
   module Swars
     class TacticJudgeAggregator
       include CacheMod
+      include AggregatorMod
 
-      class << self
-        def mock_setup
-          ::Swars::Battle.create!(strike_plan: "原始棒銀")
-          # ::Swars::Battle.create!(csa_seq: ::Swars::KifuGenerator.generate_n(14))
-        end
-      end
-
-      def call
-        aggregate
-      end
-
-      # TacticListScript から参照するときに便利な戦法名をキーにしたハッシュ
+      # 戦法一覧 (TacticListScript) 用の戦法名をキーにしたハッシュ
       # 期間は決め打ちでよい
       def tactics_hash
         @tactics_hash ||= yield_self do
@@ -50,17 +37,13 @@ module QuickScript
 
           batch_total = main_scope.count.ceildiv(batch_size)
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            if @options[:verbose]
-              puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][#{period_info}] Processing relation ##{batch_index}/#{batch_total}"
-            end
+            progress_log(batch_total, batch_index)
 
-            scope = condition_add(scope, period_info) # 激重条件はここ！(重要)
+            scope = condition_add(scope, period_info)
             memberships_count += scope.count
-            win_lose_draw_counts_hash = win_lose_draw_counts_hash_from(scope) # => { ["棒銀", "win"] => 2, ["棒銀", "lose"] => 3 , ["棒銀", "draw"] => 1 }
+            win_lose_draw_counts_hash = win_lose_draw_counts_hash_from(scope) # => { ["棒銀", "win"] => 2, ["棒銀", "lose"] => 3 }
 
-            # { ["棒銀", "win"] => 2, ["棒銀", "lose"] => 3 , ["棒銀", "draw"] => 1 }
-            # から
-            # { "棒銀" => { win_count: 2, lose_count: 3, draw_count: 1 } } の形に変換する
+            # { ["棒銀", "win"] => 2, ["棒銀", "lose"] => 3 } → { "棒銀" => { win_count: 2, lose_count: 3 } } の形に変換する
             win_lose_draw_counts_hash.each do |(tag_name, judge_key), count|
               counts_hash[tag_name] ||= JudgeInfo.inject({}) { |a, e| a.merge("#{e.key}_count".to_sym => 0) }
               counts_hash[tag_name][:"#{judge_key}_count"] += count
@@ -103,30 +86,16 @@ module QuickScript
         end
       end
 
-      def batch_size
-        @options[:batch_size] || (Rails.env.local? ? 10000 : 1000)
-      end
-
-      # 【重要】
-      # ここでは何もくっつけるな。
-      # JOIN するのは in_batches のあとの 1000 件に対して行え。
-      # ここで joins(:battle) などとすると300万件に対しての JOIN になるためそれで固まる。
-      # 毎回 JOIN されるので遅いと勘違いしてしまいそうになるが、少ない件数に対して毎回 JOIN するので正しい。
-      def main_scope
-        @options[:scope] || ::Swars::Membership.all
-      end
-
-      # 激重条件はここ！(重要)
-      def condition_add(s, period_info)
-        s = s.joins(:battle => [:imode, :xmode])
-        s = s.merge(::Swars::Battle.valid_match_only)
-        s = s.where(::Swars::Imode.arel_table[:key].eq(:normal))
-        s = s.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
-        s = s.where(::Swars::Battle.arel_table[:analysis_version].eq(Bioshogi::ANALYSIS_VERSION))
+      def condition_add(scope, period_info)
+        scope = scope.joins(:battle => [:imode, :xmode])
+        scope = scope.merge(::Swars::Battle.valid_match_only)
+        scope = scope.where(::Swars::Imode.arel_table[:key].eq(:normal))
+        scope = scope.where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
+        scope = scope.where(::Swars::Battle.arel_table[:analysis_version].eq(Bioshogi::ANALYSIS_VERSION))
         if v = period_info.period_second
-          s = s.where(::Swars::Battle.arel_table[:battled_at].gteq(v.ago))
+          scope = scope.where(::Swars::Battle.arel_table[:battled_at].gteq(v.ago))
         end
-        s
+        scope
       end
     end
   end

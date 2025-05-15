@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe QuickScript::Swars::BattleHistoryScript, type: :model do
   it "works" do
     current_user = User.create!
-    swars_user = ::Swars::User.create!
-    ::Swars::Battle.create! do |e|
+    swars_user = Swars::User.create!
+    Swars::Battle.create! do |e|
       e.memberships.build(user: swars_user)
     end
     QuickScript::Swars::BattleHistoryScript.new({}, { current_user: current_user }).call

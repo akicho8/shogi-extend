@@ -15,11 +15,14 @@ module QuickScript
       self.form_method  = :get
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local?
+      self.general_json_link_show = true
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.0003
 
       def header_link_items
-        super + [{ type: "t_link_to", name: "戦法囲い分布",   params: { href: "/insight/swars/tactic_stat.html", target: "_self", }, }]
+        super + [
+          { type: "t_link_to", name: "戦法囲い分布", params: { href: "/insight/swars/tactic_stat.html", target: "_self", }, },
+        ]
       end
 
       def form_parts
@@ -76,6 +79,10 @@ module QuickScript
         ]
       end
 
+      def as_general_json
+        rows
+      end
+
       def call
         unless aggregate
           return "一次集計データがありません"
@@ -86,7 +93,7 @@ module QuickScript
         if current_items.present?
           values = [
             { _component: "CustomChart", _v_bind: { params: custom_chart_params }, style: { "max-width" => ua_info.max_width, margin: "auto" }, :class => "is-unselectable is-centered" },
-            simple_table(table_rows, always_table: true),
+            simple_table(human_rows, always_table: true),
           ]
           if Rails.env.local?
             values << status
@@ -95,7 +102,7 @@ module QuickScript
         end
       end
 
-      def table_rows
+      def human_rows
         current_items.collect.with_index do |e, i|
           {}.tap do |row|
             row["#"] = i.next
@@ -111,9 +118,28 @@ module QuickScript
             row["ｽﾀｲﾙ"]   = e.style_name
             row["種類"]   = e.info.human_name
 
-            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面", to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
-            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-stat",     query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面",     to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-stat",     query: { tag: e.info.name }, }, }, }
             row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: e.info.name }, }, }, }
+          end
+        end
+      end
+
+      def rows
+        current_items.collect.with_index do |e, i|
+          {}.tap do |row|
+            row["順位"]     = i.next
+            row["名前"]     = e.info.name
+            row["種類"]     = e.info.human_name
+            row["スタイル"] = e.style_name
+
+            row["勝率"]     = e.win_ratio
+            row["勝ち"]     = e.win_count
+            row["負け"]     = e.lose_count
+            row["引分"]     = e.draw_count
+
+            row["相対頻度"] = e.freq_ratio
+            row["頻度"]     = e.freq_count || 0
           end
         end
       end

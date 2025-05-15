@@ -10,8 +10,8 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  # database: shogi_web_local
-  database: shogi_web_development
+  database: shogi_web_local
+  # database: shogi_web_development
 
 production:
   <<: *defaults

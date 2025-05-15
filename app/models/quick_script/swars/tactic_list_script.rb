@@ -41,28 +41,15 @@ module QuickScript
       end
 
       def call
-        simple_table(table_rows, always_table: true)
+        simple_table(human_rows, always_table: true)
       end
 
       # http://localhost:3000/api/lab/swars/tactic-list.json?json_type=general
       def as_general_json
-        current_items.collect do |item|
-          {}.tap do |row|
-            row["名称"]     = item.name
-            row["勝率"]     = tactics_hash.dig(item.key, :win_ratio)
-            row["相対頻度"] = tactics_hash.dig(item.key, :freq_ratio) || 0.0
-            row["勝ち"]     = tactics_hash.dig(item.key, :win_count) || 0
-            row["負け"]     = tactics_hash.dig(item.key, :lose_count) || 0
-            row["引き分け"] = tactics_hash.dig(item.key, :draw_count) || 0
-            row["棋風"]     = item.style_info.name
-            row["種類"]     = item.human_name
-            row["親"]       = item.parent&.name
-            row["別名"]     = item.alias_names
-          end
-        end
+        rows
       end
 
-      def table_rows
+      def human_rows
         current_items.collect do |item|
           {}.tap do |row|
             row["名前"] = row_name(item)
@@ -76,6 +63,25 @@ module QuickScript
             row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
             row["親"] = item.parent ? { _nuxt_link: { name: item.parent.name, to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
             row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }
+          end
+        end
+      end
+
+      def rows
+        current_items.collect do |item|
+          {}.tap do |row|
+            row["種類"]     = item.human_name
+            row["名前"]     = item.name
+            row["親"]       = item.parent&.name
+            row["別名"]     = item.alias_names
+
+            row["相対頻度"] = tactics_hash.dig(item.key, :freq_ratio) || 0.0
+            row["スタイル"] = item.style_info.name
+
+            row["勝率"]     = tactics_hash.dig(item.key, :win_ratio)
+            row["勝ち"]     = tactics_hash.dig(item.key, :win_count) || 0
+            row["負け"]     = tactics_hash.dig(item.key, :lose_count) || 0
+            row["引分"]     = tactics_hash.dig(item.key, :draw_count) || 0
           end
         end
       end

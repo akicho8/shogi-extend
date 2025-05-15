@@ -21,7 +21,7 @@ module QuickScript
         ]
       end
 
-      # http://localhost:3000/api/lab/swars/basic-stat.json?json_type=general
+      # http://localhost:3000/api/lab/swars/rule-wise-win-rate.json?json_type=general
       def as_general_json
         rows
       end

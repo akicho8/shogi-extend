@@ -13,6 +13,7 @@ module QuickScript
       self.description = "将棋ウォーズの棋力帯毎の偏差値を求める"
       self.form_method = :get
       self.button_label = "集計"
+      self.general_json_link_show = true
 
       def form_parts
         super + [
@@ -39,7 +40,7 @@ module QuickScript
         end
         values = [
           { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: { "max-width" => "1200px", margin: "auto" }, :class => "is-unselectable is-centered", },
-          simple_table(table_rows, always_table: true),
+          simple_table(human_rows, always_table: true),
         ]
         if Rails.env.local?
           values << status
@@ -47,19 +48,39 @@ module QuickScript
         v_stack(values, style: { "gap" => "1rem" })
       end
 
-      def table_rows
+      # http://localhost:3000/api/lab/swars/grade-stat.json?json_type=general
+      def as_general_json
+        rows
+      end
+
+      def human_rows
+        rows.collect do |row|
+          row = row.merge({
+              "棋力"   => { _nuxt_link: { name: row["棋力"], to: { path: "/lab/swars/cross-search", query: { x_grade_keys: row["棋力"] }, }, }, },
+              "偏差値" => row["偏差値"].try { "%.0f" % self },
+              "上位"   => row["上位"].try { "%.3f %%" % (self * 100.0) },
+              "割合"   => row["割合"].try { "%.3f %%" % (self * 100.0) },
+            })
+          if Rails.env.local?
+            row["基準値"] = row["基準値"].try { "%.3f" % self }
+          end
+          row
+        end
+      end
+
+      def rows
         sd_merged_grade_infos.collect do |e|
-          {}.tap do |h|
-            h["棋力"] = { _nuxt_link: { name: e[:grade_info].name, to: { path: "/lab/swars/cross-search", query: { x_grade_keys: e[:grade_info].key }, }, }, }
+          {}.tap do |row|
+            row["棋力"]   = e[:grade_info].name
             if Rails.env.local?
-              h["階級値"] = e["階級値"]
-              h["基準値"] = e["基準値"].try { "%.3f" % self }
+              row["階級値"] = e["階級値"]
+              row["基準値"] = e["基準値"]
             end
-            h["偏差値"] = e["偏差値"].try { "%.0f" % self }
-            h["上位"]   = e["累計相対度数"].try { "%.3f %%" % (self * 100.0) }
-            h["割合"]   = e["相対度数"].try { "%.3f %%" % (self * 100.0) }
-            h["人数"]   = frequency_count(:user, e[:grade_info])
-            h["対局数"] = frequency_count(:membership, e[:grade_info])
+            row["偏差値"] = e["偏差値"]
+            row["上位"]   = e["累計相対度数"]
+            row["割合"]   = e["相対度数"]
+            row["人数"]   = frequency_count(:user, e[:grade_info])
+            row["対局数"] = frequency_count(:membership, e[:grade_info])
           end
         end
       end
@@ -98,22 +119,6 @@ module QuickScript
 
       def title
         "#{super} (#{user_total_count}人)"
-      end
-
-      ################################################################################
-
-      def sd_merge(av)
-        total_count = av.sum { |e| e["度数"] }
-        av = av.collect { |e| e.merge("相対度数" => e["度数"].fdiv(total_count)) }
-        t = 0; av = av.collect { |e| t += e["相対度数"]; e.merge("累計相対度数" => t) }
-        av = av.collect.with_index { |e, i| e.merge("階級値" => -i) }
-        score_total = av.sum { |e| e["度数"] * e["階級値"] }
-        score_average = score_total.fdiv(total_count)
-        variance = av.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / total_count.pred
-        standard_deviation = Math.sqrt(variance)
-        av = av.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(standard_deviation)) }
-        standard_value_average = av.sum { |e| e["基準値"] } / av.count
-        av = av.collect { |e| e.merge("偏差値" => (e["基準値"] * 10 + 50)) }
       end
 
       ################################################################################

@@ -1,9 +1,8 @@
-# rails r QuickScript::Swars::SprintWinRateScript.new.cache_write
 module QuickScript
   module Swars
     class BasicStatScript < Base
-      self.title = "旧URL対応"
-      self.description = ""
+      self.title = "新URLに飛ぶ"
+      self.description = "/lab/swars/basic-stat から /lab/swars/rule-wise-win-rate にリダイレクトする"
       self.qs_invisible = true
 
       def call
