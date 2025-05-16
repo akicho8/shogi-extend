@@ -59,7 +59,7 @@ namespace :nuxt_side do
           end
         end
         upload! "nuxt_side/.env.#{fetch(:stage)}", "#{release_path}/nuxt_side/"
-        upload! "nuxt_side/static/report/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/report/robots.txt"
+        upload! "nuxt_side/static/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/robots.txt"
       end
     end
   end
