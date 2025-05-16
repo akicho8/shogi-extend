@@ -54,10 +54,10 @@ rows.size == 2                  # => true
 # entry("2025-01-01 00:00", user1, user2, "二段", "四段")
 # entry("2025-01-01 01:00", user1, user2, "二段", "四段")
 
-# >> [2025-05-15 19:05:50][QuickScript::Swars::HourlyActiveUserScript] Processing relation #1/1
-# >> 2025-05-15T10:05:51.002Z pid=55473 tid=15cp INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
-# >> [2025-05-15 19:05:51][QuickScript::Swars::HourlyActiveUserScript] Processing relation #1/1
-# >> [2025-05-15 19:05:52][QuickScript::Swars::HourlyActiveUserScript] Processing relation #1/1
+# >> [2025-05-17 00:05:27][QuickScript::Swars::HourlyActiveUserScript][#1/1]
+# >> 2025-05-16T15:05:27.174Z pid=62233 tid=1dkh INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
+# >> [2025-05-17 00:05:27][QuickScript::Swars::HourlyActiveUserScript][#1/1]
+# >> [2025-05-17 00:05:27][QuickScript::Swars::HourlyActiveUserScript][#1/1]
 # >> |------+-------------+-------------+---------------+-----------------+-------------------+---------------------+---------------------+--------------------------|
 # >> | hour | day_of_week | grade_total | grade_average | uniq_user_count | relative_strength | grade_average_major | grade_average_minor | relative_uniq_user_count |
 # >> |------+-------------+-------------+---------------+-----------------+-------------------+---------------------+---------------------+--------------------------|

@@ -8,23 +8,9 @@
 module QuickScript
   module Swars
     class HourlyActiveUserScript < Base
-      class << self
-        def mock_setup
-        end
-      end
-
       self.title = "時間帯別対局者情報"
       self.description = "「時間帯別対局者数」と「時間帯別相対棋力」用のデータを準備する"
       self.general_json_link_show = true
-
-      def default_options
-        super.merge({
-            :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
-            :batch_size => 10000,
-            :batch_limit => nil,
-            :uniq_by_ymhd_user_id => true,
-          })
-      end
 
       def header_link_items
         super + [
@@ -34,28 +20,32 @@ module QuickScript
       end
 
       def call
-        aggregate[:rows]
+        aggregate
       end
 
       # http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general
       def as_general_json
-        aggregate[:rows]
+        aggregate
       end
 
       concerning :AggregateMethods do
-        include CacheMod
+        include BatchMethods
 
-        private
+        def default_options
+          {
+            **super,
+            :uniq_by_ymhd_user_id => true,
+          }
+        end
 
         def aggregate_now
           hash = {}
-          main_scope.in_batches(of: batch_size, order: :desc).each.with_index do |scope, index|
-            if @options[:verbose]
-              puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}] Processing relation ##{index.next}/#{batch_total}"
-            end
+          batch_total = main_scope.count.ceildiv(batch_size)
+          main_scope.in_batches(of: batch_size, order: :desc).each.with_index do |scope, batch_index|
+            progress_log(batch_total, batch_index)
 
             if batch_limit
-              if index >= batch_limit
+              if batch_index >= batch_limit
                 break
               end
             end
@@ -97,7 +87,7 @@ module QuickScript
           # 人数はそのままでも、いいけど右のメーターにそのまま数値が出ると面倒なので、こちらで正規化しておく
           rows = hash_array_minmax_normalize(rows, :uniq_user_count, :relative_uniq_user_count)
 
-          { rows: rows.as_json }
+          rows.as_json
         end
 
         def day_of_week
@@ -163,22 +153,6 @@ module QuickScript
           rate = (1.0 - (v - base_priority)) * 100
           grade_info = ::Swars::GradeInfo.fetch(base_priority)
           { grade_average_major: grade_info.name, grade_average_minor: rate }
-        end
-
-        def main_scope
-          @options[:scope] || ::Swars::Membership.all
-        end
-
-        def batch_total
-          @batch_total ||= main_scope.count.ceildiv(batch_size)
-        end
-
-        def batch_size
-          @options[:batch_size]
-        end
-
-        def batch_limit
-          @options[:batch_limit]
         end
 
         def hash_array_minmax_normalize(rows, key1, key2)
