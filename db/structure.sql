@@ -54,6 +54,22 @@ CREATE TABLE `active_storage_variant_records` (
   CONSTRAINT `fk_rails_993965df05` FOREIGN KEY (`blob_id`) REFERENCES `active_storage_blobs` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `aggregate_caches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `aggregate_caches` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'スコープ',
+  `generation` int NOT NULL COMMENT '世代',
+  `aggregated_value` json NOT NULL COMMENT '集計済みデータ',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_aggregate_caches_on_group_name_and_generation` (`group_name`,`generation`),
+  KEY `index_aggregate_caches_on_group_name` (`group_name`),
+  KEY `index_aggregate_caches_on_generation` (`generation`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `app_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -66,7 +82,7 @@ CREATE TABLE `app_logs` (
   `process_id` int NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -87,10 +103,10 @@ CREATE TABLE `auth_infos` (
   `user_id` bigint NOT NULL COMMENT 'ユーザー',
   `provider` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '何経由でログインしたか',
   `uid` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '長い内部ID(providerとペアではユニーク)',
-  `meta_info` text COLLATE utf8mb4_bin COMMENT 'とれた情報をハッシュで持っとく用',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_auth_infos_on_provider_and_uid` (`provider`,`uid`),
-  KEY `index_auth_infos_on_user_id` (`user_id`)
+  KEY `index_auth_infos_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_c410a39830` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpu_battle_records`;
@@ -143,6 +159,28 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_outbreak_turn` (`outbreak_turn`),
   KEY `index_free_battles_on_preset_id` (`preset_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `google_api_expiration_trackers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `google_api_expiration_trackers` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `spreadsheet_id` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `holidays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `holidays` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `holiday_on` date NOT NULL COMMENT '祝日',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_holidays_on_holiday_on` (`holiday_on`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `judges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -275,6 +313,19 @@ CREATE TABLE `locations` (
   KEY `index_locations_on_position` (`position`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `permanent_variables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `permanent_variables` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'キー',
+  `value` json NOT NULL COMMENT '値',
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_permanent_variables_on_key` (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `presets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -295,12 +346,11 @@ DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE `profiles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL COMMENT 'ユーザー',
-  `description` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '自己紹介',
-  `twitter_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `index_profiles_on_user_id` (`user_id`)
+  UNIQUE KEY `index_profiles_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_e424190865` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
@@ -503,6 +553,9 @@ CREATE TABLE `swars_battles` (
   `preset_id` bigint NOT NULL COMMENT '手合割',
   `rule_id` bigint NOT NULL COMMENT '持ち時間',
   `final_id` bigint NOT NULL COMMENT '結末',
+  `analysis_version` int NOT NULL DEFAULT '0' COMMENT '戦法解析バージョン',
+  `starting_position` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '初期配置',
+  `imode_id` bigint NOT NULL COMMENT '開始モード',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_battles_on_key` (`key`),
   KEY `index_swars_battles_on_battled_at` (`battled_at`),
@@ -515,7 +568,8 @@ CREATE TABLE `swars_battles` (
   KEY `index_swars_battles_on_xmode_id` (`xmode_id`),
   KEY `index_swars_battles_on_preset_id` (`preset_id`),
   KEY `index_swars_battles_on_rule_id` (`rule_id`),
-  KEY `index_swars_battles_on_final_id` (`final_id`)
+  KEY `index_swars_battles_on_final_id` (`final_id`),
+  KEY `index_swars_battles_on_imode_id` (`imode_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_crawl_reservations`;
@@ -525,7 +579,6 @@ CREATE TABLE `swars_crawl_reservations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL COMMENT '登録者',
   `target_user_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対象者',
-  `to_email` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '完了通知先メールアドレス',
   `attachment_mode` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ZIPファイル添付の有無',
   `processed_at` datetime DEFAULT NULL COMMENT '処理完了日時',
   `created_at` datetime NOT NULL,
@@ -563,6 +616,20 @@ CREATE TABLE `swars_grades` (
   UNIQUE KEY `index_swars_grades_on_key` (`key`),
   KEY `index_swars_grades_on_priority` (`priority`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `swars_imodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `swars_imodes` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int DEFAULT NULL COMMENT '順序',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_swars_imodes_on_key` (`key`),
+  KEY `index_swars_imodes_on_position` (`position`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_membership_extras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -604,10 +671,12 @@ CREATE TABLE `swars_memberships` (
   `ai_two_freq` float DEFAULT NULL COMMENT '2手差し頻出度',
   `ai_noizy_two_max` int DEFAULT NULL COMMENT '22221パターンを考慮した2の並び個数最大値',
   `ai_gear_freq` float DEFAULT NULL COMMENT '121頻出度',
+  `opponent_id` bigint DEFAULT NULL COMMENT '相手レコード',
   PRIMARY KEY (`id`),
   UNIQUE KEY `memberships_sbri_sbui` (`battle_id`,`user_id`),
   UNIQUE KEY `memberships_sbri_lk` (`battle_id`,`location_id`),
   UNIQUE KEY `memberships_bid_ouid` (`battle_id`,`op_user_id`),
+  UNIQUE KEY `index_swars_memberships_on_opponent_id` (`opponent_id`),
   KEY `index_swars_memberships_on_battle_id` (`battle_id`),
   KEY `index_swars_memberships_on_user_id` (`user_id`),
   KEY `index_swars_memberships_on_op_user_id` (`op_user_id`),
@@ -615,7 +684,8 @@ CREATE TABLE `swars_memberships` (
   KEY `index_swars_memberships_on_position` (`position`),
   KEY `index_swars_memberships_on_judge_id` (`judge_id`),
   KEY `index_swars_memberships_on_location_id` (`location_id`),
-  KEY `index_swars_memberships_on_style_id` (`style_id`)
+  KEY `index_swars_memberships_on_style_id` (`style_id`),
+  CONSTRAINT `fk_rails_d0aeb0e4e3` FOREIGN KEY (`battle_id`) REFERENCES `swars_battles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_profiles`;
@@ -687,6 +757,8 @@ CREATE TABLE `swars_users` (
   `updated_at` datetime NOT NULL,
   `ban_at` datetime DEFAULT NULL COMMENT '垢BAN日時',
   `latest_battled_at` datetime NOT NULL COMMENT '直近の対局日時',
+  `soft_crawled_at` datetime DEFAULT NULL COMMENT 'クロール(全体)',
+  `hard_crawled_at` datetime DEFAULT NULL COMMENT 'クロール(1ページ目のみ)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_users_on_user_key` (`user_key`),
   KEY `index_swars_users_on_grade_id` (`grade_id`),
@@ -707,7 +779,7 @@ CREATE TABLE `swars_xmodes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_xmodes_on_key` (`key`),
   KEY `index_swars_xmodes_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_zip_dl_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -760,7 +832,7 @@ DROP TABLE IF EXISTS `tags`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tags` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `taggings_count` int DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_tags_on_name` (`name`)
@@ -831,7 +903,6 @@ CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'キー',
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '名前',
-  `user_agent` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ブラウザ情報',
   `race_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '種族',
   `name_input_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -1115,6 +1186,35 @@ CREATE TABLE `xy_master_time_records` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20250512000000'),
+('20250401000070'),
+('20250401000069'),
+('20250401000068'),
+('20250401000067'),
+('20250308000066'),
+('20250226000001'),
+('20250226000000'),
+('20250120000064'),
+('20250120000063'),
+('20241127000000'),
+('20241121000000'),
+('20241030000000'),
+('20240819000061'),
+('20240819000060'),
+('20240818000005'),
+('20240720300057'),
+('20240720300056'),
+('20240720300055'),
+('20240720300054'),
+('20240713000003'),
+('20240710300051'),
+('20240710000002'),
+('20240710000001'),
+('20240503000053'),
+('20240503000052'),
+('20240503000050'),
+('20240503000047'),
+('20240503000046'),
 ('20240503000044'),
 ('20240503000043'),
 ('20240503000042'),
@@ -1195,5 +1295,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20151206160054'),
 ('20151206160053'),
 ('20151206160052'),
-('20151206160051');
+('20151206160051'),
+('0');
 

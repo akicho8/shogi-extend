@@ -15,7 +15,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   User,
   Tsl,
   XyMaster,
-  QuickScript::Swars::GradeAggregator,
 ].each do |e|
   e.setup
 end
