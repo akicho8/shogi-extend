@@ -2,8 +2,10 @@
 
 module QuickScript
   module Swars
-    concern :AggregatorMod do
-      class_methods do
+    class Aggregator
+      include CacheMod
+
+      class << self
         def mock_setup
           ::Swars::Battle.create!(strike_plan: "原始棒銀")
         end

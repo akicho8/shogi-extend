@@ -7,10 +7,7 @@
 #
 module QuickScript
   module Swars
-    class TacticBattleAggregator
-      include CacheMod
-      include AggregatorMod
-
+    class TacticBattleAggregator < Aggregator
       def aggregate_now
         Bioshogi::Analysis::TacticInfo.all_elements.inject({}) do |a, e|
           a.merge(e.key => battle_ids_of(e))

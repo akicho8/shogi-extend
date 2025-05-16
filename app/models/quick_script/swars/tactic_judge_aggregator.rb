@@ -12,10 +12,7 @@
 # Swars::Membership.joins(:taggings => :tag).count
 module QuickScript
   module Swars
-    class TacticJudgeAggregator
-      include CacheMod
-      include AggregatorMod
-
+    class TacticJudgeAggregator < Aggregator
       # 戦法一覧 (TacticListScript) 用の戦法名をキーにしたハッシュ
       # 期間は決め打ちでよい
       def tactics_hash

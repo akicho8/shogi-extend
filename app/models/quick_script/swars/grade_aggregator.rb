@@ -7,10 +7,7 @@
 #
 module QuickScript
   module Swars
-    class GradeAggregator
-      include CacheMod
-      include AggregatorMod
-
+    class GradeAggregator < Aggregator
       class << self
         def mock_setup
           alice = ::Swars::User.create!
