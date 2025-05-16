@@ -47,8 +47,8 @@ RSpec.describe AggregateCache, type: :model, swars_spec: true do
     assert { AggregateCache["A"].read == { :a => { :b => "c" } } }
   end
 
-  it "値がハッシュではない場合にエラーとする" do
-    assert { (AggregateCache["A"].write("a") rescue $!).is_a?(TypeError) }
+  it "値がハッシュではない場合にエラーとしない" do
+    assert { !(AggregateCache["A"].write("a") rescue $!).is_a?(TypeError) }
   end
 
   it "fetch" do

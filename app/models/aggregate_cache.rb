@@ -45,9 +45,6 @@ class AggregateCache < ApplicationRecord
         value = Benchmarker.call { yield }
       end
       value ||= {}
-      unless value.kind_of?(Hash)
-        raise TypeError, "value は Hash にしてください : #{value.inspect}"
-      end
       create!(generation: next_generation, aggregated_value: value)
       old_only.destroy_all
       value
@@ -65,7 +62,9 @@ class AggregateCache < ApplicationRecord
 
     # DBから最新を取り出す
     def read
-      where(generation: latest_generation).pick(:aggregated_value).presence.try { deep_symbolize_keys }
+      if value = where(generation: latest_generation).pick(:aggregated_value).presence
+        { value: value }.deep_symbolize_keys[:value]
+      end
     end
 
     # すでに DB に入っている最新の世代
