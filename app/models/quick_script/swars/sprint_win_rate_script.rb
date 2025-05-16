@@ -2,8 +2,8 @@
 module QuickScript
   module Swars
     class SprintWinRateScript < RuleWiseWinRateScript
-      self.title = "棋力毎のｽﾌﾟﾘﾝﾄ先後勝率"
-      self.description = "棋力毎のｽﾌﾟﾘﾝﾄ先後勝率を調べる"
+      self.title = "棋力毎のスプリント先後勝率"
+      self.description = "棋力毎のスプリント先後勝率を調べる"
 
       # >> |----------------+----|
       # >> |  4級/white/win | 4  |
