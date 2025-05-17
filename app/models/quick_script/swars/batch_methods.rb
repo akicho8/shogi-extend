@@ -20,10 +20,6 @@ module QuickScript
           })
       end
 
-      def aggregate_now
-        raise NotImplementedError, "#{__method__} is not implemented"
-      end
-
       def progress_log(batch_total, batch_index, message = "")
         if verbose?
           puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][##{batch_index.next}/#{batch_total}] #{message}".squish

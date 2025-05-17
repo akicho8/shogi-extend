@@ -28,7 +28,7 @@ module QuickScript
       end
 
       def aggregate_now
-        {}
+        raise NotImplementedError, "#{__method__} is not implemented"
       end
 
       def aggregate_cache
