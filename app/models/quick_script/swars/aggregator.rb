@@ -8,10 +8,6 @@ module QuickScript
       def initialize(options = {})
         @options = default_options.merge(options)
       end
-
-      def call
-        aggregate
-      end
     end
   end
 end
