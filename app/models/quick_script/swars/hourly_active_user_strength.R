@@ -11,6 +11,9 @@ library(plotly)
 # グラフをHTMLファイルとして保存するためのライブラリ
 library(htmlwidgets)
 
+# library(RColorBrewer)
+library(viridisLite)
+
 # --- データの読み込み ----------------------------------------------
 
 # JSONデータを取得するURL
@@ -40,9 +43,10 @@ p_plotly <- plot_ly(
   y = ~hour,                       # 縦軸に「時間」を表示
   z = ~relative_strength,          # 各マスの色に使う値（対局者数の相対的な強さ）
   type = "heatmap",                # グラフの種類をヒートマップに指定
-  colors = colorRamp(c(            # 色のグラデーション（青→赤）を指定
-    "blue", "cyan", "green", "yellow", "orange", "red"
-  )),
+  # colors = colorRamp(c("blue", "cyan", "green", "yellow", "orange", "red")),
+  # colors = colorRamp(brewer.pal(11, "Spectral")),
+  colors = colorRamp(viridisLite::magma(100)),
+  # colors = colorRamp(viridisLite::magma(100)),
   showscale = TRUE,                # 右側に色のメーター（カラーバー）を表示
   hoverinfo = "skip",              # マウスを重ねたときの吹き出しを表示しない
 

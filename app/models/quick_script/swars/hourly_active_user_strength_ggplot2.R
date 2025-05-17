@@ -5,6 +5,7 @@ library(jsonlite)
 library(ggplot2)
 library(plotly)
 library(htmlwidgets)
+library(viridisLite)
 
 # データを読み込み
 # url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
@@ -27,7 +28,7 @@ p <- ggplot(data, aes(x = day_of_week, y = hour, fill = relative_strength, text 
   # geom_text(aes(label = round(relative_strength, 1)), size = 3) +
   scale_fill_gradientn(
     # colors = c("white", "deepskyblue"),
-    colors = c("blue", "cyan", "green", "yellow", "orange", "red"),
+    colors = viridisLite::magma(100),
     name = "棋力"
   ) +
   scale_y_discrete(limits = rev(levels(factor(data$hour)))) +
