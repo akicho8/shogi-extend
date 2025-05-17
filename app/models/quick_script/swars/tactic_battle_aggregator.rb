@@ -25,13 +25,13 @@ module QuickScript
       def finder(ids, item, condition_method)
         if ids.size < need_size
           if tag = ActsAsTaggableOn::Tag.find_by(name: item.key)
-            taggings = tag.taggings # main_scope は使わず tag から引いている
-            batch_total = taggings.count.ceildiv(batch_size)
-            taggings.in_batches(order: :desc, of: batch_size).each.with_index do |taggings, batch_index|
+            scope = tag.taggings # main_scope は使わず tag から引いている
+            batch_total = scope.count.ceildiv(batch_size)
+            scope.in_batches(order: :desc, of: batch_size).each.with_index do |scope, batch_index|
               progress_log(batch_total, batch_index, condition_method)
 
-              taggings = taggings.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
-              taggable_ids = taggings.pluck(:taggable_id)
+              scope = scope.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
+              taggable_ids = scope.pluck(:taggable_id)
               taggable_ids.size <= batch_size or raise "must not happen"
 
               ########################################
