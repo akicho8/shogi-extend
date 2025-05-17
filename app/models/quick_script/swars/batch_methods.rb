@@ -24,9 +24,15 @@ module QuickScript
         aggregate
       end
 
-      def progress_log(batch_total, batch_index, message = "")
+      def progress_start(total_step)
         if verbose?
-          puts "[#{Time.current.to_fs(:ymdhms)}][#{self.class.name}][##{batch_index.next}/#{batch_total}] #{message}".squish
+          @progress_cop = Bioshogi::Formatter::Animation::ProgressCop.new(total_step) { |e| puts e }
+        end
+      end
+
+      def progress_next(message = "")
+        if @progress_cop
+          @progress_cop.next_step("#{self.class.name.demodulize} #{message}".squish)
         end
       end
 

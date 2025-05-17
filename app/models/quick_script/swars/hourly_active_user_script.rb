@@ -40,9 +40,9 @@ module QuickScript
 
         def aggregate_now
           hash = {}
-          batch_total = main_scope.count.ceildiv(batch_size)
+          progress_start(main_scope.count.ceildiv(batch_size))
           main_scope.in_batches(of: batch_size, order: :desc).each.with_index do |scope, batch_index|
-            progress_log(batch_total, batch_index)
+            progress_next
 
             if batch_limit
               if batch_index >= batch_limit

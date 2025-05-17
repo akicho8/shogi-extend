@@ -31,9 +31,9 @@ module QuickScript
           plain_counts = Hash.new(0)
           tag_counts = Hash.new { |h, k| h[k] = Hash.new(0) }
 
-          batch_total = main_scope.count.ceildiv(batch_size)
+          progress_start(main_scope.count.ceildiv(batch_size))
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            progress_log(batch_total, batch_index, frequency_info)
+            progress_next(frequency_info)
 
             scope = condition_add(scope)
             scope = frequency_info.scope_chain[scope] # scope = scope.joins(:grade).select(:user_id, "swars_grades.key").distinct

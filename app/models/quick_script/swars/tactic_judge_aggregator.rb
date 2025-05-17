@@ -32,9 +32,9 @@ module QuickScript
           win_lose_draw_total = 0
           memberships_count = 0
 
-          batch_total = main_scope.count.ceildiv(batch_size)
+          progress_start(main_scope.count.ceildiv(batch_size))
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
-            progress_log(batch_total, batch_index)
+            progress_next
 
             scope = condition_add(scope, period_info)
             memberships_count += scope.count

@@ -1,5 +1,9 @@
 require "./setup"
 
+QuickScript::Swars::HourlyActiveUserScript.new.cache_write
+# QuickScript::Swars::HourlyActiveUserScript.new({}, batch_limit: 1).cache_write
+exit
+
 # sql
 # object = QuickScriptSwars::HourlyActiveUserScript.new({}, batch_limit: 1)
 # object.cache_write
