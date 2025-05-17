@@ -260,7 +260,7 @@ module QuickScript
       ################################################################################
 
       Item = Data.define(:info, :stat) do
-        def initialize(info:, stat:)
+        def initialize(stat:, **)
           stat ||= {}
           super
         end
