@@ -14,8 +14,8 @@ library(htmlwidgets)
 # --- データの読み込み ----------------------------------------------
 
 # JSONデータを取得するURL
-url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-# url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+# url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 
 # URLからJSONデータを取得して、Rの「データフレーム」（表形式のデータ）に変換
 data <- fromJSON(url)
@@ -66,7 +66,7 @@ p_plotly <- layout(
   # グラフのタイトルを設定
   title = list(
     text = "<b>将棋ウォーズ時間帯別相対棋力</b>", # タイトルの文字（太字にして表示）
-    font = list(size = 20),       # タイトルの文字サイズ
+    font = list(size = 28),       # タイトルの文字サイズ
     x = 0.5                       # 横方向の中央に配置（0〜1の範囲）
   ),
 
@@ -105,7 +105,7 @@ if (interactive()) {
   # スクリプトとして実行されている場合（ファイルに保存して表示）
 
   # 保存するパス（Nuxtアプリの静的ファイルとして保存する想定）
-  full_path <- "~/src/shogi-extend/nuxt_side/static/insight/swars/hourly_active_user_strength.html"
+  full_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/hourly-active-user-strength.html"
 
   # グラフをHTMLファイルとして保存（selfcontained=TRUEで1ファイルに全部まとめる）
   saveWidget(p_plotly, full_path, selfcontained = TRUE)

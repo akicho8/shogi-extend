@@ -50,6 +50,5 @@ yarn-debug.log*
 /config/google_account_json
 
 # R
-/nuxt_side/static/insight/**/*_files
+/nuxt_side/static/lab/**/*_files
 /Rplots.pdf
-/*.html

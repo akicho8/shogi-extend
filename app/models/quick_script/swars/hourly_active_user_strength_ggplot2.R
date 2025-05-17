@@ -7,8 +7,8 @@ library(plotly)
 library(htmlwidgets)
 
 # データを読み込み
-url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-# url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+# url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 data <- fromJSON(url)
 
 # 曜日の順番（祝日を右端に）
@@ -51,13 +51,13 @@ for (i in seq_along(p_plotly$x$data)) {
 }
 
 if (!interactive()) {
-  full_path <- "~/src/shogi-extend/nuxt_side/static/insight/swars/hourly_active_user_strength_ggplot2.html"
+  full_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/hourly-active-user-strength-ggplot2.html"
   saveWidget(p_plotly, full_path, selfcontained = TRUE)
   system(sprintf("open -a 'Google Chrome' %s", full_path))
 }
 
 # cap staging nuxt_side:static_upload
-# https://shogi-flow.xyz/insight/swars/hourly_active_user_strength_ggplot2.html
+# https://shogi-flow.xyz/lab/swars/hourly-active-user-strength-ggplot2.html
 
 # cap production nuxt_side:static_upload
-# https://www.shogi-extend.com/insight/swars/hourly_active_user_strength_ggplot2.html
+# https://www.shogi-extend.com/lab/swars/hourly-active-user-strength-ggplot2.html

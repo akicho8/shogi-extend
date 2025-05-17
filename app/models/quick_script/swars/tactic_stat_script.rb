@@ -21,7 +21,7 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_link_to", name: "戦法囲い分布", params: { href: "/insight/swars/tactic_stat.html", target: "_self", }, },
+          { type: "t_link_to", name: "戦法囲い分布", params: { href: "/lab/swars/tactic-stat.html", target: "_self", }, },
         ]
       end
 

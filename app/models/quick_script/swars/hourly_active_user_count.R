@@ -14,16 +14,16 @@ library(htmlwidgets)
 # --- データの読み込み ----------------------------------------------
 
 # JSONデータを取得するURL
-url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-# url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+# url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 
 # URLからJSONデータを取得して、Rの「データフレーム」（表形式のデータ）に変換
 data <- fromJSON(url)
 
 # --- データの加工（見た目を整える準備） ---------------------------
 
-# 曜日の順番を決める（「祝日」は一番右にしたいので、最後に）
-weekday_order <- c("日", "月", "火", "水", "木", "金", "土", "祝日")
+# 曜日の順番を決める
+weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
 
 # 「曜日」の列を「factor」（順番のあるカテゴリ）として登録して、表示順を指定
 data$day_of_week <- factor(data$day_of_week, levels = weekday_order)
@@ -66,7 +66,7 @@ p_plotly <- layout(
   # グラフのタイトルを設定
   title = list(
     text = "<b>将棋ウォーズ時間帯別対局者数</b>", # タイトルの文字（太字にして表示）
-    font = list(size = 20),            # タイトルの文字サイズ
+    font = list(size = 28),
     x = 0.5                            # 横方向の中央に配置（0〜1の範囲）
   ),
 
@@ -105,7 +105,7 @@ if (interactive()) {
   # スクリプトとして実行されている場合（ファイルに保存して表示）
 
   # 保存するパス（Nuxtアプリの静的ファイルとして保存する想定）
-  full_path <- "~/src/shogi-extend/nuxt_side/static/insight/swars/hourly_active_user_count.html"
+  full_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/hourly-active-user-count.html"
 
   # グラフをHTMLファイルとして保存（selfcontained=TRUEで1ファイルに全部まとめる）
   saveWidget(p_plotly, full_path, selfcontained = TRUE)

@@ -14,8 +14,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_link_to", name: "時間帯別対局者数", params: { href: "/insight/swars/hourly_active_user_count.html",    target: "_self" }, },
-          { type: "t_link_to", name: "時間帯別相対棋力", params: { href: "/insight/swars/hourly_active_user_strength.html", target: "_self" }, },
+          { type: "t_link_to", name: "時間帯別対局者数", params: { href: "/lab/swars/hourly-active-user-count.html",    target: "_self" }, },
+          { type: "t_link_to", name: "時間帯別相対棋力", params: { href: "/lab/swars/hourly-active-user-strength.html", target: "_self" }, },
         ]
       end
 
