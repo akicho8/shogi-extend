@@ -45,7 +45,7 @@ p_plotly <- plot_ly(
   # colors = colorRamp(c("blue", "cyan", "green", "yellow", "orange", "red")),
   # colors = colorRamp(brewer.pal(11, "Spectral")),
   # colors = colorRamp(viridisLite::magma(100)),
-  colors = viridisLite::magma(100),
+  colors = colorRamp(viridisLite::magma(100)),
   showscale = TRUE,                # 右側に色のメーター（カラーバー）を表示
   hoverinfo = "skip",              # マウスを重ねたときの吹き出しを表示しない
 
@@ -56,7 +56,7 @@ p_plotly <- plot_ly(
     tickvals = NULL,              # 数値の目盛りは表示しない
     ticks = "",                   # 軸のヒゲ（線）も表示しない
     x = 1.01,                     # カラーバーの位置（グラフの右端よりちょっと右）
-    y = 1.0,                      # 縦位置の中心（0が一番下、1が一番上）
+    y = 0.66,                      # 縦位置の中心（0が一番下、1が一番上）
     len = 0.33                     # カラーバーの長さ（1.0で上下いっぱいに表示）
   )
 )
@@ -68,7 +68,7 @@ p_plotly <- layout(
 
   # グラフのタイトルを設定
   title = list(
-    text = "<b>将棋ウォーズ時間帯別対局者数</b>", # タイトルの文字（太字にして表示）
+    text = "<b>将棋ウォーズ：時間帯別対局者数の推移</b>", # タイトルの文字（太字にして表示）
     font = list(size = 28),
     x = 0.5                            # 横方向の中央に配置（0〜1の範囲）
   ),
