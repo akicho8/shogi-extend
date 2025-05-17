@@ -517,11 +517,11 @@ module QuickScript
         @found_ids ||= yield_self do
           ids = []
           # FIXME: order(battled_at: :desc) としたいが実際は id: desc になっている
-          ::Swars::Battle.in_batches(of: batch_size, order: :desc).each.with_index do |relation, i|
-            if i >= batch_loop_max
+          ::Swars::Battle.in_batches(of: batch_size, order: :desc).each.with_index do |scope, batch_index|
+            if batch_index >= batch_limit
               break
             end
-            ids += sub_scope(relation).ids
+            ids += sub_scope(scope).ids
             if ids.size >= request_size
               break
             end
@@ -867,8 +867,8 @@ module QuickScript
         1000
       end
 
-      def batch_loop_max
-        @batch_loop_max ||= range_size.ceildiv(batch_size)
+      def batch_limit
+        @batch_limit ||= range_size.ceildiv(batch_size)
       end
 
       ################################################################################
@@ -1094,6 +1094,3 @@ module QuickScript
     end
   end
 end
-# ~> -:3:in `<module:Swars>': uninitialized constant QuickScript::Swars::Base (NameError)
-# ~>    from -:2:in `<module:QuickScript>'
-# ~>    from -:1:in `<main>'
