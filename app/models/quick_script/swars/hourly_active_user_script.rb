@@ -84,10 +84,9 @@ module QuickScript
           rows = rows.collect { |e| e.merge(relative_strength: max - e[:grade_average]) }
           rows = hash_array_minmax_normalize(rows, :relative_strength, :relative_strength)
 
-          # 人数はそのままでも、いいけど右のメーターにそのまま数値が出ると面倒なので、こちらで正規化しておく
+          # ヒートマップは相対的な人数なので右のメーターに人数を出しても意味がない
+          # だから見た目だけの問題で人数を正規化しておく
           rows = hash_array_minmax_normalize(rows, :uniq_user_count, :relative_uniq_user_count)
-
-          rows.as_json
         end
 
         def day_of_week
