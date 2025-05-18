@@ -2,22 +2,18 @@ require "rails_helper"
 
 RSpec.describe QuickScript::Swars::HourlyActiveUserScript, type: :model do
   it "works" do
-    def reset
-      Swars::Battle.destroy_all
-      Swars::User.destroy_all
-    end
-
     def entry(battled_at, user1, user2, grade_key1, grade_key2)
-      Swars::Battle.create!(strike_plan: "糸谷流右玉", battled_at: battled_at) do |e|
+      @battles << Swars::Battle.create!(strike_plan: "糸谷流右玉", battled_at: battled_at) do |e|
         e.memberships.build(user: user1, grade_key: grade_key1)
         e.memberships.build(user: user2, grade_key: grade_key2)
       end
     end
 
     def aggregate
-      reset
+      @battles = []
       yield
-      object = QuickScript::Swars::HourlyActiveUserScript.new({}, batch_limit: 1)
+      scope = Swars::Membership.where(id: @battles.flat_map(&:membership_ids))
+      object = QuickScript::Swars::HourlyActiveUserScript.new({}, batch_limit: 1, scope: scope)
       object.cache_write
       object.call.sort_by { |e| e[:hour] }
     end
