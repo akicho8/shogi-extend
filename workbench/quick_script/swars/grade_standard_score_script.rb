@@ -1,7 +1,7 @@
 require "./setup"
 # QuickScript::Swars::GradeAggregator.new.cache_write
-tp QuickScript::Swars::GradeStatScript.new.sd_merged_grade_infos
-tp QuickScript::Swars::GradeStatScript.new(tag: "GAVA角").sd_merged_grade_infos
+tp QuickScript::Swars::GradeStandardScoreScript.new.sd_merged_grade_infos
+tp QuickScript::Swars::GradeStandardScoreScript.new(tag: "GAVA角").sd_merged_grade_infos
 # >> |------------+------+--------------------+--------------------+--------+----------------------+--------------------|
 # >> | grade_info | 度数 | 相対度数           | 累計相対度数       | 階級値 | 基準値               | 偏差値             |
 # >> |------------+------+--------------------+--------------------+--------+----------------------+--------------------|

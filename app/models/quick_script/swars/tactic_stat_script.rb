@@ -119,7 +119,7 @@ module QuickScript
             row["種類"]   = e.info.human_name
 
             row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面",     to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
-            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-stat",     query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-standard-score",     query: { tag: e.info.name }, }, }, }
             row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: e.info.name }, }, }, }
           end
         end

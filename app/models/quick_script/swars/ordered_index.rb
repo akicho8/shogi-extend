@@ -6,7 +6,7 @@ module QuickScript
       TacticListScript,
       TacticStatScript,
       CrossSearchScript,
-      GradeStatScript,
+      GradeStandardScoreScript,
       CrawlerBatchScript,
 
       BattleDownloadScript,

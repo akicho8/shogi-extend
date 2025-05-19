@@ -37,7 +37,8 @@ class MainBatch
     QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
     QuickScript::Swars::HourlyActiveUserScript.new.cache_write # 時間帯別対局者情報
     QuickScript::Swars::TacticJudgeAggregator.new.cache_write  # 戦法一覧・戦法勝率ランキング
-    QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法一覧・戦法勝率ランキング
+    QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法に対応する対局を収集する
+    QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
 
     # チェック
     Swars::SystemValidator.new.call

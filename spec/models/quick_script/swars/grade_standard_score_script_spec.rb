@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe QuickScript::Swars::GradeStatScript, type: :model do
+RSpec.describe QuickScript::Swars::GradeStandardScoreScript, type: :model do
   def case1(params)
-    instance = QuickScript::Swars::GradeStatScript.new(params)
+    instance = QuickScript::Swars::GradeStandardScoreScript.new(params)
     instance.as_json
     instance.status
   end

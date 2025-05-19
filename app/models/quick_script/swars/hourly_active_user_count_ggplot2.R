@@ -27,7 +27,7 @@ p <- ggplot(data, aes(x = day_of_week, y = hour, fill = relative_uniq_user_count
   scale_fill_gradientn(
     # colors = c("white", "deepskyblue"),
     # colors = c("blue", "cyan", "green", "yellow", "orange", "red"),
-    colors = viridisLite::magma(100),
+    colors = viridisLite::turbo(100),
     name = "人数"
   ) +
   scale_y_discrete(limits = rev(levels(factor(data$hour)))) +

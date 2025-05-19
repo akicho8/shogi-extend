@@ -67,7 +67,7 @@ module QuickScript
             end
           end
 
-          rows = hash.collect { |(hour, day_of_week), e|
+          rows = hash.collect do |(hour, day_of_week), e|
             grade_average = e[:grade_total].fdiv(e[:uniq_user_count])
             {
               :day_of_week     => day_of_week,         # 曜日     (X)
@@ -77,7 +77,7 @@ module QuickScript
               :grade_total     => e[:grade_total],     # 合計棋力(確認用)
               **describe_grade(grade_average),         # 平均棋力(確認用)
             }
-          }
+          end
 
           # grade_average が「小さいほど強い」だと、わかりにくいので「大きいほど強い」にしておく
           max = rows.pluck(:grade_average).max

@@ -6,7 +6,7 @@
 #
 module QuickScript
   module Swars
-    class GradeStatScript < Base
+    class GradeStandardScoreScript < Base
       FrequencyInfo = GradeAggregator::FrequencyInfo
 
       self.title = "将棋ウォーズ棋力分布"
@@ -48,7 +48,7 @@ module QuickScript
         v_stack(values, style: { "gap" => "1rem" })
       end
 
-      # http://localhost:3000/api/lab/swars/grade-stat.json?json_type=general
+      # http://localhost:3000/api/lab/swars/grade-standard-score.json?json_type=general
       def as_general_json
         rows
       end
