@@ -6,6 +6,7 @@ module QuickScript
       self.form_method = :get
       self.button_label = "検索"
       self.per_page_default = 100
+      self.general_json_link_show = true
 
       def form_parts
         super + [
@@ -23,6 +24,29 @@ module QuickScript
       end
 
       def call
+        pagination_for(current_scope, always_table: false) do |scope|
+          scope.collect do |e|
+            {
+              "ウォーズID" => { _link_to: { name: e.key, url: e.official_mypage_url }, },
+              "段級位"       => e.grade.name,
+              "発見"       => e.ban_at.to_fs(:ymd),
+              ""           => { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: { name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+            }
+          end
+        end
+      end
+
+      def as_general_json
+        pagination_scope(current_scope).collect do |e|
+          {
+            "ウォーズID" => e.key,
+            "段級位"     => e.grade.name,
+            "発見日時"   => e.ban_at,
+          }
+        end
+      end
+
+      def current_scope
         scope = ::Swars::User.all
         scope = scope.ban_only
         scope = scope.order(ban_at: :desc)
@@ -35,16 +59,7 @@ module QuickScript
           c2 = ::Swars::Grade.unscoped.where("`swars_grades`.`key` LIKE ?", "%#{sanitized_query}%")
           scope = scope.and(c1.or(c2))
         end
-        pagination_for(scope, always_table: false) do |scope|
-          scope.collect do |e|
-            {
-              "名前" => { _link_to: { name: e.key, url: e.official_mypage_url }, },
-              "段位" => e.grade.name,
-              "発見" => e.ban_at.to_fs(:ymd),
-              ""     => { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: { name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
-            }
-          end
-        end
+        scope
       end
 
       def current_queries

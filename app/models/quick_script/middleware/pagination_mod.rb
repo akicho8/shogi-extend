@@ -6,8 +6,12 @@ module QuickScript
         class_attribute :per_page_max, default: 500
       end
 
+      def pagination_scope(scope)
+        scope.page(current_page).per(current_per, max_per_page: per_page_max)
+      end
+
       def pagination_for(scope, options = {}, &block)
-        scope = scope.page(current_page).per(current_per, max_per_page: per_page_max)
+        scope = pagination_scope(scope)
         if block
           rows = block.call(scope)
         else
