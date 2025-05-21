@@ -94,12 +94,8 @@ module QuickScript
       def call
         if running_in_foreground
           if request_get?
-            if Rails.env.local?
-              if current_user
-                return "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"
-              end
-            end
-            return
+            self.body_position = :above
+            return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box has-background-white-ter" }
           end
           if request_post?
             validate!
@@ -162,6 +158,14 @@ module QuickScript
         if main_scope.empty?
           flash[:notice] = scope_info.error_message
           return
+        end
+      end
+
+      def debug_info
+        if Rails.env.local?
+          if current_user
+            "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"
+          end
         end
       end
 
@@ -321,6 +325,10 @@ module QuickScript
       end
 
       ################################################################################
+
+      def markdown_info
+        MarkdownInfo.fetch("棋譜ダウンロード")
+      end
     end
   end
 end
