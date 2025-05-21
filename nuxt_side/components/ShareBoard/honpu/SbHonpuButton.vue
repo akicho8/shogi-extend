@@ -5,10 +5,10 @@ b-navbar-item.SbHonpuButton.has-text-weight-bold(
   )
   .field.is-grouped
     p.control(v-if="SB.honpu_return_button_show_p")
-      a.button.honpu_return_button(@click="SB.honpu_return_click_handle" :class="SB.appearance_theme_info.navibar_button_color")
+      a.button.honpu_return_button(@click="SB.honpu_return_click_handle" :class="SB.appearance_theme_info.undo_button_color")
         b-icon(icon="undo")
     p.control(v-if="SB.honpu_open_button_show_p")
-      a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.navibar_button_color")
+      a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.toryo_button_color")
         | 本譜
         //- b-icon(icon="note")
 </template>
