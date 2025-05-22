@@ -10,11 +10,11 @@ module Swars
         end
 
         rescue_from "Swars::BattleKeyValidator::InvalidKey" do |exception|
-          render json: { message: exception.message }, status: 404
+          render json: { message: exception.message }, status: :not_found
         end
 
         rescue_from "ActiveRecord::RecordNotFound" do |error|
-          render json: { message: "対応するデータが見つかりません" }, status: 404
+          render json: { message: "対応するデータが見つかりません" }, status: :not_found
         end
 
         # "Faraday::ServerError"      → Faraday の raise_error middleware で出るもの
@@ -26,17 +26,17 @@ module Swars
             "しばらくしてからアクセスすると直るかもしれません",
             exception.message,
           ].collect(&:presence).join("<br>")
-          render json: { message: message }, status: 408
+          render json: { message: message }, status: :request_timeout
         end
 
         rescue_from "ActiveRecord::RecordNotUnique" do |exception| # 中身は「Mysql2::Error: Duplicate entry」
           AppLog.info(exception)
-          render json: { message: "連打したのでぶっこわれました" }, status: 500
+          render json: { message: "連打したのでぶっこわれました" }, status: :internal_server_error
         end
 
         rescue_from "ActiveRecord::Deadlocked" do |exception|
           AppLog.critical(exception)
-          render json: { message: "データベースが死にそうです" }, status: 500
+          render json: { message: "データベースが死にそうです" }, status: :internal_server_error
         end
       end
     end

@@ -15,7 +15,7 @@ module Api
 
       # 結局取得できなかった場合
       unless current_league
-        render json: {}, status: 404
+        render json: {}, status: :not_found
         return
       end
 

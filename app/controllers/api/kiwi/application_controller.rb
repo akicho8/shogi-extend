@@ -41,7 +41,7 @@ module Api
       # end
 
       rescue_from "ActiveRecord::RecordNotFound" do |error|
-        render json: { statusCode: 404, message: "または権限がありません" }, status: 404
+        render json: { statusCode: 404, message: "または権限がありません" }, status: :not_found
       end
 
       rescue_from "KiwiPermissionError" do |error|

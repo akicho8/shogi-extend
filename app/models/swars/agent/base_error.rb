@@ -3,7 +3,7 @@ module Swars
     class BaseError < StandardError
       attr_accessor :status
 
-      def initialize(status = 500, message = "(MESSAGE)")
+      def initialize(status = :internal_server_error, message = "(MESSAGE)")
         @status = status
         super(message)
       end
@@ -11,19 +11,19 @@ module Swars
 
     class SwarsFormatIncompatible < BaseError
       def initialize(message = "将棋ウォーズ本家のデータ構造が変わってしまいました")
-        super(400, message)
+        super(:bad_request, message)
       end
     end
 
     class RaiseConnectionFailed < BaseError
       def initialize(message = "混み合っています<br>しばらくしてからアクセスしてください")
-        super(408, message)
+        super(:request_timeout, message)
       end
     end
 
     class BattleNotFound < BaseError
       def initialize(message = "指定の対局が存在しません<br>URLを間違えていませんか？")
-        super(404, message)
+        super(:not_found, message)
       end
     end
   end
