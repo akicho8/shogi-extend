@@ -1,6 +1,6 @@
 module Swars
   class BattlesController
-    concern :ScopeMethods do
+    concern :ScopeMod do
       ################################################################################
 
       # これは index 専用としないとだめ。show で使うと Battle.none.find_by(id: xxx) でなんも引けなくなる

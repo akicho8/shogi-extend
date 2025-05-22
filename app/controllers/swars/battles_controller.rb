@@ -44,10 +44,10 @@ module Swars
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
 
-    include ScopeMethods
-    include IndexMethods
-    include ShowMethods
-    include ExceptionCatch
+    include ScopeMod
+    include IndexMod
+    include ShowMod
+    include ExceptionCatchMod
 
     before_action do
       @xnotice = Xnotice.new

@@ -1,6 +1,6 @@
 module Swars
   class BattlesController
-    concern :IndexMethods do
+    concern :IndexMod do
       def index
         [
           :case_kento_api,

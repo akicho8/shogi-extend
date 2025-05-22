@@ -2,7 +2,7 @@
 
 module Swars
   class BattlesController
-    concern :ExceptionCatch do
+    concern :ExceptionCatchMod do
       included do
         rescue_from "Swars::Agent::BaseError" do |exception|
           AppLog.critical(exception)
@@ -22,7 +22,7 @@ module Swars
         rescue_from "Faraday::ServerError", "Faraday::ConnectionFailed" do |exception|
           AppLog.critical(exception, data: exception.response)
           message = [
-            "将棋ウォーズの本家がぶっこわれました",
+            "将棋ウォーズ本家がぶっこわれました",
             "しばらくしてからアクセスすると直るかもしれません",
             exception.message,
           ].collect(&:presence).join("<br>")

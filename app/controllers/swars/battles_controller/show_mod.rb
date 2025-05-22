@@ -1,6 +1,6 @@
 module Swars
   class BattlesController
-    concern :ShowMethods do
+    concern :ShowMod do
       private
 
       def current_record
