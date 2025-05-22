@@ -5,7 +5,8 @@ library(dplyr)
 library(tidyr)
 library(plotly)
 
-url <- "http://localhost:3000/api/lab/swars/grade_segment.json?json_type=general"
+# url <- "http://localhost:3000/api/lab/swars/grade_segment.json?json_type=general"
+url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
 json_data <- fromJSON(url)
 
 data <- data.frame(

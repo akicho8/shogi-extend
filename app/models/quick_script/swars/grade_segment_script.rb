@@ -9,7 +9,7 @@ module QuickScript
   module Swars
     class GradeSegmentScript < Base
       self.title = "棋力別の情報"
-      self.description = "「段級位別の平均手数」と「負け方の実態と傾向」用の集計を行う"
+      self.description = "「棋力別の平均手数」と「負け方の実態と傾向」用の集計を行う"
       self.general_json_link_show = true
 
       def header_link_items
@@ -67,7 +67,7 @@ module QuickScript
           scope = scope.group(::Swars::Grade.arel_table[:key])
           scope = scope.select(::Swars::Grade.arel_table[:key].as("grade_key"))
 
-          # 「段級位別の平均手数」用
+          # 「棋力別の平均手数」用
           if true
             ::Swars::TurnColumnInfo.each do |e|
               scope = scope.select(::Swars::Battle.arel_table[e.key].sum.as("#{e.key}_total"))

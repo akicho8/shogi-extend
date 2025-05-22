@@ -4,7 +4,8 @@ library(jsonlite)
 library(dplyr)
 library(plotly)
 
-url <- "http://localhost:3000/api/lab/swars/grade-segment.json?json_type=general"
+# url <- "http://localhost:3000/api/lab/swars/grade-segment.json?json_type=general"
+url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
 json_data <- fromJSON(url)
 
 data <- data.frame(
@@ -46,7 +47,7 @@ p <- plot_ly(
 p <- layout(
   p,
   title = list(
-    text = "<b>将棋ウォーズ：段級位別の平均手数</b>",
+    text = "<b>将棋ウォーズ：棋力別の平均手数</b>",
     font = list(size = 24, color = "black")
   ),
   font = list(color = "black"),
