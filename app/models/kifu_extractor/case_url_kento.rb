@@ -7,7 +7,7 @@ module KifuExtractor
     def resolve
       if uri = extracted_uri
         if uri.host.end_with?("kento-shogi.com")
-          @body = KentoParamsParser.parse(uri.to_s).to_sfen
+          @body = Kento::Url[uri.to_s].to_sfen
         end
       end
     end

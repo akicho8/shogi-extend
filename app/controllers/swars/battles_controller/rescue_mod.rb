@@ -2,7 +2,7 @@
 
 module Swars
   class BattlesController
-    concern :ExceptionCatchMod do
+    concern :RescueMod do
       included do
         rescue_from "Swars::Agent::BaseError" do |exception|
           AppLog.critical(exception)

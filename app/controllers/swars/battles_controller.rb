@@ -46,8 +46,9 @@ module Swars
 
     include ScopeMod
     include IndexMod
+    include Kento::Controller
     include ShowMod
-    include ExceptionCatchMod
+    include RescueMod
 
     before_action do
       @xnotice = Xnotice.new

@@ -21,11 +21,11 @@ module Swars
         a = super
 
         # battle
-        a[:final_info]  = { key: e.final_info.key, name: e.final_info.name, :class => e.final_info.has_text_color,        }
-        a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap_shift }
-        a[:rule_info]   = { name: e.rule_info.name                                                 }
-        a[:xmode_info]  = { key: e.xmode.key, name: e.xmode.name }
-        a[:imode_info]  = { key: e.imode.key, name: e.imode.name }
+        a[:final_info]  = { key: e.final_info.key, name: e.final_info.name, :class => e.final_info.has_text_color, }
+        a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap_shift                 }
+        a[:rule_info]   = { name: e.rule_info.name                                                                 }
+        a[:xmode_info]  = { key: e.xmode.key, name: e.xmode.name                                                   }
+        a[:imode_info]  = { key: e.imode.key, name: e.imode.name                                                   }
 
         # memberships
 
@@ -68,12 +68,12 @@ module Swars
       def js_memberships(battle, memberships)
         memberships.collect do |e|
           hv = {
-            :user         => { key: e.user.key, ban_at: e.user.ban_at },
-            :grade_info   => { name: e.grade.name },
-            :location_key => e.location_key,
-            :judge_key    => e.judge_key,
-            :badge_params => e.badge_params(params),
-            :ek_score_without_cond    => e.ek_score_without_cond,
+            :user                  => { key: e.user.key, ban_at: e.user.ban_at },
+            :grade_info            => { name: e.grade.name },
+            :location_key          => e.location_key,
+            :judge_key             => e.judge_key,
+            :badge_params          => e.badge_params(params),
+            :ek_score_without_cond => e.ek_score_without_cond,
             :ek_score_with_cond    => e.ek_score_with_cond,
           }
           if e.style

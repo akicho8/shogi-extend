@@ -2,42 +2,9 @@ module Swars
   class BattlesController
     concern :IndexMod do
       def index
-        [
-          :case_kento_api,
-          :case_swars_search,
-        ].each do |e|
-          send(e)
-          if performed?
-            return
-          end
-        end
-      end
-
-      # http://localhost:3000/w.json?query=DevUser1&format_type=kento
-      # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=kento
-      def case_kento_api
-        if request.format.json?
-          if params[:format_type] == "kento"
-            if current_swars_user
-              render json: KentoApiResponder.new({
-                  :scope         => current_index_scope,
-                  :user          => current_swars_user,
-                  :max           => params[:limit],
-                  :notify_params => {
-                    :referer    => request.referer,
-                    :user_agent => request.user_agent,
-                  },
-                })
-            end
-          end
-        end
-      end
-
-      def case_swars_search
         if request.format.json?
           import_process_any
-          render json: js_index_options.as_json
-          return
+          render json: js_index_options
         end
       end
 
