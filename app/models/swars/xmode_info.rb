@@ -16,12 +16,18 @@ module Swars
       private
 
       def invert_table
-        @invert_table ||= find_all(&:alias_key).inject({}) { |a, e| a.merge(e.alias_key => e, e.sw_side_key => e) }
+        @invert_table ||= inject({}) do |a, e|
+          e.other_keys.inject(a) { |a, key| a.merge(key.to_s => e) }
+        end
       end
     end
 
     def long_name
       "#{key}対局"
+    end
+
+    def other_keys
+      [alias_key, sw_side_key].compact
     end
   end
 end
