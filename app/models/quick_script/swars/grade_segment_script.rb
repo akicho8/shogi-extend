@@ -14,8 +14,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          # { type: "t_link_to", name: "視覚化1", params: { href: "/lab/swars/lose-pattern.html", target: "_self" }, },
-          # { type: "t_link_to", name: "視覚化2", params: { href: "/lab/swars/turn-average.html", target: "_self" }, },
+          { type: "t_link_to", name: "視覚化1", params: { href: "/lab/swars/lose-pattern.html", target: "_self" }, },
+          { type: "t_link_to", name: "視覚化2", params: { href: "/lab/swars/turn-average.html", target: "_self" }, },
         ]
       end
 
