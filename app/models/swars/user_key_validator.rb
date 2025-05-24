@@ -1,7 +1,6 @@
 module Swars
-  class BattleKeyValidator
-    TIMESTAMP_REGEXP = /\b\d{8}_\d{6}\b/
-    REGEXP = /#{UserKeyValidator::REGEXP}-#{UserKeyValidator::REGEXP}-#{TIMESTAMP_REGEXP}/
+  class UserKeyValidator
+    REGEXP = /\b[a-zA-Z][a-zA-Z_]{2,14}\b/
 
     class InvalidKey < ArgumentError
     end
@@ -22,7 +21,7 @@ module Swars
 
     def validate!
       if invalid?
-        raise InvalidKey, "将棋ウォーズの対局キーではありません: #{key.inspect}"
+        raise InvalidKey, "将棋ウォーズのIDではありません: #{key.inspect}"
       end
     end
 

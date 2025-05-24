@@ -26,6 +26,8 @@ module Swars
     attr_reader :key
 
     def initialize(key)
+      UserKeyValidator.new(key).validate! # 生焼けオブジェクトは作らせない
+
       @key = key.dup.freeze
       freeze
     end

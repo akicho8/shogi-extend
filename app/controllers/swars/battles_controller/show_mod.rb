@@ -6,7 +6,7 @@ module Swars
       def current_record
         @current_record ||= yield_self do
           if key = params[:id].presence
-            key = BattleKey.create(key)
+            key = BattleKey.create(key) # 不正なIDはここで例外になるので本家にアクセスはいかない
             if !from_crawl_bot?
               Importer::BattleImporter.new(key: key, BattleNotFound: params[:BattleNotFound]).call # すでにあるならskipしている
             end
