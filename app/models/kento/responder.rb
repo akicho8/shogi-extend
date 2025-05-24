@@ -63,7 +63,7 @@ module Kento
         s = s.joins(:battle)      # for order
         s = s.order(Swars::Battle.arel_table[:battled_at].desc)
         s = s.limit(max)
-        s = s.preload(battle: {memberships: [:grade, :user], rule: nil}, judge: nil, taggings: :tag) # battle.title のときに battle.membership.{grade,user} を参照するため
+        s = s.preload(battle: { memberships: [:grade, :user], rule: nil }, judge: nil, taggings: :tag) # battle.title のときに battle.membership.{grade,user} を参照するため
         s.collect(&method(:membership_as_hash))
       end
     end

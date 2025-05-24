@@ -1,6 +1,6 @@
 require "./setup"
 scope = Swars::Membership.where(id: ::Swars::Membership.last(1000).collect(&:id))
-object = QuickScript::Swars::SprintWinRateScript.new({}, {scope: scope})
+object = QuickScript::Swars::SprintWinRateScript.new({}, { scope: scope })
 object.cache_write
 tp object.rows
 # >> 2025-05-15T11:19:34.535Z pid=63857 tid=1bix INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
