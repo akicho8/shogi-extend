@@ -1,4 +1,6 @@
 require "#{__dir__}/setup"
 Swars::BattleKeyValidator.valid?("Kato_Hifumi-SiroChannel-20190317_140844") # => true
-
-Swars::BattleKeyValidator::REGEXP # => /(?-mix:\b[a-zA-Z][a-zA-Z_]{2,14}\b)-(?-mix:\b[a-zA-Z][a-zA-Z_]{2,14}\b)-(?-mix:\b\d{8}_\d{6}\b)/
+Swars::BattleKeyValidator.valid?("DevUser1-YamadaTaro-20200101_123401")     # => true
+Swars::BattleKeyValidator::REGEXP # => 
+# ~> -:4:in '<main>': uninitialized constant Swars::BattleKeyValidator::REGEXP (NameError)
+# ~> Did you mean?  Regexp

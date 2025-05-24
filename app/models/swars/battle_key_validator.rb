@@ -10,7 +10,7 @@ module Swars
       end
 
       def timestamp_regexp
-        /\b\d{8}_\d{6}\b/o
+        /\b\d{8}_\d{6}\b/
       end
     end
   end

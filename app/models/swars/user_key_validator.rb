@@ -6,7 +6,7 @@ module Swars
       end
 
       def regexp
-        /\b[a-zA-Z][a-zA-Z_]{2,14}\b/o
+        /\b[a-zA-Z\d][a-zA-Z\d_]{2,14}\b/
       end
     end
   end
