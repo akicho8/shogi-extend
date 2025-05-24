@@ -1,31 +1,13 @@
 module Swars
-  class BattleUrlValidator
-    REGEXP = %r{https://.*?\.heroz\.jp/games/#{BattleKeyValidator::REGEXP}}
-
-    class InvalidKey < ArgumentError
-    end
-
-    attr_reader :url
-    private :url
-
-    def initialize(url)
-      @url = url
-    end
-
-    def validate!
-      if invalid?
-        raise InvalidKey, "将棋ウォーズの対局URLではありません: #{url.inspect}"
+  class BattleUrlValidator < Validator
+    class << self
+      def target_name
+        "将棋ウォーズの対局URL"
       end
-    end
 
-    def valid?
-      if url.present?
-        url.match?(/\A(?:#{REGEXP})\z/)
+      def regexp
+        %r{\bhttps://.*?\.heroz\.jp/games/#{BattleKeyValidator.regexp}}o
       end
-    end
-
-    def invalid?
-      !valid?
     end
   end
 end

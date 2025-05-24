@@ -9,7 +9,7 @@ module Swars
           render json: { message: exception.message }, status: exception.status
         end
 
-        rescue_from "Swars::BattleKeyValidator::InvalidKey" do |exception|
+        rescue_from "Swars::InvalidKey" do |exception|
           render json: { message: exception.message }, status: :not_found
         end
 

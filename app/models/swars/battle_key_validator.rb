@@ -1,41 +1,18 @@
 module Swars
-  class BattleKeyValidator
-    TIMESTAMP_REGEXP = /\b\d{8}_\d{6}\b/
-    REGEXP = /#{UserKeyValidator::REGEXP}-#{UserKeyValidator::REGEXP}-#{TIMESTAMP_REGEXP}/
-
-    class InvalidKey < ArgumentError
-    end
+  class BattleKeyValidator < Validator
 
     class << self
-      def valid?(key)
-        new(key).valid?
+      def target_name
+        "将棋ウォーズの対局キー"
       end
 
-      def invalid?(key)
-        new(key).invalid?
+      def regexp
+        /#{UserKeyValidator.regexp}-#{UserKeyValidator.regexp}-#{timestamp_regexp}/o
+      end
+
+      def timestamp_regexp
+        /\b\d{8}_\d{6}\b/o
       end
     end
-
-    def initialize(key)
-      @key = key
-    end
-
-    def validate!
-      if invalid?
-        raise InvalidKey, "将棋ウォーズの対局キーではありません: #{key.inspect}"
-      end
-    end
-
-    def valid?
-      key.to_s.match?(/\A#{REGEXP}\z/)
-    end
-
-    def invalid?
-      !valid?
-    end
-
-    private
-
-    attr_reader :key
   end
 end
