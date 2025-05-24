@@ -17,8 +17,8 @@
 require "rails_helper"
 
 RSpec.describe Swars::XmodeInfo, type: :model, swars_spec: true do
-  xit "alias" do
-    assert { Swars::XmodeInfo.fetch("通常").name == "野良" }
+  it "通常は野良のエイリアスではない" do
+    assert { Swars::XmodeInfo.fetch("通常").name != "野良" }
   end
 
   it "将棋ウォーズ側のキー(sw_side_key)で引ける" do

@@ -18,12 +18,12 @@ module Swars
 
     # # プレイヤー情報の仕様に合わせて xmode を含めていない
     # # でも友対では棋力は上がらないので含めた方がいいかもしれない
-    # def search_params
-    #   {
-    #     "開始モード" => imode_info&.name,
-    #     "持ち時間"   => rule&.name,
-    #   }.compact,
-    # end
+    def search_params
+      {
+        "開始モード" => imode_info&.name,
+        "持ち時間"   => rule&.name,
+      }.compact
+    end
 
     def imode_info
       ImodeInfo.fetch_if(imode_key)

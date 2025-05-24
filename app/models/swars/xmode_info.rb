@@ -2,10 +2,10 @@ module Swars
   class XmodeInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "野良", alias_key: "通常", sw_side_key: "normal",       },
-      { key: "友達", alias_key: nil,    sw_side_key: "friend",       },
-      { key: "指導", alias_key: nil,    sw_side_key: "coach",        },
-      { key: "大会", alias_key: nil,    sw_side_key: "closed_event", },
+      { key: "野良", alias_key: nil, sw_side_key: "normal",       },
+      { key: "友達", alias_key: nil, sw_side_key: "friend",       },
+      { key: "指導", alias_key: nil, sw_side_key: "coach",        },
+      { key: "大会", alias_key: nil, sw_side_key: "closed_event", },
     ]
 
     class << self

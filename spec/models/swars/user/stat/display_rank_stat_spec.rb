@@ -21,7 +21,7 @@ RSpec.describe Swars::User::Stat::DisplayRankStat, type: :model, swars_spec: tru
           { key: :display_rank_ten_min, short_name: "10分", search_params: { "開始モード" => "通常", "持ち時間" => "10分" }, grade_name: "1級" },
           { key: :display_rank_three_min, short_name: "3分", search_params: { "開始モード" => "通常", "持ち時間" => "3分" }, grade_name: "3級" },
           { key: :display_rank_ten_sec, short_name: "10秒", search_params: { "開始モード" => "通常", "持ち時間" => "10秒" }, grade_name: nil },
-          { key: :display_rank_sprint, short_name: "ス", search_params: { "開始モード" => "スプリント" }, grade_name: nil },
+          { key: :display_rank_sprint, short_name: "ス", search_params: { "開始モード" => "スプリント", "持ち時間" => "3分" }, grade_name: nil },
         ]
       end
     end
