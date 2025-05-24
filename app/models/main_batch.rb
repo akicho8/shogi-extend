@@ -31,7 +31,7 @@ class MainBatch
     AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
     ShareBoard::ChatMessage.old_only(100.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
 
-    # 集計
+    # 集計 (TODO: 自動的に cache_write があるクラスを集める……のはやりすぎか)
     QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布
     QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
     QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
