@@ -45,6 +45,8 @@ module Swars
       { key: "10000級", visualize: false, select_option: false, show_in_search_script: false, teacher: false, hourly_active_user: false, lose_pattern: false, }, # ただのフラグ的な扱いなので10000級を表に表示してはいけない
     ]
 
+    prepend AliasMod
+
     BEGINNER = 30               # 違反していない範囲での最低級位
     BAN_KEY  = :"10000級"        # 垢BANしたとみなす表示上の級位表記
 
@@ -53,28 +55,14 @@ module Swars
         @ban ||= fetch(BAN_KEY)
       end
 
-      def lookup(v)
+      def key_cast(v)
         if v.kind_of? String
           v = v.tr("０-９", "0-9")
           if v.to_i > BEGINNER
             v = BAN_KEY
           end
         end
-        super || invert_table[v]
-      end
-
-      private
-
-      def invert_table
-        @invert_table ||= inject({}) do |a, e|
-          a = a.merge({
-              e.short_name => e,
-            })
-          if v = e.kanji_number_dan
-            a = a.merge(v => e)
-          end
-          a
-        end
+        v
       end
     end
 
@@ -98,6 +86,10 @@ module Swars
       if name.include?("段")
         Bioshogi::KanjiNumber.kanji_to_number_string(name)
       end
+    end
+
+    def secondary_key
+      [short_name, kanji_number_dan]
     end
   end
 end

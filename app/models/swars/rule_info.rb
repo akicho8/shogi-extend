@@ -7,24 +7,14 @@ module Swars
       { key: :ten_sec,   name: "10秒", long_name: "1手10秒",      sw_side_key: "s1", csa_time_limit: "00:00+10", life_time: 1.hour,     real_life_time: 0,   ittezume_jirasi_sec: nil,         kangaesugi_sec: nil,         kangaesugi_like_houti_sec: nil,       toryo_houti_sec: nil,       taisekimati_sec: nil,       related_time_p: false, resignation_limit: 1.minutes, most_min_turn_max_limit: 35, }, # 内部的には1時間設定になっているため変更してはいけない
     ]
 
+    prepend AliasMod
+
     class << self
-      def lookup(v)
+      def key_cast(v)
         if v.kind_of?(String)
           v = StringToolkit.hankaku_format(v)
         end
-        super || invert_table[v]
-      end
-
-      private
-
-      def invert_table
-        @invert_table ||= inject({}) do |a, e|
-          a.merge({
-              e.sw_side_key => e,
-              e.name        => e,
-              e.long_name   => e,
-            })
-        end
+        v
       end
     end
 
@@ -35,9 +25,9 @@ module Swars
     def real_life_time
       super || life_time
     end
-  end
-end
 
-if $0 == __FILE__
-  p Swars::RuleInfo[""].name
+    def secondary_key
+      [sw_side_key, name, long_name]
+    end
+  end
 end

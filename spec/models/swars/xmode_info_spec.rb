@@ -23,6 +23,6 @@ RSpec.describe Swars::XmodeInfo, type: :model, swars_spec: true do
 
   it "将棋ウォーズ側のキー(sw_side_key)で引ける" do
     assert { Swars::XmodeInfo.fetch("normal").name == "野良" }
-    assert { Swars::XmodeInfo.fetch("closed_event").name == "大会" }
+    assert { Swars::XmodeInfo.fetch(:closed_event).name == "大会" }
   end
 end

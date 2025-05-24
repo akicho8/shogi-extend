@@ -6,6 +6,8 @@ class JudgeInfo
     { key: :draw, name: "引き分け", ox_mark: "─", one_char: "△", css_class: "has-text-weight-normal", },
   ]
 
+  prepend AliasMod
+
   class << self
     def zero_default_hash
       @zero_default_hash ||= each_with_object({}) { |e, m|
@@ -19,17 +21,11 @@ class JudgeInfo
   end
 
   class << self
-    def lookup(v)
-      if v.respond_to?(:downcase)
-        v = v.downcase
+    def key_cast(key)
+      if key.respond_to?(:downcase)
+        key = key.downcase
       end
-      super || invert_table[v]
-    end
-
-    private
-
-    def invert_table
-      @invert_table ||= inject({}) { |a, e| a.merge(e.name => e, e.ox_mark => e, e.one_char => e) }
+      key
     end
   end
 
@@ -43,5 +39,9 @@ class JudgeInfo
     end
 
     self.class.fetch(key == :win ? :lose : :win)
+  end
+
+  def secondary_key
+    [name, ox_mark, one_char]
   end
 end

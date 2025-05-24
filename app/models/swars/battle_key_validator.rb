@@ -1,6 +1,5 @@
 module Swars
   class BattleKeyValidator < Validator
-
     class << self
       def target_name
         "将棋ウォーズの対局キー"

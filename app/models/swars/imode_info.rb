@@ -6,19 +6,7 @@ module Swars
       { key: :sprint, name: "スプリント", },
     ]
 
-    class << self
-      def lookup(v)
-        super || invert_table[v.to_s]
-      end
-
-      private
-
-      def invert_table
-        @invert_table ||= inject({}) do |a, e|
-          a.merge(e.name => e)
-        end
-      end
-    end
+    prepend AliasMod
 
     def long_name
       "#{name}対局"
@@ -26,6 +14,10 @@ module Swars
 
     def sw_side_key
       key
+    end
+
+    def secondary_key
+      name
     end
   end
 end

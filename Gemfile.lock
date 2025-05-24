@@ -191,7 +191,7 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.6.1)
     docile (1.4.1)
-    drb (2.2.1)
+    drb (2.2.3)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
     exception_notification (5.0.0)
@@ -325,7 +325,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    memory_record (0.0.20)
+    memory_record (0.0.21)
       activesupport
     mini_magick (5.2.0)
       benchmark

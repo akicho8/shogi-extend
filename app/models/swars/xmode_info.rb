@@ -8,26 +8,14 @@ module Swars
       { key: "大会", alias_key: nil, sw_side_key: "closed_event", },
     ]
 
-    class << self
-      def lookup(v)
-        super || invert_table[v.to_s]
-      end
-
-      private
-
-      def invert_table
-        @invert_table ||= inject({}) do |a, e|
-          e.other_keys.inject(a) { |a, key| a.merge(key.to_s => e) }
-        end
-      end
-    end
+    prepend AliasMod
 
     def long_name
       "#{key}対局"
     end
 
-    def other_keys
-      [alias_key, sw_side_key].compact
+    def secondary_key
+      [alias_key, sw_side_key]
     end
   end
 end
