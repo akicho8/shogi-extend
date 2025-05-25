@@ -15,7 +15,7 @@ module Swars
     end
 
     def extract
-      if v = @text.slice(BattleUrlValidator::REGEXP)
+      if v = @text.slice(BattleUrlValidator.regexp)
         BattleUrl.new(v)
       end
     end
