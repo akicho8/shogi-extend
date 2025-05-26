@@ -39,12 +39,12 @@ class QuickScript::Swars::TacticStatScript
       },
     ]
 
-    def ancestor_info
-      Bioshogi::Analysis::ScopeInfo.fetch(key)
-    end
+    # def ancestor_info
+    #   Bioshogi::Analysis::ScopeInfo.fetch(key)
+    # end
 
-    def tag_table
-      "#{key}_tags"
-    end
+    # def tag_table
+    #   "#{key}_tags"
+    # end
   end
 end

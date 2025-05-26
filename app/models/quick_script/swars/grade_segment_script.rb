@@ -72,7 +72,7 @@ module QuickScript
             ::Swars::TurnColumnInfo.each do |e|
               scope = scope.select(::Swars::Battle.arel_table[e.key].sum.as("#{e.key}_total"))
             end
-            scope = scope.select("COUNT(*) AS battle_count")
+            scope = scope.select("COUNT(*) AS memberhip_count")
           end
 
           # 「負け方の実態と傾向」用
@@ -94,7 +94,7 @@ module QuickScript
           row["棋力順"] = grade_info.priority
 
           ::Swars::TurnColumnInfo.each do |e|
-            row[e.name] = safe_fdiv(record[:"#{e.key}_total"], record[:battle_count]) || 0.0
+            row[e.name] = safe_fdiv(record[:"#{e.key}_total"], record[:memberhip_count]) || 0.0
           end
 
           ::Swars::FinalInfo.win_or_lose.each do |e|
