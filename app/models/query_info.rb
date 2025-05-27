@@ -14,6 +14,10 @@ class QueryInfo
   OPERATOR_SYNTAX_REGEXP = /\A(?<oprator>#{OPRATOR_KEYS_REGEXP})(?<value>[-\d]\d*)/o # foo:>=-1 にマッチ  # (?<value>[^<>=].*) でも良い
 
   class << self
+    def [](...)
+      parse(...)
+    end
+
     def parse(...)
       new(...).tap(&:parse).freeze
     end
@@ -85,16 +89,26 @@ class QueryInfo
     end
   end
 
+  ################################################################################
+
   def swars_user_key_extractor
-    @cache[:swars_user_key_extractor] ||= Swars::UserKeyExtractor.new(self)
+    @cache[__method__] ||= Swars::UserKeyExtractor.new(self)
   end
 
   def swars_user_key
-    @cache[:swars_user_key] ||= swars_user_key_extractor.extract
+    return @cache[__method__] if @cache.has_key?(__method__)
+    @cache[__method__] ||= swars_user_key_extractor.extract
   end
 
   def swars_user
-    @cache[:swars_user] ||= swars_user_key&.db_record
+    return @cache[__method__] if @cache.has_key?(__method__)
+    @cache[__method__] ||= swars_user_key&.db_record
+  end
+
+  ################################################################################
+
+  def tactic_items
+    @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(value) }.compact
   end
 
   ################################################################################

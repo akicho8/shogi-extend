@@ -9,7 +9,7 @@ module QuickScript
   module Swars
     class TacticBattleAggregator < Aggregator
       def aggregate_now
-        Bioshogi::Analysis::TacticInfo.all_elements.inject({}) do |a, e|
+        target_items.inject({}) do |a, e|
           a.merge(e.key => battle_ids_of(e))
         end
       end
@@ -28,7 +28,7 @@ module QuickScript
             scope = tag.taggings # main_scope は使わず tag から引いている
             progress_start(scope.count.ceildiv(batch_size))
             scope.in_batches(order: :desc, of: batch_size).each.with_index do |scope, batch_index|
-              progress_next
+              progress_next(item.key)
 
               scope = scope.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
               taggable_ids = scope.pluck(:taggable_id)
@@ -78,6 +78,14 @@ module QuickScript
       end
 
       ################################################################################
+
+      def target_items
+        if v = @options[:item_keys]
+          v.collect { |e| Bioshogi::Analysis::TacticInfo.flat_fetch(e) }
+        else
+          Bioshogi::Analysis::TacticInfo.all_elements
+        end
+      end
     end
   end
 end

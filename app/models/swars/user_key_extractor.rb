@@ -48,7 +48,9 @@ module Swars
     # この場合は、本当にウォーズIDかどうか怪しい。入力が間違っている恐れもある。
     def case_any_values_first
       if value = query_info.values.first
-        UserKey[value]
+        if UserKeyValidator.valid?(value)
+          UserKey[value]
+        end
       end
     end
   end

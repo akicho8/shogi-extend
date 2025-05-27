@@ -3,7 +3,11 @@ module Swars
     concern :IndexMod do
       def index
         if request.format.json?
-          import_process_any
+          if primary_battle_key
+            Swars::Importer::BattleImporter.new(key: primary_battle_key).call
+          else
+            many_import_process
+          end
           render json: js_index_options
         end
       end
@@ -31,14 +35,6 @@ module Swars
           end
         end
         hv.merge(super)
-      end
-
-      def import_process_any
-        if primary_battle_key
-          Swars::Importer::BattleImporter.new(key: primary_battle_key).call
-        else
-          many_import_process
-        end
       end
 
       def many_import_process
@@ -92,14 +88,6 @@ module Swars
 
       def look_up_to_page_x
         @look_up_to_page_x ||= (params[:look_up_to_page_x].presence || 1).to_i
-      end
-
-      def current_musers
-        @current_musers ||= query_info.lookup(:muser)
-      end
-
-      def current_ms_tags
-        @current_ms_tags ||= query_info.lookup(:ms_tag)
       end
 
       def exclude_column_names

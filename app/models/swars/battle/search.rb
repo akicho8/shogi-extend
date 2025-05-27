@@ -12,7 +12,7 @@
 module Swars
   class Battle
     class Search
-      CONDITION_BATTLE_ID_ETC = [
+      CONDITION_BATTLE_PRIMARY_KEY = [
         { db_column: :id,    query_key: ["id", "ids"],                                         },
         { db_column: :key,   query_key: ["key", "keys"],                                       },
       ]
@@ -130,7 +130,7 @@ module Swars
       ################################################################################
 
       def case_battle_id_etc
-        CONDITION_BATTLE_ID_ETC.each do |e|
+        CONDITION_BATTLE_PRIMARY_KEY.each do |e|
           if values = qi.lookup_first(e[:query_key])
             @scope = @scope.where(e[:db_column] => values.collect(&:to_s))
           end
