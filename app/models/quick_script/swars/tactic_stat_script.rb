@@ -106,7 +106,7 @@ module QuickScript
         current_items.collect.with_index do |e, i|
           {}.tap do |row|
             row["#"] = i.next
-            row[scope_info.name] = row_name(e.info)
+            row[scope_info.name] = link_to_search_by_item(e.info)
             row["勝率"] = e.win_ratio.try { "%.3f" % self } || ""
             row["頻度"] = e.freq_ratio.try { "%.4f" % self }
 

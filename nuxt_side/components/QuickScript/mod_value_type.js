@@ -23,6 +23,9 @@ export const mod_value_type = {
         if ("_nuxt_link" in value) {
           return "value_type_is_nuxt_link"
         }
+        if ("_nuxt_link2" in value) {
+          return "value_type_is_nuxt_link2"
+        }
         if ("_link_to" in value) {
           return "value_type_is_link_to"
         }

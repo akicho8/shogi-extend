@@ -41,4 +41,10 @@ module StringToolkit
     s = s.slice(/[a-z].{#{length-1}}/i) # アルファベットから初まる length 文字
     s or raise "must not happen"
   end
+
+  def plus_minus_split(s)
+    v = split(s).group_by { |e| !e.start_with?("-") }
+    v = v.transform_values { |e| e.collect { |e| e.delete_prefix("-") } }
+    [true, false].inject({}) { |a, e| a.merge(e => (v[e] || []).uniq) }
+  end
 end

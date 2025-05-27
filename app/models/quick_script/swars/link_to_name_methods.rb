@@ -1,33 +1,26 @@
 module QuickScript
   module Swars
     module LinkToNameMethods
-      def row_name(item)
-        link_to_name(item, item.name)
+      # 棋譜検索へのリンク
+      def link_to_search_by_item(item)
+        link_to_search_by_name(item.name)
       end
 
-      def row_battle_ids(item)
-        if false
-          link_to_name(item, item_battle_ids(item).size)
-        else
-          item_battle_ids(item).size.to_s
-        end
+      def link_to_search_by_name(name, options = {})
+        link_to_search_by_name_query(name, name, options)
       end
 
-      def link_to_name(item, name)
-        ids = item_battle_ids(item)
-        if ids.empty?
-          name
-        else
-          { _nuxt_link: { name: name, to: { path: "/swars/search", query: { query: "id:" + ids.join(",") } } } }
-        end
+      def link_to_search_by_name_query(name, query, options = {})
+        { _nuxt_link2: name, _v_bind: { to: { path: "/swars/search", query: { query: query } }, **options } }
       end
 
-      def item_battle_ids(item)
-        item_battle_ids_hash[item.key] || []
+      # 発掘数
+      def battle_ids_found_count(item)
+        (battle_ids_hash[item.key] || []).size
       end
 
-      def item_battle_ids_hash
-        @item_battle_ids_hash ||= TacticBattleAggregator.new.aggregate
+      def battle_ids_hash
+        @battle_ids_hash ||= TacticBattleAggregator.new.aggregate || {}
       end
     end
   end

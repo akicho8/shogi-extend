@@ -5,6 +5,7 @@ module QuickScript
       SprintWinRateScript,
       TacticListScript,
       TacticStatScript,
+      TacticCrossScript,
       CrossSearchScript,
       GradeStandardScoreScript,
       CrawlerBatchScript,

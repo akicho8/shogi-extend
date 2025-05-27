@@ -16,7 +16,7 @@ module QuickScript
         options.merge({
             :verbose     => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
             :batch_size  => Rails.env.local? ? 5000 : 1000,
-            :batch_limit => nil,
+            :batch_limit => Float::INFINITY,
           })
       end
 

@@ -20,4 +20,12 @@ RSpec.describe StringToolkit do
   it "secure_random_urlsafe_base64_token" do
     assert { StringToolkit.secure_random_urlsafe_base64_token.length == 11 }
   end
+
+  it "plus_minus_split" do
+    assert { StringToolkit.plus_minus_split("a -b c -d") == {true => ["a", "c"], false => ["b", "d"]} }
+    assert { StringToolkit.plus_minus_split("a")         == {true => ["a"], false => []} }
+    assert { StringToolkit.plus_minus_split("-a")        == {true => [], false => ["a"]} }
+    assert { StringToolkit.plus_minus_split("")          == {true => [], false => []} }
+    assert { StringToolkit.plus_minus_split("a b a")     == {true => ["a", "b"], false => []} }
+  end
 end

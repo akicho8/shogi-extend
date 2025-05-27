@@ -111,10 +111,8 @@ module QuickScript
           main_scope.in_batches(of: batch_size, order: :desc).each.with_index do |scope, batch_index|
             progress_next
 
-            if batch_limit
-              if batch_index >= batch_limit
-                break
-              end
+            if batch_index >= batch_limit
+              break
             end
 
             scope = condition_add(scope)

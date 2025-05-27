@@ -52,12 +52,12 @@ module QuickScript
       def human_rows
         current_items.collect do |item|
           {}.tap do |row|
-            row["名前"] = row_name(item)
+            row["名前"] = link_to_search_by_item(item)
             row["勝率"] = tactics_hash.dig(item.key, :win_ratio).try { "%.3f" % self } || ""
             row["頻度"] = tactics_hash.dig(item.key, :freq_ratio).try { "%.4f" % self } || "0" # 0 は文字列にしておかないと b-table の並び替えがバグる
             row["ｽﾀｲﾙ"] = item.style_info.name
             row["種類"] = item.human_name
-            row["発掘"] = row_battle_ids(item)
+            row["発掘"] = battle_ids_found_count(item)
             row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
             row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-standard-score",     query: { tag: item.name }, }, }, }
             row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }

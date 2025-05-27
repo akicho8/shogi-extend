@@ -39,6 +39,7 @@ class MainBatch
     QuickScript::Swars::TacticJudgeAggregator.new.cache_write  # 戦法一覧・戦法勝率ランキング
     QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法に対応する対局を収集する
     QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
+    QuickScript::Swars::TacticCrossScript.new.cache_write      # 将棋ウォーズ戦法人気ランキング (棋力別)
 
     # チェック
     Swars::SystemValidator.new.call
