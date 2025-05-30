@@ -18,7 +18,7 @@ module QuickScript
         ids = []
         ids = finder(ids, item, :win_only_conditon)
         ids = finder(ids, item, :general_conditon)
-        ids = finder(ids, item, :base_conditon)
+        ids = finder(ids, item, :base_condition)
         ids
       end
 
@@ -28,7 +28,7 @@ module QuickScript
             scope = tag.taggings # main_scope は使わず tag から引いている
             progress_start(scope.count.ceildiv(batch_size))
             scope.in_batches(order: :desc, of: batch_size).each.with_index do |scope, batch_index|
-              progress_next(item.key)
+              progress_next("#{item.key} #{condition_method}")
 
               scope = scope.where(taggable_type: "Swars::Membership", context: "#{item.tactic_key}_tags")
               taggable_ids = scope.pluck(:taggable_id)
@@ -54,7 +54,7 @@ module QuickScript
       ################################################################################
 
       def need_size
-        (@options[:need_size] || (Rails.env.local? ? 2 : 50)).to_i
+        @options[:need_size] || (Rails.env.local? ? 2 : 100)
       end
 
       ################################################################################
@@ -65,15 +65,15 @@ module QuickScript
         scope = general_conditon(scope)
       end
 
-      # それで見つからない場合もあるので「負け」の対局も探す
+      # それで見つからない場合は勝ち条件を外す
       def general_conditon(scope)
-        scope = scope.joins(battle: :imode).where(::Swars::Imode.arel_table[:key].eq(:normal))
-        scope = base_conditon(scope)
+        scope = scope.joins(battle: :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
+        scope = base_condition(scope)
       end
 
-      # それで見つからなかったら全部とるけど野良は絶対とする
-      def base_conditon(scope)
-        scope = scope.joins(battle: :xmode).where(::Swars::Xmode.arel_table[:key].eq(:"野良"))
+      # それでも見つからない場合は野良条件を外す
+      def base_condition(scope)
+        scope = scope.joins(battle: :imode).where(::Swars::Imode.arel_table[:key].eq(:normal))
         scope = scope.joins(:grade).order(::Swars::Grade.arel_table[:priority])
       end
 
