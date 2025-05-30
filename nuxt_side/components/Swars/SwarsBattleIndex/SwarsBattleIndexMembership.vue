@@ -27,7 +27,11 @@ export default {
   },
   methods: {
     new_query(name) {
-      return [this.membership.user.key, `tag:${name}`].join(" ")
+      if (false) {
+        return [this.membership.user.key, `tag:${name}`].join(" ")
+      } else {
+        return name
+      }
     },
   },
   computed: {
