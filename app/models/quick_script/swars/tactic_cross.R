@@ -10,6 +10,8 @@ library(htmlwidgets)
 api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 
+visible_names <- c("居飛車", "振り飛車", "急戦", "持久戦")
+
 # 棋力の表示順
 rank_order <- c(
   "10級", "9級", "8級", "7級", "6級", "5級", "4級", "3級", "2級", "1級",
@@ -20,11 +22,12 @@ rank_order <- c(
 
 message("凡例リスト読み込み: 開始")
 target_names_json <- system(
-  "cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossLegendGenerator.generate'",
+  "cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'",
   intern = TRUE
 )
 target_names <- fromJSON(paste(target_names_json, collapse = ""))
 message("凡例リスト読み込み: 完了")
+# target_names <- visible_names
 
 # データ取得と整形 ------------------------------------------------------------
 
@@ -89,9 +92,9 @@ for (name in target_names) {
     textfont = list(color = ~label_color, size = 16),
     hovertext = ~hover,
     hoverinfo = "text",
-    visible = if (name %in% c("居飛車", "振り飛車", "急戦", "持久戦")) TRUE else "legendonly",
-    marker = list(size = 12, symbol = ~symbol),
-    line = list(width = 1, shape = "spline")
+    visible = if (name %in% visible_names) TRUE else "legendonly",
+    marker = list(size = 12, symbol = ~symbol, opacity = 0.8),
+    line = list(width = 2, shape = "spline")
   )
 }
 
@@ -112,6 +115,7 @@ fig <- layout(
   ),
   yaxis = list(
     title = "",
+    # type = "log",
     titlefont = list(size = 20, color = "#b0b0b0"),
     showgrid = TRUE,
     gridcolor = "#303030",
@@ -131,7 +135,19 @@ fig <- layout(
   font = list(color = "white"),
   plot_bgcolor = "#202020",
   paper_bgcolor = "#202020",
-  margin = list(l = 100, r = 200, t = 100, b = 100)
+  margin = list(l = 100, r = 200, t = 100, b = 100),
+  annotations = list(
+    list(
+      text = "🦉右の凡例を<b>2回</b>ダブルクリックすると切り替えれるぞ",
+      xref = "paper",
+      yref = "paper",
+      x = 0.5,
+      y = -0.06,  # y=0より小さいと下に表示される
+      showarrow = FALSE,
+      font = list(size = 12, color = "#b0b0b0"),
+      align = "left"
+    )
+  )
 )
 
 # 出力保存 ------------------------------------------------------------
