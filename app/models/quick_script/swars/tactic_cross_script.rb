@@ -24,7 +24,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_link_to", name: "グラフ", params: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
+          { type: "t_nuxt_link", name: "全体",   params: { to: { path: "/lab/swars/tactic-stat" }, }, },
+          { type: "t_link_to",   name: "グラフ", params: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
         ]
       end
 

@@ -21,7 +21,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_link_to", name: "分布図", params: { href: "/lab/swars/tactic-stat.html", target: "_self", }, },
+          { type: "t_nuxt_link", name: "棋力別", params: { to: { path: "/lab/swars/tactic-cross" }, }, },
+          { type: "t_link_to",   name: "分布図", params: { href: "/lab/swars/tactic-stat.html", target: "_self", }, },
         ]
       end
 
