@@ -33,17 +33,8 @@
 
 # 外部から fetch("http://localhost:3000/w.json?query=DevUser1").then(r => r.json()).then(r => console.log(r)) できるかどうかで確認できる
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    # if Rails.env.production? || Rails.env.staging?
-    #   origins "www.shogi-extend.com"
-    # else
-    # end
-
-    # origins "*"                 # クッキーが欲しいときはそのサーバーを明示的に指定する必要があり)
-
-    if Rails.env.development?
-      # origins "0.0.0.0:4000"
-      # resource "*", headers: :any, methods: [:head, :get, :post, :patch, :put, :options], credentials: true
+  if Rails.env.development?
+    allow do
       origins *[
         # (ENV["DOMAIN"] || "localhost") + ":4000",
         "localhost:4000",
@@ -56,12 +47,29 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         methods: [:get, :post, :put, :patch, :delete, :options, :head],
         credentials: true,
       }
-    else
+    end
+  end
+
+  if Rails.env.staging?
+    allow do
       origins "*"
-      resource "*", {
+      resource "/api/general/*", {
         headers: :any,
         methods: [:get, :post, :put, :patch, :delete, :options, :head],
       }
+    end
+
+    allow do
+      origins "https://shogi-flow.xyz"
+      resource "/api/*", { headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true, }
+      resource "/lab/*", { headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true, }
+    end
+  end
+
+  if Rails.env.production?
+    allow do
+      origins "*"
+      resource "*", { headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], }
     end
   end
 end

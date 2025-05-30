@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>CORS テスト</title>
+</head>
+<body>
+  <h1>CORS テストページ</h1>
+  <button id="testButton">API を叩く</button>
+
+  <pre id="result" style="white-space: pre-wrap; border: 1px solid #ccc; padding: 1em;"></pre>
+
+  <script>
+    document.getElementById("testButton").addEventListener("click", () => {
+      // fetch("https://shogi-flow.xyz/api/adapter/record_create.json", {
+      // fetch("https://www.shogi-extend.com/api/adapter/record_create", {
+      fetch("https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=ki2", {
+        method: "POST",
+        credentials: "include", // Cookie 付きで送る
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById("result").textContent = `エラー: ${err.message}`;
+        console.error("Fetch error:", err);
+      });
+    });
+  </script>
+</body>
+</html>
