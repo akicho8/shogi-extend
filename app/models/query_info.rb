@@ -111,6 +111,14 @@ class QueryInfo
     @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(value) }.compact
   end
 
+  def grade_infos
+    @cache[__method__] ||= values.collect { |value| Swars::GradeInfo.lookup(value) }.compact
+  end
+
+  def preset_infos
+    @cache[__method__] ||= values.collect { |value| PresetInfo.lookup(value) }.compact
+  end
+
   ################################################################################
 
   private

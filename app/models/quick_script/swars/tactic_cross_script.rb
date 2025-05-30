@@ -10,7 +10,7 @@
 module QuickScript
   module Swars
     class TacticCrossScript < Base
-      include LinkToNameMethods
+      include SwarsSearchHelperMethods
       include HelperMethods
 
       self.title        = "将棋ウォーズ戦法人気ランキング (棋力別)"
@@ -24,8 +24,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_nuxt_link", name: "全体",   params: { to: { path: "/lab/swars/tactic-stat" }, }, },
-          { type: "t_link_to",   name: "グラフ", params: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
+          { name: "全体",   _v_bind: { tag: "nuxt-link", to: { path: "/lab/swars/tactic-stat" }, }, },
+          { name: "グラフ", _v_bind: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
         ]
       end
 
@@ -198,7 +198,7 @@ module QuickScript
           link_opts = {}
           link_opts[:class] = "has-text-weight-bold"
           link_opts[:style] = "color: #{palette_from_item_key[key]}"
-          link_to_search_by_name_query(options[:name] || key, key, link_opts)
+          item_name_query_search_link(options[:name] || key, key, link_opts)
         else
           if options[:inactive_blank]
             zero_with_space # テーブル列幅が変動するのを防ぐため (一行目で型を判断しているため空だと都合が悪い)
@@ -211,7 +211,7 @@ module QuickScript
             else
               link_opts[:class] = "is_decoration_off"
             end
-            link_to_search_by_name_query(options[:name] || key, key, link_opts)
+            item_name_query_search_link(options[:name] || key, key, link_opts)
           end
         end
       end

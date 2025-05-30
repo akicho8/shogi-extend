@@ -14,10 +14,10 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
 
   template(slot="end")
     template(v-for="e in QS.params.header_link_items")
-      template(v-if="e.type === 't_nuxt_link'")
-        b-navbar-item(tag="nuxt-link" v-bind="e.params") {{e.name}}
-      template(v-if="e.type === 't_link_to'")
-        b-navbar-item(tag="a" v-bind="e.params") {{e.name}}
+      // ここは、
+      //   QuickScriptViewValue(:value="e" tag="b-navbar-item")
+      // みたいにしたかったけど Vue2 ではルートが1つしかないと動かないため断念する
+      b-navbar-item(v-bind="e._v_bind" v-html="e.name")
 
     b-navbar-item(tag="a" :href="QS.current_api_url_general" target="_blank" v-if="QS.params.general_json_link_show") JSON
     b-navbar-item(tag="a" :href="QS.current_api_url_internal" target="_blank" v-if="development_p") API

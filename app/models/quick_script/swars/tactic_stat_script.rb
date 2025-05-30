@@ -7,7 +7,7 @@
 module QuickScript
   module Swars
     class TacticStatScript < Base
-      include LinkToNameMethods
+      include SwarsSearchHelperMethods
       include HelperMethods
 
       self.title        = "将棋ウォーズ戦法勝率ランキング"
@@ -21,8 +21,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { type: "t_nuxt_link", name: "棋力別", params: { to: { path: "/lab/swars/tactic-cross" }, }, },
-          { type: "t_link_to",   name: "分布図", params: { href: "/lab/swars/tactic-stat.html", target: "_self", }, },
+          { name: "棋力別", _v_bind: { tag: "nuxt-link", to: { path: "/lab/swars/tactic-cross" }, }, },
+          { name: "分布図", _v_bind: { href: "/lab/swars/tactic-stat.html", target: "_self", }, },
         ]
       end
 
@@ -107,7 +107,7 @@ module QuickScript
         current_items.collect.with_index do |e, i|
           {}.tap do |row|
             row["#"] = i.next
-            row[scope_info.name] = link_to_search_by_item(e.info)
+            row[scope_info.name] = item_search_link(e.info)
             row["勝率"] = e.win_ratio.try { "%.3f" % self } || ""
             row["頻度"] = e.freq_ratio.try { "%.4f" % self }
 
@@ -119,9 +119,9 @@ module QuickScript
             row["ｽﾀｲﾙ"]   = e.style_name
             row["種類"]   = e.info.human_name
 
-            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面",     to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
-            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",       to: { path: "/lab/swars/grade-standard-score",     query: { tag: e.info.name }, }, }, }
-            row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: e.info.name }, }, }, }
+            row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(1)] = { _nuxt_link: "棋力帯", _v_bind: { to: { path: "/lab/swars/grade-standard-score",     query: { tag: e.info.name }, }, }, }
+            row[header_blank_column(2)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: e.info.name }, }, }, }
           end
         end
       end

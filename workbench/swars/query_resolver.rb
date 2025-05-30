@@ -1,13 +1,17 @@
 require "#{__dir__}/setup"
 
-current_swars_user = Swars::User.create!.tap(&:ban!)
+user1 = Swars::User.create!(grade_key: "二段").tap(&:ban!)
+user2 = Swars::User.create!(grade_key: "三段")
 
 battles = []
-battles << Swars::Battle.create_with_members!([current_swars_user], {strike_plan: "嬉野流"})
-membership_ids = battles.flat_map(&:memberships).collect(&:id) # => [123251073, 123251074]
+battles << Swars::Battle.create_with_members!([user1, user2], {strike_plan: "嬉野流"})
+membership_ids = battles.flat_map(&:memberships).collect(&:id) # => [123251125, 123251126]
 scope = Swars::Membership.where(id: membership_ids)
-QuickScript::Swars::TacticBattleAggregator.new(scope: scope, item_keys: ["嬉野流"]).cache_write
+QuickScript::Swars::TacticBattleMiningScript.new(scope: scope, item_keys: ["嬉野流"]).cache_write
+QuickScript::Swars::GradeBattleMiningScript.new({}, {scope: scope, grade_keys: ["二段"]}).cache_write
 
+Swars::QueryResolver.resolve(query_info: QueryInfo["初段"]).exists?                                           # => false
+Swars::QueryResolver.resolve(query_info: QueryInfo["二段"]).exists?                                           # => true
 Swars::QueryResolver.resolve(query_info: QueryInfo["嬉野流"]).exists?                                         # => true
 Swars::QueryResolver.resolve(query_info: QueryInfo["id:#{battles.sole.id}"]).exists?                          # => true
 Swars::QueryResolver.resolve(query_info: QueryInfo["ids:#{battles.sole.id}"]).exists?                         # => true
@@ -19,7 +23,10 @@ Swars::QueryResolver.resolve(params: {key: battles.sole.key}).exists?           
 Swars::QueryResolver.resolve(params: {keys: battles.sole.key}).exists?                                        # => true
 Swars::QueryResolver.resolve(params: {all: 1}).exists?                                                        # => true
 Swars::QueryResolver.resolve(params: {ban: 1}).exists?                                                        # => true
-Swars::QueryResolver.resolve(current_swars_user: current_swars_user, query_info: QueryInfo["嬉野流"]).exists? # => true
+Swars::QueryResolver.resolve(current_swars_user: user1, query_info: QueryInfo["嬉野流"]).exists? # => true
 
-# >> 2025-05-27 14:07:10 1/9  11.11 % T1 TacticBattleAggregator 嬉野流
-# >> 2025-05-27T05:07:11.024Z pid=44942 tid=wva INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
+# >> 2025-05-31 12:20:19 1/9  11.11 % T1 TacticBattleMiningScript 嬉野流 win_only_conditon
+# >> 2025-05-31T03:20:20.072Z pid=40590 tid=twm INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
+# >> 2025-05-31 12:20:20 1/1 100.00 % T1 GradeBattleMiningScript 二段 win_only_conditon
+# >> 2025-05-31 12:20:20 1/1 100.00 % T1 GradeBattleMiningScript 二段 general_conditon
+# >> 2025-05-31 12:20:20 1/1 100.00 % T1 GradeBattleMiningScript 二段 base_condition

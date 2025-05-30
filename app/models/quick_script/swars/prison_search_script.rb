@@ -27,10 +27,10 @@ module QuickScript
         pagination_for(current_scope, always_table: false) do |scope|
           scope.collect do |e|
             {
-              "ウォーズID" => { _link_to: { name: e.key, url: e.official_mypage_url }, },
-              "段級位"       => e.grade.name,
+              "ウォーズID" => { _link_to: e.key, _v_bind: { href: e.official_mypage_url }, },
+              "段級位"     => e.grade.name,
               "発見"       => e.ban_at.to_fs(:ymd),
-              ""           => { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: { name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
+              ""           => { _nuxt_link: "棋譜(#{e.memberships.size})", _v_bind: { to: { name: "swars-search", query: { query: e.user_key, page: 1 } }, }, },
             }
           end
         end

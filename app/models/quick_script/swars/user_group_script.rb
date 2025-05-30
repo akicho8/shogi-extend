@@ -120,7 +120,7 @@ EOS
           Rails.logger.tagged(e.key) do
             {}.tap do |row|
               row["名前"] = user_tactics_hash[e.key][:name]
-              row["ウォーズID"] = { _nuxt_link: { name: e.name_with_ban, to: { name: "swars-search", query: { query: e.user_key } }, }, }
+              row["ウォーズID"] = { _nuxt_link: e.name_with_ban, _v_bind: { to: { name: "swars-search", query: { query: e.user_key } }, }, }
               row["最高"] = e.grade.name
               row.update(display_ranks_hash(e))
               row["勝率"] = e.cached_stat.total_judge_stat.win_ratio.try { |e| "%.0f %%" % [e * 100] }
@@ -132,8 +132,8 @@ EOS
               row["主囲い"] = e.cached_stat.simple_matrix_stat.my_defense_tag.try { name }
               row["直近対局"] = e.latest_battled_at&.to_fs(:ymd)
               if Rails.env.local?
-                row["リンク1"] = { _nuxt_link: { name: "棋譜(#{e.memberships.size})", to: { name: "swars-search", query: { query: e.user_key } }, }, }
-                row["リンク2"] = { _nuxt_link: { name: "プレイヤー情報", to: { name: "swars-users-key", params: { key: e.user_key } }, }, }
+                row["リンク1"] = { _nuxt_link: "棋譜(#{e.memberships.size})", _v_bind: { to: { name: "swars-search", query: { query: e.user_key } }, }, }
+                row["リンク2"] = { _nuxt_link: "プレイヤー情報", _v_bind: { to: { name: "swars-users-key", params: { key: e.user_key } }, }, }
                 row["リンク3"] = tag.a("本家", href: e.official_mypage_url, target: "_blank")
                 row["リンク4"] = tag.a("ググる", href: e.google_search_url, target: "_blank")
               end
@@ -377,7 +377,7 @@ end
 # s = s.includes(:grade)
 # rows = s.collect do |e|
 #   row = {}
-#   row["名前"] = { _nuxt_link: { name: e.key, to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
+#   row["名前"] = { _nuxt_link: e.key, _v_bind: { to: {name: "swars-users-key", params: { key: e.user_key } }, }, }
 #   row["最高"] = e.grade.name
 #   ::Swars::RuleInfo.each do |rule_info|
 #     row[rule_info.name] = hv.dig(e.user_key, rule_info.key) || "?"

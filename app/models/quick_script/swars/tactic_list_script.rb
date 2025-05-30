@@ -8,7 +8,7 @@
 module QuickScript
   module Swars
     class TacticListScript < Base
-      include LinkToNameMethods
+      include SwarsSearchHelperMethods
       include HelperMethods
 
       class << self
@@ -52,16 +52,16 @@ module QuickScript
       def human_rows
         current_items.collect do |item|
           {}.tap do |row|
-            row["名前"] = link_to_search_by_item(item)
+            row["名前"] = item_search_link(item)
             row["勝率"] = tactics_hash.dig(item.key, :win_ratio).try { "%.3f" % self } || ""
             row["頻度"] = tactics_hash.dig(item.key, :freq_ratio).try { "%.4f" % self } || "0" # 0 は文字列にしておかないと b-table の並び替えがバグる
             row["ｽﾀｲﾙ"] = item.style_info.name
             row["種類"] = item.human_name
-            row["発掘"] = battle_ids_found_count(item)
-            row[header_blank_column(0)] = { _nuxt_link: { name: "判定局面", to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
-            row[header_blank_column(1)] = { _nuxt_link: { name: "棋力帯",   to: { path: "/lab/swars/grade-standard-score",     query: { tag: item.name }, }, }, }
-            row[header_blank_column(2)] = { _nuxt_link: { name: "横断棋譜検索", to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
-            row["親"] = item.parent ? { _nuxt_link: { name: item.parent.name, to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
+            row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
+            row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
+            row[header_blank_column(1)] = { _nuxt_link: "棋力帯", _v_bind: { to: { path: "/lab/swars/grade-standard-score",     query: { tag: item.name }, }, }, }
+            row[header_blank_column(2)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
+            row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
             row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }
           end
         end
@@ -99,6 +99,10 @@ module QuickScript
       # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
       def tactics_hash
         @tactics_hash ||= TacticJudgeAggregator.new.tactics_hash
+      end
+
+      def battle_id_collector
+        @battle_id_collector ||= BattleIdCollector.new
       end
 
       concerning :FilterFunction do

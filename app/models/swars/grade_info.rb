@@ -58,11 +58,18 @@ module Swars
       def key_cast(v)
         if v.kind_of? String
           v = v.tr("０-９", "0-9")
+          v = v.gsub(/\b[一1]段/, "初段")
+          v = v.gsub(/(\d+)(?=段)/) { |s| Bioshogi::KanjiNumber.number_to_kanji(s.to_i) }
+          v = v.gsub(/([十〇一二三四五六八九]+)(?=級)/) { |s| Bioshogi::KanjiNumber.kanji_to_number_string(s) }
           if v.to_i > BEGINNER
             v = BAN_KEY
           end
         end
         v
+      end
+
+      def active_only
+        @active_only ||= values - [ban]
       end
     end
 

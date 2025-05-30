@@ -13,9 +13,11 @@ class MainBatch
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
 
     # 将棋ウォーズ棋譜検索クロール
-    Swars::Crawler::ReserveUserCrawler.call
-    Swars::Crawler::MainActiveUserCrawler.call
-    Swars::Crawler::SemiActiveUserCrawler.call
+    if Rails.env.production?
+      Swars::Crawler::ReserveUserCrawler.call
+      Swars::Crawler::MainActiveUserCrawler.call
+      Swars::Crawler::SemiActiveUserCrawler.call
+    end
 
     # 削除シリーズ
     Kiwi::Lemon.cleanup(execute: true)   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
@@ -32,20 +34,25 @@ class MainBatch
     ShareBoard::ChatMessage.old_only(100.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
 
     # 集計 (TODO: 自動的に cache_write があるクラスを集める……のはやりすぎか)
-    QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布
     QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
     QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
+
+    QuickScript::Swars::GradeAggregator.new.cache_write        # 棋力分布
     QuickScript::Swars::HourlyActiveUserScript.new.cache_write # 時間帯別対局者情報
     QuickScript::Swars::TacticJudgeAggregator.new.cache_write  # 戦法一覧・戦法勝率ランキング
-    QuickScript::Swars::TacticBattleAggregator.new.cache_write # 戦法に対応する対局を収集する
     QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
     QuickScript::Swars::TacticCrossScript.new.cache_write      # 将棋ウォーズ戦法人気ランキング (棋力別)
+
+    # BattleIdMining 系
+    QuickScript::Swars::TacticBattleMiningScript.new.cache_write # 戦法
+    QuickScript::Swars::GradeBattleMiningScript.new.cache_write  # 棋力
+    QuickScript::Swars::PresetBattleMiningScript.new.cache_write # 手合
 
     # チェック
     Swars::SystemValidator.new.call
   end
 
   def staging
-    Swars::Crawler::ReserveUserCrawler.call
+    production
   end
 end

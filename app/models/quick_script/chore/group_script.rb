@@ -8,7 +8,7 @@ module QuickScript
       def call
         rows = all.collect do |e|
           {
-            "グループ" => { _nuxt_link: { name: e.name, to: { path: e.qs_path }, }, },
+            "グループ" => { _nuxt_link: e.name, _v_bind: { to: { path: e.qs_path }, }, },
           }
         end
         simple_table(rows, always_table: true)

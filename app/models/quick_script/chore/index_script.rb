@@ -42,9 +42,9 @@ module QuickScript
         @rows ||= yield_self do
           rows = all_sort(all).collect do |e|
             row = {
-              "項目"     => { _nuxt_link: { name: e.title_for_index, to: { path: e.qs_path }, }, },
+              "項目"     => { _nuxt_link: e.title_for_index, _v_bind: { to: { path: e.qs_path }, }, },
               "内容"     => { :_v_text => e.description, :tag => :span, :class => "is_line_break_on" },
-              "グループ" => { _nuxt_link: { name: e.qs_group_info.name, to: { path: e.qs_group_info.qs_path }, }, },
+              "グループ" => { _nuxt_link: e.qs_group_info.name, _v_bind: { to: { path: e.qs_group_info.qs_path }, }, },
             }
             if admin_user || Rails.env.local?
               row["API"] = tag.a(e.qs_key, href: e.qs_api_url, target: "_blank")

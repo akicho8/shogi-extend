@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
   it "戦法名の場合" do
-    assert { Swars::UserKeySuggestion.message_for("嬉野流") == "最初に特定のウォーズIDで検索してからカスタム検索で嬉野流を選択してください" }
+    assert { Swars::UserKeySuggestion.message_for("嬉野流") == "嬉野流に該当する戦法は見つかりません" }
   end
 
   it "手合割の場合" do
-    assert { Swars::UserKeySuggestion.message_for("二枚落ち") == "最初に特定のウォーズIDで検索してからカスタム検索で二枚落ちを選択してください" }
+    assert { Swars::UserKeySuggestion.message_for("二枚落ち") == "二枚落ちに該当する手合割は見つかりません" }
   end
 
   it "めちゃくちゃな入力" do

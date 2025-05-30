@@ -4,8 +4,13 @@ module Swars
 
     Commands = [
       Command.new { |user_key|
-        if e = Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(user_key) || PresetInfo.lookup(user_key)
-          "最初に特定のウォーズIDで検索してからカスタム検索で#{e.name}を選択してください"
+        if e = Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(user_key)
+          "#{e.name}に該当する#{e.human_name}は見つかりません"
+        end
+      },
+      Command.new { |user_key|
+        if e = PresetInfo.lookup(user_key)
+          "#{e.name}に該当する手合割は見つかりません"
         end
       },
       Command.new { |user_key|

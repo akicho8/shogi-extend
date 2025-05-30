@@ -39,18 +39,15 @@
 
   // --------------------------------------------------------------------------------
 
-  //- 非推奨
   //- { _nuxt_link: {...} }
   template(v-else-if="value_type_guess === 'value_type_is_nuxt_link'")
-    nuxt-link(:to="value['_nuxt_link'].to" :class="value['class']" :style="value['style']") {{value['_nuxt_link'].name}}
-
-  //- { _nuxt_link2: {...} }
-  template(v-else-if="value_type_guess === 'value_type_is_nuxt_link2'")
-    nuxt-link(v-bind="value._v_bind" v-html="value._nuxt_link2")
+    nuxt-link(v-bind="value._v_bind" :class="value['class']" :style="value['style']" v-html="value._nuxt_link")
 
   //- { _link_to: {...} }
   template(v-else-if="value_type_guess === 'value_type_is_link_to'")
-    a(:href="value['_link_to'].url" target="_blank") {{value['_link_to'].name}}
+    a(v-bind="value._v_bind" :class="value['class']" :style="value['style']" v-html="value._link_to")
+
+  // --------------------------------------------------------------------------------
 
   //- "<b>foo</b>"
   template(v-else-if="value_type_guess === 'value_type_is_html'")

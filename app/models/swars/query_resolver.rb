@@ -14,6 +14,8 @@ module Swars
       :resolve_by_params_id,
       :resolve_by_params_key,
       :resolve_by_tactic_items,
+      :resolve_by_grade_infos,
+      :resolve_by_preset_infos,
       :resolve_by_params_all,
       :resolve_by_params_ban,
       :resolve_by_query_id_and_key,
@@ -62,7 +64,23 @@ module Swars
     # つまり「嬉野流 居玉」では、運が良ければ AND 検索になる
     def resolve_by_tactic_items
       if items = query_info.tactic_items.presence
-        ids_ary = items.collect { |e| battle_ids_hash[e.key] }.compact # それぞれの IDs を収集する
+        ids_ary = items.collect { |e| battle_id_collector.tactic_battle_ids_hash[e.key] }.compact # それぞれの IDs を収集する
+        ids = ids_ary.inject { |a, e| a & e }                          # 絞り込み
+        Battle.where(id: ids)
+      end
+    end
+
+    def resolve_by_grade_infos
+      if grade_infos = query_info.grade_infos.presence
+        ids_ary = grade_infos.collect { |e| battle_id_collector.grade_battle_ids_hash[e.key] }.compact # それぞれの IDs を収集する
+        ids = ids_ary.inject { |a, e| a & e }                          # 絞り込み
+        Battle.where(id: ids)
+      end
+    end
+
+    def resolve_by_preset_infos
+      if preset_infos = query_info.preset_infos.presence
+        ids_ary = preset_infos.collect { |e| battle_id_collector.preset_battle_ids_hash[e.key] }.compact # それぞれの IDs を収集する
         ids = ids_ary.inject { |a, e| a & e }                          # 絞り込み
         Battle.where(id: ids)
       end
@@ -134,8 +152,8 @@ module Swars
 
     ################################################################################
 
-    def battle_ids_hash
-      @battle_ids_hash ||= QuickScript::Swars::TacticBattleAggregator.new.aggregate || {}
+    def battle_id_collector
+      @battle_id_collector ||= QuickScript::Swars::BattleIdCollector.new
     end
 
     ################################################################################

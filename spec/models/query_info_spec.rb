@@ -50,4 +50,12 @@ RSpec.describe QueryInfo do
     assert { QueryInfo.parse("foo:==1").lookup_one(:foo)  == { :operator => :eq,     :value => 1 } }
     assert { QueryInfo.parse("foo:!=1").lookup_one(:foo)  == { :operator => :not_eq, :value => 1 } }
   end
+
+  it "tactic_items" do
+    assert { QueryInfo.parse("棒銀").tactic_items.sole.name == "棒銀" }
+  end
+
+  it "grade_infos" do
+    assert { QueryInfo.parse("初段").grade_infos.sole.name == "初段" }
+  end
 end

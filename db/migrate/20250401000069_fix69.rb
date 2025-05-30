@@ -3,7 +3,7 @@ class Fix69 < ActiveRecord::Migration[6.0]
     if Rails.env.local?
     else
       QuickScript::Swars::TacticJudgeAggregator.new.cache_write
-      QuickScript::Swars::TacticBattleAggregator.new.cache_write
+      QuickScript::Swars::TacticBattleMiningScript.new.cache_write
     end
   end
 end

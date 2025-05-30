@@ -9,7 +9,7 @@ RSpec.describe QuickScript::Swars::TacticStatScript, type: :model do
 
   it "works" do
     Swars::Battle.create!(strike_plan: "原始棒銀")
-    QuickScript::Swars::TacticBattleAggregator.new.cache_write
+    QuickScript::Swars::TacticBattleMiningScript.new.cache_write
     QuickScript::Swars::TacticJudgeAggregator.new.cache_write
 
     assert { case1(scope_key: :attack)             }
