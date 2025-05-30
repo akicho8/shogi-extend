@@ -19,6 +19,7 @@ module Swars
       :resolve_by_query_id_and_key,
       :resolve_by_current_swars_user,
       :resolve_by_params_tag_local_only,
+      :resolve_by_unknown,
     ]
 
     attr_reader :context
@@ -39,7 +40,7 @@ module Swars
           break
         end
       end
-      scope || Battle.none
+      scope
     end
 
     def resolve_by_params_id
@@ -97,6 +98,10 @@ module Swars
           Battle.where(id: Membership.tagged_with(v).pluck(:battle_id)) # 1分ぐらいかかる
         end
       end
+    end
+
+    def resolve_by_unknown
+      Battle.none
     end
 
     private

@@ -15,6 +15,6 @@ RSpec.describe Swars::Agent::MyPage, type: :model, swars_spec: true do
   end
 
   it "page_not_found?" do
-    assert { Swars::Agent::MyPage.new(user_key: "_UNKNOWN_USER_", remote_run: true).page_not_found? }
+    assert { Swars::Agent::MyPage.new(user_key: "UNKNOWN_USER_", remote_run: true).page_not_found? }
   end
 end

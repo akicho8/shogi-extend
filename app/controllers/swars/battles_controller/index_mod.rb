@@ -3,23 +3,25 @@ module Swars
     concern :IndexMod do
       def index
         if request.format.json?
-          if primary_battle_key
+          case
+          when primary_battle_key
             Swars::Importer::BattleImporter.new(key: primary_battle_key).call
-          else
-            many_import_process
+          when import_enable?
+            import_run
+          when !current_index_scope.exists? && value = query_info.values.first # 何も引けない かつ __UNKNOWN_USER__ などと形式もおかしいIDの指定がある
+            swars_id_is_invalid_format(value) # 形式からして違う
           end
           render json: js_index_options
         end
       end
 
       # インポートする条件 (重要)
-      #
-      #   1. ウォーズIDが指定されている (Userレコードの有無は関係なし)
-      #   2. ページング中ではないこと
-      #   3. 人間であること
-      #
       def import_enable?
-        current_swars_user_key && params[:page].blank? && !from_crawl_bot?
+        [
+          current_swars_user_key, # 正しい形式のウォーズIDが指定されている (Userレコードの有無は関係なし)
+          params[:page].blank?,   # ページング中ではないこと
+          !from_crawl_bot?,       # 人間であること
+        ].all?
       end
 
       def js_index_options
@@ -37,52 +39,48 @@ module Swars
         hv.merge(super)
       end
 
-      def many_import_process
-        if import_enable?
-          x_delete_process
+      def import_run
+        x_delete_process
 
-          @before_count = nil
-          @after_count = nil
-          if current_swars_user
-            @before_count = current_swars_user.battles.count
-          else
-            # 初回インポートでは User レコードが存在しない
-          end
+        @before_count = nil
+        @after_count = nil
+        if current_swars_user
+          @before_count = current_swars_user.battles.count
+        else
+          # 初回インポートでは User レコードが存在しない
+        end
 
-          if current_swars_user_key
-            # 連続クロール回避
-            # 開発環境で回避させるには rails dev:cache しておくこと
-            # 失敗時は current_swars_user ある場合にのみスキップする
-            # そうしないと「もしかして」メッセージの2度目が表示されない
-            @import_errors = []
-            @import_success = Importer::ThrottleImporter.new(import_params).call
-            import_error_message_build
-            if !@import_success && current_swars_user
-              @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
-              return
-            end
-          end
-
-          # ユーザーが見つからなかったということはウォーズIDを間違えている
-          if !current_swars_user
-            message = UserKeySuggestion.message_for(current_swars_user_key)
-            AppLog.info(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: "#{current_swars_user_key.inspect} #{message}")
-            @xnotice.add(message, type: "is-warning", duration_sec: 5)
+        if current_swars_user_key
+          # 連続クロール回避
+          # 開発環境で回避させるには rails dev:cache しておくこと
+          # 失敗時は current_swars_user ある場合にのみスキップする
+          # そうしないと「もしかして」メッセージの2度目が表示されない
+          @import_errors = []
+          @import_success = Importer::ThrottleImporter.new(import_params).call
+          import_error_message_build
+          if !@import_success && current_swars_user
+            @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
             return
           end
+        end
 
-          # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
+        # ユーザーが見つからなかったということはウォーズIDを間違えている (形式はあっているが本家にない)
+        if !current_swars_user
+          swars_id_is_invalid_format(current_swars_user_key)
+          return
+        end
 
-          if current_swars_user
-            @after_count = current_swars_user.battles.count
-            if hit_count.zero?
-              @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
-            else
-              @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
-            end
-            current_swars_user.search_logs.create!
-            AppLog.debug(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
+        # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
+
+        if current_swars_user
+          @after_count = current_swars_user.battles.count
+          if hit_count.zero?
+            @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
+          else
+            @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
           end
+          current_swars_user.search_logs.create!
+          AppLog.debug(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
         end
       end
 
@@ -116,17 +114,13 @@ module Swars
       def x_delete_process
         if Rails.env.local?
           if params[:x_destroy_all]
-            x_destroy_all
-          end
-        end
-      end
-
-      def x_destroy_all
-        ForeignKey.disabled do
-          User.destroy_all
-          Battle.destroy_all
-          if instance_variable_defined?(:@current_swars_user)
-            remove_instance_variable(:@current_swars_user)
+            ForeignKey.disabled do
+              User.destroy_all
+              Battle.destroy_all
+              if instance_variable_defined?(:@current_swars_user)
+                remove_instance_variable(:@current_swars_user)
+              end
+            end
           end
         end
       end
@@ -173,6 +167,12 @@ module Swars
             @after_count
           end
         end
+      end
+
+      def swars_id_is_invalid_format(value)
+        message = UserKeySuggestion.message_for(value)
+        AppLog.info(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: "#{value.inspect} #{message}")
+        @xnotice.add(message, type: "is-warning", duration_sec: 5)
       end
     end
   end

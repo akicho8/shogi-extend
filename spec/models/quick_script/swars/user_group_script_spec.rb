@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe QuickScript::Swars::UserGroupScript, type: :model do
   def case1
-    ::Swars::User.create!(key: "a")
-    ::Swars::User.create!(key: "b")
-    ::Swars::User.create!(key: "c")
+    ::Swars::User.create!(key: "user1")
+    ::Swars::User.create!(key: "user2")
+    ::Swars::User.create!(key: "user3")
   end
 
   def inside_options
@@ -12,7 +12,7 @@ RSpec.describe QuickScript::Swars::UserGroupScript, type: :model do
   end
 
   def user_items_text
-    ["(xname) a", "(xname) b"].join("\n")
+    ["(xname) user1", "(xname) user2"].join("\n")
   end
 
   it "通常の出力" do
@@ -30,9 +30,9 @@ RSpec.describe QuickScript::Swars::UserGroupScript, type: :model do
   end
 
   it "順番" do
-    ::Swars::User.create!(key: "alice")
+    ::Swars::User.create!(key: "user1")
     def case1(order_by)
-      QuickScript::Swars::UserGroupScript.new({ user_items_text: "(xname) alice", order_by: order_by }, inside_options).call
+      QuickScript::Swars::UserGroupScript.new({ user_items_text: "(xname) user1", order_by: order_by }, inside_options).call
     end
     assert { case1("grade")     }
     assert { case1("gentleman") }

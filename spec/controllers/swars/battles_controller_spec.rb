@@ -71,8 +71,12 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       case_ok(query: "DevUser1", bs_error_capture_fake: true)
     end
 
-    it "本家でユーザーが存在しない" do
-      case_ok(query: "__unknown__", SwarsUserNotFound: true)
+    it "ウォーズIDの形式が異なる" do
+      case_ok(query: "__UNKNOWN_USER")
+    end
+
+    it "ウォーズIDはあっているが本家でユーザーが存在しない" do
+      case_ok(query: "UNKNOWN_USER", SwarsUserNotFound: true)
     end
   end
 
