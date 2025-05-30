@@ -66,7 +66,7 @@ module Swars
       {
         key: "絶対投了しないマン",
         message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },
-        badge_params: "🪳",
+        badge_params: "🪰",
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.final_info.key == :TIMEOUT
@@ -267,7 +267,7 @@ module Swars
       {
         key: "入玉勝ちマン",
         message: "入玉で勝った",
-        badge_params: "🏈",
+        badge_params: "🪳",
         if_cond: -> m {
           if m.judge_key == "win"
             if m.tag_names_for(:note).include?("入玉")
