@@ -60,8 +60,8 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
   end
 
   def aggregate
-    url = "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
-    # url = "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
+    # url = "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
+    url = "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 
     raw_data = URI.open(url).read
     items = JSON.parse(raw_data)

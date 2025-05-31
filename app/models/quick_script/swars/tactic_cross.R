@@ -7,8 +7,8 @@ library(htmlwidgets)
 # 定数定義 ------------------------------------------------------------
 
 # API エンドポイント（本番とローカルどちらもあり、後者が優先される）
+# api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
-api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 
 visible_names <- c("居飛車", "振り飛車", "急戦", "持久戦")
 
@@ -108,33 +108,33 @@ fig <- layout(
   ),
   xaxis = list(
     title = "",
-    titlefont = list(size = 20, color = "#b0b0b0"),
+    titlefont = list(size = 20, color = "#aaa"),
     showgrid = TRUE,
-    gridcolor = "#303030",
-    tickfont = list(color = "#b0b0b0", size = 18)
+    gridcolor = "#444",
+    tickfont = list(color = "#aaa", size = 18)
   ),
   yaxis = list(
     title = "",
     # type = "log",
-    titlefont = list(size = 20, color = "#b0b0b0"),
+    titlefont = list(size = 20, color = "#aaa"),
     showgrid = TRUE,
-    gridcolor = "#303030",
-    tickfont = list(color = "#b0b0b0", size = 18)
+    gridcolor = "#444",
+    tickfont = list(color = "#aaa", size = 18)
   ),
   legend = list(
     x = 1.02,
     y = 1,
-    bgcolor = "#202020",
+    bgcolor = "#333",
     font = list(color = "#ffffff", size = 16)
   ),
   hoverlabel = list(
-    bgcolor = "#202020",
-    font = list(color = "#b0b0b0", size = 20),
-    bordercolor = "#b0b0b0"
+    bgcolor = "#333",
+    font = list(color = "#aaa", size = 20),
+    bordercolor = "#aaa"
   ),
   font = list(color = "white"),
-  plot_bgcolor = "#202020",
-  paper_bgcolor = "#202020",
+  plot_bgcolor = "#333",
+  paper_bgcolor = "#333",
   margin = list(l = 100, r = 200, t = 100, b = 100),
   annotations = list(
     list(
@@ -144,7 +144,7 @@ fig <- layout(
       x = 0.5,
       y = -0.06,  # y=0より小さいと下に表示される
       showarrow = FALSE,
-      font = list(size = 12, color = "#b0b0b0"),
+      font = list(size = 12, color = "#aaa"),
       align = "left"
     )
   )
