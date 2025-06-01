@@ -5,9 +5,9 @@ RSpec.describe QuickScript::Swars::TacticCrossScript, type: :model do
     begin
       user1 = Swars::User.create!(grade_key: "九段")
       user2 = Swars::User.create!(grade_key: "八段")
-      ::Swars::Battle.create_with_members!([user1, user2], {strike_plan: "嬉野流"})
+      ::Swars::Battle.create_with_members!([user1, user2], { strike_plan: "嬉野流" })
 
-      QuickScript::Swars::TacticCrossScript.new({}, {batch_limit: 1}).cache_write
+      QuickScript::Swars::TacticCrossScript.new({}, { batch_limit: 1 }).cache_write
     end
 
     e = QuickScript::Swars::TacticCrossScript.new

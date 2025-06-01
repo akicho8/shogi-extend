@@ -11,7 +11,7 @@ user2 = Swars::User.create!
 battle = ::Swars::Battle.create_with_members!([user1, user2])
 ids = [battle].flat_map { |e| e.memberships.pluck(:id) }
 scope = Swars::Membership.where(id: ids)
-QuickScript::Swars::StyleBattleMiningScript.new({}, {scope: scope, need_size: 1}).cache_write
+QuickScript::Swars::StyleBattleMiningScript.new({}, { scope: scope, need_size: 1 }).cache_write
 tp QuickScript::Swars::StyleBattleMiningScript.new.aggregate
 QuickScript::Swars::StyleBattleMiningScript.new.aggregate[:"王道"] == [battle.id] # => true
 

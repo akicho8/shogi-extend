@@ -4,10 +4,10 @@ require "./setup"
 
 user1 = Swars::User.create!
 user2 = Swars::User.create!
-battle = ::Swars::Battle.create_with_members!([user1, user2], {strike_plan: "棒銀"})
+battle = ::Swars::Battle.create_with_members!([user1, user2], { strike_plan: "棒銀" })
 ids = [battle].flat_map { |e| e.memberships.pluck(:id) }
 scope = Swars::Membership.where(id: ids)
-QuickScript::Swars::TacticBattleMiningScript.new({}, {scope: scope, item_keys: ["棒銀"], need_size: 1}).cache_write
+QuickScript::Swars::TacticBattleMiningScript.new({}, { scope: scope, item_keys: ["棒銀"], need_size: 1 }).cache_write
 tp QuickScript::Swars::TacticBattleMiningScript.new.aggregate
 
 # >> 2025-05-31 15:57:14 1/1 100.00 % T1 TacticBattleMiningScript 棒銀
