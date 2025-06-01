@@ -10,7 +10,7 @@ library(htmlwidgets)
 # api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 
-visible_names <- c("居飛車", "振り飛車", "急戦", "持久戦")
+visible_names <- c("居飛車", "振り飛車") # , "急戦", "持久戦"
 
 # 棋力の表示順
 rank_order <- c(
@@ -21,10 +21,7 @@ rank_order <- c(
 # 凡例（戦法の一覧）を取得 ------------------------------------------------------------
 
 message("凡例リスト読み込み: 開始")
-target_names_json <- system(
-  "cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'",
-  intern = TRUE
-)
+target_names_json <- system("cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'", intern = TRUE)
 target_names <- fromJSON(paste(target_names_json, collapse = ""))
 message("凡例リスト読み込み: 完了")
 # target_names <- visible_names
@@ -89,12 +86,12 @@ for (name in target_names) {
     name = name,
     text = ~label,
     textposition = ~text_position,
-    textfont = list(color = ~label_color, size = 16),
+    textfont = list(color = ~label_color, size = 18),
     hovertext = ~hover,
     hoverinfo = "text",
     visible = if (name %in% visible_names) TRUE else "legendonly",
     marker = list(size = 12, symbol = ~symbol, opacity = 0.8),
-    line = list(width = 2, shape = "spline")
+    line = list(width = 4, shape = "spline")
   )
 }
 
@@ -103,7 +100,7 @@ for (name in target_names) {
 fig <- layout(
   fig,
   title = list(
-    text = "<b>将棋ウォーズ：棋力で変わる戦法の使用率推移</b>",
+    text = "<b>将棋ウォーズ：棋力別に見る戦法使用率の変化</b>",
     font = list(size = 28)
   ),
   xaxis = list(
@@ -129,23 +126,29 @@ fig <- layout(
   ),
   hoverlabel = list(
     bgcolor = "#333",
-    font = list(color = "#aaa", size = 20),
-    bordercolor = "#aaa"
+    font = list(color = "white", size = 20),
+    bordercolor = "white"
   ),
   font = list(color = "white"),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
-  margin = list(l = 100, r = 200, t = 100, b = 100),
+  margin = list(l = 100, r = 200, t = 100, b = 70),
   annotations = list(
     list(
-      text = "🦉右の凡例を<b>2回</b>ダブルクリックすると切り替えれるぞ",
+      text = "🦉ﾀﾞﾌﾞﾙｸﾘｯｸ<b>2回</b>で<br>　切り替えれるぞ",
       xref = "paper",
       yref = "paper",
-      x = 0.5,
-      y = -0.06,  # y=0より小さいと下に表示される
+      x = 1.02,
+      y = 1.05,         # 凡例の上ギリギリを狙う（0.02ずらし）
+      xanchor = "left",
       showarrow = FALSE,
       font = list(size = 12, color = "#aaa"),
-      align = "left"
+      align = "left",
+      # bgcolor = "#333", # 凡例背景色と同じに
+      # borderpad = 2,
+      # bordercolor = "#555",
+      # borderwidth = 1,
+      opacity = 0.95
     )
   )
 )

@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyr)
 library(plotly)
 
-# URL からデータ取得
+# データ取得
 url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
 json_data <- fromJSON(url)
 
@@ -21,9 +21,9 @@ data <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# 棋力の表示順を設定（下から上にしないよう逆順に）
+# 棋力の順序を設定（逆順）
 grade_order_jp <- rev(c(
-  "十段", "九段", "八段", "七段", "六段", "五段", "四段", "三段", "二段", "初段",
+  "九段", "八段", "七段", "六段", "五段", "四段", "三段", "二段", "初段",
   "1級", "2級", "3級", "4級", "5級", "6級", "7級", "8級", "9級", "10級"
 ))
 data$棋力 <- factor(data$棋力, levels = grade_order_jp)
@@ -36,22 +36,27 @@ data_long <- pivot_longer(
   values_to = "value"
 )
 
-# metric の順序を固定
+# metricの順序を固定
 metric_levels <- c("投了", "詰まされ", "時間切れ", "切断逃亡", "入玉", "連続王手の千日手")
 data_long$metric <- factor(data_long$metric, levels = metric_levels)
 
-# 折れ線グラフ（スプライン）にして、色は自動
+# 「10級」の行だけ凡例名を表示するためにtext列を作成
+data_long$text <- ifelse(data_long$棋力 == "10級", as.character(data_long$metric), NA)
+
+# plot_lyで折れ線グラフ（スプライン）
 p <- plot_ly(
   data = data_long,
   x = ~棋力,
   y = ~value,
   color = ~metric,
   type = 'scatter',
-  mode = 'lines+markers',
-  text = ~paste(棋力, metric, ":", scales::percent(value, accuracy = 0.1)),
-  hoverinfo = 'text+name',
+  mode = 'lines+markers+text',
+  text = ~text,
+  textposition = "top center",   # 常にこの位置
+  textfont = list(size = 18, color = "white"),  # テキスト色は白
+  hoverinfo = 'none',
   hoverlabel = list(namelength = 0),
-  line = list(width = 2, shape = "spline"),  # ← スプライン
+  line = list(width = 4, shape = "spline"),
   marker = list(size = 12, opacity = 0.8)
 )
 
@@ -78,7 +83,7 @@ p <- layout(
   ),
   yaxis = list(
     title = "",
-    tickformat = ".0%",  # ← 50% の形式に
+    tickformat = ".0%",
     zeroline = FALSE,
     automargin = TRUE,
     showticklabels = TRUE,
@@ -101,10 +106,10 @@ p <- layout(
     font = list(color = "#222"),
     bordercolor = "white"
   ),
-  margin = list(l = 60, r = 160, t = 100, b = 100)
+  margin = list(l = 100, r = 200, t = 100, b = 70)
 )
 
-# 表示 or 保存
+# 表示または保存
 p <- config(p, displayModeBar = TRUE)
 
 if (interactive()) {

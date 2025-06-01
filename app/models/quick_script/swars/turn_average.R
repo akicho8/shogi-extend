@@ -13,35 +13,38 @@ data <- data.frame(
 )
 
 grade_order_jp <- rev(c(
-  "十段", "九段", "八段", "七段", "六段", "五段", "四段", "三段", "二段", "初段",
+  "九段", "八段", "七段", "六段", "五段", "四段", "三段", "二段", "初段",
   "1級", "2級", "3級", "4級", "5級", "6級", "7級", "8級", "9級", "10級"
 ))
 data$棋力 <- factor(data$棋力, levels = grade_order_jp)
 
 trace_names <- c("衝突", "開戦", "終局")
 
-# 最初の1本目
-name <- trace_names[1]
-p <- plot_ly(
-  data = data,
-  x = ~棋力,
-  y = as.formula(paste0("~", name)),
-  type = "scatter",
-  mode = "lines+markers",
-  name = name,
-  line = list(width = 2, shape = "spline"),
-  marker = list(size = 12, opacity = 0.8),
-  hoverinfo = "skip"
-)
+p <- plot_ly(data = data)
+for (name in trace_names) {
+  y_values <- data[[name]]
 
-# 残り2本を add_trace
-for (name in trace_names[-1]) {
+  # 10級 → 系列名、それ以外 → 空文字（textは点の上に表示する文字。今回は使わないので空でOK）
+  text_labels <- ifelse(data$棋力 == "10級", name, "")
+
+  # hovertextを小数1桁で作る
+  hover_y <- sprintf("%.1f", y_values)
+  hover_text <- hover_y
+
   p <- add_trace(
     p,
-    y = as.formula(paste0("~", name)),
+    x = ~棋力,
+    y = y_values,
+    type = "scatter",
+    mode = "lines+markers+text",
     name = name,
-    line = list(shape = "spline"),
-    hoverinfo = "skip"
+    text = text_labels,
+    textposition = "top center",  # 点上に固定テキスト表示（今回の用途は変えず）
+    textfont = list(size = 18, color = "white"),
+    hoverinfo = "text",
+    hovertext = hover_text,
+    line = list(width = 4, shape = "spline"),
+    marker = list(size = 12, opacity = 0.8)
   )
 }
 
@@ -52,20 +55,20 @@ p <- layout(
     font = list(size = 24, color = "white")
   ),
   xaxis = list(
-    title = "棋力",
     categoryorder = "array",
     categoryarray = grade_order_jp,
     tickfont = list(color = "white"),
     showgrid = TRUE,
-    gridcolor = "#444",  # 薄めの罫線
-    zeroline = FALSE
+    gridcolor = "#444",
+    zeroline = FALSE,
+    title = ""
   ),
   yaxis = list(
-    title = "手数",
     tickfont = list(color = "white"),
     showgrid = TRUE,
-    gridcolor = "#444",  # 薄めの罫線
-    zeroline = FALSE
+    gridcolor = "#444",
+    zeroline = FALSE,
+    title = ""
   ),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
@@ -76,8 +79,12 @@ p <- layout(
     yanchor = "top",
     orientation = "v"
   ),
-  margin = list(l = 60, r = 100, t = 100, b = 100),
-  hovermode = FALSE
+  hoverlabel = list(
+    bgcolor = "#333",
+    font = list(color = "white", size = 20),
+    bordercolor = "#333"
+  ),
+  margin = list(l = 70, r = 70, t = 100, b = 70)
 )
 
 p <- config(p, displayModeBar = TRUE)

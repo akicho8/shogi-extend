@@ -13,7 +13,12 @@ df <- df[df$名前 != "力戦" & df$名前 != "居玉", ]
 df <- df[0.3 <= df$勝率 & df$勝率 <= 0.7, ]
 
 # 色分け用ベクトル作成
-df$color <- ifelse(df$種類 == "戦法", hcl(h = 240, c = 90, l = 70), hcl(h = 0,  c = 90, l = 70))
+
+df$color <- ifelse(
+  df$種類 == "戦法",
+  hcl(h = 0, c = 0, l = 80),  # 明るめのグレー（ほぼ白に近い）
+  hcl(h = 0, c = 0, l = 50)   # 中間のグレー
+)
 
 # plot_ly の設定
 p <- plot_ly(
@@ -24,7 +29,7 @@ p <- plot_ly(
   mode = 'text',
   text = ~名前,
   hoverinfo = 'none',
-  textfont = ~list(color = df$color, size = 16)
+  textfont = ~list(color = df$color, size = 18)
 )
 
 # layout を適用
@@ -44,7 +49,7 @@ p <- layout(
     linecolor = "#444"
   ),
   yaxis = list(
-    title = list(text = "勝率 (%)", font = list(color = "white", size = 20)),
+    title = list(text = "勝率（％）", font = list(color = "white", size = 20)),
     tickfont = list(color = "white"),
     gridcolor = "#444",
     zerolinecolor = "#444",

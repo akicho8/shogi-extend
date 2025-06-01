@@ -43,8 +43,8 @@ p_plotly <- layout(
   p_plotly,
 
   font = list(color = "white"),
-  plot_bgcolor = "#181818",
-  paper_bgcolor = "#181818",
+  plot_bgcolor = "#333",
+  paper_bgcolor = "#333",
 
   title = list(
     text = "<b>将棋ウォーズ：時間帯による棋力の傾向分析</b>",

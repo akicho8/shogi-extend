@@ -53,8 +53,8 @@ p_plotly <- layout(
   p_plotly,
 
   font = list(color = "white"),       # その他テキストの色（白）
-  plot_bgcolor = "#181818",           # グラフ領域の背景色（暗めのグレー）
-  paper_bgcolor = "#181818",           # グラフ全体の背景色（暗めのグレー）
+  plot_bgcolor = "#333",           # グラフ領域の背景色（暗めのグレー）
+  paper_bgcolor = "#333",           # グラフ全体の背景色（暗めのグレー）
 
   # グラフのタイトルを設定
   title = list(
