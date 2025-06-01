@@ -29,6 +29,7 @@ module QuickScript
       TacticBattleMiningScript,
       GradeBattleMiningScript,
       PresetBattleMiningScript,
+      StyleBattleMiningScript,
     ]
   end
 end

@@ -51,11 +51,10 @@ RSpec.describe QueryInfo do
     assert { QueryInfo.parse("foo:!=1").lookup_one(:foo)  == { :operator => :not_eq, :value => 1 } }
   end
 
-  it "tactic_items" do
-    assert { QueryInfo.parse("棒銀").tactic_items.sole.name == "棒銀" }
-  end
-
-  it "grade_infos" do
+  it "各属性の値が直接指定された場合" do
+    assert { QueryInfo.parse("棒銀").item_infos.sole.name == "棒銀" }
     assert { QueryInfo.parse("初段").grade_infos.sole.name == "初段" }
+    assert { QueryInfo.parse("平手").preset_infos.sole.name == "平手" }
+    assert { QueryInfo.parse("王道").style_infos.sole.name == "王道" }
   end
 end

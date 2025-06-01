@@ -18,6 +18,10 @@ module QuickScript
       def preset_battle_ids_hash
         @preset_battle_ids_hash ||= PresetBattleMiningScript.new.aggregate || {}
       end
+
+      def style_battle_ids_hash
+        @style_battle_ids_hash ||= StyleBattleMiningScript.new.aggregate || {}
+      end
     end
   end
 end

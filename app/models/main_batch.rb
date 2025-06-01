@@ -47,6 +47,7 @@ class MainBatch
     QuickScript::Swars::TacticBattleMiningScript.new.cache_write # 戦法
     QuickScript::Swars::GradeBattleMiningScript.new.cache_write  # 棋力
     QuickScript::Swars::PresetBattleMiningScript.new.cache_write # 手合
+    QuickScript::Swars::StyleBattleMiningScript.new.cache_write  # スタイル
 
     # チェック
     Swars::SystemValidator.new.call

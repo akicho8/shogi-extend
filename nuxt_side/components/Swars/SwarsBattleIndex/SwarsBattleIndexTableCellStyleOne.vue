@@ -24,8 +24,12 @@ export default {
       return this.APP.StyleInfo.fetch(this.style_key).name
     },
     new_query() {
-      const style_pair = [this.search_column_name, this.style_key].join(":")
-      return [this.APP.xi.current_swars_user_key, style_pair].join(" ")
+      if (false) {
+        const style_pair = [this.search_column_name, this.style_key].join(":")
+        return [this.APP.xi.current_swars_user_key, style_pair].join(" ")
+      } else {
+        return this.style_key
+      }
     },
   },
 }

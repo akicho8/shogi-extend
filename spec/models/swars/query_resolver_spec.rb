@@ -9,12 +9,17 @@ RSpec.describe Swars::QueryResolver, type: :model, swars_spec: true do
     battles << Swars::Battle.create_with_members!([user1, user2], {strike_plan: "嬉野流"})
     membership_ids = battles.flat_map(&:memberships).collect(&:id) # => [1, 2]
     scope = Swars::Membership.where(id: membership_ids)
-    QuickScript::Swars::TacticBattleMiningScript.new(scope: scope, item_keys: ["嬉野流"]).cache_write
+    QuickScript::Swars::TacticBattleMiningScript.new({}, scope: scope, item_keys: ["嬉野流"]).cache_write
     QuickScript::Swars::GradeBattleMiningScript.new({}, {scope: scope, grade_keys: ["二段"]}).cache_write
+    QuickScript::Swars::PresetBattleMiningScript.new({}, {scope: scope, preset_keys: ["平手"]}).cache_write
+    QuickScript::Swars::StyleBattleMiningScript.new({}, {scope: scope, style_keys: ["王道"]}).cache_write
 
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo["初段"]).none? }
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo["二段"]).exists? }
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo.parse("嬉野流")).exists? }
+    assert { Swars::QueryResolver.resolve(query_info: QueryInfo["平手"]).exists? }
+    assert { Swars::QueryResolver.resolve(query_info: QueryInfo["王道"]).exists? }
+
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo.parse("id:#{battles.sole.id}")).exists? }
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo.parse("ids:#{battles.sole.id}")).exists? }
     assert { Swars::QueryResolver.resolve(query_info: QueryInfo.parse("key:#{battles.sole.key}")).exists? }

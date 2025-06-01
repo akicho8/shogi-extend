@@ -107,7 +107,7 @@ class QueryInfo
 
   ################################################################################
 
-  def tactic_items
+  def item_infos
     @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(value) }.compact
   end
 
@@ -117,6 +117,10 @@ class QueryInfo
 
   def preset_infos
     @cache[__method__] ||= values.collect { |value| PresetInfo.lookup(value) }.compact
+  end
+
+  def style_infos
+    @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::StyleInfo.lookup(value) }.compact
   end
 
   ################################################################################
