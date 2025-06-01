@@ -24,6 +24,11 @@ module QuickScript
       PrisonNewScript,
 
       HourlyActiveUserScript,
+
+      # Mining 系
+      TacticBattleMiningScript,
+      GradeBattleMiningScript,
+      PresetBattleMiningScript,
     ]
   end
 end

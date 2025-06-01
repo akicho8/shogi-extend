@@ -9,7 +9,7 @@
 module QuickScript
   module Swars
     class PresetBattleMiningScript < BattleIdMining
-      self.title        = "手合割毎対局IDsの確認"
+      self.title        = "【収集専用】手合割毎対局IDs収集"
       self.description  = "手合割毎の対局IDsを集計確認する"
 
       def need_size_default

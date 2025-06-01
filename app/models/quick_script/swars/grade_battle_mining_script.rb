@@ -9,7 +9,7 @@
 module QuickScript
   module Swars
     class GradeBattleMiningScript < BattleIdMining
-      self.title        = "棋力毎対局IDsの確認"
+      self.title        = "【収集専用】棋力毎対局IDs収集"
       self.description  = "棋力毎の対局IDsを集計確認する"
 
       def need_size_default

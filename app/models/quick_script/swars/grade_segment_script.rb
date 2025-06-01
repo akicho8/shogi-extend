@@ -8,7 +8,7 @@
 module QuickScript
   module Swars
     class GradeSegmentScript < Base
-      self.title = "棋力別の情報"
+      self.title = "【集計専用】棋力別の平均手数や負け方の内訳"
       self.description = "「棋力別の平均手数」と「負け方の実態と傾向」用の集計を行う"
       self.json_link = true
 

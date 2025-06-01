@@ -11,7 +11,7 @@
 module QuickScript
   module Swars
     class TacticBattleMiningScript < BattleIdMining
-      self.title        = "戦法毎対局IDsの確認"
+      self.title        = "【収集専用】戦法毎対局IDs収集"
       self.description  = "戦法毎の対局IDsを集計確認する"
 
       def need_size_default
