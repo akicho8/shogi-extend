@@ -348,7 +348,7 @@ module QuickScript
           items = items.collect do |e|
             freq_count = e[:win] + e[:lose] + e[:draw]
             win_ratio  = e[:win].fdiv(freq_count)
-            item = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:tag_name])
+            item = Bioshogi::Analysis::TacticInfo.flat_fetch(e[:tag_name])
             membership_count = membership_counts_hash[e[:grade_key]]
             {
               "棋力"      => e[:grade_key],
