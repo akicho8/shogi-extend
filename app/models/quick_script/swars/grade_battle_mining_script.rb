@@ -8,7 +8,10 @@
 #
 module QuickScript
   module Swars
-    class GradeBattleMiningScript < BattleIdMining
+    class GradeBattleMiningScript < Base
+      include BatchMethods
+      include BattleIdMining
+
       self.title        = "【収集専用】棋力毎対局IDs収集"
       self.description  = "棋力毎の対局IDsを集計確認する"
 
@@ -27,8 +30,6 @@ module QuickScript
       end
 
       concerning :AggregateMethods do
-        include BatchMethods
-
         def aggregate_now
           progress_start(grade_infos.size)
           grade_infos.inject({}) do |a, e|

@@ -2,13 +2,13 @@
 
 module QuickScript
   module Swars
-    class BattleIdMining < Base
-      self.abstract_script = true
-
+    concern :BattleIdMining do
       include SwarsSearchHelperMethods
 
-      self.title = "対局IDsの収集と確認"
-      self.json_link = true
+      included do
+        self.title = "対局IDsの収集と確認"
+        self.json_link = true
+      end
 
       def as_general_json
         aggregate

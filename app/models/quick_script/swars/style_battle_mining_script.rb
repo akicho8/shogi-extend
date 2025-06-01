@@ -8,7 +8,10 @@
 #
 module QuickScript
   module Swars
-    class StyleBattleMiningScript < BattleIdMining
+    class StyleBattleMiningScript < Base
+      include BatchMethods
+      include BattleIdMining
+
       self.title        = "【収集専用】スタイル毎対局IDs収集"
       self.description  = "スタイル毎の対局IDsを集計確認する"
 
@@ -17,7 +20,7 @@ module QuickScript
       end
 
       def human_rows
-        rows = aggregate.sort_by { |key, _| StyleInfo[key].code }
+        rows = aggregate.sort_by { |key, _| ::Swars::StyleInfo[key].code }
         rows.collect do |key, battle_ids|
           {
             "スタイル" => item_name_search_link(key),
@@ -26,13 +29,7 @@ module QuickScript
         end
       end
 
-      # def call
-      #   "a"
-      # end
-
       concerning :AggregateMethods do
-        include BatchMethods
-
         def aggregate_now
           progress_start(style_infos.size)
           style_infos.inject({}) do |a, e|

@@ -10,8 +10,12 @@
 #
 module QuickScript
   module Swars
-    class TacticBattleMiningScript < BattleIdMining
+    class TacticBattleMiningScript < Base
+      include BatchMethods
+      include BattleIdMining
+
       self.title        = "【収集専用】戦法毎対局IDs収集"
+
       self.description  = "戦法毎の対局IDsを集計確認する"
 
       def need_size_default
@@ -29,8 +33,6 @@ module QuickScript
       end
 
       concerning :AggregateMethods do
-        include BatchMethods
-
         def aggregate_now
           progress_start(target_items.size)
           target_items.inject({}) do |a, e|
