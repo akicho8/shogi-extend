@@ -9,6 +9,8 @@ library(plotly)
 url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
 json_data <- fromJSON(url)
 
+visible_names <- c("投了", "詰まされ")
+
 # データフレーム化
 data <- data.frame(
   棋力             = json_data$棋力,
@@ -43,22 +45,30 @@ data_long$metric <- factor(data_long$metric, levels = metric_levels)
 # 「10級」の行だけ凡例名を表示するためにtext列を作成
 data_long$text <- ifelse(data_long$棋力 == "10級", as.character(data_long$metric), NA)
 
-# plot_lyで折れ線グラフ（スプライン）
-p <- plot_ly(
-  data = data_long,
-  x = ~棋力,
-  y = ~value,
-  color = ~metric,
-  type = 'scatter',
-  mode = 'lines+markers+text',
-  text = ~text,
-  textposition = "top center",   # 常にこの位置
-  textfont = list(size = 18, color = "white"),  # テキスト色は白
-  hoverinfo = 'none',
-  hoverlabel = list(namelength = 0),
-  line = list(width = 4, shape = "spline"),
-  marker = list(size = 12, opacity = 0.8)
-)
+# 空のプロットを作成
+p <- plot_ly()
+
+# 各 metric ごとに trace を追加
+for (name in metric_levels) {
+  df <- filter(data_long, metric == name)
+  p <- add_trace(
+    p,
+    data = df,
+    x = ~棋力,
+    y = ~value,
+    name = name,
+    type = 'scatter',
+    mode = 'lines+markers+text',
+    text = ~text,
+    textposition = "top center",
+    textfont = list(size = 18, color = "white"),
+    hoverinfo = 'none',
+    hoverlabel = list(namelength = 0),
+    line = list(width = 4, shape = "spline"),
+    visible = if (name %in% visible_names) TRUE else "legendonly",
+    marker = list(size = 12, opacity = 0.8)
+  )
+}
 
 # レイアウト設定
 p <- layout(
@@ -67,14 +77,14 @@ p <- layout(
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
   title = list(
-    text = "<b>将棋ウォーズ：棋力別 負け方の実態と傾向</b>",
+    text = "<b>将棋ウォーズ：負け方の実態と傾向</b>",
     font = list(size = 28)
   ),
   xaxis = list(
     title = "",
     categoryorder = "array",
     categoryarray = grade_order_jp,
-    tickfont = list(size = 14, color = "white"),
+    tickfont = list(size = 18, color = "#aaa"),
     automargin = TRUE,
     zeroline = FALSE,
     showline = FALSE,
@@ -90,7 +100,7 @@ p <- layout(
     showline = FALSE,
     showgrid = TRUE,
     gridcolor = "#444",
-    tickfont = list(color = "white")
+    tickfont = list(size = 18, color = "#aaa")
   ),
   legend = list(
     title = list(text = ""),
