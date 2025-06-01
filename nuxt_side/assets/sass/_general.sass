@@ -84,6 +84,13 @@ pre
 .is_decoration_off
   +is_decoration_off
 
+////////// aタグを青くしないけどホバーのときは青くする
+
+.is_hover_only_link_color
+  color: inherit
+  &:hover
+    color: $link
+
 // //////// 主に modal-card-foot のボタンを均等配置にするため
 //
 // .modal-card-foot

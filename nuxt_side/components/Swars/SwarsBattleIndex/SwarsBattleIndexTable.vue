@@ -73,7 +73,7 @@ b-table.SwarsBattleIndexTable(
     | {{row.imode_info.name}}
 
   b-table-column(v-slot="{row}" field="preset_id" :label="APP.ColumnInfo.fetch('preset_key').name" :visible="APP.column_visible_p('preset_key')" sortable centered)
-    nuxt-link(:to="{name: 'swars-search', query: {query: row.preset_info.name}}" @click.native="$sound.play_click()")
+    nuxt-link.is_hover_only_link_color(:to="{name: 'swars-search', query: {query: row.preset_info.name}}" @click.native="$sound.play_click()")
       | {{row.preset_info.name}}
 
   b-table-column(v-slot="{row}" field="battled_at" :label="APP.ColumnInfo.fetch('battled_at').name" :visible="APP.column_visible_p('battled_at')" sortable centered)
