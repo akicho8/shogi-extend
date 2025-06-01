@@ -7,6 +7,8 @@
 module QuickScript
   module Swars
     class GradeStandardScoreScript < Base
+      include SwarsSearchHelperMethods
+
       FrequencyInfo = GradeAggregator::FrequencyInfo
 
       self.title = "将棋ウォーズ棋力分布"
@@ -56,7 +58,7 @@ module QuickScript
       def human_rows
         rows.collect do |row|
           row = row.merge({
-              "棋力"   => { _nuxt_link: row["棋力"], _v_bind: { to: { path: "/lab/swars/cross-search", query: { x_grade_keys: row["棋力"] }, }, }, },
+              "棋力"   => item_name_search_link(row["棋力"]),
               "偏差値" => row["偏差値"].try { "%.0f" % self },
               "上位"   => row["上位"].try { "%.3f %%" % (self * 100.0) },
               "割合"   => row["割合"].try { "%.3f %%" % (self * 100.0) },
