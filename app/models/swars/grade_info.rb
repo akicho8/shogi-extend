@@ -61,8 +61,10 @@ module Swars
           v = v.gsub(/\b[一1]段/, "初段")
           v = v.gsub(/(\d+)(?=段)/) { |s| Bioshogi::KanjiNumber.number_to_kanji(s.to_i) }
           v = v.gsub(/([十〇一二三四五六八九]+)(?=級)/) { |s| Bioshogi::KanjiNumber.kanji_to_number_string(s) }
-          if v.to_i > BEGINNER
-            v = BAN_KEY
+          if v.match?(/\A\d+級\z/) # これを入れないとウォーズID「123_456」などが変換されてしまう
+            if v.to_i > BEGINNER
+              v = BAN_KEY
+            end
           end
         end
         v
@@ -87,16 +89,6 @@ module Swars
 
     def el_label
       short_name
-    end
-
-    def kanji_number_dan
-      if name.include?("段")
-        Bioshogi::KanjiNumber.kanji_to_number_string(name)
-      end
-    end
-
-    def secondary_key
-      [short_name, kanji_number_dan]
     end
   end
 end

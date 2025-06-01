@@ -10,7 +10,7 @@ QueryInfo.parse("foo:=").lookup_one(:foo)    # => "="
 QueryInfo.parse("foo:==1").lookup_one(:foo)  # => {operator: :eq, value: 1}
 QueryInfo.parse("foo:!=1").lookup_one(:foo)  # => {operator: :not_eq, value: 1}
 
-QueryInfo.parse("foo tag:a")    # => #<QueryInfo:0x0000000121035b48 @options={available_keys: nil}, @query="foo tag:a", @cache={}, @attributes={tag: ["a"]}, @values=["foo"], @urls=[]>
+QueryInfo.parse("foo tag:a")    # => #<QueryInfo:0x0000000122831418 @options={available_keys: nil}, @query="foo tag:a", @cache={}, @attributes={tag: ["a"]}, @values=["foo"], @urls=[]>
 QueryInfo.parse("id:1,2,3").lookup_first([:ids, :id]) # => ["1", "2", "3"]
 
 QueryInfo.parse("").lookup(:foo) # => nil
@@ -27,3 +27,5 @@ QueryInfo.parse("棒銀").item_infos.sole.name # => "棒銀"
 QueryInfo.parse("初段").grade_infos.sole.name # => "初段"
 QueryInfo.parse("平手").preset_infos.sole.name # => "平手"
 QueryInfo.parse("王道").style_infos.sole.name # => "王道"
+
+QueryInfo.parse("2024_0203").swars_user_key # => <2024_0203>

@@ -14,9 +14,12 @@ RSpec.describe Swars::GradeInfo, type: :model, swars_spec: true do
       assert { Swars::GradeInfo["１０段"].name == "十段" }
     end
 
-    it "段位を省略してもマッチする" do
-      assert { Swars::GradeInfo.fetch("1") == Swars::GradeInfo.fetch("1級") }
-      assert { Swars::GradeInfo.fetch("初") == Swars::GradeInfo.fetch("初段") }
+    it "段位を省略したものをマッチさせてはいけない (ウォーズIDとして使っている場合もあるため曖昧な数値文字列を級位に自動変換してはいけない)" do
+      assert { !Swars::GradeInfo.lookup("1") }
+      assert { !Swars::GradeInfo.lookup("初") }
+
+      assert { !Swars::GradeInfo["443443443"] }
+      assert { !Swars::GradeInfo["2024_0203"] }
     end
   end
 
