@@ -22,7 +22,7 @@ module QuickScript
       self.form_method  = :get
       self.button_label = "絞り込み"
       self.debug_mode   = Rails.env.development?
-      self.general_json_link_show = true
+      self.json_link = true
 
       def form_parts
         super + [

@@ -13,7 +13,7 @@ module QuickScript
       self.description = "将棋ウォーズの棋力帯毎の偏差値を求める"
       self.form_method = :get
       self.button_label = "集計"
-      self.general_json_link_show = true
+      self.json_link = true
 
       def form_parts
         super + [

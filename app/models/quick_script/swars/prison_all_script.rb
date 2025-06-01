@@ -3,7 +3,7 @@ module QuickScript
     class PrisonAllScript < Base
       self.title = "将棋ウォーズ囚人一覧"
       self.description = "囚人をアルファベット順ですべて表示する"
-      self.general_json_link_show = true
+      self.json_link = true
 
       def call
         { :_v_text => users.sort.join(" "), :class => "is_word_break_off" }

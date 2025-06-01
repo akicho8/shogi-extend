@@ -4,7 +4,7 @@ module QuickScript
     class RuleWiseWinRateScript < Base
       self.title = "種類毎の先後勝率"
       self.description = "種類毎の先後勝率を調べる"
-      self.general_json_link_show = true
+      self.json_link = true
 
       # >> |-----------------+----------+----------+--------+--------+------|
       # >> | 種類            | ☗勝率   | ☖勝率   | ☗勝数 | ☖勝数 | 分母 |

@@ -6,7 +6,7 @@ module QuickScript
       include SwarsSearchHelperMethods
 
       self.title        = "対局IDsの収集と確認"
-      self.general_json_link_show = true
+      self.json_link = true
 
       def as_general_json
         aggregate

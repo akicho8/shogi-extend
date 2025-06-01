@@ -2,7 +2,7 @@ module QuickScript
   module Middleware
     concern :GeneralApiMod do
       prepended do
-        class_attribute :general_json_link_show, default: false # JSON のリンクを表示するか？
+        class_attribute :json_link, default: false # JSON のリンクを表示するか？
       end
 
       # このなかで params[:json_type} == "general" なら as_general_json を返す、としたのは設計ミスだった。
@@ -11,10 +11,10 @@ module QuickScript
       # また as_general_json で Hash を返してしまうと、エラーがでることもなく Nuxt 用のパラメータがまざってします。
       # したがって render_format のなかで分岐するのが正しい。
       #
-      # general_json_link_show を定義するのではなく
-      # 単に respond_to?(:as_general_json) なら general_json_link_show: true でいいような気もする
+      # json_link を定義するのではなく
+      # 単に respond_to?(:as_general_json) なら json_link: true でいいような気もする
       def as_json(*)
-        super.merge(general_json_link_show: general_json_link_show)
+        super.merge(json_link: json_link)
       end
 
       def render_format(format)

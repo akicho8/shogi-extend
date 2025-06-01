@@ -6,7 +6,7 @@ module QuickScript
       self.form_method = :get
       self.button_label = "検索"
       self.per_page_default = 100
-      self.general_json_link_show = true
+      self.json_link = true
 
       def form_parts
         super + [

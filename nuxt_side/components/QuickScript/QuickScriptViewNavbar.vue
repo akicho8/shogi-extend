@@ -19,7 +19,7 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
       // みたいにしたかったけど Vue2 ではルートが1つしかないと動かないため断念する
       b-navbar-item(v-bind="e._v_bind" v-html="e.name")
 
-    b-navbar-item(tag="a" :href="QS.current_api_url_general" target="_blank" v-if="QS.params.general_json_link_show") JSON
+    b-navbar-item(tag="a" :href="QS.current_api_url_general" target="_blank" v-if="QS.params.json_link") JSON
     b-navbar-item(tag="a" :href="QS.current_api_url_internal" target="_blank" v-if="development_p") API
     NavbarItemLogin(      v-if="QS.params.login_link_show")
     NavbarItemProfileLink(v-if="QS.params.login_link_show")

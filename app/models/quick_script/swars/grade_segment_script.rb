@@ -10,7 +10,7 @@ module QuickScript
     class GradeSegmentScript < Base
       self.title = "棋力別の情報"
       self.description = "「棋力別の平均手数」と「負け方の実態と傾向」用の集計を行う"
-      self.general_json_link_show = true
+      self.json_link = true
 
       def header_link_items
         super + [

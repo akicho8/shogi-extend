@@ -18,7 +18,7 @@ module QuickScript
       self.form_method  = :get
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local? && false
-      self.general_json_link_show = true
+      self.json_link = true
 
       FREQ_RATIO_GTEQ_DEFAULT = 0.0003
 

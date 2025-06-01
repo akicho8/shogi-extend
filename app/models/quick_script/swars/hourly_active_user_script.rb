@@ -10,7 +10,7 @@ module QuickScript
     class HourlyActiveUserScript < Base
       self.title = "時間帯別対局者情報"
       self.description = "「時間帯別対局者数」と「時間帯別相対棋力」用のデータを準備する"
-      self.general_json_link_show = true
+      self.json_link = true
 
       def header_link_items
         super + [
