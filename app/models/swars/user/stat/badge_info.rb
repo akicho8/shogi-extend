@@ -12,7 +12,7 @@ module Swars
       memory_record [
         ################################################################################ ネガティブ
 
-        { key: "絶対投了しないマン",     icon: "🪰",   message: "悔しかったので時間切れまで放置した",     if_cond: proc { leave_alone_stat.count.positive? } },
+        { key: "絶対投了しないマン",     icon: "🪳",   message: "悔しかったので時間切れまで放置した",     if_cond: proc { leave_alone_stat.count.positive? } },
         { key: "無気力マン",             icon: "🦥",   message: "無気力な対局をした",                     if_cond: proc { lethargy_stat.exist? } },
         { key: "棋力調整マン",           icon: "🩸",   message: "わざと負けて棋力を調整した",             if_cond: proc { skill_adjust_stat.count.positive? } },
         { key: "大長考マン",             icon: "😴",   message: "対局放棄と受け取られかねない長考をした", if_cond: proc { prolonged_deliberation_stat.count.positive? } },
@@ -82,7 +82,7 @@ module Swars
         { key: "カギ囲いマン",           icon: "🗝️",   message: "カギ囲いで勝ち越した",            if_cond: proc { win_stat.exist?(:"カギ囲い") }, },
         { key: "都成マン",               icon: "🪤️",   message: "都成流△3一金で勝ち越した",       if_cond: proc { win_stat.exist?(:"都成流△3一金") }, },
         { key: "居玉勝ちマン",           icon: "🗿",   message: "居玉で勝ち越した",                if_cond: proc { win_stat.exist?(:"居玉") }, },
-        { key: "入玉勝ちマン",           icon: "🪳",   message: "入玉で勝ち越した",                if_cond: proc { win_stat.exist?(:"入玉") }, },
+        { key: "入玉勝ちマン",           icon: "🏈",   message: "入玉で勝ち越した",                if_cond: proc { win_stat.exist?(:"入玉") }, },
 
         ################################################################################ 勝ったときに入るタグ
 
@@ -131,7 +131,7 @@ module Swars
         ################################################################################ 不成
 
         { key: "不成勝ちマン",           icon: "🤡",   message: "不成して勝った",     if_cond: proc { tag_stat.win_with?(:"角不成") || tag_stat.win_with?(:"飛車不成") }  },
-        { key: "不成負けマン",           icon: "🦟",   message: "不成して負けた",     if_cond: proc { tag_stat.lose_with?(:"角不成") || tag_stat.lose_with?(:"飛車不成") }  },
+        { key: "不成負けマン",           icon: "🪰",   message: "不成して負けた",     if_cond: proc { tag_stat.lose_with?(:"角不成") || tag_stat.lose_with?(:"飛車不成") }  },
         { key: "VS不成勝ちマン",         icon: "🦸‍♂️",   message: "不成者をやっつけた", if_cond: proc { op_tag_stat.lose_with?(:"角不成") || op_tag_stat.lose_with?(:"飛車不成") } },
         { key: "VS不成負けマン",         icon: "🥀",   message: "不成者に負けた",     if_cond: proc { op_tag_stat.win_with?(:"角不成") || op_tag_stat.win_with?(:"飛車不成") } },
 
