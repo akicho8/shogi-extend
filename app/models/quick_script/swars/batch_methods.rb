@@ -17,6 +17,7 @@ module QuickScript
             :verbose     => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
             :batch_size  => Rails.env.local? ? 5000 : 1000,
             :batch_limit => Float::INFINITY,
+            :one_shot    => false,
           })
       end
 
@@ -50,6 +51,10 @@ module QuickScript
 
       def batch_limit
         @options[:batch_limit]
+      end
+
+      def one_shot
+        @options[:one_shot]
       end
     end
   end

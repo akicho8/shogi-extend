@@ -116,15 +116,13 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/lab/swars/grade-standard-score" },
-      title: "将棋ウォーズ棋力分布",
-      og_image_key: "quick_script/swars/grade_standard_score_script",
-      description: "偏差値的なのを見たいときにどうぞ",
+      nuxt_link_to: { path: "/lab/swars/standard-score" },
+      title: "将棋ウォーズ偏差値",
+      og_image_key: "quick_script/swars/standard_score_script",
+      description: "自分の偏差値を知りたいときにどうぞ",
       features: [
         "一日ごと更新",
-        # "変動するように最近のだけ出してる",
-        # "戦法や囲いの分布もある",
-        # "人気戦法の対策をすれば勝ちやすいかも？",
+        "本気で取り組んでいる棋力帯の山を対象とする",
       ],
     },
 

@@ -1,13 +1,15 @@
 module QuickScript
   module Swars
     OrderedIndex = [
-      RuleWiseWinRateScript,
-      SprintWinRateScript,
       TacticListScript,
       TacticStatScript,
       TacticCrossScript,
       CrossSearchScript,
-      GradeStandardScoreScript,
+
+      # 分布系
+      UserDistScript,
+      StandardScoreScript,
+
       CrawlerBatchScript,
 
       BattleDownloadScript,
@@ -24,6 +26,10 @@ module QuickScript
       PrisonNewScript,
 
       HourlyActiveUserScript,
+
+      # スプリント先後勝率
+      RuleWiseWinRateScript,
+      SprintWinRateScript,
 
       # Mining 系
       TacticBattleMiningScript,

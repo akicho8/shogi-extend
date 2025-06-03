@@ -83,7 +83,7 @@ tp QuickScript::Base.deep_subclasses
 # >> | QuickScript::Swars::CrawlerBatchScript            |
 # >> | QuickScript::Swars::CrossSearchScript             |
 # >> | QuickScript::Swars::DocumentationScript           |
-# >> | QuickScript::Swars::GradeStandardScoreScript               |
+# >> | QuickScript::Swars::UserDistScript               |
 # >> | QuickScript::Swars::TacticListScript              |
 # >> | QuickScript::Swars::TacticStatScript              |
 # >> | QuickScript::Swars::SearchDefaultScript           |
@@ -176,7 +176,7 @@ tp QuickScript::Base.deep_subclasses
 # >> | QuickScript::Swars::CrawlerBatchScript            |
 # >> | QuickScript::Swars::CrossSearchScript             |
 # >> | QuickScript::Swars::DocumentationScript           |
-# >> | QuickScript::Swars::GradeStandardScoreScript               |
+# >> | QuickScript::Swars::UserDistScript               |
 # >> | QuickScript::Swars::TacticListScript              |
 # >> | QuickScript::Swars::TacticStatScript              |
 # >> | QuickScript::Swars::SearchDefaultScript           |

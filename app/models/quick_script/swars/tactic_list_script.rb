@@ -59,7 +59,7 @@ module QuickScript
             row["種類"] = item.human_name
             row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
             row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
-            row[header_blank_column(1)] = { _nuxt_link: "棋力帯", _v_bind: { to: { path: "/lab/swars/grade-standard-score",     query: { tag: item.name }, }, }, }
+            # row[header_blank_column(1)] = { _nuxt_link: "棋力帯", _v_bind: { to: { path: "/lab/swars/user-dist",     query: { tag: item.name }, }, }, }
             row[header_blank_column(2)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
             row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
             row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }

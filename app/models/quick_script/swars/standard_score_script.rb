@@ -1,0 +1,248 @@
+# frozen-string-literal: true
+
+# 一次集計
+# rails r QuickScript::Swars::StandardScoreScript.new.cache_write
+# rails r 'QuickScript::Swars::StandardScoreScript.new({}, batch_size: Float::INFINITY).cache_write'
+# rails r 'QuickScript::Swars::StandardScoreScript.new({}, batch_limit: 1).cache_write'
+
+module QuickScript
+  module Swars
+    class StandardScoreScript < Base
+      include SwarsSearchHelperMethods
+      include BatchMethods
+
+      self.title = "将棋ウォーズ偏差値"
+      self.description = "将棋ウォーズのガチ勢棋力帯を対象にした偏差値を求める"
+      self.form_method  = :get
+      self.button_label = "集計"
+      self.json_link = true
+
+      SEPARATOR = "/"
+
+      def header_link_items
+        super + [
+          { name: "詳細グラフ", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
+          { name: "全体グラフ", _v_bind: { href: "/lab/swars/standard-score.html", target: "_self", }, },
+        ]
+      end
+
+      def form_parts
+        super + [
+          {
+            :label        => "表示",
+            :key          => :scope2_key,
+            :type         => :radio_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => Scope2Info.form_part_elems,
+                :default => scope2_key,
+              }
+            },
+          },
+        ]
+      end
+
+      def call
+        values = [
+          { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: { "max-width" => "800px", margin: "auto" }, :class => "is-unselectable is-centered", },
+          simple_table(human_rows, always_table: true),
+        ]
+        v_stack(values, style: { "gap" => "1rem" })
+      end
+
+      # http://localhost:3000/api/lab/swars/standard-score.json?json_type=general
+      def as_general_json
+        ::Swars::GradeInfo.active_only.flat_map do |grade_info|
+          {
+            "棋力"   => grade_info.name,
+            "人数"   => freq_count(grade_info),
+          }
+        end
+      end
+
+      def human_rows
+        rows.collect do |e|
+          row = {}
+          row["棋力"]   = item_name_search_link(e["棋力"])
+          if e["偏差値"]
+            row["偏差値"] = e["偏差値"].try { "%.0f" % self }
+            row["上位"]   = e["上位"].try { "%.3f %%" % (self * 100.0) }
+            row["割合"]   = e["割合"].try { "%.3f %%" % (self * 100.0) }
+            if Rails.env.local?
+              row["基準値"] = e["基準値"].try { "%.3f" % self }
+            end
+          end
+          row["人数"] = e["人数"]
+          row
+        end
+      end
+
+      def rows
+        sd_merged_grade_infos.collect do |e|
+          {}.tap do |row|
+            row["棋力"] = e[:grade_info].name
+            if e["偏差値"]
+              if Rails.env.local?
+                row["階級値"] = e["階級値"]
+                row["基準値"] = e["基準値"]
+              end
+              row["偏差値"] = e["偏差値"]
+              row["上位"] = e["累計相対度数"]
+              row["割合"] = e["相対度数"]
+            end
+            row["人数"] = freq_count(e[:grade_info])
+          end
+        end
+      end
+
+      def sd_merged_grade_infos
+        @sd_merged_grade_infos ||= yield_self do
+          av = grade_infos.collect do |grade_info|
+            { :grade_info => grade_info, "度数" => freq_count(grade_info) }
+          end
+          if scope2_info.key == :sd
+            av = StandardDeviation.call(av)
+          end
+          av
+        end
+      end
+
+      def grade_infos
+        @grade_infos ||= yield_self do
+          if scope2_info.key == :sd
+            ::Swars::GradeInfo.find_all(&:visualize)
+          else
+            ::Swars::GradeInfo.active_only
+          end
+        end
+      end
+
+      ################################################################################
+
+      def scope2_key
+        Scope2Info.lookup_key_or_first(params[:scope2_key])
+      end
+
+      def scope2_info
+        Scope2Info.fetch(scope2_key)
+      end
+
+      ################################################################################
+
+      def user_total_count
+        grade_infos.sum { |e| freq_count(e) }
+      end
+
+      ################################################################################
+
+      def title
+        "#{super} (#{user_total_count}人)"
+      end
+
+      ################################################################################
+
+      concerning :ChartMethods do
+        def chart_source
+          @chart_source ||= grade_infos.reverse.collect do |grade_info|
+            { :name => grade_info.name, :count => freq_count(grade_info) }
+          end
+        end
+
+        def custom_chart_params
+          {
+            data: {
+              labels: chart_source.collect { |e| e[:name].remove(/[段級]/) },
+              datasets: [
+                { data: chart_source.collect { |e| e[:count] } },
+              ],
+            },
+            scales_y_axes_ticks: nil,
+            scales_y_axes_display: false,
+          }
+        end
+      end
+
+      ################################################################################
+
+      concerning :AggregateAccessorMethods do
+        def freq_count(grade_info)
+          aggregate[grade_info.key.to_sym] || 0
+        end
+      end
+
+      ################################################################################
+
+      concerning :AggregateMethods do
+        class_methods do
+          def mock_setup
+            alice = ::Swars::User.create!
+            bob = ::Swars::User.create!
+            carol = ::Swars::User.create!
+            battles = []
+            battles << ::Swars::Battle.create!(strike_plan: "GAVA角") do |e|
+              e.memberships.build(user: alice, grade_key: "九段")
+              e.memberships.build(user: bob, grade_key: "初段")
+            end
+            battles << ::Swars::Battle.create!(strike_plan: "GAVA角") do |e|
+              e.memberships.build(user: alice, grade_key: "九段")
+              e.memberships.build(user: carol, grade_key: "初段")
+            end
+            battles
+          end
+        end
+
+        def aggregate_now
+          # # 間違った方法
+          # counts = Hash.new(0)
+          # progress_start(main_scope.count.ceildiv(batch_size))
+          # main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
+          #   progress_next
+          #   if batch_index >= batch_limit
+          #     break
+          #   end
+          #   scope = condition_add(scope)
+          #   res = scope.select(::Swars::Membership.arel_table[:user_id]).distinct.count # ユニークにする段階が早すぎて不整合が埋まれる
+          #   counts.update(res) { |_, a, b| a + b }
+          # end
+          # return counts.transform_keys { |e| e.join(SEPARATOR) }
+
+          if one_shot
+            scope = condition_add(main_scope)
+            counts = scope.select(::Swars::Membership.arel_table[:user_id]).distinct.count # distinct.count = count.keys.size
+          else
+            counts = Hash.new { |h, k| h[k] = Set.new }
+            progress_start(main_scope.count.ceildiv(batch_size))
+            main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
+              progress_next
+              if batch_index >= batch_limit
+                break
+              end
+              scope = condition_add(scope)
+              res = scope.group(::Swars::Membership.arel_table[:user_id]).count
+              res.keys.each do |grade_key, user_id|
+                counts[grade_key] << user_id
+              end
+            end
+            counts = counts.transform_values(&:size)
+          end
+        end
+
+        def condition_add(s)
+          s = s.joins(:grade)
+          if false
+            s = s.joins(:battle => [:imode, :xmode, :rule])
+            s = s.where(::Swars::Imode.arel_table[:key].eq("normal"))
+            s = s.where(::Swars::Xmode.arel_table[:key].eq("指導"))
+            s = s.where(::Swars::Rule.arel_table[:key].eq("ten_min"))
+            s = s.where(::Swars::Grade.arel_table[:key].eq("十段"))
+          end
+          # s = s.group(::Swars::Imode.arel_table[:key])
+          # s = s.group(::Swars::Xmode.arel_table[:key])
+          # s = s.group(::Swars::Rule.arel_table[:key])
+          s = s.group(::Swars::Grade.arel_table[:key])
+        end
+      end
+    end
+  end
+end

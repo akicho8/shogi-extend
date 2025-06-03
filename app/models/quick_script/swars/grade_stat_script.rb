@@ -6,7 +6,7 @@ module QuickScript
       self.qs_invisible = true
 
       def call
-        redirect_to "/lab/swars/grade-standard-score"
+        redirect_to "/lab/swars/standard-score"
       end
     end
   end
