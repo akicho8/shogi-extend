@@ -13,8 +13,6 @@ module QuickScript
 
       self.title = "将棋ウォーズ偏差値"
       self.description = "将棋ウォーズのガチ勢棋力帯を対象にした偏差値を求める"
-      self.form_method  = :get
-      self.button_label = "集計"
       self.json_link = true
 
       SEPARATOR = "/"
@@ -23,23 +21,6 @@ module QuickScript
         super + [
           { name: "詳細グラフ", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
           { name: "全体グラフ", _v_bind: { href: "/lab/swars/standard-score.html", target: "_self", }, },
-        ]
-      end
-
-      def form_parts
-        super + [
-          {
-            :label        => "表示",
-            :key          => :scope2_key,
-            :type         => :radio_button,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :elems   => Scope2Info.form_part_elems,
-                :default => scope2_key,
-              }
-            },
-          },
         ]
       end
 
@@ -63,18 +44,16 @@ module QuickScript
 
       def human_rows
         rows.collect do |e|
-          row = {}
-          row["棋力"]   = item_name_search_link(e["棋力"])
-          if e["偏差値"]
+          {}.tap do |row|
+            row["棋力"]   = item_name_search_link(e["棋力"])
             row["偏差値"] = e["偏差値"].try { "%.0f" % self }
             row["上位"]   = e["上位"].try { "%.3f %%" % (self * 100.0) }
             row["割合"]   = e["割合"].try { "%.3f %%" % (self * 100.0) }
             if Rails.env.local?
               row["基準値"] = e["基準値"].try { "%.3f" % self }
             end
+            row["人数"] = e["人数"]
           end
-          row["人数"] = e["人数"]
-          row
         end
       end
 
@@ -82,15 +61,13 @@ module QuickScript
         sd_merged_grade_infos.collect do |e|
           {}.tap do |row|
             row["棋力"] = e[:grade_info].name
-            if e["偏差値"]
-              if Rails.env.local?
-                row["階級値"] = e["階級値"]
-                row["基準値"] = e["基準値"]
-              end
-              row["偏差値"] = e["偏差値"]
-              row["上位"] = e["累計相対度数"]
-              row["割合"] = e["相対度数"]
+            if Rails.env.local?
+              row["階級値"] = e["階級値"]
+              row["基準値"] = e["基準値"]
             end
+            row["偏差値"] = e["偏差値"]
+            row["上位"] = e["累計相対度数"]
+            row["割合"] = e["相対度数"]
             row["人数"] = freq_count(e[:grade_info])
           end
         end
@@ -101,31 +78,14 @@ module QuickScript
           av = grade_infos.collect do |grade_info|
             { :grade_info => grade_info, "度数" => freq_count(grade_info) }
           end
-          if scope2_info.key == :sd
-            av = StandardDeviation.call(av)
-          end
-          av
+          StandardDeviation.call(av)
         end
       end
 
       def grade_infos
         @grade_infos ||= yield_self do
-          if scope2_info.key == :sd
-            ::Swars::GradeInfo.find_all(&:visualize)
-          else
-            ::Swars::GradeInfo.active_only
-          end
+          ::Swars::GradeInfo.find_all(&:visualize)
         end
-      end
-
-      ################################################################################
-
-      def scope2_key
-        Scope2Info.lookup_key_or_first(params[:scope2_key])
-      end
-
-      def scope2_info
-        Scope2Info.fetch(scope2_key)
       end
 
       ################################################################################
