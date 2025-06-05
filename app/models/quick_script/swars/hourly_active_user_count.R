@@ -6,31 +6,27 @@ library(htmlwidgets)
 library(viridisLite)
 
 # JSONデータを取得するURL
-# url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general" # このコードは消すな
+api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
 
 # URLからJSONデータを取得して、Rの「データフレーム」（表形式のデータ）に変換
-data <- fromJSON(url)
+data <- fromJSON(api_url)
 
 # 曜日の順番を決める
 weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
 
 # 「曜日」の列を「factor」（順番のあるカテゴリ）として登録して、表示順を指定
-data$day_of_week <- factor(data$day_of_week, levels = weekday_order)
+data$曜日 <- factor(data$曜日, levels = weekday_order)
 
 # 「時間」（0〜23時）も順番通りに並ぶようにfactor化（文字列として扱う）
-data$hour <- factor(data$hour, levels = as.character(0:23))
+data$時 <- factor(data$時, levels = as.character(0:23))
 
 p_plotly <- plot_ly(
   data = data,
-  x = ~day_of_week,
-  y = ~hour,
-  z = ~relative_uniq_user_count,
+  x = ~曜日,
+  y = ~時,
+  z = ~人数,
   type = "heatmap",
-  # colors = colorRamp(c("blue", "cyan", "green", "yellow", "orange", "red")),
-  # colors = colorRamp(brewer.pal(11, "Spectral")),
-  # colors = colorRamp(viridisLite::turbo(100)),
-  # colors = c("white", "darkred"),
   colors = colorRamp(viridisLite::turbo(100)),
   showscale = TRUE,
   hoverinfo = "skip",
@@ -52,24 +48,15 @@ p_plotly <- plot_ly(
 p_plotly <- layout(
   p_plotly,
 
-  font = list(color = "white"),       # その他テキストの色（白）
-  plot_bgcolor = "#333",           # グラフ領域の背景色（暗めのグレー）
-  paper_bgcolor = "#333",           # グラフ全体の背景色（暗めのグレー）
+  font = list(color = "white"),
+  plot_bgcolor = "#333",
+  paper_bgcolor = "#333",
 
   # グラフのタイトルを設定
-  title = list(
-    text = "<b>将棋ウォーズ：時間帯別対局者数の推移</b>", # タイトルの文字（太字にして表示）
-    font = list(size = 28),
-    x = 0.5                            # 横方向の中央に配置（0〜1の範囲）
-  ),
+  title = list(text = "<b>将棋ウォーズ：時間帯別対局者数の推移</b>", font = list(size = 28), x = 0.5),
 
   # グラフ全体の余白を設定（単位はピクセル）
-  margin = list(
-    t = 80,   # 上の余白（タイトルがかぶらないように）
-    l = 60,   # 左の余白（時間ラベルが見えるように）
-    r = 80,   # 右の余白（カラーバーを表示するためのスペース）
-    b = 60    # 下の余白（曜日ラベルが見えるように）
-  ),
+  margin = list(t = 80, l = 60, r = 80, b = 60),
 
   # x軸（横軸：曜日）の設定
   xaxis = list(

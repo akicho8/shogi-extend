@@ -4,7 +4,8 @@ library(plotly)
 library(htmlwidgets)
 
 # データ取得
-df <- fromJSON("https://www.shogi-extend.com/api/lab/swars/tactic-list.json?json_type=general")
+api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-list.json?json_type=general"
+df <- fromJSON(api_url)
 
 # フィルタリング
 df <- df[!is.na(df$勝率), ]

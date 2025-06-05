@@ -6,8 +6,8 @@ library(tidyr)
 library(plotly)
 
 # データ取得
-url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
-json_data <- fromJSON(url)
+api_url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
+json_data <- fromJSON(api_url)
 
 visible_names <- c("投了", "詰まされ")
 

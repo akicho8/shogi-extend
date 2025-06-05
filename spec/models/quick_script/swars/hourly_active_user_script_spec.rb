@@ -13,9 +13,9 @@ RSpec.describe QuickScript::Swars::HourlyActiveUserScript, type: :model do
       @battles = []
       yield
       scope = Swars::Membership.where(id: @battles.flat_map(&:membership_ids))
-      object = QuickScript::Swars::HourlyActiveUserScript.new({}, batch_limit: 1, scope: scope)
+      object = QuickScript::Swars::HourlyActiveUserScript.new({}, batch_size: 1, scope: scope)
       object.cache_write
-      object.call.sort_by { |e| e[:hour] }
+      object.call.sort_by { |e| e[:"時"] }
     end
 
     user1 = Swars::User.create!
@@ -34,8 +34,8 @@ RSpec.describe QuickScript::Swars::HourlyActiveUserScript, type: :model do
       entry("2025-01-01 01:00", user1, user2, "五段", "五段")
     end
     assert { rows.size == 2 }
-    assert { rows[0][:relative_strength] == 0.0 }
-    assert { rows[1][:relative_strength] == 1.0 }
+    assert { rows[0] == {:"時" => 0, :"人数" => 2, :"強さ" => -1.0, :"曜日" => "水", } }
+    assert { rows[1] == {:"時" => 1, :"人数" => 2, :"強さ" =>  1.0, :"曜日" => "水", } }
 
     # 同じ時間帯に2度対局しても1度の対局と見なすが、日付が異なった場合は別の対局とする
     rows = aggregate do

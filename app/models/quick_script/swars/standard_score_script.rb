@@ -19,7 +19,7 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "詳細グラフ", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
+          { name: "詳細グラフ", _v_bind: { href: "/lab/swars/user-dist.html",      target: "_self", }, },
           { name: "全体グラフ", _v_bind: { href: "/lab/swars/standard-score.html", target: "_self", }, },
         ]
       end
@@ -169,6 +169,7 @@ module QuickScript
 
           if one_shot
             scope = condition_add(main_scope)
+            scope = scope.group(::Swars::Grade.arel_table[:key])
             counts = scope.select(::Swars::Membership.arel_table[:user_id]).distinct.count # distinct.count = count.keys.size
           else
             counts = Hash.new { |h, k| h[k] = Set.new }
@@ -179,8 +180,16 @@ module QuickScript
                 break
               end
               scope = condition_add(scope)
-              res = scope.group(::Swars::Membership.arel_table[:user_id]).count
-              res.keys.each do |grade_key, user_id|
+              if false
+                # 場合によっては集計するので遅い (個数も必要な場合はこちらだけど個数はいらない)
+                scope = scope.group(::Swars::Grade.arel_table[:key])
+                scope = scope.group(::Swars::Membership.arel_table[:user_id])
+                res = scope.count.keys
+              else
+                # ユニークなペアがほしいだけならこちらの方がシンプルで速い
+                res = scope.distinct.pluck(::Swars::Grade.arel_table[:key], ::Swars::Membership.arel_table[:user_id])
+              end
+              res.each do |grade_key, user_id|
                 counts[grade_key] << user_id
               end
             end
@@ -200,7 +209,7 @@ module QuickScript
           # s = s.group(::Swars::Imode.arel_table[:key])
           # s = s.group(::Swars::Xmode.arel_table[:key])
           # s = s.group(::Swars::Rule.arel_table[:key])
-          s = s.group(::Swars::Grade.arel_table[:key])
+          s
         end
       end
     end

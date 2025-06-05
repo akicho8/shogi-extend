@@ -37,4 +37,10 @@ RSpec.describe Swars::GradeInfo, type: :model, swars_spec: true do
       assert { Swars::GradeInfo.fetch("9999級").ban? }
     end
   end
+
+  it "score" do
+    assert { Swars::GradeInfo["十段"].score    == 40 }
+    assert { Swars::GradeInfo["九段"].score    == 39 }
+    assert { Swars::GradeInfo["10000級"].score == 0  }
+  end
 end

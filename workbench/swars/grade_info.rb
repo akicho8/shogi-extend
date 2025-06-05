@@ -12,3 +12,7 @@ Swars::GradeInfo["１０段"].name # => "十段"
 
 Swars::GradeInfo["1"]           # => nil
 Swars::GradeInfo["123_456"]     # => nil
+
+Swars::GradeInfo["十段"].score    # => 40
+Swars::GradeInfo["九段"].score    # => 39
+Swars::GradeInfo["10000級"].score # => 0

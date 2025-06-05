@@ -1,8 +1,8 @@
 library(jsonlite)
 library(plotly)
 
-url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
-json_data <- fromJSON(url)
+api_url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
+json_data <- fromJSON(api_url)
 
 data <- data.frame(
   棋力 = json_data$棋力,

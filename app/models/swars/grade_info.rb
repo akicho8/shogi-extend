@@ -83,6 +83,10 @@ module Swars
       code
     end
 
+    def score
+      @score ||= self.class.values.last.code - code
+    end
+
     def short_name
       @short_name ||= name.remove(/[段級]/)
     end

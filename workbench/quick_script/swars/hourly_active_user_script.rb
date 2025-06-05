@@ -15,13 +15,13 @@ def entry(battled_at, user1, user2, grade_key1, grade_key2)
   end
 end
 
-def aggregate
+def aggregate(options = {})
   @battles = []
   yield
   scope = Swars::Membership.where(id: @battles.flat_map(&:membership_ids))
-  object = QuickScript::Swars::HourlyActiveUserScript.new({}, batch_limit: 1, scope: scope)
+  object = QuickScript::Swars::HourlyActiveUserScript.new({}, {scope: scope, batch_size: 1, **options})
   object.cache_write
-  object.call.sort_by { |e| e[:hour] }
+  object.call.sort_by { |e| e[:"時"] }
 end
 
 user1 = Swars::User.create!
@@ -39,27 +39,31 @@ rows = aggregate do
   entry("2025-01-01 00:00", user1, user2, "二段", "四段")
   entry("2025-01-01 01:00", user1, user2, "五段", "五段")
 end
-rows.size                       # => 2
-rows[0][:relative_strength] == 0 # => true
-rows[1][:relative_strength] == 1 # => true
+rows[0] == {:"時" => 0, :"人数" => 2, :"強さ" => -1.0, :"曜日" => "水", } # => true
+rows[1] == {:"時" => 1, :"人数" => 2, :"強さ" =>  1.0, :"曜日" => "水", } # => true
 
 # 同じ時間帯に2度対局しても1度の対局と見なすが、日付が異なった場合は別の対局とする
 rows = aggregate do
   entry("2025-01-01 00:00", user1, user2, "二段", "四段")
   entry("2025-01-02 00:59", user1, user2, "二段", "四段")
 end
-tp rows
 rows.size == 2                  # => true
-
-# entry("2025-01-01 00:00", user1, user2, "二段", "四段")
-# entry("2025-01-01 01:00", user1, user2, "二段", "四段")
-# >> 2025-05-18 08:56:01 1/1 100.00 % T1 HourlyActiveUserScript
-# >> 2025-05-17T23:56:01.533Z pid=75156 tid=1ncs INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
-# >> 2025-05-18 08:56:02 1/1 100.00 % T1 HourlyActiveUserScript
-# >> 2025-05-18 08:56:03 1/1 100.00 % T1 HourlyActiveUserScript
-# >> |------+-------------+-------------+---------------+-----------------+-------------------+---------------------+---------------------+--------------------------|
-# >> | hour | day_of_week | grade_total | grade_average | uniq_user_count | relative_strength | grade_average_major | grade_average_minor | relative_uniq_user_count |
-# >> |------+-------------+-------------+---------------+-----------------+-------------------+---------------------+---------------------+--------------------------|
-# >> |    0 | 祝日        |          14 |           7.0 |               2 |               0.0 | 三段                |               100.0 |                      0.0 |
-# >> |    0 | 木          |          14 |           7.0 |               2 |               0.0 | 三段                |               100.0 |                      0.0 |
-# >> |------+-------------+-------------+---------------+-----------------+-------------------+---------------------+---------------------+--------------------------|
+# >> 2025-06-05 22:45:48 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-05 22:45:48 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:48 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:48 4/4 100.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05T13:45:49.003Z pid=78875 tid=1qsz INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
+# >> 2025-06-05 22:45:49 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-05 22:45:49 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:49 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:49 4/4 100.00 % T0 HourlyActiveUserScript
+# >> |----+------+------+------|
+# >> | 時 | 人数 | 強さ | 曜日 |
+# >> |----+------+------+------|
+# >> |  0 |    2 | -1.0 | 水   |
+# >> |  1 |    2 |  1.0 | 水   |
+# >> |----+------+------+------|
+# >> 2025-06-05 22:45:50 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-05 22:45:50 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:50 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-05 22:45:50 4/4 100.00 % T0 HourlyActiveUserScript

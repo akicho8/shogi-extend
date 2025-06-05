@@ -7,22 +7,21 @@ library(viridisLite)
 
 # --- データの読み込み ----------------------------------------------
 
-# url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
+api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+data <- fromJSON(api_url)
 
-data <- fromJSON(url)
+weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
 
-weekday_order <- c("日", "月", "火", "水", "木", "金", "土", "祝日")
+data$曜日 <- factor(data$曜日, levels = weekday_order)
 
-data$day_of_week <- factor(data$day_of_week, levels = weekday_order)
-
-data$hour <- factor(data$hour, levels = as.character(0:23))
+data$時 <- factor(data$時, levels = as.character(0:23))
 
 p_plotly <- plot_ly(
   data = data,
-  x = ~day_of_week,
-  y = ~hour,
-  z = ~relative_strength,
+  x = ~曜日,
+  y = ~時,
+  z = ~強さ,
   type = "heatmap",
   colors = colorRamp(viridisLite::turbo(100)),
   showscale = TRUE,

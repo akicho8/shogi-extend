@@ -1,10 +1,13 @@
+#!/usr/bin/env Rscript
+
 library(jsonlite)
 library(plotly)
 library(htmlwidgets)
 
 # JSONの取得
-url <- "http://localhost:3000/api/lab/swars/user_dist.json?json_type=general"
-json_data <- fromJSON(url)
+# api_url <- "http://localhost:3000/api/lab/swars/user_dist.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/user_dist.json?json_type=general"
+json_data <- fromJSON(api_url)
 
 # データフレーム作成
 df <- as.data.frame(json_data)
