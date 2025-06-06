@@ -14,8 +14,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "視覚化1", _v_bind: { href: "/lab/swars/lose-pattern.html", target: "_self" }, },
-          { name: "視覚化2", _v_bind: { href: "/lab/swars/turn-average.html", target: "_self" }, },
+          { name: "負け方", icon: "chart-box", _v_bind: { href: "/lab/swars/lose-pattern.html", target: "_self" }, },
+          { name: "手数",   icon: "chart-box", _v_bind: { href: "/lab/swars/turn-average.html", target: "_self" }, },
         ]
       end
 

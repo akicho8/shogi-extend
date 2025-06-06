@@ -25,7 +25,7 @@ module QuickScript
       def header_link_items
         super + [
           { name: "全体",   _v_bind: { tag: "nuxt-link", to: { path: "/lab/swars/tactic-stat" }, }, },
-          { name: "グラフ", _v_bind: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
+          { name: "グラフ", icon: "chart-box", _v_bind: { href: "/lab/swars/tactic-cross.html", target: "_self", }, },
         ]
       end
 

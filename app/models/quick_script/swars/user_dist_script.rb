@@ -19,7 +19,7 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "詳細グラフ", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
+          { name: "詳細グラフ", icon: "chart-box", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
         ]
       end
 
