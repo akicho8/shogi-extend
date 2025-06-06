@@ -19,8 +19,8 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "詳細グラフ", icon: "chart-box", _v_bind: { href: "/lab/swars/user-dist.html",      target: "_self", }, },
-          { name: "全体グラフ", icon: "chart-box", _v_bind: { href: "/lab/swars/standard-score.html", target: "_self", }, },
+          { name: "詳細", icon: "chart-box", _v_bind: { href: "/lab/swars/user-dist.html",      target: "_self", }, },
+          { name: "全体", icon: "chart-box", _v_bind: { href: "/lab/swars/standard-score.html", target: "_self", }, },
         ]
       end
 
@@ -83,9 +83,7 @@ module QuickScript
       end
 
       def grade_infos
-        @grade_infos ||= yield_self do
-          ::Swars::GradeInfo.find_all(&:visualize)
-        end
+        @grade_infos ||= ::Swars::GradeInfo.find_all(&:visualize)
       end
 
       ################################################################################
@@ -197,19 +195,8 @@ module QuickScript
           end
         end
 
-        def condition_add(s)
-          s = s.joins(:grade)
-          if false
-            s = s.joins(:battle => [:imode, :xmode, :rule])
-            s = s.where(::Swars::Imode.arel_table[:key].eq("normal"))
-            s = s.where(::Swars::Xmode.arel_table[:key].eq("指導"))
-            s = s.where(::Swars::Rule.arel_table[:key].eq("ten_min"))
-            s = s.where(::Swars::Grade.arel_table[:key].eq("十段"))
-          end
-          # s = s.group(::Swars::Imode.arel_table[:key])
-          # s = s.group(::Swars::Xmode.arel_table[:key])
-          # s = s.group(::Swars::Rule.arel_table[:key])
-          s
+        def condition_add(scope)
+          scope = scope.joins(:grade)
         end
       end
     end

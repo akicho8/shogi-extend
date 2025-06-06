@@ -204,12 +204,3 @@ module QuickScript
     end
   end
 end
-
-# rows = scope.collect do |membership|
-#   {}.tap do |row|
-#     row["対象"] = { _nuxt_link: membership.user.key, _v_bind: { to: {name: "swars-users-key", params: { key: membership.user.key } }, }, }
-#     row["相手"] = { _nuxt_link: membership.op_user.key, _v_bind: { to: {name: "swars-users-key", params: { key: membership.op_user.key } }, }, }
-#     row["勝敗"] = membership.judge.name
-#     row["棋譜"] = { _nuxt_link: membership.battle.key, _v_bind: { to: {name: "swars-battles-key", params: { key: membership.battle.key } } } }
-#   end
-# end

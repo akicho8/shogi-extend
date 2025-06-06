@@ -5,15 +5,28 @@ module QuickScript
       self.description = ""
 
       def call
-        h_stack [
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/hourly-active-user-count.html"></iframe>),
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/hourly-active-user-strength.html"></iframe>),
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/tactic-stat.html"></iframe>),
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/tactic-cross.html"></iframe>),
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/turn-average.html"></iframe>),
-          %(<iframe width="1600" height="1200" frameborder="0" src="/lab/swars/lose-pattern.html"></iframe>),
+        elems = parts.collect do |e|
+          path = "/lab/swars/#{e}.html"
+          [
+            %(<a href="#{path}" class="has-text-weight-bold">固定リンク</a>),
+            %(<iframe width="800" height="600" frameborder="0" src="#{path}"></iframe>),
+          ].join("<br>")
+        end
+
+        h_stack elems, style: "justify-content: center"
+      end
+
+      def parts
+        [
+          "hourly-active-user-count",
+          "hourly-active-user-strength",
+          "tactic-stat",
+          "tactic-cross",
+          "turn-average",
+          "lose-pattern",
         ]
       end
     end
   end
 end
+

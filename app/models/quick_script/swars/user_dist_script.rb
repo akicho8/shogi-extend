@@ -19,16 +19,11 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "詳細グラフ", icon: "chart-box", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
+          { name: "詳細", icon: "chart-box", _v_bind: { href: "/lab/swars/user-dist.html", target: "_self", }, },
         ]
       end
 
       def call
-        # values = [
-        #   { _component: "CustomChart", _v_bind: { params: custom_chart_params, }, style: { "max-width" => "800px", margin: "auto" }, :class => "is-unselectable is-centered", },
-        #   simple_table(human_rows, always_table: true),
-        # ]
-        # v_stack(values, style: { "gap" => "1rem" })
         as_general_json
       end
 
@@ -51,106 +46,9 @@ module QuickScript
         end
       end
 
-      # def human_rows
-      #   rows.collect do |row|
-      #     row = row.merge({
-      #         "棋力"   => item_name_search_link(row["棋力"]),
-      #         "偏差値" => row["偏差値"].try { "%.0f" % self },
-      #         "上位"   => row["上位"].try { "%.3f %%" % (self * 100.0) },
-      #         "割合"   => row["割合"].try { "%.3f %%" % (self * 100.0) },
-      #       })
-      #     if Rails.env.local?
-      #       row["基準値"] = row["基準値"].try { "%.3f" % self }
-      #     end
-      #     row
-      #   end
-      # end
-
-      # def rows
-      #   sd_merged_grade_infos.collect do |e|
-      #     {}.tap do |row|
-      #       row["棋力"]   = e[:grade_info].name
-      #       if Rails.env.local?
-      #         row["階級値"] = e["階級値"]
-      #         row["基準値"] = e["基準値"]
-      #       end
-      #       row["偏差値"] = e["偏差値"]
-      #       row["上位"]   = e["累計相対度数"]
-      #       row["割合"]   = e["相対度数"]
-      #       row["人数"]   = freq_count(e[:grade_info])
-      #     end
-      #   end
-      # end
-
-      # def sd_merged_grade_infos
-      #   @sd_merged_grade_infos ||= yield_self do
-      #     av = grade_infos.collect do |grade_info|
-      #       { :grade_info => grade_info, "度数" => freq_count(grade_info) }
-      #     end
-      #     StandardDeviation.call(av)
-      #   end
-      # end
-
-      # def grade_infos
-      #   @grade_infos ||= ::Swars::GradeInfo.find_all(&:user_dist)
-      # end
-
-      ################################################################################
-
-      # def user_total_count
-      #   grade_infos.sum { |e| freq_count(e) }
-      # end
-
-      ################################################################################
-
-      # def title
-      #   "#{super} (#{user_total_count}人)"
-      # end
-
-      ################################################################################
-
-      # concerning :ChartMethods do
-      #   def chart_source
-      #     @chart_source ||= grade_infos.reverse.collect do |grade_info|
-      #       { :name => grade_info.name, :count => freq_count(grade_info) }
-      #     end
-      #   end
-      #
-      #   def custom_chart_params
-      #     {
-      #       data: {
-      #         labels: chart_source.collect { |e| e[:name].remove(/[段級]/) },
-      #         datasets: [
-      #           { data: chart_source.collect { |e| e[:count] } },
-      #         ],
-      #       },
-      #       scales_y_axes_ticks: nil,
-      #       scales_y_axes_display: false,
-      #     }
-      #   end
-      # end
-
       ################################################################################
 
       concerning :AggregateAccessorMethods do
-        # # これルールをまたいで足してはいけない！ (重要)
-        # # 1人が10分と3分で遊ぶこともあるので、足すと2人いることになってしまう
-        # # 一次集計を細分化してしまったがために複雑になっている
-        # def freq_count(grade_info)
-        #   @freq_count ||= {}
-        #   @freq_count[grade_info.key] ||= yield_self do
-        #     total = 0
-        #     ::Swars::ImodeInfo.each do |imode_info|
-        #       ::Swars::XmodeInfo.each do |xmode_info|
-        #         ::Swars::RuleInfo.each do |rule_info|
-        #           total += freq_count_by(imode_info.key, xmode_info.key, rule_info.key, grade_info.key)
-        #         end
-        #       end
-        #     end
-        #     total
-        #   end
-        # end
-
         def freq_count_by(imode_key, xmode_key, rule_key, grade_key)
           key = [imode_key, xmode_key, rule_key, grade_key].join(SEPARATOR).to_sym
           aggregate[key] || 0
@@ -198,7 +96,7 @@ module QuickScript
             counts = scope.select(::Swars::Membership.arel_table[:user_id]).distinct.count # distinct.count = count.keys.size
             counts.transform_keys { |e| e.join(SEPARATOR) }
           else
-            counts = Hash.new { |h, k| h[k] = Set.new }
+            counts = Hash.new { |h, k| h[k] = Set[] }
             progress_start(main_scope.count.ceildiv(batch_size))
             main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
               progress_next
@@ -216,19 +114,12 @@ module QuickScript
           end
         end
 
-        def condition_add(s)
-          s = s.joins(:battle => [:imode, :xmode, :rule])
-          s = s.joins(:grade)
-          if false
-            s = s.where(::Swars::Imode.arel_table[:key].eq("normal"))
-            s = s.where(::Swars::Xmode.arel_table[:key].eq("指導"))
-            s = s.where(::Swars::Rule.arel_table[:key].eq("ten_min"))
-            s = s.where(::Swars::Grade.arel_table[:key].eq("十段"))
-          end
-          s = s.group(::Swars::Imode.arel_table[:key])
-          s = s.group(::Swars::Xmode.arel_table[:key])
-          s = s.group(::Swars::Rule.arel_table[:key])
-          s = s.group(::Swars::Grade.arel_table[:key])
+        def condition_add(scope)
+          scope = scope.joins(:battle => [:imode, :xmode, :rule], :grade => [])
+          scope = scope.group(::Swars::Imode.arel_table[:key])
+          scope = scope.group(::Swars::Xmode.arel_table[:key])
+          scope = scope.group(::Swars::Rule.arel_table[:key])
+          scope = scope.group(::Swars::Grade.arel_table[:key])
         end
       end
     end
