@@ -3,7 +3,7 @@ require "./setup"
 battles = QuickScript::Swars::StandardScoreScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-QuickScript::Swars::StandardScoreScript.new({}, {scope: scope, batch_size: 1}).cache_write
+QuickScript::Swars::StandardScoreScript.new({}, { scope: scope, batch_size: 1 }).cache_write
 tp QuickScript::Swars::StandardScoreScript.new.aggregate # => {九段: 1, 初段: 2}
 tp QuickScript::Swars::StandardScoreScript.new.as_general_json
 exit
@@ -26,8 +26,8 @@ exit
 battles = QuickScript::Swars::StandardScoreScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-a = QuickScript::Swars::StandardScoreScript.new({}, {scope: scope, one_shot: true}).aggregate_now
-b = QuickScript::Swars::StandardScoreScript.new({}, {scope: scope, one_shot: false, batch_size: 1}).aggregate_now
+a = QuickScript::Swars::StandardScoreScript.new({}, { scope: scope, one_shot: true }).aggregate_now
+b = QuickScript::Swars::StandardScoreScript.new({}, { scope: scope, one_shot: false, batch_size: 1 }).aggregate_now
 p a.values.sum
 p b.values.sum
 exit
@@ -39,10 +39,10 @@ exit
 battles = QuickScript::Swars::StandardScoreScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-QuickScript::Swars::StandardScoreScript.new({}, {scope: scope, batch_limit: 1}).cache_write
+QuickScript::Swars::StandardScoreScript.new({}, { scope: scope, batch_limit: 1 }).cache_write
 exit
 
-e = QuickScript::Swars::StandardScoreScript.new.aggregate # => 
+e = QuickScript::Swars::StandardScoreScript.new.aggregate # =>
 e == { :"九段" => 1, :"初段" => 2 }
 tp QuickScript::Swars::StandardScoreScript.new.sd_merged_grade_infos
 # >> 2025-06-05 14:26:20 1/4  25.00 % T1 StandardScoreScript

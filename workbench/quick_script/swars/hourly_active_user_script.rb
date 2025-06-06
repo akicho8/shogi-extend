@@ -19,7 +19,7 @@ def aggregate(options = {})
   @battles = []
   yield
   scope = Swars::Membership.where(id: @battles.flat_map(&:membership_ids))
-  object = QuickScript::Swars::HourlyActiveUserScript.new({}, {scope: scope, batch_size: 1, **options})
+  object = QuickScript::Swars::HourlyActiveUserScript.new({}, { scope: scope, batch_size: 1, **options })
   object.cache_write
   object.call.sort_by { |e| e[:"時"] }
 end
@@ -40,8 +40,8 @@ rows = aggregate do
   entry("2025-01-01 01:00", user1, user2, "五段", "五段")
 end
 tp rows
-rows[0] == {:"時" => 0, :"人数" => 2, :"強さ" => 33.0, :"曜日" => "水", :"対局数" => 1, } # => false
-rows[1] == {:"時" => 1, :"人数" => 2, :"強さ" => 35.0, :"曜日" => "水", :"対局数" => 1, } # => false
+rows[0] == { :"時" => 0, :"人数" => 2, :"強さ" => 33.0, :"曜日" => "水", :"対局数" => 1, } # => false
+rows[1] == { :"時" => 1, :"人数" => 2, :"強さ" => 35.0, :"曜日" => "水", :"対局数" => 1, } # => false
 
 # 同じ時間帯に2度対局しても1度の対局と見なすが、日付が異なった場合は別の対局とする
 rows = aggregate do

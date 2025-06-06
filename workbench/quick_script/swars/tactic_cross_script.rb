@@ -1,10 +1,10 @@
 require "./setup"
 # QuickScript::Swars::TacticCrossScript.new.cache_write
 # exit
-# 
+#
 # _ { QuickScript::Swars::TacticCrossScript.new({ show_type: "debug2" }).call } # => "260.43 ms"
 # exit
-# 
+#
 QuickScript::Swars::TacticCrossScript.new({}, { batch_limit: 1 }).cache_write
 tp QuickScript::Swars::TacticCrossScript.new.aggregate
 exit
@@ -27,7 +27,7 @@ hv = counts_hash # => {"棋力" => "九段", "種類" => "戦法", "スタイル
 tp hv
 hv = hv.group_by { |(grade_key, tag_name, judge_key), count| [grade_key, tag_name] } # => {["棋力", nil] => [["棋力", "九段"]], ["種類", nil] => [["種類", "戦法"]], ["スタイル", nil] => [["スタイル", "王道"]], ["名前", nil] => [["名前", "原始棒銀"]], ["勝率", nil] => [["勝率", 1.0]], ["頻度", nil] => [["頻度", 1.0]], ["出現数", nil] => [["出現数", 1]], ["勝ち", nil] => [["勝ち", 1]], ["負け", nil] => [["負け", 0]], ["引分", nil] => [["引分", 0]]}
 tp hv
-hv = hv.transform_values { |a| a.inject(JudgeInfo.zero_default_hash) { |a, ((_, _, judge_key), count)| a.merge(judge_key.to_sym => count) } } # => 
+hv = hv.transform_values { |a| a.inject(JudgeInfo.zero_default_hash) { |a, ((_, _, judge_key), count)| a.merge(judge_key.to_sym => count) } } # =>
 tp hv
 
 records = hv.collect do |(grade_key, tag_name), e|
@@ -60,12 +60,12 @@ records = records.find_all { |e| e[:"種類"].in?(["戦法", "囲い"]) }
 tp records
 
 records_per_grades = records.group_by { |e| e[:"棋力"].to_sym }.transform_values { |e| e.sort_by { |e| -e[:"勝率"] } }
-records_per_grades              # => 
+records_per_grades              # =>
 tp records_per_grades
-top_n = records_per_grades.values.collect(&:size).max # => 
+top_n = records_per_grades.values.collect(&:size).max # =>
 
 grade_infos = ::Swars::GradeInfo.find_all(&:range_10kyu_to_9dan).sort_by(&:priority)
-grade_infos                     # => 
+grade_infos                     # =>
 
 rankings = top_n.times.collect do |i|
   hv = {}
@@ -75,7 +75,7 @@ rankings = top_n.times.collect do |i|
   end
   hv
 end
-tp rankings # => 
+tp rankings # =>
 # ~> -:30:in 'block (2 levels) in <main>': undefined method 'to_sym' for nil (NoMethodError)
 # ~> 	from -:30:in 'Array#each'
 # ~> 	from -:30:in 'Enumerable#inject'

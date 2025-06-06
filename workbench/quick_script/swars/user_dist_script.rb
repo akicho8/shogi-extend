@@ -3,7 +3,7 @@ require "./setup"
 battles = QuickScript::Swars::UserDistScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-QuickScript::Swars::UserDistScript.new({}, {scope: scope, batch_size: 1}).cache_write
+QuickScript::Swars::UserDistScript.new({}, { scope: scope, batch_size: 1 }).cache_write
 tp QuickScript::Swars::UserDistScript.new.aggregate # => {"normal/野良/ten_min/九段": 1, "normal/野良/ten_min/初段": 2}
 tp QuickScript::Swars::UserDistScript.new.as_general_json
 exit
@@ -26,8 +26,8 @@ exit
 battles = QuickScript::Swars::UserDistScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-a = QuickScript::Swars::UserDistScript.new({}, {scope: scope, one_shot: true}).aggregate_now
-b = QuickScript::Swars::UserDistScript.new({}, {scope: scope, one_shot: false, batch_size: 1}).aggregate_now
+a = QuickScript::Swars::UserDistScript.new({}, { scope: scope, one_shot: true }).aggregate_now
+b = QuickScript::Swars::UserDistScript.new({}, { scope: scope, one_shot: false, batch_size: 1 }).aggregate_now
 p a.values.sum
 p b.values.sum
 exit
@@ -39,10 +39,10 @@ exit
 battles = QuickScript::Swars::UserDistScript.mock_setup
 ids = battles.flat_map { |e| e.memberships.pluck(:id) }
 scope = ::Swars::Membership.where(id: ids)
-QuickScript::Swars::UserDistScript.new({}, {scope: scope, batch_limit: 1}).cache_write
+QuickScript::Swars::UserDistScript.new({}, { scope: scope, batch_limit: 1 }).cache_write
 exit
 
-e = QuickScript::Swars::UserDistScript.new.aggregate # => 
+e = QuickScript::Swars::UserDistScript.new.aggregate # =>
 e == { :"九段" => 1, :"初段" => 2 }
 tp QuickScript::Swars::UserDistScript.new.sd_merged_grade_infos
 # >> 2025-06-04 20:21:34 1/4  25.00 % T1 UserDistScript
