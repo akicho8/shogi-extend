@@ -84,7 +84,7 @@ module QuickScript
             end
           end
 
-          items = MinmaxNormalizer.from_hash_array(items, :"強さ", :"強さ", method: :minus_one_to_plus_one)
+          items = MinmaxNormalizer.merge(items, :"強さ", out_min: -1.0)
         end
 
         # %w: 曜日(0-6) WdayInfo の並びと一致している

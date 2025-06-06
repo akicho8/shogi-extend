@@ -116,7 +116,8 @@ p <- layout(
     font = list(color = "#222"),
     bordercolor = "white"
   ),
-  margin = list(l = 100, r = 200, t = 100, b = 70)
+  margin = list(l = 100, r = 200, t = 100, b = 70),
+  annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))
 )
 
 # 表示または保存

@@ -7,8 +7,8 @@ library(viridisLite)
 
 # --- データの読み込み ----------------------------------------------
 
-api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 data <- fromJSON(api_url)
 
 weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
@@ -68,7 +68,9 @@ p_plotly <- layout(
     ticklen = 0,
     autorange = "reversed",
     tickfont = list(size = 18)
-  )
+  ),
+
+  annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))
 )
 
 if (interactive()) {

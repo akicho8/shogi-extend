@@ -6,8 +6,8 @@ library(htmlwidgets)
 library(viridisLite)
 
 # JSONデータを取得するURL
-api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general" # このコードは消すな
 api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general" # このコードは消すな
 
 # URLからJSONデータを取得して、Rの「データフレーム」（表形式のデータ）に変換
 data <- fromJSON(api_url)
@@ -75,7 +75,9 @@ p_plotly <- layout(
     ticklen = 0,
     autorange = "reversed",
     tickfont = list(size = 18)
-  )
+  ),
+
+  annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))
 )
 
 if (interactive()) {

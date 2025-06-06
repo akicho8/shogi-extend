@@ -149,7 +149,8 @@ fig <- layout(
       # bordercolor = "#555",
       # borderwidth = 1,
       opacity = 0.95
-    )
+    ),
+    list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa"))
   )
 )
 

@@ -121,7 +121,8 @@ p <- layout(
     font = list(color = "#aaa", size = 18),
     bordercolor = "#aaa"
   ),
-  margin = list(l = 70, r = 70, t = 100, b = 70)
+  margin = list(l = 70, r = 70, t = 100, b = 70),
+  annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))
 )
 
 p <- config(p, displayModeBar = TRUE)
