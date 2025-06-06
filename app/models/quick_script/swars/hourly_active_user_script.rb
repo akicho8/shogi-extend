@@ -10,7 +10,7 @@ module QuickScript
     class HourlyActiveUserScript < Base
       include BatchMethods
 
-      self.title = "時間帯別情報"
+      self.title = "【集計専用】時間帯別情報"
       self.description = "「時間帯別対局者数」と「時間帯別相対棋力」用のデータを準備する"
       self.json_link = true
 
@@ -31,10 +31,11 @@ module QuickScript
 
       concerning :AggregateMethods do
         def aggregate_now
-          dhash = Hash.new do |h, k|
+          acc = Hash.new do |h, k|
             h[k] = {
-              :user_ids   => Set[], # 人数用(ユニーク)
-              :grade_keys => [],    # 強さ用
+              :user_ids          => Set[], # 人数用
+              :grade_keys        => [],    # 強さ用
+              :memberships_count => 0,     # 対局数
             }
           end
 
@@ -46,45 +47,52 @@ module QuickScript
               break
             end
 
+            # 対局数はただの加算でよい (注: distinct で battled_id を求める方法はブロック間で分断される)
+            s = condition_add(scope)
+            s.group(time_key).count.each do |key, count|
+              acc[key][:memberships_count] += count
+            end
+
             # 「曜日 時 user_id」のユニークな組み合わせを収集して user_id だけを貯めていく
             s = condition_add(scope)
             res = s.distinct.pluck(time_key, "user_id") # => [["3/00", 1075401], ["3/00", 1075402]]
             res.each do |key, user_id|
-              dhash[key][:user_ids] << user_id # Set
+              acc[key][:user_ids] << user_id # Set
             end
 
             # 「曜日 時 user_id 棋力」のユニークな組み合わせを収集して棋力だけを貯めていく
             s = condition_add(scope)
             res = s.distinct.pluck(time_key, "user_id", "swars_grades.key") # => [["3/00", 1075401, "二段"], ["3/00", 1075402, "四段"]]
             res.each do |key, user_id, grade_key|
-              dhash[key][:grade_keys] << grade_key.to_sym # Array
+              acc[key][:grade_keys] << grade_key.to_sym # Array
             end
           end
 
-          dhash.values.each do |e|
+          acc.values.each do |e|
             if grade_keys = e[:grade_keys].presence
               e[:"強さ"] = grade_keys.sum { |e| ::Swars::GradeInfo.fetch(e).score }.fdiv(grade_keys.size)
             end
           end
 
-          items = [].tap do |items|
-            WdayInfo.each do |wday_info|
-              (1.day / 1.hour).times do |hour|
-                hour_key = "%02d" % hour
-                key = "#{wday_info.code}#{SEPARATOR}#{hour_key}"
-                unless dhash[key][:user_ids].empty?
-                  items << {
-                    :"曜日" => wday_info.name,
-                    :"時"   => hour,
-                    :"人数" => dhash[key][:user_ids].size,
-                    :"強さ" => dhash[key][:"強さ"],
-                  }
-                end
-              end
-            end
+          if acc.values.any? { |e| e[:memberships_count].odd? }
+            raise "共通対局数が奇数になっている"
           end
 
-          items = MinmaxNormalizer.merge(items, :"強さ", out_min: -1.0)
+          WdayInfo.collect { |wday_info|
+            (1.day / 1.hour).times.collect do |hour|
+              hour_key = "%02d" % hour
+              key = "#{wday_info.code}#{SEPARATOR}#{hour_key}"
+              if acc[key][:user_ids].present?
+                {
+                  :"曜日"   => wday_info.name,
+                  :"時"     => hour,
+                  :"対局数" => acc[key][:memberships_count] / LocationInfo.count,
+                  :"人数"   => acc[key][:user_ids].size,
+                  :"強さ"   => acc[key][:"強さ"],
+                }
+              end
+            end
+          }.flatten.compact
         end
 
         # %w: 曜日(0-6) WdayInfo の並びと一致している

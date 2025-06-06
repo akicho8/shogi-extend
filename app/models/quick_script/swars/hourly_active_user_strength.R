@@ -4,17 +4,18 @@ library(jsonlite)
 library(plotly)
 library(htmlwidgets)
 library(viridisLite)
+library(scales)
 
 # --- データの読み込み ----------------------------------------------
 
-api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
+# api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 data <- fromJSON(api_url)
 
 weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
 
+data$強さ <- rescale(data$強さ, to = c(-1, 1))
 data$曜日 <- factor(data$曜日, levels = weekday_order)
-
 data$時 <- factor(data$時, levels = as.character(0:23))
 
 p_plotly <- plot_ly(
@@ -58,7 +59,7 @@ p_plotly <- layout(
     showticklabels = TRUE,
     ticks = "",
     ticklen = 0,
-    tickfont = list(size = 18)
+    tickfont = list(size = 18, color = "#aaa")
   ),
 
   yaxis = list(
@@ -67,7 +68,7 @@ p_plotly <- layout(
     ticks = "",
     ticklen = 0,
     autorange = "reversed",
-    tickfont = list(size = 18)
+    tickfont = list(size = 18, color = "#aaa")
   ),
 
   annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))

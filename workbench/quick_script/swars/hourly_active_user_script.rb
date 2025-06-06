@@ -39,8 +39,9 @@ rows = aggregate do
   entry("2025-01-01 00:00", user1, user2, "二段", "四段")
   entry("2025-01-01 01:00", user1, user2, "五段", "五段")
 end
-rows[0] == {:"時" => 0, :"人数" => 2, :"強さ" => -1.0, :"曜日" => "水", } # => true
-rows[1] == {:"時" => 1, :"人数" => 2, :"強さ" =>  1.0, :"曜日" => "水", } # => true
+tp rows
+rows[0] == {:"時" => 0, :"人数" => 2, :"強さ" => 33.0, :"曜日" => "水", :"対局数" => 1, } # => false
+rows[1] == {:"時" => 1, :"人数" => 2, :"強さ" => 35.0, :"曜日" => "水", :"対局数" => 1, } # => false
 
 # 同じ時間帯に2度対局しても1度の対局と見なすが、日付が異なった場合は別の対局とする
 rows = aggregate do
@@ -48,22 +49,22 @@ rows = aggregate do
   entry("2025-01-02 00:59", user1, user2, "二段", "四段")
 end
 rows.size == 2                  # => true
-# >> 2025-06-05 22:45:48 1/4  25.00 % T1 HourlyActiveUserScript
-# >> 2025-06-05 22:45:48 2/4  50.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:48 3/4  75.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:48 4/4 100.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05T13:45:49.003Z pid=78875 tid=1qsz INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
-# >> 2025-06-05 22:45:49 1/4  25.00 % T1 HourlyActiveUserScript
-# >> 2025-06-05 22:45:49 2/4  50.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:49 3/4  75.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:49 4/4 100.00 % T0 HourlyActiveUserScript
-# >> |----+------+------+------|
-# >> | 時 | 人数 | 強さ | 曜日 |
-# >> |----+------+------+------|
-# >> |  0 |    2 | -1.0 | 水   |
-# >> |  1 |    2 |  1.0 | 水   |
-# >> |----+------+------+------|
-# >> 2025-06-05 22:45:50 1/4  25.00 % T1 HourlyActiveUserScript
-# >> 2025-06-05 22:45:50 2/4  50.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:50 3/4  75.00 % T0 HourlyActiveUserScript
-# >> 2025-06-05 22:45:50 4/4 100.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:14 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-06 16:33:14 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:14 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:14 4/4 100.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06T07:33:15.019Z pid=41785 tid=xqh INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
+# >> 2025-06-06 16:33:15 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-06 16:33:15 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:15 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:15 4/4 100.00 % T0 HourlyActiveUserScript
+# >> |----+------+------+------+--------|
+# >> | 時 | 人数 | 強さ | 曜日 | 対局数 |
+# >> |----+------+------+------+--------|
+# >> |  0 |    2 | 33.0 | 水   |      1 |
+# >> |  1 |    2 | 35.0 | 水   |      1 |
+# >> |----+------+------+------+--------|
+# >> 2025-06-06 16:33:16 1/4  25.00 % T1 HourlyActiveUserScript
+# >> 2025-06-06 16:33:16 2/4  50.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:16 3/4  75.00 % T0 HourlyActiveUserScript
+# >> 2025-06-06 16:33:16 4/4 100.00 % T0 HourlyActiveUserScript

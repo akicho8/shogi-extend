@@ -225,3 +225,6 @@ gem "matrix"
 
 # Google Sheet / Google Drive
 gem "google-api-client"
+
+# 統計
+gem "geom_craft"
