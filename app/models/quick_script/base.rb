@@ -44,7 +44,11 @@ module QuickScript
       end
 
       def title_for_index
-        title.to_s.remove(/\A#{qs_group_info.name}\s*/) # "将棋ウォーズ囚人検索" => "囚人検索"
+        if false
+          title.to_s.remove(/\A#{qs_group_info.name}\s*/) # "将棋ウォーズ囚人検索" => "囚人検索"
+        else
+          title
+        end
       end
 
       def api_server_root_url

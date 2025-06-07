@@ -97,7 +97,7 @@ module QuickScript
       # | 名人に定跡なし       |         7 |                 1.0 |          0 |          7 |   0.1346153846153846 |          0 |              7 |
       # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
       def tactics_hash
-        @tactics_hash ||= TacticJudgeAggregator.new.tactics_hash
+        @tactics_hash ||= TacticStatScript.new.tactics_hash
       end
 
       def battle_id_collector

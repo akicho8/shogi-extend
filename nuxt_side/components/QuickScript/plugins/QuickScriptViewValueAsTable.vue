@@ -1,4 +1,5 @@
 <template lang="pug">
+//- https://buefy.org/documentation/table/
 b-table.QuickScriptViewValueAsTable(
   :data="value.rows"
   scrollable

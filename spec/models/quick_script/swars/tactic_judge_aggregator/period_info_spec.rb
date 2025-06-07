@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe type: QuickScript::Swars::TacticJudgeAggregator::PeriodInfo do
+RSpec.describe type: QuickScript::Swars::TacticStatScript::PeriodInfo do
   it "works" do
-    assert { QuickScript::Swars::TacticJudgeAggregator::PeriodInfo.count }
+    assert { QuickScript::Swars::TacticStatScript::PeriodInfo.count }
   end
 end

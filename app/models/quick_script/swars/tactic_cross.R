@@ -124,11 +124,7 @@ fig <- layout(
     bgcolor = "#333",
     font = list(color = "#ffffff", size = 16)
   ),
-  hoverlabel = list(
-    bgcolor = "#333",
-    font = list(color = "white", size = 20),
-    bordercolor = "white"
-  ),
+  hoverlabel = list(bgcolor = "#333", font = list(color = "white", size = 20), bordercolor = "white"),
   font = list(color = "white"),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",

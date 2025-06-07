@@ -4,7 +4,7 @@ RSpec.describe QuickScript::Swars::TacticListScript, type: :model do
   it "works" do
     Swars::Battle.create!(strike_plan: "原始棒銀")
     QuickScript::Swars::TacticBattleMiningScript.new.cache_write
-    QuickScript::Swars::TacticJudgeAggregator.new.cache_write
+    QuickScript::Swars::TacticStatScript.new.cache_write
 
     instance = QuickScript::Swars::TacticListScript.new
     assert { instance.as_json }

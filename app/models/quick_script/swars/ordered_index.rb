@@ -4,7 +4,7 @@ module QuickScript
       PlotScript,
 
       TacticListScript,         # 整合性？
-      TacticStatScript,         # 整合性？
+      TacticStatScript,         # 整合性◎
       TacticCrossScript,        # 整合性？
 
       # 分布系

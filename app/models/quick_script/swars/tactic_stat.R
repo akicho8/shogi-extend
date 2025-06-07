@@ -57,11 +57,7 @@ p <- layout(
   legend = list(
     font = list(color = "white")
   ),
-  hoverlabel = list(
-    bgcolor = "#333",
-    font = list(color = "#aaa"),
-    bordercolor = "#444"
-  ),
+  hoverlabel = list(bgcolor = "#333", font = list(color = "#aaa"), bordercolor = "#444"),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
   margin = list(l=80, r=80, b=80, t=100),
