@@ -4,8 +4,10 @@ library(plotly)
 library(htmlwidgets)
 
 # データ取得
-api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-list.json?json_type=general"
+# api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-stat.json?json_type=general"
+api_url <- "http://localhost:3000/api/lab/swars/tactic-stat.json?json_type=general"
 df <- fromJSON(api_url)
+df <- df[["infinite"]]
 
 # フィルタリング
 df <- df[!is.na(df$勝率), ]
@@ -17,7 +19,7 @@ p <- plot_ly(
   type = "scatter",
   mode = "markers+text",   # ドットとテキスト両方表示
   x = ~勝率,
-  y = ~相対頻度,
+  y = ~人気度,
   text = ~名前,
   color = ~種類,
   marker = list(size = 8),    # ドットサイズ
@@ -26,7 +28,8 @@ p <- plot_ly(
   hovertemplate = paste(
     "%{text}<br>",
     "勝率: %{x:.5f}<br>",
-    "頻度: %{y:.5f}<extra></extra>"
+    "人気度: %{y:.5f}",
+    "<extra></extra>"
   )
 )
 

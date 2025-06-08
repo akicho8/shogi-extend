@@ -55,7 +55,7 @@ for (name in target_names) {
     "勝ち:", tactic_data$勝ち, "<br>",
     "負け:", tactic_data$負け, "<br>",
     "引分:", tactic_data$引分, "<br>",
-    "出現:", tactic_data$出現数
+    "出現:", tactic_data$出現回数
   )
 
   # ラベルは10級だけに表示

@@ -69,7 +69,7 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
     categories = ["備考", "手筋", "戦法", "囲い"]
     group = items.group_by { |e| e["種類"] }
     sorted_items = categories.flat_map do |category|
-      group[category].sort_by { |e| -e["頻度"] }
+      group[category].sort_by { |e| -e["出現率"] }
     end
 
     all_names = sorted_items.collect { |e| e["名前"] }.uniq

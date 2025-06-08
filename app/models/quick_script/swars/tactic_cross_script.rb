@@ -2,25 +2,25 @@
 
 #
 # 一次集計
-# QuickScript::Swars::TacticCrossScript.new.cache_write
-# QuickScript::Swars::TacticCrossScript.new.cache_write({}, {batch_limit: 1})
+# rails r QuickScript::Swars::TacticCrossScript.new.cache_write
+# rails r 'QuickScript::Swars::TacticCrossScript.new.cache_write({}, {batch_limit: 1})'
 #
 # http://localhost:4000/lab/swars/tactic-cross
 #
 module QuickScript
   module Swars
     class TacticCrossScript < Base
+      include BatchMethods
       include SwarsSearchHelperMethods
       include HelperMethods
+      include TacticStatScript::ShareMethods
 
-      self.title        = "将棋ウォーズ戦法人気ランキング (棋力別)"
-      self.description  = "棋力別の戦法・囲いなどの頻度・勝率を調べる"
+      self.title        = "将棋ウォーズ戦法ランキング (棋力別)"
+      self.description  = "棋力別の戦法・囲いなどの出現率・勝率を調べる"
       self.form_method  = :get
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local? && false
-      self.json_link = true
-
-      FREQ_RATIO_GTEQ_DEFAULT = 0.0003
+      self.json_link    = true
 
       def header_link_items
         super + [
@@ -31,43 +31,6 @@ module QuickScript
 
       def form_parts
         super + [
-          {
-            :label        => "種類",
-            :key          => :scope_key,
-            :type         => :radio_button,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :elems   => ScopeInfo.form_part_elems,
-                :default => scope_key,
-              }
-            },
-          },
-          {
-            :label        => "順番",
-            :key          => :order_key,
-            :type         => :radio_button,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :elems   => OrderInfo.form_part_elems,
-                :default => order_info.key,
-              }
-            },
-          },
-          {
-            :label        => "勝率ランキング参加条件 頻度N以上",
-            :key          => :freq_ratio_gteq,
-            :type         => :numeric,
-            :session_sync => true,
-            :dynamic_part => -> {
-              {
-                :options      => { min: 0, step: 0.0001 },
-                :default      => freq_ratio_gteq,
-                :help_message => "初期値: #{FREQ_RATIO_GTEQ_DEFAULT}",
-              }
-            },
-          },
           {
             :label        => "表示",
             :key          => :show_key,
@@ -138,7 +101,7 @@ module QuickScript
       end
 
       def title
-        "将棋ウォーズ#{scope_info.name}#{order_info.human_name}ランキング (棋力別)"
+        "将棋ウォーズ#{scope_info.name}#{order_info.name}ランキング (棋力別)"
       end
 
       def current_items_hash
@@ -149,7 +112,7 @@ module QuickScript
           items = filter_by_freq(items)
           items = items.reject { |e| highlight_minus.include?(e[:"名前"]) }
           items = items.group_by { |e| e[:"棋力"] }
-          items = items.transform_values { |e| e.sort_by { |e| [-e.fetch(order_info.order_by), -e.fetch(:"頻度")] } }
+          items = items.transform_values { |e| e.sort_by { |e| [-(e[order_info.attr_key] || -1), -e[:"出現回数"], -e[:"使用人数"]] } }
         end
       end
 
@@ -169,7 +132,7 @@ module QuickScript
           top_n = items.values.collect(&:size).max || 0
           items = top_n.times.collect do |i|
             {}.tap do |hv|
-              hv["#"] = i.next  # ソートがもげるので文字列にするべからず
+              hv["#"] = i.next  # 列が複数あるため正確なランキングは不明。値は数値とすること。
               grade_infos.each { |e| hv[head_value(e)] = cell_value(items.dig(e.key, i)) }
             end
           end
@@ -225,30 +188,10 @@ module QuickScript
       def filter_by_freq(items)
         if order_info.key == :win_rate
           if pivot = freq_ratio_gteq
-            items = items.find_all { |e| e[:"頻度"] >= pivot }
+            items = items.find_all { |e| e[:"出現率"] >= pivot }
           end
         end
         items
-      end
-
-      ################################################################################
-
-      def scope_key
-        ScopeInfo.lookup_key_or_first(params[:scope_key])
-      end
-
-      def scope_info
-        ScopeInfo.fetch(scope_key)
-      end
-
-      ################################################################################
-
-      def order_key
-        OrderInfo.lookup_key_or_first(params[:order_key])
-      end
-
-      def order_info
-        OrderInfo.fetch(order_key)
       end
 
       ################################################################################
@@ -269,12 +212,6 @@ module QuickScript
 
       def arrow_info
         ArrowInfo.fetch(arrow_key)
-      end
-
-      ################################################################################
-
-      def freq_ratio_gteq
-        @freq_ratio_gteq ||= (params[:freq_ratio_gteq].presence || FREQ_RATIO_GTEQ_DEFAULT).to_f
       end
 
       ################################################################################
@@ -320,11 +257,10 @@ module QuickScript
       ################################################################################
 
       concerning :AggregateMethods do
-        include BatchMethods
-
         def aggregate_now
-          main_counts_hash       = {} # { ["九段", "棒銀", "win"] => 個数 } を集める用
-          membership_counts_hash = {} # { "九段" => 対局数, } を集める用
+          judge_counts_hash = {} # { ["九段", "棒銀", "win"] => 個数 } を集める用
+          memberships_counts_hash = {} # { "九段" => 対局数, } を集める用
+          user_ids_hash = Hash.new { |h, k| h[k] = Set[] }
 
           progress_start(main_scope.count.ceildiv(batch_size))
           main_scope.in_batches(of: batch_size).each.with_index do |scope, batch_index|
@@ -335,47 +271,94 @@ module QuickScript
             end
 
             scope = condition_add(scope)
-            main_counts_hash.update(grade_tag_judge_from(scope)) { |_, a, b| a + b }
-            membership_counts_hash.update(scope.group(::Swars::Grade.arel_table[:key]).count) { |_, a, b| a + b } # => { "九段" => 1, ... }
+
+            # 勝敗
+            hv = judge_hash_from(scope)
+            judge_counts_hash.update(hv) { |_, a, b| a + b }
+
+            # 出現率の分母
+            hv = scope.group(::Swars::Grade.arel_table[:key]).count
+            memberships_counts_hash.update(hv) { |_, a, b| a + b } # => { "九段" => 1, ... }
+
+            # 使用人数
+            uniq_user_ids_query(scope).each do |grade_key, tag_name, user_id|
+              user_ids_hash[[grade_key.to_sym, tag_name.to_sym]] << user_id
+            end
           end
 
-          hv = main_counts_hash # => { ["九段", "原始棒銀", "win"] => 1, ... }
+          aggregate_result_merge(judge_counts_hash, memberships_counts_hash, user_ids_hash)
+        end
+
+        def aggregate_result_merge(judge_counts_hash, memberships_counts_hash, user_ids_hash)
+          user_counts_hash = user_counts_hash_from(user_ids_hash)
+
+          hv = judge_counts_hash # => { ["九段", "原始棒銀", "win"] => 1, ... }
           hv = hv.group_by { |(grade_key, tag_name, judge_key), count| [grade_key, tag_name] } # => {["九段", "原始棒銀"] => [[["九段", "原始棒銀", "win"], 1]], }
           hv = hv.transform_values { |a| a.inject(JudgeInfo.zero_default_hash) { |a, ((_, _, judge_key), count)| a.merge(judge_key.to_sym => count) } } # => {["九段", "原始棒銀"] => {win: 1, lose: 0, draw: 0}, }
 
           items = hv.collect { |(grade_key, tag_name), e| { grade_key: grade_key, tag_name: tag_name, **e } } # 次のコードでハッシュの状態からいきなりまわしてもいいけど、わかりやすいようにいったん配列化しておく
 
-          items = items.collect do |e|
-            freq_count = e[:win] + e[:lose] + e[:draw]
-            win_ratio  = e[:win].fdiv(freq_count)
-            item = Bioshogi::Analysis::TacticInfo.flat_fetch(e[:tag_name])
-            membership_count = membership_counts_hash[e[:grade_key]]
+          items.collect do |e|
+            judge_calc = JudgeCalc.new(e)
+            info = Bioshogi::Analysis::TacticInfo.flat_fetch(e[:tag_name])
+            grade_info = ::Swars::GradeInfo.fetch(e[:grade_key].to_sym)
             {
-              "棋力"      => e[:grade_key],
-              "種類"      => item.human_name,
-              "スタイル"  => item.style_info.name,
-              "名前"      => item.name,
-              "勝率"      => win_ratio,
-              "頻度"      => freq_count.fdiv(membership_count), # この分母は全体ではなく棋力毎の membership_count とする (重要)
-              "出現数"    => freq_count,
-              **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name => e[o.key]) },
+              :棋力      => grade_info.name,
+
+              **initial_fields(info), # TacticStatScript 側とは違ってほぼハッシュキーの順番を固定するのが目的
+
+              :勝率     => judge_calc.ratio,
+              **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name.to_sym => e[o.key]) },
+
+              :使用人数 => user_ids_hash[[grade_info.key, info.key]].size,
+              :人気度   => user_ids_hash[[grade_info.key, info.key]].size.fdiv(user_counts_hash[grade_info.key]), # 分母は棋力毎のユニークユーザー数
+
+              :出現回数 => judge_calc.count,
+              :出現率   => judge_calc.count.fdiv(memberships_counts_hash[e[:grade_key]]), # 分母は棋力毎の memberships_count であってる？ → 分子が最大のときは「その棋力での対局数分」なので、分母の最大が「その棋力の対局数分」なのは合っている
             }
           end
         end
 
-        def grade_tag_judge_from(s)
-          s = s.joins(:taggings => :tag)
-          s = s.joins(:judge)
-          s = s.group(::Swars::Grade.arel_table[:key])
-          s = s.group("tags.name")
-          s = s.group("judges.key")
-          s.count
-        end
+        ################################################################################
 
         def condition_add(scope)
           scope = scope.joins(:battle => :imode, :grade => nil)
-          scope = scope.merge(::Swars::Battle.valid_match_only)
-          scope = scope.merge(::Swars::Battle.imode_eq("通常"))
+          scope = scope.where(::Swars::Imode.arel_table[:key].eq(:normal))
+        end
+
+        def judge_hash_from(scope)
+          scope = scope.joins(:taggings => :tag)
+          scope = scope.joins(:judge)
+          scope = scope.group(::Swars::Grade.arel_table[:key])
+          scope = scope.group(ActsAsTaggableOn::Tag.arel_table[:name])
+          scope = scope.group(Judge.arel_table[:key])
+          scope.count
+        end
+
+        def uniq_user_ids_query(scope)
+          scope = scope.joins(:taggings => :tag)
+          scope.distinct.pluck([
+              ::Swars::Grade.arel_table[:key],
+              ActsAsTaggableOn::Tag.arel_table[:name],
+              ::Swars::Membership.arel_table[:user_id],
+            ])
+        end
+
+        ################################################################################
+
+        # {
+        #   [:初段, :嬉野流]   => #<Set: {5, 6}>,
+        #   [:初段, :新米長玉] => #<Set: {6, 7}>,
+        # }
+        #
+        # ↓
+        #
+        # { :初段 => 3 }
+        #
+        def user_counts_hash_from(user_ids_hash)
+          initial = Hash.new { |h, k| h[k] = Set[] }
+          hv = user_ids_hash.inject(initial) { |a, ((grade_key, _tag_name), set)| a.merge(grade_key => a[grade_key] + set) }
+          hv.transform_values(&:size)
         end
       end
     end

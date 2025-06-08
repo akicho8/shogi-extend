@@ -5,46 +5,42 @@ class QuickScript::Swars::TacticStatScript
       {
         key: :attack,
         name: "戦法",
-        target_infos: Bioshogi::Analysis::AttackInfo,
+        items: Bioshogi::Analysis::AttackInfo,
       },
       {
         key: :defense,
         name: "囲い",
-        target_infos: Bioshogi::Analysis::DefenseInfo,
+        items: Bioshogi::Analysis::DefenseInfo,
       },
       {
         key: :attack_and_defense,
         name: "戦法＋囲い",
-        target_infos: Bioshogi::Analysis::AttackInfo.values + Bioshogi::Analysis::DefenseInfo.values,
+        items: Bioshogi::Analysis::AttackInfo.values + Bioshogi::Analysis::DefenseInfo.values,
       },
       {
         key: :right_king,
         name: "右玉",
-        target_infos: Bioshogi::Analysis::AttackInfo.find_all { |e| e.group_info && e.group_info.key == :"右玉" },
+        items: Bioshogi::Analysis::AttackInfo.find_all { |e| e.group_info && e.group_info.key == :"右玉" },
       },
       {
         key: :technique,
         name: "手筋",
-        target_infos: Bioshogi::Analysis::TechniqueInfo,
+        items: Bioshogi::Analysis::TechniqueInfo,
       },
       {
         key: :note,
         name: "備考",
-        target_infos: Bioshogi::Analysis::NoteInfo,
+        items: Bioshogi::Analysis::NoteInfo,
       },
       {
         key: :all,
         name: "全体",
-        target_infos: Bioshogi::Analysis::TacticInfo.all_elements,
+        items: Bioshogi::Analysis::TacticInfo.all_elements,
       },
     ]
 
-    # def ancestor_info
-    #   Bioshogi::Analysis::ScopeInfo.fetch(key)
-    # end
-
-    # def tag_table
-    #   "#{key}_tags"
-    # end
+    def items_set
+      @items_set ||= items.collect(&:key).to_set
+    end
   end
 end

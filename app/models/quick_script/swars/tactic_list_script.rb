@@ -53,9 +53,12 @@ module QuickScript
         current_items.collect do |item|
           {}.tap do |row|
             row["名前"] = item_search_link(item)
-            row["勝率"] = tactics_hash.dig(item.key, :win_ratio).try { "%.3f" % self } || ""
-            row["頻度"] = tactics_hash.dig(item.key, :freq_ratio).try { "%.4f" % self } || "0" # 0 は文字列にしておかないと b-table の並び替えがバグる
-            row["ｽﾀｲﾙ"] = item.style_info.name
+            row["勝率"] = tactics_hash.dig(item.key, :"勝率").try { "%.3f" % self } || "?"
+            row["人気度"] = "%.4f" % (tactics_hash.dig(item.key, :"人気度") || 0.0)
+            row["出現率"] = "%.4f" % (tactics_hash.dig(item.key, :"出現率") || 0.0)
+            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
+            row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
+            row["スタイル"] = item.style_info.name
             row["種類"] = item.human_name
             row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
             row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
@@ -70,17 +73,21 @@ module QuickScript
         current_items.collect do |item|
           {}.tap do |row|
             row["種類"]     = item.human_name
+            row["スタイル"] = item.style_info.name
             row["名前"]     = item.name
             row["親"]       = item.parent&.name
             row["別名"]     = item.alias_names
 
-            row["相対頻度"] = tactics_hash.dig(item.key, :freq_ratio) || 0.0
-            row["スタイル"] = item.style_info.name
+            row["勝率"]     = tactics_hash.dig(item.key, :"勝率")
+            row["人気度"]   = tactics_hash.dig(item.key, :"人気度") || 0.0
+            row["出現率"]   = tactics_hash.dig(item.key, :"出現率") || 0.0
 
-            row["勝率"]     = tactics_hash.dig(item.key, :win_ratio)
-            row["勝ち"]     = tactics_hash.dig(item.key, :win_count) || 0
-            row["負け"]     = tactics_hash.dig(item.key, :lose_count) || 0
-            row["引分"]     = tactics_hash.dig(item.key, :draw_count) || 0
+            JudgeInfo.each do |e|
+              row[e.short_name] = tactics_hash.dig(item.key, e.short_name.to_sym) || 0
+            end
+
+            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
+            row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
           end
         end
       end
@@ -89,13 +96,6 @@ module QuickScript
 
       ################################################################################
 
-      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
-      # | tag_name             | win_count | win_ratio           | draw_count | freq_count | freq_ratio           | lose_count | win_lose_count |
-      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
-      # | 力戦                 |         7 |  0.5833333333333334 |          0 |         12 |   0.2307692307692308 |          5 |             12 |
-      # | 居玉                 |         6 |  0.4615384615384616 |          0 |         13 |                 0.25 |          7 |             13 |
-      # | 名人に定跡なし       |         7 |                 1.0 |          0 |          7 |   0.1346153846153846 |          0 |              7 |
-      # |----------------------+-----------+---------------------+------------+------------+----------------------+------------+----------------|
       def tactics_hash
         @tactics_hash ||= TacticStatScript.new.tactics_hash
       end
