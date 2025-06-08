@@ -108,15 +108,15 @@ module QuickScript
             row["#"]        = ranks[i]
             row["名前"]     = item_name_search_link(e[:"名前"])
             row["勝率"]     = e[:"勝率"].try { "%.3f" % self } || ""
-            row["人気度"]   = e[:"人気度"].try { "%.4f" % self } || ""
             row["登場率"]   = e[:"登場率"].try { "%.4f" % self } || ""
+            row["人気度"]   = e[:"人気度"].try { "%.4f" % self } || ""
 
             row["勝ち"]     = e[:"勝ち"]
             row["負け"]     = e[:"負け"]
             row["引分"]     = e[:"引分"]
 
-            row["使用人数"] = e[:"使用人数"]
             row["登場回数"] = e[:"登場回数"]
+            row["使用人数"] = e[:"使用人数"]
 
             row["ｽﾀｲﾙ"]     = e[:"スタイル"]
             row["種類"]     = e[:"種類"]
