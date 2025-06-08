@@ -15,9 +15,9 @@ require "./setup"
 def case1(kifu_body_list)
   user1 = Swars::User.create!
   user2 = Swars::User.create!
-  battles = kifu_body_list.collect { |e| Swars::Battle.create_with_members!([user1, user2], {kifu_body_for_test: e}) }
+  battles = kifu_body_list.collect { |e| Swars::Battle.create_with_members!([user1, user2], { kifu_body_for_test: e }) }
   scope = Swars::Membership.where(id: battles.flat_map(&:membership_ids))
-  object = QuickScript::Swars::TacticStatScript.new({period_key: :infinite}, {batch_size: 1, scope: scope})
+  object = QuickScript::Swars::TacticStatScript.new({ period_key: :infinite }, { batch_size: 1, scope: scope })
   object.cache_write
   tp object.aggregate[:day7]
 end

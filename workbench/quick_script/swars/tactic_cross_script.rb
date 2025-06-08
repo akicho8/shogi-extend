@@ -2,9 +2,9 @@ require "./setup"
 
 def case1(grade_keys, kifu_body_list)
   users = grade_keys.collect { |e| Swars::User.create!(grade_key: e) }
-  battles = kifu_body_list.collect { |e| Swars::Battle.create_with_members!(users, {kifu_body_for_test: e}) }
+  battles = kifu_body_list.collect { |e| Swars::Battle.create_with_members!(users, { kifu_body_for_test: e }) }
   scope = Swars::Membership.where(id: battles.flat_map(&:membership_ids))
-  object = QuickScript::Swars::TacticCrossScript.new({}, {batch_size: 1, scope: scope, verbose: false})
+  object = QuickScript::Swars::TacticCrossScript.new({}, { batch_size: 1, scope: scope, verbose: false })
   tp object.aggregate_now
 end
 

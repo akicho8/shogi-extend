@@ -60,8 +60,8 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
   end
 
   def aggregate
-    # url = "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
-    url = "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
+    url = "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
+    # url = "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 
     raw_data = URI.open(url).read
     items = JSON.parse(raw_data)
@@ -69,7 +69,8 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
     categories = ["備考", "手筋", "戦法", "囲い"]
     group = items.group_by { |e| e["種類"] }
     sorted_items = categories.flat_map do |category|
-      group[category].sort_by { |e| -e["出現率"] }
+      # group[category].sort_by { |e| -e["人気度"] }
+      group[category].sort_by { |e| Bioshogi::Analysis::TacticInfo.flat_fetch(e["名前"]) }
     end
 
     all_names = sorted_items.collect { |e| e["名前"] }.uniq

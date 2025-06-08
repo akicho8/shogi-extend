@@ -379,7 +379,6 @@ module QuickScript
             end
           end
         end
-
       end
     end
   end

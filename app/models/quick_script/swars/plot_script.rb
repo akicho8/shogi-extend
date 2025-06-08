@@ -29,4 +29,3 @@ module QuickScript
     end
   end
 end
-

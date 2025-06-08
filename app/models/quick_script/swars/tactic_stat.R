@@ -9,35 +9,79 @@ api_url <- "http://localhost:3000/api/lab/swars/tactic-stat.json?json_type=gener
 df <- fromJSON(api_url)
 df <- df[["infinite"]]
 
-# フィルタリング
+# 不要な行を除去
 df <- df[!is.na(df$勝率), ]
 df$種類 <- factor(df$種類, levels = c("戦法", "囲い", "手筋", "備考"))
 
-# プロット作成
-p <- plot_ly(
-  df,
-  type = "scatter",
-  mode = "markers+text",   # ドットとテキスト両方表示
-  x = ~勝率,
-  y = ~人気度,
-  text = ~名前,
-  color = ~種類,
-  marker = list(size = 8),    # ドットサイズ
-  textfont = list(size = 14),
-  textposition = "top center",
-  hovertemplate = paste(
-    "%{text}<br>",
-    "勝率: %{x:.5f}<br>",
-    "人気度: %{y:.5f}",
-    "<extra></extra>"
-  )
+# hover表示用のテキスト整形
+df$hover <- paste(
+  "<b>", df$名前, "</b>", "\n",
+  "勝率:", sprintf("%.3f", df$勝率), "\n",
+  "人気度:", sprintf("%.4f", df$人気度), "\n",
+  "出現率:", sprintf("%.4f", df$出現率), "\n",
+  "勝ち:", df$勝ち, "\n",
+  "負け:", df$負け, "\n",
+  "引分:", df$引分, "\n",
+  "使用人数:", df$使用人数, "\n",
+  "出現回数:", df$出現回数
 )
 
-# レイアウト調整
+# プロット初期化
+p <- plot_ly()
+
+# 種類ごとに「人気度（左Y軸）」traceを追加
+for (kind in levels(df$種類)) {
+  df_sub <- df[df$種類 == kind, ]
+  p <- add_trace(
+    p,
+    data = df_sub,
+    type = "scatter",
+    mode = "markers+text",
+    x = ~勝率,
+    y = ~人気度,
+    text = ~名前,
+    color = ~種類,
+    hovertext = ~hover,
+    hoverinfo = "text",
+    marker = list(size = 8),
+    textfont = list(size = 14),
+    textposition = "top center",
+    name = paste0(kind, "（人気度）"),
+    legendgroup = paste0(kind, "_pop"),
+    showlegend = TRUE,
+    yaxis = "y1"
+  )
+}
+
+# 種類ごとに「出現率（右Y軸）」traceを追加
+for (kind in levels(df$種類)) {
+  df_sub <- df[df$種類 == kind, ]
+  p <- add_trace(
+    p,
+    data = df_sub,
+    type = "scatter",
+    mode = "markers+text",
+    x = ~勝率,
+    y = ~出現率,
+    text = ~名前,
+    color = ~種類,
+    hovertext = ~hover,
+    hoverinfo = "text",
+    marker = list(size = 8, symbol = "circle-open", line = list(width = 2)),
+    textfont = list(size = 14),
+    textposition = "top center",
+    name = paste0(kind, "（出現率）"),
+    legendgroup = paste0(kind, "_freq"),
+    showlegend = TRUE,
+    yaxis = "y2"
+  )
+}
+
+# レイアウト設定
 p <- layout(
   p,
   title = list(
-    text = "<b>将棋ウォーズ：強さと人気で見る戦法分布</b>",
+    text = "<b>将棋ウォーズ：強さと人気・出現率で見る戦法分布</b>",
     font = list(color = "white", size = 24)
   ),
   xaxis = list(
@@ -57,17 +101,30 @@ p <- layout(
     showline = TRUE,
     linecolor = "#444"
   ),
+  yaxis2 = list(
+    overlaying = "y",
+    side = "right",
+    title = list(text = "出現率", font = list(color = "#aaa", size = 16)),
+    type = "log",
+    tickfont = list(color = "#aaa"),
+    showgrid = FALSE
+  ),
   legend = list(
     font = list(color = "white")
   ),
   hoverlabel = list(bgcolor = "#333", font = list(color = "#aaa"), bordercolor = "#444"),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
-  margin = list(l=80, r=80, b=80, t=100),
-  annotations = list(list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa")))
+  margin = list(l = 80, r = 80, b = 80, t = 100),
+  annotations = list(list(
+    x = 1.0, y = 1.03,
+    text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")),
+    showarrow = FALSE, xref = "paper", yref = "paper",
+    font = list(size = 12, color = "#aaa")
+  ))
 )
 
-# 保存と表示
+# 表示または保存
 if (interactive()) {
   p
 } else {

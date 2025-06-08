@@ -6,13 +6,11 @@ library(htmlwidgets)
 
 # 定数定義 ------------------------------------------------------------
 
-# API エンドポイント（本番とローカルどちらもあり、後者が優先される）
-# api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
-api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
+# API エンドポイント
+api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 
-visible_names <- c("居飛車", "振り飛車") # , "急戦", "持久戦"
+visible_names <- c("居飛車", "振り飛車") # 初期表示する戦法
 
-# 棋力の表示順
 rank_order <- c(
   "10級", "9級", "8級", "7級", "6級", "5級", "4級", "3級", "2級", "1級",
   "初段", "二段", "三段", "四段", "五段", "六段", "七段", "八段", "九段"
@@ -24,7 +22,7 @@ message("凡例リスト読み込み: 開始")
 target_names_json <- system("cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'", intern = TRUE)
 target_names <- fromJSON(paste(target_names_json, collapse = ""))
 message("凡例リスト読み込み: 完了")
-# target_names <- visible_names
+# target_names <- c("居飛車", "振り飛車") # 初期表示する戦法
 
 # データ取得と整形 ------------------------------------------------------------
 
@@ -40,67 +38,85 @@ filtered_data <- filtered_data[order(filtered_data$名前, filtered_data$棋力)
 fig <- plot_ly()
 
 for (name in target_names) {
-  tactic_data <- subset(filtered_data, 名前 == name)
+  df <- subset(filtered_data, 名前 == name)
 
-  if (nrow(tactic_data) == 0) {
+  if (nrow(df) == 0) {
     message(sprintf("データなしのためスキップ: %s", name))
     next
   }
 
-  # ホバーに表示する詳細情報
-  tactic_data$hover <- paste(
-    tactic_data$名前, tactic_data$棋力, "<br>",
-    "勝率:", sprintf("%.3f", tactic_data$勝率), "<br>",
-    "頻度:", sprintf("%.4f", tactic_data$頻度), "<br>",
-    "勝ち:", tactic_data$勝ち, "<br>",
-    "負け:", tactic_data$負け, "<br>",
-    "引分:", tactic_data$引分, "<br>",
-    "出現:", tactic_data$出現回数
+  df$hover <- paste(
+    df$名前, df$棋力, "<br>",
+    "勝率:", sprintf("%.3f", df$勝率), "<br>",
+    "人気度:", sprintf("%.4f", df$人気度), "<br>",
+    "出現率:", sprintf("%.4f", df$出現率), "<br>",
+    "勝ち:", df$勝ち, "<br>",
+    "負け:", df$負け, "<br>",
+    "引分:", df$引分, "<br>",
+    "使用人数:", df$使用人数, "<br>",
+    "出現回数:", df$出現回数
   )
 
-  # ラベルは10級だけに表示
-  tactic_data$label <- ifelse(tactic_data$棋力 == "10級", tactic_data$名前, "")
+  # ラベル色とシンボル
+  df$symbol <- ifelse(df$勝率 >= 0.5, "circle", "circle-open")
 
-  # ラベル色：10級は白、他は勝率に応じた色
-  tactic_data$label_color <- ifelse(
-    tactic_data$棋力 == "10級",
-    "white",
-    ifelse(tactic_data$勝率 >= 0.5,
-           hcl(h = 20, c = 85, l = 50),   # オレンジ
-           hcl(h = 207, c = 85, l = 50))  # 青
-  )
+  ## ラベル名を分ける
+  df$label_popularity <- ifelse(df$棋力 == "10級", paste(name, "(人気度)"), "")
+  df$label_appearance <- ifelse(df$棋力 == "10級", paste(name, "(出現率)"), "")
 
-  # ラベル位置
-  tactic_data$text_position <- "top center"
-
-  # シンボル（勝率によって塗りあり・なし）
-  tactic_data$symbol <- ifelse(tactic_data$勝率 >= 0.5, "circle", "circle-open")
-
+  # 人気度プロット（y軸1）
   fig <- add_trace(
     fig,
-    data = tactic_data,
+    data = df,
     x = ~棋力,
-    y = ~頻度,
+    y = ~人気度,
     type = "scatter",
     mode = "lines+markers+text",
-    name = name,
-    text = ~label,
-    textposition = ~text_position,
-    textfont = list(color = ~label_color, size = 18),
+    name = paste(name, "(人気度)"),
+    text = ~label_popularity,
+    textposition = "top center",
+    textfont = list(color = "white", size = 18),
     hovertext = ~hover,
     hoverinfo = "text",
     visible = if (name %in% visible_names) TRUE else "legendonly",
-    marker = list(size = 12, symbol = ~symbol, opacity = 0.8),
-    line = list(width = 4, shape = "spline")
+    marker = list(size = 12, symbol = df$symbol, opacity = 0.8),
+    line = list(width = 4, shape = "spline"),
+    yaxis = "y"
+  )
+
+  # 出現率プロット（y軸2）
+  fig <- add_trace(
+    fig,
+    data = df,
+    x = ~棋力,
+    y = ~出現率,
+    type = "scatter",
+    mode = "lines+markers+text",
+    name = paste(name, "(出現率)"),
+    text = ~label_appearance,
+    textposition = "top center",
+    textfont = list(color = "white", size = 18),
+    hovertext = ~hover,
+    hoverinfo = "text",
+    visible = if (name %in% visible_names) TRUE else "legendonly",
+    marker = list(size = 12, symbol = df$symbol, opacity = 0.8),
+    line = list(width = 4, dash = "dot", shape = "spline"),
+    yaxis = "y2"
   )
 }
 
 # レイアウト設定 ------------------------------------------------------------
 
+# データ全体から、人気度と出現率の最大・最小値を取得
+# y_min <- min(c(df$人気度, df$出現率), na.rm = TRUE)
+# y_max <- max(c(df$人気度, df$出現率), na.rm = TRUE)
+# y_min <- 0.0
+# y_max <- 1.0
+
 fig <- layout(
   fig,
   title = list(
-    text = "<b>将棋ウォーズ：棋力別に見る戦法使用率の変化</b>",
+    text = "<b>将棋ウォーズ：棋力別に見る戦法人気度と出現率の変化</b>",
     font = list(size = 28)
   ),
   xaxis = list(
@@ -111,42 +127,58 @@ fig <- layout(
     tickfont = list(color = "#aaa", size = 18)
   ),
   yaxis = list(
-    title = "",
-    # type = "log",
+    title = "人気度",
     titlefont = list(size = 20, color = "#aaa"),
+    tickfont = list(color = "#aaa", size = 18),
     showgrid = TRUE,
-    gridcolor = "#444",
-    tickfont = list(color = "#aaa", size = 18)
+    gridcolor = "#444"
+  ),
+  yaxis2 = list(
+    title = "出現率",
+    # range = c(y_min, y_max),
+    titlefont = list(size = 20, color = "#aaa"),
+    tickfont = list(color = "#aaa", size = 18),
+    overlaying = "y",
+    side = "right",
+    showgrid = FALSE
   ),
   legend = list(
-    x = 1.02,
+    x = 1.05,
     y = 1,
     bgcolor = "#333",
     font = list(color = "#ffffff", size = 16)
   ),
-  hoverlabel = list(bgcolor = "#333", font = list(color = "white", size = 20), bordercolor = "white"),
+  hoverlabel = list(
+    bgcolor = "#333",
+    font = list(color = "#aaa", size = 20),
+    bordercolor = "#aaa"
+  ),
   font = list(color = "white"),
   plot_bgcolor = "#333",
   paper_bgcolor = "#333",
-  margin = list(l = 100, r = 200, t = 100, b = 70),
+  margin = list(l = 100, r = 350, t = 100, b = 70),
   annotations = list(
     list(
       text = "🦉ﾀﾞﾌﾞﾙｸﾘｯｸ<b>2回</b>で<br>　切り替えれるぞ",
       xref = "paper",
       yref = "paper",
-      x = 1.02,
-      y = 1.05,         # 凡例の上ギリギリを狙う（0.02ずらし）
+      x = 1.05,
+      y = 1.05,
       xanchor = "left",
       showarrow = FALSE,
       font = list(size = 12, color = "#aaa"),
       align = "left",
-      # bgcolor = "#333", # 凡例背景色と同じに
-      # borderpad = 2,
-      # bordercolor = "#555",
-      # borderwidth = 1,
       opacity = 0.95
     ),
-    list(x = 1.0, y = 1.03, text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")), showarrow = FALSE, xref = "paper", yref = "paper", font = list(size = 12, color = "#aaa"))
+    list(
+      x = 1.0,
+      y = 1.03,
+      text = paste("最終更新:", format(Sys.time(), "%Y-%m-%d")),
+      showarrow = FALSE,
+      xref = "paper",
+      yref = "paper",
+      font = list(size = 12, color = "#aaa")
+    )
   )
 )
 

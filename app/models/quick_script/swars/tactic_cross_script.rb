@@ -292,6 +292,7 @@ module QuickScript
         def aggregate_result_merge(judge_counts_hash, memberships_counts_hash, user_ids_hash)
           user_counts_hash = user_counts_hash_from(user_ids_hash)
 
+          # FIXME: メソッド化
           hv = judge_counts_hash # => { ["九段", "原始棒銀", "win"] => 1, ... }
           hv = hv.group_by { |(grade_key, tag_name, judge_key), count| [grade_key, tag_name] } # => {["九段", "原始棒銀"] => [[["九段", "原始棒銀", "win"], 1]], }
           hv = hv.transform_values { |a| a.inject(JudgeInfo.zero_default_hash) { |a, ((_, _, judge_key), count)| a.merge(judge_key.to_sym => count) } } # => {["九段", "原始棒銀"] => {win: 1, lose: 0, draw: 0}, }
@@ -357,7 +358,9 @@ module QuickScript
         #
         def user_counts_hash_from(user_ids_hash)
           initial = Hash.new { |h, k| h[k] = Set[] }
-          hv = user_ids_hash.inject(initial) { |a, ((grade_key, _tag_name), set)| a.merge(grade_key => a[grade_key] + set) }
+          hv = user_ids_hash.inject(initial) do |a, ((grade_key, _tag_name), set)|
+            a.merge(grade_key => a[grade_key] + set)
+          end
           hv.transform_values(&:size)
         end
       end
