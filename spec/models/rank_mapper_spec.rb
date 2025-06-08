@@ -2,18 +2,11 @@ require "rails_helper"
 
 RSpec.describe RankMapper, type: :model do
   it "works" do
-    assert { RankMapper.new([30, 20, 20, 10]).to_a == [3, 1, 1, 0] }
+    assert { RankMapper.ranks([])                       == [] }
+    assert { RankMapper.ranks([nil, 1]) rescue $!.class == ArgumentError }
+    assert { RankMapper.ranks([5, 5])                   == [0, 0] }
+    assert { RankMapper.ranks([7, 6, 6, 5, 5])          == [4, 2, 2, 0, 0] }
+    assert { RankMapper.ranks([2, 3, 4], base_rank: 5)  == [5, 6, 7] }
+    assert { RankMapper.ranks([-5, -4, -4, -3])         == [0, 1, 1, 3] }
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
-# >> 
-# >> RankMapper
-# >>   works
-# >> 
-# >> Top 1 slowest examples (0.13804 seconds, 5.5% of total time):
-# >>   RankMapper works
-# >>     0.13804 seconds -:4
-# >> 
-# >> Finished in 2.5 seconds (files took 1.56 seconds to load)
-# >> 1 example, 0 failures
-# >> 
