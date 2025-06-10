@@ -9,7 +9,7 @@ library(plotly)
 api_url <- "https://www.shogi-extend.com/api/lab/swars/grade_segment.json?json_type=general"
 json_data <- fromJSON(api_url)
 
-visible_names <- c("投了", "詰まされ")
+visible_names <- c("投了", "詰まされ", "時間切れ")
 
 # データフレーム化
 data <- data.frame(
