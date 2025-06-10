@@ -54,10 +54,10 @@ module QuickScript
           {}.tap do |row|
             row["名前"] = item_search_link(item)
             row["勝率"] = tactics_hash.dig(item.key, :"勝率").try { "%.3f" % self } || "?"
-            row["人気度"] = "%.4f" % (tactics_hash.dig(item.key, :"人気度") || 0.0)
             row["出現率"] = "%.4f" % (tactics_hash.dig(item.key, :"出現率") || 0.0)
-            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
+            row["人気度"] = "%.4f" % (tactics_hash.dig(item.key, :"人気度") || 0.0)
             row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
+            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
             row["スタイル"] = item.style_info.name
             row["種類"] = item.human_name
             row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
@@ -79,15 +79,15 @@ module QuickScript
             row["別名"]     = item.alias_names
 
             row["勝率"]     = tactics_hash.dig(item.key, :"勝率")
-            row["人気度"]   = tactics_hash.dig(item.key, :"人気度") || 0.0
             row["出現率"]   = tactics_hash.dig(item.key, :"出現率") || 0.0
+            row["人気度"]   = tactics_hash.dig(item.key, :"人気度") || 0.0
 
             JudgeInfo.each do |e|
               row[e.short_name] = tactics_hash.dig(item.key, e.short_name.to_sym) || 0
             end
 
-            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
             row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
+            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
           end
         end
       end

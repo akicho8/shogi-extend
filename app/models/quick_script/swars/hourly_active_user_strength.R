@@ -10,16 +10,16 @@ library(scales)
 
 # api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
-data <- fromJSON(api_url)
+df <- fromJSON(api_url)
 
 weekday_order <- c("日", "月", "火", "水", "木", "金", "土")
 
-data$強さ <- rescale(data$強さ, to = c(-1, 1))
-data$曜日 <- factor(data$曜日, levels = weekday_order)
-data$時 <- factor(data$時, levels = as.character(0:23))
+df$強さ <- rescale(df$強さ, to = c(-1, 1))
+df$曜日 <- factor(df$曜日, levels = weekday_order)
+df$時 <- factor(df$時, levels = as.character(0:23))
 
 p_plotly <- plot_ly(
-  data = data,
+  data = df,
   x = ~曜日,
   y = ~時,
   z = ~強さ,

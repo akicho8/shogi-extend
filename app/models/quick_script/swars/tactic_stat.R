@@ -4,8 +4,8 @@ library(plotly)
 library(htmlwidgets)
 
 # データ取得
-# api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-stat.json?json_type=general"
-api_url <- "http://localhost:3000/api/lab/swars/tactic-stat.json?json_type=general"
+# api_url <- "http://localhost:3000/api/lab/swars/tactic-stat.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-stat.json?json_type=general"
 df <- fromJSON(api_url)
 df <- df[["infinite"]]
 
@@ -17,43 +17,18 @@ df$種類 <- factor(df$種類, levels = c("戦法", "囲い", "手筋", "備考"
 df$hover <- paste(
   "<b>", df$名前, "</b>", "\n",
   "勝率:", sprintf("%.3f", df$勝率), "\n",
-  "人気度:", sprintf("%.4f", df$人気度), "\n",
   "出現率:", sprintf("%.4f", df$出現率), "\n",
+  "人気度:", sprintf("%.4f", df$人気度), "\n",
   "勝ち:", df$勝ち, "\n",
   "負け:", df$負け, "\n",
   "引分:", df$引分, "\n",
-  "使用人数:", df$使用人数, "\n",
-  "出現回数:", df$出現回数
+  "出現回数:", df$出現回数, "\n",
+  "使用人数:", df$使用人数
 )
 
 # プロット初期化
 p <- plot_ly()
 
-# 種類ごとに「人気度（左Y軸）」traceを追加
-for (kind in levels(df$種類)) {
-  df_sub <- df[df$種類 == kind, ]
-  p <- add_trace(
-    p,
-    data = df_sub,
-    type = "scatter",
-    mode = "markers+text",
-    x = ~勝率,
-    y = ~人気度,
-    text = ~名前,
-    color = ~種類,
-    hovertext = ~hover,
-    hoverinfo = "text",
-    marker = list(size = 8),
-    textfont = list(size = 14),
-    textposition = "top center",
-    name = paste0(kind, "（人気度）"),
-    legendgroup = paste0(kind, "_pop"),
-    showlegend = TRUE,
-    yaxis = "y1"
-  )
-}
-
-# 種類ごとに「出現率（右Y軸）」traceを追加
 for (kind in levels(df$種類)) {
   df_sub <- df[df$種類 == kind, ]
   p <- add_trace(
@@ -67,13 +42,36 @@ for (kind in levels(df$種類)) {
     color = ~種類,
     hovertext = ~hover,
     hoverinfo = "text",
-    marker = list(size = 8, symbol = "circle-open", line = list(width = 2)),
+    marker = list(size = 8, symbol = "circle", line = list(width = 2)),
     textfont = list(size = 14),
     textposition = "top center",
     name = paste0(kind, "（出現率）"),
     legendgroup = paste0(kind, "_freq"),
     showlegend = TRUE,
     yaxis = "y2"
+  )
+}
+
+for (kind in levels(df$種類)) {
+  df_sub <- df[df$種類 == kind, ]
+  p <- add_trace(
+    p,
+    data = df_sub,
+    type = "scatter",
+    mode = "markers+text",
+    x = ~勝率,
+    y = ~人気度,
+    text = ~名前,
+    color = ~種類,
+    hovertext = ~hover,
+    hoverinfo = "text",
+    marker = list(size = 8, symbol = "circle-open", line = list(width = 2)),
+    textfont = list(size = 14),
+    textposition = "top center",
+    name = paste0(kind, "（人気度）"),
+    legendgroup = paste0(kind, "_pop"),
+    showlegend = TRUE,
+    yaxis = "y1"
   )
 }
 
@@ -93,7 +91,7 @@ p <- layout(
     linecolor = "#444"
   ),
   yaxis = list(
-    title = list(text = "人気", font = list(color = "#aaa", size = 16)),
+    title = list(text = "出現率", font = list(color = "#aaa", size = 16)),
     type = "log",
     tickfont = list(color = "#aaa"),
     gridcolor = "#444",
@@ -102,11 +100,11 @@ p <- layout(
     linecolor = "#444"
   ),
   yaxis2 = list(
-    overlaying = "y",
-    side = "right",
-    title = list(text = "出現率", font = list(color = "#aaa", size = 16)),
+    title = list(text = "人気", font = list(color = "#aaa", size = 16)),
     type = "log",
     tickfont = list(color = "#aaa"),
+    overlaying = "y",
+    side = "right",
     showgrid = FALSE
   ),
   legend = list(

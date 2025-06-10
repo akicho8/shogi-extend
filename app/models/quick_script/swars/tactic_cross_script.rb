@@ -312,7 +312,7 @@ module QuickScript
               **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name.to_sym => e[o.key]) },
 
               :使用人数 => user_ids_hash[[grade_info.key, info.key]].size,
-              :人気度   => user_ids_hash[[grade_info.key, info.key]].size.fdiv(user_counts_hash[grade_info.key]), # 分母は棋力毎のユニークユーザー数
+              :人気度     => user_ids_hash[[grade_info.key, info.key]].size.fdiv(user_counts_hash[grade_info.key]), # 分母は棋力毎のユニークユーザー数
 
               :出現回数 => judge_calc.count,
               :出現率   => judge_calc.count.fdiv(memberships_counts_hash[e[:grade_key]]), # 分母は棋力毎の memberships_count であってる？ → 分子が最大のときは「その棋力での対局数分」なので、分母の最大が「その棋力の対局数分」なのは合っている

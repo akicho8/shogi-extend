@@ -7,7 +7,7 @@ library(viridisLite)
 
 # JSONデータを取得するURL
 # api_url <- "http://localhost:3000/api/lab/swars/hourly_active_user.json?json_type=general"
-api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general" # このコードは消すな
+api_url <- "https://www.shogi-extend.com/api/lab/swars/hourly_active_user.json?json_type=general"
 
 data <- fromJSON(api_url)
 

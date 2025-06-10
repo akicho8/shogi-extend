@@ -7,7 +7,8 @@ library(htmlwidgets)
 # 定数定義 ------------------------------------------------------------
 
 # API エンドポイント
-api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
+# api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 
 visible_names <- c("居飛車", "振り飛車") # 初期表示する戦法
 
@@ -48,23 +49,38 @@ for (name in target_names) {
   df$hover <- paste(
     df$名前, df$棋力, "<br>",
     "勝率:", sprintf("%.3f", df$勝率), "<br>",
-    "人気度:", sprintf("%.4f", df$人気度), "<br>",
     "出現率:", sprintf("%.4f", df$出現率), "<br>",
+    "人気度:", sprintf("%.4f", df$人気度), "<br>",
     "勝ち:", df$勝ち, "<br>",
     "負け:", df$負け, "<br>",
     "引分:", df$引分, "<br>",
-    "使用人数:", df$使用人数, "<br>",
-    "出現回数:", df$出現回数
+    "出現回数:", df$出現回数, "<br>",
+    "使用人数:", df$使用人数
   )
 
-  # ラベル色とシンボル
-  df$symbol <- ifelse(df$勝率 >= 0.5, "circle", "circle-open")
-
   ## ラベル名を分ける
-  df$label_popularity <- ifelse(df$棋力 == "10級", paste(name, "(人気度)"), "")
   df$label_appearance <- ifelse(df$棋力 == "10級", paste(name, "(出現率)"), "")
+  df$label_popularity <- ifelse(df$棋力 == "10級", paste(name, "(人気度)"), "")
 
-  # 人気度プロット（y軸1）
+  fig <- add_trace(
+    fig,
+    data = df,
+    x = ~棋力,
+    y = ~出現率,
+    text = ~label_appearance,
+    type = "scatter",
+    mode = "lines+markers+text",
+    name = paste(name, "(出現率)"),
+    textposition = "top center",
+    textfont = list(color = "white", size = 18),
+    hovertext = ~hover,
+    hoverinfo = "text",
+    visible = if (name %in% visible_names) TRUE else "legendonly",
+    marker = list(size = 12, symbol = "circle", opacity = 0.8),
+    line = list(width = 4, shape = "spline"),
+    yaxis = "y"
+  )
+
   fig <- add_trace(
     fig,
     data = df,
@@ -79,27 +95,7 @@ for (name in target_names) {
     hovertext = ~hover,
     hoverinfo = "text",
     visible = if (name %in% visible_names) TRUE else "legendonly",
-    marker = list(size = 12, symbol = df$symbol, opacity = 0.8),
-    line = list(width = 4, shape = "spline"),
-    yaxis = "y"
-  )
-
-  # 出現率プロット（y軸2）
-  fig <- add_trace(
-    fig,
-    data = df,
-    x = ~棋力,
-    y = ~出現率,
-    type = "scatter",
-    mode = "lines+markers+text",
-    name = paste(name, "(出現率)"),
-    text = ~label_appearance,
-    textposition = "top center",
-    textfont = list(color = "white", size = 18),
-    hovertext = ~hover,
-    hoverinfo = "text",
-    visible = if (name %in% visible_names) TRUE else "legendonly",
-    marker = list(size = 12, symbol = df$symbol, opacity = 0.8),
+    marker = list(size = 12, symbol = "circle", opacity = 0.8),
     line = list(width = 4, dash = "dot", shape = "spline"),
     yaxis = "y2"
   )
@@ -127,14 +123,14 @@ fig <- layout(
     tickfont = list(color = "#aaa", size = 18)
   ),
   yaxis = list(
-    title = "人気度",
+    title = "出現率",
     titlefont = list(size = 20, color = "#aaa"),
     tickfont = list(color = "#aaa", size = 18),
     showgrid = TRUE,
     gridcolor = "#444"
   ),
   yaxis2 = list(
-    title = "出現率",
+    title = "人気度",
     # range = c(y_min, y_max),
     titlefont = list(size = 20, color = "#aaa"),
     tickfont = list(color = "#aaa", size = 18),
