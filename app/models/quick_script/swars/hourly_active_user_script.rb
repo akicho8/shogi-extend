@@ -16,8 +16,7 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "ｺﾞｰﾙﾃﾞﾝﾀｲﾑ",  icon: "chart-box", _v_bind: { href: "/lab/swars/hourly-active-user-count.html",    target: "_self" }, },
-          { name: "棋力ﾋｰﾄﾏｯﾌﾟ", icon: "chart-box", _v_bind: { href: "/lab/swars/hourly-active-user-strength.html", target: "_self" }, },
+          { name: "ﾋｰﾄﾏｯﾌﾟ", icon: "chart-box", _v_bind: { href: "/lab/swars/hourly-active-user.html", target: "_self" }, },
         ]
       end
 

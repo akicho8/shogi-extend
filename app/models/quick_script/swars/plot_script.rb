@@ -18,8 +18,7 @@ module QuickScript
 
       def parts
         [
-          "hourly-active-user-count",
-          "hourly-active-user-strength",
+          "hourly-active-user",
           "tactic-stat",
           "tactic-cross",
           "turn-average",

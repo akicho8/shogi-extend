@@ -7,8 +7,8 @@ module QuickScript
       # http://localhost:4000/lab/dev/iframe
       def call
         h_stack [
-          %(<iframe width="480" height="800" src="/lab/swars/hourly-active-user-count.html"    frameborder="0"></iframe>),
-          %(<iframe width="480" height="800" src="/lab/swars/hourly-active-user-strength.html" frameborder="0"></iframe>),
+          %(<iframe width="480" height="800" src="/lab/swars/hourly-active-user.html" frameborder="0"></iframe>),
+          %(<iframe width="480" height="800" src="/lab/swars/hourly-active-user.html" frameborder="0"></iframe>),
         ]
       end
     end
