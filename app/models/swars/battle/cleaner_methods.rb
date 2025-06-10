@@ -65,23 +65,23 @@ module Swars
 
         # 消さない棋譜に集計が偏るため集計では直近3ヶ月とした方がいいかもしれない
 
-        # 一般ユーザーの対局は90日後に消す
+        # 一般ユーザー
         scope :drop_scope1, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 3.month,
+            :old_only    => Rails.env.local? ? 0.days : 2.month,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
         }
 
-        # VIPユーザーの対局は120日後に消す
+        # VIPユーザー
         scope :drop_scope2, -> (options = {}) {
           options = {
             :xmode_only  => "野良",
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 4.month,
+            :old_only    => Rails.env.local? ? 0.days : 3.month,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても
             :user_except => Swars::User::Vip.protected_user_keys,      # さらにこちらで除外される
           }.merge(options)
