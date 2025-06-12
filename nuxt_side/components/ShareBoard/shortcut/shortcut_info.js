@@ -48,6 +48,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.yomikomi_from_clipboard(),
       },
       {
+        _if: (c, e) => c.play_mode_p && e.code === "KeyR" && c.keyboard_shift_p(e),
+        call: c => c.yomikomi_modal_open_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, ","),
         call: c => c.general_setting_modal_shortcut_handle(),
       },

@@ -30,9 +30,13 @@
         td
           b-tag(type="is-primary") ⇧ c
       tr
-        th 棋譜張り付け
+        th 棋譜張り付け (直接)
         td
           b-tag(type="is-primary") ⇧ v
+      tr
+        th 棋譜張り付け (モーダルを開く)
+        td
+          b-tag(type="is-primary") ⇧ r
       tr
         th 局面編集・完了
         td
