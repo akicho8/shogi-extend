@@ -29,7 +29,7 @@ plot_count <- plot_ly(
   type = "heatmap",
   colors = colorRamp(viridisLite::turbo(100)),
   showscale = FALSE,
-  hovertemplate = "%{z:.2f}<extra></extra>"
+  hovertemplate = "%{x}曜日 %{y}時台 %{z:.2f}<extra></extra>"
 )
 plot_count <- layout(
   plot_count,
@@ -45,7 +45,7 @@ plot_strength <- plot_ly(
   type = "heatmap",
   colors = colorRamp(viridisLite::turbo(100)),
   showscale = TRUE,
-  hovertemplate = "%{z:.2f}<extra></extra>",
+  hovertemplate = "%{x}曜日 %{y}時台 %{z:.2f}<extra></extra>",
 
   colorbar = list(
     title = "",

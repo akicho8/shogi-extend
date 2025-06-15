@@ -2,7 +2,11 @@ namespace :r do
   desc "Rスクリプトの一括実行 (DEPLOY=1 でデプロイ)"
   task :generate do
     Rails.root.join("app/models").glob("**/*.R") do |e|
-      system "Rscript #{e}", exception: true
+      begin
+        system "Rscript #{e}", exception: true
+      rescue => error
+        tp error
+      end
     end
 
     tp("production に即反映" => "cap production nuxt_side:static_upload")
