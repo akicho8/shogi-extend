@@ -188,7 +188,9 @@ module QuickScript
             row["スタイル"] = e[:"スタイル"]
             row["種類"]     = e[:"種類"]
 
-            row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: e[:"名前"] }, }, }, }
+            if AppConfig[:encyclopedia_link]
+              row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: e[:"名前"] }, }, }, }
+            end
             row[header_blank_column(1)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: e[:"名前"] }, }, }, }
           end
         end
