@@ -3,6 +3,7 @@
   .title.is-6 スタイル設定
   SimpleRadioButton(:base="SB" model_name="AppearanceThemeInfo" var_name="appearance_theme_key" custom-class="is-small" element_size="is-small")
   SimpleSlider.is-hidden-touch(:base="SB" label="盤の大きさ" var_name="board_width" :min="0" :max="100" :step="1.0")
+  SimpleRadioButton.is-hidden-tablet(:base="SB" model_name="MobileVerticalInfo" var_name="mobile_vertical_key" custom-class="is-small" element_size="is-small")
 </template>
 
 <script>
