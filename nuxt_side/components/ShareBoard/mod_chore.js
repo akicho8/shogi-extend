@@ -69,9 +69,7 @@ export const mod_chore = {
 
     // プロフィールアイコンを押して移動
     profile_click_handle(e) {
-      this.run_or_room_out_confirm(() => {
-        this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
-      })
+      this.run_or_room_out_confirm(() => this.$router.push("/lab/account"))
     },
 
     // ホームアイコンを押してトップに戻る
