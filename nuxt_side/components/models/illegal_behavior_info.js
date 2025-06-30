@@ -20,7 +20,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       {
         key: "is_illegal_behavior_auto",
         name: "したら負け",
-        message: "基本はこれ (推奨)",
+        message: "緊張感あり。逆転の余地あり。面白さ増↑ (推奨)",
         type: "is-primary",
         sp_illegal_validate: true,
         sp_illegal_cancel: false,
@@ -29,7 +29,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_newbie",
         name: "できない",
-        message: "超初心者向け (接待用)",
+        message: "緊張感なし。逆転の余地なし。面白さ減↓ (非推奨)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
@@ -38,7 +38,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_throw",
         name: "関与しない",
-        message: "リアル対面対局と同じ (非推奨)",
+        message: "リアル対局と同じ。もし二歩をしても対局は進む (非推奨)",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
