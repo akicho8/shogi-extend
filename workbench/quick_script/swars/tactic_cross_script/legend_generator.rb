@@ -170,7 +170,7 @@ tp QuickScript::Swars::TacticCrossScript::LegendGenerator.new.aggregate
 # >> | ムリヤリ早石田           |
 # >> | 升田式石田流             |
 # >> | 鬼殺し                   |
-# >> | 2手目△3ニ飛戦法         |
+# >> | 2手目△3二飛戦法         |
 # >> | コーヤン流三間飛車       |
 # >> | 真部流                   |
 # >> | 初手▲7八飛戦法          |

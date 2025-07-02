@@ -62,7 +62,7 @@ RSpec.describe Swars::Battle, type: :model, swars_spec: true do
         assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
         assert { value[:url]         == nil                                                        }
         assert { value[:image]       == "http://localhost:3000/w/alice-bob-20000101_000000.png?turn=5&viewpoint=black" }
-        assert { value[:description] == "新嬉野流 vs 2手目△3ニ飛戦法"                                   }
+        assert { value[:description] == "新嬉野流 vs 2手目△3二飛戦法"                                   }
       end
       it "turnを変更できる" do
         assert { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
@@ -74,7 +74,7 @@ RSpec.describe Swars::Battle, type: :model, swars_spec: true do
     end
 
     it "description" do
-      assert { record.description == "新嬉野流 vs 2手目△3ニ飛戦法" }
+      assert { record.description == "新嬉野流 vs 2手目△3二飛戦法" }
     end
   end
 
