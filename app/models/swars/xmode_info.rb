@@ -6,6 +6,7 @@ module Swars
       { key: "友達", alias_key: nil, sw_side_key: "friend",       },
       { key: "指導", alias_key: nil, sw_side_key: "coach",        },
       { key: "大会", alias_key: nil, sw_side_key: "closed_event", },
+      # 本当は次に「ラーニング」がある
     ]
 
     prepend AliasMod

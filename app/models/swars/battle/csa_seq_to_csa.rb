@@ -26,7 +26,10 @@ module Swars
         @lines << ["N-", @battle.memberships.second.name_with_grade].join
         @lines << ["$START_TIME", @battle.battled_at.to_fs(:csa_ymdhms)] * ":"
         @lines << ["$EVENT", "#{event_title}(#{event_types.join(' ')})"] * ":"
-        @lines << ["$TIME_LIMIT", @battle.rule_info.csa_time_limit] * ":"
+
+        if v = @battle.rule_info.csa_time_limit
+          @lines << ["$TIME_LIMIT", v] * ":"
+        end
 
         if true
           @lines << ["$X_FINAL", @battle.final_info.name] * ":" # 未使用
@@ -51,7 +54,9 @@ module Swars
 
       def render_body
         # 残り時間の並びから使用時間を求めつつ指し手と一緒に並べていく
-        life = [@battle.rule_info.life_time] * @battle.memberships.size
+        life_time = @battle.rule_info.life_time || (60 * 60)
+
+        life = [life_time] * @battle.memberships.size
 
         @battle.csa_seq.each.with_index do |(op, t), i|
           if true

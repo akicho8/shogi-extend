@@ -45,7 +45,9 @@ module BattleDecorator
     end
 
     def hold_time_str
-      ["各", battle.rule_info.real_life_time / 1.minutes, "分"].join
+      if v = battle.rule_info.real_life_time
+        ["各", v / 1.minutes, "分"].join
+      end
     end
 
     def total_seconds_for(location_info)

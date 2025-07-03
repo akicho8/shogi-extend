@@ -8,7 +8,9 @@ module Swars
         if battle.final_info.key == :TIMEOUT
           if judge_info.key == :lose
             if battle.rule_info.related_time_p
-              battle.rule_info.life_time - battle.raw_sec_list(location_info).sum # sec_list を使うと無限ループするので注意。補正してない raw_sec_list を使うこと
+              if v = battle.rule_info.life_time
+                v - battle.raw_sec_list(location_info).sum # sec_list を使うと無限ループするので注意。補正してない raw_sec_list を使うこと
+              end
             end
           end
         end
