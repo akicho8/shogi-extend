@@ -13,7 +13,7 @@ RSpec.describe "順番設定直後の自動設定", type: :system, share_board_s
       })
   end
 
-  it "順番設定モーダルから明示的に共有したタイミングでのみ印モードが対局者はONで観戦者はOFFになる" do
+  it "順番設定モーダルから明示的に共有したタイミングでのみ印モードが対局者はOFFで観戦者はONになる" do
     # 変化したか分からないため想定値の逆の値にしておく
     a_block { case1("a", "true")  }
     b_block { case1("b", "true")  }
