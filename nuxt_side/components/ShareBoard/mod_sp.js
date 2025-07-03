@@ -91,7 +91,7 @@ export const mod_sp = {
 
     // 手番が違うのに操作しようとした
     ev_illegal_click_but_self_is_not_turn() {
-      if (this.think_mark_mode_p) {
+      if (this.think_mark_mode_p || this.think_mark_watcher_then_always_enable_p) {
         return
       }
 

@@ -5,6 +5,8 @@ import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
+const THINK_MARK_WATCHER_THEN_ALWAYS_ENABLE_P = true // 観戦者なら思考印を常に有効とするか？
+
 export const mod_think_mark = {
   mounted() {
     this.think_mark_setup()
@@ -86,6 +88,11 @@ export const mod_think_mark = {
 
       // 誰でもメタキーを押しながらでもマークできる
       if (this.play_mode_p && event && this.keyboard_meta_p(event)) {
+        return true
+      }
+
+      // 観戦者なら常にマークできるとする
+      if (this.play_mode_p && this.think_mark_watcher_then_always_enable_p) {
         return true
       }
 
@@ -172,6 +179,8 @@ export const mod_think_mark = {
     ThinkMarkReceiveScopeInfo()    { return ThinkMarkReceiveScopeInfo },
     think_mark_receive_scope_info() { return this.ThinkMarkReceiveScopeInfo.fetch(this.think_mark_receive_scope_key) },
 
+    think_mark_watcher_then_always_enable_p() { return THINK_MARK_WATCHER_THEN_ALWAYS_ENABLE_P && this.i_am_watcher_p }, // 観戦者なら思考印を常に有効とするか？
+
     // 現在の利用者の名前に対応する色番号を得る
     mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
@@ -181,6 +190,11 @@ export const mod_think_mark = {
 
     // 思考マークモード有効/無効ボタンを表示するか？
     think_mark_button_show_p() {
+      // 観戦者なら常に有効なのでボタンは表示しない
+      if (this.think_mark_watcher_then_always_enable_p) {
+        return false
+      }
+
       if (this.play_mode_p) {
         // if (!this.think_mark_mode_global_p) {
         //   return false
