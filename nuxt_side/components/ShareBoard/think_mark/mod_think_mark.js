@@ -5,7 +5,7 @@ import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 const SS_MARK_COLOR_COUNT = 12   // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
-const THINK_MARK_WATCHER_THEN_ALWAYS_ENABLE_P = true // 観戦者なら思考印を常に有効とするか？
+const THINK_MARK_WATCHER_THEN_ALWAYS_ENABLE_P = false // 観戦者なら思考印を常に有効とするか？
 
 export const mod_think_mark = {
   mounted() {
