@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsBattleIndexApp
-  b-loading(:active="$fetchState.pending")
+  b-loading(:active="loading_p")
 
   DebugBox(v-if="development_p")
     p mounted_then_query_present_p: {{mounted_then_query_present_p}}
@@ -17,7 +17,9 @@
       NavbarItemProfileLink
       NavbarItemSidebarOpen(@click="sidebar_toggle")
 
-  MainSection
+  XyMasterLiteApp(v-if="xy_master_lite_p")
+
+  MainSection(v-if="!xy_master_lite_p")
     .container.is-fluid
       .columns
         .column
@@ -235,6 +237,23 @@ export default {
 
     current_query()  { return Gs.presence(Gs.query_compact(this.query)) }, // 現在のクエリを継続して使うとき用
     query_for_link() { return QUERY_KEEP_P ? this.current_query : undefined },  // 名前クリックしたときのクエリ
+
+    loading_p() {
+      return this.$fetchState.pending && !this.xy_master_lite_p
+    },
+
+    xy_master_lite_p() {
+      return false              // やっぱやめ
+
+      if (this.$route.query.xy_master_lite_p) {
+        return true
+      }
+      return this.$fetchState.pending &&
+        this.$gs.present_p(this.$route.query.query) &&
+        this.$gs.blank_p(this.$route.query.sort_column) &&
+        this.$gs.blank_p(this.$route.query.sort_order) &&
+        this.$gs.blank_p(this.$route.query.page)
+    },
   },
 }
 </script>

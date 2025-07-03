@@ -25,7 +25,7 @@ b-table.SwarsBattleIndexTable(
   :row-class="APP.row_class"
   )
 
-  SwarsBattleIndexTableEmpty(slot="empty" v-if="!APP.$fetchState.pending && $route.query.query && APP.xi.total === 0")
+  SwarsBattleIndexTableEmpty(slot="empty" v-if="!APP.loading_p && $route.query.query && APP.xi.total === 0")
 
   b-table-column(v-slot="{row}" field="id" :label="APP.ColumnInfo.fetch('id').name" :visible="APP.column_visible_p('id')" sortable centered numeric)
     nuxt-link(:to="APP.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}

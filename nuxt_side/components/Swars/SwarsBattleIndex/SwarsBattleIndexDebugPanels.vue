@@ -49,12 +49,13 @@
         pre
           | [layout_key={{APP.layout_key}}]
           | [scene_key={{APP.scene_key}}]
-          | [per={{APP.xi.per}}]
-          | [records_length={{APP.xi.records ? APP.xi.records.length : ''}}]
           | [tiresome_count={{APP.tiresome_count}}]
           | [tiresome_previous_user_key={{APP.tiresome_previous_user_key}}]
           | [tiresome_modal_selected={{APP.tiresome_modal_selected}}]
           | [complement_user_keys={{APP.complement_user_keys.join("|")}}]
+        pre(v-if="APP.xi")
+          | [per={{APP.xi.per}}]
+          | [records_length={{APP.xi.records ? APP.xi.records.length : ''}}]
 </template>
 
 <script>

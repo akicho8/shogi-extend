@@ -46,7 +46,7 @@ export const mod_search = {
     // ↓この方法だと同じURLでもアクセスする
     // a(@click="APP.interactive_search({query: new_query})") {{name}}
     interactive_search(params) { // private
-      if (this.$fetchState.pending) {
+      if (this.loading_p) {
         this.debug_alert("interactive_search の処理中に interactive_search が再度呼ばれている")
         return
       }
