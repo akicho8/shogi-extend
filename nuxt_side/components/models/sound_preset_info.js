@@ -13,7 +13,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "se_toggle_off",      name: "トグルOFF",        volume: 0.2, source: require("@/assets/SND01_sine/toggle_off.wav"),      },
       { key: "se_select",          name: "ラジオボタン選択", volume: 0.3, source: require("@/assets/SND01_sine/select.wav"),          },
       { key: "se_disabled",        name: "禁止",             volume: 0.3, source: require("@/assets/SND01_sine/disabled.wav"),        },
-      { key: "se_notification",    name: "通知",             volume: 0.3, source: require("@/assets/SND01_sine/notification.wav"),    },
+      { key: "se_notification",    name: "通知",             volume: 0.4, source: require("@/assets/SND01_sine/notification.wav"),    },
       { key: "se_caution",         name: "危険",             volume: 0.3, source: require("@/assets/SND01_sine/caution.wav"),         },
       { key: "se_transition_up",   name: "遷移(進む)",       volume: 0.2, source: require("@/assets/SND01_sine/transition_up.wav"),   },
       { key: "se_transition_down", name: "遷移(戻る)",       volume: 0.2, source: require("@/assets/SND01_sine/transition_down.wav"), },
@@ -57,15 +57,15 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",                                                volume: 0.4,  source: require("@/assets/USF/IMPACTS/Stone/IMPACT_Stone_On_Stone_05_mono.wav"),                              },
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/assets/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),                                        },
       { key: "se_piece_lift",                name: "持ち上げる",               volume: 0.3,  source: require("@/assets/SND01_sine/tap_03.wav"),                                                            },
-      { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.4,  source: require("@/assets/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
+      { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
       { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    },
       // { key: "se_piece_select",                                             volume: 0.2,  source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    },
 
       // ▼思考印をセルに付ける / 外す
 
       // 8BIT
-      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.15, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
-      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.15, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
+      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.1, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
+      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.1, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
       // { key: "se_think_mark_at_cell_on",                                    volume: 0.30, source: require("@/assets/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),      },
 
       // Factoio 搬送ベルト風
