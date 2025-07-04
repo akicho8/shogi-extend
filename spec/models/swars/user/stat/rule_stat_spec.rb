@@ -17,9 +17,10 @@ RSpec.describe Swars::User::Stat::RuleStat, type: :model, swars_spec: true do
       case1(:ten_sec)
 
       outcome = [
-        { :name => "10分", :value => 1 },
-        { :name => "3分",  :value => 1 },
-        { :name => "10秒", :value => 1 },
+        { :name => "10分",     :value => 1 },
+        { :name => "3分",      :value => 1 },
+        { :name => "10秒",     :value => 1 },
+        { :name => "カスタム", :value => 0 },
       ]
 
       assert { @black.stat.rule_stat.to_chart == outcome }
