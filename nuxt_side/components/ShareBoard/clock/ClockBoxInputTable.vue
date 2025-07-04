@@ -19,7 +19,9 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
-      th 猶予(秒)
+      th
+        b-tooltip(position="is-top" label="回復しない")
+          | 猶予(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_sec(v-bind="input_default_attrs" v-model="e.initial_extra_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
