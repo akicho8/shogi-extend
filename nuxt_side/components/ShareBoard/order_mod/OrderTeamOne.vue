@@ -1,6 +1,6 @@
 <template lang="pug">
 .OrderTeamOne
-  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@dblclick="TheOSM.state_toggle_handle")
+  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable.has-text-centered(@dblclick="TheOSM.state_toggle_handle")
     | {{label}}
   VueDraggable.draggable_area(
     tag="div"
@@ -14,8 +14,8 @@
     )
     template(v-for="e in current_items")
       .draggable_item(:key="e.unique_key" :class="name_class(e)" :style="name_style(e)")
-        .text
-          XemojiWrap(:str="name_emoji(e)" v-if="name_emoji(e)")
+        .icon_with_name
+          XemojiWrap.is-flex-shrink-0(:str="name_emoji(e)" v-if="name_emoji(e)")
           span.name
             | {{e.to_s}}
 </template>
@@ -105,7 +105,6 @@ export default {
   width: 7rem            // サイズを固定する(重要) 指定しないとハンドルネームの長さによって崩れる
 
   white-space: nowrap
-  text-align: center
   font-size: $size-7
 
   .draggable_area
@@ -127,11 +126,9 @@ export default {
       padding: 0.25rem 0.75rem
       cursor: move
 
-      // overflow: hidden で切ったとき右のパッディングがなくなるため li に直接テキストを入れない
-      .text
+      // overflow: hidden で切ったとき右のパッディングがなくなるため .draggable_item に直接テキストを入れてはいけない
+      .icon_with_name
         display: flex
-        align-items: center
-        justify-content: center
         gap: 0.25rem            // ドクロと名前の隙間
 
         line-height: 2.5
