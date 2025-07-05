@@ -57,8 +57,8 @@ module SharedMethods
   # klass の上からn番目のメンバーを観戦に移動する
   # klass: [dnd_black, dnd_white, dnd_both]
   def drag_to_watch(klass, n)
-    a = find(".#{klass} li:nth-child(#{n.next})")
-    b = find(".dnd_watch_users ul")
+    a = find(".#{klass} .draggable_item:nth-child(#{n.next})")
+    b = find(".dnd_watch_users .draggable_area")
     # forceFallback: true によって drag_to が動かなくなるため revert した
     # https://github.com/SortableJS/Vue.Draggable/issues/1156#issuecomment-1340558451
     a.drag_to(b)
@@ -89,7 +89,7 @@ module SharedMethods
   end
 
   def __assert_order_dnd_team_one(klass, names_str, options)
-    names = all(".#{klass} li").collect(&:text)
+    names = all(".#{klass} .draggable_item").collect(&:text)
     if options[:sort]
       names = names.sort
     end
