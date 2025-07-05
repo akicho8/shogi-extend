@@ -28,7 +28,6 @@ export const HandleNameNgWordList = [
   "。",
   "、",
   ",",
-  "sex",
   "「",
   "」",
   "xvideo",
