@@ -2,17 +2,16 @@
 .OrderTeamOne
   .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@dblclick="TheOSM.state_toggle_handle")
     | {{label}}
-  VueDraggable.draggable_area(
-    tag="div"
+  VueDraggable(
+    tag="ul"
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
     @start="start_handle"
     @end="end_handle"
-    draggable=".draggable_item"
     )
     template(v-for="e in current_items")
-      .draggable_item(:key="e.unique_key" :class="name_class(e)" :style="name_style(e)")
+      li(:key="e.unique_key" :class="name_class(e)" :style="name_style(e)")
         .text
           XemojiWrap(:str="name_emoji(e)" v-if="name_emoji(e)")
           span.name
@@ -97,27 +96,21 @@ export default {
 
 <style lang="sass">
 .OrderTeamOne
-  display: flex
-  flex-direction: column // 縦並びにする場合
-  width: 7rem            // サイズを固定する(重要) 指定しないとハンドルネームの長さによって崩れる
-
   white-space: nowrap
+  min-width: 4rem
+  max-width: 6rem
   text-align: center
   font-size: $size-7
 
-  .draggable_area
+  ul
+    margin-top: 6px // ラベルとの差
     display: flex
     gap: 6px        // 上下の差
     flex-direction: column
-
-    margin-top: 6px // ラベルとの隙間
     height: 100%    // ← ulの下の空いた空間にdropできるようになる (超重要)
 
-    // &:hover
-    //   border: 1px solid $grey-lighter
-
     // ドラッグ要素
-    .draggable_item
+    li
       background-color: $white
       border: 1px solid $grey-lighter
       border-radius: 2px
@@ -158,12 +151,4 @@ export default {
     // 持ち上げて動かしている要素
     .sortable-drag
       opacity: 1.0 ! important  // 1.0 にしたいが Sortable 側で 0.8 がハードコーディングされていて変更できない(FIXME)
-
-.STAGE-development
-  .OrderTeamOne
-    border: 1px dashed change_color($primary, $alpha: 0.5)
-    .OrderTeamOneTitle
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .draggable_area
-      border: 2px solid change_color($danger, $alpha: 0.5)
 </style>
