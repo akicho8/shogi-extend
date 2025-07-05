@@ -30,7 +30,7 @@ export default {
   .MainSection.section
     padding: 1rem
 
-.SbApp.debug_mode_p
+.STAGE-development
   .SbDashboard
     .container, .section
       border: 1px dashed change_color($primary, $alpha: 0.5)

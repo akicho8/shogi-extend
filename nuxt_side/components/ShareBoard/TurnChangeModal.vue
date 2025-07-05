@@ -59,7 +59,7 @@ export default {
   .modal-card-body
     padding: 1.25rem
 
-.SbApp.debug_mode_p
+.STAGE-development
   .TurnChangeModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)

@@ -60,7 +60,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.SbApp.debug_mode_p
+.STAGE-development
   .GiveUpModal
     __css_keep__: 0
 

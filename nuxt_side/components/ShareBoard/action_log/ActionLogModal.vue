@@ -111,7 +111,7 @@ export default {
     .buttons > *
       margin-bottom: 0
 
-.SbApp.debug_mode_p
+.STAGE-development
   .ActionLogModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)

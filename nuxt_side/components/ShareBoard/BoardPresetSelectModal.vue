@@ -87,7 +87,7 @@ export default {
     +setvar(sp_grid_outer_color, hsl(0, 0%, 80%))
     +setvar(sp_grid_inner_color, hsl(0, 0%, 80%))
 
-.SbApp.debug_mode_p
+.STAGE-development
   .BoardPresetSelectModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)

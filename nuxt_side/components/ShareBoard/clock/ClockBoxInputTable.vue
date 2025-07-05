@@ -65,7 +65,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.SbApp.debug_mode_p
+.STAGE-development
   .ClockBoxInputTable
     td, th
       border: 1px dashed change_color($primary, $alpha: 0.5)

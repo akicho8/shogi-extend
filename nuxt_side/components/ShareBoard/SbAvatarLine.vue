@@ -75,7 +75,7 @@ export default {
     display: block           // inlineだと余計な隙間が生まれるため念のためblockにしておく
     border-radius: 100%      // 丸める
 
-.SbApp.debug_mode_p
+.STAGE-development, .SbApp.debug_mode_p
   .SbAvatarLine
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .flex_item
