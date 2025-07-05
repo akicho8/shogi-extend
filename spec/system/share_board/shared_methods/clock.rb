@@ -13,14 +13,14 @@ module SharedMethods
   def clock_box_form_set(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
     find(cc_input(location_key, :initial_main_min)).find(:fillable_field).set(initial_main_min)                # 持ち時間(分)
     find(cc_input(location_key, :initial_read_sec)).find(:fillable_field).set(initial_read_sec)                # 秒読み
-    find(cc_input(location_key, :initial_extra_sec)).find(:fillable_field).set(initial_extra_sec)              # 猶予(秒)
+    find(cc_input(location_key, :initial_extra_sec)).find(:fillable_field).set(initial_extra_sec)              # 深考時間(秒)
     find(cc_input(location_key, :every_plus)).find(:fillable_field).set(every_plus)                            # 1手毎加算(秒)
   end
 
   def clock_box_form_eq(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
     find(cc_input(location_key, :initial_main_min)).assert_selector(:fillable_field, with: initial_main_min)   # 持ち時間(分)
     find(cc_input(location_key, :initial_read_sec)).assert_selector(:fillable_field, with: initial_read_sec)   # 秒読み
-    find(cc_input(location_key, :initial_extra_sec)).assert_selector(:fillable_field, with: initial_extra_sec) # 猶予(秒)
+    find(cc_input(location_key, :initial_extra_sec)).assert_selector(:fillable_field, with: initial_extra_sec) # 深考時間(秒)
     find(cc_input(location_key, :every_plus)).assert_selector(:fillable_field, with: every_plus)               # 1手毎加算(秒)
   end
 

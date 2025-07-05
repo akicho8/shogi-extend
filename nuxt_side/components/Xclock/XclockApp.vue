@@ -23,7 +23,7 @@
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="秒読み" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
-              b-field(label="猶予(秒)" custom-class="is-small")
+              b-field(label="深考時間(秒)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
       XclockAppFooter(:base="base" ref="XclockAppFooter")
 

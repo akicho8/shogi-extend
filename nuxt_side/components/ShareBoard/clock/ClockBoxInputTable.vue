@@ -20,8 +20,15 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
         b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
       th
-        b-tooltip(position="is-top" label="回復しない")
-          | 猶予(秒)
+        //- https://buefy.org/documentation/tooltip
+        b-tooltip(position="is-right" multilined)
+          template(v-slot:content)
+            p.title.is-6.mb-0 深考時間とは？
+            ul
+              li 回復しない最後の持ち時間で、秒読みが0になった後で消費します
+              li うっかり時間切れの救済用ではなく、勝負所の局面で<b>じっくり考えるため</b>の時間です
+              li <b>数分程度</b>あると、より深い終盤戦が楽しめるでしょう
+          | 深考時間(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_sec(v-bind="input_default_attrs" v-model="e.initial_extra_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
@@ -86,4 +93,17 @@ export default {
     tbody
       td
         width: 50%
+
+  // ツールチップ左寄せ
+  .b-tooltip.is-multiline
+    .tooltip-content
+      padding: 1rem
+      text-align: left
+      line-height: 1.5
+      width: 15rem
+      .title
+        color: inherit
+        white-space: nowrap
+      li
+        margin-top: 0.8rem
 </style>

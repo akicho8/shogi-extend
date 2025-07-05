@@ -11,7 +11,7 @@ export class CcRuleInfo extends ApplicationMemoryRecord {
   static cc_params_keys = [
     "initial_main_min",  // 持ち時間(分)
     "initial_read_sec",  // 秒読み
-    "initial_extra_sec", // 猶予(秒)
+    "initial_extra_sec", // 深考時間(秒)
     "every_plus",        // 1手毎加算
   ]
 

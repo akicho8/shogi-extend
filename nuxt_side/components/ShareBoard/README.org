@@ -78,7 +78,7 @@
   | RS_RESEND_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                     |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                     |
   | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                     |
-  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                     |
+  | clock_box.initial_extra_sec | 深考時間(秒)                                                |                                                                                     |
   | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                     |
   | clock_auto_start            | true なら即開始                                         |                                                                                     |
   | xmatch_auth_key             |                                                         |                                                                                     |
