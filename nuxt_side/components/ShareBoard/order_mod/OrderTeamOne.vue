@@ -126,6 +126,9 @@ export default {
       padding: 0.25rem 0.75rem
       cursor: move
 
+      display: flex
+      justify-content: center
+
       // overflow: hidden で切ったとき右のパッディングがなくなるため .draggable_item に直接テキストを入れてはいけない
       .icon_with_name
         display: flex
