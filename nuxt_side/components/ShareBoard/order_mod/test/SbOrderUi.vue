@@ -144,7 +144,7 @@ export default {
   .TeamContainer
     // width: 24rem
     display: flex
-.STAGE-development
+.SbApp.debug_mode_p
   .SbOrderUi
     .columns
       .column

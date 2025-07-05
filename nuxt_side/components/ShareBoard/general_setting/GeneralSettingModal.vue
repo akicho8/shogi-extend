@@ -71,7 +71,7 @@ export default {
     .tab_content
       margin-top: 1.25rem
 
-.STAGE-development
+.SbApp.debug_mode_p
   .GeneralSettingModal
     .column
       border: 1px dashed change_color($primary, $alpha: 0.5)

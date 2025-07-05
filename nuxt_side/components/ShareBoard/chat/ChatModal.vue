@@ -157,7 +157,7 @@ export default {
       width: unset
 
 // Windows ではデザインが崩れるため開発環境でのみ有効化する
-.STAGE-development
+.SbApp.debug_mode_p
   .ChatModal
     .modal-card
       overflow: scroll

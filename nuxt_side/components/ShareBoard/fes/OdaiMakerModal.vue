@@ -105,7 +105,7 @@ export default {
     .button
       min-width: 6rem
 
-.STAGE-development
+.SbApp.debug_mode_p
   .OdaiMakerModal
     __css_keep__: 0
 </style>

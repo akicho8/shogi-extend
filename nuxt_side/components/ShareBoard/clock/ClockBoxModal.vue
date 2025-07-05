@@ -148,7 +148,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.STAGE-development
+.SbApp.debug_mode_p
   .ClockBoxModal
     .modal-card-body, .field
       border: 1px dashed change_color($primary, $alpha: 0.5)

@@ -287,7 +287,7 @@ export default {
       scale: 0.75
       color: $grey
 
-.STAGE-development
+.SbApp.debug_mode_p
   .OrderSettingModal
     .modal-card-body
       border: 1px dashed change_color($primary, $alpha: 0.5)

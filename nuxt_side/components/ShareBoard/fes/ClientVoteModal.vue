@@ -106,7 +106,7 @@ export default {
       &.is_active
         border: 3px solid $primary
 
-.STAGE-development
+.SbApp.debug_mode_p
   .ClientVoteModal
     .items
       border: 1px dashed change_color($primary, $alpha: 0.5)

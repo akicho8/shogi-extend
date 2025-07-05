@@ -165,7 +165,7 @@ export default {
         .box
           padding: 0.75rem
 
-.STAGE-development
+.SbApp.debug_mode_p
   .XmatchModal
     .columns
       border: 1px dashed change_color($primary, $alpha: 0.5)

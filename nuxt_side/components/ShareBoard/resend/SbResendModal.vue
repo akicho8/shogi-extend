@@ -47,7 +47,7 @@ export default {
   // +modal_max_width(480px)
   +modal_width_auto
 
-.STAGE-development
+.SbApp.debug_mode_p
   .SbResendModal
     .modal-card-body
       border: 1px dashed change_color($primary, $alpha: 0.5)
