@@ -26,8 +26,8 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
             //- p.title.is-6.mb-0 深考時間とは？
             .is-flex.is-flex-direction-column
               p 回復しない最後の持ち時間で、秒読みが0になった後で消費します
-              p うっかり切れ負けの救済用ではなく、勝負所で<b>じっくり考えるため</b>の時間です
-              p <b>数分程度</b>あると、より深い終盤戦が楽しめるでしょう
+              p 切れ負けの救済用ではなく、主に終盤の<b>勝負所で考えるため</b>の時間です
+              p <b>数分程度</b>あると、より深い終盤戦が楽しめます
           | 深考時間(秒)
           b-icon.has-text-info(icon="help-circle-outline" size="is-small")
       td(v-for="e in SB.cc_params")
