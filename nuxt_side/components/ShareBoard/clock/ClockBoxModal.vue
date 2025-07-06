@@ -83,10 +83,10 @@ export default {
 
       // いったん初期配置に戻すか聞く
       if (this.SB.current_turn >= 1) {
-        this.SB.cc_turn_zero_confirm({
+        this.SB.cc_play_confirim({
           onCancel: () => {
             this.$sound.play_click()
-            this.toast_ok("メニューの中の上の方に「初期配置に戻す」があるぞ")
+            this.toast_ok("メニューの中の上の方に「初期配置に戻す」があります")
           },
           onConfirm: () => {
             this.play_core_handle()

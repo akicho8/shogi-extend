@@ -460,14 +460,14 @@ export const mod_clock_box = {
       this.tl_add("CC初期値", `${label}: ${this.cc_params_inspect(params)}`)
     },
 
-    cc_turn_zero_confirm(params = {}) {
+    cc_play_confirim(params = {}) {
       this.$sound.play_click()
-      this.sb_talk(`ちょっとまて。本当に今の局面から開始してえんか？`)
+      this.sb_talk(`ちょっと待って。本当にこの途中の局面から開始してもいいのですか？`)
       this.dialog_confirm({
-        title: "ちょっとまて",
+        title: "ちょっと待って",
         // type: "is-warning",
         hasIcon: false,
-        message: `本当に今の局面から開始してえんか？`,
+        message: `本当にこの途中の局面から開始してもいいのですか？`,
         cancelText: "いいえ",
         confirmText: "はい",
         focusOn: "cancel",

@@ -13,7 +13,7 @@ RSpec.describe "対局時計で初期配置に戻さずに対局開始しよう�
         :autoexec             => "cc_create,cc_modal_open_handle",
       })
     clock_play_button_click
-    assert_selector(".dialog .modal-card-title", text: "ちょっとまて")
+    assert_selector(".dialog .modal-card-title", text: "ちょっと待って")
   end
 
   it "はい" do
