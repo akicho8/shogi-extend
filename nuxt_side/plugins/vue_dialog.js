@@ -173,7 +173,7 @@ export const vue_dialog = {
     // focusOn の初期値は "confirm"
     dialog_confirm(params = {}) {
       return this.$buefy.dialog.confirm({
-        message: "本当にもよいですか？",
+        message: "本当によいですか？",
         cancelText: "キャンセル",
         animation: "",
         onCancel: () => this.$sound.play_click(),

@@ -80,6 +80,24 @@ export default {
         this.toast_ng("先に順番設定をしてください")
         return
       }
+
+      // いったん初期配置に戻すか聞く
+      if (this.SB.current_turn >= 1) {
+        this.SB.cc_turn_zero_confirm({
+          onCancel: () => {
+            this.$sound.play_click()
+            this.toast_ok("メニューの中の上の方に「初期配置に戻す」があるぞ")
+          },
+          onConfirm: () => {
+            this.play_core_handle()
+            // this.$sound.play_click()
+            // this.SB.force_sync_turn_zero()
+            // this.play_core_handle()
+          },
+        })
+        return
+      }
+
       this.play_core_handle()
     },
     play_core_handle() {

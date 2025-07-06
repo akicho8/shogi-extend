@@ -57,15 +57,19 @@ module SharedMethods
   # 順番設定済みの状態で対局時計を設置してPLAY押して閉じる
   def clock_start
     clock_open                               # 対局時計を開いて
-    find(".play_button").click               # 開始
+    clock_play_button_click               # 開始
     cc_modal_close
   end
 
   # 順番設定をしてください状態で対局時計を設置してPLAY押して閉じる
   def clock_start_force
     clock_open                                     # 対局時計を開いて
-    find(".play_button").click                     # 開始
+    clock_play_button_click                     # 開始
     cc_modal_close
+  end
+
+  def clock_play_button_click
+    find(".play_button").click
   end
 
   # URLにする時計のパラメータ
