@@ -68,6 +68,7 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("将棋初心者")).toEqual(false)
     expect(HandleNameValidator.valid_p("noname")).toEqual(false)
     expect(HandleNameValidator.valid_p("あああ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ちんちん")).toEqual(false)
     expect(HandleNameValidator.valid_p("雑　魚")).toEqual(false)
     expect(HandleNameValidator.valid_p("雑 魚")).toEqual(false)
     expect(HandleNameValidator.valid_p("戦aaa犯")).toEqual(false)
