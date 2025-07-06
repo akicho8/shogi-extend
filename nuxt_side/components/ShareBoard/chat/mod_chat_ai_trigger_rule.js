@@ -37,7 +37,7 @@ export const mod_chat_ai_trigger_rule = {
       if (!this.GPT_FUNCTION) { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
-        content = [content, "返答は短かく簡潔にすること。"].join("")
+        content = [content, "チャットでの発言なんで返答は短かく簡潔にしてな。"].join("")
         if (this.$route.query.__system_test_now__) {
           delay = 0
         }

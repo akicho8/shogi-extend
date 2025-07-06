@@ -80,14 +80,14 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           const illegal_names = params.illegal_names.join("と")
           const name = context.user_call_name(params.from_user_name)
-          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を励ましてください。`
+          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を励ましてな。`
         },
       },
       {
         key: "時間切れで負けた人を励ます",
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
-          return `時間切れで負けた${name}を励ましてください。`
+          return `時間切れで負けた${name}を励ましてな。`
         },
       },
       {
@@ -105,12 +105,13 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
             const names = members.map(e => context.user_call_name(e.from_user_name))
             const name = _.sample(names)
             const messages = []
-            messages.push("対局が終わったところです。")
-            if (names.length >= 2) {
+            if (names.length >= 1) {
+              messages.push("対局が終わったところです。")
               messages.push(`とくに${name}の活躍が目立ちました。`)
+              messages.push("全角40文字以内で労ってください。")
+              messages.push("いろんなバリデーションで頼むぞ。")
+              return messages.join("")
             }
-            messages.push("熱く両者を労ってください。")
-            return messages.join("")
           }
         },
       },
