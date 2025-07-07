@@ -1,4 +1,15 @@
 export const HandleNameNgWordList = [
+  // 絶対禁止
+  "<",
+  ">",
+  "\\+",
+  "/",
+  ",",
+  "\\?",
+  "#",
+  "=",
+  "\\|",
+
   // 手動
   "shogi.*extend",
   "[な名][な無]し|nanash?i|無名|匿名|NONAME",
@@ -28,7 +39,6 @@ export const HandleNameNgWordList = [
   "麻痺",
   "。",
   "、",
-  ",",
   "「",
   "」",
   "xvideo",

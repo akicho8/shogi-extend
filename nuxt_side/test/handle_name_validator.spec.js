@@ -5,6 +5,18 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_message("a").includes("ハンドルネームを入力してください")).toEqual(true)
   })
 
+  test("危険文字", () => {
+    expect(HandleNameValidator.valid_p("foo<bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo>bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo/bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo+bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo,bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo?bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo#bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo=bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo|bar")).toEqual(false)
+  })
+
   test("短かくても漢字なら良い", () => {
     expect(HandleNameValidator.valid_p("金")).toEqual(true)
   })
