@@ -475,6 +475,29 @@ export const mod_clock_box = {
       })
     },
 
+    cc_not_use_battle_start_warn(params) {
+      // if (this.order_enable_p && !this.cc_play_p) {
+      if (this.order_enable_p) {
+        let message = null
+        if (this.clock_box) {
+          if (this.clock_box.play_p) {
+          } else {
+            if (this.current_turn <= 10) {
+              // message = `対局開始ボタンを押していないのに${this.user_call_name(params.from_user_name)}が指しました`
+              message = `対局開始ボタンを押してから始めましょう`
+            }
+          }
+        } else {
+          if (this.current_turn <= 10) {
+            // message = `対局時計を設置していない状態で${this.user_call_name(params.from_user_name)}が指しました`
+            message = `対局時計を設置してから始めましょう`
+          }
+        }
+        if (message) {
+          this.toast_warn(message)
+        }
+      }
+    },
   },
 
   computed: {
