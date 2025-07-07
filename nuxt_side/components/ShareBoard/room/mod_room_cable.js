@@ -11,6 +11,7 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
+import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
 export const mod_room_cable = {
   data() {
@@ -57,7 +58,7 @@ export const mod_room_cable = {
       Gs.assert(new_room_key, "new_room_key")
 
       new_room_key = _.trim(new_room_key)
-      new_user_name = _.trim(new_user_name)
+      new_user_name = HandleNameNormalizer.normalize(new_user_name)
 
       if (this.user_name !== new_user_name) {
         this.handle_name_set(new_user_name)

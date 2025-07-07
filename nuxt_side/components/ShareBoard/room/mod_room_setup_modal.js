@@ -2,6 +2,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import RoomSetupModal from "./RoomSetupModal.vue"
 import { HandleNameValidator } from "@/components/models/handle_name/handle_name_validator.js"
+import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
 export const mod_room_setup_modal = {
   data() {
@@ -70,7 +71,7 @@ export const mod_room_setup_modal = {
       this.$sound.play_click()
 
       this.new_room_key = _.trim(this.new_room_key)
-      this.new_user_name = _.trim(this.new_user_name)
+      this.new_user_name = HandleNameNormalizer.normalize(this.new_user_name)
 
       // ニックネームを入力していなければ再入力を促す
       if (Gs.blank_p(this.new_room_key)) {
