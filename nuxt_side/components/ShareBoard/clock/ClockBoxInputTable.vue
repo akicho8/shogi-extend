@@ -8,7 +8,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           | {{Location.fetch(i).name}}
       template(v-else)
         th
-          | ☗☖
+          | ☗ ☖
   tbody
     tr
       th 持ち時間(分)
@@ -25,8 +25,9 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           template(v-slot:content)
             //- p.title.is-6.mb-0 深考時間とは？
             .is-flex.is-flex-direction-column
-              p 秒読みが0になった後に使える、第二の持ち時間です
-              p 切れ負けの救済としてよりも、深く考える時間として<b>数分</b>程度あると、読みの入った駆け引きを楽しめます
+              p 秒読みが0になった後に使える第二の持ち時間です
+              p 切れ負け防止用ではなく勝負所でじっくり考えるための時間です
+              p <b>数分</b>程度あると内容の濃い対局になるでしょう
           | 深考時間(秒)
           b-icon.has-text-info(icon="help-circle-outline" size="is-small")
       td(v-for="e in SB.cc_params")
@@ -98,7 +99,7 @@ export default {
   .b-tooltip.is-multiline
     .tooltip-content
       padding: 1rem
-      width: 14rem
+      width: 15rem
 
       text-align: left
       line-height: 1.5
