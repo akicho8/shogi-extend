@@ -13,6 +13,7 @@
 
 <script>
 import { support_child } from "./support_child.js"
+import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
 export default {
   name: "HandleNameModal",
