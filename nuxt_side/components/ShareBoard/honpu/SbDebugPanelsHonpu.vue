@@ -3,8 +3,9 @@
   .panel
     .panel-heading
       | 本譜
+    .panel-block(v-if="SB.current_sfen") 現在 \#{{SB.current_turn}} {{SB.current_sfen}}
     .panel-block(v-if="SB.honpu_main") 本譜 \#{{SB.honpu_main.turn}} {{SB.honpu_main.sfen}}
-    .panel-block(v-if="SB.honpu_branch") 指手 \#{{SB.honpu_branch.turn}} {{SB.honpu_branch.sfen}}
+    .panel-block(v-if="SB.honpu_branch") ブランチ \#{{SB.honpu_branch.turn}} {{SB.honpu_branch.sfen}}
     .panel-block 直近の指し手は本譜をなぞっている？ {{SB.honpu_branch_is_same_route_p}}
     .panel-block 直近の指し手は本譜から外れた？ {{SB.honpu_branch_exist_p}}
     a.panel-block.honpu_main_setup(@click="SB.honpu_main_setup") 作成

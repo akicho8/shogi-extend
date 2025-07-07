@@ -4,6 +4,7 @@
 const AL_RECORDS_MAX    = 200   // 履歴の最大長
 const AL_PUSH_TO        = "top" // 追加位置
 const AL_SAME_SFEN_SKIP = false // 同じ局面なら何もしない？
+const AL_TURN_ONLY_REVERT = true // 過去の履歴なら手数だけ戻す？
 
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
@@ -94,13 +95,27 @@ export const mod_action_log = {
         }
       }
 
-      this.current_sfen = action_log.sfen
-      this.current_turn = action_log.turn
+      let message = null
+      if (AL_TURN_ONLY_REVERT) {
+        if (this.current_sfen.startsWith(action_log.sfen)) {
+          message = `${action_log.turn}手目に戻しました`
+          // 戻る局面は現在の局面の過去の局面なのでSFENを元に戻さない
+        } else {
+          // 戻る局面は現在の局面とまったく異なるのでSFENごと変更する
+          message = `局面を変更しました`
+          this.current_sfen = action_log.sfen
+        }
+        this.current_turn = action_log.turn
+      } else {
+        message = "局面を戻しました"
+        this.current_sfen = action_log.sfen
+        this.current_turn = action_log.turn
+      }
 
       this.honpu_branch_clear()
 
       if (this.ac_room) {
-        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が局面を戻しました`))
+        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が${message}`))
       }
     },
   },
