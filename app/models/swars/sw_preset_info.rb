@@ -12,6 +12,7 @@ module Swars
       { key: "四枚落ち", },
       { key: "六枚落ち", },
       { key: "八枚落ち", },
+      { key: "十枚落ち", },
     ]
   end
 end
