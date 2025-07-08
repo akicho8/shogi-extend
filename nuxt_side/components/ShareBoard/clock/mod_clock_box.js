@@ -480,7 +480,7 @@ export const mod_clock_box = {
     cc_not_use_battle_start_warn(params) {
       const message = this.cc_not_use_battle_start_warn_message(params)
       if (message) {
-        this.toast_warn(message)
+        this.toast_warn(message, {duration: 1000 * 5})
       }
     },
     cc_not_use_battle_start_warn_message(params) {
