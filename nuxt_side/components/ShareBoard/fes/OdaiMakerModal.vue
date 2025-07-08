@@ -11,8 +11,8 @@
     b-field(label-position="on-border")
       template(#label)
         | お題
-        span.mx-1(class="has-text-grey") 例: {{example.subject}}
-      b-input.odai_subject(v-model="SB.master_odai.subject" ref="subject_input_tag")
+        span.mx-1(class="has-text-grey" v-if="false") 例: {{example.subject}}
+      b-input.odai_subject(v-model="SB.master_odai.subject" :placeholder="example.subject" ref="subject_input_tag")
     b-field(grouped)
       b-field(label="選択肢1" label-position="on-border")
         b-input.odai_left(v-model="SB.master_odai.left_value" :placeholder="example.left_value" expanded)
