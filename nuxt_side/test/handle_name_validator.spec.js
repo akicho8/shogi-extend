@@ -5,6 +5,11 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_message("a").includes("ハンドルネームを入力してください")).toEqual(true)
   })
 
+  test("長すぎる", () => {
+    expect(HandleNameValidator.valid_message("alice６７８９０")).toEqual(null)
+    expect(HandleNameValidator.valid_message("alice６７８９０１").includes("ハンドルネームは10文字以内にしてください")).toEqual(true)
+  })
+
   test("危険文字", () => {
     expect(HandleNameValidator.valid_p("foo<bar")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo>bar")).toEqual(false)

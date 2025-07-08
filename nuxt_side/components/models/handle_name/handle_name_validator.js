@@ -15,7 +15,7 @@ import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 
 export class HandleNameValidator {
-  static MAX_LENGTH = 16
+  static MAX_LENGTH = 10
 
   static PREFIX_LIST = [
     "もっと素敵な",
@@ -47,6 +47,7 @@ export class HandleNameValidator {
     this.source = source
     this.options = {
       name: "ハンドルネーム",
+      max_length: this.constructor.MAX_LENGTH,
       ...options,
     }
   }
@@ -69,8 +70,10 @@ export class HandleNameValidator {
       }
     }
     if (message == null) {
-      if (s.length > this.MAX_LENGTH) {
-        message = `${this.options.name}は${this.MAX_LENGTH}文字以下にしてください`
+      if (this.options.max_length) {
+        if (s.length > this.options.max_length) {
+          message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
+        }
       }
     }
     if (message == null) {
