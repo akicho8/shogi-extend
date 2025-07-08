@@ -42,11 +42,11 @@
         td
           b-tag(type="is-primary") ⇧ e
       tr
-        th 目印モードのトグル
+        th 思考印モードのトグル
         td
           b-tag(type="is-primary") m
       tr
-        th 目印 (セルに合わせて)
+        th 思考印 (セルに合わせて)
         td
           b-tag(type="is-primary") ⇧ Click
       tr
