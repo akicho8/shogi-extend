@@ -10,7 +10,7 @@ export class LiftCancelActionInfo extends ApplicationMemoryRecord {
         key: "standard",
         name: "移動先以外",
         type: "is-primary",
-        message: "「将棋ウォーズ」や「ぴよ将棋」に準拠する",
+        message: "「将棋ウォーズ」や「ぴよ将棋」と同じ",
       },
       {
         key: "reality",
@@ -22,7 +22,7 @@ export class LiftCancelActionInfo extends ApplicationMemoryRecord {
         key: "rehold",
         name: "持ち替え",
         type: "is-primary",
-        message: "「lishogi」に準拠する。離すことができない。別の駒をタップすればそのまま持ち替える",
+        message: "「lishogi」と同じ。離すことができない。別の駒をタップすればそのまま持ち替える。",
       },
     ]
   }
