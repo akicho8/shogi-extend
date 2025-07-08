@@ -13,6 +13,7 @@ import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
+import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class HandleNameValidator {
   static MAX_LENGTH = 10
@@ -84,6 +85,11 @@ export class HandleNameValidator {
     if (message == null) {
       if (s.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {  // 通りすがり
         message = this.message_sample
+      }
+    }
+    if (message == null) {
+      if (s.match(new RegExp(SystemNgWordList.join("|"), "i"))) {  // URLとして使えない文字
+        message = `${this.options.name}には記号のような文字を含めないでください`
       }
     }
     if (message == null) {

@@ -20,6 +20,10 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("foo#bar")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo=bar")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo|bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo&bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo%bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo~bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo^bar")).toEqual(false)
   })
 
   test("短かくても漢字なら良い", () => {
