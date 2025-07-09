@@ -36,6 +36,9 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
+    b-navbar-item.has-text-weight-bold.is-hidden-mobile(tag="div" v-if="SB.otasuke_single_line" centered)
+      | {{SB.otasuke_single_line}}
+
   template(slot="end")
     SbHonpuButton
 
@@ -72,6 +75,9 @@ export default {
   computed: {
     component_attrs() {
       const hv = {}
+
+      // hv.centered = true
+      // hv.shadow = true
 
       // hv.transparent = true
       hv.type = this.SB.appearance_theme_info.navbar_type

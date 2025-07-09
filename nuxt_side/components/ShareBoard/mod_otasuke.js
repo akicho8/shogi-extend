@@ -116,5 +116,65 @@ export const mod_otasuke = {
         }
       }
     },
+
+    otasuke_single_line() {
+      let message = null
+      if (message == null) {
+        if (this.ac_room && !this.order_enable_p && !this.cc_play_p && this.honpu_main) {
+          message = "感想戦中"
+        }
+      }
+      if (message == null) {
+        if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length < 2) {
+          message = "対戦相手待ち"
+        }
+      }
+      if (message == null) {
+        if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length >= 2) {
+          message = "順番設定待ち"
+        }
+      }
+      // if (message == null) {
+      //   if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main == null) {
+      //     message = "対局時計設置待ち"
+      //   }
+      // }
+      // if (message == null) {
+      //   if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main) {
+      //     message = "検討する場合は順番設定も解除しよう"
+      //     // icon = "play"
+      //   }
+      // }
+      if (message == null) {
+        if (this.ac_room && this.order_enable_p && !this.clock_box) {
+          message = "対局時計設置待ち"
+          // icon = "play"
+        }
+      }
+      if (message == null) {
+        if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.play_p) {
+          message = "対局開始待ち"
+          // icon = "play"
+        }
+      }
+      // if (message == null) {
+      //   if (this.ac_room && this.clock_box && this.clock_box.play_p) {
+      //     message = [
+      //       // "投了は右上のチャットで発言しよう",
+      //       // "タイトルを変更できるよ",
+      //       "盤駒のスタイルを変更できるよ",
+      //       "間違えたときは「1手戻す」で指し直そう (でも勝手にやると顰蹙を買うよ)",
+      //       "自分の手番になると音が鳴るよ",
+      //       "時間切れになっても続行できるよ",
+      //       "チャットは観戦者だけに向けて発言できるよ",
+      //       "履歴にはその時点までの棋譜が含まれているよ",
+      //       "二歩が心配なときは順番設定で反則を「できない」にしよう",
+      //       "「投了」すると「本譜」が出現するよ",
+      //     ]
+      //     message = null
+      //   }
+      // }
+      return message
+    },
   },
 }
