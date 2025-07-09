@@ -21,16 +21,16 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
     tr
       th
         //- https://buefy.org/documentation/tooltip
-        b-tooltip(position="is-right" multilined type="is-light")
+        b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             //- p.title.is-6.mb-0 深考時間とは？
             .is-flex.is-flex-direction-column
               p 秒読みが0になった後に使える、回復しない持ち時間です
               p 切れ負け防止用ではなく<b>勝負所でじっくり考える</b>ための時間です
               p <b>分単位</b>で設定すると内容の濃い対局になるでしょう
-          span.has-text-weight-bold
-            | 深考時間(秒)
-            b-icon.has-text-info(icon="help-circle-outline" size="is-small")
+          //- span.has-text-weight-bold
+          | 深考時間(秒)
+          //- b-icon.has-text-info(icon="help-circle-outline" size="is-small")
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_sec(v-bind="input_default_attrs" v-model="e.initial_extra_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
