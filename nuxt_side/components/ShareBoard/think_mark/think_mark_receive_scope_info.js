@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class ThinkMarkReceiveScopeInfo extends ApplicationMemoryRecord {
-  static field_label = "思考印が見える人"
+  static field_label = "対局中に思考印が見える人"
   static message = null
   static hint_messages = ["右上の鉛筆マークをタップすると盤の升目に印をつけることができます"]
 
