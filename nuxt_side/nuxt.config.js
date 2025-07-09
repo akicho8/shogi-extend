@@ -250,7 +250,9 @@ const config = {
     { src: "~/plugins/my_client_plugin.js", mode: "client" },
     { src: "~/plugins/my_client_mixin.js",  mode: "client" },
     { src: "~/plugins/my_chart_init.js",    mode: "client" },
-    { src: "~/plugins/vue_history.js", mode: "client" },
+    { src: "~/plugins/my_chart_init.js",    mode: "client" },
+    { src: "~/plugins/vue_history.js",      mode: "client" },
+    { src: '~/plugins/vue-tippy.js',        mode: "client" },
   ],
   /*
   ** Auto import components
