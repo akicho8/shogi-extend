@@ -2,34 +2,15 @@
 b-field.SimpleRadioButton(
   :message="field_message"
   v-bind="$attrs"
+  :class="{'is_scroll_x': buttons_p}"
   )
   template(#label)
-    //- https://buefy.org/documentation/tooltip
-    //- span(:title="hint_str")
-    //-   | {{label}}
-    //-   template(v-if="permanent_mark_append")
-    //-     span.has-text-danger ＊
-
-    //- template(v-if="hint_exist_p")
-    //-   a.hint_icon(@click="label_click_handle")
-    //-     b-icon(icon="help-circle-outline" size="is-small")
-
-    //- https://buefy.org/documentation/tooltip
-    //- b-tooltip(position="is-right" multilined type="is-light" dashed)
-    //-   template(v-slot:content)
-    //-     | {{hint_str}}
-    //-   span.has-text-weight-bold
-    //-     span {{label}}
-    //-     template(v-if="permanent_mark_append")
-    //-       span.has-text-danger ＊
-    //-     //- template(v-if="hint_exist_p")
-    //-     //-   a.hint_icon(@click="label_click_handle")
-    //-     //-     b-icon(icon="help-circle-outline" size="is-small")
-
-    tippy(content="右に表示されるツールチップ" placement="right")
-      | 右に出る
-    button(v-tippy="'こんにちは！これはヒントです。'")
-      | ホバーしてみて
+    span {{label}}
+    template(v-if="permanent_mark_append")
+      span.has-text-danger ＊
+    template(v-if="hint_exist_p")
+      a.hint_icon(@click="label_click_handle")
+        b-icon(icon="help-circle-outline" size="is-small")
 
   template(v-if="real_model.input_type === 'numberinput'")
     b-numberinput(
