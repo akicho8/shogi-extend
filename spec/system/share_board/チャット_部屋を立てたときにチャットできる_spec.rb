@@ -14,6 +14,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       find(".chat_modal_open_handle").click            # 開く
       chat_message_send(message1)
+      assert_message_body(wait: 3)
       assert_message_received_o(message1)
     end
     b_block do
