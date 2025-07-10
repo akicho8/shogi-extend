@@ -119,6 +119,7 @@ export const mod_otasuke = {
 
     otasuke_single_line() {
       let message = null
+      let css_class = null
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && !this.cc_play_p && this.honpu_main) {
           message = "感想戦中"
@@ -127,11 +128,13 @@ export const mod_otasuke = {
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length < 2) {
           message = "対戦相手待ち"
+          css_class = "otasuke_blink"
         }
       }
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length >= 2) {
           message = "順番設定待ち"
+          css_class = "otasuke_blink"
         }
       }
       // if (message == null) {
@@ -147,34 +150,36 @@ export const mod_otasuke = {
       // }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.clock_box) {
-          message = "対局時計設置待ち"
+          message = "対局時計 設置待ち"
+          css_class = "otasuke_blink"
           // icon = "play"
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.play_p) {
+        if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "stop") {
           message = "対局開始待ち"
+          css_class = "otasuke_blink"
           // icon = "play"
         }
       }
-      // if (message == null) {
-      //   if (this.ac_room && this.clock_box && this.clock_box.play_p) {
-      //     message = [
-      //       // "投了は右上のチャットで発言しよう",
-      //       // "タイトルを変更できるよ",
-      //       "盤駒のスタイルを変更できるよ",
-      //       "間違えたときは「1手戻す」で指し直そう (でも勝手にやると顰蹙を買うよ)",
-      //       "自分の手番になると音が鳴るよ",
-      //       "時間切れになっても続行できるよ",
-      //       "チャットは観戦者だけに向けて発言できるよ",
-      //       "履歴にはその時点までの棋譜が含まれているよ",
-      //       "二歩が心配なときは順番設定で反則を「できない」にしよう",
-      //       "「投了」すると「本譜」が出現するよ",
-      //     ]
-      //     message = null
-      //   }
-      // }
-      return message
+      if (message == null) {
+        if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "play" && this.current_turn === 0) {
+          message = "対局開始"
+        }
+      }
+      if (message == null) {
+        if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "pause") {
+          message = "対局時計 再開待ち"
+          css_class = "otasuke_blink"
+          // icon = "play"
+        }
+      }
+      if (message) {
+        return {
+          message: message,
+          css_class: css_class,
+        }
+      }
     },
   },
 }

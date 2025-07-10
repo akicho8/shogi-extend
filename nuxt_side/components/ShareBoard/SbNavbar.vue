@@ -36,8 +36,9 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
-    b-navbar-item.has-text-weight-bold.is-hidden-mobile(tag="div" v-if="SB.otasuke_single_line" centered)
-      | {{SB.otasuke_single_line}}
+    template(v-if="SB.otasuke_single_line")
+      b-navbar-item.has-text-weight-bold.is-hidden-mobile(tag="div" :class="SB.otasuke_single_line.css_class")
+        | {{SB.otasuke_single_line.message}}
 
   template(slot="end")
     SbHonpuButton
@@ -124,4 +125,16 @@ export default {
 //           background-color: transparent
 //           .navbar-item, .navbar-link
 //             color: $grey
+
+.SbNavbar
+  .otasuke_blink
+    animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
+
+@keyframes otasuke_blink
+  0%
+    opacity: 1.0
+  50%
+    opacity: 0.6
+  100%
+    opacity: 1.0
 </style>
