@@ -62,46 +62,52 @@ export class HandleNameValidator {
   }
 
   get valid_message() {
-    let s = this.normalized_source
-
     let message = null
-    if (message == null) {
-      if (Gs.blank_p(s)) {
-        message = `${this.options.name}を入力してください`
+
+    {
+      if (message == null) {
+        if (Gs.blank_p(this.source)) {
+          message = `${this.options.name}を入力してください`
+        }
       }
-    }
-    if (message == null) {
-      if (this.options.max_length) {
-        if (s.length > this.options.max_length) {
-          message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
+      if (message == null) {
+        if (this.options.max_length) {
+          if (this.source.length > this.options.max_length) {
+            message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
+          }
         }
       }
     }
-    if (message == null) {
-      if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
-        message = this.message_sample
+
+    {
+      let s = this.normalized_source
+      if (message == null) {
+        if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        if (s.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {  // 通りすがり
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        if (s.match(new RegExp(SystemNgWordList.join("|"), "i"))) {  // URLとして使えない文字
+          message = `${this.options.name}には記号のような文字を含めないでください`
+        }
+      }
+      if (message == null) {
+        if (s.length <= 1 && !s.match(/[一-龠]/)) { // 漢字を除く、1文字はだめ
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        if ([...s].length === TwitterEmojiParser(s).length) { // すべて絵文字
+          message = `${this.options.name}には絵文字以外も入力してください`
+        }
       }
     }
-    if (message == null) {
-      if (s.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {  // 通りすがり
-        message = this.message_sample
-      }
-    }
-    if (message == null) {
-      if (s.match(new RegExp(SystemNgWordList.join("|"), "i"))) {  // URLとして使えない文字
-        message = `${this.options.name}には記号のような文字を含めないでください`
-      }
-    }
-    if (message == null) {
-      if (s.length <= 1 && !s.match(/[一-龠]/)) { // 漢字を除く、1文字はだめ
-        message = this.message_sample
-      }
-    }
-    if (message == null) {
-      if ([...s].length === TwitterEmojiParser(s).length) { // すべて絵文字
-        message = `${this.options.name}には絵文字以外も入力してください`
-      }
-    }
+
     return message
   }
 
@@ -110,7 +116,6 @@ export class HandleNameValidator {
   get normalized_source() {
     let s = this.source
     s = Gs.str_space_remove(s)
-    s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
     s = Gs.hankaku_format(s)
     return s
   }

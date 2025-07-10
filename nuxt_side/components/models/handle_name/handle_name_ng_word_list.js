@@ -28,8 +28,11 @@ export const HandleNameNgWordList = [
   "麻痺",
   "。",
   "、",
+  "｢",
+  "｣",
   "「",
   "」",
+  "・",
   "xvideo",
   "pornhub",
 

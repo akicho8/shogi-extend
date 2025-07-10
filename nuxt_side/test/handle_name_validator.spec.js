@@ -121,4 +121,9 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("初段の○")).toEqual(true)
     expect(HandleNameValidator.valid_p("○の初段")).toEqual(true)
   })
+
+  test("「」", () => {
+    expect(HandleNameValidator.valid_p("｢｣")).toEqual(false)
+    expect(HandleNameValidator.valid_p("「」")).toEqual(false)
+  })
 })
