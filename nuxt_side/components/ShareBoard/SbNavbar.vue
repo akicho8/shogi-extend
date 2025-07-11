@@ -37,7 +37,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           .has-text-primary {{SB.member_infos.length}}
 
     template(v-if="SB.otasuke_single_line")
-      b-navbar-item.has-text-weight-bold.otasuke_single_line(tag="div" :class="SB.otasuke_single_line.css_class")
+      b-navbar-item.has-text-weight-bold.otasuke_single_line.is-hidden-mobile(tag="div" :class="SB.otasuke_single_line.css_class")
         | {{SB.otasuke_single_line.message}}
 
   template(slot="end")
