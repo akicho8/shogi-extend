@@ -37,7 +37,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           .has-text-primary {{SB.member_infos.length}}
 
     template(v-if="SB.otasuke_single_line")
-      b-navbar-item.has-text-weight-bold.is-hidden-mobile(tag="div" :class="SB.otasuke_single_line.css_class")
+      b-navbar-item.has-text-weight-bold.otasuke_single_line(tag="div" :class="SB.otasuke_single_line.css_class")
         | {{SB.otasuke_single_line.message}}
 
   template(slot="end")
@@ -127,6 +127,10 @@ export default {
 //             color: $grey
 
 .SbNavbar
+  .otasuke_single_line
+    +mobile
+      font-size: $size-7
+
   .otasuke_blink
     animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
 

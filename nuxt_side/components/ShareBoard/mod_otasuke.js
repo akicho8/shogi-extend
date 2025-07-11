@@ -150,7 +150,7 @@ export const mod_otasuke = {
       // }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.clock_box) {
-          message = "対局時計 設置待ち"
+          message = "時計設置待ち"
           css_class = "otasuke_blink"
           // icon = "play"
         }
@@ -169,7 +169,7 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "pause") {
-          message = "対局時計 再開待ち"
+          message = "時計再開待ち"
           css_class = "otasuke_blink"
           // icon = "play"
         }
