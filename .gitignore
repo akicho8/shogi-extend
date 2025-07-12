@@ -27,6 +27,7 @@ yarn-debug.log*
 /*.rdb
 /shogi-player
 /*.lock.json
+/du.txt
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
