@@ -2,7 +2,7 @@
 .SbDebugPanelsThinkMark.column.is-3
   .panel
     .panel-heading
-      | 印
+      | 思考印
     a.panel-block(@click="SB.think_mark_toggle_button_click_handle") 切り替え
     a.panel-block(@click="SB.think_mark_all_clear") 全消し
     a.panel-block(href="?body=position sfen ln3gsnl/1r2g1kb1/2ppsp1p1/p3p1p1p/1p7/P1RPS3P/BPN1PPPP1/4G1SK1/L4G1NL b P 1&think_mark_list_str=5_6,ありす,0,6_5,ありす,0,black_P,ぼぶ,10,7_2,ぼぶ,10,5_6,きゃろる,2,4_5,きゃろる,2,3_4,きゃろる,2,4_7,でいぶ,3,4_6,でいぶ,3,5_6,でいぶ,3,9_9,えれん,4,9_8,えれん,4,4_1,ふらんく,5,3_1,ふらんく,5,8_2,いぶ,6,7_2,いぶ,6,9_4,あいざっく,7,9_5,あいざっく,7,7_7,ちゃーりー,8,6_5,ちゃーりー,8,9_7,まろりー,9,5_3,まろりー,9,3_2,おすかー,11,1_1,おすかー,11") デモ1 石田流
