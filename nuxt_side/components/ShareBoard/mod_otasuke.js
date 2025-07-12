@@ -121,7 +121,7 @@ export const mod_otasuke = {
       let message = null
       let css_class = null
       if (message == null) {
-        if (this.ac_room && !this.order_enable_p && !this.cc_play_p && this.honpu_main) {
+        if (this.ac_room && !this.order_enable_p && !this.cc_play_p && this.honpu_main && this.uniq_member_infos.length >= 2) {
           message = "感想戦中"
         }
       }
