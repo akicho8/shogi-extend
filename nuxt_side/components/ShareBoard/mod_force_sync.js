@@ -172,7 +172,7 @@ export const mod_force_sync = {
       if (params.message) {
         if (params.notify_mode === "fs_notify_all") { // 全員
           this.se_force_sync()
-          this.toast_ok(params.message)
+          this.toast_ok(params.message, {talk: false})
         } else if (params.notify_mode === "fs_notify_without_self") { // 自分を除く
           if (!this.received_from_self(params)) {
             this.se_force_sync()
