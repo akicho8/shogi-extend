@@ -219,7 +219,7 @@ export const mod_clock_box = {
 
     cc_extra_koreyori(sec) {
       Gs.delay_block(CC_KOREYORI_DELAY, () => {
-        this.cc_talk(`猶予が0になったら負けなので御注意ください`)
+        this.cc_talk(`深考時間が0になったら負けなので御注意ください`)
       })
     },
 

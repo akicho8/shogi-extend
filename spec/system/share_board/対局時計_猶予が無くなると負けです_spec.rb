@@ -28,7 +28,7 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_extra_koreyori_true
   end
 
-  it "猶予が残っていないときは発動しない" do
+  it "深考時間が残っていないときは発動しない" do
     case1([0, 1, 0, 0])
     find(".TimeoutModal .close_handle").click
     assert_extra_koreyori_false

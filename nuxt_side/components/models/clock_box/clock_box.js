@@ -21,7 +21,7 @@ export class ClockBox {
       switched_fn:         () => {}, // 時計を切り替えた瞬間の処理 (用途不明)
       second_decriment_fn: () => {}, // 時間が減るたびに呼ぶ処理 (主に秒読み用)
       read_koreyori_fn:    () => {},  // 「これより1手N秒でお願いします」と言いたい場合の処理
-      extra_koreyori_fn:   () => {}, // 「猶予が0になったら負けです」と言いたい場合の処理
+      extra_koreyori_fn:   () => {}, // 「深考時間が0になったら負けです」と言いたい場合の処理
 
       active_value_zero_css_class:    "",
       active_value_nonzero_css_class: "",

@@ -122,12 +122,12 @@ export class SingleClock {
         }
       }
 
-      // 「猶予が0になったら負けです」
+      // 「深考時間が0になったら負けです」
       if (this.extra_koreyori_count === 0) {                           // 初回なら
         if ((previous_changes.main_sec >= 1 && this.main_sec === 0) || // 残り時間 1 -> 0 または
             (previous_changes.read_sec >= 1 && this.read_sec === 0)) { // 秒読み   1 -> 0 のタイミングで
-          if (this.extra_sec >= 1) {                                   // 猶予が残っていれば
-            this.base.params.extra_koreyori_fn(this)                   // 「猶予が0になったら負けです」
+          if (this.extra_sec >= 1) {                                   // 深考時間が残っていれば
+            this.base.params.extra_koreyori_fn(this)                   // 「深考時間が0になったら負けです」
             this.extra_koreyori_count += 1                             // 実行回数を記録しておく
           }
         }
