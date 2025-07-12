@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .GeneralSettingModal
   +modal_width(800px)
   +modal_height(700px)

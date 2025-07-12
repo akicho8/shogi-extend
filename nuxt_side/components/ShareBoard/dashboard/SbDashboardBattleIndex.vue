@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbDashboardBattleIndex
   .memberships_cell
     font-size: $size-7

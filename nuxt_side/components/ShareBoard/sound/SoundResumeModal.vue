@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SoundResumeModal
   .modal-background
     background-color: hsla(0, 0%, 0%, 0.75)

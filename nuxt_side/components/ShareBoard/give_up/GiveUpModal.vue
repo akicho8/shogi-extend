@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 
 .STAGE-development
   .GiveUpModal

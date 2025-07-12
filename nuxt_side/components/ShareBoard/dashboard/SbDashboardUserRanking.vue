@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbDashboardUserRanking
   __css_keep__: 0
 </style>

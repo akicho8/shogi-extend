@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbChatOpenButton
   // チャットアイコンは2つをずらして組み合わせる
   .icon

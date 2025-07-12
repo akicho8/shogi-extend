@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 
 .OdaiMakerModal
   +modal_width(30rem)

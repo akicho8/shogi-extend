@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 
 .ClientVoteModal
   +modal_width(30rem)

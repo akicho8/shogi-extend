@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbResendModal
   // +modal_max_width(480px)
   +modal_width_auto

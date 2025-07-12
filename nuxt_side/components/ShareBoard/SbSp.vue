@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./sass/support.sass"
 @import "shogi-player/components/support.sass"
 
 .SbSp

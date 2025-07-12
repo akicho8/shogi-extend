@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "./sass/support.sass"
 .BoardPresetSelectModal
   +modal_width(32rem)
   .modal-card-body

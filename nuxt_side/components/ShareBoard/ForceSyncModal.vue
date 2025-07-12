@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "./sass/support.sass"
 .ForceSyncModal
   +modal_width(28rem)
   .modal-card-body

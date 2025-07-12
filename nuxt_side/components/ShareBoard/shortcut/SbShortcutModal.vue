@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbShortcutModal
   .simple_title
     border-bottom: 1px solid $grey-lighter

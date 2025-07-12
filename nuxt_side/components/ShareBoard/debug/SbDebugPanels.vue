@@ -133,7 +133,7 @@
       .panel-block
         pre {{JSON.stringify(SB.record, null, 4)}}
   .column.is-3
-    .panel.is_line_break_on
+    .panel
       .panel-heading
         | SFEN
       .panel-block 操作 {{SB.current_sfen}}
@@ -168,7 +168,7 @@
       .panel-heading
         | JS側で作成 プレビュー用
       .panel-block
-        p.is_line_break_on(:key="SB.twitter_card_url") {{SB.twitter_card_url}}
+        p(:key="SB.twitter_card_url") {{SB.twitter_card_url}}
       .panel-block
         a(:href="SB.twitter_card_url" target="_blank") 確認
   .column.is-4
@@ -176,7 +176,7 @@
       .panel-heading
         | Rails側で作成 og:image 用
       .panel-block
-        p.is_line_break_on {{$config.MY_SITE_URL + SB.config.twitter_card_options.image}}
+        p {{$config.MY_SITE_URL + SB.config.twitter_card_options.image}}
       .panel-block
         a(:href=`$config.MY_SITE_URL + SB.config.twitter_card_options.image` target="_blank") 確認
   .column.is-4
@@ -220,7 +220,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 .SbDebugPanels
   .xemoji
     height: 4rem

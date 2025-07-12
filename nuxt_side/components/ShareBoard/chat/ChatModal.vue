@@ -107,7 +107,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../sass/support.sass"
 
 .ChatModal
   +modal_width(32rem)

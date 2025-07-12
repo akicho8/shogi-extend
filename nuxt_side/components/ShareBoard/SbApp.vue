@@ -366,9 +366,10 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./sass/support.sass"
 @import "./appearance_theme/appearance_theme.sass"
-@import "./layout.sass"
-@import "./gap.sass"
-@import "./SideColumn.sass"
+@import "./sass/layout.sass"
+@import "./sass/main.sass"
+@import "./sass/gap.sass"
+@import "./sass/SideColumn.sass"
 </style>
