@@ -152,8 +152,9 @@ export const mod_chat_ai_trigger_rule = {
     // private
 
     ai_say_turn_gteq(turn) {
+      const retv = this.current_turn >= turn
       if (this.$route.query.__system_test_now__) { return true }
-      return this.current_turn >= turn
+      return retv
     }
   },
 
