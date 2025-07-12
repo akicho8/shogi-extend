@@ -10,3 +10,19 @@
   dateext
   su root root
 }
+
+/var/log/mysqld.log {
+  create 640 mysql mysql
+  notifempty
+  daily
+  rotate 5
+  missingok
+  compress
+  postrotate
+    # just if mysqld is really running
+    if test -x /usr/bin/mysqladmin && /usr/bin/mysqladmin ping &>/dev/null
+    then
+      /usr/bin/mysqladmin flush-logs
+    fi
+  endscript
+}
