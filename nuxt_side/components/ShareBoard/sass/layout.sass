@@ -1,19 +1,4 @@
 .SbApp
-  &.debug_mode_p
-    .columns, .column
-      border: 1px dashed change_color($success, $alpha: 0.5)
-
-  // ダークモード風にするとHTMLタグの背景色が見えるため
-  min-height: 100vh
-
-  // 自分で管理するので左右の余白を取る
-  .container
-    padding: 0
-
-  // 上下にある負のマージンを取る
-  .columns
-    margin: 0
-
   // タブレット以上では盤は中央に来る
   +tablet
     .SbMemberList
@@ -22,18 +7,3 @@
       order: 2
     .SbActionLog
       order: 3
-
-  //////////////////////////////////////////////////////////////////////////////// __theme__
-  &.normal_mode_p
-    background-color: var(--sb_bg_color)
-
-    .SideColumn
-      &.is_content_present
-        color:            var(--sb_side_fg_color)
-        background-color: var(--sb_side_bg_color)
-
-  // //////////////////////////////////////////////////////////////////////////////// __theme__
-  // &.edit_mode_p
-  //   // background-color: change_color($black, $lightness: 80%)
-  //   background-color: hsla(149.57,38.12%,35.49%,0.3)
-

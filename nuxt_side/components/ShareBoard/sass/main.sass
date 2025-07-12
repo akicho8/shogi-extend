@@ -1,6 +1,11 @@
 .SbApp
-  .panel
-    .panel-heading, .panel-block
-      word-break: break-all
+  // ダークモード風にするとHTMLタグの背景色が見えるため
+  min-height: 100vh
 
+  // 自分で管理するので左右の余白を取る
+  .container
+    padding: 0
 
+  // 上下にある負のマージンを取る
+  .columns
+    margin: 0

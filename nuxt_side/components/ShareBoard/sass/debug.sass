@@ -1,0 +1,8 @@
+.SbApp
+  &.debug_mode_p
+    .columns, .column
+      border: 1px dashed change_color($success, $alpha: 0.5)
+
+  // デバッグ情報で画面幅が広がるのを防ぐ
+  .panel
+    word-break: break-all
