@@ -1,3 +1,14 @@
+desc "ディスクの空き容量を増やす"
+task :disk_free do
+  on roles(:all) do
+    within current_path do
+      execute :pwd
+      execute :bundle, "clean", "--force"
+      execute :df, "/", "-H"
+    end
+  end
+end
+
 desc "credentials の内容を表示"
 task :credentials do
   credentials = YAML.load(`rails credentials:show`)
