@@ -5,12 +5,11 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
       b-navbar-item(@click.native="SB.exit_handle" v-if="SB.home_display_p")
         b-icon(icon="home")
 
-      b-navbar-item.has-text-weight-bold.title_navbar_item(@click="SB.title_edit_handle")
+      b-navbar-item.has-text-weight-bold.title_navbar_item.is_truncate.is-hidden-mobile(@click="SB.title_edit_handle")
         template(v-if="SB.edit_mode_p")
-          span.current_title.is_truncate.is-hidden-mobile
-            span 編集モード
+          span 編集モード
         template(v-if="SB.play_mode_p")
-          span.current_title.is_truncate.is-hidden-mobile
+          span
             | {{SB.current_title}}
           span.mx-1
             | \#{{SB.current_turn}}
