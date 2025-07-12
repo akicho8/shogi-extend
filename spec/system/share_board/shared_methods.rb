@@ -134,7 +134,7 @@ module SharedMethods
 
   def give_up_run
     give_up_modal_open
-    find(:button, "本当に投了する").click                     # モーダルが表示されるので本当に投了する
+    find(:button, "投了する").click # モーダルが表示されるので本当に投了する
   end
 
   # 投了ボタンがある
