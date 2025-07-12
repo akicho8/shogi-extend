@@ -196,15 +196,4 @@ export default {
         max-width: 3em
         white-space: nowrap
         overflow: hidden
-
-    // TODO: 以下がただしく動くなら shogi-player 側で設定したい
-    .Membership
-      // &.is_turn_inactive
-      //   .MembershipLocationPlayerInfo
-      //     font-weight: normal
-      &.is_turn_active
-        .MembershipLocationPlayerInfo
-          font-weight: 1000
-        // .MembershipLocationPlayerInfoTime
-        //   font-weight: 1000
 </style>
