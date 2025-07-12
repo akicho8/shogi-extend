@@ -7,10 +7,10 @@
     .content
       p {{message}}
       p.give_up_warn_message.is-size-7.has-text-grey(v-if="SB.my_team_member_is_many_p")
-        | 自分本位の投了は仲間から反感を買う場合があります
+        | {{sub_message}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 諦めない
-    b-button.give_up_handle(@click="give_up_handle" type="is-danger") 本当に投了する
+    b-button.give_up_handle(@click="give_up_handle" type="is-danger") 投了する
 </template>
 
 <script>
@@ -52,6 +52,9 @@ export default {
         s = "対局者ではないけど本当に投了しますか？"
       }
       return s
+    },
+    sub_message() {
+      return "自分本位の投了は仲間から反感を買う場合があります"
     },
   },
 }
