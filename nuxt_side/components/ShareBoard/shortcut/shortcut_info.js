@@ -1,4 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
+import { Gs } from "@/components/models/gs.js"
 
 export class ShortcutInfo extends ApplicationMemoryRecord {
   static get define() {
@@ -10,6 +11,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_code_equal(e, "Enter"),
         call: c => c.chat_modal_shortcut_handle(),
+      },
+      {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "/"),
+        call: c => c.sidebar_toggle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "i"),
