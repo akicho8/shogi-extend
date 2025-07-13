@@ -1,6 +1,7 @@
 const ARASHI_THRESHOLD = 3      // 荒らし判定閾値
 const ARASHI_RE_RATE   = 4      // 1/n の確率で反応する
 const NESSEN_BATTLE_TURN_GTEQ = 42 // 熱戦はN手以上
+const AI_RESPONSE_MODE = false  // 状況に応じて発言するか？
 
 // AIが発動する条件を書く
 
@@ -36,6 +37,7 @@ export const mod_chat_ai_trigger_rule = {
     // /gpt xxx の xxx を自動で作る
     ai_say_for(delay, key, params) {
       if (!this.GPT_FUNCTION) { return }
+      if (!AI_RESPONSE_MODE) { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
         content = [content, "チャットでの発言なんで返答は短かく簡潔にしてな。"].join("")
