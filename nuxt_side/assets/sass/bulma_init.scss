@@ -80,5 +80,9 @@ $navbar-breakpoint: 0;
 // $section-padding: 0rem;
 
 // ../../node_modules/bulma/sass/utilities/initial-variables.sass
-// http://neos21.hatenablog.com/entry/2017/10/22/080000
-$family-monospace: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace;
+//
+// 古い
+// $family-monospace: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace;
+//
+// モダン設定
+$family-monospace: "Roboto Mono", "Consolas", "Menlo", "Courier New", "ＭＳ ゴシック", monospace;
