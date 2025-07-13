@@ -1,4 +1,5 @@
 <template lang="pug">
+//- https://buefy.org/documentation/sidebar
 b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
