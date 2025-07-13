@@ -43,7 +43,7 @@ module SharedMethods
 
   # message を受信した
   def assert_message_received_o(message, options = {})
-    assert_selector(".ChatModal .message_body")
+    assert_selector(".ChatModal .message_body", options)
     assert_selector(".ChatModal .message_body", { text: message, exact_text: true }.merge(options))
   end
 
