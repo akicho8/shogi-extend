@@ -109,7 +109,7 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
               messages.push("対局が終わったところです。")
               messages.push(`とくに${name}の活躍が目立ちました。`)
               messages.push("全角40文字以内で労ってください。")
-              messages.push("いろんなバリエーションで頼むぞ。")
+              // messages.push("いろんなバリエーションで頼むぞ。") // ← この指示をすると、たまに、いろんな10個ぐらいパターンを列挙してくるので危険。
               return messages.join("")
             }
           }
