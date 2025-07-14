@@ -165,7 +165,7 @@ export default {
     component_style() {
       if (this.pc_standby_ok >= 1) {
         return {
-          // "--board_width": this.board_width,
+          // "--sb_board_width": this.sb_board_width,
           ...this.appearance_theme_info.to_style,
         }
       }

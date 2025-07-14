@@ -346,7 +346,8 @@ export default {
     // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
     component_style() {
       return {
-        "--board_width": this.board_width,
+        "--sb_board_width": this.sb_board_width,
+        "--sb_grid_stroke": this.sb_grid_stroke,
         ...this.appearance_theme_info.to_style,
       }
     },

@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.SimpleSlider(custom-class="is-small" :label="label")
+b-field.SimpleSlider(custom-class="is-small" :label="label" :message="message")
   b-slider(v-bind="slider_attrs" v-model="base[var_name]" v-on="$listeners")
 </template>
 
@@ -10,6 +10,7 @@ export default {
     base:     { type: Object, required: true, },
     var_name: { type: String, required: true, },
     label:    { type: String, required: true, },
+    message:  { type: String, required: false, },
   },
   computed: {
     slider_attrs() {

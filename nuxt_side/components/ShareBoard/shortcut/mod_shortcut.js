@@ -15,13 +15,20 @@ export const mod_shortcut = {
   methods: {
     keydown_handle(e) {
       if (this.focus_on_input_tag_p()) {
+        this.tl_add("SHORTCUT", "INPUTタグにフォーカスされていたのでキャンセルする", e)
         return
       }
       const found = ShortcutInfo.values.find(o => o._if(this, e))
       if (found) {
+        this.tl_add("SHORTCUT", "対応する命令が見つかったので実行する", e)
         if (found.call(this)) {
+          this.tl_add("SHORTCUT", "戻値 true")
           e.preventDefault()
+        } else {
+          this.tl_add("SHORTCUT", "戻値 false")
         }
+      } else {
+        this.tl_add("SHORTCUT", "対応する命令が見つからない", e)
       }
     },
   },

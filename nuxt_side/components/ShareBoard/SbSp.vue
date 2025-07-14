@@ -158,9 +158,9 @@ export default {
   +desktop
     +padding_tb(unset)
     &.is_sb_mode_play
-      max-width: calc(var(--board_width) * 1.0vmin)
+      max-width: calc(var(--sb_board_width) * 1.0vmin)
     &.is_sb_mode_edit
-      max-width: calc(var(--board_width) * 1.0vmin * 0.75)
+      max-width: calc(var(--sb_board_width) * 1.0vmin * 0.75)
 
   // 残り時間の色
   .CustomShogiPlayer
@@ -196,4 +196,6 @@ export default {
         max-width: 3em
         white-space: nowrap
         overflow: hidden
+
+  +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
 </style>
