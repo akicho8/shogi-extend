@@ -16,6 +16,10 @@
             td
               b-tag(type="is-primary") ⇧ c
           tr
+            th 短縮棋譜URLコピー
+            td
+              b-tag(type="is-primary") ⇧ u
+          tr
             th 局面編集・完了
             td
               b-tag(type="is-primary") ⇧ e

@@ -37,6 +37,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.honpu_return_click_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && e.code === "KeyU" && c.keyboard_shift_p(e),
+        call: c => c.current_short_url_copy_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.keyboard_shift_p(e),
         call: c => c.edit_mode_handle(),
       },
