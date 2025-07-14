@@ -32,7 +32,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
                 .check_mark(v-if="SB.bold_if(mi3_bold_p)") ✅
 
         b-menu-list(label="局面操作")
-          b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す"   @click="SB.board_init_modal_handle")
+          b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す"   @click="SB.board_init_modal_handle" :class="SB.bold_if(SB.current_turn >= 1)")
           b-menu-item.is_active_unset(icon="undo"        label="1手戻す (待った)" @click="SB.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"       @click="SB.force_sync_modal_handle" v-if="SB.quick_sync_info.sidebar_function_show || SB.debug_mode_p")
 
