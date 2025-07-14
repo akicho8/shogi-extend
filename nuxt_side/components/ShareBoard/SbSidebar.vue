@@ -71,7 +71,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="SB.general_help_modal_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="SB.title_edit_handle")
           b-menu-item.is_active_unset(icon="account-edit" label="ハンドルネーム変更"          @click="SB.handle_name_modal_handle")
-          b-menu-item.is_active_unset(icon="keyboard-outline" label="ショートカット"                      @click="SB.shortcut_modal_open_handle")
+          b-menu-item.is_active_unset.is-hidden-mobile(icon="keyboard-outline" label="ショートカット"                      @click="SB.shortcut_modal_open_handle")
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="SB.general_setting_modal_open_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="SB.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="SB.reset_handle" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
