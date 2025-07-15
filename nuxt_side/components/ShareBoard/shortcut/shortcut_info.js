@@ -17,15 +17,15 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.sidebar_toggle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "i"),
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "1"),
         call: c => c.rsm_open_shortcut_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "o"),
+        _if: (c, e) => c.play_mode_p && (c.keyboard_single_key_equal(e, "2") || c.keyboard_single_key_equal(e, "o")),
         call: c => c.os_modal_shortcut_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "c"),
+        _if: (c, e) => c.play_mode_p && (c.keyboard_single_key_equal(e, "3") || c.keyboard_single_key_equal(e, "t")),
         call: c => c.cc_modal_shortcut_handle(),
       },
       {

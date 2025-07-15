@@ -38,21 +38,25 @@
       table.modal-card-body.table.is-fullwidth.is-narrow
         tbody
           tr
-            th チャットを開く / 閉じる
-            td
-              b-tag(type="is-primary") Enter
-          tr
             th 入退室
             td
-              b-tag(type="is-primary") i
+              b-tag(type="is-primary") 1
           tr
             th 順番設定
             td
+              b-tag(type="is-primary") 2
+              | or
               b-tag(type="is-primary") o
           tr
             th 対局時計
             td
-              b-tag(type="is-primary") c
+              b-tag(type="is-primary") 3
+              | or
+              b-tag(type="is-primary") t
+          tr
+            th チャットを開く / 閉じる
+            td
+              b-tag(type="is-primary") Enter
 
     .column.is-half-desktop.is-half-tablet
       .sub_title 思考印
