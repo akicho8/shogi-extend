@@ -34,7 +34,7 @@
               b-tag(type="is-primary") z
 
     .column.is-half-desktop.is-half-tablet
-      .sub_title 対局時
+      .sub_title 対局
       table.modal-card-body.table.is-fullwidth.is-narrow
         tbody
           tr
