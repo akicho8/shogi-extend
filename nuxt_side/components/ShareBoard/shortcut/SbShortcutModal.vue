@@ -38,14 +38,9 @@
       table.modal-card-body.table.is-fullwidth.is-narrow
         tbody
           tr
-            th チャットを開く
+            th チャットを開く / 閉じる
             td
               b-tag(type="is-primary") Enter
-          tr
-            th チャットを閉じる
-            td
-              b-tag(type="is-primary") Enter
-              //- | or 空送信
           tr
             th 入退室
             td
@@ -60,17 +55,21 @@
               b-tag(type="is-primary") c
 
     .column.is-half-desktop.is-half-tablet
-      .sub_title 補助
+      .sub_title 思考印
       table.modal-card-body.table.is-fullwidth.is-narrow
         tbody
+          tr
+            th 思考印を書く / 消す
+            td
+              b-tag(type="is-primary") 副ボタン
+          tr
+            th 思考印を書く / 消す
+            td
+              b-tag(type="is-primary") ⇧主ボタン
           tr
             th 思考印モードのトグル
             td
               b-tag(type="is-primary") m
-          tr
-            th 思考印 (セルに合わせて)
-            td
-              b-tag(type="is-primary") ⇧ Click
     .column.is-half-desktop.is-half-tablet
       .sub_title その他
       table.modal-card-body.table.is-fullwidth.is-narrow

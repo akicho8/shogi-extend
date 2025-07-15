@@ -21,6 +21,12 @@ RSpec.describe "基本的な挙動", type: :system, share_board_spec: true do
     assert_selector(".place_7_6 .ThinkMark")
   end
 
+  it "印モードは無効でも副ボタンであれば印が出る" do
+    visit_app
+    find(".place_7_6").right_click
+    assert_selector(".place_7_6 .ThinkMark")
+  end
+
   it "持駒に印が出る" do
     visit_app(think_mark_mode_p: true, body: king_vs_king_sfen)
     find(".Membership.is_black .piece_P").click

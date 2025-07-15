@@ -7,6 +7,8 @@ const PEPPER_DATE_FORMAT  = "-"  // 色が変化するタイミング。毎日�
 
 const THINK_MARK_WATCHER_THEN_ALWAYS_ENABLE_P = false // 観戦者なら思考印を常に有効とするか？
 
+const MOUSE_MAIN_BUTTON = 0 // マウスの主ボタン
+
 export const mod_think_mark = {
   mounted() {
     this.think_mark_setup()
@@ -88,6 +90,11 @@ export const mod_think_mark = {
 
       // 誰でもメタキーを押しながらでもマークできる
       if (this.play_mode_p && event && this.keyboard_meta_p(event)) {
+        return true
+      }
+
+      // 誰でも副ボタンを押せばマークできる
+      if (this.play_mode_p && event.button !== MOUSE_MAIN_BUTTON) {
         return true
       }
 
