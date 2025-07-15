@@ -52,7 +52,10 @@ export default {
   name: "RoomSetupModal",
   mixins: [support_child],
   mounted() {
-    this.desktop_focus_to(this.$refs.new_room_key)
+    // ショートカットキーから起動すると、そのキーを入力してしまいがちなので、合言葉が未入力のときだけフォーカスする
+    if (Gs.blank_p(this.SB.new_room_key)) {
+      this.desktop_focus_to(this.$refs.new_room_key)
+    }
   },
 }
 </script>
