@@ -41,9 +41,21 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "棋譜コピー" do
     visit_app
-    Capybara.current_session.active_element.send_keys([:shift, "c"])
+    Capybara.current_session.active_element.send_keys("c")
     assert_text("コピーしました", wait: 3)
     assert { Clipboard.read.include?("棋戦：共有将棋盤") }
+  end
+
+  it "通常モード←→編集モード" do
+    visit_app
+
+    assert_selector(".SbApp.normal_mode_p")
+
+    Capybara.current_session.active_element.send_keys([:shift, "e"])
+    assert_selector(".SbApp.edit_mode_p")
+
+    Capybara.current_session.active_element.send_keys([:shift, "e"])
+    assert_selector(".SbApp.normal_mode_p")
   end
 
   # クリップボードの許可モーダルが出るためテストできない

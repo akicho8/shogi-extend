@@ -23,12 +23,12 @@ export const mod_shortcut = {
         this.tl_add("SHORTCUT", "対応する命令が見つかったので実行する", e)
         if (found.call(this)) {
           this.tl_add("SHORTCUT", "戻値 true")
-          e.preventDefault()
         } else {
           this.tl_add("SHORTCUT", "戻値 false")
         }
+        e.preventDefault()
       } else {
-        this.tl_add("SHORTCUT", "対応する命令が見つからない", e)
+        // this.tl_add("SHORTCUT", "対応する命令が見つからない", e)
       }
     },
   },

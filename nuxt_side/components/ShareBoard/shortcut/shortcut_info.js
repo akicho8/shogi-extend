@@ -37,10 +37,6 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.honpu_return_click_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && e.code === "KeyU" && c.keyboard_shift_p(e),
-        call: c => c.current_short_url_copy_handle(),
-      },
-      {
         _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.keyboard_shift_p(e),
         call: c => c.edit_mode_handle(),
       },
@@ -49,8 +45,24 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.play_mode_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && e.code === "KeyC" && c.keyboard_shift_p(e),
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "c"),
         call: c => c.kifu_copy_handle("kif_utf8"),
+      },
+      {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "u"),
+        call: c => c.current_short_url_copy_handle(),
+      },
+      {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "l"),
+        call: c => c.current_url_copy_handle(),
+      },
+      {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "b"),
+        call: c => c.kifu_copy_handle(c.FormatTypeInfo.fetch("bod")),
+      },
+      {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "s"),
+        call: c => c.kifu_download_handle(c.FormatTypeInfo.fetch("kif_utf8")),
       },
       {
         _if: (c, e) => c.play_mode_p && e.code === "KeyV" && c.keyboard_shift_p(e),

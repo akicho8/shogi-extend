@@ -14,11 +14,23 @@
           tr
             th 棋譜コピー
             td
-              b-tag(type="is-primary") ⇧ c
+              b-tag(type="is-primary") c
+          tr
+            th BODコピー
+            td
+              b-tag(type="is-primary") b
+          tr
+            th 棋譜ダウンロード
+            td
+              b-tag(type="is-primary") s
           tr
             th 短縮棋譜URLコピー
             td
-              b-tag(type="is-primary") ⇧ u
+              b-tag(type="is-primary") u
+          tr
+            th 棋譜URLコピー
+            td
+              b-tag(type="is-primary") l
           tr
             th 局面編集・完了
             td
@@ -28,10 +40,6 @@
               | 棋譜の読み込み画面を開く
             td
               b-tag(type="is-primary") ⇧ r
-          tr
-            th 本譜に戻る
-            td
-              b-tag(type="is-primary") z
 
     .column.is-half-desktop.is-half-tablet
       .sub_title 対局
@@ -57,6 +65,10 @@
             th チャットを開く / 閉じる
             td
               b-tag(type="is-primary") Enter
+          tr
+            th 本譜に戻る
+            td
+              b-tag(type="is-primary") z
 
     .column.is-half-desktop.is-half-tablet
       .sub_title 思考印
