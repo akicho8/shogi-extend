@@ -12,34 +12,33 @@
             td
               b-tag(type="is-primary") ⇧ v
           tr
-            th 棋譜コピー
+            th 棋譜の入力
+            td
+              b-tag(type="is-primary") ⇧ r
+          tr
+            th 棋譜コピー (KIF)
             td
               b-tag(type="is-primary") c
           tr
-            th BODコピー
+            th 局面コピー (BOD)
             td
               b-tag(type="is-primary") b
           tr
-            th 棋譜ダウンロード
+            th 棋譜ダウンロード (KIF)
             td
               b-tag(type="is-primary") s
           tr
-            th 短縮棋譜URLコピー
+            th 短縮した棋譜URLコピー
             td
               b-tag(type="is-primary") u
           tr
-            th 棋譜URLコピー
+            th そのままの棋譜URLコピー
             td
               b-tag(type="is-primary") l
           tr
-            th 局面編集・完了
+            th 局面編集 / 完了
             td
               b-tag(type="is-primary") ⇧ e
-          tr
-            th
-              | 棋譜の入力画面を開く
-            td
-              b-tag(type="is-primary") ⇧ r
 
     .column.is-half-desktop.is-half-tablet
       .sub_title 対局
