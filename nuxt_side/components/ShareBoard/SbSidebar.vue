@@ -56,7 +56,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_handle")
-          b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="SB.yomikomi_modal_open_handle()")
+          b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.yomikomi_modal_open_handle()")
 
         b-menu-list(label="SNS共有")
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")

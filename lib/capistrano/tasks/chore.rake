@@ -3,7 +3,9 @@ task :disk_free do
   on roles(:all) do
     within current_path do
       execute :pwd
-      execute :bundle, "clean", "--force"
+      execute :bundle, "clean", "--dry-run"
+      execute :bundle, "clean"
+      execute :bundle, "clean", "--dry-run"
       execute :df, "/", "-H"
     end
   end

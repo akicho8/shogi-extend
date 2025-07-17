@@ -37,7 +37,7 @@
               b-tag(type="is-primary") ⇧ e
           tr
             th
-              | 棋譜の読み込み画面を開く
+              | 棋譜の入力画面を開く
             td
               b-tag(type="is-primary") ⇧ r
 

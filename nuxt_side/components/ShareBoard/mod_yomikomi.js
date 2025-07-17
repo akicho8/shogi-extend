@@ -28,7 +28,7 @@ export const mod_yomikomi = {
       }
     },
 
-    // 棋譜の読み込みタップ時の処理
+    // 棋譜の入力タップ時の処理
     yomikomi_modal_open_handle(source = "") {
       this.sidebar_p = false
       this.$sound.play_click()

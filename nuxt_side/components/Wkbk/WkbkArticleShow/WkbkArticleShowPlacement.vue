@@ -26,7 +26,7 @@ MainSection.WkbkArticleShowPlacement
               KifCopyButton(@click="kifu_copy_handle") コピー
 
             //- .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-            //-   b-button(@click="base.any_source_read_handle") 棋譜の読み込み
+            //-   b-button(@click="base.any_source_read_handle") 棋譜の入力
             //-
             //- .buttons.mb-0.has-addons.is-centered.are-small.mt-3(v-if="development_p")
             //-   b-button(@click="$refs.main_sp.sp_object().xcontainer.shuffle_apply(3)") 3

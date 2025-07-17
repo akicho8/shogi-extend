@@ -105,7 +105,7 @@ module SharedMethods
 
   def kifu_yomikomi
     global_menu_open
-    menu_item_click("棋譜の読み込み")
+    menu_item_click("棋譜の入力")
     find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
     find(".AnySourceReadModal .submit_handle").click
   end
