@@ -1,107 +1,102 @@
 <template lang="pug">
-.SbShortcutModal.modal-card.box.has-text-left.is-size-7(@click="close_handle" style="width:auto")
-  .has-text-weight-bold.simple_title.is-size-6
+.SbShortcutModal.modal-card.box.has-text-left(@click="close_handle" style="width:auto")
+  .sc_main_title
     | ショートカット
-  .columns.is-multiline
+  .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
     .column.is-half-desktop.is-half-tablet
-      .sub_title 基本
-      table.modal-card-body.table.is-fullwidth.is-narrow
-        tbody
-          tr
-            th 棋譜の張り付け
-            td
-              b-tag(type="is-primary") ⇧ v
-          tr
-            th 棋譜の入力
-            td
-              b-tag(type="is-primary") ⇧ r
-          tr
-            th 棋譜コピー (KIF)
-            td
-              b-tag(type="is-primary") c
-          tr
-            th 局面コピー (BOD)
-            td
-              b-tag(type="is-primary") b
-          tr
-            th 棋譜ダウンロード (KIF)
-            td
-              b-tag(type="is-primary") s
-          tr
-            th 短縮した棋譜URLコピー
-            td
-              b-tag(type="is-primary") u
-          tr
-            th そのままの棋譜URLコピー
-            td
-              b-tag(type="is-primary") l
-          tr
-            th 局面編集 / 完了
-            td
-              b-tag(type="is-primary") ⇧ e
+      .sc_sub_title 基本
+      .sc_table
+        .sc_item
+          .sc_label 棋譜の張り付け
+          .sc_buttons
+            b-tag(type="is-primary") ⇧ v
+        .sc_item
+          .sc_label 棋譜の入力
+          .sc_buttons
+            b-tag(type="is-primary") ⇧ r
+        .sc_item
+          .sc_label 棋譜コピー (KIF)
+          .sc_buttons
+            b-tag(type="is-primary") c
+        .sc_item
+          .sc_label 局面コピー (BOD)
+          .sc_buttons
+            b-tag(type="is-primary") b
+        .sc_item
+          .sc_label 棋譜ダウンロード (KIF)
+          .sc_buttons
+            b-tag(type="is-primary") s
+        .sc_item
+          .sc_label 短縮した棋譜URLコピー
+          .sc_buttons
+            b-tag(type="is-primary") u
+        .sc_item
+          .sc_label そのままの棋譜URLコピー
+          .sc_buttons
+            b-tag(type="is-primary") l
+        .sc_item
+          .sc_label 局面編集 / 完了
+          .sc_buttons
+            b-tag(type="is-primary") ⇧ e
 
     .column.is-half-desktop.is-half-tablet
-      .sub_title 対局
-      table.modal-card-body.table.is-fullwidth.is-narrow
-        tbody
-          tr
-            th 入退室
-            td
-              b-tag(type="is-primary") 1
-          tr
-            th 順番設定
-            td
-              b-tag(type="is-primary") 2
-              | or
-              b-tag(type="is-primary") o
-          tr
-            th 対局時計
-            td
-              b-tag(type="is-primary") 3
-              | or
-              b-tag(type="is-primary") t
-          tr
-            th チャットを開く / 閉じる
-            td
-              b-tag(type="is-primary") Enter
-          tr
-            th 本譜に戻る
-            td
-              b-tag(type="is-primary") z
+      .sc_sub_title 対局
+      .sc_table
+        .sc_item
+          .sc_label 入退室
+          .sc_buttons
+            b-tag(type="is-primary") 1
+        .sc_item
+          .sc_label 順番設定
+          .sc_buttons
+            b-tag(type="is-primary") 2
+            | or
+            b-tag(type="is-primary") o
+        .sc_item
+          .sc_label 対局時計
+          .sc_buttons
+            b-tag(type="is-primary") 3
+            | or
+            b-tag(type="is-primary") t
+        .sc_item
+          .sc_label チャットを開く / 閉じる
+          .sc_buttons
+            b-tag(type="is-primary") Enter
+        .sc_item
+          .sc_label 本譜に戻る
+          .sc_buttons
+            b-tag(type="is-primary") z
 
     .column.is-half-desktop.is-half-tablet
-      .sub_title 思考印
-      table.modal-card-body.table.is-fullwidth.is-narrow
-        tbody
-          tr
-            th 思考印を書く / 消す
-            td
-              b-tag(type="is-primary") 副ボタン
-          tr
-            th 思考印を書く / 消す
-            td
-              b-tag(type="is-primary") ⇧主ボタン
-          tr
-            th 思考印モードのトグル
-            td
-              b-tag(type="is-primary") m
+      .sc_sub_title 思考印
+      .sc_table
+        .sc_item
+          .sc_label 思考印を書く / 消す
+          .sc_buttons
+            b-tag(type="is-primary") 副ボタン
+        .sc_item
+          .sc_label 思考印を書く / 消す
+          .sc_buttons
+            b-tag(type="is-primary") ⇧主ボタン
+        .sc_item
+          .sc_label 思考印モードのトグル
+          .sc_buttons
+            b-tag(type="is-primary") m
     .column.is-half-desktop.is-half-tablet
-      .sub_title その他
-      table.modal-card-body.table.is-fullwidth.is-narrow
-        tbody
-          tr
-            th サイドバーのトグル
-            td
-              b-tag(type="is-primary") /
-          tr
-            th 設定
-            td
-              b-tag(type="is-primary") ,
-          tr
-            th これを開く
-            td
-              b-tag(type="is-primary") ?
-
+      .sc_sub_title その他
+      .sc_table
+        .sc_item
+          .sc_label サイドバーのトグル
+          .sc_buttons
+            b-tag(type="is-primary") /
+        .sc_item
+          .sc_label 設定
+          .sc_buttons
+            b-tag(type="is-primary") ,
+        .sc_item
+          .sc_label これを開く
+          .sc_buttons
+            b-tag(type="is-primary") ?
 </template>
 
 <script>
@@ -121,15 +116,11 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .SbShortcutModal
-  +modal_max_width(640px)
+  +modal_max_width(512px)
 
-  .simple_title
-    // border-bottom: 1px solid $grey-lighter
-    padding-bottom: 0.5rem
+  ////////////////////////////////////////////////////////////////////////////////
 
-  .columns
-    margin-top: 0rem
-
+  padding: 1.5rem
   +mobile
     padding: 1rem
     .columns
@@ -138,35 +129,39 @@ export default {
       padding: 0
       &:not(:first-child)
         margin-top: 0.75rem
-    +tablet
-      padding: 1.5rem
 
-  .sub_title
-    margin-top: 0.5rem
-    border-bottom: 1px solid $grey-lighter
-    +mobile
-      margin-top: 1.2rem
+  ////////////////////////////////////////////////////////////////////////////////
 
-  .table
-    margin-top: 0.25rem
-    th, td
-      vertical-align: middle
-    th
-      width: 66%
-      font-weight: normal
-      text-align: right
-      font-size: $size-7
-      border-width: 0
-    td
-      border-width: 0
-
-      display: flex
-      align-items: center
-      justify-content: flex-start
-      gap: 0.25rem
-
-  .tag
+  .sc_main_title
     font-weight: bold
+
+  .columns
+    margin-top: 0rem
+    font-size: $size-7
+    .column
+      .sc_sub_title
+        font-weight: bold
+        margin-top: 0.5rem
+        border-bottom: 1px solid $grey-lighter
+        +mobile
+          margin-top: 1.2rem
+      .sc_table
+        margin-top: 0.25rem
+        .sc_item
+          display: flex
+          align-items: center
+          justify-content: space-between
+          padding: 0.15rem 0
+          .sc_label
+            font-weight: normal
+            font-size: $size-7
+          .sc_buttons
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            gap: 0.25rem
+            .tag
+              font-weight: bold
 
 .STAGE-development
   .SbShortcutModal
