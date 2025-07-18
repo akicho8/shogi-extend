@@ -12,6 +12,10 @@ export const mod_preset_select = {
     this.sfen_set_by_url_params()
   },
 
+  beforeDestroy() {
+    this.preset_select_modal_close()
+  },
+
   methods: {
     // FIXME: 取る
     // 引数でプリセットの初期値設定
