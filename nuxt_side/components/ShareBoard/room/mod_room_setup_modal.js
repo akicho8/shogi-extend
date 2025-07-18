@@ -26,36 +26,36 @@ export const mod_room_setup_modal = {
     },
 
     rsm_open_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.rsm_open()
+      if (this.rsm_instance == null) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+
+        this.new_room_key = this.room_key
+        this.new_user_name = this.user_name
+
+        this.rsm_instance = this.modal_card_open({
+          component: RoomSetupModal,
+          onCancel: () => {
+            this.$sound.play_click()
+            this.rsm_close()
+          },
+        })
+      }
     },
 
     rsm_close_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.rsm_close()
-    },
-
-    rsm_open() {
-      this.rsm_close()
-
-      this.new_room_key = this.room_key
-      this.new_user_name = this.user_name
-
-      this.rsm_instance = this.modal_card_open({
-        component: RoomSetupModal,
-        onCancel: () => {
-          this.$sound.play_click()
-          this.rsm_close()
-        },
-      })
+      if (this.rsm_instance) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.rsm_close()
+      }
     },
 
     rsm_close() {
       if (this.rsm_instance) {
         this.rsm_instance.close()
         this.rsm_instance = null
+        this.debug_alert("RoomSetupModal close")
       }
     },
 
