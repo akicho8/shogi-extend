@@ -17,19 +17,24 @@ export const mod_room_setup_modal = {
     this.rsm_close()
   },
   methods: {
-    rsm_open_shortcut_handle() {
-      if (this.rsm_instance) {
-        return
-      }
-      this.rsm_open_handle()
-      return true
-    },
-
     rsm_open_handle() {
       if (this.rsm_instance == null) {
         this.sidebar_p = false
         this.$sound.play_click()
+        this.rsm_open()
+      }
+    },
 
+    rsm_close_handle() {
+      if (this.rsm_instance) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.rsm_close()
+      }
+    },
+
+    rsm_open() {
+      if (this.rsm_instance == null) {
         this.new_room_key = this.room_key
         this.new_user_name = this.user_name
 
@@ -40,14 +45,6 @@ export const mod_room_setup_modal = {
             this.rsm_close()
           },
         })
-      }
-    },
-
-    rsm_close_handle() {
-      if (this.rsm_instance) {
-        this.sidebar_p = false
-        this.$sound.play_click()
-        this.rsm_close()
       }
     },
 
