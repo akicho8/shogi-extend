@@ -115,17 +115,12 @@ export default {
         this.SB.os_modal_close_confirm({
           onConfirm: () => {
             this.$sound.play_click()
-            this.direct_close_handle()
+            this.SB.os_modal_close()
           },
         })
         return
       }
       this.$sound.play_click()
-      this.direct_close_handle()
-    },
-
-    direct_close_handle() {
-      this.$emit("close")
       this.SB.os_modal_close()
     },
 
@@ -225,7 +220,7 @@ export default {
 
     odai_maker_handle() {
       this.$sound.play_click()
-      this.direct_close_handle()
+      this.SB.os_modal_close()
       this.SB.odai_maker_handle()
       this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
     },
