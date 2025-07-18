@@ -5,13 +5,13 @@ module SharedMethods
     assert_system_variable("clock_box.current_status", "stop")
   end
 
-  def os_modal_handle
-    find(".os_modal_handle").click
+  def os_modal_open_handle
+    find(".os_modal_open_handle").click
   end
 
   def os_modal_open
     global_menu_open
-    os_modal_handle
+    os_modal_open_handle
   end
 
   def os_modal_close

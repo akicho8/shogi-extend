@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "1,2,3,4",
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
-        :autoexec             => "os_modal_handle",
+        :autoexec             => "os_modal_open_handle",
       })
   end
 

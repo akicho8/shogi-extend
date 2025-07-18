@@ -10,7 +10,7 @@
       a.panel-block(@click="SB.odai_maker_handle()") お題メーカー
       a.panel-block(@click="SB.odai_share(SB.Odai.create({subject: 's', items: ['a', 'b']}))") お題配布
       a.panel-block(@click="SB.odai_delete()") お題の削除
-      a.panel-block(@click="SB.os_modal_handle()") 順番設定
+      a.panel-block(@click="SB.os_modal_open_handle()") 順番設定
       a.panel-block(@click="SB.voted_result_to_order_apply()") 結果を反映する
   .column.is-3
     .panel

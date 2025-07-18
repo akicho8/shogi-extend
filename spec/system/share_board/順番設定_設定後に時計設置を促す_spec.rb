@@ -10,7 +10,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :handle_name_validate => "false",
       })
     global_menu_open
-    os_modal_handle
+    os_modal_open_handle
     os_switch_toggle
     os_submit_button_click
     assert_text "次は時計を設置してください"

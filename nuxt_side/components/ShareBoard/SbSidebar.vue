@@ -18,7 +18,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
                   | 入退室
                   b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi1_hand_p")
                 .check_mark(v-if="SB.bold_if(mi1_bold_p)") ✅
-              b-button.mb-0.is_active_unset.important.os_modal_handle(rounded expanded :class="SB.bold_if(mi2_bold_p)" @click="SB.os_modal_handle")
+              b-button.mb-0.is_active_unset.important.os_modal_open_handle(rounded expanded :class="SB.bold_if(mi2_bold_p)" @click="SB.os_modal_open_handle")
                 .number_with_label
                   b-icon(icon="numeric-2-circle-outline")
                   | 順番設定

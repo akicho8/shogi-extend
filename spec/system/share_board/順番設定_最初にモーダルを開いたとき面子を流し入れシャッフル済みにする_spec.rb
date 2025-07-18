@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "1,2,3,4,5,6,7,8",
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
-        :autoexec             => "os_modal_handle",
+        :autoexec             => "os_modal_open_handle",
         :shuffle_first        => shuffle_first,
       })
     os_switch_toggle

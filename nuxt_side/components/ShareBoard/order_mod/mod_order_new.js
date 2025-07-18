@@ -22,36 +22,39 @@ export const mod_order_new = {
       },
     }
   },
+
+  beforeDestroy() {
+    this.os_modal_close()
+  },
+
   methods: {
-    os_modal_shortcut_handle() {
+    os_modal_open_handle() {
       if (this.os_modal_instance == null) {
-        this.os_modal_handle()
-        return true
+
+        // 動かしている途中で消すとエラーになる
+        // Gs.delay_block(5, () => this.os_modal_close())
+
+        if (this.room_is_empty_p()) { return }
+
+        this.sidebar_p = false
+        this.$sound.play_click()
+
+        this.os_modal_init()
+
+        Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
+        // this.rsm_close()
+        this.os_modal_instance = this.modal_card_open({
+          component: OrderSettingModal,
+          props: { },
+          canCancel: [],
+          // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
+          onCancel: () => {
+            Gs.assert(false, "must not happen")
+            this.$sound.play_click()
+            this.os_modal_close()
+          },
+        })
       }
-    },
-
-    os_modal_handle() {
-      // 動かしている途中で消すとエラーになる
-      // Gs.delay_block(5, () => this.os_modal_close())
-
-      if (this.room_is_empty_p()) { return }
-      this.sidebar_p = false
-
-      this.$sound.play_click()
-      this.os_modal_init()
-      Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
-      // this.rsm_close()
-      this.os_modal_instance = this.modal_card_open({
-        component: OrderSettingModal,
-        props: { },
-        canCancel: [],
-        // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
-        onCancel: () => {
-          Gs.assert(false, "must not happen")
-          this.$sound.play_click()
-          this.os_modal_close()
-        },
-      })
     },
 
     // 順番設定モーダル内で使うデータの準備
@@ -80,6 +83,7 @@ export const mod_order_new = {
       if (this.os_modal_instance) {
         this.os_modal_instance.close()
         this.os_modal_instance = null
+        this.debug_alert("OrderSettingModal close")
       }
     },
 

@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a",
         :fixed_order_state    => "to_o1_state",
         :handle_name_validate => "false",
-        :autoexec             => "os_modal_handle",
+        :autoexec             => "os_modal_open_handle",
       })
 
     drag_to_watch("dnd_both", 0) # a を観戦に移動
