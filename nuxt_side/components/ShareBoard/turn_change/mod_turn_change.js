@@ -10,6 +10,10 @@ export const mod_turn_change = {
     }
   },
 
+  beforeDestroy() {
+    this.turn_change_modal_close()
+  },
+
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
