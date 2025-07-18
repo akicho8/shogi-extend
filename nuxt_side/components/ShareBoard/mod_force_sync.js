@@ -98,7 +98,7 @@ export const mod_force_sync = {
       this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
-    force_sync_handicap() {
+    force_sync_preset() {
       this.current_turn = 0
       this.current_sfen = this.board_preset_info.sfen
       this.ac_log({subject: "駒落適用", body: this.board_preset_info.name})

@@ -1,7 +1,13 @@
 import { BoardPresetInfo } from "@/components/models/board_preset_info.js"
-import BoardPresetSelectModal from "./BoardPresetSelectModal.vue"
+import PresetSelectModal from "./PresetSelectModal.vue"
 
-export const mod_board_preset_select = {
+export const mod_preset_select = {
+  data() {
+    return {
+      preset_select_modal_instance: null,
+    }
+  },
+
   created() {
     this.sfen_set_by_url_params()
   },
@@ -22,12 +28,23 @@ export const mod_board_preset_select = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    board_preset_select_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.modal_card_open({
-        component: BoardPresetSelectModal,
-      })
+    preset_select_modal_open_handle() {
+      if (this.preset_select_modal_instance == null) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.preset_select_modal_instance = this.modal_card_open({
+          component: PresetSelectModal,
+          onCancel: () => this.preset_select_modal_close(),
+        })
+      }
+    },
+
+    preset_select_modal_close() {
+      if (this.preset_select_modal_instance) {
+        this.preset_select_modal_instance.close()
+        this.preset_select_modal_instance = null
+        this.debug_alert("PresetSelectModal close")
+      }
     },
   },
   computed: {

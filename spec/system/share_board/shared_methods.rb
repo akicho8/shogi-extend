@@ -63,7 +63,7 @@ module SharedMethods
   def preset_select(preset_key)
     global_menu_open
     menu_item_click("手合割")
-    find(".BoardPresetSelectModal .board_preset_key").select(preset_key)
+    find(".PresetSelectModal .board_preset_key").select(preset_key)
     find(".apply_button").click
   end
 

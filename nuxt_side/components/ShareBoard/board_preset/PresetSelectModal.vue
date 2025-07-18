@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "BoardPresetSelectModal",
+  name: "PresetSelectModal",
   mixins: [support_child],
   methods: {
     next_handle(v) {
@@ -49,20 +49,20 @@ export default {
     },
     close_handle() {
       this.$sound.play_click()
-      this.$emit("close")
+      this.SB.preset_select_modal_close()
     },
     apply_handle() {
       this.$sound.play_click()
-      this.SB.force_sync_handicap()
-      this.$emit("close")
+      this.SB.force_sync_preset()
+      this.SB.preset_select_modal_close()
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
-.BoardPresetSelectModal
+@import "../sass/support.sass"
+.PresetSelectModal
   +modal_width(32rem)
   .modal-card-body
     padding: 1.25rem
@@ -88,7 +88,7 @@ export default {
     +setvar(sp_grid_inner_color, hsl(0, 0%, 80%))
 
 .STAGE-development
-  .BoardPresetSelectModal
+  .PresetSelectModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body
