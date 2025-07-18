@@ -26,8 +26,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
             //- p.title.is-6.mb-0 深考時間とは？
             .is-flex.is-flex-direction-column
               p 秒読みが0になった後に使える、回復しない持ち時間です
-              p 切れ負け防止用ではなく<b>勝負所でじっくり考える</b>ための時間です
-              p <b>分単位</b>で設定すると内容の濃い対局になるでしょう
+              p 切れ負け防止用ではなく<b>勝負所でじっくり考える</b>ための時間として<b>分単位</b>で設定すると内容の濃い対局になるでしょう
           //- span.has-text-weight-bold
           | 深考時間(秒)
           //- b-icon.has-text-info(icon="help-circle-outline" size="is-small")
