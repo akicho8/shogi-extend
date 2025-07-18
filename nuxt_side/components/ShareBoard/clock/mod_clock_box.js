@@ -47,40 +47,34 @@ export const mod_clock_box = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    cc_modal_shortcut_handle() {
+    cc_modal_open_handle() {
       if (this.cc_modal_instance == null) {
-        this.cc_modal_open_handle()
-        return true
+        this.sidebar_p = false
+        this.$sound.play_click()
+
+        this.cc_modal_instance = this.modal_card_open({
+          component: ClockBoxModal,
+          onCancel: () => {
+            this.$sound.play_click()
+            this.cc_modal_close()
+          },
+        })
       }
     },
 
-    cc_modal_open_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.cc_modal_open()
-    },
-
     cc_modal_close_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.cc_modal_close()
-    },
-
-    cc_modal_open() {
-      this.cc_modal_close()
-      this.cc_modal_instance = this.modal_card_open({
-        component: ClockBoxModal,
-        onCancel: () => {
-          this.$sound.play_click()
-          this.cc_modal_close()
-        },
-      })
+      if (this.cc_modal_instance) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.cc_modal_close()
+      }
     },
 
     cc_modal_close() {
       if (this.cc_modal_instance) {
         this.cc_modal_instance.close()
         this.cc_modal_instance = null
+        this.debug_alert("ClockBoxModal close")
       }
     },
 
