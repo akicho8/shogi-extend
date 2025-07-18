@@ -10,6 +10,10 @@ export const mod_give_up = {
     }
   },
 
+  beforeDestroy() {
+    this.give_up_modal_close()
+  },
+
   methods: {
     // 投了確認モーダルを開く
     give_up_modal_open() {
@@ -26,6 +30,7 @@ export const mod_give_up = {
       if (this.give_up_modal_instance) {
         this.give_up_modal_instance.close()
         this.give_up_modal_instance = null
+        this.debug_alert("GiveUpModal close")
       }
     },
 
