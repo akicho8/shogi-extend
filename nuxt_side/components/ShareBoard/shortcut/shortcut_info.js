@@ -17,6 +17,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.sidebar_toggle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "0"),
+        call: c => c.turn_change_to_zero_modal_open_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "i"),
         call: c => c.preset_select_modal_open_handle(),
       },

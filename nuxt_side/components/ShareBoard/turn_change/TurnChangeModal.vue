@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 局面 \#{{new_turn}}
+      | {{title ?? '局面'}} \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -17,6 +17,8 @@
         :sp_turn="turn"
         @ev_turn_offset_change="v => new_turn = v"
       )
+    template(v-if="message")
+      .message_body.has-text-grey(v-html="message")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "TurnChangeModal",
@@ -32,6 +34,8 @@ export default {
   props: {
     sfen: { type: String, required: true, },
     turn: { type: Number, required: true, },
+    title: { type: String, required: false, },
+    message: { type: String, required: false, },
   },
   data() {
     return {
@@ -41,23 +45,26 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.$emit("close")
+      this.SB.turn_change_modal_close()
     },
     apply_handle() {
       this.$sound.play_click()
       this.SB.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
-      this.$emit("close")
+      this.SB.turn_change_modal_close()
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
+@import "../sass/support.sass"
 .TurnChangeModal
   +modal_width(512px)
   .modal-card-body
     padding: 1.25rem
+    .message_body
+      margin-top: 0.75rem
+      font-size: $size-7
 
 .STAGE-development
   .TurnChangeModal

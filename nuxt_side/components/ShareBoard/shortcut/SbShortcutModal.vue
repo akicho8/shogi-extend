@@ -63,13 +63,17 @@
           .sc_buttons
             b-tag(type="is-primary") Enter
         .sc_item
-          .sc_label 手合割
-          .sc_buttons
-            b-tag(type="is-primary") i
-        .sc_item
           .sc_label 本譜に戻る
           .sc_buttons
             b-tag(type="is-primary") z
+        .sc_item
+          .sc_label 初期配置に戻す
+          .sc_buttons
+            b-tag(type="is-primary") 0
+        .sc_item
+          .sc_label 手合割
+          .sc_buttons
+            b-tag(type="is-primary") i
 
     .column.is-half-desktop.is-half-tablet
       .sc_sub_title 思考印

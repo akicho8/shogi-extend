@@ -1,4 +1,4 @@
-import TurnChangeModal from "./TurnChangeModal.vue"
+import TurnChangeModal from "./turn_change/TurnChangeModal.vue"
 
 export const mod_back_to = {
   methods: {

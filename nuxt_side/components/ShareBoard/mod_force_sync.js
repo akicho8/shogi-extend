@@ -1,71 +1,10 @@
 import ForceSyncModal from "./ForceSyncModal.vue"
-import TurnChangeModal from "./TurnChangeModal.vue"
 import _ from "lodash"
 
-const CONFIRM_METHOD = false
+// const CONFIRM_METHOD = false
 
 export const mod_force_sync = {
   methods: {
-    ////////////////////////////////////////////////////////////////////////////////
-
-    board_init_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-
-      if (CONFIRM_METHOD) {
-        this.dialog_confirm({
-          title: "初期配置に戻す (0手目に移動する)",
-          message: `途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください`,
-          confirmText: "実行",
-          type: "is-danger",
-          focusOn: "cancel",
-          onConfirm: () => {
-            this.$sound.play_click()
-            this.force_sync_turn_zero()
-          },
-        })
-      } else {
-        this.ac_log({subject: "盤面起動", body: "初期配置に戻す"})
-        this.modal_card_open({
-          component: TurnChangeModal,
-          props: {
-            sfen: this.current_sfen,
-            turn: 0,
-          },
-        })
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    force_sync_turn_previous_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-
-      if (CONFIRM_METHOD) {
-        this.dialog_confirm({
-          title: "1手戻す",
-          message: "実行してもよろしいですか？",
-          confirmText: "実行",
-          type: "is-danger",
-          focusOn: "cancel",
-          onConfirm: () => {
-            this.$sound.play_click()
-            this.force_sync_turn_previous()
-          },
-        })
-      } else {
-        this.ac_log({subject: "盤面起動", body: "1手戻す"})
-        this.modal_card_open({
-          component: TurnChangeModal,
-          props: {
-            sfen: this.current_sfen,
-            turn: _.clamp(this.current_turn - 1, 0, this.current_turn),
-          },
-        })
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     force_sync_modal_handle() {

@@ -107,8 +107,9 @@ import { mod_color_theme                   } from "./mod_color_theme.js"
 import { mod_sfen_share                    } from "./mod_sfen_share.js"
 import { mod_resend                        } from "./resend/mod_resend.js"
 import { mod_force_sync                    } from "./mod_force_sync.js"
+import { mod_turn_change                   } from "./turn_change/mod_turn_change.js"
 import { mod_illegal                       } from "./illegal/mod_illegal.js"
-import { mod_preset_select           } from "./board_preset/mod_preset_select.js"
+import { mod_preset_select                 } from "./board_preset/mod_preset_select.js"
 import { mod_back_to                       } from "./mod_back_to.js"
 import { mod_shortcut                      } from "./shortcut/mod_shortcut.js"
 import { window_active_detector            } from "./window_active_detector.js"
@@ -222,6 +223,7 @@ export default {
     mod_sfen_share,
     mod_resend,
     mod_force_sync,
+    mod_turn_change,
     mod_illegal,
     mod_preset_select,
     mod_back_to,
