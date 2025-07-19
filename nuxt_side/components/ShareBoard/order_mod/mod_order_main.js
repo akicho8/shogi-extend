@@ -175,20 +175,20 @@ export const mod_order_main = {
         return "none"
       }
 
-      let retv = "both"                                          // デフォルトは誰でも動かせる
+      let retval = "both"                                          // デフォルトは誰でも動かせる
       if (this.order_enable_p) {                                 // 順番設定が有効かつ
         if (this.ac_room) {                                      // 部屋が立てられていて
-          retv = "none"                                        // 観戦者含めて全体を「禁止」にする
+          retval = "none"                                        // 観戦者含めて全体を「禁止」にする
           if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
-            retv = "both"
+            retval = "both"
           } else {
             if (this.current_turn_self_p) {                    // そのあとで対象者だけを
-              retv = "both"                                    // 指せるようにする
+              retval = "both"                                    // 指せるようにする
             }
           }
         }
       }
-      return retv
+      return retval
     },
 
     order_ok() { return this.order_enable_p && this.order_unit }, // 順番設定ONかつ、順番情報が入っている状態か？

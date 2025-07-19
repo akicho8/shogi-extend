@@ -17,8 +17,8 @@ export const mod_export = {
   methods: {
     async kifu_copy_handle(e, params = {}) {
       const url = this.kifu_show_url(e, params)
-      const retv = await this.kif_clipboard_copy_from_url(url)
-      if (retv) {
+      const retval = await this.kif_clipboard_copy_from_url(url)
+      if (retval) {
         this.sidebar_close()
       }
     },

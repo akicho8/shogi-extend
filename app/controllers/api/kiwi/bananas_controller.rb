@@ -37,26 +37,26 @@ module Api
       # http://localhost:3000/api/kiwi/bananas.json?scope=public
       # http://localhost:3000/api/kiwi/bananas.json?scope=private
       def index
-        retv = {}
-        retv[:bananas] = current_bananas.sorted(sort_info).as_json(::Kiwi::Banana.json_struct_for_index)
-        retv[:total] = current_bananas.total_count
-        # retv[:meta]  = AppEntryInfo.fetch(:kiwi).og_meta
-        render json: retv
+        retval = {}
+        retval[:bananas] = current_bananas.sorted(sort_info).as_json(::Kiwi::Banana.json_struct_for_index)
+        retval[:total] = current_bananas.total_count
+        # retval[:meta]  = AppEntryInfo.fetch(:kiwi).og_meta
+        render json: retval
       end
 
       # http://localhost:3000/api/kiwi/bananas/show.json?banana_key=6&_user_id=1
       # http://localhost:3000/api/kiwi/bananas/show.json?banana_key=5
       def show
-        retv = {}
-        retv[:config] = ::Kiwi::Config
+        retval = {}
+        retval[:config] = ::Kiwi::Config
         banana = ::Kiwi::Banana.find_by!(key: params[:banana_key])
         show_can!(banana)
         if axios_process_client? # 2度呼ばれるため仕方なく
           banana.access_logs.create!(user: current_user)
         end
         v = banana.as_json(::Kiwi::Banana.json_struct_for_show)
-        retv[:banana] = v
-        render json: retv
+        retval[:banana] = v
+        render json: retval
       end
 
       # 問題編集用
@@ -66,8 +66,8 @@ module Api
       # http://localhost:4000/video/watch/new
       # http://localhost:4000/video/watch/1/edit
       def edit
-        retv = {}
-        retv[:config] = ::Kiwi::Config
+        retval = {}
+        retval[:config] = ::Kiwi::Config
         s = current_user.kiwi_bananas
         if v = params[:banana_key]
           banana = s.find_by!(key: v)
@@ -79,10 +79,10 @@ module Api
           end
           banana.form_values_default_assign
         end
-        retv[:banana] = banana.as_json(::Kiwi::Banana.json_struct_for_edit)
-        # retv[:meta] = banana.og_meta
+        retval[:banana] = banana.as_json(::Kiwi::Banana.json_struct_for_edit)
+        # retval[:meta] = banana.og_meta
         # sleep(3)
-        render json: retv
+        render json: retval
       end
 
       # POST http://localhost:3000/api/kiwi/bananas/save

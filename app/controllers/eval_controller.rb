@@ -9,8 +9,8 @@ class EvalController < ApplicationController
   skip_forgery_protection
 
   def run
-    retv = evaluate(current_code)
-    console_str = ">> #{current_code}\n#{retv}"
+    retval = evaluate(current_code)
+    console_str = ">> #{current_code}\n#{retval}"
 
     if v = params[:redirect_to].presence
       redirect_to v, alert: h.simple_format(console_str)
@@ -29,11 +29,11 @@ class EvalController < ApplicationController
 
   def evaluate(input)
     begin
-      retv = eval(input)
-      if !retv.kind_of?(String) && retv.respond_to?(:to_t)
-        retv = retv.to_t
+      retval = eval(input)
+      if !retval.kind_of?(String) && retval.respond_to?(:to_t)
+        retval = retval.to_t
       end
-      retv
+      retval
     rescue => error
       backtrace = Array(error.backtrace) - caller
       ["#{error.class.name}: #{error}\n", *backtrace.map { |e| "#{' ' * 8}from #{e}\n" }].join

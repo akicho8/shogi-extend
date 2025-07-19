@@ -36,18 +36,18 @@ module Api
       # http://localhost:3000/api/wkbk/books.json?scope=public
       # http://localhost:3000/api/wkbk/books.json?scope=private
       def index
-        retv = {}
-        retv[:books] = current_books.sorted(sort_info).as_json(::Wkbk::Book.json_struct_for_index)
-        retv[:total] = current_books.total_count
-        retv[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
-        render json: retv
+        retval = {}
+        retval[:books] = current_books.sorted(sort_info).as_json(::Wkbk::Book.json_struct_for_index)
+        retval[:total] = current_books.total_count
+        retval[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
+        render json: retval
       end
 
       # http://localhost:3000/api/wkbk/books/show.json?book_key=6&_user_id=1
       # http://localhost:3000/api/wkbk/books/show.json?book_key=5
       def show
-        retv = {}
-        retv[:config] = ::Wkbk::Config
+        retval = {}
+        retval[:config] = ::Wkbk::Config
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
         if force_access?
@@ -58,8 +58,8 @@ module Api
         end
         v = book.as_json(::Wkbk::Book.json_struct_for_show)
         v[:xitems] = book.to_xitems(current_user)
-        retv[:book] = v
-        render json: retv
+        retval[:book] = v
+        render json: retval
       end
 
       # 問題編集用
@@ -69,8 +69,8 @@ module Api
       # http://localhost:4000/rack/books/new
       # http://localhost:4000/rack/books/1/edit
       def edit
-        retv = {}
-        retv[:config] = ::Wkbk::Config
+        retval = {}
+        retval[:config] = ::Wkbk::Config
         s = current_user.wkbk_books
         if v = params[:book_key]
           book = s.find_by!(key: v)
@@ -79,16 +79,16 @@ module Api
           book = s.build
           book.form_values_default_assign
         end
-        retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
-        retv[:meta] = book.og_meta
+        retval[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
+        retval[:meta] = book.og_meta
         # sleep(3)
-        render json: retv
+        render json: retval
       end
 
       # POST http://localhost:3000/api/wkbk/books/save
       # nginx の client_max_body_size を調整が必要
       def save
-        retv = {}
+        retval = {}
         if v = params[:book][:key]
           book = current_user.wkbk_books.find_by!(key: v)
         else
@@ -96,11 +96,11 @@ module Api
         end
         begin
           book.update_from_action(params.to_unsafe_h[:book])
-          retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
+          retval[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
-          retv[:form_error_message] = error.message
+          retval[:form_error_message] = error.message
         end
-        render json: retv
+        render json: retval
       end
 
       # DELETE http://localhost:3000/api/wkbk/books/destroy

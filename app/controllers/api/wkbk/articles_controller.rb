@@ -39,24 +39,24 @@ module Api
       # http://localhost:3000/api/wkbk/articles/index?_user_id=1
       # http://localhost:3000/api/wkbk/articles/index?_user_id=1&sort_column=id&sort_order=desc
       def index
-        retv = {}
-        retv[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
-        retv[:total]    = current_articles.total_count
-        retv[:meta]     = AppEntryInfo.fetch(:wkbk).og_meta
-        render json: retv
+        retval = {}
+        retval[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
+        retval[:total]    = current_articles.total_count
+        retval[:meta]     = AppEntryInfo.fetch(:wkbk).og_meta
+        render json: retval
       end
 
       # http://localhost:3000/api/wkbk/articles/show
       # http://localhost:3000/api/wkbk/articles/show?article_key=1
       # http://localhost:3000/api/wkbk/articles/show?article_key=1&_user_id=1
       def show
-        retv = {}
-        retv[:config] = ::Wkbk::Config
+        retval = {}
+        retval[:config] = ::Wkbk::Config
         article = ::Wkbk::Article.find_by!(key: params[:article_key])
         show_can!(article)
-        retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_show)
-        retv[:meta] = article.og_meta
-        render json: retv
+        retval[:article] = article.as_json(::Wkbk::Article.json_struct_for_show)
+        retval[:meta] = article.og_meta
+        render json: retval
       end
 
       # http://localhost:3000/api/wkbk/articles/edit.json
@@ -64,9 +64,9 @@ module Api
       # http://localhost:3000/api/wkbk/articles/edit.json?book_key=1&_user_id=1
       # http://localhost:3000/api/wkbk/articles/edit.json?article_key=1&_user_id=1
       def edit
-        retv = {}
-        retv[:config] = ::Wkbk::Config
-        retv[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
+        retval = {}
+        retval[:config] = ::Wkbk::Config
+        retval[:LineageInfo] = ::Wkbk::LineageInfo.as_json(only: [:key, :name, :type, :mate_validate_on])
 
         if v = params[:article_key]
           article = current_user.wkbk_articles.find_by!(key: v) # 本人しかアクセスできないため権限チェックは不要
@@ -75,12 +75,12 @@ module Api
           # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
           article.form_values_default_assign(params.merge(source_article: source_article, books: default_books))
-          # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
-          # retv[:meta] = ::Wkbk::Article.new_og_meta
+          # retval[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
+          # retval[:meta] = ::Wkbk::Article.new_og_meta
         end
 
-        retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
-        retv[:meta] = article.og_meta
+        retval[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
+        retval[:meta] = article.og_meta
 
         # チェックしたものが上に来るようにする
         books = [
@@ -88,14 +88,14 @@ module Api
           article.books.order(updated_at: :desc),           # 現在のレコードで選択したもの
           current_user.wkbk_books.order(updated_at: :desc), # その他全部
         ].flatten.compact.uniq
-        retv[:books] = books.as_json(::Wkbk::Book.json_struct_for_article_edit_form)
+        retval[:books] = books.as_json(::Wkbk::Book.json_struct_for_article_edit_form)
 
-        render json: retv
+        render json: retval
       end
 
       # POST http://localhost:3000/api/wkbk/articles/save
       def save
-        retv = {}
+        retval = {}
         if v = params[:article][:key]
           article = current_user.wkbk_articles.find_by!(key: v)
         else
@@ -103,11 +103,11 @@ module Api
         end
         begin
           article.update_from_action(params.to_unsafe_h[:article])
-          retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
+          retval[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
-          retv[:form_error_message] = error.message
+          retval[:form_error_message] = error.message
         end
-        render json: retv
+        render json: retval
       end
 
       # DELETE http://localhost:3000/api/wkbk/books/destroy

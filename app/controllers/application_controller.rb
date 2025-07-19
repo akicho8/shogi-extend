@@ -139,17 +139,17 @@ class ApplicationController < ActionController::Base
     def admin_login_required
       session.delete(:admin_user)
       authenticate_or_request_with_http_basic do |name, password|
-        retv = name.present? && password == Rails.application.credentials[:basic_auth_password]
+        retval = name.present? && password == Rails.application.credentials[:basic_auth_password]
         if Rails.env.production? || Rails.env.test?
           Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
-            AppLog.important(subject: "管理画面ログイン", body: [retv, name, password].inspect)
+            AppLog.important(subject: "管理画面ログイン", body: [retval, name, password].inspect)
             nil
           end
         end
-        if retv
+        if retval
           session[:admin_user] ||= name.presence || "(admin_user)"
         end
-        retv
+        retval
       end
     end
 

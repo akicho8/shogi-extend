@@ -4,20 +4,20 @@ module Api
       # http://localhost:3000/api/wkbk/tops/index.json
       # http://localhost:3000/api/wkbk/tops/index.json?query=a&tag=b,c
       def index
-        retv = {}
-        retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
-        retv[:xpage_info] = xpage_info(current_books)
-        retv[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
-        render json: retv
+        retval = {}
+        retval[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
+        retval[:xpage_info] = xpage_info(current_books)
+        retval[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
+        render json: retval
       end
 
       # http://localhost:3000/api/wkbk/tops/sitemap.json
       # http://localhost:4000/sitemap.xml
       def sitemap
-        retv = {}
-        retv[:books]    = ::Wkbk::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
-        retv[:articles] = ::Wkbk::Article.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
-        render json: retv
+        retval = {}
+        retval[:books]    = ::Wkbk::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+        retval[:articles] = ::Wkbk::Article.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+        render json: retval
       end
 
       private
