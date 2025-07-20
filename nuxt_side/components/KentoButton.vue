@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.app_log("KENTO")
+      this.app_log("KENTO起動")
     },
   },
 }

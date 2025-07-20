@@ -128,6 +128,17 @@ class AppLog < ApplicationRecord
   scope :body_like,    -> query { where(["body    LIKE ?", "%#{query}%"]) }
   scope :search,       -> query { body_like(query).or(subject_like(query)).or(level_like(query)) }
 
+  scope :search2, -> query do
+    scope = all
+    SimpleQueryParser.parse(query.to_s).each do |plus, queries|
+      queries.each do |query|
+        sanitized = ActiveRecord::Base.sanitize_sql_like(query.downcase)
+        scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(body) LIKE ? OR LOWER(subject) LIKE ? OR LOWER(level) LIKE ?)", "%#{sanitized}%", "%#{sanitized}%", "%#{sanitized}%")
+      end
+    end
+    scope = scope.order(:created_at, :id).reverse_order
+  end
+
   scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
   normalizes :subject, with: -> e { column_value_db_truncate(:subject, e) }

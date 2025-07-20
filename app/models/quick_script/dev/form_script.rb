@@ -128,7 +128,22 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:static1].presence || "固定文字列",
-                :help_message => "(help_message)",
+                :help_message => "変更はできないがフォームにポストする。key を nil にすればポストしない。",
+              }
+            },
+          },
+
+          {
+            :label   => "real_static_value",
+            :key     => nil,
+            :type    => :real_static_value,
+            :dynamic_part => -> {
+              {
+                :value => h_stack([
+                    { _nuxt_link: "リンク1", _v_bind: { to: { name: "lab-qs_group_key-qs_page_key", params: { qs_group_key: "dev", qs_page_key: "calc" }, query: { lhv: 100 }, }, }, :class => "has-text-weight-bold", },
+                    { _nuxt_link: "リンク2", _v_bind: { to: { name: "lab-qs_group_key-qs_page_key", params: { qs_group_key: "dev", qs_page_key: "calc" }, query: { lhv: 100 }, }, }, :class => "has-text-weight-bold", },
+                  ]),
+                :help_message => "static とは異なり、value を本文のように表示する。key は nil にしておくこと。",
               }
             },
           },

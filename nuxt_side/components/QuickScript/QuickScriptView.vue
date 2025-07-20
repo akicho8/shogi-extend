@@ -195,7 +195,9 @@ export default {
       // フォームの初期値を埋める
       if (this.params["form_parts"]) {
         this.params["form_parts"].forEach(form_part => {
-          this.$set(this.attributes, form_part["key"], form_part["default"])
+          if (form_part["key"]) { // これで real_static_value は除外できる
+            this.$set(this.attributes, form_part["key"], form_part["default"])
+          }
 
           // b-taginput 用の候補初期値を設定する
           if (form_part.type === "b_taginput") {
@@ -299,7 +301,9 @@ export default {
     browser_query_delete(params) {
       this.params["form_parts"].forEach(e => {
         if (e.hidden_on_query) {
-          delete params[e.key]
+          if (e.key) {
+            delete params[e.key]
+          }
         }
       })
     },

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.app_log("コピー")
+      this.app_log("棋譜コピー")
     },
   },
 }

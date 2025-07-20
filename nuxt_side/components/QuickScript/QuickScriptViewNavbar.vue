@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_class].join(' ')" v-if="QS.params.navibar_show")
+MainNavbar.QuickScriptViewNavbar.is_active_unset(:wrapper-class="['container', QS.container_class].join(' ')" v-if="QS.params.navibar_show")
   template(slot="brand")
     NavbarItemHome(icon="chevron-left" to="" tag="a" href="#" @click.native.prevent="QS.parent_link_click_handle")
 
@@ -7,6 +7,9 @@ MainNavbar.QuickScriptViewNavbar(:wrapper-class="['container', QS.container_clas
     template(v-if="QS.meta.title")
       template(v-if="QS.params.title_link === 'url_path_reset'")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle")
+          h1 {{QS.meta.title}}
+      template(v-else-if="QS.params.title_link === 'force_reload'")
+        b-navbar-item(tag="a" href="")
           h1 {{QS.meta.title}}
       template(v-else)
         b-navbar-item(tag="span")

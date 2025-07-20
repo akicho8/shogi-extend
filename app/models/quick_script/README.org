@@ -7,3 +7,19 @@ http://localhost:4000/lab/prison?a=1 は http://localhost:4000/lab/chore/index?a
 
 ~/src/shogi-extend/nuxt_side/pages/swars/prison1.vue
 ~/src/shogi-extend/nuxt_side/pages/swars/prison2.vue
+
+* __prefer_url_params__
+
+URL に __prefer_url_params__=1 をつけると URL 側のパラメータを必ず反映するようになる。
+これはナビゲーションからフォームでも指定してあるものをつけて同じページにリンクしたときフォームの値の方が優先されてしまうのを防ぐ。
+具体的には xxx のページのフォームで query=foo としてあるとき URL で xxx?query=bar としても bar が反映されない。
+そのときに __prefer_url_params__=1 をつける。
+
+* nuxt の問題点
+
+フォームがあってかつ、そのフォームと同じ値で、同じページに飛ぶと、フォーム値が優先されてしまう。
+そのときは __prefer_url_params__ をつける
+
+* fetch_index
+
+URL からいきなり呼ばれたのか submit したときかのかの判別に使える

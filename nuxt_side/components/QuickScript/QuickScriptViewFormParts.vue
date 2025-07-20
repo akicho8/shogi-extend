@@ -79,7 +79,10 @@
             input.input.is-static(:id="QS.form_part_id(form_part)" v-model="QS.attributes[form_part.key]" readonly)
           template(v-else)
             p.control
-              span.is-static(:id="QS.form_part_id(form_part)" v-text="QS.attributes[form_part.key]")
+              span.is-static(:id="QS.form_part_id(form_part)" v-html="QS.attributes[form_part.key]")
+        template(v-else-if="form_part.type === 'real_static_value'")
+          p.control
+            QuickScriptViewValue(:value="form_part.value")
         template(v-else-if="form_part.type === 'text'")
           b-input(
             :id="QS.form_part_id(form_part)"

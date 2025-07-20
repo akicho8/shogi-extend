@@ -49,7 +49,7 @@ module QuickScript
     end
 
     def dispatch
-      AppLog.info(subject: action.class, body: action.params.to_t)
+      AppLog.info(subject: action.class.title, body: action.params.to_t)
       action.tap(&:render_anything)
     end
 
