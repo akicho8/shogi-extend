@@ -23,7 +23,7 @@ module BackendScript
 
       now = Time.current
       current_length.times.collect do |i|
-        current = now.midnight - i.days
+        current = now.beginning_of_day - i.days
         date = current.to_date
         row = {}
         row["日付"]     = h.tag.span(current.to_fs(:ymd_j), :class => holiday_sunday_saturday_class(current))
@@ -35,7 +35,7 @@ module BackendScript
     end
 
     def time_begin
-      current_length.days.ago.midnight
+      current_length.days.ago.beginning_of_day
     end
 
     def current_length

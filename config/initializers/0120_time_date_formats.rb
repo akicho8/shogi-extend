@@ -41,7 +41,7 @@ Time::DATE_FORMATS.update({
       suffix = d.negative? ? "前" : "後"
       t = d.abs
       case
-        # when time >= Time.current.midnight
+        # when time >= Time.current.beginning_of_day
         # when time >= 1.days.ago
         #   time.to_fs(:battle_short)
       when t < 1.minute then "#{t.div(1.second)}秒#{suffix}"

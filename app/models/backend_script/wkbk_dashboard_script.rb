@@ -69,7 +69,7 @@ module BackendScript
     end
 
     def time_begin
-      current_length.days.ago.midnight
+      current_length.days.ago.beginning_of_day
     end
 
     def current_length

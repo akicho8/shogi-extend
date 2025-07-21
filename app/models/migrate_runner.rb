@@ -258,7 +258,7 @@ class MigrateRunner
   #   # r = t.advance(days: 0)...t.advance(days: 1)
   #   # Swars::MembershipExtra.delete_all
   #   # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-  #   t = Time.current.midnight
+  #   t = Time.current.beginning_of_day
   #   r = "2000-01-01".to_time..."2021-12-01".to_time
   #   m = Swars::Membership.membership_extra_missing
   #   b = Swars::Battle.where(battled_at: r).where(memberships: m)

@@ -21,7 +21,7 @@ tp Swars.info
 Swars::MembershipExtra.delete_all
 Swars::MembershipExtra.create_if_nothing
 # # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-# t = Time.current.midnight
+# t = Time.current.beginning_of_day
 # r = "2000-11-01".to_time..."2021-12-01".to_time
 # m = Swars::Membership.membership_extra_missing
 # b = Swars::Battle.where(battled_at: r).where(memberships: m)

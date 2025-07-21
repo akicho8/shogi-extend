@@ -29,7 +29,7 @@ module XyMaster
 
         # 指定のルールで今日プレイした人だけに絞る
         if true
-          entry_names = TimeRecord.where(rule: rule).where(TimeRecord.arel_table[:created_at].gteq(Time.current.midnight)).group(:entry_name).count.keys
+          entry_names = TimeRecord.where(rule: rule).where(TimeRecord.arel_table[:created_at].gteq(Time.current.beginning_of_day)).group(:entry_name).count.keys
           scope = scope.where(entry_name: entry_names)
         end
 
@@ -59,7 +59,7 @@ module XyMaster
         # datasets: 1.times.collect { |i|
         #   {
         #     label: wl.name,
-        #     data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.midnight.to_fs(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
+        #     data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.beginning_of_day.to_fs(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
         #     backgroundColor: wl.palette.background_color,
         #     borderColor: wl.palette.border_color,
         #     pointRadius: 4,           # 点半径

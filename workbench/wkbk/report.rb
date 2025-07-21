@@ -7,7 +7,7 @@ class App
   end
 
   def yesterday_range
-    @yesterday_range ||= Time.current.midnight.yesterday..Time.current.midnight
+    @yesterday_range ||= Time.current.beginning_of_day.yesterday..Time.current.beginning_of_day
   end
 
   def answer_kind_id_group_fetch(book)

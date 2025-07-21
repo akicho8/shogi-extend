@@ -3,8 +3,8 @@ module Swars
     concern :StatMethods do
       included do
         # TODO: created_at に index がない
-        scope :with_today,     -> t = Time.current { where(created_at: t.midnight...t.midnight.tomorrow) }                     # 本日取得分
-        scope :with_yesterday, -> t = Time.current { where(created_at: t.yesterday.midnight...t.yesterday.midnight.tomorrow) } # 昨日取得分
+        scope :with_today,     -> t = Time.current { where(created_at: t.beginning_of_day...t.beginning_of_day.tomorrow) }                     # 本日取得分
+        scope :with_yesterday, -> t = Time.current { where(created_at: t.yesterday.beginning_of_day...t.yesterday.beginning_of_day.tomorrow) } # 昨日取得分
       end
 
       class_methods do

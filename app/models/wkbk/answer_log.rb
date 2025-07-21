@@ -29,7 +29,7 @@ module Wkbk
     belongs_to :user, class_name: "::User"
     # end
 
-    scope :with_today,   -> t = Time.current { where(created_at: t.midnight...t.midnight.tomorrow) }
+    scope :with_today,   -> t = Time.current { where(created_at: t.beginning_of_day...t.beginning_of_day.tomorrow) }
     scope :with_answer_kind, -> key { where(answer_kind: AnswerKind.fetch(key)) }
     scope :with_o,       -> { with_answer_kind(:correct) }
     scope :without_o,    -> { where.not(answer_kind: AnswerKind.fetch(:correct)) }

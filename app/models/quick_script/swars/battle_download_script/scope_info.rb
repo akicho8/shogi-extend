@@ -25,7 +25,7 @@ class QuickScript::Swars::BattleDownloadScript
         el_message: "本日分を日時昇順で取得する",
         error_message: "本日対局していないようです",
         scope: -> context, s {
-          t = Time.current.midnight
+          t = Time.current.beginning_of_day
           s = s.where(battled_at: t...t.tomorrow)
           s = s.reorder(battled_at: :asc)
         },

@@ -8,7 +8,7 @@ user1 = Swars::User.create!
 user2 = Swars::User.create!
 1.times do |i|
   Swars::Battle.create! do |e|
-    e.battled_at = Time.current.midnight - (1.days * i)
+    e.battled_at = Time.current.beginning_of_day - (1.days * i)
     e.final_key = "DRAW_SENNICHI"
     e.memberships.build(user: user1, judge_key: "draw")
     e.memberships.build(user: user2, judge_key: "draw")
@@ -17,7 +17,7 @@ end
 
 2.times do |i|
   Swars::Battle.create! do |e|
-    e.battled_at = Time.current.midnight - (12.hours * i)
+    e.battled_at = Time.current.beginning_of_day - (12.hours * i)
     e.memberships.build(user: user1)
     e.memberships.build(user: user2)
   end
