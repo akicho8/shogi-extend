@@ -1,16 +1,26 @@
 module QuickScript
   module Middleware
     concern :ComponentWrapperMod do
-      def v_stack(values, **options)
-        { _component: "QuickScriptViewValueAsV", _v_bind: { value: values }, **options }
+      def v_stack(...)
+        component_wrapper("QuickScriptViewValueAsV", ...)
       end
 
-      def h_stack(values, **options)
-        { _component: "QuickScriptViewValueAsH", _v_bind: { value: values }, **options }
+      def h_stack(...)
+        component_wrapper("QuickScriptViewValueAsH", ...)
       end
 
-      def box_block(values, **options)
-        { _component: "QuickScriptViewValueAsBox", _v_bind: { value: values }, **options }
+      def box_block(...)
+        component_wrapper("QuickScriptViewValueAsBox", ...)
+      end
+
+      def component_wrapper(component, values = nil, **options, &block)
+        if values && block_given?
+          raise ArgumentError
+        end
+        if block_given?
+          values = yield
+        end
+        { _component: component, _v_bind: { value: values }, **options }
       end
     end
   end

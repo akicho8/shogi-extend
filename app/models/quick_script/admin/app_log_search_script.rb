@@ -1,3 +1,5 @@
+# http://localhost:4000/lab/admin/app-log-search
+
 module QuickScript
   module Admin
     class AppLogSearchScript < Base
@@ -9,30 +11,13 @@ module QuickScript
       self.router_push_failed_then_fetch = true
       self.title_link = :force_reload
 
-      def header_link_items
-        super + query_keywords.collect do |e|
-          query = { query: [e, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1 }
-          { name: e, _v_bind: { tag: "nuxt-link", to: { path: %(/lab/admin/app_log_search?#{query.to_query}) }, :class => "", }, }
+      if Rails.env.development? && false
+        def header_link_items
+          super + AppLogSearchKeywordInfo.collect do |e|
+            params = { query: [e.key, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1 }
+            { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params), :class => "", }, }
+          end
         end
-      end
-
-      def query_keywords
-        [
-          "共有将棋盤",
-          "チャット",
-          "オーダー配布",
-          "cc_behavior_start",
-          "cc_behavior_silent_stop",
-          "KENTO API",
-          "ぴよ将棋",
-          "短縮URL作成",
-          "短縮URLリダイレクト",
-          "ウォーズID不明",
-          "囚人",
-          "棋譜コピー",
-          "ぴよ将棋起動",
-          "KENTO起動",
-        ]
       end
 
       def form_parts
@@ -51,11 +36,37 @@ module QuickScript
         ]
       end
 
+      def head_content
+        shortcut_search_links
+      end
+
       def call
-        pagination_for(AppLog.search2(params[:query]), always_table: true) do |scope|
+        v_stack do
+          [].yield_self do |e|
+            e << table_content
+          end
+        end
+      end
+
+      private
+
+      def shortcut_search_links
+        links = AppLogSearchKeywordInfo.collect do |e|
+          params = { query: [e.key, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1 }
+          # { _nuxt_link: "#{e.name}", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "px-1 py-1 is-size-6", }
+          # https://bulma.io/documentation/elements/button/
+          { _nuxt_link: "#{e.name}", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-light is-small-x", }
+        end
+        # h_stack(links, :class => "box is-shadowless has-text-weight-bold has-background-white-ter px-3 py-3", :style => "gap:0.5rem")
+        # h_stack(links, :class => "has-text-weight-bold", :style => "gap: 0.5rem")
+        h_stack(links, :style => "gap: 0.5rem")
+      end
+
+      def table_content
+        pagination_for(AppLog.plus_minus_search(params[:query]), always_table: true) do |scope|
           scope.collect do |e|
             {
-              "ID"   => { _nuxt_link: e.id, _v_bind: { to: { name: "lab-qs_group_key-qs_page_key", params: { qs_group_key: "admin", qs_page_key: "app_log_show" }, query: { id: e.id }, }, }, :class => "", },
+              "ID"   => { _nuxt_link: e.id, _v_bind: { to: qs_nuxt_link_to(params: {id: e.id}), } },
               "日時" => e.created_at.to_fs(:ymdhms),
               "LV"   => e.level,
               "絵"   => e.emoji,

@@ -179,6 +179,7 @@ module QuickScript
     prepend Middleware::ComponentWrapperMod  # for v_stack, h_stack
     prepend Middleware::GeneralApiMod        # for as_general_json
     prepend Middleware::HeaerLinkMod
+    prepend Middleware::HeadMod              # フォームより上に表示するコンテンツを追加する
 
     # Middleware だけど他のところにあるやつ
     prepend GoogleApi::Helper      # for hyper_link

@@ -7,6 +7,7 @@
     QuickScriptViewNavbar
     MainSection
       .container(:class="QS.container_class")
+        QuickScriptViewHead
         QuickScriptViewBody(v-if="QS.params.body_position === 'above'")
         QuickScriptViewFormParts
         QuickScriptViewFormButton

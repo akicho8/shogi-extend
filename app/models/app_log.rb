@@ -128,7 +128,7 @@ class AppLog < ApplicationRecord
   scope :body_like,    -> query { where(["body    LIKE ?", "%#{query}%"]) }
   scope :search,       -> query { body_like(query).or(subject_like(query)).or(level_like(query)) }
 
-  scope :search2, -> query do
+  scope :plus_minus_search, -> query do
     scope = all
     SimpleQueryParser.parse(query.to_s).each do |plus, queries|
       queries.each do |query|
