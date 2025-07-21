@@ -39,7 +39,7 @@ module QuickScript
       def call
         if request_get?
           self.body_position = :above
-          return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box has-background-white-ter" }
+          return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box is-shadowless has-background-white-ter" }
         end
         if request_post?
           validate!
