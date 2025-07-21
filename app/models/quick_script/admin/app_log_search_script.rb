@@ -34,9 +34,22 @@ module QuickScript
             },
           },
           {
-            :label   => "抽出件数（直近N件）",
+            :label        => "期間",
+            :key          => :period_key,
+            :type         => :radio_button,
+            :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => PeriodInfo.form_part_elems,
+                :default => period_info.key,
+              }
+            },
+          },
+          {
+            :label   => "1ページあたりの表示件数",
             :key     => :per_page,
             :type    => :radio_button,
+            :session_sync => true,
             :dynamic_part => -> {
               {
                 :elems   => per_page_list.collect(&:to_s),
@@ -48,7 +61,7 @@ module QuickScript
       end
 
       def as_general_json
-        pagination_scope(AppLog.plus_minus_search(params[:query]))
+        pagination_scope(current_scope)
       end
 
       def head_content
@@ -60,10 +73,10 @@ module QuickScript
       end
 
       def call
-        pagination_for(AppLog.plus_minus_search(params[:query]), always_table: true) do |scope|
+        pagination_for(current_scope, always_table: true) do |scope|
           scope.collect do |e|
             {
-              "ID"   => { _nuxt_link: e.id, _v_bind: { to: qs_nuxt_link_to(params: {id: e.id}), } },
+              "ID"   => { _nuxt_link: e.id, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "app_log_show", params: {id: e.id}), } },
               "日時" => e.created_at.to_fs(:ymdhms),
               "LV"   => e.level,
               "絵"   => e.emoji,
@@ -73,6 +86,17 @@ module QuickScript
           end
         end
       end
+
+      def current_scope
+        scope = AppLog.plus_minus_search(params[:query])
+        scope = scope.public_send(period_info.key)
+      end
+
+      def title
+        @title ||= "#{super} (#{current_scope.count})"
+      end
+
+      ################################################################################
 
       def per_page_list
         [50, 100, 200, 500, 1000]
@@ -85,6 +109,18 @@ module QuickScript
       def per_page_max
         per_page_list.last
       end
+
+      ################################################################################
+
+      def period_key
+        PeriodInfo.lookup_key_or_first(params[:period_key])
+      end
+
+      def period_info
+        PeriodInfo.fetch(period_key)
+      end
+
+      ################################################################################
     end
   end
 end

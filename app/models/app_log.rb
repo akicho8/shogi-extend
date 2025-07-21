@@ -139,7 +139,14 @@ class AppLog < ApplicationRecord
     scope = scope.order(:created_at, :id).reverse_order
   end
 
-  scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
+  scope :old_only,       -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
+
+  # app/models/quick_script/admin/app_log_search_script/period_info.rb で使っている
+  scope :last24h,       -> { where(arel_table[:created_at].gteq(24.hours.ago)) }
+  scope :last3d,        -> { where(arel_table[:created_at].gteq(3.days.ago)) }
+  scope :today_only,    -> t = Time.current { t.beginning_of_day.then { |t| where(created_at: t...t.tomorrow) } }
+  scope :tomorrow_only, -> { today_only(Time.current.yesterday) }
+  scope :no_period,     -> { }
 
   normalizes :subject, with: -> e { column_value_db_truncate(:subject, e) }
   normalizes :body,    with: -> e { column_value_db_truncate(:body, e)    }
