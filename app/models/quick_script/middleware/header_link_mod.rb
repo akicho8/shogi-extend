@@ -1,6 +1,6 @@
 module QuickScript
   module Middleware
-    concern :HeaerLinkMod do
+    concern :HeaderLinkMod do
       def as_json(*)
         super.merge({
             :header_link_items => header_link_items,

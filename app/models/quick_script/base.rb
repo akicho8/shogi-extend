@@ -178,7 +178,7 @@ module QuickScript
     prepend Middleware::TitleLinkMod         # title_link
     prepend Middleware::ComponentWrapperMod  # for v_stack, h_stack
     prepend Middleware::GeneralApiMod        # for as_general_json
-    prepend Middleware::HeaerLinkMod
+    prepend Middleware::HeaderLinkMod
     prepend Middleware::HeadMod              # フォームより上に表示するコンテンツを追加する
 
     # Middleware だけど他のところにあるやつ
