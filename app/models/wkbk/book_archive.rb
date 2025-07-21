@@ -67,8 +67,7 @@ module Wkbk
     end
 
     def path_normalize(str)
-      str = str.gsub(/\P{Graph}/, "_")
-      str = str.gsub(/\p{Punct}/, "_")
+      StringToolkit.path_normalize(str)
     end
 
     def body_encodes

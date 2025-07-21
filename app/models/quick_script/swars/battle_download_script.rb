@@ -93,6 +93,11 @@ module QuickScript
 
       def call
         if running_in_foreground
+          # if debug_mode
+          #   if current_user
+          #     current_user.swars_zip_dl_logs.destroy_all
+          #   end
+          # end
           if request_get?
             self.body_position = :above
             return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box is-shadowless has-background-white-ter" }
@@ -123,7 +128,7 @@ module QuickScript
       end
 
       def mail_subject
-        "【将棋ウォーズ棋譜ダウンロード】#{swars_user.name_with_grade} (#{scope_info.name}#{main_scope.size}件)"
+        "【将棋ウォーズ棋譜ダウンロード】#{query} (#{scope_info.name}#{main_scope.size}件)"
       end
 
       def posted_message
@@ -135,35 +140,37 @@ module QuickScript
           flash[:notice] = "ZIP をメールするのでログインしてください"
           return
         end
+
         unless current_user.email_valid?
           flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
           return
         end
-        if swars_user_key.blank?
-          flash[:notice] = "将棋ウォーズIDを入力してください"
-          return
+
+        if swars_user_key
+          if !swars_user
+            flash[:notice] = "#{swars_user_key} は存在しません (一度棋譜検索すると出てくるかも)"
+            return
+          end
+          if swars_user.battles.none?
+            flash[:notice] = "対局データがひとつもありません"
+            return
+          end
         end
-        unless swars_user
-          flash[:notice] = "#{swars_user_key} は存在しません (一度棋譜検索すると出てくるかも)"
-          return
-        end
-        if swars_user.battles.empty?
-          flash[:notice] = "対局データがひとつもありません"
-          return
-        end
-        if current_user.swars_zip_dl_logs.download_prohibit?
-          flash[:notice] = current_user.swars_zip_dl_logs.error_message
-          return
-        end
-        if main_scope.empty?
+
+        # if current_user.swars_zip_dl_logs.download_prohibit?
+        #   flash[:notice] = current_user.swars_zip_dl_logs.error_message
+        #   return
+        # end
+
+        if main_scope.none?
           flash[:notice] = scope_info.error_message
           return
         end
       end
 
-      def debug_info
-        if Rails.env.local?
-          if current_user
+      def head_content
+        if current_user
+          h.tag.div(:class => "is-size-7") do
             "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"
           end
         end
@@ -240,11 +247,11 @@ module QuickScript
       ################################################################################
 
       def log_create!(scope = main_scope)
-        current_user.swars_zip_dl_logs.where(swars_user: swars_user).create_by_battles!(scope, query: query)
+        current_user.swars_zip_dl_logs.create_by_battles!(scope, query: query)
       end
 
       def swars_zip_dl_logs
-        current_user.swars_zip_dl_logs.where(swars_user: swars_user)
+        current_user.swars_zip_dl_logs
       end
 
       # デバッグ用で対象ユーザーの一番古い棋譜を1件ダウンロードしたことにする
@@ -259,7 +266,7 @@ module QuickScript
       ################################################################################
 
       def main_scope
-        @main_scope ||= scope_info.scope[self, query_scope].limit(dl_rest_count)
+        @main_scope ||= scope_info.scope.call(self, query_scope).limit(dl_rest_count)
       end
 
       def scope_info

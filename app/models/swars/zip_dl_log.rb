@@ -30,8 +30,7 @@ module Swars
     cattr_accessor(:recent_period)    { 1.days } # 直近のこの期間に
     cattr_accessor(:recent_count_max) { Rails.env.local? ? 100 : 1000 } # これを越えていると禁止 (DL数回数ではなくDLに含む棋譜総数)
 
-    belongs_to :user,       class_name: "::User"        # ダウンロードしようとしている人
-    belongs_to :swars_user, class_name: "::Swars::User" # ダウンロードされようとしている人
+    belongs_to :user, class_name: "::User" # ダウンロードしようとしている人
 
     scope :recent_only, -> (period = recent_period) { where(arel_table[:created_at].gt(period.ago)) } # 最近の period 期間のレコードたち
 
@@ -80,8 +79,10 @@ module Swars
       end
     end
 
+    normalizes :query, with: -> e { e.squish }
+
     before_validation on: :create do
-      self.query ||= query.to_s.squish
+      self.query ||= query.to_s
     end
 
     with_options presence: true do

@@ -47,4 +47,9 @@ module StringToolkit
     v = v.transform_values { |e| e.collect { |e| e.delete_prefix("-") } }
     [true, false].inject({}) { |a, e| a.merge(e => (v[e] || []).uniq) }
   end
+
+  def path_normalize(s)
+    s = s.gsub(/\P{Graph}/, "_")
+    s = s.gsub(/\p{Punct}/, "_")
+  end
 end

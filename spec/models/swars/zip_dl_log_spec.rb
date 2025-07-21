@@ -23,20 +23,6 @@
 # 【警告:リレーション欠如】::Swars::Userモデルで has_many :swars/zip_dl_logs されていません
 # --------------------------------------------------------------------------------
 
-# == Swars::Schema Swars::Information ==
-#
-# Swars::Xmode (swars_xmodes as Swars::Xmode)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
 require "rails_helper"
 
 RSpec.describe Swars::ZipDlLog, type: :model do
@@ -56,7 +42,7 @@ RSpec.describe Swars::ZipDlLog, type: :model do
     Swars::Battle.create! do |e|
       e.memberships.build(user: @swars_user)
     end
-    @current_user.swars_zip_dl_logs.where(swars_user: @swars_user).create_by_battles!(@swars_user.battles.limit(1))
+    @current_user.swars_zip_dl_logs.create_by_battles!(@swars_user.battles.limit(1))
   end
 
   it "「前回の続きから」は end_at を見る" do
@@ -66,14 +52,14 @@ RSpec.describe Swars::ZipDlLog, type: :model do
 
   it "ダウンロード数判定が正しい" do
     case1
-    Swars::ZipDlLog.recent_period    = 1.days                              # 期間1日内で、
-    Swars::ZipDlLog.recent_count_max = 2                                   # 2件ダウンロードしたらもうだめとする
+    Swars::ZipDlLog.recent_period    = 1.days                       # 期間1日内で、
+    Swars::ZipDlLog.recent_count_max = 2                            # 2件ダウンロードしたらもうだめとする
     assert { @current_user.swars_zip_dl_logs.recent_dl_total == 1 } # 現在1件ダウンロードしている
     assert { @current_user.swars_zip_dl_logs.downloadable? }        # まだダウンロードできる
-    Swars::ZipDlLog.recent_count_max = 1                                   # 1件ダウンロードしたらもうだめとする
+    Swars::ZipDlLog.recent_count_max = 1                            # 1件ダウンロードしたらもうだめとする
     assert { @current_user.swars_zip_dl_logs.download_prohibit? }   # 越えている (正確には 1 >= 1 の状態になっている)
     assert { @current_user.swars_zip_dl_logs.error_message }        # エラー文言は自分で作らなくていい
-    Swars::ZipDlLog.recent_period = 0.days                                 # 仮に期間を 0 日とすれば条件の片方がはずれて
+    Swars::ZipDlLog.recent_period = 0.days                          # 仮に期間を 0 日とすれば条件の片方がはずれて
     assert { @current_user.swars_zip_dl_logs.downloadable? }        # まだダウンロードできる
   end
 end

@@ -23,7 +23,9 @@ class QuickScript::Swars::BattleDownloadScript
 
     def path_of(battle)
       av = []
-      av << @base.swars_user.key
+      if @base.swars_user
+        av << @base.swars_user.key
+      end
       if v = @base.structure_info.zip_path_format
         av << battle.battled_at.strftime(v)
       end

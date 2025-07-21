@@ -28,4 +28,8 @@ RSpec.describe StringToolkit do
     assert { StringToolkit.plus_minus_split("")          == { true => [], false => [] } }
     assert { StringToolkit.plus_minus_split("a b a")     == { true => ["a", "b"], false => [] } }
   end
+
+  it "path_normalize" do
+    assert { StringToolkit.path_normalize("あ い A:1") == "あ_い_A_1" }
+  end
 end

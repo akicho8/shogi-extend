@@ -68,10 +68,6 @@ module QuickScript
         params[:attachment_mode].to_s
       end
 
-      # def swars_user_key_default
-      #   @swars_user_key_default ||= ["BOUYATETSU5"].sample
-      # end
-
       def crawl_reservation_params
         {
           :target_user_key => current_swars_user_key,

@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_07_21_000002) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,11 +21,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
-    t.text "metadata"
+    t.text "metadata", size: :medium
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -50,7 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["group_name"], name: "index_aggregate_caches_on_group_name"
   end
 
-  create_table "app_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "app_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "level", null: false
     t.string "emoji", null: false
     t.string "subject", null: false
@@ -59,16 +59,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.datetime "created_at", precision: nil, null: false
   end
 
-  create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
-    t.string "provider", null: false, comment: "何経由でログインしたか"
-    t.string "uid", null: false, comment: "長い内部ID(providerとペアではユニーク)"
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.text "meta_info", comment: "JSON形式での保存用"
     t.index ["provider", "uid"], name: "index_auth_infos_on_provider_and_uid", unique: true
     t.index ["user_id"], name: "index_auth_infos_on_user_id"
   end
 
-  create_table "cpu_battle_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", comment: "ログインしているならそのユーザー"
+  create_table "cpu_battle_records", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "judge_key", null: false, comment: "結果"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -76,25 +77,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_cpu_battle_records_on_user_id"
   end
 
-  create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
-    t.string "title"
-    t.text "kifu_body", null: false, comment: "棋譜本文"
-    t.text "sfen_body", null: false, comment: "SFEN形式"
+  create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "key", null: false, comment: "URL識別子"
+    t.text "kifu_body"
     t.integer "turn_max", null: false, comment: "手数"
-    t.text "meta_info", null: false, comment: "棋譜メタ情報"
+    t.text "meta_info", size: :medium, null: false, comment: "棋譜メタ情報"
     t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
-    t.string "use_key", null: false
-    t.datetime "accessed_at", precision: nil, null: false, comment: "最終参照日時"
-    t.bigint "user_id"
-    t.text "description", null: false
-    t.string "sfen_hash", null: false
-    t.integer "start_turn", comment: "???"
-    t.integer "critical_turn", comment: "開戦"
-    t.integer "outbreak_turn", comment: "中盤"
-    t.integer "image_turn", comment: "???"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "user_id"
+    t.string "title"
+    t.text "description", null: false
+    t.integer "start_turn"
+    t.integer "critical_turn"
+    t.string "saturn_key", null: false
+    t.text "sfen_body", null: false
+    t.integer "image_turn"
+    t.string "use_key", null: false
+    t.integer "outbreak_turn"
+    t.datetime "accessed_at", precision: nil, null: false
+    t.string "sfen_hash", null: false
     t.bigint "preset_id", comment: "手合割"
     t.index ["accessed_at"], name: "index_free_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
@@ -102,7 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
     t.index ["preset_id"], name: "index_free_battles_on_preset_id"
-    t.index ["start_turn"], name: "index_free_battles_on_start_turn"
+    t.index ["saturn_key"], name: "index_free_battles_on_saturn_key"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
     t.index ["user_id"], name: "index_free_battles_on_user_id"
@@ -114,13 +116,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "google_api_sheet_expiration_trackers", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "spreadsheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "holidays", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.date "holiday_on", null: false, comment: "祝日"
     t.index ["holiday_on"], name: "index_holidays_on_holiday_on", unique: true
   end
 
-  create_table "judges", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "judges", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -129,7 +137,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_judges_on_position"
   end
 
-  create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", comment: "参照者"
     t.bigint "banana_id", null: false, comment: "動画"
     t.datetime "created_at", precision: nil, null: false, comment: "記録日時"
@@ -137,7 +145,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_kiwi_access_logs_on_user_id"
   end
 
-  create_table "kiwi_banana_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_banana_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "発言者"
     t.bigint "banana_id", null: false, comment: "動画"
     t.string "body", limit: 512, null: false, comment: "発言"
@@ -151,7 +159,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_kiwi_banana_messages_on_user_id"
   end
 
-  create_table "kiwi_bananas", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_bananas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
@@ -171,7 +179,41 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_kiwi_bananas_on_user_id"
   end
 
-  create_table "kiwi_folders", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_book_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "book_id", null: false, comment: "動画"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.integer "position", null: false, comment: "番号"
+    t.datetime "deleted_at", precision: nil, comment: "削除日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id", "position"], name: "index_kiwi_book_messages_on_book_id_and_position", unique: true
+    t.index ["book_id"], name: "index_kiwi_book_messages_on_book_id"
+    t.index ["position"], name: "index_kiwi_book_messages_on_position"
+    t.index ["user_id"], name: "index_kiwi_book_messages_on_user_id"
+  end
+
+  create_table "kiwi_books", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lemon_id", null: false, comment: "動画"
+    t.string "title", limit: 100, null: false, comment: "タイトル"
+    t.text "description", null: false, comment: "説明"
+    t.float "thumbnail_pos", null: false, comment: "サムネ位置"
+    t.integer "book_messages_count", default: 0, null: false, comment: "コメント数"
+    t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_logs_count"], name: "index_kiwi_books_on_access_logs_count"
+    t.index ["book_messages_count"], name: "index_kiwi_books_on_book_messages_count"
+    t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
+    t.index ["key"], name: "index_kiwi_books_on_key", unique: true
+    t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id", unique: true
+    t.index ["user_id"], name: "index_kiwi_books_on_user_id"
+  end
+
+  create_table "kiwi_folders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
     t.integer "bananas_count", default: 0, null: false, comment: "問題集数"
@@ -181,7 +223,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_kiwi_folders_on_position"
   end
 
-  create_table "kiwi_lemons", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_lemons", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "所有者"
     t.string "recordable_type", null: false
     t.bigint "recordable_id", null: false, comment: "対象レコード"
@@ -207,7 +249,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_kiwi_lemons_on_user_id"
   end
 
-  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -224,7 +266,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["key"], name: "index_permanent_variables_on_key", unique: true
   end
 
-  create_table "presets", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "presets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -233,14 +275,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_presets_on_position"
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
-  create_table "share_board_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "share_board_battles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "部屋"
     t.string "key", null: false, comment: "対局識別子"
     t.string "title", null: false, comment: "タイトル"
@@ -257,7 +299,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["win_location_id"], name: "index_share_board_battles_on_win_location_id"
   end
 
-  create_table "share_board_chat_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "share_board_chat_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "発言者(キーは名前だけなのですり変われる)"
     t.bigint "message_scope_id", null: false, comment: "スコープ"
@@ -274,7 +316,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_share_board_chat_messages_on_user_id"
   end
 
-  create_table "share_board_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "share_board_memberships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
     t.bigint "judge_id", null: false, comment: "勝・敗・引き分け"
@@ -289,7 +331,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_share_board_memberships_on_user_id"
   end
 
-  create_table "share_board_message_scopes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "share_board_message_scopes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -298,7 +340,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_share_board_message_scopes_on_position"
   end
 
-  create_table "share_board_rooms", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "share_board_rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false, comment: "部屋識別子"
     t.integer "battles_count", default: 0
     t.datetime "created_at", precision: nil, null: false
@@ -358,22 +400,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_swars_ban_crawl_requests_on_user_id"
   end
 
-  create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "key", null: false, comment: "対局識別子"
     t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
-    t.text "csa_seq", null: false, comment: "棋譜の断片"
+    t.text "csa_seq", size: :medium, null: false, comment: "棋譜の断片"
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
-    t.text "meta_info", null: false, comment: "棋譜メタ情報"
-    t.datetime "accessed_at", precision: nil, null: false, comment: "最終参照日時"
-    t.text "sfen_body", null: false
-    t.string "sfen_hash", null: false
-    t.integer "start_turn", comment: "???"
-    t.integer "critical_turn", comment: "開戦"
-    t.integer "outbreak_turn", comment: "中盤"
-    t.integer "image_turn", comment: "???"
+    t.text "meta_info", size: :medium, null: false, comment: "棋譜メタ情報"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.integer "start_turn"
+    t.integer "critical_turn"
+    t.text "sfen_body", null: false
+    t.integer "image_turn"
+    t.integer "outbreak_turn"
+    t.datetime "accessed_at", precision: nil, null: false
+    t.string "sfen_hash"
     t.bigint "xmode_id", null: false, comment: "対局モード"
     t.bigint "preset_id", null: false, comment: "手合割"
     t.bigint "rule_id", null: false, comment: "持ち時間"
@@ -390,13 +432,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["preset_id"], name: "index_swars_battles_on_preset_id"
     t.index ["rule_id"], name: "index_swars_battles_on_rule_id"
-    t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
     t.index ["xmode_id"], name: "index_swars_battles_on_xmode_id"
   end
 
-  create_table "swars_crawl_reservations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_crawl_reservations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "登録者"
     t.string "target_user_key", null: false, comment: "対象者"
     t.string "attachment_mode", null: false, comment: "ZIPファイル添付の有無"
@@ -407,7 +448,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
   end
 
-  create_table "swars_finals", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_finals", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -416,7 +457,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_swars_finals_on_position"
   end
 
-  create_table "swars_grades", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_grades", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "key", null: false
     t.integer "priority", null: false, comment: "優劣"
     t.datetime "created_at", precision: nil, null: false
@@ -434,7 +475,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_swars_imodes_on_position"
   end
 
-  create_table "swars_membership_extras", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_membership_extras", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "membership_id", null: false, comment: "対局情報"
     t.json "used_piece_counts", null: false, comment: "駒の使用頻度"
     t.datetime "created_at", null: false
@@ -442,19 +483,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["membership_id"], name: "index_swars_membership_extras_on_membership_id", unique: true
   end
 
-  create_table "swars_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
-    t.bigint "op_user_id", comment: "相手"
     t.bigint "grade_id", null: false, comment: "対局時の段級"
     t.integer "position", comment: "手番の順序"
-    t.integer "grade_diff", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "think_all_avg", comment: "指し手の平均秒数(全体)"
-    t.integer "think_end_avg", comment: "指し手の平均秒数(最後5手)"
-    t.integer "think_last", comment: "最後の指し手の秒数"
-    t.integer "think_max", comment: "最大考慮秒数"
+    t.integer "grade_diff", null: false
+    t.integer "think_max"
+    t.bigint "op_user_id", comment: "相手"
+    t.integer "think_last"
+    t.integer "think_all_avg"
+    t.integer "think_end_avg"
     t.integer "ai_drop_total", comment: "棋神を使って指した総手数"
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
@@ -470,6 +511,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
+    t.index ["grade_diff"], name: "index_swars_memberships_on_grade_diff"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
     t.index ["judge_id"], name: "index_swars_memberships_on_judge_id"
     t.index ["location_id"], name: "index_swars_memberships_on_location_id"
@@ -480,7 +522,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_swars_memberships_on_user_id"
   end
 
-  create_table "swars_profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対局者"
     t.datetime "ban_at", precision: nil, comment: "垢BAN日時"
     t.datetime "ban_crawled_at", precision: nil, null: false, comment: "垢BANクロール日時"
@@ -491,7 +533,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_swars_profiles_on_user_id"
   end
 
-  create_table "swars_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_rules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -507,7 +549,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_id"], name: "index_swars_search_logs_on_user_id"
   end
 
-  create_table "swars_styles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_styles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -516,7 +558,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["position"], name: "index_swars_styles_on_position"
   end
 
-  create_table "swars_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_users", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "user_key", null: false, comment: "対局者名"
     t.bigint "grade_id", null: false, comment: "最高段級"
     t.datetime "last_reception_at", precision: nil, comment: "受容日時"
@@ -534,7 +576,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
   end
 
-  create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", precision: nil, null: false
@@ -545,7 +587,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
 
   create_table "swars_zip_dl_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "登録者"
-    t.bigint "swars_user_id", null: false, comment: "対象者"
     t.string "query", null: false, comment: "クエリ全体(予備)"
     t.integer "dl_count", null: false, comment: "ダウンロード数(記録用)"
     t.datetime "begin_at", precision: nil, null: false, comment: "スコープ(開始・記録用)"
@@ -554,11 +595,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_swars_zip_dl_logs_on_created_at"
     t.index ["end_at"], name: "index_swars_zip_dl_logs_on_end_at"
-    t.index ["swars_user_id"], name: "index_swars_zip_dl_logs_on_swars_user_id"
     t.index ["user_id"], name: "index_swars_zip_dl_logs_on_user_id"
   end
 
-  create_table "taggings", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "taggings", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
     t.integer "taggable_id"
@@ -577,7 +617,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
     t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
   end
 
-  create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
@@ -827,7 +867,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_000000) do
   add_foreign_key "profiles", "users"
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_memberships", "swars_battles", column: "battle_id"
-  add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"
   add_foreign_key "wkbk_answer_logs", "users"
   add_foreign_key "wkbk_answer_logs", "wkbk_answer_kinds", column: "answer_kind_id"

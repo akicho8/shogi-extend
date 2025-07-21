@@ -19,26 +19,18 @@ module QuickScript
 
       ################################################################################
 
-      def swars_user_key_default
-        @swars_user_key_default ||= yield_self do
-          if debug_mode
-            ::Swars::UserKey["BOUYATETSU5"]
-          end
-        end
-      end
-
       def swars_user_key
-        query_info.swars_user_key || swars_user_key_default
+        query_info.swars_user_key
       end
 
       def swars_user
-        @swars_user ||= swars_user_key.db_record
+        @swars_user ||= swars_user_key.try { db_record }
       end
 
       ################################################################################
 
       def query
-        params[:query].to_s
+        params[:query].to_s.squish
       end
 
       def query_info
@@ -46,7 +38,7 @@ module QuickScript
       end
 
       def query_scope
-        @query_scope ||= swars_user.battles.find_all_by_params(query_info: query_info, target_owner: swars_user)
+        @query_scope ||= ::Swars::QueryResolver.resolve(current_swars_user: swars_user, query_info: query_info)
       end
 
       ################################################################################
