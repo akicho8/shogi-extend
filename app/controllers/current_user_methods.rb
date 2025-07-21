@@ -90,6 +90,8 @@ module CurrentUserMethods
         current_user_clear
       end
 
+      QuickScript::SessionCleaner.new.call(session)
+
       user
     end
   end

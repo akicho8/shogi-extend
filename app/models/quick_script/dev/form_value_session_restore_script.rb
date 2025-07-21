@@ -1,8 +1,8 @@
 module QuickScript
   module Dev
     class FormValueSessionRestoreScript < Base
-      self.title = "フォーム値をブラウザに保存する"
-      self.description = "Rails 側の session を使ってフォーム値を保存するテスト"
+      self.title = "フォーム値を保存する"
+      self.description = "フォーム値を保存するテスト (元々 session に保存していたのは設計ミスで、現在は session_id をキーにして DB に保存している)"
       self.form_method = :get
 
       def form_parts
@@ -34,7 +34,7 @@ module QuickScript
       end
 
       def call
-        session
+        PermanentVariable.order(created_at: :desc).limit(100)
       end
     end
   end

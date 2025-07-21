@@ -22,7 +22,7 @@ EOS
             :label           => "名前とウォーズIDたち",
             :key             => :user_items_text,
             :type            => :text,
-            :session_sync    => :use_db_session_for_login_user_only, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため普通のセッションに保存してはいけない
+            :session_sync    => true, # 50人以上貼られるとクッキーセッションに収まらずエラーになるため普通のセッションに保存してはいけない → ここだけでなくすべてセッションに保存してはいけない
             :dynamic_part => -> {
               {
                 :default      => params[:user_items_text].to_s.presence,
