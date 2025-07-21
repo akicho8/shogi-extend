@@ -3,13 +3,17 @@
 module QuickScript
   module Admin
     class AppLogSearchScript < Base
+      PER_PAGE_LIST = [50, 100, 200, 500, 1000]
+
       self.title = "アプリログ一覧"
       self.description = "アプリログの一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"
-      self.per_page_default = 200
+      self.per_page_default = PER_PAGE_LIST.first
+      self.per_page_max = PER_PAGE_LIST.last
       self.router_push_failed_then_fetch = true
       self.title_link = :force_reload
+      self.json_link = true
 
       if Rails.env.development? && false
         def header_link_items
@@ -29,11 +33,26 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:query].presence,
-                :help_message => "a -b c -d で、a と c を含むかつ b と d を含まない",
+                :help_message => %("a -b c -d" → a と c を含むかつ b と d を含まない),
+              }
+            },
+          },
+          {
+            :label   => "抽出件数（直近N件）",
+            :key     => :per_page,
+            :type    => :radio_button,
+            :dynamic_part => -> {
+              {
+                :elems   => PER_PAGE_LIST.collect(&:to_s),
+                :default => current_per.to_s,
               }
             },
           },
         ]
+      end
+
+      def as_general_json
+        pagination_scope(AppLog.plus_minus_search(params[:query]))
       end
 
       def head_content
