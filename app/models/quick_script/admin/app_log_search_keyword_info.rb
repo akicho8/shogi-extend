@@ -1,6 +1,6 @@
 module QuickScript
   module Admin
-    class AppLogSearchKeywordInfo < Base
+    class AppLogSearchKeywordInfo
       include ApplicationMemoryRecord
       memory_record [
         { key: "共有将棋盤",              },
