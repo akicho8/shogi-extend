@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 69633e9d174b4ea7782c774f1b9ea2d167abd55c
+  revision: 3cfeffedd1c69963777d3eb877abf4ea73c0751b
   branch: main
   specs:
     bioshogi (0.0.17)
@@ -124,10 +124,10 @@ GEM
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.11.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    base64 (0.2.0)
+    base64 (0.3.0)
     bcrypt (3.1.20)
-    benchmark (0.4.0)
-    bigdecimal (3.1.9)
+    benchmark (0.4.1)
+    bigdecimal (3.2.2)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -166,7 +166,7 @@ GEM
     chronic (0.10.2)
     codecov (0.6.0)
       simplecov (>= 0.15, < 0.22)
-    color (1.8)
+    color (2.1.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
     crass (1.0.6)
@@ -215,10 +215,10 @@ GEM
       faraday-retry (~> 1.0)
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
-    faraday-em_synchrony (1.0.0)
+    faraday-em_synchrony (1.0.1)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.1.0)
+    faraday-multipart (1.1.1)
       multipart-post (~> 2.0)
     faraday-net_http (1.0.2)
     faraday-net_http_persistent (1.2.0)
@@ -316,7 +316,7 @@ GEM
     language_server-protocol (3.17.0.4)
     lint_roller (1.1.0)
     logger (1.7.0)
-    loofah (2.24.0)
+    loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -326,13 +326,13 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    memory_record (0.0.21)
+    memory_record (0.0.22)
       activesupport
     mini_magick (5.2.0)
       benchmark
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.8)
+    mini_portile2 (2.8.9)
     minitest (5.25.5)
     minitest-power_assert (0.3.1)
       minitest
@@ -359,24 +359,24 @@ GEM
     net-ssh (7.3.0)
     nio4r (2.7.4)
     nkf (0.2.0)
-    nokogiri (1.18.8)
+    nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.18.8-aarch64-linux-gnu)
+    nokogiri (1.18.9-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-aarch64-linux-musl)
+    nokogiri (1.18.9-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-gnu)
+    nokogiri (1.18.9-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-musl)
+    nokogiri (1.18.9-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.18.8-arm64-darwin)
+    nokogiri (1.18.9-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-darwin)
+    nokogiri (1.18.9-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-musl)
+    nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
@@ -468,7 +468,7 @@ GEM
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
       activesupport (>= 5.0.1.rc1)
-    rails-dom-testing (2.2.0)
+    rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -510,7 +510,7 @@ GEM
     retriable (3.1.2)
     retryable (3.0.5)
     rexml (3.4.1)
-    rmagick (6.1.1)
+    rmagick (6.1.2)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)
@@ -645,7 +645,7 @@ GEM
       activesupport
       nkf
     temple (0.10.3)
-    thor (1.3.2)
+    thor (1.4.0)
     tilt (2.6.0)
     timecop (0.9.10)
     timeout (0.4.3)
@@ -684,7 +684,7 @@ GEM
     woothee (1.13.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.2)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   aarch64-linux-gnu
