@@ -52,7 +52,9 @@ class PermanentVariable < ApplicationRecord
     validates :key
   end
 
-  after_create_commit do
-    AppLog.important(subject: "[#{key}]", body: value.to_t(truncate: nil))
+  if Rails.env.local?
+    after_create_commit do
+      AppLog.important(subject: "[#{key}]", body: value.to_t(truncate: nil))
+    end
   end
 end
