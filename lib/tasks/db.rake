@@ -25,6 +25,7 @@ namespace :my do
           :swars_styles,
           :swars_users,
           :swars_xmodes,
+          :swars_imodes,
           :taggings,
           :tags,
         ].join(",")
