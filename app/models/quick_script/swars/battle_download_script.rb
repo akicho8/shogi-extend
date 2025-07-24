@@ -168,7 +168,7 @@ module QuickScript
         end
       end
 
-      def head_content
+      def top_content
         if current_user
           h.tag.div(:class => "is-size-7") do
             "残りダウンロード可能件数: #{current_user.swars_zip_dl_logs.dl_rest_count} 件"

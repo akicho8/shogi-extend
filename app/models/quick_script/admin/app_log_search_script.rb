@@ -64,7 +64,7 @@ module QuickScript
         pagination_scope(current_scope)
       end
 
-      def head_content
+      def top_content
         links = AppLogSearchKeywordInfo.collect do |e|
           params = { query: [e.key, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1 }
           { _nuxt_link: "#{e.name}", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-light is-small-x" }
