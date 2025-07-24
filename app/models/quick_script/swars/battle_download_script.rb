@@ -298,7 +298,7 @@ module QuickScript
       end
 
       def max_key
-        params[:max_key].presence || MaxInfo.fetch(Rails.env.local? ? "1" : "50").key
+        params[:max_key].presence || MaxInfo.fetch(Rails.env.local? ? "1" : "100").key
       end
 
       ################################################################################

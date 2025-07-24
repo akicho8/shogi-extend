@@ -28,7 +28,7 @@
 module Swars
   class ZipDlLog < ApplicationRecord
     cattr_accessor(:recent_period)    { 1.days } # 直近のこの期間に
-    cattr_accessor(:recent_count_max) { Rails.env.local? ? 100 : 200 } # これを越えていると禁止 (DL数回数ではなくDLに含む棋譜総数)
+    cattr_accessor(:recent_count_max) { Rails.env.local? ? 100 : 1000 } # これを越えていると禁止 (DL数回数ではなくDLに含む棋譜総数)
 
     belongs_to :user, class_name: "::User" # ダウンロードしようとしている人
 
