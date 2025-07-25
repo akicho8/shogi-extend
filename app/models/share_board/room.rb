@@ -48,14 +48,14 @@ module ShareBoard
         data = data.symbolize_keys
         user = User.fetch(data[:from_user_name])
         create!({
-                  :user               => user,
-                  :content            => data[:content],
-                  :message_scope_key  => data[:message_scope_key],
-                  :from_connection_id => data[:from_connection_id], # 人間であればこれが入っている
-                  :session_user_id    => data[:session_user_id],
-                  :primary_emoji      => data[:primary_emoji],
-                  :performed_at       => data[:performed_at],
-                })
+            :user               => user,
+            :content            => data[:content],
+            :message_scope_key  => data[:message_scope_key],
+            :from_connection_id => data[:from_connection_id], # 人間であればこれが入っている
+            :session_user_id    => data[:session_user_id],
+            :primary_emoji      => data[:primary_emoji],
+            :performed_at       => data[:performed_at],
+          })
       end
     end
     has_many :chat_users, through: :chat_messages, source: :user # この部屋の発言者たち
@@ -186,6 +186,12 @@ module ShareBoard
             end
           end
         end
+      end
+    end
+
+    concerning :AdminMethods do
+      def to_share_board_url
+        UrlProxy.full_url_for(path: "/share-board", query: { room_key: key })
       end
     end
   end

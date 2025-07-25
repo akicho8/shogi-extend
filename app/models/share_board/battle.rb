@@ -58,5 +58,18 @@ module ShareBoard
         memberships.where(location: Location.fetch(e.key))
       end
     end
+
+    def to_share_board_url
+      UrlProxy.full_url_for({
+          path: "/share-board",
+          query: {
+            :xbody => SafeSfen.encode(sfen),
+            :title => title,
+            :black => black.collect { |e| e.user.name }.join(","),
+            :white => white.collect { |e| e.user.name }.join(","),
+            :turn  => turn,
+          }.compact,
+        })
+    end
   end
 end
