@@ -84,6 +84,7 @@ module SharedMethods
 
   def cc_modal_open_handle
     find(".cc_modal_open_handle").click
+    assert_selector(".ClockBoxModal")
   end
 
   def clock_switch_toggle

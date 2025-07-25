@@ -107,7 +107,7 @@ export default {
       this.SB.cc_play_handle()
       this.SB.clock_box_share("cc_behavior_start")
       if (this.SB.auto_close_p) {
-        this.$emit("close")
+        this.SB.cc_modal_close()
       }
     },
     pause_handle() {
@@ -132,7 +132,7 @@ export default {
       this.SB.cc_resume_handle()
       this.SB.clock_box_share("cc_behavior_resume")
       if (this.SB.auto_close_p) {
-        this.$emit("close")
+        this.SB.cc_modal_close()
       }
     },
     save_handle() {
