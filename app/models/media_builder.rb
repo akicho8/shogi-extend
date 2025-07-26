@@ -275,7 +275,7 @@ class MediaBuilder
       :ki2_function   => false,
       :validate_feature    => false,
       :container_class     => Bioshogi::Container::Fast,
-      :turn_limit         => turn,
+      :turn_max         => turn,
     }
   end
 

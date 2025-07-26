@@ -124,7 +124,7 @@ module Api
 
         # info.pi.move_infos.size - 0
 
-        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).container.to_history_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, turn_max: 1).container.to_history_sfen
         # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).container.to_history_sfen
         # render json: {failure_message: failure_message, before_sfen: before_sfen}
 

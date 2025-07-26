@@ -205,7 +205,7 @@ class KifuParser
       :typical_error_case => :embed,
     }
     if to_format == :bod
-      options[:turn_limit] = turn_limit
+      options[:turn_max] = turn_max
     end
     [
       :ki2_function,
@@ -228,7 +228,7 @@ class KifuParser
     end
   end
 
-  def turn_limit
+  def turn_max
     if v = params[:turn].presence
       v.to_i
     end

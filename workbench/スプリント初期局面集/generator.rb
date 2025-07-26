@@ -6,7 +6,7 @@ p Time.current
 av = []
 scope.in_batches(order: :desc).each do |scope|
   scope.each do |battle|
-    # info = Bioshogi::Parser.parse(battle.kifu_body, turn_limit: 0).to_sfen # とする方法もあるが遅い
+    # info = Bioshogi::Parser.parse(battle.kifu_body, turn_max: 0).to_sfen # とする方法もあるが遅い
     sfen = battle.sfen_body.remove(/position sfen\s*/, /\s*moves.*/)
     av << "#{sfen}\n"
   end
