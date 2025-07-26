@@ -223,7 +223,7 @@ class AppEntryInfo
       ],
     },
     {
-      display_p: true, # !Rails.env.production?,
+      display_p: false, # !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: { path: "/vs" },
       title: "対人戦",
