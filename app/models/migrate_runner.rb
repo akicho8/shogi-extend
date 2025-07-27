@@ -22,6 +22,80 @@ class MigrateRunner
     nil
   end
 
+  def step10_直近50件を残してすべて削除する
+    battles_max_gt = 50
+    process_count = 0
+    process_count_max = 10
+    catch(:break) do
+      Swars::User.in_batches do |scope|
+        scope = scope.vip_except
+        scope = scope.joins(:battles)
+        scope = scope.group("swars_users.id")
+        scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
+        scope.each do |user|
+          if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
+            battles_max2 = 200
+          else
+            battles_max2 = 50
+          end
+          battles = user.battles
+          battles = battles.order(accessed_at: :desc).offset(battles_max2)
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          begin
+            Retryable.retryable(on: ActiveRecord::Deadlocked) do
+              battles.destroy_all
+            end
+          rescue ActiveRecord::Deadlocked => error
+            p error
+          end
+          process_count += 1
+          if process_count >= process_count_max
+            throw(:break)
+          end
+        end
+      end
+    end
+  end
+
+  # def step2_tag_rename
+  #   list = {
+  #     "対矢倉急戦棒銀"           => "速攻棒銀",
+  #     "一間飛車穴熊"             => "一間飛車右穴熊",
+  #     "対ひねり飛車たこ金戦法"   => "たこ金戦法",
+  #     "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
+  #     "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
+  #     "金銀橋"                   => "リッチブリッジ",
+  #     "パンツを脱ぐ"             => "パンティを脱ぐ",
+  #     "超速▲3七銀戦法"          => "超速▲3七銀",
+  #     "背水の陣"                 => "屍の舞",
+  #   }
+  #   list.each do |from, to|
+  #     # p [from, to, :try]
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       begin
+  #         tag.update!(name: to)
+  #         p [from, to, :update]
+  #       rescue ActiveRecord::RecordInvalid => error
+  #         p error
+  #         # tag_delete(tag.name)
+  #       end
+  #     end
+  #   end
+  # end
+  #
+  # def step2a_tag_delete
+  #   list = [
+  #     "空中楼閣",
+  #     "対穴熊",
+  #     "片穴熊",
+  #   ]
+  #   list.each do |from, to|
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       tag_delete(tag.name)
+  #     end
+  #   end
+  # end
+
   # def step6_rebuild_for_auto_crawl_user_keys
   #   ::Swars::User::Vip.auto_crawl_user_keys.each.with_index do |user_key, i|
   #     if i.modulo(50).zero?
@@ -139,20 +213,20 @@ class MigrateRunner
   #   end
   # end
 
-  def step3_rebuild
-    s = Swars::Battle.all
-    batch_size = 1000
-    all_count = s.count.ceildiv(batch_size)
-    s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-      p [batch, all_count, batch.fdiv(all_count)]
-      # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-      # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
-      s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
-      # s = s.where("analysis_version < 2")
-      s.each { |e| e.rebuild(tries: 1) }
-      puts
-    end
-  end
+  # def step3_rebuild
+  #   s = Swars::Battle.all
+  #   batch_size = 1000
+  #   all_count = s.count.ceildiv(batch_size)
+  #   s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
+  #     p [batch, all_count, batch.fdiv(all_count)]
+  #     # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
+  #     # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
+  #     s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
+  #     # s = s.where("analysis_version < 2")
+  #     s.each { |e| e.rebuild(tries: 1) }
+  #     puts
+  #   end
+  # end
 
   # def step4
   #   [
