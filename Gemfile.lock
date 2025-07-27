@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 3cfeffedd1c69963777d3eb877abf4ea73c0751b
-  branch: main
+  revision: b7c0e3d36531f8338a4246d59e721a04a95759cb
+  branch: develop
   specs:
     bioshogi (0.0.17)
       actionview
       activesupport (>= 7.1.0)
       benchmark
-      color
+      color (< 2.0.0)
       faraday
       memory_record
       nkf
