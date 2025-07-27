@@ -15,8 +15,8 @@ class MainBatch
     # 将棋ウォーズ棋譜検索クロール
     if Rails.env.production?
       Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
-      Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
-      Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
+      # Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
+      # Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
     end
 
     # 削除シリーズ
