@@ -3,7 +3,7 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "居玉勝ちマン",     strike_plan: "居玉",               n_times: 1,  },
   { expected_badge_key: "居飛車党",         strike_plan: "棒銀",               n_times: 10, },
   { expected_badge_key: "振り飛車党",       strike_plan: "早石田",             n_times: 10, },
-  { expected_badge_key: "パンツマン",       strike_plan: "パンツを脱ぐ",       n_times: 1,  },
+  { expected_badge_key: "パンツマン",       strike_plan: "パンティを脱ぐ",       n_times: 1,  },
   { expected_badge_key: "一間飛車マン",     strike_plan: "一間飛車",           n_times: 1,  },
   { expected_badge_key: "一間飛車マン",     strike_plan: "一間飛車穴熊",       n_times: 1,  },
   { expected_badge_key: "九間飛車マン",     strike_plan: "九間飛車",           n_times: 1,  },

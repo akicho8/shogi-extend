@@ -3,6 +3,14 @@
 #
 # ▼削除実行
 # rails r Swars::Battle.cleaner.call
+#
+# ▼削除実行 (production)
+# # ↓必要であれば
+# cap production deploy:upload FILES=app/models/swars/battle/cleaner_methods.rb
+# # RAILS_ENV=production bundle exec bin/rails r 'Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true, old_only: 50.days).call'
+# # ↓引数を全部書けばコードを変更する必要はない
+# RAILS_ENV=production nohup bundle exec bin/rails r 'Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true, old_only: 50.days, xmode_only: ["野良", "大会"], verbose: true).call' &
+# tailf nohup.out
 module Swars
   class Battle
     concern :CleanerMethods do
@@ -68,7 +76,7 @@ module Swars
         # 一般ユーザー
         scope :drop_scope1, -> (options = {}) {
           options = {
-            :xmode_only  => "野良",
+            :xmode_only  => ["野良", "大会"],
             :ban_except  => false,
             :old_only    => Rails.env.local? ? 0.days : 30.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
@@ -79,7 +87,7 @@ module Swars
         # VIPユーザー
         scope :drop_scope2, -> (options = {}) {
           options = {
-            :xmode_only  => "野良",
+            :xmode_only  => ["野良", "大会"],
             :ban_except  => false,
             :old_only    => Rails.env.local? ? 0.days : 60.days,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても

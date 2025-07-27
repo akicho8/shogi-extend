@@ -274,6 +274,7 @@ class MediaBuilder
       :typical_error_case => :embed, # validate_feature しているのでこのオプションは使わない？
       :ki2_function   => false,
       :validate_feature    => false,
+      :analysis_feature    => false,
       :container_class     => Bioshogi::Container::Fast,
       :turn_max         => turn,
     }

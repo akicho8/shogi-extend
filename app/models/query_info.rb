@@ -108,7 +108,7 @@ class QueryInfo
   ################################################################################
 
   def item_infos
-    @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(value) }.compact
+    @cache[__method__] ||= values.collect { |value| Bioshogi::Analysis::TagIndex.fuzzy_lookup(value) }.compact
   end
 
   def grade_infos

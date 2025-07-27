@@ -73,7 +73,7 @@ module QuickScript
       end
 
       def current_item
-        @current_item ||= Bioshogi::Analysis::TacticInfo.flat_lookup(tag)
+        @current_item ||= Bioshogi::Analysis::TagIndex.lookup(tag)
       end
 
       def candidate_tag_names
@@ -122,7 +122,7 @@ module QuickScript
       # 平手でない場合に先後が怪しくなる。
       # 単純に「戦法」を持っている側の視点にするのがいい。
       def sp_viewpoint
-        player = parser.container.players.find { |e| e.skill_set.has_skill?(current_item) }
+        player = parser.container.players.find { |e| e.tag_bundle.include?(current_item) }
         player or raise "この棋譜では #{current_item.name} が発動しない"
         player.location.key
       end

@@ -290,8 +290,8 @@ module Api
 
           # 方法1
           if false
-            if last.skill_set
-              last.skill_set.each do |e|
+            if last.tag_bundle
+              last.tag_bundle.each do |e|
                 e.each do |e|
                   talk(e.name)
                 end
@@ -301,8 +301,8 @@ module Api
 
           # 方法2
           if false
-            if last.skill_set
-              names = last.skill_set.flat_map { |e| e.collect(&:name) }
+            if last.tag_bundle
+              names = last.tag_bundle.flat_map { |e| e.collect(&:name) }
               names = names.reject { |e| e.in?(["居飛車", "振り飛車"]) }
               if names.present?
                 # sound_play(:shine) # このメソッドはない

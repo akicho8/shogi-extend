@@ -35,7 +35,7 @@ module Swars
 
       # 「穴熊マン」か？
       def anaguma_medal?
-        Bioshogi::Analysis::DefenseInfo.anaguma_elems.any? do |e|
+        Bioshogi::Analysis::GroupInfo["穴熊"].values.any? do |e|
           exist?(e.key)
         end
       end

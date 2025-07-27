@@ -110,7 +110,7 @@ tp battle.memberships
 # >>   ↳ app/models/swars/membership.rb:159:in `block in <class:Membership>'
 # >>   Swars::MembershipExtra Create (0.2ms)  INSERT INTO `swars_membership_extras` (`membership_id`, `used_piece_counts`, `created_at`, `updated_at`) VALUES (100028961, '{\"R0\":1,\"P0\":1}', '2024-07-22 05:34:54.610674', '2024-07-22 05:34:54.610674')
 # >>   ActsAsTaggableOn::Tag Load (0.2ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 100028961 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'defense_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id
-# >>   ActsAsTaggableOn::Tag Load (20.2ms)  SELECT `tags`.* FROM `tags` WHERE (LOWER(name) = LOWER('2手目△3ニ飛戦法'))
+# >>   ActsAsTaggableOn::Tag Load (20.2ms)  SELECT `tags`.* FROM `tags` WHERE (LOWER(name) = LOWER('2手目△3二飛戦法'))
 # >>   ActsAsTaggableOn::Tag Load (0.3ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 100028961 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'attack_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id
 # >>   ActsAsTaggableOn::Tag Load (0.2ms)  SELECT `tags`.* FROM `tags` WHERE `tags`.`id` = 1570 LIMIT 1
 # >>   ActsAsTaggableOn::Tagging Exists? (0.3ms)  SELECT 1 AS one FROM `taggings` WHERE `taggings`.`tag_id` = 1570 AND `taggings`.`taggable_type` = 'Swars::Membership' AND `taggings`.`taggable_id` = 100028961 AND `taggings`.`context` = 'attack_tags' AND `taggings`.`tagger_id` IS NULL AND `taggings`.`tagger_type` IS NULL LIMIT 1

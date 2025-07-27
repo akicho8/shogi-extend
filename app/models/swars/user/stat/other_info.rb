@@ -232,24 +232,24 @@ module Swars
 
         ################################################################################
 
-        {
-          key: "右玉度",
-          chart_type: :pie,
-          chart_options: {
-            pie_type: :is_pair_values,
-          },
-          body: proc { right_king_stat.to_ratio_chart },
-        },
-
-        {
-          key: "右玉ファミリー",
-          body: proc { right_king_stat.to_names_chart },
-          chart_type: :pie,
-          chart_options: {
-            pie_type: :is_many_values,
-          },
-          with_search: { key: "tag", },
-        },
+        # {
+        #   key: "右玉度",
+        #   chart_type: :pie,
+        #   chart_options: {
+        #     pie_type: :is_pair_values,
+        #   },
+        #   body: proc { right_king_stat.to_ratio_chart },
+        # },
+        #
+        # {
+        #   key: "右玉ファミリー",
+        #   body: proc { right_king_stat.to_names_chart },
+        #   chart_type: :pie,
+        #   chart_options: {
+        #     pie_type: :is_many_values,
+        #   },
+        #   with_search: { key: "tag", },
+        # },
 
         ################################################################################
 

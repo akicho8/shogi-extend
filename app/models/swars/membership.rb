@@ -317,7 +317,7 @@ module Swars
 
     concerning :StyleMethos do
       def style_update(player)
-        if main_style_info = player.skill_set.main_style_info
+        if main_style_info = player.tag_bundle.main_style_info
           self.style = Style.fetch(main_style_info.key)
         else
           self.style = nil

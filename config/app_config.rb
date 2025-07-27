@@ -30,5 +30,5 @@ AppConfig.deep_merge!({
 
     ################################################################################ 他
     :GPT_FUNCTION                   => true,  # ChatGPT を有効にするか？
-    :encyclopedia_link              => true,  # 判定局面を公開するか？
+    :encyclopedia_link              => true,  # 判定局面を公開するか？ → する
   })

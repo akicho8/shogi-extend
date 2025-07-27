@@ -35,7 +35,7 @@ class QuickScript::Swars::TacticStatScript
       {
         key: :all,
         name: "全体",
-        items: Bioshogi::Analysis::TacticInfo.all_elements,
+        items: Bioshogi::Analysis::TagIndex.values,
       },
     ]
 

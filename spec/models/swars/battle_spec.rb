@@ -62,7 +62,7 @@ RSpec.describe Swars::Battle, type: :model, swars_spec: true do
         assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
         assert { value[:url]         == nil                                                        }
         assert { value[:image]       == "http://localhost:3000/w/alice-bob-20000101_000000.png?turn=5&viewpoint=black" }
-        assert { value[:description] == "新嬉野流 vs 2手目△3ニ飛戦法"                                   }
+        assert { value[:description] == "嬉野流 新嬉野流 vs 三間飛車 2手目△3二飛戦法"                                   }
       end
       it "turnを変更できる" do
         assert { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
@@ -74,7 +74,7 @@ RSpec.describe Swars::Battle, type: :model, swars_spec: true do
     end
 
     it "description" do
-      assert { record.description == "新嬉野流 vs 2手目△3ニ飛戦法" }
+      assert { record.description == "嬉野流 新嬉野流 vs 三間飛車 2手目△3二飛戦法" }
     end
   end
 
@@ -153,9 +153,8 @@ RSpec.describe Swars::Battle, type: :model, swars_spec: true do
       Swars::Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
     end
     it "works" do
-      # もともと「相居飛車」タグを除去していたが、除去しないようにした
-      assert { record.memberships[0].note_tag_list == ["入玉", "相入玉"] }
-      assert { record.memberships[1].note_tag_list == ["入玉", "相入玉"] }
+      assert { record.memberships[0].note_tag_list == ["相入玉"] }
+      assert { record.memberships[1].note_tag_list == ["相入玉"] }
     end
   end
 

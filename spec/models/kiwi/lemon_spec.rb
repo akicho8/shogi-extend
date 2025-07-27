@@ -114,7 +114,7 @@ RSpec.describe Kiwi::Lemon, type: :model, kiwi: true do
   end
 
   it "tag_list" do
-    assert { lemon1.tag_list == ["対居飛車", "居飛車"] }
+    assert { lemon1.tag_list == ["居飛車"] }
   end
 
   it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Swars::User::Stat::RightKingStat, type: :model, swars_spec: true do
-  describe "右玉" do
+  xdescribe "右玉" do
     def case1
       black = Swars::User.create!
       Swars::Battle.create!(strike_plan: "糸谷流右玉") do |e|

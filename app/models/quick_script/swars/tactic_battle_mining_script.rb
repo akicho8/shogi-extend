@@ -99,9 +99,9 @@ module QuickScript
 
         def target_items
           @target_items ||= yield_self do
-            av = Bioshogi::Analysis::TacticInfo.all_elements
+            av = Bioshogi::Analysis::TagIndex.values
             if v = @options[:item_keys]
-              set = v.collect { |e| Bioshogi::Analysis::TacticInfo.flat_fetch(e) }.to_set
+              set = v.collect { |e| Bioshogi::Analysis::TagIndex.fetch(e) }.to_set
               av = av.find_all { |e| set.include?(e) }
             end
             av

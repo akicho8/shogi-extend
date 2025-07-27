@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: b7c0e3d36531f8338a4246d59e721a04a95759cb
+  revision: 5e69b24a05355ebef64bb6a10658c35d498c48f6
   branch: develop
   specs:
     bioshogi (0.0.17)

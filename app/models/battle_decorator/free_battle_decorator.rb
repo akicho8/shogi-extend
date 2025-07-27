@@ -38,9 +38,9 @@ module BattleDecorator
       sep = " #{params[:separator]} "
       max = params[:strategy_take_max]
       s = nil
-      s ||= player.skill_set.attack_infos.take(max).join(sep).presence
-      s ||= player.skill_set.defense_infos.take(max).join(sep).presence
-      s ||= player.skill_set.note_infos.take(max).first.to_s.presence
+      s ||= player.tag_bundle.attack_infos.take(max).join(sep).presence
+      s ||= player.tag_bundle.defense_infos.take(max).join(sep).presence
+      s ||= player.tag_bundle.note_infos.take(max).first.to_s.presence
     end
 
     # 1手も指さないときは "0手で後手の勝ち" になる

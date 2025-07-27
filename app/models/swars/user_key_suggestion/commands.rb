@@ -4,7 +4,7 @@ module Swars
 
     Commands = [
       Command.new { |user_key|
-        if e = Bioshogi::Analysis::TacticInfo.fuzzy_flat_lookup(user_key)
+        if e = Bioshogi::Analysis::TagIndex.fuzzy_lookup(user_key)
           "#{e.name}に該当する#{e.human_name}は見つかりません"
         end
       },

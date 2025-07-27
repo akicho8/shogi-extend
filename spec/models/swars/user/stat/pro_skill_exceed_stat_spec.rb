@@ -21,16 +21,27 @@ RSpec.describe Swars::User::Stat::ProSkillExceedStat, type: :model, swars_spec: 
     end
   end
 end
-# >> Swars::Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >>
-# >> Swars::User::Stat::ProSkillExceedStat
-# >>   指導の平手で勝った回数
-# >>     works
-# >>
-# >> Swars::Top 1 slowest examples (1.62 seconds, 43.4% of total time):
-# >>   Swars::User::Stat::ProSkillExceedStat 指導の平手で勝った回数 works
-# >>     1.62 seconds -:16
-# >>
-# >> Swars::Finished in 3.72 seconds (files took 2.07 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# ~> /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/runtime.rb:314:in 'Bundler::Runtime#check_for_activated_spec!': You have already activated rspec-support 3.13.4, but your Gemfile requires rspec-support 3.13.3. Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/runtime.rb:25:in 'block in Bundler::Runtime#setup'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/spec_set.rb:203:in 'Array#each'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/spec_set.rb:203:in 'Bundler::SpecSet#each'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/runtime.rb:24:in 'Enumerable#map'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/runtime.rb:24:in 'Bundler::Runtime#setup'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler.rb:167:in 'Bundler.setup'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/setup.rb:32:in 'block in <top (required)>'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/ui/shell.rb:173:in 'Bundler::UI::Shell#with_level'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/ui/shell.rb:119:in 'Bundler::UI::Shell#silence'
+# ~> 	from /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/bundler-2.6.6/lib/bundler/setup.rb:32:in '<top (required)>'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/boot.rb:3:in '<top (required)>'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/application.rb:1:in 'Kernel#require_relative'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/application.rb:1:in '<top (required)>'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/environment.rb:2:in 'Kernel#require_relative'
+# ~> 	from /Users/ikeda/src/shogi-extend/config/environment.rb:2:in '<top (required)>'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from /Users/ikeda/src/shogi-extend/spec/rails_helper.rb:4:in '<top (required)>'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Kernel#require'
+# ~> 	from -:1:in '<main>'

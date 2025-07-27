@@ -327,22 +327,23 @@ module QuickScript
         def aggregate_result_merge(judge_counts_hash, memberships_count, user_ids_hash)
           uniq_user_count = user_ids_hash.values.inject(Set[], &:+).size
 
-          judge_counts_hash_normalize(judge_counts_hash).collect do |tag_name, e|
+          judge_counts_hash_normalize(judge_counts_hash).collect { |tag_name, e|
             judge_calc = JudgeCalc.new(e)
-            info = Bioshogi::Analysis::TacticInfo.flat_fetch(tag_name)
-            {
-              **initial_fields(info),
+            if info = Bioshogi::Analysis::TagIndex.lookup(tag_name)
+              {
+                **initial_fields(info),
 
-              :"勝率"     => judge_calc.ratio,
-              **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name => e[o.key]) },
+                :"勝率"     => judge_calc.ratio,
+                **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name => e[o.key]) },
 
-              :"出現回数" => judge_calc.count,
-              :"出現率"   => judge_calc.count.fdiv(memberships_count), # 分母は memberships 数でよい。freq_count を分母にしてはいけない
+                :"出現回数" => judge_calc.count,
+                :"出現率"   => judge_calc.count.fdiv(memberships_count), # 分母は memberships 数でよい。freq_count を分母にしてはいけない
 
-              :"使用人数" => user_ids_hash[tag_name].size,
-              :"人気度"   => user_ids_hash[tag_name].size.fdiv(uniq_user_count), # 分母は全体のユニークユーザー数でないとだめ
-            }
-          end
+                :"使用人数" => user_ids_hash[tag_name].size,
+                :"人気度"   => user_ids_hash[tag_name].size.fdiv(uniq_user_count), # 分母は全体のユニークユーザー数でないとだめ
+              }
+            end
+          }.compact
         end
 
         ################################################################################

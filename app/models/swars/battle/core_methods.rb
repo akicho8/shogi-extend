@@ -16,7 +16,7 @@ module Swars
 
       def kifu_body
         if strike_plan
-          return Bioshogi::Analysis::TacticInfo.flat_lookup(strike_plan).static_kif_file.read
+          return Bioshogi::Analysis::TagIndex.lookup(strike_plan).static_kif_file.read
         end
         kifu_body_for_test || to_temporary_csa
       end
@@ -37,7 +37,7 @@ module Swars
         fast_parsed_info.container.players.each.with_index do |player, i|
           m = memberships[i]
           if !m.membership_extra
-            m.build_membership_extra(used_piece_counts: player.used_piece_counts)
+            m.build_membership_extra(used_piece_counts: player.used_soldier_counter.to_h)
           end
         end
       end
@@ -50,8 +50,9 @@ module Swars
 
       def fast_parser_options
         {
-          :validate_feature  => false,
-          :ki2_function => false,
+          :ki2_function     => false,
+          :validate_feature => false,
+          :analysis_feature => false,
         }
       end
 
@@ -67,7 +68,7 @@ module Swars
         if true
           fast_parsed_info.container.players.each.with_index do |player, i|
             memberships[i].tap do |e|
-              player.skill_set.to_h.each do |key, values|
+              player.tag_bundle.to_h.each do |key, values|
                 e.send("#{key}_tag_list=", values)
               end
               e.ek_score_without_cond = player.ek_score_without_cond

@@ -299,25 +299,26 @@ module QuickScript
 
           items = hv.collect { |(grade_key, tag_name), e| { grade_key: grade_key, tag_name: tag_name, **e } } # 次のコードでハッシュの状態からいきなりまわしてもいいけど、わかりやすいようにいったん配列化しておく
 
-          items.collect do |e|
-            judge_calc = JudgeCalc.new(e)
-            info = Bioshogi::Analysis::TacticInfo.flat_fetch(e[:tag_name])
-            grade_info = ::Swars::GradeInfo.fetch(e[:grade_key].to_sym)
-            {
-              :棋力      => grade_info.name,
+          items.collect { |e|
+            if info = Bioshogi::Analysis::TagIndex.lookup(e[:tag_name])
+              judge_calc = JudgeCalc.new(e)
+              grade_info = ::Swars::GradeInfo.fetch(e[:grade_key].to_sym)
+              {
+                :棋力      => grade_info.name,
 
-              **initial_fields(info), # TacticStatScript 側とは違ってほぼハッシュキーの順番を固定するのが目的
+                **initial_fields(info), # TacticStatScript 側とは違ってほぼハッシュキーの順番を固定するのが目的
 
-              :勝率     => judge_calc.ratio,
-              **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name.to_sym => e[o.key]) },
+                :勝率     => judge_calc.ratio,
+                **JudgeInfo.inject({}) { |a, o| a.merge(o.short_name.to_sym => e[o.key]) },
 
-              :使用人数 => user_ids_hash[[grade_info.key, info.key]].size,
-              :人気度     => user_ids_hash[[grade_info.key, info.key]].size.fdiv(user_counts_hash[grade_info.key]), # 分母は棋力毎のユニークユーザー数
+                :使用人数 => user_ids_hash[[grade_info.key, info.key]].size,
+                :人気度     => user_ids_hash[[grade_info.key, info.key]].size.fdiv(user_counts_hash[grade_info.key]), # 分母は棋力毎のユニークユーザー数
 
-              :出現回数 => judge_calc.count,
-              :出現率   => judge_calc.count.fdiv(memberships_counts_hash[e[:grade_key]]), # 分母は棋力毎の memberships_count であってる？ → 分子が最大のときは「その棋力での対局数分」なので、分母の最大が「その棋力の対局数分」なのは合っている
-            }
-          end
+                :出現回数 => judge_calc.count,
+                :出現率   => judge_calc.count.fdiv(memberships_counts_hash[e[:grade_key]]), # 分母は棋力毎の memberships_count であってる？ → 分子が最大のときは「その棋力での対局数分」なので、分母の最大が「その棋力の対局数分」なのは合っている
+              }
+            end
+          }.compact
         end
 
         ################################################################################

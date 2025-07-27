@@ -210,6 +210,7 @@ class KifuParser
     [
       :ki2_function,
       :validate_feature,
+      :analysis_feature,
     ].each do |key|
       if params.has_key?(key)
         options[key] = true_or_false(params[key])

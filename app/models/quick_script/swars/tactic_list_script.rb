@@ -113,7 +113,7 @@ module QuickScript
 
         def current_items
           @current_items ||= yield_self do
-            av = Bioshogi::Analysis::TacticInfo.all_elements.collect { |e| SearchableItem.new(e) }
+            av = Bioshogi::Analysis::TagIndex.values.collect { |e| SearchableItem.new(e) }
             g = SimpleQueryParser.parse(query)
             Array(g[true]).each do |m|
               av = av.find_all { |e| e.to_s.include?(m) }

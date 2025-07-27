@@ -128,7 +128,7 @@ Rails.application.configure do
         :available_providers => [:twitter, :google, :github],
         :nanasi_login        => false,
         :email_pw_login      => true,
-        :encyclopedia_link   => false,
+        :encyclopedia_link   => false, # 判定局面を公開する → しない
       })
   end
 end

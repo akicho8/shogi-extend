@@ -52,7 +52,7 @@ RSpec.describe Kiwi::Banana, type: :model, kiwi: true do
     assert { banana1.thumbnail_pos == 0 }
     assert { banana1.title == "(cover_text)" }
     assert { banana1.description == "(description1)\n(description2)" }
-    assert { banana1.tag_list == ["対居飛車", "居飛車"] }
+    assert { banana1.tag_list == ["居飛車"] }
 
     # 確認のためにあれば削除しておく
     lemon1.thumbnail_clean

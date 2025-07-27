@@ -49,7 +49,7 @@ module Swars
 
         before_validation on: :create do
           if Rails.env.local?
-            # Bioshogi::Parser.parse(Bioshogi::Analysis::TacticInfo.flat_lookup(strike_plan).static_kif_file.read).to_csa
+            # Bioshogi::Parser.parse(Bioshogi::Analysis::TagIndex.lookup(strike_plan).static_kif_file.read).to_csa
             if !kifu_body_for_test && !strike_plan
               # self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
               self.csa_seq ||= KifuGenerator.generate_n(5, {

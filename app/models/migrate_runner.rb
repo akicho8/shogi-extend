@@ -23,7 +23,6 @@ class MigrateRunner
     nil
   end
 
-<<<<<<< HEAD
   def step13_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|
       scope = scope.vip_except
@@ -38,10 +37,37 @@ class MigrateRunner
         end
       rescue ActiveRecord::Deadlocked => error
         p error
+        
+        
+=======
+  def step1_tag_rename
+    list = {
+      "対矢倉急戦棒銀"           => "速攻棒銀",
+      "一間飛車穴熊"             => "一間飛車右穴熊",
+      "対ひねり飛車たこ金戦法"   => "たこ金戦法",
+      "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
+      "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
+      "金銀橋"                   => "リッチブリッジ",
+      "パンツを脱ぐ"             => "パンティを脱ぐ",
+      "超速▲3七銀戦法"          => "超速▲3七銀",
+      "背水の陣"                 => "屍の舞",
+    }
+    list.each do |from, to|
+      # p [from, to, :try]
+      if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+        begin
+          tag.update!(name: to)
+          p [from, to, :update]
+        rescue ActiveRecord::RecordInvalid => error
+          p error
+          # tag_delete(tag.name)
+        end
+>>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
       end
     end
   end
 
+<<<<<<< HEAD
   # def step12_最近対局していない人の対局を全部消す
   #   battles_max_gt = 0
   #   process_count = 0
@@ -72,10 +98,49 @@ class MigrateRunner
   #           throw(:break)
   #         end
   #       end
+=======
+  # def step2_tag_delete
+  #   list = [
+  #     # "三間飛車系",
+  #     # "中飛車系",
+  #     # "右玉系",
+  #     # "向かい飛車系",
+  #     # "四間飛車系",
+  #     # "対三間飛車系",
+  #     # "対中飛車系",
+  #     # "対右玉系",
+  #     # "対向かい飛車系",
+  #     # "対四間飛車系",
+  #     # "対居飛車",
+  #     # "対引き角系",
+  #     # "対振り飛車",
+  #     # "対横歩取り系",
+  #     # "対相掛かり系",
+  #     # "対筋違い角系",
+  #     # "対角換わり系",
+  #     # "引き角系",
+  #     # "横歩取り系",
+  #     # "片穴熊",
+  #     # "相掛かり系",
+  #     # "空中楼閣",
+  #     # "筋違い角系",
+  #     # "角換わり系",
+  #
+  #     "対穴熊",
+  #     "対居飛車",
+  #     "対振り飛車",
+  #     "片穴熊",
+  #     "空中楼閣",
+  #   ]
+  #   list.each do |from, to|
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       tag_delete(tag.name)
+>>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
   #     end
   #   end
   # end
 
+<<<<<<< HEAD
   def step10_一般_直近50件を残してすべて削除する
     battles_max_gt = 50
     process_count = 0
@@ -84,6 +149,9 @@ class MigrateRunner
       Swars::User.in_batches(order: :desc) do |scope|
 =======
   def step10_直近50件を残してすべて削除する
+=======
+  def step3_直近50件を残してすべて削除する
+>>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
     battles_max_gt = 50
     process_count = 0
     process_count_max = 10
@@ -166,45 +234,6 @@ class MigrateRunner
       end
     end
   end
-
-  # def step2_tag_rename
-  #   list = {
-  #     "対矢倉急戦棒銀"           => "速攻棒銀",
-  #     "一間飛車穴熊"             => "一間飛車右穴熊",
-  #     "対ひねり飛車たこ金戦法"   => "たこ金戦法",
-  #     "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
-  #     "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
-  #     "金銀橋"                   => "リッチブリッジ",
-  #     "パンツを脱ぐ"             => "パンティを脱ぐ",
-  #     "超速▲3七銀戦法"          => "超速▲3七銀",
-  #     "背水の陣"                 => "屍の舞",
-  #   }
-  #   list.each do |from, to|
-  #     # p [from, to, :try]
-  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
-  #       begin
-  #         tag.update!(name: to)
-  #         p [from, to, :update]
-  #       rescue ActiveRecord::RecordInvalid => error
-  #         p error
-  #         # tag_delete(tag.name)
-  #       end
-  #     end
-  #   end
-  # end
-  #
-  # def step2a_tag_delete
-  #   list = [
-  #     "空中楼閣",
-  #     "対穴熊",
-  #     "片穴熊",
-  #   ]
-  #   list.each do |from, to|
-  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
-  #       tag_delete(tag.name)
-  #     end
-  #   end
-  # end
 
   # def step6_rebuild_for_auto_crawl_user_keys
   #   ::Swars::User::Vip.auto_crawl_user_keys.each.with_index do |user_key, i|

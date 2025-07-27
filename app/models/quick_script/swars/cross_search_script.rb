@@ -420,7 +420,7 @@ module QuickScript
         ################################################################################
 
         all_tag_names.each do |tag_name|
-          unless Bioshogi::Analysis::TacticInfo.flat_lookup(tag_name)
+          unless Bioshogi::Analysis::TagIndex.lookup(tag_name)
             flash[:notice] = "#{tag_name}とはなんでしょう？"
             return
           end

@@ -11,6 +11,7 @@ export const vue_general_kifu_copy = {
       options = {
         ki2_function: true, // KI2 の場合 true にしないとエラーになる
         validate_feature: false,
+        analysis_feature: false,
         any_source: any_source,
         ...options,
       }

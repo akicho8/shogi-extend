@@ -12,9 +12,9 @@ RSpec.describe Swars::User::Stat::BadgeStat, type: :model, swars_spec: true do
       def case1(e)
         black = Swars::User.create!
         white = Swars::User.create!
-        skill = Bioshogi::Analysis::TacticInfo.flat_lookup(e[:strike_plan])
+        skill = Bioshogi::Analysis::TagIndex.lookup(e[:strike_plan])
         info = skill.static_kif_info
-        player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
+        player = info.container.players.find { |e| e.tag_bundle.include?(skill) } # このスキルを持っているプレイヤー
         e[:n_times].times do
           Swars::Battle.create!(strike_plan: e[:strike_plan]) do |e|
             e.memberships.build(user: black, judge_key: player.location.key == :black ? :win : :lose) # そのプレイヤーの方を勝ちにする

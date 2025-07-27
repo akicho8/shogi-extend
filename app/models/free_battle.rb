@@ -176,6 +176,7 @@ class FreeBattle < ApplicationRecord
       {
         :ki2_function => false,
         :validate_feature  => false,
+        :analysis_feature  => false,
       }
     else
       {}
@@ -190,7 +191,7 @@ class FreeBattle < ApplicationRecord
 
   def parsed_data_to_columns_set_after
     self.meta_info = fast_parsed_info.container.players.inject({}) do |a, player|
-      a.merge(player.location.key => player.skill_set.to_h)
+      a.merge(player.location.key => player.tag_bundle.to_h)
     end
 
     if use_info.key == :basic || use_info.key == :kiwi_lemon
@@ -199,10 +200,10 @@ class FreeBattle < ApplicationRecord
       self.technique_tag_list = ""
       self.note_tag_list      = ""
 
-      defense_tag_list.add   fast_parsed_info.container.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-      attack_tag_list.add    fast_parsed_info.container.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      technique_tag_list.add fast_parsed_info.container.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      note_tag_list.add      fast_parsed_info.container.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      defense_tag_list.add   fast_parsed_info.container.players.flat_map { |e| e.tag_bundle.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    fast_parsed_info.container.players.flat_map { |e| e.tag_bundle.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add fast_parsed_info.container.players.flat_map { |e| e.tag_bundle.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      fast_parsed_info.container.players.flat_map { |e| e.tag_bundle.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     end
   end
 

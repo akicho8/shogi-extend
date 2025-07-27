@@ -70,7 +70,13 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
     group = items.group_by { |e| e["種類"] }
     sorted_items = categories.flat_map do |category|
       # group[category].sort_by { |e| -e["人気度"] }
-      group[category].sort_by { |e| Bioshogi::Analysis::TacticInfo.flat_fetch(e["名前"]) }
+      group[category].sort_by do |e|
+        if tag = Bioshogi::Analysis::TagIndex.lookup(e["名前"])
+          tag.code
+        else
+          Float::INFINITY
+        end
+      end
     end
 
     all_names = sorted_items.collect { |e| e["名前"] }.uniq
