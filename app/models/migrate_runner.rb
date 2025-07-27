@@ -23,6 +23,7 @@ class MigrateRunner
     nil
   end
 
+<<<<<<< HEAD
   def step13_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|
       scope = scope.vip_except
@@ -81,11 +82,20 @@ class MigrateRunner
     process_count_max = 10000*4*10
     catch(:break) do
       Swars::User.in_batches(order: :desc) do |scope|
+=======
+  def step10_直近50件を残してすべて削除する
+    battles_max_gt = 50
+    process_count = 0
+    process_count_max = 10
+    catch(:break) do
+      Swars::User.in_batches do |scope|
+>>>>>>> 8486d7473 ([feat] migrate_runner の調整)
         scope = scope.vip_except
         scope = scope.joins(:battles)
         scope = scope.group("swars_users.id")
         scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
         scope.each do |user|
+<<<<<<< HEAD
           battles_max2 = battles_max_gt
           battles = user.battles
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
@@ -94,11 +104,24 @@ class MigrateRunner
           STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+=======
+          if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
+            battles_max2 = 200
+          else
+            battles_max2 = 50
+          end
+          battles = user.battles
+          battles = battles.order(accessed_at: :desc).offset(battles_max2)
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          begin
+            Retryable.retryable(on: ActiveRecord::Deadlocked) do
+>>>>>>> 8486d7473 ([feat] migrate_runner の調整)
               battles.destroy_all
             end
           rescue ActiveRecord::Deadlocked => error
             p error
           end
+<<<<<<< HEAD
           p [process_count, process_count_max]
           if process_count >= process_count_max
             throw(:break)
@@ -133,6 +156,9 @@ class MigrateRunner
             p error
           end
           p [process_count, process_count_max]
+=======
+          process_count += 1
+>>>>>>> 8486d7473 ([feat] migrate_runner の調整)
           if process_count >= process_count_max
             throw(:break)
           end
