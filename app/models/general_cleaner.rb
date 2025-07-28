@@ -60,6 +60,9 @@ class GeneralCleaner
       return
     end
     records.each { |e| one_record(e) }
+    if @options[:verbose]
+      puts
+    end
     @group
   end
 
@@ -76,6 +79,9 @@ class GeneralCleaner
           #   method = :destroy_for_general_cleaner
           # end
           record.public_send(method)
+        end
+        if @options[:verbose]
+          print "."
         end
       end
       @group["成功"] += 1
