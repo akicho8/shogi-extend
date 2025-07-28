@@ -3,7 +3,7 @@
 module QuickScript
   module Admin
     class ShareBoardBattleIndexScript < Base
-      self.title = "共有将棋盤対局履歴"
+      self.title = "共有将棋盤 対局"
       self.description = "共有将棋盤の対局の履歴一覧を表示する"
 
       def call

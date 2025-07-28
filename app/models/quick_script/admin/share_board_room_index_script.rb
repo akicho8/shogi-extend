@@ -3,8 +3,8 @@
 module QuickScript
   module Admin
     class ShareBoardRoomIndexScript < Base
-      self.title = "共有将棋盤部屋情報"
-      self.description = "共有将棋盤の対局の履歴一覧を表示する"
+      self.title = "共有将棋盤 部屋"
+      self.description = "共有将棋盤の部屋の履歴一覧を表示する"
 
       def call
         ShareBoard::Room.order(updated_at: :desc).limit(50).collect do |e|
