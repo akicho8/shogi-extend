@@ -17,6 +17,10 @@ class LogLevelInfo
     @available_environments ||= super.to_set
   end
 
+  def slack_notify
+    false
+  end
+
   def to_app_log_attributes
     {
       :database     => database,
