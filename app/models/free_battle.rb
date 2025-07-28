@@ -288,16 +288,16 @@ class FreeBattle < ApplicationRecord
               ],
             })
         rescue Bioshogi::BioshogiError => error
-          adapter_notify(params, record, error)
+          AppLog.error(app_log_params(params, record, error))
           raise error
         end
-        adapter_notify(params, record)
+        AppLog.info(app_log_params(params, record))
         { record: attrs }
       end
 
       private
 
-      def adapter_notify(params, record, error = nil)
+      def app_log_params(params, record, error = nil)
         emoji = ":成功:"
 
         if error
@@ -351,7 +351,7 @@ class FreeBattle < ApplicationRecord
 
         body = body.join("\n")
 
-        AppLog.important(subject: subject, body: body, emoji: emoji)
+        { subject: subject, body: body, emoji: emoji }
       end
     end
   end
