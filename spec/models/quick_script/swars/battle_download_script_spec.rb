@@ -32,6 +32,6 @@ RSpec.describe QuickScript::Swars::BattleDownloadScript, type: :model do
     # バックグラウンド実行予約 (本番)
     instance = QuickScript::Swars::BattleDownloadScript.new({ query: "SWARS_USER_KEY", bg_request_key: :on }, { current_user: @current_user, _method: "post" })
     assert { instance.as_json[:flash][:notice].include?("ZIPで送ります") }
-    assert { ActionMailer::Base.deliveries.count == 2 } # テスト環境では即座に実行され、管理者と本人にメールされた
+    assert { ActionMailer::Base.deliveries.count == 1 } # テスト環境では即座に実行され、管理者には送らず、本人だけにメールされた
   end
 end

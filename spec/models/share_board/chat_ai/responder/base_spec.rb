@@ -33,7 +33,7 @@ RSpec.describe ShareBoard::ChatAi::Responder::Base do
   end
 
   it "@gpt の直後に全角" do
-    assert { case1("@gptあ")   == "あ"   }
-    assert { case1("@gpt　あ") == "　あ" }
+    assert { case1("@gptあ")   == "あ" }
+    assert { case1("@gpt　あ") == "あ" }
   end
 end
