@@ -7,9 +7,11 @@ module ShareBoard
     module Responder
       class ResponderRes < Base
         def call
-          history << user_message
-          if message_content.match?(MATCH_REGEXP)
-            response_generate
+          if v = user_message   # "@gpt" とだけ書いて連投するやつ対策で内容があるものだけを対象とする
+            history << v
+            if message_content.match?(MATCH_REGEXP)
+              response_generate
+            end
           end
         end
       end

@@ -91,7 +91,9 @@ module ShareBoard
         end
 
         def user_message
-          Message.new(:user, normalized_message_content)
+          if str = normalized_message_content.presence
+            Message.new(:user, str)
+          end
         end
 
         def system_message
@@ -113,7 +115,7 @@ module ShareBoard
         end
 
         def message_content
-          params[:content]
+          params[:content].gsub(/\p{Blank}+/, " ").squish
         end
 
         def message_scope_key
