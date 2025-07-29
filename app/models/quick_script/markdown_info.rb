@@ -11,10 +11,15 @@ module QuickScript
       { key: :credit,          title: "クレジット",             description: "クレジットを表示する",                              },
       { key: :privacy_policy,  title: "プライバシーポリシー",   description: "プライバシーポリシーを表示する",                    },
       { key: :terms,           title: "利用規約",               description: "利用規約を表示する",                                },
+      { key: "横断棋譜検索",   title: "横断棋譜検索",           description: "「横断棋譜検索」ページの上に表示する内容",          },
     ]
 
     def markdown_text
       Pathname(__dir__).join("markdown_files/#{key}.md").read
+    end
+
+    def to_box_content
+      { _component: "MarkdownContent", _v_bind: { body: markdown_text }, :class => "content box is-shadowless has-background-white-ter" }
     end
   end
 end

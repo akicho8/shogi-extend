@@ -1,3 +1,5 @@
+# http://localhost:4000/lab/swars/cross-search
+
 module QuickScript
   module Swars
     class CrossSearchScript < Base
@@ -361,6 +363,12 @@ module QuickScript
             },
           },
         ]
+      end
+
+      def top_content
+        if request_get?
+          MarkdownInfo.fetch("横断棋譜検索").to_box_content
+        end
       end
 
       def call
@@ -920,8 +928,15 @@ module QuickScript
 
         # 弱めの改善指示
         begin
-          if x_tag_names.present? || y_tag_names.present?
+          if x_tag_names.present? && y_tag_names.present?
             return "「自分のタグ」欄だけを指定して他の条件を外してみてください。それでもマッチしない場合は「検索対象件数」を増やしてみてください。"
+          end
+        end
+
+        # 「自分のタグ」だけを1件指定している場合は「将棋ウォーズ棋譜検索」で検索してほしいと伝える
+        begin
+          if x_tag_names.one? && y_tag_names.blank?
+            return "「自分のタグ」に1件だけ指定している場合は「将棋ウォーズ棋譜検索」側で、そのタグだけを入力してみてください。ここよりたくさんヒットするはずです。"
           end
         end
 

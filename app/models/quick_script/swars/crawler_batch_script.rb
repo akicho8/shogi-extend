@@ -39,7 +39,7 @@ module QuickScript
       def call
         if request_get?
           self.body_position = :above
-          return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box is-shadowless has-background-white-ter" }
+          return MarkdownInfo.fetch("棋譜取得の予約").to_box_content
         end
         if request_post?
           validate!
@@ -92,10 +92,6 @@ module QuickScript
           flash[:notice] = "#{current_swars_user_key} さんは存在しません"
           return
         end
-      end
-
-      def markdown_info
-        MarkdownInfo.fetch("棋譜取得の予約")
       end
     end
   end

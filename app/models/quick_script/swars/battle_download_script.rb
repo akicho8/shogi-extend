@@ -100,7 +100,7 @@ module QuickScript
           # end
           if request_get?
             self.body_position = :above
-            return { _component: "MarkdownContent", _v_bind: { body: markdown_info.markdown_text }, :class => "content box is-shadowless has-background-white-ter" }
+            return MarkdownInfo.fetch("棋譜ダウンロード").to_box_content
           end
           if request_post?
             validate!
@@ -331,10 +331,6 @@ module QuickScript
       end
 
       ################################################################################
-
-      def markdown_info
-        MarkdownInfo.fetch("棋譜ダウンロード")
-      end
     end
   end
 end
