@@ -141,7 +141,7 @@ module Swars
         subject << "(要ZIP添付)"
       end
       subject = subject.join(" ")
-      AppLog.important(emoji: ":目覚まし時計:", subject: subject, body: attributes.to_t)
+      AppLog.info(emoji: ":目覚まし時計:", subject: subject, body: attributes.to_t)
     end
 
     private
