@@ -43,6 +43,7 @@ export default {
     return {
       charactor: null,
       error_for_show: null,
+      is_online: true,
     }
   },
 
@@ -62,6 +63,8 @@ export default {
     if (this.development_p && false) {
       this.error_show_toggle_handle(null)
     }
+
+    this.is_online = navigator.onLine // ここで設定すれば絶対に navigator が無いで怒られる心配がない
   },
 
   methods: {
@@ -82,10 +85,11 @@ export default {
     ResponseStatusCodeInfo()    { return ResponseStatusCodeInfo                                                                      },
     response_status_code_info() { return this.ResponseStatusCodeInfo.lookup_by_status_code(this.status_code)                         },
 
-    english_message() { return this.error?.message },                                        // 英語の文言はわかりにくいので使わない
-    primary_error_message() { return this.error?.__RESPONSE_DATA__?.primary_error_message },             // 最優先して表示したい文言
-    default_message() { return this.response_status_code_info?.message },                    // 代替文言
-    message() { return this.primary_error_message ?? this.default_message ?? "ぶっこわれました" }, // 最終的に表示する文言
+    english_message()       { return this.error?.message                                  }, // 英語の文言はわかりにくいので使わない
+    primary_error_message() { return this.error?.__RESPONSE_DATA__?.primary_error_message }, // 最優先して表示したい文言
+    default_message()       { return this.response_status_code_info?.message              }, // 代替文言
+    offline_message()       { return this.is_online ? null : "通信環境が不安定です"       }, // オフラインの場合
+    message()               { return this.primary_error_message ?? this.default_message ?? this.offline_message ?? "ぶっこわれました" }, // 最終的に表示する文言
 
     meta() {
       return {
