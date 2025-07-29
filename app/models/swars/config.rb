@@ -15,6 +15,6 @@ module Swars
 
     ################################################################################ 削除
 
-    mattr_accessor(:battle_keep_days) { 2.month } # 最低限保持する日数
+    mattr_accessor(:battle_keep_days) { nil } # 最低限保持する日数
   end
 end

@@ -70,7 +70,7 @@ module Swars
           options = {
             :xmode_only  => "野良",
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 2.month,
+            :old_only    => Rails.env.local? ? 0.days : 50.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
@@ -106,8 +106,10 @@ module Swars
 
         def cleaner_options_old_only_validation!(options)
           if Rails.env.production? || Rails.env.staging?
-            if options[:old_only] < Config[:battle_keep_days]
-              raise "削除までの猶予は共通保持期間よりも長めにすること : (#{options[:old_only]} < #{Config[:battle_keep_days]})"
+            if options[:old_only]
+              if options[:old_only] < Config[:battle_keep_days]
+                raise "削除までの猶予は共通保持期間よりも長めにすること : (#{options[:old_only]} < #{Config[:battle_keep_days]})"
+              end
             end
           end
         end
