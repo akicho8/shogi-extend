@@ -20,6 +20,8 @@ module QuickScript
         { key: "棋譜コピー",              },
         { key: "ぴよ将棋起動",            },
         { key: "KENTO起動",               },
+        { key: "SNS経由登録",             },
+        { key: "ユーザー新規登録",        },
       ]
     end
   end

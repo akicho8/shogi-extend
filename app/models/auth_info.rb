@@ -72,7 +72,7 @@ class AuthInfo < ApplicationRecord
   # end
 
   def app_logging
-    AppLog.important(subject: "[SNS経由登録][#{provider}] #{user.name.inspect} (AuthInfo.create!)", body: [user.info.to_t, meta_info.pretty_inspect].join("\n"))
+    AppLog.info(subject: "[SNS経由登録][#{provider}] #{user.name.inspect} (AuthInfo.create!)", body: [user.info.to_t, meta_info.pretty_inspect].join("\n"))
   end
   after_create_commit :app_logging
 end

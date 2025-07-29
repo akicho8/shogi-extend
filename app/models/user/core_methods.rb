@@ -56,7 +56,7 @@ class User
     end
 
     def app_logging
-      AppLog.important(subject: "[ユーザー新規登録] #{name.inspect} (User.create!)", body: info.to_t)
+      AppLog.info(subject: "[ユーザー新規登録] #{name.inspect} (User.create!)", body: info.to_t)
     end
   end
 end
