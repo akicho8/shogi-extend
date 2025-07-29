@@ -8,14 +8,11 @@ import { CcBehaviorInfo     } from "./cc_behavior_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
-import ClockBoxModal  from "./ClockBoxModal.vue"
-
 export const mod_clock_box = {
   data() {
     return {
       clock_box: null,
       cc_params: null,
-      cc_modal_instance: null,
     }
   },
 
@@ -45,39 +42,6 @@ export const mod_clock_box = {
   },
 
   methods: {
-    ////////////////////////////////////////////////////////////////////////////////
-
-    cc_modal_open_handle() {
-      if (this.cc_modal_instance == null) {
-        this.sidebar_p = false
-        this.$sound.play_click()
-
-        this.cc_modal_instance = this.modal_card_open({
-          component: ClockBoxModal,
-          onCancel: () => {
-            this.$sound.play_click()
-            this.cc_modal_close()
-          },
-        })
-      }
-    },
-
-    cc_modal_close_handle() {
-      if (this.cc_modal_instance) {
-        this.sidebar_p = false
-        this.$sound.play_click()
-        this.cc_modal_close()
-      }
-    },
-
-    cc_modal_close() {
-      if (this.cc_modal_instance) {
-        this.cc_modal_instance.close()
-        this.cc_modal_instance = null
-        this.debug_alert("ClockBoxModal close")
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_sec = 0, every_plus = 0) {
@@ -257,6 +221,17 @@ export const mod_clock_box = {
       if (this.clock_box.pause_or_play_p) {
       } else {
         this.clock_box.play_handle()
+      }
+    },
+    cc_play_pause_resume_shortcut_handle() {
+      if (this.clock_box) {
+        if (this.clock_box.pause_p) {
+          this.debug_alert("clock_box.stop_or_pause_p")
+          this.cc_resume_handle()
+        } else if (this.clock_box.play_p) {
+          this.debug_alert("clock_box.play_p")
+          this.cc_pause_handle()
+        }
       }
     },
     cc_dropdown_active_change(on) {
