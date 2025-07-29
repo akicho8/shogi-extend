@@ -72,7 +72,7 @@ module ShareBoard
             if text
               history << Message.new(:assistant, text)
               logger.debug { history.to_topic.to_t }
-              AppLog.important(subject: "ChatGPT 返答記録 (#{room_key})", body: history.to_topic.to_t(truncate: 80))
+              AppLog.info(subject: "ChatGPT 返答記録 (#{room_key})", body: history.to_topic.to_t(truncate: 80))
               messanger.call(text)
             end
           rescue Net::ReadTimeout => error

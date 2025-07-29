@@ -5,6 +5,7 @@ module QuickScript
       memory_record [
         { key: "共有将棋盤",              },
         { key: "チャット",                },
+        { key: "返答記録",                },
         { key: "オーダー配布",            },
         { key: "cc_behavior_start",       },
         { key: "cc_behavior_silent_stop", },
