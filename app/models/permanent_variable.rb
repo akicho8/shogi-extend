@@ -54,7 +54,7 @@ class PermanentVariable < ApplicationRecord
 
   if Rails.env.local?
     after_create_commit do
-      AppLog.important(subject: "[#{key}]", body: value.to_t(truncate: nil))
+      AppLog.info(subject: "[変数永続化][#{key}]", body: value.to_t(truncate: nil))
     end
   end
 end
