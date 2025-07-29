@@ -44,10 +44,6 @@ class PermanentVariable < ApplicationRecord
     end
   end
 
-  before_validation do
-    self.value ||= {}
-  end
-
   with_options presence: true do
     validates :key
   end

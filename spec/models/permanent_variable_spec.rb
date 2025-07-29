@@ -17,15 +17,37 @@
 require "rails_helper"
 
 RSpec.describe PermanentVariable, type: :model, swars_spec: true do
-  it "works" do
+  before do
     PermanentVariable.destroy_all
+  end
 
+  it "初期値" do
     assert { PermanentVariable["A"] == nil }
+  end
 
+  it "基本" do
     PermanentVariable["A"] = "x"
     assert { PermanentVariable["A"] == "x" }
+  end
 
+  it "ハッシュの場合、キーを文字列で入れても、取り出したときはシンボルになっている" do
     PermanentVariable["A"] = { "x" => 1 }
     assert { PermanentVariable["A"] == { x: 1 } }
+  end
+
+  it "配列" do
+    PermanentVariable["A"] = ["x"]
+    assert { PermanentVariable["A"] == ["x"] }
+  end
+
+  it "空文字を設定できる" do
+    PermanentVariable["A"] = ""
+    assert { PermanentVariable["A"] == "" }
+  end
+
+  it "nil を設定できる" do
+    PermanentVariable["A"] = "foo"
+    PermanentVariable["A"] = nil
+    assert { PermanentVariable["A"] == nil }
   end
 end
