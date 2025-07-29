@@ -8,6 +8,8 @@ module QuickScript
         { key: "オーダー配布",            },
         { key: "cc_behavior_start",       },
         { key: "cc_behavior_silent_stop", },
+        { key: "短縮URL",                 },
+        { key: "棋譜取得予約",            },
         { key: "KENTO API",               },
         { key: "ぴよ将棋",                },
         { key: "短縮URL作成",             },
