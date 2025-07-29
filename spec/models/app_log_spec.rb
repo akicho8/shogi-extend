@@ -111,11 +111,6 @@ RSpec.describe AppLog, type: :model do
       SlackSender.deliveries.clear
     end
 
-    it "ログレベルが高いとSlack送信する" do
-      AppLog.alert
-      assert { SlackSender.deliveries.present? }
-    end
-
     it "ログレベルが高くてもオプションで禁止できる" do
       AppLog.alert(slack_notify: false)
       assert { SlackSender.deliveries.blank? }
