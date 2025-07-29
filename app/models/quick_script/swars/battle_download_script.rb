@@ -197,7 +197,6 @@ module QuickScript
             :emoji       => ":棋譜ZIP:",
             :subject     => mail_subject,
             :to          => current_user.email,
-            :bcc         => AppConfig[:admin_email],
             :body        => "",
             :attachments => mail_attachments,
           }).deliver_now
