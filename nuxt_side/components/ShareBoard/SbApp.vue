@@ -141,6 +141,7 @@ import { mod_clock_box                     } from "./clock/mod_clock_box.js"
 import { mod_clock_box_timeout             } from "./clock/mod_clock_box_timeout.js"
 import { mod_clock_decorator               } from "./clock/mod_clock_decorator.js"
 import { mod_persistent_cc_params          } from "./clock/mod_persistent_cc_params.js"
+import { mod_clock_box_modal                    } from "./clock/mod_clock_box_modal.js"
 
 import { mod_give_up                       } from "./give_up/mod_give_up.js"
 import { mod_kifu_mail                     } from "./give_up/mod_kifu_mail.js"
@@ -254,6 +255,7 @@ export default {
     mod_clock_box,
     mod_clock_box_timeout,
     mod_clock_decorator,
+    mod_clock_box_modal,
   ],
   props: {
     config: { type: Object, required: true },

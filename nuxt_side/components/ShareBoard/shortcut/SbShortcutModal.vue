@@ -53,11 +53,15 @@
             | or
             b-tag(type="is-primary") o
         .sc_item
-          .sc_label 対局時計
+          .sc_label 対局時計 起動
           .sc_buttons
             b-tag(type="is-primary") 3
             | or
             b-tag(type="is-primary") t
+        .sc_item
+          .sc_label 一時停止 / 再開
+          .sc_buttons
+            b-tag(type="is-primary") p
         .sc_item
           .sc_label チャットを開く / 閉じる
           .sc_buttons

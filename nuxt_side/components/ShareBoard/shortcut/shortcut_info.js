@@ -73,6 +73,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.kifu_download_handle(c.FormatTypeInfo.fetch("kif_utf8")),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "p"),
+        call: c => c.cc_play_pause_resume_shortcut_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && e.code === "KeyV" && c.keyboard_shift_p(e),
         call: c => c.yomikomi_from_clipboard(),
       },

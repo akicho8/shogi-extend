@@ -230,6 +230,21 @@ export class ClockBox {
     }
   }
 
+  // PAUSE している状態か？
+  get pause_p() {
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+      } else {
+        // pause
+        return true
+      }
+    } else {
+      // stop
+      return false
+    }
+  }
+
   // 秒針が動いている状態か？ (時間切れでマイナスを0に補正されている状態でもtrue)
   get play_p() {
     if (this.pause_or_play_p) {
@@ -241,6 +256,18 @@ export class ClockBox {
       }
     } else {
       // stop
+    }
+  }
+
+  get stop_p() {
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+      } else {
+        // pause
+      }
+    } else {
+      return true
     }
   }
 
