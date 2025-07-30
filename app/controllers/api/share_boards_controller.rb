@@ -4,7 +4,8 @@ module Api
 
     # POST http://localhost:3000/api/share_board/kifu_mail.json
     def kifu_mail
-      KifuMailer.basic_mail(params_with_user).deliver_later
+      mail = KifuMailer.basic_mail(params_with_user)
+      AppLog.info(subject: "[棋譜メール] #{mail.subject} #{mail.to}", body: mail.text_part.decoded)
       render json: { message: "#{current_user.email} 宛に送信しました" }
     end
 

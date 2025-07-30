@@ -46,7 +46,11 @@ class KifuMailAdapter
 
   def body
     hv = {}
-    hv["再生"] = kifu_parser.to_share_board_short_url
+    if false
+      hv["再生"] = kifu_parser.to_share_board_short_url
+    else
+      hv["再生"]  = kifu_parser.to_share_board_url
+    end
     if Rails.env.local?
       hv["*再生URLの元"]     = kifu_parser.to_share_board_url
       hv["*KENTO"]           = kifu_parser.to_kento_url
@@ -77,8 +81,8 @@ class KifuMailAdapter
   def mail_to_address
     if user
       "#{user.name} <#{user.email}>"
-    else
-      AppConfig[:admin_email]
+      # else
+      #   AppConfig[:admin_email]
     end
   end
 

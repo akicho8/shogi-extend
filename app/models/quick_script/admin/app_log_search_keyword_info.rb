@@ -23,6 +23,7 @@ module QuickScript
         { key: "SNS経由登録",             },
         { key: "ユーザー新規登録",        },
         { key: "一次集計完了",            },
+        { key: "棋譜メール",              },
       ]
     end
   end

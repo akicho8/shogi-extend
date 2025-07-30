@@ -10,6 +10,7 @@ class KifuMailer < ApplicationMailer
 
     body = []
     body << adapter.body
+    body << ""
     body << "--"
     body << "共有将棋盤"
     body << UrlProxy.full_url_for("/share-board")
@@ -26,7 +27,7 @@ class KifuMailer < ApplicationMailer
     mail({
         :subject => subject,
         :to      => adapter.mail_to_address,
-        :bcc     => AppConfig[:admin_email],
+        :bcc     => nil,        # AppConfig[:admin_email]
         :body    => body,
       })
   end
