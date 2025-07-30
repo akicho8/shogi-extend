@@ -14,6 +14,8 @@ require "./setup"
 Swars::Importer::FullHistoryImporter.new(user_key: "akihiko810", remote_run: true, look_up_to_page_x: 1).call
 Swars::User["akihiko810"].hard_crawled_at # => Sat, 23 Nov 2024 01:12:46.000000000 JST +09:00
 
+# Swars::Importer::FullHistoryImporter.new(user_key: "Myan_yade", remote_run: true, look_up_to_page_x: 1).call
+
 # tp Swars::User["asa2yoru"].battles.last(10).collect(&:info)
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&opponent_type=normal&page=1&user_id=akihiko810
 # >> akihiko810 Page1 10分 [全10件][新0件][続く]

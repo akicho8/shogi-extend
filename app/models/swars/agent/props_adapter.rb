@@ -152,7 +152,7 @@ module Swars
 
       # 取り込むべきか？
       def valid?
-        # opponent_type = 4 の場合が謎なので取り込まない
+        # opponent_type = 4 の場合が謎なので取り込まない → あとでわかったが4はラーニング
         unless xmode_info
           return false
         end
@@ -167,6 +167,13 @@ module Swars
         # 2021-03-27 緊急メンテナンスが入った日
         # 本家では「対局無効」と表示されている
         if props["result"] == "DRAW_INVALID"
+          return false
+        end
+
+        # 2025-07-30 この日のメンテナンスが入ったときに対局中だった対局の結果がこうなっていた
+        # おそらく最近入ったと思われる仕様
+        # これを取り込んでも意味がないので除外する
+        if props["result"] == "DRAW_MAINTENANCE"
           return false
         end
 

@@ -17,11 +17,13 @@ require "./setup"
 # tp battle_importer.battle.memberships
 # tp battle_importer.battle
 
-Battle.where(id: Swars::User["shikacha"].battles.ids).destroy_all     # => []
-key = Swars::BattleKey["Hululudayo-shikacha-20250702_200538"]
+Battle.where(id: Swars::User["Myan_yade"].battles.ids).destroy_all     # => []
+key = Swars::BattleKey["okazu4-Myan_yade-20250730_132820"]
 Swars::Battle[key]&.destroy!
 battle_importer = Swars::Importer::BattleImporter.new(key: key, skip_if_exist: false, remote_run: true)
 battle_importer.call
 battle = battle_importer.battle
 puts battle.kifu_body
 tp battle.info
+# ~> -:26:in '<main>': undefined method 'kifu_body' for nil (NoMethodError)
+# >> [fetch][record] https://shogiwars.heroz.jp/games/okazu4-Myan_yade-20250730_132820
