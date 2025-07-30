@@ -291,7 +291,7 @@ class FreeBattle < ApplicationRecord
           AppLog.error(app_log_params(params, record, error))
           raise error
         end
-        AppLog.info(app_log_params(params, record))
+        AppLog.info(**app_log_params(params, record))
         { record: attrs }
       end
 
