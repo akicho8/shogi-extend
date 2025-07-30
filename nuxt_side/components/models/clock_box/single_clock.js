@@ -122,6 +122,7 @@ export class SingleClock {
         }
       }
 
+      // FIXME: ここは extra_sec が最初に 1 減ったときをトリガーとすべきかもしれない。秒読みの場合、回復してしまう。→ extra_koreyori_count を入れているのでその必要はないはず
       // 「深考時間が0になったら負けです」
       if (this.extra_koreyori_count === 0) {                           // 初回なら
         if ((previous_changes.main_sec >= 1 && this.main_sec === 0) || // 残り時間 1 -> 0 または
