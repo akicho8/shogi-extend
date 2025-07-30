@@ -14,7 +14,7 @@ module QuickScript
       if Rails.env.development? && false
         def header_link_items
           super + AppLogSearchKeywordInfo.collect do |e|
-            params = { query: [e.key, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1, page: 1 }
+            params = { query: [e.key].join(" "), __prefer_url_params__: 1, page: 1 }
             { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params), :class => "", }, }
           end
         end
