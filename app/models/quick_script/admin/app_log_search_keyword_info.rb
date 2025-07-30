@@ -22,6 +22,7 @@ module QuickScript
         { key: "KENTO起動",               },
         { key: "SNS経由登録",             },
         { key: "ユーザー新規登録",        },
+        { key: "一次集計完了",            },
       ]
     end
   end

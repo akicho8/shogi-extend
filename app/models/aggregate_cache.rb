@@ -92,6 +92,6 @@ class AggregateCache < ApplicationRecord
   end
 
   after_create_commit do
-    AppLog.important(subject: "[#{group_name}][#{generation}] 一次集計完了", body: aggregated_value.to_t(truncate: 80))
+    AppLog.info(subject: "[#{group_name}][#{generation}] 一次集計完了", body: aggregated_value.to_t(truncate: 80))
   end
 end

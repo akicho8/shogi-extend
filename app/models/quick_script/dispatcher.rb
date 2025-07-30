@@ -49,7 +49,9 @@ module QuickScript
     end
 
     def dispatch
-      AppLog.info(subject: action.class.title, body: action.params.to_t)
+      if Rails.env.local?
+        AppLog.info(subject: action.class.title, body: action.params.to_t)
+      end
       action.tap(&:render_anything)
     end
 
