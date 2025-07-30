@@ -4,9 +4,14 @@
 if Rails.env.production? || Rails.env.staging? || ENV["EXCEPTION_NOTIFICATION_ENABLE"].to_s == "1" # || Rails.env.development?
   Rails.application.config.middleware.use(ExceptionNotification::Rack, {
       # ignore_exceptions: ExceptionNotifier.ignored_exceptions - ["ActiveRecord::RecordNotFound"], # 404 のエラーも通知する
-      ignore_exceptions: ExceptionNotifier.ignored_exceptions - [
-        # "ActiveRecord::RecordNotFound",
-        # "Slack::Web::Api::Errors::TooManyRequestsError",
+      # ignore_exceptions: ExceptionNotifier.ignored_exceptions - [
+      #   # "ActiveRecord::RecordNotFound",
+      #   # "Slack::Web::Api::Errors::TooManyRequestsError",
+      # ],
+
+      # デッドロックのエラーは通知しない
+      ignore_exceptions: ExceptionNotifier.ignored_exceptions + [
+        "ActiveRecord::Deadlocked",
       ],
 
       # 将棋MAPのフォームで入力されたSFENをバックスペースで1文字消すたびに変換APIが呼ばれるせいで
