@@ -1,7 +1,6 @@
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { Gs } from "@/components/models/gs.js"
-import dayjs from "dayjs"
 
 const HUMAN_STATUS_LABELS = {
   play:  "動作中",
@@ -9,48 +8,8 @@ const HUMAN_STATUS_LABELS = {
   stop:  "停止中",
 }
 
-const PauseTimerMethods = {
-  // public
-  get pause_sec_human() {
-    if (this.pause_timer) {
-      return dayjs().startOf("year").set("seconds", this.pause_sec).format("m:ss")
-    }
-  },
-
-  // private
-
-  pause_var_init() {
-    this.pause_sec = 0
-  },
-
-  //
-  pause_tick() {
-    this.pause_sec += 1
-  },
-
-  pause_timer_start() {
-    if (this.pause_timer == null) {
-      this.pause_timer = setInterval(() => this.pause_tick(), 1000 / this.speed)
-    }
-  },
-
-  pause_timer_stop() {
-    if (this.pause_timer) {
-      clearTimeout(this.pause_timer)
-      this.pause_timer = null
-    }
-  },
-
-  pause_timer_restart() {
-    this.pause_timer_stop()
-    this.pause_timer_start()
-  },
-}
-
 export class ClockBox {
   constructor(params = {}) {
-    Object.defineProperties(this, Object.getOwnPropertyDescriptors(PauseTimerMethods))
-
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
       initial_main_sec:  null,  // 持ち時間(初期値)
@@ -87,9 +46,6 @@ export class ClockBox {
 
     this.speed = 1.0
 
-    this.pause_timer = null   // ポーズ時のタイマー
-    this.pause_sec   = null   // ポーズ時の経過秒数
-
     this.reset()
   }
 
@@ -103,7 +59,6 @@ export class ClockBox {
 
   reset() {
     this.timer_stop()
-    this.pause_timer_stop()
     if (this.params.initial_turn != null) {
       this.turn = this.params.initial_turn
     }
@@ -118,8 +73,6 @@ export class ClockBox {
     this.resume_count = 0
     this.switch_count = 0
     this.elapsed_sec = 0
-
-    this.pause_var_init()
   }
 
   // 切り替え
@@ -174,7 +127,6 @@ export class ClockBox {
   stop_handle() {
     if (this.pause_or_play_p) {
       this.timer_stop()
-      this.pause_timer_stop()
       this._var_init()
       this.single_clocks.forEach(e => e.variable_reset())
     }
@@ -185,9 +137,6 @@ export class ClockBox {
   pause_handle() {
     if (this.timer) {
       this.timer_stop()
-
-      this.pause_var_init()
-      this.pause_timer_start()
       this.pause_count += 1
     }
   }
@@ -195,9 +144,6 @@ export class ClockBox {
   resume_handle() {
     if (this.timer == null) {
       this.timer_start()
-
-      this.pause_timer_stop()
-      this.pause_var_init()
       this.resume_count += 1
     }
   }
@@ -368,21 +314,14 @@ export class ClockBox {
     v.elapsed_sec     = this.elapsed_sec
     v.speed           = this.speed           // タイマー速度
 
-    v.pause_timer     = this.pause_timer       // ポーズ時のタイマー
-    v.pause_sec       = this.pause_sec         // ポーズ時の経過秒数
-
     return v
   }
 
   set attributes(v) {
     this.timer_stop()
-    this.pause_timer_stop()
     this.attributes_copy_from(v)
     if (v.timer) {
       this.timer_start()
-    }
-    if (v.pause_timer) {
-      this.pause_timer_start()
     }
   }
 
@@ -397,8 +336,6 @@ export class ClockBox {
     this.switch_count    = v.switch_count
     this.elapsed_sec     = v.elapsed_sec
     this.speed           = v.speed
-
-    this.pause_sec       = v.pause_sec
 
     v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)
   }

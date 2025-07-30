@@ -6,7 +6,7 @@
       | 対局時計
 
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.clock_box")
-        | {{SB.clock_box.human_status}} {{SB.clock_box.pause_sec_human}}
+        | {{SB.clock_box.human_status}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="SB.cc_modal_close_handle" v-if="development_p")
