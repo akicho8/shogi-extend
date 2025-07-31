@@ -46,7 +46,7 @@ module ShareBoard
     def rs_failed_notify(data)
       rs_failed_count = data["rs_failed_count"]
       track(data, subject: "指手不達", body: "#{rs_failed_count}回目", emoji: ":指手不達:")
-      raise SfenNotReachError, "指手不達(#{rs_failed_count}回目) : #{data}"
+      # raise SfenNotReachError, "指手不達(#{rs_failed_count}回目) : #{data}"
     end
 
     def title_share(data)
