@@ -43,7 +43,7 @@ module QuickScript
             # :session_sync => true,
             :dynamic_part => -> {
               {
-                :elems   => LogLevelInfo.form_part_elems,
+                :elems   => LogLevelInfo.form_part_elems.to_a.reverse.to_h,
                 :default => log_level_keys,
               }
             },
@@ -80,16 +80,16 @@ module QuickScript
       end
 
       def top_content
-        links = AppLogSearchKeywordInfo.collect { |e|
-          [e.name, { query: e.key, log_level_keys: "" }]
-        } + LogLevelInfo.collect { |e|
-          [e.name, { query: "", log_level_keys: e.key }]
+        blocks = AppLogSearchKeywordInfo.collect { |e|
+          av = e.keywords.collect do |word|
+            params = { query: "", log_level_keys: "", __prefer_url_params__: 1, page: 1 }
+            params[e.param_key] = word
+            { _nuxt_link: word, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-small #{e.css_klass}" }
+          end
+          av = h_stack(av, :style => "gap: 0.25rem")
+          v_stack([tag.span(e.name, :class => "is-size-7"), av], :style => "gap: 0.25rem")
         }
-        links = links.collect { |name, params|
-          params = {**params, __prefer_url_params__: 1, page: 1 }
-          { _nuxt_link: name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-light is-small-x" }
-        }
-        h_stack(links, :style => "gap: 0.5rem")
+        v_stack(blocks, :style => "gap: 0.5rem")
       end
 
       def call
