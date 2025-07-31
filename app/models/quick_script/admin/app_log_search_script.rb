@@ -11,18 +11,6 @@ module QuickScript
       self.title_link = :force_reload
       self.json_link = true
 
-      # if Rails.env.development? && false
-      #   def header_link_items
-      #     super + AppLogSearchKeywordInfo.collect { |e|
-      #       params = { query: e.key, __prefer_url_params__: 1, page: 1 }
-      #       { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params) }, }
-      #     } + LogLevelInfo.collect { |e|
-      #       params = { level: e.key, __prefer_url_params__: 1, page: 1 }
-      #       { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params) }, }
-      #     }
-      #   end
-      # end
-
       def form_parts
         super + [
           {
@@ -40,7 +28,6 @@ module QuickScript
             :label        => "ログレベル",
             :key          => :log_level_keys,
             :type         => :checkbox_button,
-            # :session_sync => true,
             :dynamic_part => -> {
               {
                 :elems   => LogLevelInfo.form_part_elems.to_a.reverse.to_h,
@@ -116,7 +103,7 @@ module QuickScript
       end
 
       def log_level_keys
-        Array(params[:log_level_keys]) # .compact_blank
+        Array(params[:log_level_keys])
       end
 
       def title
