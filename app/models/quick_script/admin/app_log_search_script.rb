@@ -11,14 +11,17 @@ module QuickScript
       self.title_link = :force_reload
       self.json_link = true
 
-      if Rails.env.development? && false
-        def header_link_items
-          super + AppLogSearchKeywordInfo.collect do |e|
-            params = { query: [e.key].join(" "), __prefer_url_params__: 1, page: 1 }
-            { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params), :class => "", }, }
-          end
-        end
-      end
+      # if Rails.env.development? && false
+      #   def header_link_items
+      #     super + AppLogSearchKeywordInfo.collect { |e|
+      #       params = { query: e.key, __prefer_url_params__: 1, page: 1 }
+      #       { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params) }, }
+      #     } + LogLevelInfo.collect { |e|
+      #       params = { level: e.key, __prefer_url_params__: 1, page: 1 }
+      #       { name: e.name, _v_bind: { tag: "nuxt-link", to: qs_nuxt_link_to(params: params) }, }
+      #     }
+      #   end
+      # end
 
       def form_parts
         super + [
@@ -30,6 +33,18 @@ module QuickScript
               {
                 :default => params[:query].presence,
                 :help_message => %("a -b c -d" → a と c を含むかつ b と d を含まない),
+              }
+            },
+          },
+          {
+            :label        => "ログレベル",
+            :key          => :log_level_keys,
+            :type         => :checkbox_button,
+            # :session_sync => true,
+            :dynamic_part => -> {
+              {
+                :elems   => LogLevelInfo.form_part_elems,
+                :default => log_level_keys,
               }
             },
           },
@@ -65,10 +80,15 @@ module QuickScript
       end
 
       def top_content
-        links = AppLogSearchKeywordInfo.collect do |e|
-          params = { query: [e.key, "-#{self.class.qs_page_key}"].join(" "), __prefer_url_params__: 1 }
-          { _nuxt_link: "#{e.name}", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-light is-small-x" }
-        end
+        links = AppLogSearchKeywordInfo.collect { |e|
+          [e.name, { query: e.key, log_level_keys: "" }]
+        } + LogLevelInfo.collect { |e|
+          [e.name, { query: "", log_level_keys: e.key }]
+        }
+        links = links.collect { |name, params|
+          params = {**params, __prefer_url_params__: 1, page: 1 }
+          { _nuxt_link: name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-light is-small-x" }
+        }
         h_stack(links, :style => "gap: 0.5rem")
       end
 
@@ -89,7 +109,14 @@ module QuickScript
 
       def current_scope
         scope = AppLog.plus_minus_search(params[:query])
+        if v = log_level_keys.presence
+          scope = scope.level_eq(v)
+        end
         scope = scope.public_send(period_info.key)
+      end
+
+      def log_level_keys
+        Array(params[:log_level_keys]) # .compact_blank
       end
 
       def title

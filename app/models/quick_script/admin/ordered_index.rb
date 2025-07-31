@@ -2,14 +2,17 @@ module QuickScript
   module Admin
     OrderedIndex = [
       AppLogSearchScript,
-      AppLogShowScript,
-
       ActionCableInfoScript,
+      BookmarkScript,
 
       SwarsZipDlLogScript,
 
       LoginScript,
       SwarsAgentScript,
+
+      # private
+
+      AppLogShowScript,
     ]
   end
 end

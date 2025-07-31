@@ -24,6 +24,8 @@ module QuickScript
         { key: "ユーザー新規登録",        },
         { key: "一次集計完了",            },
         { key: "棋譜メール",              },
+        { key: "RecordNotUnique",         },
+        { key: "Deadlocked",              },
       ]
     end
   end

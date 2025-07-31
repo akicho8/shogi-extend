@@ -123,6 +123,7 @@ class AppLog < ApplicationRecord
     end
   end
 
+  scope :level_eq,     -> value { where(level: value) }
   scope :level_like,   -> query { where(["level   LIKE ?", "%#{query}%"]) }
   scope :subject_like, -> query { where(["subject LIKE ?", "%#{query}%"]) }
   scope :body_like,    -> query { where(["body    LIKE ?", "%#{query}%"]) }
