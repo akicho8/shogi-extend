@@ -210,6 +210,9 @@ module QuickScript
               }
             },
           },
+
+          ################################################################################
+
           {
             :label   => "checkbox (array)",
             :key     => :checkbox1,
@@ -232,6 +235,24 @@ module QuickScript
               }
             },
           },
+
+          # checkbox_button の場合は次のようにしないとだめかも ← いや不要
+          #
+          #   {
+          #     :label        => "ログレベル",
+          #     :key          => :log_level_keys,
+          #     :type         => :checkbox_button,
+          #     :dynamic_part => -> {
+          #       {
+          #         :elems   => LogLevelInfo.form_part_elems,
+          #         :default => log_level_keys,
+          #       }
+          #     },
+          #   },
+          #
+          #   def log_level_keys
+          #     Array(params[:log_level_keys]).compact_blank
+          #   end
 
           ################################################################################
 

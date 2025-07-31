@@ -148,7 +148,11 @@ export default {
       const hv = {}
       _.forIn(params, (val, key) => {
         if (Gs.blank_p(val)) {
-          val = "__empty__"
+          if (_.isArray(val)) {
+            // 配列の場合 __empty__  にしてしまうと "" になってしまう
+          } else {
+            val = "__empty__"
+          }
           // } else {
           // if (_.isArray(val)) {
           //   val = "[" + val.join(",") + "]"
