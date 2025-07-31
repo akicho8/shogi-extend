@@ -19,7 +19,7 @@ module Api
 
     # POST http://localhost:3000/api/share_board/kifu_mail.json
     def kifu_mail
-      render json: KifuMailSender.new(params_with_user).call
+      render json: ShareBoard::KifuMailSender.new(params_with_user).call
     end
 
     private
