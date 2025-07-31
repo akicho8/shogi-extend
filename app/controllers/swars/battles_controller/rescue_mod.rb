@@ -35,7 +35,7 @@ module Swars
         end
 
         rescue_from "ActiveRecord::Deadlocked" do |exception|
-          AppLog.critical(exception)
+          AppLog.info(exception)
           render json: { message: "データベースが死にそうです" }, status: :internal_server_error
         end
       end
