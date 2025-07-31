@@ -117,9 +117,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
     it "works" do
       data = data_factory("rs_failed_count" => 1)
-      expect {
-        subscription.rs_failed_notify(data)
-      }.to raise_error(ShareBoard::RoomChannel::SfenNotReachError, /指手不達.*1回目/)
+      subscription.rs_failed_notify(data)
+      assert { AppLog.last.subject.include?("指手不達") }
     end
   end
 
