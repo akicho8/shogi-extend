@@ -30,8 +30,8 @@ class MainBatch
     Swars::Battle.drop_scope2.cleaner(subject: "特別", execute: true).call
     Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
-    AppLog.old_only(2.weeks).cleaner(subject: "アプリログ", execute: true).call
-    ShareBoard::ChatMessage.old_only(100.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
+    AppLog.old_only(1.weeks).cleaner(subject: "アプリログ", execute: true).call
+    ShareBoard::ChatMessage.old_only(30.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
 
     # 集計 (TODO: 自動的に cache_write があるクラスを集める……のはやりすぎか)
     QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
