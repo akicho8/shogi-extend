@@ -22,16 +22,16 @@ export const mod_clock_box_modal = {
         if (false) {
         } else if (this.clock_box.stop_p) {
           if (this.debug_mode_p) {
-            this.toast_ok("開始", {talk: false})
+            this.debug_alert("開始")
             this.cbm_play_handle()
             this.cc_modal_close()
           }
         } else if (this.clock_box.play_p) {
-          this.toast_ok("一時停止", {talk: false})
+          this.debug_alert("一時停止")
           this.cbm_pause_handle()
           this.cc_modal_open()
         } else if (this.clock_box.pause_p) {
-          this.toast_ok("再開", {talk: false})
+          this.debug_alert("再開")
           this.cbm_resume_handle()
           this.cc_modal_close()
         }
