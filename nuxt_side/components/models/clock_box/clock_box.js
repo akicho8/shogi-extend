@@ -195,6 +195,7 @@ export class ClockBox {
 
       this.pause_var_init()
       this.pause_timer_start()
+
       this.pause_count += 1
     }
   }
@@ -205,6 +206,7 @@ export class ClockBox {
 
       this.pause_timer_stop()
       this.pause_var_init()
+
       this.resume_count += 1
     }
   }
