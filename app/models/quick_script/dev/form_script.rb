@@ -251,7 +251,7 @@ module QuickScript
           #   },
           #
           #   def log_level_keys
-          #     Array(params[:log_level_keys]).compact_blank
+          #     params[:log_level_keys].to_s.scan(/\w+/)       # または Array(params[:log_level_keys]).compact_blank
           #   end
 
           ################################################################################

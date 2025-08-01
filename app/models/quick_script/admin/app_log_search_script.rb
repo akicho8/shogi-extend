@@ -103,7 +103,7 @@ module QuickScript
       end
 
       def log_level_keys
-        Array(params[:log_level_keys])
+        params[:log_level_keys].to_s.scan(/\w+/)
       end
 
       def title
