@@ -1,71 +1,48 @@
 require "#{__dir__}/setup"
-
-_ { QuickScript::Admin::ShareBoardBattleIndexScript.new.call } # => "142.53 ms"
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
-# >> <black>
-# >> <white>
+user_id = ShareBoard::User.last.id
+# s { QuickScript::Admin::ShareBoardBattleIndexScript.new(user_id: user_id).call } # => [{"ID" => {_link_to: 1, _v_bind: {href: "http://localhost:4000/share-board?black=alice%2Ccarol&title=&turn=4&white=bob&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIrIDNhMmI", target: "_blank"}}, "日時" => "2025-08-01 20:27:23", "部屋" => {_nuxt_link: "2065451900d4136c50c99d9a301c0d74(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 1}}}}, "手数" => 4, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}, {_nuxt_link: "carol(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 3}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "bob(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 2}}}}]}}}]
+s { QuickScript::Admin::ShareBoardBattleIndexScript.new.call } # => [{"ID" => 6, "棋譜" => {_link_to: "4手", _v_bind: {href: "http://localhost:4000/share-board?black=alice%2Ccarol&title=&turn=4&white=bob&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIrIDNhMmI", target: "_blank"}}, "日時" => "2025-08-01 20:43:18", "部屋" => {_nuxt_link: "e80154f46ebd60e8c4e0d3b5ec6a566d(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 5}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}, {_nuxt_link: "carol(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 3}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "bob(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 2}}}}]}}}, {"ID" => 5, "棋譜" => {_link_to: "4手", _v_bind: {href: "http://localhost:4000/share-board?black=alice%2Ccarol&title=&turn=4&white=bob&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIrIDNhMmI", target: "_blank"}}, "日時" => "2025-08-01 20:43:11", "部屋" => {_nuxt_link: "f41d211f485a107425193e1d9f02d76a(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 4}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}, {_nuxt_link: "carol(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 3}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "bob(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 2}}}}]}}}, {"ID" => 4, "棋譜" => {_link_to: "4手", _v_bind: {href: "http://localhost:4000/share-board?black=alice%2Ccarol&title=&turn=4&white=bob&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIrIDNhMmI", target: "_blank"}}, "日時" => "2025-08-01 20:43:00", "部屋" => {_nuxt_link: "9a53fb4e817f42bcdd1ff9e3d258a672(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 3}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}, {_nuxt_link: "carol(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 3}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "bob(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 2}}}}]}}}, {"ID" => 3, "棋譜" => {_link_to: "0手", _v_bind: {href: "http://localhost:4000/share-board?black=alice&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0&white=&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDE", target: "_blank"}}, "日時" => "2025-08-01 20:33:58", "部屋" => {_nuxt_link: "development(2)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 2}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: []}}}, {"ID" => 2, "棋譜" => {_link_to: "0手", _v_bind: {href: "http://localhost:4000/share-board?black=alice&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0&white=&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDE", target: "_blank"}}, "日時" => "2025-08-01 20:33:44", "部屋" => {_nuxt_link: "development(2)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 2}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: []}}}, {"ID" => 1, "棋譜" => {_link_to: "4手", _v_bind: {href: "http://localhost:4000/share-board?black=alice%2Ccarol&title=&turn=4&white=bob&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIrIDNhMmI", target: "_blank"}}, "日時" => "2025-08-01 20:27:23", "部屋" => {_nuxt_link: "2065451900d4136c50c99d9a301c0d74(1)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {room_id: 1}}}}, "☗" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "alice(6)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 1}}}}, {_nuxt_link: "carol(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 3}}}}]}}, "☖" => {_component: "QuickScriptViewValueAsV", _v_bind: {value: [{_nuxt_link: "bob(4)", _v_bind: {to: {name: "lab-qs_group_key-qs_page_key", params: {qs_group_key: "admin", qs_page_key: "share-board-battle-index"}, query: {user_id: 2}}}}]}}}]
+# >>   ShareBoard::Battle Load (0.4ms)  SELECT `share_board_battles`.* FROM `share_board_battles` ORDER BY `share_board_battles`.`created_at` DESC LIMIT 50 /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   Location Load (0.3ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.3ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   ShareBoard::Membership Load (0.4ms)  SELECT `share_board_memberships`.* FROM `share_board_memberships` WHERE `share_board_memberships`.`battle_id` IN (6, 5, 4, 3, 2, 1) ORDER BY `share_board_memberships`.`position` ASC /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::Room Load (0.3ms)  SELECT `share_board_rooms`.* FROM `share_board_rooms` WHERE `share_board_rooms`.`id` IN (5, 4, 3, 2, 1) /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::Membership Load (0.3ms)  SELECT `share_board_memberships`.* FROM `share_board_memberships` WHERE `share_board_memberships`.`location_id` = 1 AND `share_board_memberships`.`battle_id` IN (6, 5, 4, 3, 2, 1) ORDER BY `share_board_memberships`.`position` ASC /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::Membership Load (0.2ms)  SELECT `share_board_memberships`.* FROM `share_board_memberships` WHERE `share_board_memberships`.`location_id` = 2 AND `share_board_memberships`.`battle_id` IN (6, 5, 4, 3, 2, 1) ORDER BY `share_board_memberships`.`position` ASC /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::User Load (0.2ms)  SELECT `share_board_users`.* FROM `share_board_users` WHERE `share_board_users`.`id` IN (1, 2, 3) /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::Battle Load (0.2ms)  SELECT `share_board_battles`.* FROM `share_board_battles` WHERE `share_board_battles`.`room_id` IN (1, 2, 3, 4, 5) ORDER BY `share_board_battles`.`created_at` DESC /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   ShareBoard::Membership Load (0.2ms)  SELECT `share_board_memberships`.* FROM `share_board_memberships` WHERE `share_board_memberships`.`user_id` IN (1, 2, 3) /*application='ShogiWeb'*/
+# >>   ↳ app/models/quick_script/admin/share_board_battle_index_script.rb:10:in 'Enumerable#collect'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.6ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.3ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.3ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.3ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'

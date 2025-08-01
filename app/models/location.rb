@@ -23,4 +23,14 @@ class Location < ApplicationRecord
     has_many :swars_memberships, class_name: "Swars::Membership"
     has_many :swars_battles, through: :swars_memberships, source: :battle, class_name: "Swars::Battle"
   end
+
+  # class << self
+  #   def black
+  #     @black ||= self[:black]
+  #   end
+  #
+  #   def white
+  #     @white ||= self[:white]
+  #   end
+  # end
 end

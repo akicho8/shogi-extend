@@ -21,7 +21,7 @@ module QuickScript
           :name => "lab-qs_group_key-qs_page_key",
           :params => {
             :qs_group_key => options[:qs_group_key],
-            :qs_page_key => options[:qs_page_key],
+            :qs_page_key => options[:qs_page_key].dasherize,
           },
           :query => options[:params],
         }
