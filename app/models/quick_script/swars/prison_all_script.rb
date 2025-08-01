@@ -6,6 +6,7 @@ module QuickScript
       self.json_link = true
 
       def call
+        AppLog.info(subject: "[囚人][一覧]")
         { :_v_text => users.sort.join(" "), :class => "is_word_break_off" }
       end
 

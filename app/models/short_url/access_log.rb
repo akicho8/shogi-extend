@@ -21,7 +21,7 @@ module ShortUrl
     end
 
     def log_subject
-      "短縮URLリダイレクト(#{component.access_logs_count}回目)"
+      "[短縮URL][転送] (#{component.access_logs_count}回目)"
     end
 
     def log_body

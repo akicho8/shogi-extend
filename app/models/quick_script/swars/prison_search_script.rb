@@ -24,6 +24,7 @@ module QuickScript
       end
 
       def call
+        AppLog.info(subject: "[囚人][検索] #{current_queries}")
         pagination_for(current_scope, always_table: false) do |scope|
           scope.collect do |e|
             {

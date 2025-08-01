@@ -53,6 +53,7 @@ module QuickScript
             user.ban!
           end
           flash[:notice] = "#{user_key} を追加しました"
+          AppLog.info(subject: "[囚人][追加][#{user_key}]")
           redirect_to "/lab/swars/prison-search"
           nil
         end

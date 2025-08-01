@@ -68,7 +68,7 @@ module ShortUrl
     end
 
     after_create do
-      AppLog.info(emoji: ":短縮URL:", subject: "短縮URL作成", body: [compact_url, original_url].join("\n"))
+      AppLog.info(emoji: ":短縮URL:", subject: "[短縮URL][作成完了]", body: [compact_url, original_url].join("\n"))
     end
 
     def compact_url
