@@ -199,7 +199,7 @@ export const mod_clock_box = {
 
     cc_destroy() {
       if (this.clock_box) {
-        this.clock_box.timer_stop()
+        this.clock_box.stop_handle() // timer_stop ではなく完全停止で一時停止中のタイマーも止める
         this.clock_box = null
       }
     },
