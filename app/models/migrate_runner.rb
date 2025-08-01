@@ -25,7 +25,7 @@ class MigrateRunner
   def step10_直近50件を残してすべて削除する
     battles_max_gt = 50
     process_count = 0
-    process_count_max = 10
+    process_count_max = 60*60*2
     catch(:break) do
       Swars::User.in_batches do |scope|
         scope = scope.vip_except
@@ -33,11 +33,12 @@ class MigrateRunner
         scope = scope.group("swars_users.id")
         scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
         scope.each do |user|
-          if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
-            battles_max2 = 200
-          else
-            battles_max2 = 50
-          end
+          battles_max2 = battles_max_gt
+          # if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
+          #   battles_max2 = 200
+          # else
+          #   battles_max2 = 50
+          # end
           battles = user.battles
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
