@@ -109,6 +109,7 @@ export const mod_clock_box = {
         read_koreyori_fn: context => this.cc_read_koreyori(context.initial_read_sec),
         extra_koreyori_fn: context => this.cc_extra_koreyori(context.initial_extra_sec),
         time_zero_fn: e => this.cc_timeout_trigger(),
+        pause_tick_fn: this.cc_pause_tick_callback,
         switched_fn: () => {
           // this.$sound.play_click()
         },
@@ -136,6 +137,13 @@ export const mod_clock_box = {
       })
 
       this.clock_box.speed = this.clock_speed
+    },
+
+    cc_pause_tick_callback(mm, ss) {
+      if (ss === 0 && mm >= 1) {
+        this.$sound.play("se_notification")
+        this.toast_ok(`${mm}分経過`)
+      }
     },
 
     // 秒読み10秒設定のとき毎回9から読み上げると騒いので10秒なら5秒から読み上げる
