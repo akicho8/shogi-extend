@@ -1,7 +1,6 @@
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { Gs } from "@/components/models/gs.js"
-import dayjs from "dayjs"
 
 const HUMAN_STATUS_LABELS = {
   play:  "動作中",
@@ -9,54 +8,8 @@ const HUMAN_STATUS_LABELS = {
   stop:  "停止中",
 }
 
-// 一時停止中の時間を管理する
-const PauseTimerMethods = {
-  // public
-  get pause_sec_human() {
-    if (this.pause_timer) {
-      return dayjs().startOf("year").set("seconds", this.pause_sec).format("m:ss")
-    }
-  },
-
-  // private
-
-  pause_var_init() {
-    this.pause_sec = 0
-  },
-
-  pause_tick() {
-    this.pause_sec += 1
-    this.pause_tick_user_callback()
-  },
-
-  pause_tick_user_callback() {
-    const [mm, ss] = Gs.idivmod(this.pause_sec, 60)
-    this.params.pause_tick_fn(mm, ss)
-  },
-
-  pause_timer_start() {
-    if (this.pause_timer == null) {
-      this.pause_timer = setInterval(() => this.pause_tick(), 1000 / this.speed)
-    }
-  },
-
-  pause_timer_stop() {
-    if (this.pause_timer) {
-      clearTimeout(this.pause_timer)
-      this.pause_timer = null
-    }
-  },
-
-  pause_timer_restart() {
-    this.pause_timer_stop()
-    this.pause_timer_start()
-  },
-}
-
 export class ClockBox {
   constructor(params = {}) {
-    Object.defineProperties(this, Object.getOwnPropertyDescriptors(PauseTimerMethods)) // Ruby でいうところの extend
-
     this.params = {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
       initial_main_sec:  null,  // 持ち時間(初期値)
@@ -67,9 +20,8 @@ export class ClockBox {
       time_zero_fn:        () => {}, // 残り時間が 0 になったときの処理 (切れ負け/勝ち判定用)
       switched_fn:         () => {}, // 時計を切り替えた瞬間の処理 (用途不明)
       second_decriment_fn: () => {}, // 時間が減るたびに呼ぶ処理 (主に秒読み用)
-      read_koreyori_fn:    () => {}, // 「これより1手N秒でお願いします」と言いたい場合の処理
+      read_koreyori_fn:    () => {},  // 「これより1手N秒でお願いします」と言いたい場合の処理
       extra_koreyori_fn:   () => {}, // 「深考時間が0になったら負けです」と言いたい場合の処理
-      pause_tick_fn:       () => {}, // 一時停止中に「1分経過」と言いたい場合の処理
 
       active_value_zero_css_class:    "",
       active_value_nonzero_css_class: "",
@@ -94,9 +46,6 @@ export class ClockBox {
 
     this.speed = 1.0
 
-    this.pause_timer = null   // ポーズ時のタイマー
-    this.pause_sec   = null   // ポーズ時の経過秒数
-
     this.reset()
   }
 
@@ -110,7 +59,6 @@ export class ClockBox {
 
   reset() {
     this.timer_stop()
-    this.pause_timer_stop()
     if (this.params.initial_turn != null) {
       this.turn = this.params.initial_turn
     }
@@ -125,8 +73,6 @@ export class ClockBox {
     this.resume_count = 0
     this.switch_count = 0
     this.elapsed_sec = 0
-
-    this.pause_var_init()
   }
 
   // 切り替え
@@ -181,7 +127,6 @@ export class ClockBox {
   stop_handle() {
     if (this.pause_or_play_p) {
       this.timer_stop()
-      this.pause_timer_stop()
       this._var_init()
       this.single_clocks.forEach(e => e.variable_reset())
     }
@@ -192,9 +137,6 @@ export class ClockBox {
   pause_handle() {
     if (this.timer) {
       this.timer_stop()
-
-      this.pause_var_init()
-      this.pause_timer_start()
       this.pause_count += 1
     }
   }
@@ -202,9 +144,6 @@ export class ClockBox {
   resume_handle() {
     if (this.timer == null) {
       this.timer_start()
-
-      this.pause_timer_stop()
-      this.pause_var_init()
       this.resume_count += 1
     }
   }
@@ -276,23 +215,66 @@ export class ClockBox {
     return this.single_clocks.some(e => e.rest <= 0)
   }
 
-  //////////////////////////////////////////////////////////////////////////////// 状態
-
+  // STOP または PAUSE している状態か？
   get stop_or_pause_p() {
-    return this.stop_p || this.pause_p
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+      } else {
+        // pause
+        return true
+      }
+    } else {
+      // stop
+      return true
+    }
   }
+
+  // PAUSE している状態か？
   get pause_p() {
-    return this.current_status === "pause"
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+      } else {
+        // pause
+        return true
+      }
+    } else {
+      // stop
+      return false
+    }
   }
+
+  // 秒針が動いている状態か？ (時間切れでマイナスを0に補正されている状態でもtrue)
   get play_p() {
-    return this.current_status === "play"
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+        return true
+      } else {
+        // pause
+      }
+    } else {
+      // stop
+    }
   }
+
   get stop_p() {
-    return this.current_status === "stop"
+    if (this.pause_or_play_p) {
+      if (this.timer) {
+        // play
+      } else {
+        // pause
+      }
+    } else {
+      return true
+    }
   }
+
   get human_status() {
     return HUMAN_STATUS_LABELS[this.current_status]
   }
+
   get current_status() {
     let v = null
     if (this.pause_or_play_p) {
@@ -332,21 +314,14 @@ export class ClockBox {
     v.elapsed_sec     = this.elapsed_sec
     v.speed           = this.speed           // タイマー速度
 
-    v.pause_timer     = this.pause_timer       // ポーズ時のタイマー
-    v.pause_sec       = this.pause_sec         // ポーズ時の経過秒数
-
     return v
   }
 
   set attributes(v) {
     this.timer_stop()
-    this.pause_timer_stop()
     this.attributes_copy_from(v)
     if (v.timer) {
       this.timer_start()
-    }
-    if (v.pause_timer) {
-      this.pause_timer_start()
     }
   }
 
@@ -361,8 +336,6 @@ export class ClockBox {
     this.switch_count    = v.switch_count
     this.elapsed_sec     = v.elapsed_sec
     this.speed           = v.speed
-
-    this.pause_sec       = v.pause_sec
 
     v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)
   }

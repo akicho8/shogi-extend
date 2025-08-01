@@ -4,11 +4,9 @@
   .modal-card-head
     .modal-card-title
       | 対局時計
-      span.has-text-grey.has-text-weight-normal.mx-1(v-if="SB.clock_box")
-        span.clock_box_human_status.mx-1
-          | {{SB.clock_box.human_status}}
-        span.clock_box_pause_sec_human.is-family-monospace.mx-1
-          | {{SB.clock_box.pause_sec_human}}
+
+      span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.clock_box")
+        | {{SB.clock_box.human_status}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="SB.cc_modal_close_handle" v-if="development_p")
