@@ -288,7 +288,7 @@ class FreeBattle < ApplicationRecord
               ],
             })
         rescue Bioshogi::BioshogiError => error
-          AppLog.error(app_log_params(params, record, error))
+          AppLog.error(**app_log_params(params, record, error))
           raise error
         end
         AppLog.info(**app_log_params(params, record))
