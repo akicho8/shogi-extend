@@ -45,6 +45,6 @@ class UserMailer < ApplicationMailer
       attachments[record.zip_filename] = record.to_zip.string
     end
 
-    mail(subject: subject, to: "#{user.name} <#{user.email}>", bcc: AppConfig[:admin_email], body: body)
+    mail(subject: subject, to: "#{user.name} <#{user.email}>", body: body)
   end
 end
