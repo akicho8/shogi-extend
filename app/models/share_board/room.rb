@@ -193,6 +193,10 @@ module ShareBoard
       def to_share_board_url
         UrlProxy.full_url_for(path: "/share-board", query: { room_key: key })
       end
+
+      def to_share_board_dashboard_url
+        UrlProxy.full_url_for(path: "/share-board/dashboard", query: { room_key: key })
+      end
     end
   end
 end

@@ -51,6 +51,7 @@ module ShareBoard
 
     has_many :memberships, dependent: :destroy                   # 対局時の情報(複数)
     has_many :battles, through: :memberships                     # 対局(複数)
+    has_many :rooms, through: :memberships                       # 対局部屋(複数)
 
     has_many :chat_messages, dependent: :destroy                 # このユーザーの発言たち (すべての部屋での発言)
     has_many :chat_rooms, through: :chat_messages, source: :room # このユーザーが発言した部屋たち
