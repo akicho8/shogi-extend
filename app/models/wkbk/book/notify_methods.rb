@@ -17,12 +17,12 @@ module Wkbk
       # rails r 'puts Wkbk::Book.first.mail_subject'
       def mail_subject
         av = []
-        av << "問題集"
+        av << "[将棋ドリル]"
+        av << "問題集#{status_name}"
         av << "##{id}"
         av << title
         av << user.name
         av << "計#{user.wkbk_books.count}回"
-        av << status_name
         av.join(" ")
       end
 

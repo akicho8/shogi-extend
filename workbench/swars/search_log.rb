@@ -1,30 +1,15 @@
 require "./setup"
+# sql
+# Swars::SearchLog.old_only(50.days).cleaner.call
+# Swars::SearchLog.momentum_user_ids(period: 1000.days, at_least: 5) # => [966838, 257, 943988, 169, 135378, 181315, 746616, 129474, 890422]
+
 sql
-Swars::SearchLog.old_only(50.days).cleaner.call
-Swars::SearchLog.momentum_user_ids(period: 1000.days, at_least: 5) # => [966838, 257, 943988, 169, 135378, 181315, 746616, 129474, 890422]
+Swars::SearchLog.select(:user_id).distinct.count # => 114
+Swars::SearchLog.distinct.count(:user_id)        # => 114
+
+
 
 # Swars::User.find(257)           # => #<Swars::User id: 257, user_key: "ebitaro2", grade_id: 9, last_reception_at: nil, search_logs_count: 0, created_at: "2018-08-02 14:24:23.000000000 +0900", updated_at: "2023-11-29 02:44:41.000000000 +0900", ban_at: nil, latest_battled_at: "2018-08-02 14:24:23.000000000 +0900">
 # .cleaner.call
-# >>   Swars::SearchLog Count (1.5ms)  SELECT COUNT(*) FROM `swars_search_logs` WHERE `swars_search_logs`.`created_at` < '2024-09-18 11:09:22'
-# >>   ↳ app/models/general_cleaner.rb:15:in `call'
-# >>   Swars::SearchLog Count (1.0ms)  SELECT COUNT(*) FROM `swars_search_logs` WHERE `swars_search_logs`.`created_at` < '2024-09-18 11:09:22'
-# >>   ↳ app/models/general_cleaner.rb:16:in `call'
-# >>   TRANSACTION (0.2ms)  BEGIN
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   AppLog Create (1.8ms)  INSERT INTO `app_logs` (`level`, `emoji`, `subject`, `body`, `process_id`, `created_at`) VALUES ('trace', '', '', '[\"/Users/ikeda/src/shogi-extend/app/models/free_space.rb:22\", :call]', 85573, '2024-11-07 11:09:22')
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   TRANSACTION (1.0ms)  COMMIT
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   Swars::SearchLog Load (1.3ms)  SELECT `swars_search_logs`.* FROM `swars_search_logs` WHERE `swars_search_logs`.`created_at` < '2024-09-18 11:09:22' ORDER BY `swars_search_logs`.`id` ASC LIMIT 1000
-# >>   ↳ app/models/general_cleaner.rb:20:in `block in call'
-# >>   Swars::SearchLog Count (1.2ms)  SELECT COUNT(*) FROM `swars_search_logs` WHERE `swars_search_logs`.`created_at` < '2024-09-18 11:09:22'
-# >>   ↳ app/models/general_cleaner.rb:32:in `call'
-# >> 2024-11-07T11:09:22.239Z pid=85573 tid=1w2d INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
-# >>   TRANSACTION (0.2ms)  BEGIN
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   AppLog Create (1.4ms)  INSERT INTO `app_logs` (`level`, `emoji`, `subject`, `body`, `process_id`, `created_at`) VALUES ('important', '', '[レコード削除] 915 → 915 (0) 0.088972 seconds', '|------------+-------|\n|    subject |       |\n|    execute | false |\n| time_limit |       |\n|    verbose | false |\n| batch_size | 1000  |\n|------------+-------|\n|------+---------------------|\n|   前 | 915                 |\n|   後 | 915                 |\n|   差 | 0                   |\n| 開始 | 2024-11-07 20:09:22 |\n| 終了 | 2024-11-07 20:09:22 |\n| 時間 | 0.088972 seconds    |\n| 空き | 71% → 71%          |\n|------+---------------------|\n|---------------------+------+------+------|\n| 日時                | 個数 | 成功 | 失敗 |\n|---------------------+------+------+------|\n| 2024-11-07 20:09:22 |  915 |  915 |    0 |\n|---------------------+------+------+------|\n', 85573, '2024-11-07 11:09:22')
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   TRANSACTION (0.9ms)  COMMIT
-# >>   ↳ app/models/app_log.rb:102:in `call'
-# >>   Swars::SearchLog Count (351.6ms)  SELECT COUNT(*) AS `count_all`, `swars_search_logs`.`user_id` AS `swars_search_logs_user_id` FROM `swars_search_logs` WHERE `swars_search_logs`.`user_id` NOT IN (SELECT `swars_users`.`id` FROM `swars_users` WHERE `swars_users`.`user_key` IN ('Cookieboy1129', 'GOLD_harupona', 'Human_of_Amen', 'Jyohshin', 'KURONEKOFUKU', 'Mibuki0101', 'NT1679', 'Nihei_kisi', 'Omannyawa', 'Pklilili', 'RYO_CHiN_', 'Ritsumeikan_APU', 'Ryamaguchi', 'SATORI99', 'Seiryuushogi', 'Shisakugata', 'TAMAKOCHAN_', 'Tesla_R', 'Tokusyo_1', 'UMR_Summer', 'Waiem_0827', 'abacus10', 'adgjm3121', 'akihiko810', 'bulletcheckmate', 'eGuiterman', 'eternalvirgin', 'gagagakuma', 'gomiress', 'hide_yuki_kun', 'kallsium', 'kamiosa', 'kawa_toshi_1', 'kinakom0chi', 'korirakkuma0108', 'kzts', 'maiyahi4649', 'molcar', 'mosangun', 'nao_frag', 'news3939', 'nisiyan0204', 'penguinyasu', 'pooh1122N', 'puniho', 'sea_sky_', 'seimei_0917', 'shinbigiumu', 'sir_lancelo', 'slowstep3210', 'slowstep5678', 'sptree', 'stampedeod', 'staygold3377', 'toshimetal', 'twitter_X', 'wicvofy', 'yinhe', 'yukky1119', 'yuyuqi', 'zun_y', 'BOUYATETSU5', 'itoshinTV', 'Taichan0601', 'MurachanLions', 'pagagm', 'TOBE_CHAN', 'ideon_shogi', 'Odenryu', 'chanlili', 'Dsuke213', 'GOMUNINGEN', 'Y_Hiroshi_316', 'T_Hiroki_323', 'erikokouza', 'Manaochannel', 'KOH56', 'yukkuri22', 'Cupro_Rin', 'AmanogawaNemu', 'Judar_dAlembert', 'uuta_game', 'YumeKokona', 'NamomeOga', 'marinohiyo', 'kone_kone_ru', 'YotsumiyaS', 'eirukoyume', 'Tsukune_Yuki', 'kodai_murasaki', 'oshtaraataru', 'flamme_o', 'K_Yamawasabi', 'ichilitre', 'tabinosoiri', 'ONETWO3', 'tampopochan', 'urechannel', 'pome_em', 'XK_Pekeko', 'SUZUKI_NEKO', 'yukkuri22', 'weissvice', 'K1254', 'Moka_K', 'totutohoku', 'mo_ri_', 'PARM_shogi_CH_', 'ahirutaityouZ', 'ryutaro1991', 'omuomun', 'aya_s_love', 'Seigo_S', 'IrUkAzz', 'raikachess', 'TYosTYos', 'okayama_shogi', 'YT_Dash', 'MartinRiggs', 'MaisonMargiela', 'kanikubo73', '9114aaxt', 'AHIRU_MAN_', 'Ayaseaya', 'Choco_math', 'EffectTarou', 'FujitaAoi', 'Gotanda_N', 'H_Britney', 'Kaku_Kiriko', 'Kousaka_Makuri', 'NgisaNagi', 'RIKISEN_shogi', 'ShowYanChannel', 'SugarHuuko', 'Sukonbu3', 'Sushi_Kuine', 'Sylvamiya', 'UtadaHikaru', 'YARD_CHANNEL', 'anpirika', 'bsplive', 'chisei_mazawa', 'chrono_', 'garo0926', 'gorirakouen', 'UMA7777777', 'hakuyoutu', 'mafuneko', 'micro77', 'mokkun_mokumoku', 'morusuko', 'naruru55', 'ray_nanakawa', 'saisai_shogi', 'verdura', 'yomeP', 'polunga_shogi', 'si_kun_YouTuber', 'Ada_Tsugamachi', 'tayayan_ts', 'kaorin55', 'sakuya_T', 'kimbrelp', 'Traumonac', 'Mitsuki_YouTube', 'stmtk', 'trick98', 'JANUS001', 'discodancer', 'Corilla', 'shusorairaku', 'LEVEKO', 'ttmnttmn', 'touchica', 'ibisya_bokumetu', 'TANTANMENDAYO', 'Habu', 'mrynu', 'enthusi', 'shogiyuuca', '0Komamusume', 'progmemeter', 'takaponpoko', 'himanagoya', 'yaba_bozu2015', 'akutoc', 'funyagakoi', 'momotetsunokami', 'MisoJennifer', 'HomuPaka', 'AygoN7', 'Osaka_Referee', 'shoshirasaka', 'chacopipi0516', 'monkeykong', 'seiryuu1230', 'hisana1', 'harungun', 'kd2001', 'Kaori3159', 'ariakedo', '443443443', 'piyomaru_shogi', 'hebosugiChan', 'IKEMENKISHI', 'ANAGUMA4MAI', 'H_Kirara', 'Jerry_Shogi', 'M_10032', 'Serumasama', 'TokiwadaiMei', 'Weiss_Hairi', 'asa2yoru', 'chodo', 'kisamoko', 'mai_ueo', 'takayukiando', 'tora9900_torara', 'yadamon2525', 'yoru0000', 'hanabi7711', 'nananamin', 'ds4', 'wata1417', 'katoayumn', 'daiwajpjp', 'yamaloveuma', 'HIKOUKI_GUMO', 'ultimate701', 'terauching', 'daichukikikuchi', '5inkyo', 'nitro7910', 'soyokaz', 'SevenColor627', 'santa_ABC', 'arminn', 'createv', 'Naitot', 'hitoride_nemuru', 'Hey_Ya', 'sleepycat', 'tanukitirou', 'zibakuou', 'suzukihajime', 'Janne1', 'alonPlay', 'k_tp', 'sanawaka', 'its', 'success_glory')) AND `swars_search_logs`.`created_at` >= '2022-02-11 11:09:22' GROUP BY `swars_search_logs`.`user_id` HAVING (count_all >= '5') ORDER BY count_all DESC
-# >>   ↳ app/models/swars/search_log.rb:34:in `momentum_user_ids'
+# >>   Swars::SearchLog Count (0.9ms)  SELECT COUNT(DISTINCT `swars_search_logs`.`user_id`) FROM `swars_search_logs` /*application='ShogiWeb'*/
+# >>   Swars::SearchLog Count (0.6ms)  SELECT COUNT(DISTINCT `swars_search_logs`.`user_id`) FROM `swars_search_logs` /*application='ShogiWeb'*/

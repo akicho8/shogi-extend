@@ -8,6 +8,7 @@ module QuickScript
           css_klass: "is-light",
           param_key: :query,
           keywords: [
+            "将棋ドリル",
             "短縮URL",
             "KENTO API",
             "ぴよ将棋",
@@ -22,8 +23,10 @@ module QuickScript
           css_klass: "is-warning is-light",
           param_key: :query,
           keywords: [
+            "ウォーズID記憶案内",
             "ウォーズID不明",
             "棋譜取得予約",
+            "夜中棋譜取得",
             "ぴよ将棋起動",
             "KENTO起動",
             "一次集計完了",

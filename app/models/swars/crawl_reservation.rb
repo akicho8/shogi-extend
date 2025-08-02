@@ -76,33 +76,41 @@ module Swars
 
       update!(processed_at: Time.current)
 
+      if true
+        # deliver_later する前に mail にアクセスしてはいけないため別々に生成している
+        mail = UserMailer.battle_fetch_notify(self, other_options)
+        AppLog.info(subject: "[夜中棋譜取得] #{mail.subject} #{mail.to}", body: mail.text_part.decoded)
+      end
+
       UserMailer.battle_fetch_notify(self, other_options).deliver_later
     end
 
     def to_zip
-      t = Time.current
+      @to_zip ||= yield_self do
+        t = Time.current
 
-      io = Zip::OutputStream.write_buffer do |zos|
-        zip_dl_scope.each do |battle|
-          if str = battle.to_xxx(kifu_format_info.key)
-            body_encodes.each do |encode|
-              entry = Zip::Entry.new(zos, "#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
-              entry.time = Zip::DOSTime.from_time(battle.battled_at)
-              zos.put_next_entry(entry)
-              s = str
-              if encode == "Shift_JIS"
-                s = s.encode(encode)
+        io = Zip::OutputStream.write_buffer do |zos|
+          zip_dl_scope.each do |battle|
+            if str = battle.to_xxx(kifu_format_info.key)
+              body_encodes.each do |encode|
+                entry = Zip::Entry.new(zos, "#{target_user.key}/#{encode}/#{battle.key}.#{kifu_format_info.key}")
+                entry.time = Zip::DOSTime.from_time(battle.battled_at)
+                zos.put_next_entry(entry)
+                s = str
+                if encode == "Shift_JIS"
+                  s = s.encode(encode)
+                end
+                zos.write(s)
               end
-              zos.write(s)
             end
           end
         end
+
+        sec = "%.2f s" % (Time.current - t)
+        AppLog.info(subject: "ZIP #{sec}", body: zip_filename)
+
+        io
       end
-
-      sec = "%.2f s" % (Time.current - t)
-      AppLog.info(subject: "ZIP #{sec}", body: zip_filename)
-
-      io
     end
 
     def zip_dl_scope
