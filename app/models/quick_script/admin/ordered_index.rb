@@ -1,6 +1,8 @@
 module QuickScript
   module Admin
     OrderedIndex = [
+      DashboardScript,
+
       AppLogSearchScript,
       ActionCableInfoScript,
       BookmarkScript,
