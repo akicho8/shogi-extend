@@ -18,7 +18,7 @@ module QuickScript
           },
           {
             name: "[共有] 対局数",
-            href: UrlProxy.full_url_for("/lab/amdin/share_board_battle_index".dasherize),
+            href: UrlProxy.full_url_for("/lab/admin/share_board_battle_index".dasherize),
             func: -> { ShareBoard::Battle.where(ShareBoard::Battle.arel_table[:created_at].gteq(24.hours.ago)).count },
           },
           {
