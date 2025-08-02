@@ -3,6 +3,7 @@ import { general_setting_modal } from "./general_setting_modal.js"
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
 import { ClockVolumeInfo       } from "../models/clock_volume_info.js"
+import { MoveVolumeInfo       } from "../models/move_volume_info.js"
 import { TalkVolumeInfo       } from "../models/talk_volume_info.js"
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
@@ -26,6 +27,8 @@ export const mod_general_setting = {
   computed: {
     ClockVolumeInfo()         { return ClockVolumeInfo                                           },
 
+    MoveVolumeInfo()        { return MoveVolumeInfo                                          },
+
     TalkVolumeInfo()          { return TalkVolumeInfo                                            },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
@@ -40,8 +43,8 @@ export const mod_general_setting = {
     YomiageModeInfo()         { return YomiageModeInfo                                           },
     yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },
 
-    AiModeInfo()             { return AiModeInfo                                               },
-    ai_mode_info()           { return this.AiModeInfo.fetch(this.ai_mode_key)                 },
+    AiModeInfo()              { return AiModeInfo                                                },
+    ai_mode_info()            { return this.AiModeInfo.fetch(this.ai_mode_key)                   },
 
     ByoyomiModeInfo()         { return ByoyomiModeInfo                                           },
     byoyomi_mode_info()       { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)         },

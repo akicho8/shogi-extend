@@ -58,7 +58,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/assets/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),                                        },
       { key: "se_piece_lift",                name: "持ち上げる",               volume: 0.3,  source: require("@/assets/SND01_sine/tap_03.wav"),                                                            },
       { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
-      { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    },
+      { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/models/sound_preset_info.js と合わせる
       // { key: "se_piece_select",                                             volume: 0.2,  source: require("@/assets/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    },
 
       // ▼思考印をセルに付ける / 外す

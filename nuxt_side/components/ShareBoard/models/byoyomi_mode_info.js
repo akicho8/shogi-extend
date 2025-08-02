@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export class ByoyomiModeInfo extends ApplicationMemoryRecord {
   static field_label = "秒読み"
-  static field_message = ""
+  static field_message = null
 
   static get define() {
     return [

@@ -19,7 +19,7 @@
           | がついているものはブラウザに保存する
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
 </template>
 
 <script>

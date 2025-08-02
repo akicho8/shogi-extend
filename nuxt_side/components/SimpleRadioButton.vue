@@ -81,8 +81,10 @@ export default {
   },
   methods: {
     input_handle(e) {
-      if (this.buttons_p) {
+      if (false) {
+      } else if (this.buttons_p) {
         this.$sound.play("se_select")
+      } else if (this.slider_p) {
       } else {
         this.$sound.play_click()
       }
