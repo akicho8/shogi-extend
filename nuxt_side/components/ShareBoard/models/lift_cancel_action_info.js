@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class LiftCancelActionInfo extends ApplicationMemoryRecord {
-  static field_label = "どこをタップしたら持った駒を離すか"
+  static field_label = "持った駒をいったん元に戻すのはどこをタップしたとき？"
   static field_message = "右クリックやESCキーでもキャンセルできる"
 
   static get define() {
@@ -15,14 +15,14 @@ export class LiftCancelActionInfo extends ApplicationMemoryRecord {
       {
         key: "reality",
         name: "元の位置",
-        type: "is-primary",
-        message: "リアルと同じで元のセルに戻したら離す",
+        type: "is-warning",
+        message: "リアル対局と同じで元の升目に戻したとき",
       },
       {
         key: "rehold",
-        name: "持ち替え",
-        type: "is-primary",
-        message: "「lishogi」と同じ。離すことができない。別の駒をタップすればそのまま持ち替える。",
+        name: "持ち替える",
+        type: "is-danger",
+        message: "「lishogi」と同じで単に戻すことはできない。別の駒をタップすればそのまま持ち替える。",
       },
     ]
   }

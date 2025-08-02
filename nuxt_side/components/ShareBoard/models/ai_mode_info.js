@@ -6,8 +6,8 @@ export class AiModeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "ai_mode_on",  name: "しゃべる", type: "is-primary", message: null, },
-      { key: "ai_mode_off", name: "黙る",     type: "is-primary", message: null, },
+      { key: "ai_mode_on",  name: "しゃべる", type: "is-primary", message: "ときどきチャットに反応したりする", },
+      { key: "ai_mode_off", name: "だまる",   type: "is-primary", message: "静かにする",                       },
     ]
   }
 }
