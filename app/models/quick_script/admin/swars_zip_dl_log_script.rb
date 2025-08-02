@@ -5,7 +5,7 @@ module QuickScript
     class SwarsZipDlLogScript < Base
       self.title = "将棋ウォーズ棋譜ダウンロード履歴"
       self.description = "将棋ウォーズの棋譜をダウンロードした人を表示する"
-      self.title_link = :force_reload
+      self.title_click_behaviour = :force_reload
 
       def call
         pagination_for(::Swars::ZipDlLog.order(created_at: :desc), always_table: true) do |scope|

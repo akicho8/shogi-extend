@@ -5,6 +5,7 @@ module QuickScript
     class DashboardScript < Base
       self.title = "ダッシュボード"
       self.description = ""
+      self.title_click_behaviour = :force_reload
 
       def call
         tag.div(:class => "columns is-mobile is-multiline") do

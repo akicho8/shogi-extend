@@ -5,10 +5,10 @@ MainNavbar.QuickScriptViewNavbar.is_active_unset(:wrapper-class="['container', Q
 
     // タイトルをクリックしたときの挙動
     template(v-if="QS.meta.title")
-      template(v-if="QS.params.title_link === 'url_path_reset'")
+      template(v-if="QS.params.title_click_behaviour === 'url_params_remove'")
         b-navbar-item(tag="nuxt-link" :to="{}" @click.native="QS.title_click_handle")
           h1 {{QS.meta.title}}
-      template(v-else-if="QS.params.title_link === 'force_reload'")
+      template(v-else-if="QS.params.title_click_behaviour === 'force_reload'")
         b-navbar-item(tag="a" href="")
           h1 {{QS.meta.title}}
       template(v-else)

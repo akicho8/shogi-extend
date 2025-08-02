@@ -175,7 +175,7 @@ module QuickScript
     prepend Middleware::CustomStyleMod
     prepend Middleware::SidebarMod
     prepend Middleware::ParentLinkMod        # parent_link
-    prepend Middleware::TitleLinkMod         # title_link
+    prepend Middleware::TitleLinkMod         # title_click_behaviour
     prepend Middleware::ComponentWrapperMod  # for v_stack, h_stack
     prepend Middleware::GeneralApiMod        # for as_general_json
     prepend Middleware::HeaderLinkMod

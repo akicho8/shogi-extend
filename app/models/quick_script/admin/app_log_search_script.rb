@@ -8,7 +8,7 @@ module QuickScript
       self.form_method = :get
       self.button_label = "検索"
       self.router_push_failed_then_fetch = true
-      self.title_link = :force_reload
+      self.title_click_behaviour = :force_reload
       self.json_link = true
 
       def form_parts

@@ -11,7 +11,7 @@ module QuickScript
       self.login_link_show               = true
       self.debug_mode                    = Rails.env.local?
       self.throttle_expires_in           = 5.0
-      self.title_link                    = nil
+      self.title_click_behaviour                    = nil
 
       RANGE_SIZE_DEFAULT   = 10000   # 初期値
       RANGE_SIZE_THRESHOLD = 30000   # N以上ならバックグラウンド実行する
