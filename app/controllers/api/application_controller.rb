@@ -10,6 +10,7 @@ module Api
       end
     end
 
+    # FIXME: なんだこれ？ いらなかったら消す
     def html_fetch(url, options = {})
       options = {
         expires_in: 1.hour,
