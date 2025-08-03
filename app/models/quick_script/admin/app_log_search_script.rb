@@ -3,7 +3,7 @@
 module QuickScript
   module Admin
     class AppLogSearchScript < Base
-      self.title = "アプリログ一覧"
+      self.title = "アプリログ"
       self.description = "アプリログの一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"

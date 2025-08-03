@@ -9,37 +9,41 @@ module QuickScript
 
       def call
         tag.div(:class => "columns is-mobile is-multiline") do
-          DashboardItemInfo.collect { |item|
+          computed_items.collect { |item, result, duration|
             tag.div(:class => "column is-2") do
-              box_html = tag.div(:class => "box has-text-centered") do
-                body = nil
-                sec = TimeTrial.realtime do
-                  if item.expires_in
-                    expires_in = Rails.env.production? ? item.expires_in : item.expires_in
-                    body = Rails.cache.fetch("DashboardItemInfo/#{item.key}", expires_in: expires_in) do
-                      instance_exec(&item.func)
-                    end
-                  else
-                    body = instance_exec(&item.func)
-                  end
-                end
-                body = tag.div(body, :class => "has-text-weight-bold is-size-3")
-
-                name = item.name
-                if item.expires_in
-                  name = "*#{name}"
-                end
-                name = "#{name} #{sec.round(1)}s"
-                name = tag.div(name, :class => "is-size-7")
-
-                [name, body].join.html_safe
+              name = tag.div("#{item.name} #{duration.round(1)}s", :class => "is-size-7")
+              if result.kind_of? Integer
+                result = ActiveSupport::NumberHelper.number_to_delimited(result)
               end
+              body = tag.div(result, :class => "has-text-weight-bold is-size-3")
+              content = [name, body].join.html_safe
+
+              options = { :class => "box has-text-centered" }
               if item.href
-                box_html = tag.a(box_html, href: item.href, target: "_blank")
+                tag.a(content, href: item.href, target: "_blank", **options)
+              else
+                tag.div(content, **options)
               end
-              box_html
             end
           }.join.html_safe
+        end
+      end
+
+      def prepare_aggregation_cache
+        rows = DashboardItemInfo.find_all(&:cache_expires_in).collect do |item|
+          duration = TimeTrial.realtime { item.result }
+          { "項目" => item.name, "実行時間" => ActiveSupport::Duration.build(duration).inspect }
+        end
+        AppLog.info(subject: "[ダッシュボード][事前集計]", body: rows.to_t)
+      end
+
+      private
+
+      def computed_items
+        DashboardItemInfo.collect do |item|
+          result = nil
+          duration = TimeTrial.realtime { result = item.result }
+          [item, result, duration]
         end
       end
     end

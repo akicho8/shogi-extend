@@ -4,7 +4,13 @@ module QuickScript
       DashboardScript,
 
       AppLogSearchScript,
+
+      ShareBoardBattleIndexScript,
+      ShareBoardRoomIndexScript,
+      ShareBoardChatMessageIndexScript,
+
       ActionCableInfoScript,
+
       BookmarkScript,
 
       SwarsZipDlLogScript,

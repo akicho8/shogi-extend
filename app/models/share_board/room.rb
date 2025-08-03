@@ -39,9 +39,9 @@ module ShareBoard
 
     has_many :battles, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :room # この部屋の対局履歴たち
     has_many :memberships, through: :battles                                                   # この部屋のユーザー対局履歴たち
-    has_many :users, through: :memberships                                                     # この部屋の対局者たち
 
     has_many :roomships, dependent: :destroy, inverse_of: :room # この部屋の対局者の情報(ランキングとしてそのまま使える)
+    has_many :users, through: :roomships                                                     # この部屋の対局者たち
 
     has_many :chat_messages, dependent: :destroy do                # この部屋の発言
       def create_from_data!(data)

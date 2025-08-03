@@ -25,7 +25,7 @@ class MigrateRunner
   def step10_直近50件を残してすべて削除する
     battles_max_gt = 50
     process_count = 0
-    process_count_max = 60*60*1
+    process_count_max = 10000
     catch(:break) do
       Swars::User.in_batches do |scope|
         scope = scope.vip_except
@@ -41,7 +41,9 @@ class MigrateRunner
           # end
           battles = user.battles
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
+          process_count += battles.size
           tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked) do
               battles.destroy_all
@@ -49,7 +51,7 @@ class MigrateRunner
           rescue ActiveRecord::Deadlocked => error
             p error
           end
-          process_count += 1
+          p [process_count, process_count_max]
           if process_count >= process_count_max
             throw(:break)
           end

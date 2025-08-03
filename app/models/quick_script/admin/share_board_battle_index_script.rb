@@ -3,8 +3,8 @@
 module QuickScript
   module Admin
     class ShareBoardBattleIndexScript < Base
-      self.title = "共有将棋盤 対局"
-      self.description = "共有将棋盤の対局の履歴一覧を表示する"
+      self.title = "【共有将棋盤】対局"
+      self.description = "共有将棋盤の対局の情報を表示する"
 
       def call
         current_scope.collect do |e|
@@ -33,7 +33,6 @@ module QuickScript
           scope = scope.where(room_id: v)
         end
         if v = params[:user_id]
-          scope = scope.joins(:memberships => :user)
           scope = scope.merge(ShareBoard::User.where(id: v))
         end
         scope = scope.includes(:memberships => {:user => :memberships}, :room => :battles, :black => :user, :white => :user)

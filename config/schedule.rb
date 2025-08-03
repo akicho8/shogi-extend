@@ -26,6 +26,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 # end
 
 every("45 2 * * *") { runner "MainBatch.new.call" }
+every("0  * * * *") { runner "QuickScript::Admin::DashboardScript.new.prepare_aggregation_cache" }
 
 # every("0 18 * * *")  { runner "Kiwi::Lemon.background_job_for_cron" }
 
