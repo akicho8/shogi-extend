@@ -5,9 +5,9 @@ module QuickScript
 
       AppLogSearchScript,
 
-      ShareBoardBattleIndexScript,
-      ShareBoardRoomIndexScript,
-      ShareBoardChatMessageIndexScript,
+      ShareBoardBattleSearchScript,
+      ShareBoardRoomSearchScript,
+      ShareBoardChatMessageSearchScript,
 
       ActionCableInfoScript,
 

@@ -2,7 +2,7 @@
 
 module QuickScript
   module Admin
-    class ShareBoardRoomIndexScript < Base
+    class ShareBoardRoomSearchScript < Base
       self.title = "【共有将棋盤】部屋"
       self.description = "共有将棋盤の部屋の情報を表示する"
 

@@ -2,7 +2,7 @@
 
 module QuickScript
   module Admin
-    class ShareBoardChatMessageIndexScript < Base
+    class ShareBoardChatMessageSearchScript < Base
       self.title = "【共有将棋盤】発言"
       self.description = "共有将棋盤の発言の情報を表示する"
 
