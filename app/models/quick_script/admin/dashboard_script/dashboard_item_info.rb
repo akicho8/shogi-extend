@@ -27,7 +27,7 @@ module QuickScript
             func: -> { ShareBoard::Battle.where(created_at: 24.hours.ago..).select(:room_id).distinct.count },
           },
           {
-            name: "[共有] 対局数",
+            name: "[共有] 追加対局数",
             href: UrlProxy.full_url_for("/lab/admin/share_board_battle_index".dasherize),
             func: -> { ShareBoard::Battle.where(created_at: 24.hours.ago..).count },
           },
@@ -66,20 +66,20 @@ module QuickScript
             func: -> { ::Swars::SearchLog.where(created_at: 24.hours.ago..).count },
           },
           {
-            name: "[ウ検] 取込対局数 (created_at)",
+            name: "[ウ検] 追加対局数 (created_at)",
             cache_expires_in: 24.hours,
             func: -> { ::Swars::Battle.where(created_at: 24.hours.ago..).count }, # 約40秒 (インデックスが効いていないため)
           },
           {
-            name: "[ウ検] 取込対局数 (accessed_at)",
+            name: "[ウ検] 追加対局数 (accessed_at)",
             func: -> { ::Swars::Battle.where(accessed_at: 24.hours.ago..).count },
           },
           {
-            name: "[ウ検] 取込対局数 (battled_at)",
+            name: "[ウ検] 追加対局数 (battled_at)",
             func: -> { ::Swars::Battle.where(battled_at: 24.hours.ago..).count },
           },
           {
-            name: "[ウ検] 取込対局総数",
+            name: "[ウ検] 対局総数",
             cache_expires_in: 12.hours,
             func: -> { ::Swars::Battle.count }, # 約5秒
           },
