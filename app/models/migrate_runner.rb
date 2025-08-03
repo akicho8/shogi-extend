@@ -25,9 +25,9 @@ class MigrateRunner
   def step10_直近50件を残してすべて削除する
     battles_max_gt = 50
     process_count = 0
-    process_count_max = 10000*2
+    process_count_max = 10000*4*7
     catch(:break) do
-      Swars::User.in_batches do |scope|
+      Swars::User.in_batches(order: :desc) do |scope|
         scope = scope.vip_except
         scope = scope.joins(:battles)
         scope = scope.group("swars_users.id")
