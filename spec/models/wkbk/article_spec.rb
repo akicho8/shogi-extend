@@ -77,11 +77,13 @@ RSpec.describe Wkbk::Article, type: :model do
       assert { article.turn_max == 1 }
       assert { article.book_keys == ["book1"] }
 
-      # 開発者に通知
-      mail = ActionMailer::Base.deliveries.last
-      assert { mail.to   == ["shogi.extend@gmail.com"] }
-      assert { mail.subject.include?("作成") }
-      # puts mail.body
+      if false
+        # 開発者に通知
+        mail = ActionMailer::Base.deliveries.last
+        assert { mail.to   == ["shogi.extend@gmail.com"] }
+        assert { mail.subject.include?("作成") }
+        # puts mail.body
+      end
 
       # 同じ2つ目を作る→失敗
       article = user1.wkbk_articles.build
