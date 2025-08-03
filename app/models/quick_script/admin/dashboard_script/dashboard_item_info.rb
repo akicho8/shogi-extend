@@ -23,12 +23,12 @@ module QuickScript
 
           {
             name: "[共有] 対局部屋数",
-            href: UrlProxy.full_url_for("/lab/admin/share_board_room_index".dasherize),
+            href: UrlProxy.full_url_for("/lab/admin/share_board_room_search".dasherize),
             func: -> { ShareBoard::Battle.where(created_at: 24.hours.ago..).select(:room_id).distinct.count },
           },
           {
             name: "[共有] 追加対局数",
-            href: UrlProxy.full_url_for("/lab/admin/share_board_battle_index".dasherize),
+            href: UrlProxy.full_url_for("/lab/admin/share_board_battle_search".dasherize),
             func: -> { ShareBoard::Battle.where(created_at: 24.hours.ago..).count },
           },
 
@@ -36,17 +36,17 @@ module QuickScript
 
           {
             name: "[共有] 発言部屋数",
-            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_index".dasherize),
+            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_search".dasherize),
             func: -> { ShareBoard::ChatMessage.where(created_at: 24.hours.ago..).select(:room_id).distinct.count },
           },
           {
             name: "[共有] 発言者数",
-            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_index".dasherize),
+            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_search".dasherize),
             func: -> { ShareBoard::ChatMessage.where(created_at: 24.hours.ago..).select(:user_id).distinct.count },
           },
           {
             name: "[共有] 発言数",
-            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_index".dasherize),
+            href: UrlProxy.full_url_for(path: "/lab/admin/share_board_chat_message_search".dasherize),
             func: -> { ShareBoard::ChatMessage.where(created_at: 24.hours.ago..).count },
           },
           {

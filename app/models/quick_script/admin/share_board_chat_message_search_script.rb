@@ -1,4 +1,4 @@
-# http://localhost:4000/lab/admin/share_board_chat_message_index
+# http://localhost:4000/lab/admin/share_board_chat_message_search
 
 module QuickScript
   module Admin

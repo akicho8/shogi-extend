@@ -1,4 +1,4 @@
-# http://localhost:4000/lab/admin/share_board_battle_index
+# http://localhost:4000/lab/admin/share_board_battle_search
 
 module QuickScript
   module Admin
@@ -10,7 +10,7 @@ module QuickScript
         current_scope.collect do |e|
           {}.tap do |row|
             row["ID"] = e.id
-            row["部屋情報"] = { _nuxt_link: "↗️", _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_room_index", params: { id: e.room.id }), }, }
+            row["部屋情報"] = { _nuxt_link: "↗️", _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_room_search", params: { id: e.room.id }), }, }
             row["部屋"] = { _nuxt_link: "#{e.room.key}(#{e.room.battles.size})", _v_bind: { to: qs_nuxt_link_to(params: { room_id: e.room.id }), }, }
             LocationInfo.each do |location|
               row[location.pentagon_mark] = v_stack do

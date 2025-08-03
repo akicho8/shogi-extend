@@ -1,4 +1,4 @@
-# http://localhost:4000/lab/admin/share_board_room_index
+# http://localhost:4000/lab/admin/share_board_room_search
 
 module QuickScript
   module Admin
@@ -11,8 +11,8 @@ module QuickScript
           {}.tap do |row|
             row["ID"] = e.id
             row["名前"] = e.key
-            row["対局数"] = { _nuxt_link: e.battles_count, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_battle_index", params: { room_id: e.id }), }, }
-            row["発言数"] = { _nuxt_link: e.chat_messages_count, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_chat_message_index", params: { room_id: e.id }), }, }
+            row["対局数"] = { _nuxt_link: e.battles_count, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_battle_search", params: { room_id: e.id }), }, }
+            row["発言数"] = { _nuxt_link: e.chat_messages_count, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_chat_message_search", params: { room_id: e.id }), }, }
             row["作成"] = e.created_at.to_fs(:ymdhms)
             row["更新"] = e.updated_at.to_fs(:ymdhms)
             row["ランキング"] = { _link_to: "ランキング", _v_bind: { href: e.to_share_board_dashboard_url, target: "_blank" }, }
