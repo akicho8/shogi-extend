@@ -882,7 +882,7 @@ module QuickScript
       ################################################################################
 
       def foreground_execute_log
-        AppLog.important(emoji: ":REALTIME:", subject: mail_subject, body: mail_body)
+        AppLog.info(emoji: ":REALTIME:", subject: mail_subject, body: mail_body)
       end
 
       ################################################################################
@@ -960,9 +960,11 @@ module QuickScript
             :subject     => mail_subject,
             :body        => mail_body,
             :to          => current_user.email,
-            :bcc         => AppConfig[:admin_email],
+            :bcc         => nil,
             :attachments => mail_attachments,
           }).deliver_now        # deliver_later では download_content のシリアライズの関係でエラーになる
+
+        AppLog.info(subject: "#{mail_subject} (#{current_user.email})", body: mail_body)
       end
 
       def mail_attachments

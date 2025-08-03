@@ -94,6 +94,12 @@ module QuickScript
             func: -> { AppLog.plus_minus_search("ウォーズID記憶案内 絶対やらない").where(created_at: 24.hours.ago..).count },
           },
 
+          {
+            name: "横断棋譜検索",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "横断棋譜検索" }),
+            func: -> { AppLog.subject_like("横断棋譜検索").where(created_at: 24.hours.ago..).count },
+          },
+
           ################################################################################
 
           {
