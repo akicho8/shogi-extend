@@ -66,9 +66,22 @@ module QuickScript
             func: -> { ::Swars::SearchLog.where(created_at: 24.hours.ago..).count },
           },
           {
-            name: "[ウ検] 取込対局数",
+            name: "[ウ検] 取込対局数 (created_at)",
+            cache_expires_in: 24.hours,
+            func: -> { ::Swars::Battle.where(created_at: 24.hours.ago..).count }, # 約40秒 (インデックスが効いていないため)
+          },
+          {
+            name: "[ウ検] 取込対局数 (accessed_at)",
+            func: -> { ::Swars::Battle.where(accessed_at: 24.hours.ago..).count },
+          },
+          {
+            name: "[ウ検] 取込対局数 (battled_at)",
+            func: -> { ::Swars::Battle.where(battled_at: 24.hours.ago..).count },
+          },
+          {
+            name: "[ウ検] 取込対局総数",
             cache_expires_in: 12.hours,
-            func: -> { ::Swars::Battle.where(created_at: 24.hours.ago..).count },
+            func: -> { ::Swars::Battle.count }, # 約5秒
           },
           {
             name: "[ウ検] ID記憶案内 やってみる",
@@ -139,14 +152,14 @@ module QuickScript
           },
 
           {
-            name: "[Sidekiq] 死亡ジョブ数",
+            name: "死亡ジョブ数",
             href: UrlProxy.full_url_for(path: "/admin/sidekiq/morgue"),
             func: -> { Sidekiq::DeadSet.new.size },
           },
 
           {
-            name: "[System] 負荷",
-            func: -> { `uptime` },
+            name: "負荷",
+            func: -> { `uptime`.split.last.to_f.fdiv(`nproc`.to_i).round(2) },
           },
 
           ################################################################################
