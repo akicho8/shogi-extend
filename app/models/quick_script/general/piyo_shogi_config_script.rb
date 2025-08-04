@@ -26,7 +26,7 @@ module QuickScript
       def call
         if request_post?
           flash[:notice] = "保存しました"
-          AppLog.important(subject: "[ぴよ将棋の設定] #{piyo_shogi_type_info.name}")
+          AppLog.info(subject: "[ぴよ将棋の設定] #{piyo_shogi_type_info.name}")
           piyo_shogi_reload!
         end
         nil
