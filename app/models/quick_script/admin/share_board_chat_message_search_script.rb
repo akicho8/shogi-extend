@@ -16,13 +16,15 @@ module QuickScript
       end
 
       def call
-        current_scope.collect do |e|
-          {}.tap do |row|
-            row["ID"] = e.id
-            row["部屋"] = { _nuxt_link: e.room.key, _v_bind: { to: qs_nuxt_link_to(params: { room_id: e.room.id }), }, }
-            row["名前"] = { _nuxt_link: e.user.name, _v_bind: { to: qs_nuxt_link_to(params: { user_id: e.user.id }), }, }
-            row["発言"] = { _autolink: e.content }
-            row["日時"] = e.created_at.to_fs(:ymdhms)
+        pagination_for(current_scope, always_table: true) do |scope|
+          scope.collect do |e|
+            {}.tap do |row|
+              row["ID"] = e.id
+              row["部屋"] = { _nuxt_link: e.room.key, _v_bind: { to: qs_nuxt_link_to(params: { room_id: e.room.id }), }, }
+              row["名前"] = { _nuxt_link: e.user.name, _v_bind: { to: qs_nuxt_link_to(params: { user_id: e.user.id }), }, }
+              row["発言"] = { _autolink: e.content }
+              row["日時"] = e.created_at.to_fs(:ymdhms)
+            end
           end
         end
       end
@@ -36,9 +38,10 @@ module QuickScript
           scope = scope.where(user_id: v)
         end
         scope = scope.includes(:user, :room)
-        # scope = scope.where(created_at: 24.hours.ago..)
+        if false
+          scope = scope.where(created_at: 24.hours.ago..)
+        end
         scope = scope.order(created_at: :desc, id: :desc)
-        scope = scope.limit(params[:max].presence || 200)
       end
     end
   end
