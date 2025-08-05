@@ -1102,7 +1102,7 @@ module QuickScript
         @to_zip ||= yield_self do
           io = nil
           processed_second = TimeTrial.realtime { io = zip_builder.to_blob }
-          AppLog.important(subject: "ZIP生成 (#{found_ids.size})", body: ActiveSupport::Duration.build(processed_second).inspect)
+          AppLog.info(subject: "ZIP生成 (#{found_ids.size})", body: ActiveSupport::Duration.build(processed_second).inspect)
           io
         end
       end

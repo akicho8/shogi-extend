@@ -17,6 +17,7 @@ module QuickScript
             "SNS経由登録",
             "ユーザー新規登録",
             "Googleスプレッドシート",
+            "ZIP生成",
           ],
         },
         {
