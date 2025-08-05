@@ -10,7 +10,7 @@ module QuickScript
 
           {
             name: "[共有] 接続数 (現在)",
-            href: UrlProxy.full_url_for("/lab/admin/action_cable_info_script".dasherize),
+            href: UrlProxy.full_url_for("/lab/admin/action_cable_info".dasherize),
             func: -> { ActionCable.server.open_connections_statistics.count },
           },
           {
