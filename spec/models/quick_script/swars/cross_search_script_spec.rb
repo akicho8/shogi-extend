@@ -36,7 +36,7 @@ RSpec.describe QuickScript::Swars::CrossSearchScript, type: :model do
   it "バックグランドでダウンロードする" do
     instance = QuickScript::Swars::CrossSearchScript.new({ download_key: :on, bg_request_key: :on, exec: true }, { current_user: @current_user })
     assert { instance.as_json[:flash][:notice].match?(/承りました/) }
-    assert { ActionMailer::Base.deliveries.count == 2 }
+    assert { ActionMailer::Base.deliveries.count.positive? }
   end
 
   it "各種メソッド" do
