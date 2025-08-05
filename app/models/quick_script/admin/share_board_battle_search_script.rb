@@ -35,7 +35,7 @@ module QuickScript
           scope = scope.where(room_id: v)
         end
         if v = params[:user_id]
-          scope = scope.merge(ShareBoard::User.where(id: v))
+          scope = scope.where(memberships: {user: v})
         end
         scope = scope.includes(:memberships => {:user => :memberships}, :room => :battles, :black => :user, :white => :user)
         scope = scope.order(created_at: :desc)

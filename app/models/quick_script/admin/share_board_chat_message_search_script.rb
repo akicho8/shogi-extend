@@ -37,10 +37,10 @@ module QuickScript
         if v = params[:user_id]
           scope = scope.where(user_id: v)
         end
-        scope = scope.includes(:user, :room)
         if false
           scope = scope.where(created_at: 24.hours.ago..)
         end
+        scope = scope.includes(:user, :room)
         scope = scope.order(created_at: :desc, id: :desc)
       end
     end

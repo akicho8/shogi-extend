@@ -28,7 +28,7 @@ module ShareBoard
           { user_name: "bob",   location_key: "white", judge_key: "lose", },
           { user_name: "carol", location_key: "black", judge_key: "win",  },
         ]
-        room = Room.create!(key: "dev_room")
+        room = Room.create!
         room.redis_clear
         room.battles.create! do |e|
           e.memberships.build(records)
@@ -61,11 +61,8 @@ module ShareBoard
     has_many :chat_users, through: :chat_messages, source: :user # この部屋の発言者たち
 
     before_validation do
-      if Rails.env.development?
-        self.key ||= SecureRandom.hex
-      end
-      if Rails.env.test?
-        self.key ||= "dev_room"
+      if Rails.env.local?
+        self.key ||= ["dev_room", self.class.count.next].join
       end
     end
 

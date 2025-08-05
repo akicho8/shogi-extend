@@ -34,10 +34,10 @@ module QuickScript
           scope = scope.where(id: v)
         end
         if v = params[:user_id]
-          scope = scope.where(id: ShareBoard::User.find(v).room_ids)
+          scope = scope.where(roomships: {user: v})
         end
+        scope = scope.includes(roomships: :user, users: nil)
         scope = scope.order(updated_at: :desc)
-        scope = scope.includes(:roomships => :user)
       end
     end
   end
