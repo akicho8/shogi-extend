@@ -65,7 +65,8 @@ module QuickScript
           end
         end
         if running_in_background
-          SystemMailer.notify(subject: long_title, to: current_user.email, bcc: AppConfig[:admin_email], body: google_sheet_url).deliver_later
+          SystemMailer.notify(subject: long_title, to: current_user.email, bcc: nil, body: google_sheet_url).deliver_later
+          AppLog.info(subject: "#{long_title} (to:#{current_user.email})", body: google_sheet_url)
         end
       end
 
