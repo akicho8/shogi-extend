@@ -76,13 +76,13 @@ module Swars
 
       update!(processed_at: Time.current)
 
+      UserMailer.battle_fetch_notify(self, other_options).deliver_later
+
       if true
         # deliver_later する前に mail にアクセスしてはいけないため別々に生成している
         mail = UserMailer.battle_fetch_notify(self, other_options)
-        AppLog.info(subject: "[夜中棋譜取得] #{mail.subject} #{mail.to}", body: mail.text_part.decoded)
+        AppLog.info(subject: "[夜中棋譜取得] #{mail.subject} #{mail.to}", body: mail.text_part&.decoded)
       end
-
-      UserMailer.battle_fetch_notify(self, other_options).deliver_later
     end
 
     def to_zip
