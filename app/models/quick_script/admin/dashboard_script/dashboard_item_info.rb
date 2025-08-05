@@ -100,6 +100,12 @@ module QuickScript
             func: -> { AppLog.subject_like("横断棋譜検索").where(created_at: 24.hours.ago..).count },
           },
 
+          {
+            name: "将棋ウォーズ対局履歴",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "将棋ウォーズ対局履歴" }),
+            func: -> { AppLog.subject_like("将棋ウォーズ対局履歴").where(created_at: 24.hours.ago..).count },
+          },
+
           ################################################################################
 
           {
@@ -150,6 +156,12 @@ module QuickScript
           },
 
           ################################################################################
+
+          {
+            name: "ZIP生成",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "ZIP生成" }),
+            func: -> { AppLog.subject_like("ZIP生成").where(created_at: 24.hours.ago..).count },
+          },
 
           {
             name: "[KENTO] API",
