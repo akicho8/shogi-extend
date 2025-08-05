@@ -16,6 +16,7 @@ module QuickScript
             "棋譜コピー",
             "SNS経由登録",
             "ユーザー新規登録",
+            "Googleスプレッドシート",
           ],
         },
         {
