@@ -48,11 +48,12 @@ module Swars
 
       private
 
+      # ここで有効にしたいのは最初の2つだけ
       def fast_parser_options
         {
           :ki2_function     => false,
           :validate_feature => false,
-          :analysis_feature => false,
+          :analysis_feature => true,
         }
       end
 

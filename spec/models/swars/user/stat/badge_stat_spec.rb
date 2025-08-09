@@ -24,7 +24,7 @@ RSpec.describe Swars::User::Stat::BadgeStat, type: :model, swars_spec: true do
         [black, white].any? do |user|
           if false
             p user.stat.win_stat.to_s
-            p user.stat.instance_eval(&User::Stat::BadgeInfo.fetch(e[:expected_badge_key]).if_cond)
+            p user.stat.instance_eval(&Swars::User::Stat::BadgeInfo.fetch(e[:expected_badge_key]).if_cond)
           end
           user.stat.badge_stat.active?(e[:expected_badge_key])
         end
@@ -34,6 +34,11 @@ RSpec.describe Swars::User::Stat::BadgeStat, type: :model, swars_spec: true do
         it "#{e[:strike_plan]} → #{e[:expected_badge_key]}" do
           assert { case1(e) }
         end
+      end
+
+      it "入玉" do
+        e = { expected_badge_key: "入玉勝ちマン", strike_plan: "入玉", n_times: 1 }
+        assert { case1(e) }
       end
     end
 

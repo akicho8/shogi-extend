@@ -3,6 +3,8 @@
 module Swars
   module User::Stat
     class TagStat < Base
+      WIN_THRESHOLD = 0.65
+
       class << self
         def report(options = {})
           options = {
@@ -54,19 +56,34 @@ module Swars
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.lose_with?(:"飛車不成")                 # => false
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.win_with?(:"飛車不成")                  # => true
 
-      # tag を使ってトータルで勝ち越した
-      def win_with?(tag)
+      # これを使うよりは win_stat を使った方が早い
+      def master_of(tag, threshold: WIN_THRESHOLD)
         assert_tag(tag)
         if v = ratios_hash[tag]
-          v > 0.5
+          v >= threshold
+        end
+      end
+
+      def win_ratio_lt(tag, threshold)
+        assert_tag(tag)
+        if v = ratios_hash[tag]
+          v < threshold
+        end
+      end
+
+      # tag を使ってトータルで勝ち越した
+      def win_with?(tag, threshold = 0.5)
+        assert_tag(tag)
+        if v = ratios_hash[tag]
+          v > threshold
         end
       end
 
       # tag を使ってトータルで負け越した
-      def lose_with?(tag)
+      def lose_with?(tag, threshold = 0.5)
         assert_tag(tag)
         if v = ratios_hash[tag]
-          v < 0.5
+          v < threshold
         end
       end
 

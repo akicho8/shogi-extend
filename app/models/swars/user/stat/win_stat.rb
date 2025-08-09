@@ -3,8 +3,8 @@
 module Swars
   module User::Stat
     class WinStat < Base
-      THRESHOLD  = 0.5 # 0.5 を越えた場合にメダルを出すと出すぎるので 0.5〜0.6 ぐらいで調整する
-      COUNT_GTEQ = 10  # 居飛車・振り飛車判定はN局以上あったときに有効とする
+      THRESHOLD  = 0.65 # 0.5 を越えた場合にメダルを出すと出すぎるので 0.5〜0.6 ぐらいで調整する
+      COUNT_GTEQ = 10   # 居飛車・振り飛車判定はN局以上あったときに有効とする
 
       delegate *[
         :tag_stat,

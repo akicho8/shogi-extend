@@ -1,19 +1,138 @@
 require "./setup"
-# sql
-# _ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.count } # =>
-# _ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.count } # =>
-# _ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.count } # =>
-# _ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.count } # =>
-
-# Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.counts_hash # =>
+sql
+_ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.counts_hash } # => "146.42 ms"
+_ { Swars::User["bsplive"].stat(sample_max: 1500).pro_skill_exceed_stat.counts_hash } # => "16.89 ms"
 
 black = Swars::User.create!
 white = Swars::User.create!(grade_key: "十段")
-Swars::Battle.create!(xmode_key: "指導", preset_key: "角落") do |e|
+battle = Swars::Battle.create!(xmode_key: "指導", preset_key: "角落", kifu_body_for_test: "△34歩(33)") do |e|
   e.memberships.build(user: black, judge_key: :win)
   e.memberships.build(user: white)
 end
-p black.stat.pro_skill_exceed_stat.counts_hash
-
-# >> #<ActiveRecord::Relation []>
-# >> {}
+black.stat.pro_skill_exceed_stat.counts_hash # => {}
+tp battle.info
+# >>   Swars::User Load (0.5ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'bsplive' LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:45:in 'Swars::User.[]'
+# >>   Swars::Membership Ids (3.3ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 22122 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 1500 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Count (2.7ms)  SELECT COUNT(*) AS `count_all`, `swars_xmodes`.`key` AS `swars_xmodes_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_memberships`.`id` IN (122695304, 121524736, 121524739, 121499377, 121493822, 121493158, 120520558, 120520559, 120520562, 118568280, 118568282, 115847990, 115847993, 115847560, 115450023, 114232283, 114232285, 114232287, 111794149, 111687474, 111677235, 111667406, 111665012, 111569324, 111567456, 111565940, 111472030, 111472032, 111472036, 111466185, 111265354, 111182155, 111182161, 111034752, 111033579, 110962668, 110954760, 110953565, 110867369, 110743854, 110593194, 110502926, 110326822, 110326324, 110225155, 110138171, 110138174, 110132172, 110131476, 109993174, 109633954, 109329482, 109000811, 108672081, 108662466, 108660211, 108379761, 107769627, 107614771, 107272071, 107093212, 107009608, 106911339, 106816387, 106731055, 106670795, 105179947, 101961991, 101960167, 101958027, 101956035, 101954185, 101735932, 97394917, 96472433, 96409005, 92694683, 84299061, 84296970, 84296972, 84296975, 84296976, 81963083, 120866362, 72902452, 71544330, 69224370, 57136392, 50612928, 47720980, 44569305, 28273514, 27295221, 22929090, 22601659, 22513116, 22399000, 22362594, 22166224, 22103937, 22102833, 20914310, 20681647, 20496154, 20239712, 20043018, 20042158, 19887188) GROUP BY `swars_xmodes`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/xmode_stat.rb:42:in 'block in Swars::User::Stat::XmodeStat#counts_hash'
+# >>   Swars::Membership Count (5.9ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` INNER JOIN `presets` ON `presets`.`id` = `swars_battles`.`preset_id` WHERE `swars_memberships`.`id` IN (122695304, 121524736, 121524739, 121499377, 121493822, 121493158, 120520558, 120520559, 120520562, 118568280, 118568282, 115847990, 115847993, 115847560, 115450023, 114232283, 114232285, 114232287, 111794149, 111687474, 111677235, 111667406, 111665012, 111569324, 111567456, 111565940, 111472030, 111472032, 111472036, 111466185, 111265354, 111182155, 111182161, 111034752, 111033579, 110962668, 110954760, 110953565, 110867369, 110743854, 110593194, 110502926, 110326822, 110326324, 110225155, 110138171, 110138174, 110132172, 110131476, 109993174, 109633954, 109329482, 109000811, 108672081, 108662466, 108660211, 108379761, 107769627, 107614771, 107272071, 107093212, 107009608, 106911339, 106816387, 106731055, 106670795, 105179947, 101961991, 101960167, 101958027, 101956035, 101954185, 101735932, 97394917, 96472433, 96409005, 92694683, 84299061, 84296970, 84296972, 84296975, 84296976, 81963083, 120866362, 72902452, 71544330, 69224370, 57136392, 50612928, 47720980, 44569305, 28273514, 27295221, 22929090, 22601659, 22513116, 22399000, 22362594, 22166224, 22103937, 22102833, 20914310, 20681647, 20496154, 20239712, 20043018, 20042158, 19887188) AND `judges`.`key` = 'win' AND `swars_xmodes`.`key` = '指導' AND `presets`.`key` = '平手' GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/pro_skill_exceed_stat.rb:54:in 'block in Swars::User::Stat::ProSkillExceedStat#counts_hash'
+# >>   Swars::User Load (0.4ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'bsplive' LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:45:in 'Swars::User.[]'
+# >>   Swars::Membership Ids (1.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 22122 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 1500 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Count (2.3ms)  SELECT COUNT(*) AS `count_all`, `swars_xmodes`.`key` AS `swars_xmodes_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_memberships`.`id` IN (122695304, 121524736, 121524739, 121499377, 121493822, 121493158, 120520558, 120520559, 120520562, 118568280, 118568282, 115847990, 115847993, 115847560, 115450023, 114232283, 114232285, 114232287, 111794149, 111687474, 111677235, 111667406, 111665012, 111569324, 111567456, 111565940, 111472030, 111472032, 111472036, 111466185, 111265354, 111182155, 111182161, 111034752, 111033579, 110962668, 110954760, 110953565, 110867369, 110743854, 110593194, 110502926, 110326822, 110326324, 110225155, 110138171, 110138174, 110132172, 110131476, 109993174, 109633954, 109329482, 109000811, 108672081, 108662466, 108660211, 108379761, 107769627, 107614771, 107272071, 107093212, 107009608, 106911339, 106816387, 106731055, 106670795, 105179947, 101961991, 101960167, 101958027, 101956035, 101954185, 101735932, 97394917, 96472433, 96409005, 92694683, 84299061, 84296970, 84296972, 84296975, 84296976, 81963083, 120866362, 72902452, 71544330, 69224370, 57136392, 50612928, 47720980, 44569305, 28273514, 27295221, 22929090, 22601659, 22513116, 22399000, 22362594, 22166224, 22103937, 22102833, 20914310, 20681647, 20496154, 20239712, 20043018, 20042158, 19887188) GROUP BY `swars_xmodes`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/xmode_stat.rb:42:in 'block in Swars::User::Stat::XmodeStat#counts_hash'
+# >>   Swars::Membership Count (5.1ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` INNER JOIN `presets` ON `presets`.`id` = `swars_battles`.`preset_id` WHERE `swars_memberships`.`id` IN (122695304, 121524736, 121524739, 121499377, 121493822, 121493158, 120520558, 120520559, 120520562, 118568280, 118568282, 115847990, 115847993, 115847560, 115450023, 114232283, 114232285, 114232287, 111794149, 111687474, 111677235, 111667406, 111665012, 111569324, 111567456, 111565940, 111472030, 111472032, 111472036, 111466185, 111265354, 111182155, 111182161, 111034752, 111033579, 110962668, 110954760, 110953565, 110867369, 110743854, 110593194, 110502926, 110326822, 110326324, 110225155, 110138171, 110138174, 110132172, 110131476, 109993174, 109633954, 109329482, 109000811, 108672081, 108662466, 108660211, 108379761, 107769627, 107614771, 107272071, 107093212, 107009608, 106911339, 106816387, 106731055, 106670795, 105179947, 101961991, 101960167, 101958027, 101956035, 101954185, 101735932, 97394917, 96472433, 96409005, 92694683, 84299061, 84296970, 84296972, 84296975, 84296976, 81963083, 120866362, 72902452, 71544330, 69224370, 57136392, 50612928, 47720980, 44569305, 28273514, 27295221, 22929090, 22601659, 22513116, 22399000, 22362594, 22166224, 22103937, 22102833, 20914310, 20681647, 20496154, 20239712, 20043018, 20042158, 19887188) AND `judges`.`key` = 'win' AND `swars_xmodes`.`key` = '指導' AND `presets`.`key` = '平手' GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/pro_skill_exceed_stat.rb:54:in 'block in Swars::User::Stat::ProSkillExceedStat#counts_hash'
+# >>   TRANSACTION (0.2ms)  BEGIN /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/grade.rb:47:in 'block (3 levels) in <class:Grade>'
+# >>   Swars::Grade Load (0.3ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`key` = '30級' ORDER BY `swars_grades`.`priority` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Swars::Grade Count (0.3ms)  SELECT COUNT(*) FROM `swars_grades` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/grade_methods.rb:11:in 'block (3 levels) in <class:User>'
+# >>   Swars::User Count (126.4ms)  SELECT COUNT(*) FROM `swars_users` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:69:in 'block in <class:User>'
+# >>   Swars::Grade Load (0.2ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`id` = 39 ORDER BY `swars_grades`.`priority` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::User Create (0.3ms)  INSERT INTO `swars_users` (`user_key`, `grade_id`, `last_reception_at`, `search_logs_count`, `created_at`, `updated_at`, `ban_at`, `latest_battled_at`, `soft_crawled_at`, `hard_crawled_at`) VALUES ('user1099335', 39, NULL, 0, '2025-08-09 07:01:57', '2025-08-09 07:01:57', NULL, '2025-08-09 07:01:57', '2025-08-09 07:01:57', '2025-08-09 07:01:57') /*application='ShogiWeb'*/
+# >>   Swars::Profile Create (0.2ms)  INSERT INTO `swars_profiles` (`user_id`, `ban_at`, `ban_crawled_at`, `ban_crawled_count`, `created_at`, `updated_at`) VALUES (1099400, NULL, '2025-08-09 07:01:57', 0, '2025-08-09 07:01:57', '2025-08-09 07:01:57') /*application='ShogiWeb'*/
+# >>   TRANSACTION (1.0ms)  COMMIT /*application='ShogiWeb'*/
+# >>   Swars::Grade Load (0.2ms)  SELECT `swars_grades`.* FROM `swars_grades` WHERE `swars_grades`.`key` = '十段' ORDER BY `swars_grades`.`priority` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   TRANSACTION (0.1ms)  BEGIN /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/grade_methods.rb:11:in 'block (3 levels) in <class:User>'
+# >>   Swars::Grade Count (0.6ms)  SELECT COUNT(*) FROM `swars_grades` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/grade_methods.rb:11:in 'block (3 levels) in <class:User>'
+# >>   Swars::User Count (101.9ms)  SELECT COUNT(*) FROM `swars_users` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:69:in 'block in <class:User>'
+# >>   Swars::User Create (0.4ms)  INSERT INTO `swars_users` (`user_key`, `grade_id`, `last_reception_at`, `search_logs_count`, `created_at`, `updated_at`, `ban_at`, `latest_battled_at`, `soft_crawled_at`, `hard_crawled_at`) VALUES ('user1099336', 40, NULL, 0, '2025-08-09 07:01:57', '2025-08-09 07:01:57', NULL, '2025-08-09 07:01:57', '2025-08-09 07:01:57', '2025-08-09 07:01:57') /*application='ShogiWeb'*/
+# >>   Swars::Profile Create (0.5ms)  INSERT INTO `swars_profiles` (`user_id`, `ban_at`, `ban_crawled_at`, `ban_crawled_count`, `created_at`, `updated_at`) VALUES (1099401, NULL, '2025-08-09 07:01:57', 0, '2025-08-09 07:01:57', '2025-08-09 07:01:57') /*application='ShogiWeb'*/
+# >>   TRANSACTION (0.7ms)  COMMIT /*application='ShogiWeb'*/
+# >>   Swars::Xmode Load (0.2ms)  SELECT `swars_xmodes`.* FROM `swars_xmodes` WHERE `swars_xmodes`.`key` = '指導' ORDER BY `swars_xmodes`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   Preset Load (0.2ms)  SELECT `presets`.* FROM `presets` WHERE `presets`.`key` = '角落ち' ORDER BY `presets`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   Judge Load (0.2ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   TRANSACTION (0.1ms)  BEGIN /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:107:in 'block (3 levels) in <module:MemoryRecordBind>'
+# >>   Swars::Rule Load (0.2ms)  SELECT `swars_rules`.* FROM `swars_rules` WHERE `swars_rules`.`key` = 'ten_min' ORDER BY `swars_rules`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Swars::Final Load (0.2ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TORYO' ORDER BY `swars_finals`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Swars::Imode Load (0.2ms)  SELECT `swars_imodes`.* FROM `swars_imodes` WHERE `swars_imodes`.`key` = 'normal' ORDER BY `swars_imodes`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/application_memory_record.rb:36:in 'ApplicationMemoryRecord#db_record!'
+# >>   Location Load (0.2ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'black' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   Swars::Membership Exists? (0.1ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`location_id` = 1 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.1ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`user_id` = 1099400 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.1ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`op_user_id` = 1099401 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Location Load (0.1ms)  SELECT `locations`.* FROM `locations` WHERE `locations`.`key` = 'white' ORDER BY `locations`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in 'MemoryRecordBind::Base::ClassMethods#lookup'
+# >>   Swars::Membership Exists? (0.1ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`location_id` = 2 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.2ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`user_id` = 1099401 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.2ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`op_user_id` = 1099400 AND `swars_memberships`.`battle_id` IS NULL LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Rule Load (0.3ms)  SELECT `swars_rules`.* FROM `swars_rules` WHERE `swars_rules`.`id` = 1 ORDER BY `swars_rules`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`id` = 1 ORDER BY `swars_finals`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Imode Load (0.1ms)  SELECT `swars_imodes`.* FROM `swars_imodes` WHERE `swars_imodes`.`id` = 1 ORDER BY `swars_imodes`.`position` ASC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Battle Create (2.3ms)  INSERT INTO `swars_battles` (`key`, `battled_at`, `csa_seq`, `win_user_id`, `turn_max`, `meta_info`, `created_at`, `updated_at`, `start_turn`, `critical_turn`, `sfen_body`, `image_turn`, `outbreak_turn`, `accessed_at`, `sfen_hash`, `xmode_id`, `preset_id`, `rule_id`, `final_id`, `analysis_version`, `starting_position`, `imode_id`) VALUES ('4233e238f2f2f3040c81e4e17e0e9791', '2025-08-09 07:01:57', '--- []\n', 1099400, 1, '--- {}\n', '2025-08-09 07:01:57', '2025-08-09 07:01:57', NULL, NULL, 'position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 3c3d', NULL, NULL, '2025-08-09 07:01:57', '08542513bb7d59b960dfd97b97cffab3', 3, 4, 1, 1, 5, NULL, 1) /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.3ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`location_id` = 1 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.2ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`user_id` = 1099400 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.3ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`op_user_id` = 1099401 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Load (0.5ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`battle_id` = 64581750 AND (`swars_memberships`.`position` IS NOT NULL) ORDER BY `swars_memberships`.`position` DESC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Create (1.2ms)  INSERT INTO `swars_memberships` (`battle_id`, `user_id`, `grade_id`, `position`, `created_at`, `updated_at`, `grade_diff`, `think_max`, `op_user_id`, `think_last`, `think_all_avg`, `think_end_avg`, `ai_drop_total`, `judge_id`, `location_id`, `style_id`, `ek_score_without_cond`, `ek_score_with_cond`, `ai_wave_count`, `ai_two_freq`, `ai_noizy_two_max`, `ai_gear_freq`, `opponent_id`) VALUES (64581750, 1099400, 39, 0, '2025-08-09 07:01:57', '2025-08-09 07:01:57', 39, 0, 1099401, 0, NULL, NULL, 0, 1, 1, NULL, 0, NULL, 0, 0.0, 0, 0.0, NULL) /*application='ShogiWeb'*/
+# >>   Swars::MembershipExtra Create (0.3ms)  INSERT INTO `swars_membership_extras` (`membership_id`, `used_piece_counts`, `created_at`, `updated_at`) VALUES (128512689, '{\"P0\":1}', '2025-08-09 07:01:57.767158', '2025-08-09 07:01:57.767158') /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.7ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512689 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'defense_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.5ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512689 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'attack_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.4ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512689 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'technique_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512689 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'note_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.2ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`location_id` = 2 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.1ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`user_id` = 1099401 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Exists? (0.2ms)  SELECT 1 AS one FROM `swars_memberships` WHERE `swars_memberships`.`op_user_id` = 1099400 AND `swars_memberships`.`battle_id` = 64581750 LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Load (0.5ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`battle_id` = 64581750 AND (`swars_memberships`.`position` IS NOT NULL) ORDER BY `swars_memberships`.`position` DESC LIMIT 1 /*application='ShogiWeb'*/
+# >>   Swars::Membership Create (0.6ms)  INSERT INTO `swars_memberships` (`battle_id`, `user_id`, `grade_id`, `position`, `created_at`, `updated_at`, `grade_diff`, `think_max`, `op_user_id`, `think_last`, `think_all_avg`, `think_end_avg`, `ai_drop_total`, `judge_id`, `location_id`, `style_id`, `ek_score_without_cond`, `ek_score_with_cond`, `ai_wave_count`, `ai_two_freq`, `ai_noizy_two_max`, `ai_gear_freq`, `opponent_id`) VALUES (64581750, 1099401, 40, 1, '2025-08-09 07:01:57', '2025-08-09 07:01:57', -39, 0, 1099400, 0, 0, 0, 0, 2, 2, NULL, 0, NULL, 0, 0.0, 0, 0.0, NULL) /*application='ShogiWeb'*/
+# >>   Swars::MembershipExtra Create (0.2ms)  INSERT INTO `swars_membership_extras` (`membership_id`, `used_piece_counts`, `created_at`, `updated_at`) VALUES (128512690, '{}', '2025-08-09 07:01:57.783640', '2025-08-09 07:01:57.783640') /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512690 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'defense_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.7ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512690 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'attack_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.4ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512690 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'technique_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ActsAsTaggableOn::Tag Load (0.3ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 128512690 AND `taggings`.`taggable_type` = 'Swars::Membership' AND (taggings.context = 'note_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   Swars::Membership Update (0.6ms)  UPDATE `swars_memberships` SET `swars_memberships`.`opponent_id` = 128512690 WHERE `swars_memberships`.`id` = 128512689 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/battle/basic_methods.rb:104:in 'block (3 levels) in <class:Battle>'
+# >>   Swars::Membership Update (0.3ms)  UPDATE `swars_memberships` SET `swars_memberships`.`opponent_id` = 128512689 WHERE `swars_memberships`.`id` = 128512690 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/battle/basic_methods.rb:105:in 'block (3 levels) in <class:Battle>'
+# >>   ActsAsTaggableOn::Tagging Load (0.5ms)  SELECT `taggings`.* FROM `taggings` WHERE `taggings`.`taggable_id` = 64581750 AND `taggings`.`taggable_type` = 'Swars::Battle' /*application='ShogiWeb'*/
+# >>   TRANSACTION (0.5ms)  COMMIT /*application='ShogiWeb'*/
+# >>   Swars::Membership Ids (0.3ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 1099400 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Count (0.4ms)  SELECT COUNT(*) AS `count_all`, `swars_xmodes`.`key` AS `swars_xmodes_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_memberships`.`id` = 128512689 GROUP BY `swars_xmodes`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/xmode_stat.rb:42:in 'block in Swars::User::Stat::XmodeStat#counts_hash'
+# >>   Swars::Membership Count (0.4ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` INNER JOIN `presets` ON `presets`.`id` = `swars_battles`.`preset_id` WHERE `swars_memberships`.`id` = 128512689 AND `judges`.`key` = 'win' AND `swars_xmodes`.`key` = '指導' AND `presets`.`key` = '平手' GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/pro_skill_exceed_stat.rb:54:in 'block in Swars::User::Stat::ProSkillExceedStat#counts_hash'
+# >>   ActsAsTaggableOn::Tag Load (0.4ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 64581750 AND `taggings`.`taggable_type` = 'Swars::Battle' AND (taggings.context = 'defense_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/tag_methods.rb:33:in 'TagMethods#tag_info'
+# >>   ActsAsTaggableOn::Tag Load (0.4ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 64581750 AND `taggings`.`taggable_type` = 'Swars::Battle' AND (taggings.context = 'attack_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/tag_methods.rb:34:in 'TagMethods#tag_info'
+# >>   ActsAsTaggableOn::Tag Load (0.3ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 64581750 AND `taggings`.`taggable_type` = 'Swars::Battle' AND (taggings.context = 'technique_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/tag_methods.rb:35:in 'TagMethods#tag_info'
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`taggable_id` = 64581750 AND `taggings`.`taggable_type` = 'Swars::Battle' AND (taggings.context = 'note_tags' AND taggings.tagger_id IS NULL) ORDER BY taggings.id /*application='ShogiWeb'*/
+# >>   ↳ app/models/concerns/tag_methods.rb:36:in 'TagMethods#tag_info'
+# >> |----------+--------------------------|
+# >> |       ID | 64581750                 |
+# >> |   ルール | 10分                     |
+# >> |     結末 | 投了                     |
+# >> | 開始局面 | 通常                     |
+# >> |   モード | 指導                     |
+# >> |   手合割 | 角落ち                   |
+# >> |     手数 | 1                        |
+# >> |       ▲ | user1099335 30級 勝ち () |
+# >> |       △ | user1099336 十段 負け () |
+# >> | 対局日時 | 2025-08-09 16:01:57      |
+# >> | 対局秒数 | 0                        |
+# >> | 終了日時 | 2025-08-09 16:01:57      |
+# >> |     勝者 | user1099335              |
+# >> | 最終参照 | 2025-08-09 16:01:57      |
+# >> |----------+--------------------------|
