@@ -23,7 +23,42 @@ class MigrateRunner
     nil
   end
 
-  def step13_両者の最終対局がかなり前の対局を全部消す
+  def step1_tag_rename
+    list = {
+      "対矢倉急戦棒銀"           => "速攻棒銀",
+      "一間飛車穴熊"             => "一間飛車右穴熊",
+      "対ひねり飛車たこ金戦法"   => "たこ金戦法",
+      "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
+      "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
+      "金銀橋"                   => "リッチブリッジ",
+      "パンツを脱ぐ"             => "パンティを脱ぐ",
+      "超速▲3七銀戦法"          => "超速▲3七銀",
+      "背水の陣"                 => "屍の舞",
+    }
+
+    p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+    p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+
+    list.each do |from, to|
+      # p [from, to, :try]
+      ActsAsTaggableOn::Tag.find_by(name: to).destroy!
+
+      if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+        begin
+          tag.update!(name: to)
+          p [from, to, :update]
+        rescue ActiveRecord::RecordInvalid => error
+          p error
+          # tag_delete(tag.name)
+        end
+      end
+    end
+
+    p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+    p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+  end
+
+  def step2_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|
       scope = scope.vip_except
       scope = scope.joins(memberships: :user)
@@ -37,133 +72,21 @@ class MigrateRunner
         end
       rescue ActiveRecord::Deadlocked => error
         p error
-        
-        
-=======
-  def step1_tag_rename
-    list = {
-      "対矢倉急戦棒銀"           => "速攻棒銀",
-      "一間飛車穴熊"             => "一間飛車右穴熊",
-      "対ひねり飛車たこ金戦法"   => "たこ金戦法",
-      "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
-      "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
-      "金銀橋"                   => "リッチブリッジ",
-      "パンツを脱ぐ"             => "パンティを脱ぐ",
-      "超速▲3七銀戦法"          => "超速▲3七銀",
-      "背水の陣"                 => "屍の舞",
-    }
-    list.each do |from, to|
-      # p [from, to, :try]
-      if tag = ActsAsTaggableOn::Tag.find_by(name: from)
-        begin
-          tag.update!(name: to)
-          p [from, to, :update]
-        rescue ActiveRecord::RecordInvalid => error
-          p error
-          # tag_delete(tag.name)
-        end
->>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
       end
     end
   end
 
-<<<<<<< HEAD
-  # def step12_最近対局していない人の対局を全部消す
-  #   battles_max_gt = 0
-  #   process_count = 0
-  #   process_count_max = 10000*4*100
-  #   catch(:break) do
-  #     Swars::User.in_batches(order: :desc) do |scope|
-  #       scope = scope.vip_except
-  #       scope = scope.where(latest_battled_at: ...3.month.ago)
-  #       scope = scope.joins(:battles)
-  #       scope = scope.group("swars_users.id")
-  #       scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
-  #       scope.each do |user|
-  #         battles_max2 = battles_max_gt
-  #         battles = user.battles
-  #         battles = battles.order(accessed_at: :desc).offset(battles_max2)
-  #         process_count += battles.size
-  #         tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "最終対局" => user.latest_battled_at.to_s, "削除件数" => battles.size}])
-  #         STDOUT.flush
-  #         begin
-  #           Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
-  #             battles.destroy_all
-  #           end
-  #         rescue ActiveRecord::Deadlocked => error
-  #           p error
-  #         end
-  #         p [process_count, process_count_max]
-  #         if process_count >= process_count_max
-  #           throw(:break)
-  #         end
-  #       end
-=======
-  # def step2_tag_delete
-  #   list = [
-  #     # "三間飛車系",
-  #     # "中飛車系",
-  #     # "右玉系",
-  #     # "向かい飛車系",
-  #     # "四間飛車系",
-  #     # "対三間飛車系",
-  #     # "対中飛車系",
-  #     # "対右玉系",
-  #     # "対向かい飛車系",
-  #     # "対四間飛車系",
-  #     # "対居飛車",
-  #     # "対引き角系",
-  #     # "対振り飛車",
-  #     # "対横歩取り系",
-  #     # "対相掛かり系",
-  #     # "対筋違い角系",
-  #     # "対角換わり系",
-  #     # "引き角系",
-  #     # "横歩取り系",
-  #     # "片穴熊",
-  #     # "相掛かり系",
-  #     # "空中楼閣",
-  #     # "筋違い角系",
-  #     # "角換わり系",
-  #
-  #     "対穴熊",
-  #     "対居飛車",
-  #     "対振り飛車",
-  #     "片穴熊",
-  #     "空中楼閣",
-  #   ]
-  #   list.each do |from, to|
-  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
-  #       tag_delete(tag.name)
->>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
-  #     end
-  #   end
-  # end
-
-<<<<<<< HEAD
-  def step10_一般_直近50件を残してすべて削除する
+  def step3_一般_直近50件を残してすべて削除する
     battles_max_gt = 50
     process_count = 0
     process_count_max = 10000*4*10
     catch(:break) do
       Swars::User.in_batches(order: :desc) do |scope|
-=======
-  def step10_直近50件を残してすべて削除する
-=======
-  def step3_直近50件を残してすべて削除する
->>>>>>> 3147790e8 ([feat] 新しい bioshogi に対応する)
-    battles_max_gt = 50
-    process_count = 0
-    process_count_max = 10
-    catch(:break) do
-      Swars::User.in_batches do |scope|
->>>>>>> 8486d7473 ([feat] migrate_runner の調整)
         scope = scope.vip_except
         scope = scope.joins(:battles)
         scope = scope.group("swars_users.id")
         scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
         scope.each do |user|
-<<<<<<< HEAD
           battles_max2 = battles_max_gt
           battles = user.battles
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
@@ -172,24 +95,11 @@ class MigrateRunner
           STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
-=======
-          if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
-            battles_max2 = 200
-          else
-            battles_max2 = 50
-          end
-          battles = user.battles
-          battles = battles.order(accessed_at: :desc).offset(battles_max2)
-          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
-          begin
-            Retryable.retryable(on: ActiveRecord::Deadlocked) do
->>>>>>> 8486d7473 ([feat] migrate_runner の調整)
               battles.destroy_all
             end
           rescue ActiveRecord::Deadlocked => error
             p error
           end
-<<<<<<< HEAD
           p [process_count, process_count_max]
           if process_count >= process_count_max
             throw(:break)
@@ -224,9 +134,6 @@ class MigrateRunner
             p error
           end
           p [process_count, process_count_max]
-=======
-          process_count += 1
->>>>>>> 8486d7473 ([feat] migrate_runner の調整)
           if process_count >= process_count_max
             throw(:break)
           end
@@ -234,6 +141,19 @@ class MigrateRunner
       end
     end
   end
+
+  # def step2a_tag_delete
+  #   list = [
+  #     "空中楼閣",
+  #     "対穴熊",
+  #     "片穴熊",
+  #   ]
+  #   list.each do |from, to|
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       tag_delete(tag.name)
+  #     end
+  #   end
+  # end
 
   # def step6_rebuild_for_auto_crawl_user_keys
   #   ::Swars::User::Vip.auto_crawl_user_keys.each.with_index do |user_key, i|
@@ -304,6 +224,54 @@ class MigrateRunner
   #   end
   # end
 
+  # def step2_rename
+  #   list = {
+  #     # "中田功XP"           => "コーヤン流三間飛車",
+  #     # "平目"               => "ヒラメ戦法",
+  #     # "急戦棒銀"           => "対矢倉急戦棒銀",
+  #     # '▲3七銀戦法'        => "矢倉▲3七銀戦法",
+  #     # "▲５五龍中飛車"     => "▲5五龍中飛車",
+  #     # "▲３七銀戦法"       => "▲3七銀戦法",
+  #     # "都成流△３一金"     => "都成流△3一金",
+  #     # "△３三角型空中戦法" => "△3三角型空中戦法",
+  #     # "△３三桂戦法"       => "△3三桂戦法",
+  #     # "△２三歩戦法"       => "△2三歩戦法",
+  #     # "△４五角戦法"       => "△4五角戦法",
+  #     # "▲５七金戦法"       => "▲5七金戦法",
+  #     # "△３三飛戦法"       => "△3三飛戦法",
+  #     # "菜々河流△４四角"   => "菜々河流△4四角",
+  #     # "天彦流▲６六角"     => "天彦流▲6六角",
+  #     # "▲４六銀右急戦"     => "▲4六銀右急戦",
+  #     # "▲４六銀左急戦"     => "▲4六銀左急戦",
+  #     # "▲４五歩早仕掛け"   => "▲4五歩早仕掛け",
+  #     # "超速▲３七銀"       => "超速▲3七銀戦法",
+  #     # "超速▲3七銀"        => "超速▲3七銀戦法",
+  #     # "初手７八銀戦法"     => "初手▲7八銀戦法",
+  #     # "初手7八銀戦法"      => "初手▲7八銀戦法",
+  #     # "初手３六歩戦法"     => "初手▲3六歩戦法",
+  #     # "初手3六歩戦法"      => "初手▲3六歩戦法",
+  #     # "2手目△３ニ飛戦法"  => "2手目△3ニ飛戦法",
+  #     # "2手目△74歩戦法"    => "2手目△7四歩戦法",
+  #     # "4手目△３三角戦法"  => "4手目△3三角戦法",
+  #     # "2手目△62銀"        => "2手目△6二銀戦法",
+  #     # "2手目△6二銀"       => "2手目△6二銀戦法",
+  #     # "阪田流向飛車" => "阪田流向かい飛車",
+  #     # "石田流" => "石田流本組み",
+  #   }
+  #   list.each do |from, to|
+  #     # p [from, to, :try]
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       begin
+  #         tag.update!(name: to)
+  #         p [from, to, :update]
+  #       rescue ActiveRecord::RecordInvalid => error
+  #         p error
+  #         # tag_delete(tag.name)
+  #       end
+  #     end
+  #   end
+  # end
+
   # def step3_rebuild
   #   s = Swars::Battle.all
   #   batch_size = 1000
@@ -319,21 +287,6 @@ class MigrateRunner
   #   end
   # end
 
-  #   # def step3_rebuild
-  #   #   s = Swars::Battle.all
-  #   #   batch_size = 1000
-  #   #   all_count = s.count.ceildiv(batch_size)
-  #   #   s.in_batches(order: :desc, of: batch_size).each_with_index do |s, batch|
-  #   #     p [batch, all_count, batch.fdiv(all_count)]
-  #   #     # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
-  #   #     # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
-  #   #     s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
-  #   #     # s = s.where("analysis_version < 2")
-  #   #     s.each { |e| e.rebuild(tries: 1) }
-  #   #     puts
-  #   #   end
-  #   # end
-  #
   # def step4
   #   [
   #     # ["手得角交換型", "attack_tags",  "note_tags",   ],
@@ -454,14 +407,53 @@ class MigrateRunner
   #   AppLog.info(subject: "create_if_nothing", body: "完了")
   # end
 
+  # def step12_最近対局していない人の対局を全部消す
+  #   battles_max_gt = 0
+  #   process_count = 0
+  #   process_count_max = 10000*4*100
+  #   catch(:break) do
+  #     Swars::User.in_batches(order: :desc) do |scope|
+  #       scope = scope.vip_except
+  #       scope = scope.where(latest_battled_at: ...3.month.ago)
+  #       scope = scope.joins(:battles)
+  #       scope = scope.group("swars_users.id")
+  #       scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
+  #       scope.each do |user|
+  #         battles_max2 = battles_max_gt
+  #         battles = user.battles
+  #         battles = battles.order(accessed_at: :desc).offset(battles_max2)
+  #         process_count += battles.size
+  #         tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "最終対局" => user.latest_battled_at.to_s, "削除件数" => battles.size}])
+  #         STDOUT.flush
+  #         begin
+  #           Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+  #             battles.destroy_all
+  #           end
+  #         rescue ActiveRecord::Deadlocked => error
+  #           p error
+  #         end
+  #         p [process_count, process_count_max]
+  #         if process_count >= process_count_max
+  #           throw(:break)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
+
   private
 
   def tag_delete(name)
     p [:tag_delete, name]
     if e = ActsAsTaggableOn::Tag.find_by(name: name)
       e.taggings.in_batches do |relation|
-        p [Time.current]
-        relation.where(taggable_type: "Swars::Membership").destroy_all
+        begin
+          Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+            relation.where(taggable_type: "Swars::Membership").destroy_all
+          end
+        rescue ActiveRecord::Deadlocked => error
+          p error
+        end
       end
     end
   end
