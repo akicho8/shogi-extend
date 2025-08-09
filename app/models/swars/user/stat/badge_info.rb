@@ -12,7 +12,7 @@ module Swars
       memory_record [
         ################################################################################ ネガティブ
 
-        { key: "絶対投了しないマン",     icon: "🪳",   message: "悔しかったので時間切れまで放置した",     if_cond: proc { leave_alone_stat.count.positive? } },
+        { key: "絶対投了しないマン",     icon: "💩",   message: "悔しかったので時間切れまで放置した",     if_cond: proc { leave_alone_stat.count.positive? } },
         { key: "無気力マン",             icon: "🦥",   message: "無気力な対局をした",                     if_cond: proc { lethargy_stat.exist? } },
         { key: "棋力調整マン",           icon: "🩸",   message: "わざと負けて棋力を調整した",             if_cond: proc { skill_adjust_stat.count.positive? } },
         { key: "大長考マン",             icon: "😴",   message: "対局放棄と受け取られかねない長考をした", if_cond: proc { prolonged_deliberation_stat.count.positive? } },
@@ -153,7 +153,7 @@ module Swars
 
         ################################################################################ 結末
 
-        { key: "切断マン",       icon: "💩",   message: "切断の使い手",       if_cond: proc { judge_final_stat.count_by(:lose, :DISCONNECT).try { self >= 1 } }, },
+        { key: "切断マン",       icon: "🪳",   message: "切断の使い手",       if_cond: proc { judge_final_stat.count_by(:lose, :DISCONNECT).try { self >= 1 } }, },
         { key: "投了マン",       icon: "🤚",   message: "投了を究めし者",     if_cond: proc { judge_final_stat.master_ratio(:TORYO).try { self == 1.0 } }, },
         { key: "詰まされマン",   icon: "Ⓜ️",   message: "マゾの傾向がある",   if_cond: proc { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "時間切れで負けがち", if_cond: proc { judge_final_stat.master_ratio(:TIMEOUT).try { self >= 0.25 } }, },

@@ -23,40 +23,39 @@ class MigrateRunner
     nil
   end
 
-  def step1_tag_rename
-    list = {
-      "対矢倉急戦棒銀"           => "速攻棒銀",
-      "一間飛車穴熊"             => "一間飛車右穴熊",
-      "対ひねり飛車たこ金戦法"   => "たこ金戦法",
-      "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
-      "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
-      "金銀橋"                   => "リッチブリッジ",
-      "パンツを脱ぐ"             => "パンティを脱ぐ",
-      "超速▲3七銀戦法"          => "超速▲3七銀",
-      "背水の陣"                 => "屍の舞",
-    }
-
-    p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
-    p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
-
-    list.each do |from, to|
-      # p [from, to, :try]
-      ActsAsTaggableOn::Tag.find_by(name: to).destroy!
-
-      if tag = ActsAsTaggableOn::Tag.find_by(name: from)
-        begin
-          tag.update!(name: to)
-          p [from, to, :update]
-        rescue ActiveRecord::RecordInvalid => error
-          p error
-          # tag_delete(tag.name)
-        end
-      end
-    end
-
-    p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
-    p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
-  end
+  # def step1_tag_rename
+  #   list = {
+  #     "対矢倉急戦棒銀"           => "速攻棒銀",
+  #     "一間飛車穴熊"             => "一間飛車右穴熊",
+  #     "対ひねり飛車たこ金戦法"   => "たこ金戦法",
+  #     "2手目△3ニ飛戦法"         => "2手目△3二飛戦法",
+  #     "飯島流相掛かり引き角戦法" => "飯島流相掛かり引き角",
+  #     "金銀橋"                   => "リッチブリッジ",
+  #     "パンツを脱ぐ"             => "パンティを脱ぐ",
+  #     "超速▲3七銀戦法"          => "超速▲3七銀",
+  #     "背水の陣"                 => "屍の舞",
+  #   }
+  #
+  #   p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+  #   p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+  #
+  #   list.each do |from, to|
+  #     # p [from, to, :try]
+  #     # ActsAsTaggableOn::Tag.find_by(name: to).destroy!
+  #     if tag = ActsAsTaggableOn::Tag.find_by(name: from)
+  #       begin
+  #         tag.update!(name: to)
+  #         p [from, to, :update]
+  #       rescue ActiveRecord::RecordInvalid => error
+  #         p error
+  #         # tag_delete(tag.name)
+  #       end
+  #     end
+  #   end
+  #
+  #   p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+  #   p list.values.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }
+  # end
 
   def step2_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|

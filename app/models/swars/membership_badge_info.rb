@@ -20,7 +20,7 @@ module Swars
       {
         key: "切断マン",
         message: "悔しかったので切断した",
-        badge_params: "💩",
+        badge_params: "🪳",
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.turn_max >= Config.establish_gteq
@@ -66,7 +66,7 @@ module Swars
       {
         key: "絶対投了しないマン",
         message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },
-        badge_params: "🪳",
+        badge_params: "💩",
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.final_info.key == :TIMEOUT
