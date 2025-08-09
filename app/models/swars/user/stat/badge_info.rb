@@ -51,12 +51,12 @@ module Swars
 
         ################################################################################ 単純な勝ち越し戦法シリーズ
 
-        { key: "棒銀マン",               icon: "🐭️",   message: "棒銀の使い手",               if_cond: proc { win_stat.exist?("棒銀") }, },
-        { key: "嬉野マン",               icon: "↗️",    message: "嬉野流の使い手",             if_cond: proc { win_stat.exist?("嬉野流") }, },
-        { key: "パックマン野郎",         icon: "🅿",    message: "パックマンの使い手",           if_cond: proc { win_stat.exist?("パックマン") }, },
-        { key: "耀龍マン",               icon: "🐉",   message: "耀龍四間飛車の使い手",           if_cond: proc { win_stat.exist?("耀龍四間飛車") }, },
-        { key: "右玉マン",               icon: "➡",    message: "右玉の使い手",               if_cond: proc { win_stat.exist?("右玉") }, },
-        { key: "屋敷マン",               icon: "🥷",   message: "屋敷流二枚銀の使い手",       if_cond: proc { win_stat.exist?("屋敷流二枚銀") }, },
+        { key: "棒銀マン",               icon: "🐭️",   message: "棒銀の使い手",               if_cond: proc { win_stat.exist?(:"棒銀") }, },
+        { key: "嬉野マン",               icon: "↗️",    message: "嬉野流の使い手",             if_cond: proc { win_stat.exist?(:"嬉野流") }, },
+        { key: "パックマン野郎",         icon: "🅿",    message: "パックマンの使い手",           if_cond: proc { win_stat.exist?(:"パックマン戦法") }, },
+        { key: "耀龍マン",               icon: "🐉",   message: "耀龍四間飛車の使い手",           if_cond: proc { win_stat.exist?(:"耀龍四間飛車") }, },
+        { key: "右玉マン",               icon: "➡",    message: "右玉の使い手",               if_cond: proc { win_stat.exist?(:"右玉") }, },
+        { key: "屋敷マン",               icon: "🥷",   message: "屋敷流二枚銀の使い手",       if_cond: proc { win_stat.exist?(:"屋敷流二枚銀") }, },
         { key: "UFOマン",                icon: "🛸",   message: "UFO銀の使い手",              if_cond: proc { win_stat.exist?(:"UFO銀") }, },
         { key: "魔界マン",               icon: "🧛‍♀️",   message: "魔界四間飛車の使い手",     if_cond: proc { win_stat.exist?(:"魔界四間飛車") }, },
         { key: "カニ囲いマン",           icon: "🦀",   message: "カニ囲いの使い手",           if_cond: proc { win_stat.exist?(:"カニ囲い") }, },
@@ -73,7 +73,7 @@ module Swars
         { key: "スイーツマン",           icon: "🍓",   message: "いちご囲いの使い手",         if_cond: proc { win_stat.exist?(:"いちご囲い")                  }, },
         { key: "無敵囲いマン",           icon: "🔰",   message: "無敵囲いの使い手",           if_cond: proc { win_stat.exist?(:"無敵囲い")                  }, },
         { key: "エルモマン",             icon: "🐵",   message: "エルモ囲いの使い手",         if_cond: proc { win_stat.exist?(:"エルモ囲い")                  }, },
-        { key: "鬼殺しマン",             icon: "👹",   message: "鬼殺しの使い手",             if_cond: proc { win_stat.exist?("鬼殺し") }, },
+        { key: "鬼殺しマン",             icon: "👹",   message: "鬼殺しの使い手",             if_cond: proc { win_stat.exist?(:"鬼殺し") }, },
         { key: "アヒルマン",             icon: "🐥",   message: "アヒル戦法の使い手",         if_cond: proc { win_stat.exist?(:"アヒル戦法") }, },
         { key: "稲庭マン",               icon: "👾",   message: "稲庭戦法の使い手",           if_cond: proc { win_stat.exist?(:"稲庭戦法") }, },
         { key: "雲隠れマン",             icon: "🌥️",   message: "雲隠れ玉の使い手",            if_cond: proc { win_stat.exist?(:"雲隠れ玉") }, },
