@@ -11,9 +11,9 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
           e.memberships.build(user: white)
         end
       end
-      { black: black, white: white }.inject({}) { |a, (k, v)|
+      { black: black, white: white }.inject({}) do |a, (k, v)|
         a.merge(k => v.memberships.first.badge_info.key.to_s)
-      }
+      end
     end
 
     it "works" do
