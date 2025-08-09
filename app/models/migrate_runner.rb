@@ -59,10 +59,10 @@ class MigrateRunner
 
   def step2_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|
-      scope = scope.vip_except
+      # scope = scope.vip_except
       scope = scope.joins(memberships: :user)
       scope = scope.group("swars_battles.id")
-      scope = scope.having("MAX(swars_users.latest_battled_at) < ?", 3.month.ago)
+      scope = scope.having("MAX(swars_users.latest_battled_at) < ?", 1.month.ago)
       puts scope.size
       STDOUT.flush
       begin
@@ -108,7 +108,7 @@ class MigrateRunner
     end
   end
 
-  def step11_VIP_直近200件を残してすべて削除する
+  def step4_VIP_直近200件を残してすべて削除する
     battles_max_gt = 200
     process_count = 0
     process_count_max = 10000*4*200
