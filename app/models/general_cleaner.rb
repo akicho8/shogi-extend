@@ -15,16 +15,15 @@ class GeneralCleaner
     @count = scope.count
     memo["前"] = scope.count
 
-    @free_changes = FreeSpace.new.call do
-      if scope.respond_to?(:find_in_batches)
-        scope.find_in_batches(batch_size: @options[:batch_size]) do |records|
-          one_group(records)
-          rows << @group
-        end
-      else
-        one_group(scope)
+    if scope.respond_to?(:find_in_batches)
+      # FIXME: find_in_batches の使い方を間違えている。複雑な条件のあとで find_in_batches ではなく find_in_batches のあとで複雑な条件を入れるのが正しい。
+      scope.find_in_batches(batch_size: @options[:batch_size]) do |records|
+        one_group(records)
         rows << @group
       end
+    else
+      one_group(scope)
+      rows << @group
     end
 
     @end_time = Time.current
@@ -34,7 +33,6 @@ class GeneralCleaner
     memo["開始"] = @start_time.to_fs(:ymdhms)
     memo["終了"] = @end_time.to_fs(:ymdhms)
     memo["時間"] = execution_duration.inspect
-    memo["空き"] = @free_changes.join(" → ")
 
     AppLog.important(subject: subject, body: body)
 
