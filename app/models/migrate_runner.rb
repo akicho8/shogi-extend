@@ -23,14 +23,65 @@ class MigrateRunner
     nil
   end
 
-  def step12_最近対局していない人の対局を全部消す
-    battles_max_gt = 0
+  def step13_両者の最終対局がかなり前の対局を全部消す
+    Swars::Battle.in_batches do |scope|
+      scope = scope.vip_except
+      scope = scope.joins(memberships: :user)
+      scope = scope.group("swars_battles.id")
+      scope = scope.having("MAX(swars_users.latest_battled_at) < ?", 3.month.ago)
+      puts scope.size
+      STDOUT.flush
+      begin
+        Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+          scope.destroy_all
+        end
+      rescue ActiveRecord::Deadlocked => error
+        p error
+      end
+    end
+  end
+
+  # def step12_最近対局していない人の対局を全部消す
+  #   battles_max_gt = 0
+  #   process_count = 0
+  #   process_count_max = 10000*4*100
+  #   catch(:break) do
+  #     Swars::User.in_batches(order: :desc) do |scope|
+  #       scope = scope.vip_except
+  #       scope = scope.where(latest_battled_at: ...3.month.ago)
+  #       scope = scope.joins(:battles)
+  #       scope = scope.group("swars_users.id")
+  #       scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
+  #       scope.each do |user|
+  #         battles_max2 = battles_max_gt
+  #         battles = user.battles
+  #         battles = battles.order(accessed_at: :desc).offset(battles_max2)
+  #         process_count += battles.size
+  #         tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "最終対局" => user.latest_battled_at.to_s, "削除件数" => battles.size}])
+  #         STDOUT.flush
+  #         begin
+  #           Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+  #             battles.destroy_all
+  #           end
+  #         rescue ActiveRecord::Deadlocked => error
+  #           p error
+  #         end
+  #         p [process_count, process_count_max]
+  #         if process_count >= process_count_max
+  #           throw(:break)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
+
+  def step10_一般_直近50件を残してすべて削除する
+    battles_max_gt = 50
     process_count = 0
-    process_count_max = 10000*4*100
+    process_count_max = 10000*4*10
     catch(:break) do
       Swars::User.in_batches(order: :desc) do |scope|
         scope = scope.vip_except
-        scope = scope.where(latest_battled_at: ...3.month.ago)
         scope = scope.joins(:battles)
         scope = scope.group("swars_users.id")
         scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
@@ -39,7 +90,7 @@ class MigrateRunner
           battles = user.battles
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           process_count += battles.size
-          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "最終対局" => user.latest_battled_at.to_s, "削除件数" => battles.size}])
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
           STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
@@ -57,81 +108,38 @@ class MigrateRunner
     end
   end
 
-  # def step10_一般_直近50件を残してすべて削除する
-  #   battles_max_gt = 50
-  #   process_count = 0
-  #   process_count_max = 10000*4*10
-  #   catch(:break) do
-  #     Swars::User.in_batches(order: :desc) do |scope|
-  #       scope = scope.vip_except
-  #       scope = scope.joins(:battles)
-  #       scope = scope.group("swars_users.id")
-  #       scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
-  #       scope.each do |user|
-  #         battles_max2 = battles_max_gt
-  #         # if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
-  #         #   battles_max2 = 200
-  #         # else
-  #         #   battles_max2 = 50
-  #         # end
-  #         battles = user.battles
-  #         battles = battles.order(accessed_at: :desc).offset(battles_max2)
-  #         process_count += battles.size
-  #         tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
-  #         STDOUT.flush
-  #         begin
-  #           Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
-  #             battles.destroy_all
-  #           end
-  #         rescue ActiveRecord::Deadlocked => error
-  #           p error
-  #         end
-  #         p [process_count, process_count_max]
-  #         if process_count >= process_count_max
-  #           throw(:break)
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
-
-  # def step11_VIP_直近200件を残してすべて削除する
-  #   battles_max_gt = 200
-  #   process_count = 0
-  #   process_count_max = 10000*4*200
-  #   catch(:break) do
-  #     Swars::User.in_batches(order: :asc) do |scope|
-  #       scope = scope.vip_only
-  #       scope = scope.joins(:battles)
-  #       scope = scope.group("swars_users.id")
-  #       scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
-  #       scope.each do |user|
-  #         battles_max2 = battles_max_gt
-  #         # if Swars::User::Vip.auto_crawl_user_keys.include?(user.key)
-  #         #   battles_max2 = 200
-  #         # else
-  #         #   battles_max2 = 50
-  #         # end
-  #         battles = user.battles
-  #         battles = battles.order(accessed_at: :desc).offset(battles_max2)
-  #         process_count += battles.size
-  #         tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
-  #         STDOUT.flush
-  #         begin
-  #           Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
-  #             battles.destroy_all
-  #           end
-  #         rescue ActiveRecord::Deadlocked => error
-  #           p error
-  #         end
-  #         p [process_count, process_count_max]
-  #         if process_count >= process_count_max
-  #           throw(:break)
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
+  def step11_VIP_直近200件を残してすべて削除する
+    battles_max_gt = 200
+    process_count = 0
+    process_count_max = 10000*4*200
+    catch(:break) do
+      Swars::User.in_batches(order: :asc) do |scope|
+        scope = scope.vip_only
+        scope = scope.joins(:battles)
+        scope = scope.group("swars_users.id")
+        scope = scope.having("COUNT(swars_battles.id) > ?", battles_max_gt)
+        scope.each do |user|
+          battles_max2 = battles_max_gt
+          battles = user.battles
+          battles = battles.order(accessed_at: :desc).offset(battles_max2)
+          process_count += battles.size
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          STDOUT.flush
+          begin
+            Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
+              battles.destroy_all
+            end
+          rescue ActiveRecord::Deadlocked => error
+            p error
+          end
+          p [process_count, process_count_max]
+          if process_count >= process_count_max
+            throw(:break)
+          end
+        end
+      end
+    end
+  end
 
   # def step2_tag_rename
   #   list = {
