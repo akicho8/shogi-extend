@@ -176,7 +176,7 @@ class FreeBattle < ApplicationRecord
       {
         :ki2_function => false,
         :validate_feature  => false,
-        :analysis_feature  => false,
+        :analysis_feature  => true,
       }
     else
       {}
