@@ -7,7 +7,7 @@
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
   b-taglist(v-if="APP.column_visible_p('attack_tag_list') || APP.column_visible_p('defense_tag_list')")
-    template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
+    template(v-for="key in ['attack_tag_list', 'defense_tag_list', 'technique_tag_list', 'note_tag_list']")
       template(v-if="APP.column_visible_p(key)")
         template(v-for="name in membership[key]")
           nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")

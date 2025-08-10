@@ -79,7 +79,7 @@ module Swars
           if e.style
             hv[:style_key] = e.style.key
           end
-          [:attack, :defense].each do |key|
+          [:attack, :defense, :technique, :note].each do |key|
             hv["#{key}_tag_list"] = e.tag_names_for(key)
           end
           hv
