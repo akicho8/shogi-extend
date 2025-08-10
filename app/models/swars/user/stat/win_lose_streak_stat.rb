@@ -7,6 +7,10 @@ module Swars
         :ordered_ids_scope,
       ], to: :stat
 
+      def five_win?
+        max(:win) >= 5
+      end
+
       def ten_win?
         max(:win) >= 10
       end

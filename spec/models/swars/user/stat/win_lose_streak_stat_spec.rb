@@ -18,6 +18,12 @@ RSpec.describe Swars::User::Stat::WinLoseStreakStat, type: :model, swars_spec: t
       assert { case1([:win, :lose, :win, :win]) == { win: 2, lose: 1 } }
     end
 
+    it "5連勝" do
+      case1([:win] * 5)
+      assert { @user.stat.badge_stat.win_lose_streak_stat.five_win? }
+      assert { @user.stat.badge_stat.active?(:"5連勝") }
+    end
+
     it "10連勝" do
       case1([:win] * 10)
       assert { @user.stat.badge_stat.win_lose_streak_stat.ten_win? }
