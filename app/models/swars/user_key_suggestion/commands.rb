@@ -4,12 +4,12 @@ module Swars
 
     Commands = [
       Command.new { |user_key|
-        if e = Bioshogi::Analysis::TagIndex.fuzzy_lookup(user_key)
+        if e = Bioshogi::Analysis::TagIndex.fuzzy_lookup(user_key.to_s)
           "#{e.name}に該当する#{e.human_name}は見つかりません"
         end
       },
       Command.new { |user_key|
-        if e = PresetInfo.lookup(user_key)
+        if e = PresetInfo.lookup(user_key.to_s)
           "#{e.name}に該当する手合割は見つかりません"
         end
       },

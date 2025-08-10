@@ -2,42 +2,25 @@ require "rails_helper"
 
 RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
   describe "タグ依存バッジ" do
-    def test(tactic_keys, win_or_lose)
+    def case1(tactic_keys, win_or_lose)
       black = Swars::User.create!
       white = Swars::User.create!
-      tactic_keys.each do |e|
+      Array(tactic_keys).each do |e|
         Swars::Battle.create!(strike_plan: e) do |e|
           e.memberships.build(user: black, judge_key: win_or_lose)
           e.memberships.build(user: white)
         end
       end
       { black: black, white: white }.inject({}) { |a, (k, v)|
-        p [k, v.memberships.first.badge_info.key.to_s]
         a.merge(k => v.memberships.first.badge_info.key.to_s)
       }
     end
 
-    def b(*tactic_keys)
-      test(tactic_keys, :win)
-      # test(tactic_keys, :win)[:black]
-    end
-
-    def w(*tactic_keys)
-      test(tactic_keys, :lose)[:white]
-    end
-
     it "works" do
-      p b("角不成")
-      p b("飛車不成")
-      p b("背水の陣")
-      p b("入玉")
-
-      # assert { b("角不成")   == "角不成マン"   }
-      # assert { b("飛車不成") == "飛車不成マン" }
-      # assert { b("背水の陣") == "背水マン"     }
-      # assert { b("入玉")     == "入玉勝ちマン" }
-
-      # assert { test(["背水の陣"], :lose)[:black].include?("逆背水マン")   }
+      assert { case1("角不成", :win)[:black]   == "角不成マン"   }
+      assert { case1("飛車不成", :win)[:black] == "飛車不成マン" }
+      assert { case1("屍の舞", :win)[:black]   == "背水マン"     }
+      assert { case1("入玉", :win)[:black]     == "入玉勝ちマン" }
     end
   end
 

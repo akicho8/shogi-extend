@@ -21,9 +21,21 @@ module TagMethods
     end
   end
 
+  # これは使うな
   def all_tag_names
     [:defense, :attack, :technique, :note].flat_map do |e|
       tag_names_for(e)
+    end
+  end
+
+  def all_tag_names_set
+    @all_tag_names_set ||= yield_self do
+      if taggings.loaded?
+        names = taggings.collect { |e| e.tag.name }
+      else
+        names = taggings.includes(:tag).pluck(:name)
+      end
+      names.collect(&:to_sym).to_set
     end
   end
 
@@ -36,4 +48,10 @@ module TagMethods
       :note_tag_list      => note_tag_list,
     }
   end
+
+  # def x_tags_set
+  #   if taggings.loaded?
+  #     taggings.collect { |e| e.tag.name.to_sym }.to_set
+  #   end
+  # end
 end

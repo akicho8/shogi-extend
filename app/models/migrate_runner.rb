@@ -33,7 +33,7 @@ class MigrateRunner
   #     "金銀橋"                   => "リッチブリッジ",
   #     "パンツを脱ぐ"             => "パンティを脱ぐ",
   #     "超速▲3七銀戦法"          => "超速▲3七銀",
-  #     "背水の陣"                 => "屍の舞",
+  #     "屍の舞"                 => "屍の舞",
   #   }
   #
   #   p list.keys.collect { |e| ActsAsTaggableOn::Tag.find_by(name: e)&.taggings&.where(taggable_type: "Swars::Membership")&.count }

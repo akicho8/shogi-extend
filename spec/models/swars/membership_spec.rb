@@ -80,7 +80,7 @@ RSpec.describe Swars::Membership, type: :model, swars_spec: true do
   end
 
   it "location_human_name" do
-    battle = Swars::Battle.create!(preset_key: "角落ち")
+    battle = Swars::Battle.create!(preset_key: "角落ち", kifu_body_for_test: "")
     assert { battle.memberships[0].location_human_name == "下手" }
   end
 end

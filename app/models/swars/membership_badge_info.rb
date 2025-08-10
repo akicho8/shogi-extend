@@ -103,7 +103,7 @@ module Swars
         if_cond: -> m {
           if m.judge_key == "win"
             if m.battle.final_info.toryo_or_tsumi
-              m.tag_names_for(:note).include?("背水の陣")
+              m.all_tag_names_set.include?(:"屍の舞")
             end
           end
         },
@@ -115,7 +115,7 @@ module Swars
       #   if_cond: -> m {
       #     if m.judge_key == "lose"
       #       if m.battle.final_info.toryo_or_tsumi
-      #         m.tag_names_for(:note).include?("背水の陣")
+      #         m.all_tag_names_set.include?(:"屍の舞")
       #       end
       #     end
       #   },
@@ -164,17 +164,13 @@ module Swars
         key: "角不成マン",
         message: "角成らずで舐めプした",
         badge_params: "🤡",
-        if_cond: -> m {
-          m.tag_names_for(:note).include?("角不成")
-        }
+        if_cond: -> m { m.all_tag_names_set.include?(:"角不成") }
       },
       {
         key: "飛車不成マン",
         message: "飛車成らずで舐めプした",
         badge_params: "🤡",
-        if_cond: -> m {
-          m.tag_names_for(:note).include?("飛車不成")
-        },
+        if_cond: -> m { m.all_tag_names_set.include?(:"飛車不成") },
       },
       {
         key: "切れ負けマン",
@@ -270,7 +266,7 @@ module Swars
         badge_params: "🏈",
         if_cond: -> m {
           if m.judge_key == "win"
-            if m.tag_names_for(:note).include?("入玉")
+            if m.all_tag_names_set.include?(:"入玉")
               m.battle.final_info.toryo_or_tsumi
             end
           end

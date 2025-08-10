@@ -35,7 +35,7 @@ tp QuickScript::Swars::TacticCrossScript::LegendGenerator.new.aggregate
 # >> | 角交換型                 |
 # >> | 手損角交換型             |
 # >> | 対穴熊                   |
-# >> | 背水の陣                 |
+# >> | 屍の舞                 |
 # >> | 手得角交換型             |
 # >> | 垂れ歩                   |
 # >> | たたきの歩               |
