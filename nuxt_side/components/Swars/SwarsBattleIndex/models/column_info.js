@@ -33,8 +33,8 @@ export class ColumnInfo extends ApplicationMemoryRecord {
       { key: "badge",                name: "アイコン",         visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "attack_tag_list",      name: "戦法",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "defense_tag_list",     name: "囲い",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "technique_tag_list",   name: "手筋",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "note_tag_list",        name: "備考",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "technique_tag_list",   name: "手筋",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "note_tag_list",        name: "備考",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
 
       { key: "mobile_card",          name: "スマホなら縦並び", visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "tablet_header",        name: "表の見出し(PC)",   visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
