@@ -93,8 +93,8 @@ module Swars
 
         ################################################################################
 
-        { key: "大駒全ブッチ",        local_only: false, body: proc { tag_stat.to_win_lose_chart(:"大駒全ブッチ")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "大駒全ブッチ",     }, }, },
-        { key: "大駒コンプリート",    local_only: false, body: proc { tag_stat.to_win_lose_chart(:"大駒コンプリート")                }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "大駒コンプリート", }, }, },
+        { key: "大駒全ブッチ",        local_only: true, body: proc { tag_stat.to_win_lose_chart(:"大駒全ブッチ")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "大駒全ブッチ",     }, }, },
+        { key: "大駒コンプリート",    local_only: true, body: proc { tag_stat.to_win_lose_chart(:"大駒コンプリート")                }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "大駒コンプリート", }, }, },
 
         # 「大駒全ブッチ」と「vs 大駒コンプリート」の勝敗数は同等になるため両方を表示する意味がない
         { key: "vs 大駒全ブッチ",     local_only: true,  body: proc { op_tag_stat.to_win_lose_chart(:"大駒全ブッチ", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "大駒全ブッチ", }, }, },
@@ -102,17 +102,17 @@ module Swars
 
         ################################################################################
 
-        { key: "[win-lose] 角不成",      display_name: "角不成",      local_only: false, body: proc { tag_stat.to_win_lose_chart(:"角不成")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "角不成",     }, }, },
-        { key: "[win-lose] vs 角不成",   display_name: "vs 角不成",   local_only: false, body: proc { op_tag_stat.to_win_lose_chart(:"角不成", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "角不成", }, }, },
-        { key: "[win-lose] 飛車不成",    display_name: "飛車不成",    local_only: false, body: proc { tag_stat.to_win_lose_chart(:"飛車不成")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "飛車不成",     }, }, },
-        { key: "[win-lose] vs 飛車不成", display_name: "vs 飛車不成", local_only: false, body: proc { op_tag_stat.to_win_lose_chart(:"飛車不成", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "飛車不成", }, }, },
+        { key: "[win-lose] 角不成",      display_name: "角不成",      local_only: true, body: proc { tag_stat.to_win_lose_chart(:"角不成")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "角不成",     }, }, },
+        { key: "[win-lose] vs 角不成",   display_name: "vs 角不成",   local_only: true, body: proc { op_tag_stat.to_win_lose_chart(:"角不成", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "角不成", }, }, },
+        { key: "[win-lose] 飛車不成",    display_name: "飛車不成",    local_only: true, body: proc { tag_stat.to_win_lose_chart(:"飛車不成")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "飛車不成",     }, }, },
+        { key: "[win-lose] vs 飛車不成", display_name: "vs 飛車不成", local_only: true, body: proc { op_tag_stat.to_win_lose_chart(:"飛車不成", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "飛車不成", }, }, },
 
         ################################################################################
 
         ################################################################################
 
-        { key: "[win-lose] 入玉",    display_name: "入玉",    local_only: false, body: proc { tag_stat.to_win_lose_chart(:"入玉")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "入玉",     }, }, },
-        { key: "[win-lose] vs 入玉", display_name: "vs 入玉", local_only: false, body: proc { op_tag_stat.to_win_lose_chart(:"入玉", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "入玉", }, }, },
+        { key: "[win-lose] 入玉",    display_name: "入玉",    local_only: true, body: proc { tag_stat.to_win_lose_chart(:"入玉")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "入玉",     }, }, },
+        { key: "[win-lose] vs 入玉", display_name: "vs 入玉", local_only: true, body: proc { op_tag_stat.to_win_lose_chart(:"入玉", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "入玉", }, }, },
 
         ################################################################################
 
