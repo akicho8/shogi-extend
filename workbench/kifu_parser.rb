@@ -1,8 +1,18 @@
 require "#{__dir__}/setup"
-
 sfen = "position sfen 7nl/5sg2/5pppp/4p4/5PS2/5R3/6N1P/9/8L b 2P 1 moves P*2b 3b2b 4e4d 4c4d 3e4d"
-obj = KifuParser.new(source: sfen, black: "(black)", white: "(white)", other: "(other)", member: "(member)", title: "(title)")
+obj = KifuParser.new(source: sfen, black: "(black)", white: "(white)", other: "(other)", member: "(member)", title: "(title)", to_format: :bod, turn: 1)
+obj.turn_max                    # => 1
 puts obj.to_kif
+# >> 先手の手筋：歩裏の歩, 桂頭攻め
+# >> 先手の駒使用：歩1 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
+# >> 先手の玉移動：0回
+# >> 先手のキル数：0キル
+# >> 後手の駒使用：歩0 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
+# >> 後手の玉移動：0回
+# >> 後手のキル数：0キル
+# >> 総手数：1手
+# >> 総キル数：0キル
+# >> 結末：投了
 # >> 棋戦：(title)
 # >> 先手：(black)
 # >> 後手：(white)
@@ -25,9 +35,6 @@ puts obj.to_kif
 # >> 先手番
 # >> 手数----指手---------消費時間--
 # >>    1 ２二歩打
-# >>    2 ２二金(32)
-# >>    3 ４四歩(45)
-# >>    4 ４四歩(43)
-# >>    5 ４四銀(35)
-# >>    6 投了
-# >> まで5手で先手の勝ち
+# >> *▲手筋：歩裏の歩, 桂頭攻め
+# >>    2 投了
+# >> まで1手で先手の勝ち

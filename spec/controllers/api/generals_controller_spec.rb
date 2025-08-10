@@ -9,7 +9,7 @@ RSpec.describe Api::GeneralsController, type: :controller do
 
     describe "デバッグ用にGETでも受け付ける" do
       it "works" do
-        assert { case1(:get, :sfen, "68銀")[:turn_max]  }
+        assert { case1(:get, :sfen, "68銀").fetch(:turn_max) }
       end
     end
 

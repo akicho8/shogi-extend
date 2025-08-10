@@ -114,6 +114,10 @@ class KifuParser
     core
   end
 
+  def turn_max
+    core.container.turn_info.turn_offset
+  end
+
   private
 
   def to_format
@@ -188,10 +192,6 @@ class KifuParser
     end
   end
 
-  def turn_max
-    core.container.turn_info.turn_offset
-  end
-
   def source
     @source ||= params[:source] || KifuExtractor.extract(any_source) || any_source # URLや戦術名→棋譜
   end
@@ -205,7 +205,7 @@ class KifuParser
       :typical_error_case => :embed,
     }
     if to_format == :bod
-      options[:turn_max] = turn_max
+      options[:turn_max] = current_turn
     end
     [
       :ki2_function,
@@ -229,7 +229,7 @@ class KifuParser
     end
   end
 
-  def turn_max
+  def current_turn
     if v = params[:turn].presence
       v.to_i
     end

@@ -25,4 +25,21 @@ RSpec.describe KifuParser do
       assert { obj.to_kif.include?("先手：a, b, c") }
     end
   end
+
+  describe "turn_max" do
+    it "turn_max は通常総手数を返す" do
+      obj = KifuParser.new(source: "▲76歩△34歩")
+      assert { obj.turn_max == 2 }
+    end
+
+    it "bod の場合にみ turn で局面が変わる" do
+      obj = KifuParser.new(source: "▲76歩△34歩", to_format: :bod, turn: 1)
+      assert { obj.turn_max == 1 }
+    end
+
+    it "kif の場合には turn で局面が変わらない(が、よく考えたら変わった方がいい気もする)" do
+      obj = KifuParser.new(source: "▲76歩△34歩", to_format: :kif, turn: 1)
+      assert { obj.turn_max == 2 }
+    end
+  end
 end
