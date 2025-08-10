@@ -30,10 +30,10 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="id" :label="APP.ColumnInfo.fetch('id').name" :visible="APP.column_visible_p('id')" sortable centered numeric)
     nuxt-link(:to="APP.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
 
-  b-table-column(v-slot="{row}" :label="APP.xi.current_swars_user_key ? '自分' : 'WIN'" :visible="APP.column_visible_p('membership_left')")
+  b-table-column(v-slot="{row}" :label="APP.xi.current_swars_user_key ? '自分' : 'WIN'" :visible="APP.column_visible_p('membership_left')" cell-class="membership")
     SwarsBattleIndexMembership(:row="row" :membership="row.memberships[0]" :with_user_key="APP.column_visible_p('user_key_left')")
 
-  b-table-column(v-slot="{row}" :label="APP.xi.current_swars_user_key ? '相手' : 'LOSE'" :visible="APP.column_visible_p('membership_right')")
+  b-table-column(v-slot="{row}" :label="APP.xi.current_swars_user_key ? '相手' : 'LOSE'" :visible="APP.column_visible_p('membership_right')" cell-class="membership")
     SwarsBattleIndexMembership(:row="row" :membership="row.memberships[1]" :with_user_key="APP.column_visible_p('user_key_right')")
 
   b-table-column(v-slot="{row}" field="membership.style_id" :label="APP.ColumnInfo.fetch('style_key').name" :visible="APP.column_visible_p('style_key')" sortable centered)
@@ -144,4 +144,8 @@ export default {
 .SwarsBattleIndexTable
   .menu-label:not(:first-child)
     margin-top: 2em
+  .buttons
+    flex-wrap: nowrap
+  td.membership
+    vertical-align: initial
 </style>
