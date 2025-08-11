@@ -58,6 +58,11 @@ module QuickScript
           ################################################################################
 
           {
+            name: "[ウ検] 棋譜ダウンロード回数",
+            href: UrlProxy.full_url_for(path: "/lab/admin/swars_zip_dl_log".dasherize),
+            func: -> { ::Swars::ZipDlLog.where(created_at: 24.hours.ago..).count },
+          },
+          {
             name: "[ウ検] 検索数 (直近1h)",
             func: -> { ::Swars::SearchLog.where(created_at: 1.hours.ago..).count },
           },
