@@ -48,8 +48,8 @@ RSpec.describe FreeBattle, type: :model do
   describe "空の棋譜と平手の棋譜のハッシュは同じなので同じIDになる" do
     it "works" do
       free_battle1 = FreeBattle.same_body_fetch(body: "")
-      free_battle2 = FreeBattle.same_body_fetch(body: "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}")
-      assert { free_battle1.id == free_battle2.id }
+      adapter_receiver = FreeBattle.same_body_fetch(body: "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}")
+      assert { free_battle1.id == adapter_receiver.id }
     end
   end
 
@@ -127,14 +127,6 @@ RSpec.describe FreeBattle, type: :model do
     it "works" do
       assert { case1(:basic)      == 2 } # 二歩の手前で止っている
       assert { case1(:kiwi_lemon) == 3 } # 二歩を許可
-    end
-  end
-
-  describe "AdapterMethods" do
-    it "works" do
-      assert { FreeBattle.adapter_post(input_text: "68銀") }
-      assert { FreeBattle.adapter_post(input_text: "") rescue $!.class == Bioshogi::FileFormatError }
-      assert { FreeBattle.adapter_post(input_text: "58金") rescue $!.class == Bioshogi::AmbiguousFormatError }
     end
   end
 end

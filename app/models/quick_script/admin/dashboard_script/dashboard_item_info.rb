@@ -162,19 +162,21 @@ module QuickScript
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "ZIP生成" }),
             func: -> { AppLog.subject_like("ZIP生成").where(created_at: 24.hours.ago..).count },
           },
-
           {
             name: "[KENTO] API",
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "KENTO API" }),
             func: -> { AppLog.subject_like("KENTO API").where(created_at: 24.hours.ago..).count },
           },
-
+          {
+            name: "hibinotatsuya",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "hibinotatsuya" }),
+            func: -> { AppLog.search("hibinotatsuya").where(created_at: 24.hours.ago..).count },
+          },
           {
             name: "死亡ジョブ数",
             href: UrlProxy.full_url_for(path: "/admin/sidekiq/morgue"),
             func: -> { Sidekiq::DeadSet.new.size },
           },
-
           {
             name: "負荷",
             func: -> { `uptime`.split.last.to_f.fdiv(`nproc`.to_i).round(2) },

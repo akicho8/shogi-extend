@@ -2,8 +2,7 @@ module Api
   class AdaptersController < ::Api::ApplicationController
     # curl -d _method=post http://localhost:3000/api/adapter/record_create.json
     def record_create
-      v = FreeBattle.adapter_post(params.merge(current_user: current_user))
-      render json: v
+      render json: AdapterReceiver.call(params.merge(current_user: current_user, request: request))
     end
 
     # curl http://localhost:3000/api/adapter/formal_sheet.json?key=xxx

@@ -16,7 +16,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # KifuExtractor.extract("76歩")   # => nil
 
 # KifuExtractor.extract("https://lishogi.org/")
-# puts FreeBattle.adapter_post(input_text: "https://lishogi.org/")
+# puts AdapterReceiver.call(input_text: "https://lishogi.org/")
 
 # puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/sente")
 # puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2dUdLl")

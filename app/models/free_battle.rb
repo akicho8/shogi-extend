@@ -42,12 +42,8 @@ class FreeBattle < ApplicationRecord
   include ShareBoardMethods
 
   class << self
-    def setup(options = {})
+    def setup(...)
       super
-    end
-
-    def cleanup(...)
-      Cleanup.new(...).call
     end
   end
 
@@ -268,92 +264,6 @@ class FreeBattle < ApplicationRecord
       names = LocationInfo.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
       a.update([:sente_name, :gote_name].zip(names).to_h)
       a
-    end
-  end
-
-  concerning :AdapterMethods do
-    class_methods do
-      # 成功
-      #   rails r 'tp FreeBattle.adapter_post(input_text: "68銀")'
-      #   rails r 'tp FreeBattle.adapter_post(input_text: "")'
-      # 失敗
-      #   rails r 'FreeBattle.adapter_post(input_text: "58金") rescue (p $!.message)'
-      def adapter_post(params)
-        begin
-          record = FreeBattle.create!(kifu_body: params[:input_text], use_key: "adapter")
-          attrs = record.as_json({
-              methods: [
-                :all_kifs,
-                :display_turn,
-                :piyo_shogi_base_params,
-              ],
-            })
-        rescue Bioshogi::BioshogiError => error
-          AppLog.error(**app_log_params(params, record, error))
-          raise error
-        end
-        AppLog.info(**app_log_params(params, record))
-        { record: attrs }
-      end
-
-      private
-
-      def app_log_params(params, record, error = nil)
-        emoji = ":成功:"
-
-        if error
-          emoji = ":失敗:"
-        end
-
-        turn_max = nil
-        if record
-          turn_max = record.turn_max
-          # 最大0手の場合は詰将棋の局面なので失敗の絵文字にしてはいけない
-          if false
-            if turn_max.zero?
-              emoji = ":失敗:"
-            end
-          end
-        end
-
-        subject = []
-        subject << "なんでも棋譜変換"
-        if params[:current_user]
-          subject << params[:current_user].name
-        end
-        if turn_max
-          subject << "[手数:#{turn_max}]"
-        end
-        if error
-          subject << error.class.name
-        end
-        subject = subject.join(" ")
-
-        body = []
-        if params[:current_user]
-          body << params[:current_user].info.to_t.strip
-          body << ""
-        end
-        if error
-          body << "▼エラー"
-          body << error.message.strip
-          body << ""
-        end
-
-        body << "▼棋譜(入力)"
-        body << params[:input_text].strip
-        body << ""
-
-        if record
-          body << "▼棋譜(変換後)"
-          body << record.to_xxx(:kif)
-          body << ""
-        end
-
-        body = body.join("\n")
-
-        { subject: subject, body: body, emoji: emoji }
-      end
     end
   end
 end
