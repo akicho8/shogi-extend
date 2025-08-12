@@ -28,13 +28,20 @@
 
 module Tsl
   class Membership < ApplicationRecord
-    belongs_to :league                      # 対局
-    belongs_to :user, counter_cache: true   # 参加者
+    belongs_to :league                                                              # 対局
+    belongs_to :user, counter_cache: true                                           # 参加者
+    custom_belongs_to :result, ar_model: Result, st_model: ResultInfo, default: nil # 結果
 
     before_validation on: :create do
-      self.ox ||= ""
       self.previous_runner_up_count = user.runner_up_count
-      self.seat_count = user.seat_count(league.generation) + 1 # 在籍数(自分を含むため+1)
+      self.seat_count = user.seat_count_lt(league.generation) + 1 # 在籍数(自分を含むため+1)
+    end
+
+    before_validation do
+      self.start_pos ||= 0
+      self.win ||= 0
+      self.lose ||= 0
+      self.ox ||= ""
     end
 
     with_options presence: true do
@@ -46,67 +53,26 @@ module Tsl
 
     after_save do
       if saved_change_to_attribute?(:age) && age
-        if !user.first_age || age < user.first_age
-          user.first_age = age
-        end
-        if !user.last_age || age > user.last_age
-          user.last_age = age
-        end
+        user.min_age = [age, (user.min_age || Float::INFINITY)].min
+        user.max_age = [age, (user.max_age || 0)].max
       end
 
-      if saved_change_to_attribute?(:result_key) && result_key
-        if level_up_p
-          user.level_up_generation ||= league.generation
-        end
-        if runner_up_p
+      if saved_change_to_attribute?(:result_id)
+        case result.key
+        when "promotion"        # 昇段
+          user.promotion_membership = self
+          user.promotion_generation = league.generation
+        when "runner_up"        # 次点
           user.runner_up_count += 1
         end
       end
 
+      # 在籍の開始と終了のレコードを一発で引けるようにしておく
+      memberships = user.memberships.minmax_by { |e| e.league.generation }
+      user.min_membership, user.max_membership = memberships
+      user.min_generation, user.max_generation = memberships.collect { |e| e&.league.generation }
+
       user.save!
-    end
-
-    def name_with_age
-      s = user.name
-      if age
-        s += "(#{age})"
-      end
-      # if user.level_up_generation
-      #   s += " ★"
-      # end
-      s
-    end
-
-    def ox_human
-      # ox.tr("ox", "🍓💀")
-      # ox.tr("ox", "🍎💀")
-      ox.tr("ox", "○●")
-    end
-
-    def result_mark
-      if result_key != "none"
-        result_key[0]
-      end
-    end
-
-    # プロになったか？
-    def level_up_p
-      result_key.include?("昇")
-    end
-
-    # 次点あり？
-    def runner_up_p
-      result_key.include?("次")
-    end
-
-    # 降段
-    def level_down_p
-      result_key.include?("降")
-    end
-
-    # 在籍回数のかわりに表示したい在籍毎の勝数
-    def zaiseki_win_list
-      user.zaiseki_win_list(league.generation)
     end
   end
 end

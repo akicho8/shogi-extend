@@ -56,14 +56,6 @@ const sitemap = {
     list = list.concat(res.data.books.map(({key}) => `/rack/books/${key}`))
     list = list.concat(res.data.articles.map(({key}) => `/rack/articles/${key}`))
 
-    // http://localhost:3000/api/tsl_user_all
-    res = await axios.get(`${process.env.API_URL}/api/tsl_league_all`)
-    list = list.concat(res.data.map(({generation}) => `/three-stage-leagues/${generation}`))
-
-    // http://localhost:3000/api/tsl_league_all
-    res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
-    list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
-
     return list
   },
 }

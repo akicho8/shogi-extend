@@ -55,6 +55,11 @@ module QuickScript
       def current_per
         [(params[:per_page].presence || per_page_default).to_i, per_page_max].min
       end
+
+      # [KEYWORD] __COLUMN_NAME_PREFIX__ column_name_prefix
+      def column_name_prefix
+        "_"
+      end
     end
   end
 end

@@ -65,9 +65,6 @@ LIST_ALL = [
   # { url: "/swars/users/YamadaTaro/kento-api",                                       validations: { "title" => /YamadaTaro/,                                                                                                                                       }},
   # { url: "/xy",                                                                      validations: { "title" => /符号の鬼/,                                                                                                                                          }},
   # { url: "/vs-clock",                                                                validations: { "title" => /対局時計/,                                                                                                                                          }},
-  { url: "/three-stage-leagues",                                                     validations: { "og:title" => /第\d+期.*奨励会三段リーグ/,                                                                                                                                                                }},
-  { url: "/three-stage-leagues/67",                                                  validations: { "og:title" => /第67期.*奨励会三段リーグ/,                                                                                                                                             }},
-  { url: "/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0",                  validations: { "og:title" => /伊藤匠の成績/,                                                                                                                                                                }},
   # { url: "/adapter",                                                                 validations: { "title" => /なんでも棋譜変換/,                                                                                                                                  }},
   # { url: "/share-board",                                                             validations: { "title" => "共有将棋盤", "og:title" => "共有将棋盤", "og:description" => "",                     "og:image" => /share-board.png.*position.*turn=0/, }},
   # { url: "/share-board?#{URESINORYU}",                                               validations: { "title" => "嬉野流 1手目",     "og:title" => "嬉野流 1手目",     "og:description" => "☗嬉野流 vs ☖その他", "og:image" => /share-board.png.*position.*turn=1/,   }},
@@ -227,9 +224,6 @@ end
 # >> http://localhost:4000/swars/users/YamadaTaro/kento-api
 # >> http://localhost:4000/xy
 # >> http://localhost:4000/vs-clock
-# >> http://localhost:4000/three-stage-leagues
-# >> http://localhost:4000/three-stage-leagues/67
-# >> http://localhost:4000/three-stage-league-players/%E4%BC%8A%E8%97%A4%E5%8C%A0
 # >> http://localhost:4000/adapter
 # >> http://localhost:4000/share-board
 # >> http://localhost:4000/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%207i6h&turn=1&title=%E5%AC%89%E9%87%8E%E6%B5%81&viewpoint=black

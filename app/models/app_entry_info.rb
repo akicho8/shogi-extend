@@ -185,10 +185,10 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: { path: "/three-stage-leagues" },
+      nuxt_link_to: { path: "/lab/general/three-stage-league" },
       title: "奨励会三段リーグ成績早見表",
-      og_image_key: "three-stage-league",
-      description: "個人成績を見たいときにどうぞ",
+      og_image_key: "quick_script/general/three_stage_league_script",
+      description: "いろいろまとめて見たいときにどうぞ",
       features: [
         # "スマホに最適化",
         # "個人毎の総成績表示",

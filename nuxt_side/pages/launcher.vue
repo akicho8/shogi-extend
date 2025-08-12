@@ -43,8 +43,6 @@ export default {
         { title: "将棋ウォーズショート一括DL",            to: { name: 'swars-users-key-download-all', params: { key: "DevUser1", }}},
         { title: "将棋ウォーズプレイヤー情報",            to: { name: "swars-users-key",   params: {key: "DevUser1"}, }, },
         { title: "将棋ウォーズ棋譜検索",                  to: { name: "swars-search",                   }, },
-        { title: "三段リーグ成績早見表",                  to: { name: "three-stage-leagues-generation"  }, },
-        { title: "三段リーグ個人成績"  ,                  to: { name: "three-stage-league-players-name" }, },
         { title: "なんでも棋譜変換",                      to: { name: "adapter"                         }, },
         { title: "共有将棋盤",                            to: { name: "share-board"                     }, },
         { title: "CPU対戦",                               to: { name: "cpu-battle"                      }, },

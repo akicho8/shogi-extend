@@ -1,86 +1,59 @@
 # -*- coding: utf-8 -*-
 
-# == Schema Information ==
-#
-# ユーザー (users as User)
-#
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | name                   | desc                       | type        | opts                | refs | index |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
-# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
-# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
-# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
-# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
-# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
-# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
-# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
-# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
-# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
-# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
-# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
-# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
-# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
-# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
-# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
-# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-
 module Tsl
   class User < ApplicationRecord
-    has_many :memberships, dependent: :destroy, inverse_of: :user # 対局時の情報(複数)
-    has_many :leagues, through: :memberships                      # 対局(複数)
+    has_many :memberships, dependent: :destroy   # 対局時の情報(複数)
+    has_many :leagues, through: :memberships     # 対局(複数)
 
-    scope :pro_only, -> { where.not(level_up_generation: nil) }
+    with_options class_name: "Tsl::Membership", optional: true do
+      belongs_to :min_membership
+      belongs_to :max_membership
+      belongs_to :promotion_membership
+    end
 
-    before_validation on: :create do
+    scope :link_order,  -> { order(promotion_generation: :desc, runner_up_count: :desc, min_age: :asc, memberships_count: :asc) }
+    scope :table_order, -> { order(promotion_generation: :desc, runner_up_count: :desc, min_age: :asc, memberships_count: :asc) }
+
+    scope :plus_minus_search, -> query do
+      scope = all
+      SimpleQueryParser.parse(query.to_s).each do |plus, queries|
+        queries.each do |query|
+          case
+          when query == "all"
+          when query.match?(/\A\d+\z/)
+            if league = Tsl::League.find_by(generation: query)
+              if plus
+                scope = scope.where(id: league.user_ids)
+              else
+                scope = scope.where.not(id: league.user_ids)
+              end
+            end
+          else
+            sanitized = ActiveRecord::Base.sanitize_sql_like(query.downcase)
+            scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(name) LIKE ?)", "%#{sanitized}%")
+          end
+        end
+      end
+      scope
+    end
+
+    normalizes :name, with: -> e { NameNormalizer.normalize(e) }
+
+    before_validation do
       self.runner_up_count ||= 0
     end
 
-    def name_with_age
-      s = ""
-
-      s += name
-
-      if first_age && last_age
-        s += "(#{first_age}-#{last_age})"
-      end
-
-      case
-      when level_up_generation
-        s += " #{memberships_count}期抜け"
-      when runner_up_count >= 2
-        s += " 次点2回で#{memberships_count}期抜け"
-      when runner_up_count >= 1
-        s += " 在籍#{memberships_count}期 次点あり"
-      else
-        s += " 在籍#{memberships_count}期"
-      end
-
-      # if level_up_generation
-      #   s += " (プロ)"
-      # end
-
-      s
+    def shoudan_p
+      promotion_membership || runner_up_count >= 2
     end
 
     # シーズン generation を含まないこれまでの在籍回数
-    def seat_count(generation)
+    def seat_count_lt(generation)
       memberships.joins(:league).where(League.arel_table[:generation].lt(generation)).count
     end
 
-    # 在籍回数のかわりに表示したい在籍毎の勝数
-    def zaiseki_win_list(generation)
-      g = League.arel_table[:generation]
-      s = memberships.joins(:league).where(g.lt(generation))
-      s.order(g.asc).pluck(:win)
+    def promotion_age
+      promotion_membership&.age
     end
   end
 end

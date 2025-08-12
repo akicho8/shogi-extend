@@ -19,7 +19,7 @@ b-table.QuickScriptViewValueAsTable(
     b-table-column(
       v-slot="{row}"
       :field="column_name"
-      :label="column_name"
+      :label="column_name_decorator(column_name)"
       :sortable="true"
       :numeric="numeric_hash[column_name]"
       )
@@ -32,15 +32,31 @@ b-table.QuickScriptViewValueAsTable(
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
+const OPTIMIZE_ROWS = true
+
 export default {
   name: "QuickScriptViewValueAsTable",
   inject: ["QS"],
   props: ["value"],
+  methods: {
+    // JS でハッシュキーに数値文字列を使うと順序が変わってしまう対策で "_7" などとしたとき実際には 7 を表示する
+    column_name_decorator(colum_name) {
+      return colum_name.replace(/^_/, "") // [KEYWORD] __COLUMN_NAME_PREFIX__ column_name_prefix
+    },
+  },
   computed: {
+    // 最初と最後の行だけ
+    compact_rows() {
+      let rows = this.value.rows
+      if (OPTIMIZE_ROWS) {
+        rows = [_.first(rows), _.last(rows)]
+      }
+      return rows
+    },
+
     column_names() {
-      // FIXME: ここは1行目だけ見ればいいかも？
       const hv = {}
-      this.value.rows.forEach(e => { _.each(e, (v, k) => { hv[k] = true })})
+      this.compact_rows.forEach(e => { _.each(e, (v, k) => { hv[k] = true })})
       return Object.keys(hv)
     },
 
@@ -49,23 +65,28 @@ export default {
     numeric_hash() {
       const hv = {}
       this.column_names.forEach(column_name => {
-        const av = [
-          _.first(this.value.rows),
-          _.last(this.value.rows),
-        ]
-        const numeric_like = av.every(row => { // every = all?
-          const v = row[column_name]
+        const numeric_like = this.compact_rows.every(row => { // every = all?
+          let v = row[column_name]
+
+          // { _v_text: 1 } 形式の場合は値だけを抽出する
+          if (_.isPlainObject(v)) {
+            if ("_v_text" in v) {
+              v = v["_v_text"]
+            }
+          }
+
           if (false) {
           } else if (v === "" || v === null) {
-            return true
+            return true         // 空の場合は数値とみなす
           } else if (typeof v === 'number') {
             return true
           } else if (typeof v === 'string') {
-            return /^[-+]?\d+/.test(v.trim())
+            return /^[-+]?\d+/.test(v.trim()) // 先頭が数値で始まるなら数値と見なす
           } else {
             return false
           }
         })
+
         hv[column_name] = numeric_like
       })
       return hv

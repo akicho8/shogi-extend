@@ -8,13 +8,15 @@ module Tsl
     if options[:reset]
       Tsl.destroy_all
     end
+    Tsl::Result.setup(options)
     Tsl::League.setup(options)
   end
 
   def self.destroy_all
-    [Tsl::League, Tsl::User].each do |e|
-      e.find_each(&:destroy!)
-    end
+    [
+      Tsl::League,
+      Tsl::User,
+    ].each(&:destroy_all)
   end
 
   def self.reset_all

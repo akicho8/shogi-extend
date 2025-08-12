@@ -330,11 +330,11 @@
 # |---------------------+---------------------+-------------+-------------+------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
 # | name                | Name                | string(255) | NOT NULL    |      | A!    |
-# | first_age           | First age           | integer(4)  |             |      |       |
-# | last_age            | Last age            | integer(4)  |             |      |       |
+# | min_age           | First age           | integer(4)  |             |      |       |
+# | max_age            | Last age            | integer(4)  |             |      |       |
 # | memberships_count   | Memberships count   | integer(4)  | DEFAULT(0)  |      |       |
 # | runner_up_count     | Runner up count     | integer(4)  | NOT NULL    |      |       |
-# | level_up_generation | Level up generation | integer(4)  |             |      | B     |
+# | promotion_membership_id | Level up generation | integer(4)  |             |      | B     |
 # | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
 # |---------------------+---------------------+-------------+-------------+------+-------|

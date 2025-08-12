@@ -21,8 +21,6 @@ Top 20 slowest example groups:
     4.14 seconds average (4.14 seconds / 1 example) ./spec/system/share_board/最初に来たときのタイトルが正しい_spec.rb:3
   棋譜用紙
     4.08 seconds average (24.47 seconds / 6 examples) ./spec/system/swars/formal_sheet_spec.rb:3
-  奨励会三段リーグ
-    3.49 seconds average (6.99 seconds / 2 examples) ./spec/system/three_stage_league_spec.rb:3
   トップ
     3.01 seconds average (3.01 seconds / 1 example) ./spec/system/top_spec.rb:3
   その他

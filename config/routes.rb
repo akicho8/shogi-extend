@@ -207,9 +207,6 @@ Rails.application.routes.draw do
     resources :app_entry_infos, only: :index
     resources :users, only: [:show]
     resource :cpu_battle, only: [:show, :create]
-    resource :three_stage_league, only: [:show]
-    resource :three_stage_league_player, only: [:show]
-    resource :swars_grade_stat, only: [:show]
 
     # 共有将棋盤用API
     resource :share_board, only: [:show, :create] do
