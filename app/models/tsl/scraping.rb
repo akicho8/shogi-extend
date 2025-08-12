@@ -1,5 +1,3 @@
-require "open-uri"
-
 module Tsl
   class Scraping
     cattr_accessor(:league_range)  do

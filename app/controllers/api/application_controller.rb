@@ -1,5 +1,3 @@
-require "open-uri"
-
 module Api
   class ApplicationController < ::ApplicationController
     include ShogiErrorRescueMethods # for bs_error

@@ -34,8 +34,6 @@
 # User.has_one :profile
 # --------------------------------------------------------------------------------
 
-require "open-uri"
-
 class FreeBattle < ApplicationRecord
   include BattleModelMethods
   include PresetMethods

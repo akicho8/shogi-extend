@@ -12,7 +12,6 @@
 # | ログイン | http://localhost:3000/xusers/sign_in | :new_xuser_session      |
 # | 登録     | http://localhost:3000/xusers/sign_up | :new_xuser_registration |
 # |----------+--------------------------------------+-------------------------|
-require "open-uri" # for URI#open
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google
