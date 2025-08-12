@@ -73,10 +73,10 @@ module QuickScript
             params[e.param_key] = word
             { _nuxt_link: word, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-small #{e.css_klass}" }
           end
-          av = h_stack(av, :style => "gap: 0.25rem")
-          v_stack([tag.span(e.name, :class => "is-size-7"), av], :style => "gap: 0.25rem")
+          av = h_stack(av, :class => "gap_small")
+          v_stack([tag.span(e.name, :class => "is-size-7"), av], :class => "gap_small")
         }
-        v_stack(blocks, :style => "gap: 0.5rem")
+        v_stack(blocks, :class => "gap_small")
       end
 
       def call
