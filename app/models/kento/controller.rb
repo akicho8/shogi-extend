@@ -26,6 +26,7 @@ module Kento
         :notify_params => {
           :referer    => request.referer,
           :user_agent => request.user_agent,
+          :remote_ip  => request.remote_ip,
         },
       }
     end
