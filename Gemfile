@@ -152,7 +152,8 @@ end
 
 # gem "bioshogi", ">= 0.0.3"
 # gem "bioshogi", path: "~/src/bioshogi"
-gem "bioshogi", github: "akicho8/bioshogi", branch: "develop"
+# gem "bioshogi", github: "akicho8/bioshogi", branch: "develop"
+gem "bioshogi", github: "akicho8/bioshogi", branch: "main"
 
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
