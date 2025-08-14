@@ -9,12 +9,12 @@ module Ppl
       destroy_all
     end
     Result.setup(options)
-    League.setup(options)
+    LeagueSeason.setup(options)
   end
 
   def self.destroy_all
     [
-      League,
+      LeagueSeason,
       User,
     ].each(&:destroy_all)
   end

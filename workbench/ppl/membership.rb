@@ -6,7 +6,7 @@ membership.result_info.name     # => "維持"
 tp membership
 # >> |------------+---------------------------|
 # >> |         id | 2541                      |
-# >> |  league_id | 138                       |
+# >> |  league_season_id | 138                       |
 # >> |    user_id | 605                       |
 # >> |  result_id | 4                         |
 # >> |  start_pos | 0                         |

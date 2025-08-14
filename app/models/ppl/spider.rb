@@ -22,7 +22,7 @@ module Ppl
     end
 
     def source_url
-      "https://www.shogi.or.jp/match/shoreikai/sandan/#{generation}/index.html"
+      "https://www.shogi.or.jp/match/shoreikai/sandan/#{season_number}/index.html"
     end
 
     private
@@ -52,7 +52,7 @@ module Ppl
     # 次点2回目なのか2位以内に入ったことで昇段なのか判断できない
     def column_names
       @column_names ||= yield_self do
-        if generation.in?(OLD_TYPE_GENERATIONS)
+        if season_number.in?(OLD_TYPE_GENERATIONS)
           [:result_key, :start_pos, :name, :win, :lose]
         else
           [:result_key, :start_pos, :name, :_mentor, :age, :win, :lose] # _mentor は未使用
@@ -68,8 +68,8 @@ module Ppl
       (params[:max].presence || 256).to_i
     end
 
-    def generation
-      params.fetch(:generation).to_i
+    def season_number
+      params.fetch(:season_number).to_i
     end
 
     # 当初ここをキャッシュしていたがそれは設計ミス
@@ -80,7 +80,7 @@ module Ppl
       end
 
       if params[:verbose]
-        tp({ "期" => generation, "URL" => source_url, sleep: params[:sleep] })
+        tp({ "期" => season_number, "URL" => source_url, sleep: params[:sleep] })
       end
 
       sleep(params[:sleep])

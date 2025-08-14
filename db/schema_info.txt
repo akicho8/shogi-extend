@@ -330,8 +330,8 @@
 # |---------------------+---------------------+-------------+-------------+------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
 # | name                | Name                | string(255) | NOT NULL    |      | A!    |
-# | min_age           | First age           | integer(4)  |             |      |       |
-# | max_age            | Last age            | integer(4)  |             |      |       |
+# | age_min           | First age           | integer(4)  |             |      |       |
+# | age_max            | Last age            | integer(4)  |             |      |       |
 # | memberships_count   | Memberships count   | integer(4)  | DEFAULT(0)  |      |       |
 # | runner_up_count     | Runner up count     | integer(4)  | NOT NULL    |      |       |
 # | promotion_membership_id | Level up generation | integer(4)  |             |      | B     |

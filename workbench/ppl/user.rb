@@ -9,34 +9,34 @@ Ppl::Updater.update_raw(5, { name: "alice", result_key: "維持", age: 1, win: 3
 Ppl::Updater.update_raw(6, { name: "alice", result_key: "次点", age: 2, win: 2 })
 Ppl::Updater.update_raw(7, { name: "alice", result_key: "昇段", age: 3, win: 1 })
 user = Ppl::User["alice"]
-user.min_age                                # => 1
-user.max_age                                # => 3
+user.age_min                                # => 1
+user.age_max                                # => 3
 user.runner_up_count                        # => 1
-user.max_win                                # => 3
-user.promotion_membership.league.generation # => 7
-user.promotion_generation                   # => 7
+user.win_max                                # => 3
+user.promotion_membership.league_season.season_number # => 7
+user.promotion_season_number                   # => 7
 user.promotion_win                          # => 1
-user.min_membership.league.generation       # => 5
-user.max_membership.league.generation       # => 7
-user.min_generation                         # => 5
-user.max_generation                         # => 7
-tp Ppl::League
+user.memberships_first.league_season.season_number       # => 5
+user.memberships_last.league_season.season_number       # => 7
+user.season_number_min                         # => 5
+user.season_number_max                         # => 7
+tp Ppl::LeagueSeason
 tp Ppl::User
 tp Ppl::Membership
 # >> |-----+------------+---------------------------+---------------------------|
-# >> | id  | generation | created_at                | updated_at                |
+# >> | id  | season_number | created_at                | updated_at                |
 # >> |-----+------------+---------------------------+---------------------------|
 # >> | 141 |          5 | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |
 # >> | 142 |          6 | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |
 # >> | 143 |          7 | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |
 # >> |-----+------------+---------------------------+---------------------------|
 # >> |-----+-------+---------+---------+-----------------+---------+-------------------------+----------------------+---------------+-------------------+----------------+-------------------+----------------+-------------------+---------------------------+---------------------------|
-# >> | id  | name  | min_age | max_age | runner_up_count | max_win | promotion_membership_id | promotion_generation | promotion_win | min_membership_id | min_generation | max_membership_id | max_generation | memberships_count | created_at                | updated_at                |
+# >> | id  | name  | age_min | age_max | runner_up_count | win_max | promotion_membership_id | promotion_season_number | promotion_win | memberships_first_id | season_number_min | memberships_last_id | season_number_max | memberships_count | created_at                | updated_at                |
 # >> |-----+-------+---------+---------+-----------------+---------+-------------------------+----------------------+---------------+-------------------+----------------+-------------------+----------------+-------------------+---------------------------+---------------------------|
 # >> | 608 | alice |       1 |       3 |               1 |       3 |                    2546 |                    7 |             1 |              2544 |              5 |              2546 |              7 |                 3 | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |
 # >> |-----+-------+---------+---------+-----------------+---------+-------------------------+----------------------+---------------+-------------------+----------------+-------------------+----------------+-------------------+---------------------------+---------------------------|
 # >> |------+-----------+---------+-----------+-----------+-----+-----+------+----+---------------------------+---------------------------|
-# >> | id   | league_id | user_id | result_id | start_pos | age | win | lose | ox | created_at                | updated_at                |
+# >> | id   | league_season_id | user_id | result_id | start_pos | age | win | lose | ox | created_at                | updated_at                |
 # >> |------+-----------+---------+-----------+-----------+-----+-----+------+----+---------------------------+---------------------------|
 # >> | 2544 |       141 |     608 |         4 |         0 |   1 |   3 |    0 |    | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |
 # >> | 2545 |       142 |     608 |         3 |         0 |   2 |   2 |    0 |    | 2025-08-14 18:40:32 +0900 | 2025-08-14 18:40:32 +0900 |

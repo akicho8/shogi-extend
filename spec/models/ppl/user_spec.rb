@@ -82,16 +82,16 @@ RSpec.describe Ppl::User, type: :model do
     Ppl::Updater.update_raw(6, { name: "alice", result_key: "次点", age: 2, win: 2 })
     Ppl::Updater.update_raw(7, { name: "alice", result_key: "昇段", age: 3, win: 1 })
     user = Ppl::User["alice"]
-    assert { user.min_age                                == 1 }
-    assert { user.max_age                                == 3 }
+    assert { user.age_min                                == 1 }
+    assert { user.age_max                                == 3 }
     assert { user.runner_up_count                        == 1 }
-    assert { user.max_win                                == 3 }
-    assert { user.promotion_membership.league.generation == 7 }
-    assert { user.promotion_generation                   == 7 }
+    assert { user.win_max                                == 3 }
+    assert { user.promotion_membership.league_season.season_number == 7 }
+    assert { user.promotion_season_number                   == 7 }
     assert { user.promotion_win                          == 1 }
-    assert { user.min_membership.league.generation       == 5 }
-    assert { user.max_membership.league.generation       == 7 }
-    assert { user.min_generation                         == 5 }
-    assert { user.max_generation                         == 7 }
+    assert { user.memberships_first.league_season.season_number       == 5 }
+    assert { user.memberships_last.league_season.season_number       == 7 }
+    assert { user.season_number_min                         == 5 }
+    assert { user.season_number_max                         == 7 }
   end
 end

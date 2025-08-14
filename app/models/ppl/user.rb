@@ -9,22 +9,22 @@ module Ppl
     end
 
     has_many :memberships, dependent: :destroy   # 対局時の情報(複数)
-    has_many :leagues, through: :memberships     # 対局(複数)
+    has_many :league_seasons, through: :memberships     # 対局(複数)
 
     with_options class_name: "Ppl::Membership", optional: true do
-      belongs_to :min_membership
-      belongs_to :max_membership
+      belongs_to :memberships_first
+      belongs_to :memberships_last
       belongs_to :promotion_membership
     end
 
     # 最優先で「昇段している人」「昇段していない人」の順にする
-    # 非常にわかりにくいが promotion_generation IS NULL で値があれば false つまり 0 になるため上にくる
-    # そのあとで promotion_generation: asc なので昇段している中ではなるべく先輩から表示する
+    # 非常にわかりにくいが promotion_season_number IS NULL で値があれば false つまり 0 になるため上にくる
+    # そのあとで promotion_season_number: asc なので昇段している中ではなるべく先輩から表示する
     # このようにすることで、期を絞ったときその期で昇段した人が上にくるのでわかりやすい
-    scope :table_order, -> { order(Arel.sql("promotion_generation IS NULL"), promotion_generation: :asc, promotion_win: :desc, runner_up_count: :desc, min_age: :asc, memberships_count: :asc) }
+    scope :table_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :asc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
 
     # 最近昇段した人ほど手前にくる
-    scope :link_order,  -> { order(promotion_generation: :desc, promotion_win: :desc, runner_up_count: :desc, min_age: :asc, memberships_count: :asc) }
+    scope :link_order,  -> { order(promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
 
     scope :plus_minus_search, -> query do
       scope = all
@@ -43,7 +43,7 @@ module Ppl
 
     before_validation do
       self.runner_up_count ||= 0
-      self.max_win ||= 0
+      self.win_max ||= 0
     end
 
     # 昇段または次点2つで権利を獲得したか？
@@ -56,8 +56,8 @@ module Ppl
       promotion_membership&.age
     end
 
-    def generation_range
-      min_generation..max_generation
+    def season_number_range
+      season_number_min..season_number_max
     end
   end
 end

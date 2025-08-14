@@ -7,7 +7,7 @@ RSpec.describe Ppl::UserSearch, type: :model do
     Ppl::Updater.update_raw(6, { name: "bob",   })
     Ppl::Updater.update_raw(7, { name: "carol", })
     assert { Ppl::User.search(name_rel: "a").collect(&:name)       == ["alice", "bob", "carol"] }
-    assert { Ppl::User.search(generation_rel: "6").collect(&:name) == ["bob"] }
+    assert { Ppl::User.search(season_number_rel: "6").collect(&:name) == ["bob"] }
     assert { Ppl::User.search(query: "a").collect(&:name)          == ["alice", "carol"] }
   end
 end
