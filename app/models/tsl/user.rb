@@ -18,20 +18,8 @@ module Tsl
       scope = all
       SimpleQueryParser.parse(query.to_s).each do |plus, queries|
         queries.each do |query|
-          case
-          when query == "all"
-          when query.match?(/\A\d+\z/)
-            if league = Tsl::League.find_by(generation: query)
-              if plus
-                scope = scope.where(id: league.user_ids)
-              else
-                scope = scope.where.not(id: league.user_ids)
-              end
-            end
-          else
-            sanitized = ActiveRecord::Base.sanitize_sql_like(query.downcase)
-            scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(name) LIKE ?)", "%#{sanitized}%")
-          end
+          sanitized = ActiveRecord::Base.sanitize_sql_like(query.downcase)
+          scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(name) LIKE ?)", "%#{sanitized}%")
         end
       end
       scope
@@ -43,8 +31,10 @@ module Tsl
       self.runner_up_count ||= 0
     end
 
-    def shoudan_p
-      promotion_membership || runner_up_count >= 2
+    # 昇段または次点2つで権利を獲得したか？
+    # ・次点2つの場合は昇段したか
+    def promoted_or_rights
+      promotion_membership_id || runner_up_count >= 2
     end
 
     # シーズン generation を含まないこれまでの在籍回数
