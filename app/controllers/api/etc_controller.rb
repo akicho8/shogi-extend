@@ -77,29 +77,5 @@ module Api
       AppLog.call(**hv)
       render json: { :message => "OK" }
     end
-
-    # 三段リーグのユーザー配列
-    # http://localhost:3000/api/ppl_user_all
-    def ppl_user_all
-      render json: Ppl::User.all
-    end
-
-    # 三段リーグのユーザーの代表
-    # http://localhost:3000/api/ppl_user_newest
-    def ppl_user_newest
-      render json: Ppl::User.all.sample
-    end
-
-    # 三段リーグのリーグ配列
-    # http://localhost:3000/api/ppl_league_all
-    def ppl_league_all
-      render json: Ppl::League.all
-    end
-
-    # 三段リーグの最新
-    # http://localhost:3000/api/ppl_league_newest
-    def ppl_league_newest
-      render json: Ppl::League.newest_order.first
-    end
   end
 end

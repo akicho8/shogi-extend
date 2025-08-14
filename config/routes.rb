@@ -113,11 +113,6 @@ Rails.application.routes.draw do
 
     post "app_log(.:format)", to: "etc#app_log"
 
-    get "ppl_user_all(.:format)",      to: "etc#ppl_user_all"
-    get "ppl_user_newest(.:format)",   to: "etc#ppl_user_newest"
-    get "ppl_league_all(.:format)",    to: "etc#ppl_league_all"
-    get "ppl_league_newest(.:format)", to: "etc#ppl_league_newest"
-
     get "swars/download_config_fetch(.:format)", to: "swars#download_config_fetch"
     get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
     get "swars/tag_frequency(.:format)",    to: "swars#tag_frequency"
