@@ -2,94 +2,15 @@ require "./setup"
 # GoogleApi::ExpirationTracker.delete_all
 facade = GoogleApi::Facade.new(rows: [{ id: 1 }])
 facade.rows               # => [[:id], [1]]
-facade.call               # => "https://docs.google.com/spreadsheets/d/1IVyhvkya4KSvlYBh78Ua-dtKgy3X2AGYPRQkXOi7t_A/edit"
+facade.call               # => "https://docs.google.com/spreadsheets/d/1ahucSBfBIS5TEXaO1ejd64qC1bvAsdWzwNeQ4N8YM_A/edit"
 # GoogleApi::ExpirationTracker.find_each do |e|
 #   e.spreadsheet_delete rescue puts $!
 # end
 tp GoogleApi::ExpirationTracker
-# >> 2025-03-14T09:54:23.134Z pid=46766 tid=vo6 INFO: Sidekiq 7.1.6 connecting to Redis with options {:size=>10, :pool_name=>"internal", :url=>"redis://localhost:6379/4"}
 # >> |-----+----------------------------------------------+---------------------------+---------------------------|
 # >> | id  | spreadsheet_id                               | created_at                | updated_at                |
 # >> |-----+----------------------------------------------+---------------------------+---------------------------|
-# >> |  58 | 1fXVZWFvQ7ytkZiIyPK1GhTOlcmX_g-5gfhBr7OW-uOA | 2024-07-23 15:32:45 +0900 | 2024-07-23 15:32:45 +0900 |
-# >> |  59 | 1X4Y4wKSstUbsV2YcD78k8porK_RdDe8ityqZVNKwHX4 | 2024-07-25 13:17:37 +0900 | 2024-07-25 13:17:37 +0900 |
-# >> |  60 | 1fj54PgkzU6dQRq57SMSynlpo9ZW_ljqEAlXbfcDgazE | 2024-07-25 13:18:09 +0900 | 2024-07-25 13:18:09 +0900 |
-# >> |  61 | 1iNwDgnofXXBdbbyUlNYKDnoTxb48zdE9m-NCk81sdY0 | 2024-07-25 13:19:02 +0900 | 2024-07-25 13:19:02 +0900 |
-# >> |  62 | 1iarklkxwKvjTwJYLjgrqrSqS4WklT9qcXxS7N8U0fy0 | 2024-07-25 13:19:49 +0900 | 2024-07-25 13:19:49 +0900 |
-# >> |  63 | 17xky4Z9PmBmEKgJjerwnui5jc852v8t-9W1XIbF2leE | 2024-07-25 13:25:48 +0900 | 2024-07-25 13:25:48 +0900 |
-# >> |  64 | 1cTihNGMBDfWyvB6FANnR0TgFZ3EkfRfjiuEGRZ69th8 | 2024-07-25 13:26:50 +0900 | 2024-07-25 13:26:50 +0900 |
-# >> |  65 | 1LEpmhdWxLpA2QIayqRhwkMvUYy4_HJokxQz9ChnvXdU | 2024-07-25 13:47:47 +0900 | 2024-07-25 13:47:47 +0900 |
-# >> |  66 | 1OoM3_2wEQab6f6HpspbaJfchK4rQs2lx4NXA1DA8Ads | 2024-07-25 13:48:42 +0900 | 2024-07-25 13:48:42 +0900 |
-# >> |  67 | 1zhOyVv1py6nN6lp1mI1pJQo1j0FbKq8cdobSLZulGjM | 2024-07-25 13:50:19 +0900 | 2024-07-25 13:50:19 +0900 |
-# >> |  68 | 1CMC0-mZ29N2HU8JKse2aHbbDujTzm3gb_mBo5pa1qRc | 2024-07-25 13:50:54 +0900 | 2024-07-25 13:50:54 +0900 |
-# >> |  69 | 1lE5l4QuNsJsBhrtF1-LAiQli2Q5hapKlHM50bk_BGds | 2024-07-25 13:51:48 +0900 | 2024-07-25 13:51:48 +0900 |
-# >> |  70 | 1ks0KqRpImyOHtWqxiqNz5Dyormu3OR39JYWsYnVMWyw | 2024-07-25 13:52:22 +0900 | 2024-07-25 13:52:22 +0900 |
-# >> |  71 | 1kbSWVCWvWN9yxLh8X6g2s0tGELeASpH4ta73GDWhbSM | 2024-07-25 13:52:55 +0900 | 2024-07-25 13:52:55 +0900 |
-# >> |  72 | 1nn8nY6yr1kq8cypU_nz1E4AJN9pXBKS3895-NxhFRuA | 2024-07-25 13:53:33 +0900 | 2024-07-25 13:53:33 +0900 |
-# >> |  73 | 1gdWC11um3aMhyljjxDPQjC8D_t6joO-0mEiZ2WB6K9E | 2024-07-25 21:20:15 +0900 | 2024-07-25 21:20:15 +0900 |
-# >> |  74 | 1KmUkmX3-dcU0iRCOan2OWr-P9uaitfG_WhiJYvH0PfI | 2024-07-25 21:41:44 +0900 | 2024-07-25 21:41:44 +0900 |
-# >> |  75 | 1M-bbeESQbua7q5z5HHJAFeU85nK_I28-RxkopTZ7j9Y | 2024-08-04 09:00:58 +0900 | 2024-08-04 09:00:58 +0900 |
-# >> |  76 | 1oszM6MOamiCNIU4TpXWNIuyDh823QJ7gES0VPGavHWc | 2024-08-08 17:26:02 +0900 | 2024-08-08 17:26:02 +0900 |
-# >> |  77 | 1EnGIkUP-vzhE9dQ7QRua3p69JRQ_Dw565kxMp-ziQ3Y | 2024-08-08 17:27:24 +0900 | 2024-08-08 17:27:24 +0900 |
-# >> |  78 | 17cGTzYRBlSzZzrdQTizq8E8WPoefwsd12NpXeadl7l4 | 2024-08-13 23:34:00 +0900 | 2024-08-13 23:34:00 +0900 |
-# >> |  79 | 17xWw0ClAf77e5aSw0i5t9gOEyaTuM62bAQjf5MR908Q | 2024-08-13 23:34:59 +0900 | 2024-08-13 23:34:59 +0900 |
-# >> |  80 | 1Agh8eeY4gGZRo1Hn8oioAgKBHQKn-NTbiOyfkdiOMHQ | 2024-08-13 23:38:44 +0900 | 2024-08-13 23:38:44 +0900 |
-# >> |  81 | 1eJUyCedjHEoF5LJG6Jb1lIKKlpbny5QDhXCnSuPytQ0 | 2024-08-13 23:41:48 +0900 | 2024-08-13 23:41:48 +0900 |
-# >> |  82 | 1Fe7sKxkKMoAb0jfSlA-o87mPOAzJBRmSQeHVj2emghA | 2024-08-13 23:42:53 +0900 | 2024-08-13 23:42:53 +0900 |
-# >> |  83 | 1C6ZJKv_lKdKzGonWngUwPsMZo76OHRWf7wfY1nMgtPA | 2024-08-13 23:45:29 +0900 | 2024-08-13 23:45:29 +0900 |
-# >> |  84 | 1TNX2jwPqSgISSl7btp4s70CH9DvgEWuhFEw5-m8en98 | 2024-08-14 06:44:04 +0900 | 2024-08-14 06:44:04 +0900 |
-# >> |  85 | 1dkIcknoSvKd4Vlb__ff_hGWGUvsGO6C-LrH3pXhH6rs | 2024-08-14 11:40:31 +0900 | 2024-08-14 11:40:31 +0900 |
-# >> |  86 | 1q-fzyj8BP0cdjeA-aiJToU2fp0vrYtFhcrYtQ8p1KaI | 2024-08-14 11:41:20 +0900 | 2024-08-14 11:41:20 +0900 |
-# >> |  87 | 1djnrGOLEZIqR9TggerxgE8l5dhEVZkEyCnkp4cVKLeg | 2024-08-14 11:43:15 +0900 | 2024-08-14 11:43:15 +0900 |
-# >> |  88 | 1JtMLf-RKH0zbLDDAUQ5IeKWlpIkdokMpW3ONGZfJtIo | 2024-08-14 11:43:50 +0900 | 2024-08-14 11:43:50 +0900 |
-# >> |  89 | 1-ddhzzUkvDbE4wc7G3s6oY7lj-fkXpIu4kEqE_xI8Xs | 2024-08-14 11:45:49 +0900 | 2024-08-14 11:45:49 +0900 |
-# >> |  90 | 1cRYowjeq36yh66kJlCuAwj9GN15WyQm4Nx5F1urkxIQ | 2024-08-14 11:51:30 +0900 | 2024-08-14 11:51:30 +0900 |
-# >> |  91 | 1CA55YbYAueJ2Y-LiC5rIm263o2CWb6LX_MgSPzVoj_w | 2024-08-14 11:53:45 +0900 | 2024-08-14 11:53:45 +0900 |
-# >> |  92 | 1f2cmB_5NZTlEzwNBNMabAXBCwr6hDVCr0b6nYVFiWM4 | 2024-08-14 11:54:25 +0900 | 2024-08-14 11:54:25 +0900 |
-# >> |  93 | 1bxQ4yeD0hXe-p2JXvILmno-00roM2i7om72D7KpymyU | 2024-08-14 12:00:06 +0900 | 2024-08-14 12:00:06 +0900 |
-# >> |  94 | 1pOtPzezTsLs2dv0pN5OmCK7Mq55RXtEEzJbIxg3IVw0 | 2024-08-14 12:03:44 +0900 | 2024-08-14 12:03:44 +0900 |
-# >> |  95 | 1gPjsvggx6uBq4pJsRynMsZcjIo_Re1FS5-7oRzWHHpY | 2024-08-14 12:19:20 +0900 | 2024-08-14 12:19:20 +0900 |
-# >> |  96 | 19gsXvTrSQWewwoH_D82colqh7YpSa__WDTKWGb3F3fQ | 2024-08-14 17:48:51 +0900 | 2024-08-14 17:48:51 +0900 |
-# >> |  97 | 1Da7e4FaXqa1bBz-TyR8MaQhK2HTCzAPEl78hdqaoaXY | 2024-08-14 17:54:53 +0900 | 2024-08-14 17:54:53 +0900 |
-# >> |  98 | 1tBP1bUUQuxtIKQ9AnYG9uPztXMqsAKDoXeNzjDK7sWo | 2024-08-17 10:59:56 +0900 | 2024-08-17 10:59:56 +0900 |
-# >> |  99 | 1zXDs8EB21HBp_12RhBTZpFiZCxVJlJGvWNW1PtICqRE | 2024-08-17 20:34:28 +0900 | 2024-08-17 20:34:28 +0900 |
-# >> | 100 | 1sYEByySoFFXW-IyPdinVKWxJcPdDckYQUm4A6TEXpew | 2024-09-11 23:35:30 +0900 | 2024-09-11 23:35:30 +0900 |
-# >> | 101 | 12xEefIm8l56h039F41_pLE50niVl7Ii5dgbrjgJZxPs | 2024-09-11 23:37:03 +0900 | 2024-09-11 23:37:03 +0900 |
-# >> | 102 | 1xywENKd4s9SD5jm2vk6J7rPjVjaILrG7rG066A63ClA | 2024-09-19 21:24:56 +0900 | 2024-09-19 21:24:56 +0900 |
-# >> | 103 | 1ZiEY2zm8zlWEMc6GgDAle_NUTAmpSVRLeX5_7BJdPoo | 2024-09-19 21:25:00 +0900 | 2024-09-19 21:25:00 +0900 |
-# >> | 104 | 1FZRJ4IgmFwCMJzEVXdk2lR5hR239Oj1g7hGIS5hbnjs | 2024-09-19 21:25:04 +0900 | 2024-09-19 21:25:04 +0900 |
-# >> | 105 | 1MJKJzZPPWRRv6zbj9p9i3ex-Jaj8q7n9bE40lAk_ykI | 2024-09-19 21:25:08 +0900 | 2024-09-19 21:25:08 +0900 |
-# >> | 106 | 1PBz02GHAedrI0vBFeRTP5kYby_WlVi9tmwSXJ4XMfJo | 2024-09-19 21:25:20 +0900 | 2024-09-19 21:25:20 +0900 |
-# >> | 107 | 11UF6_9myeKzDrbLYH4yuS0O5uq6s-qfQOKC2NNfEmBI | 2024-09-19 21:25:24 +0900 | 2024-09-19 21:25:24 +0900 |
-# >> | 108 | 1cqVKdTNQHWgZQTEWc89F7mfxeZpLjz6JAYfE2siMOQU | 2024-09-19 21:25:27 +0900 | 2024-09-19 21:25:27 +0900 |
-# >> | 109 | 1fvLrXjBTuKsqtmasJCsmOz17bY--Ipy2wwdabA--FNo | 2024-09-19 21:26:31 +0900 | 2024-09-19 21:26:31 +0900 |
-# >> | 110 | 1T97YXrp3YTIy1-pErI89zgoYw1ccrAHgbsmOxekHtcM | 2024-09-19 21:26:35 +0900 | 2024-09-19 21:26:35 +0900 |
-# >> | 111 | 13YlvPZ3_udrdK7Zh5TMN4PUJlklkRZW9GWpWiG9pqKk | 2024-09-19 21:26:38 +0900 | 2024-09-19 21:26:38 +0900 |
-# >> | 112 | 1-6KnaQl-WnK5vAlBjIrt5HnoXn9uaPf4F0U7zAzbCD4 | 2024-09-19 21:26:55 +0900 | 2024-09-19 21:26:55 +0900 |
-# >> | 113 | 1IM9lCxWjhU-ToID1jO6viTadLkgFNSCLNrLLDEA5_S4 | 2024-09-19 21:36:15 +0900 | 2024-09-19 21:36:15 +0900 |
-# >> | 114 | 1SML1leBT4oODb55tr9bBEmJWgZPCtoCu486ysPQ1B2U | 2024-09-19 21:36:20 +0900 | 2024-09-19 21:36:20 +0900 |
-# >> | 115 | 1jmEv8avAbTxyPLZTA21GGCkguCjsB6Vxf_naZMDg0D8 | 2024-09-19 21:36:25 +0900 | 2024-09-19 21:36:25 +0900 |
-# >> | 116 | 1zTw2TevzG9YbAVaNSUVlkA1hwa4ZcHRgAChh5ncLFRk | 2024-09-19 21:36:54 +0900 | 2024-09-19 21:36:54 +0900 |
-# >> | 117 | 1818Lgx69hwQbD5kRbx3efdF372TPb1sIwokUI0KWSxs | 2024-09-19 21:37:54 +0900 | 2024-09-19 21:37:54 +0900 |
-# >> | 118 | 16xrD08wWmvYRoFFFK6s8i-hOMG0hshrL7uaupyG0mRc | 2024-11-02 17:24:48 +0900 | 2024-11-02 17:24:48 +0900 |
-# >> | 119 | 1ejJ08yf_TwrjEhI2EmOTHxamUdRFXrVLH7yk5JLFaeI | 2024-11-02 17:25:21 +0900 | 2024-11-02 17:25:21 +0900 |
-# >> | 120 | 1PGG58Btqz_5Dj40nRYPS80XfDfXWHGcgFIIbN9UIrps | 2024-11-17 13:08:41 +0900 | 2024-11-17 13:08:41 +0900 |
-# >> | 121 | 1X2X1P0C1N7-tsCYlqIQOYl0rbMX7hSWmoc7WOEnJXR0 | 2024-11-17 13:27:46 +0900 | 2024-11-17 13:27:46 +0900 |
-# >> | 122 | 121Xu7W1SXifBNDvscKBegCsNnxyJBgWEF5IzlWifdyk | 2024-11-17 17:16:56 +0900 | 2024-11-17 17:16:56 +0900 |
-# >> | 123 | 1DhQ3uKrG0Nmyw2Io-Ykt_xsBRBgDPkTLf27yT4Ju1Xw | 2024-11-17 17:17:11 +0900 | 2024-11-17 17:17:11 +0900 |
-# >> | 124 | 1vwPw5tk-NpC0TkTl-D-Tc77Ciy49KaAoFHItOVgYH7o | 2024-11-17 18:09:52 +0900 | 2024-11-17 18:09:52 +0900 |
-# >> | 125 | 1sDqWdDa9n9VdjxNVvCvfjk9MP6EiP8vk9cp1TKgxKRI | 2024-11-17 18:10:50 +0900 | 2024-11-17 18:10:50 +0900 |
-# >> | 126 | 1HF1KQavW42nJxLlvToZVOWFp02vVCAPneQdHQh4uMjg | 2024-11-17 18:12:31 +0900 | 2024-11-17 18:12:31 +0900 |
-# >> | 127 | 1Bly8Xyol9KoU_BkH47WzotfngT9yU-AqB4O15WCie5A | 2024-11-17 18:19:38 +0900 | 2024-11-17 18:19:38 +0900 |
-# >> | 128 | 1Zw0DmV-td91x2vTgYeVxZmheyCur6drb4WIcKDNR--I | 2024-11-17 18:19:48 +0900 | 2024-11-17 18:19:48 +0900 |
-# >> | 129 | 1ctZUsy6d53-yeWM_K4DcRCCkoTU-hp_Fb1ZoemOm8I8 | 2024-11-17 19:08:26 +0900 | 2024-11-17 19:08:26 +0900 |
-# >> | 130 | 1uJ5U_zS-p-egFiMBtxQ0Gwf55xN3ApFTE7SqjExdh6g | 2024-11-17 19:20:59 +0900 | 2024-11-17 19:20:59 +0900 |
-# >> | 131 | 1KwZ9gglfit9P4gOuapoAQfeePto1ixjwVMQC0r5Sa1s | 2024-11-17 19:23:02 +0900 | 2024-11-17 19:23:02 +0900 |
-# >> | 132 | 1oIt1p5QtRrosXGBuLlGa1M_14QER59Yxz5EMV3fARKs | 2024-11-17 19:43:41 +0900 | 2024-11-17 19:43:41 +0900 |
-# >> | 133 | 1zEVrsOJvmOj0TAIiAbN72WIHchOE6Bt0DLW-1MnL2ZI | 2024-11-17 19:54:00 +0900 | 2024-11-17 19:54:00 +0900 |
-# >> | 134 | 1Xz1o5y2v9siwFEU1BV2DbQTqFD13RfWoNsWMNSKqZeQ | 2024-11-18 12:46:28 +0900 | 2024-11-18 12:46:28 +0900 |
-# >> | 135 | 1ixRS_jp2gttdQ93bWHfiSHDdOqdA9htLHtaXo5U4Sag | 2024-11-27 21:15:37 +0900 | 2024-11-27 21:15:37 +0900 |
-# >> | 136 | 1mBHnrLPEZ_nAKtFZfKW0RZNkK9utnzlXkdUN8LeESk4 | 2024-11-27 21:15:41 +0900 | 2024-11-27 21:15:41 +0900 |
-# >> | 137 | 1-JtQIn1njwrsrTW_KgAkfyxGzMx8yc_uLnUoAH7CU8k | 2024-11-27 21:16:57 +0900 | 2024-11-27 21:16:57 +0900 |
-# >> | 138 | 1IVyhvkya4KSvlYBh78Ua-dtKgy3X2AGYPRQkXOi7t_A | 2025-03-14 18:54:23 +0900 | 2025-03-14 18:54:23 +0900 |
+# >> | 141 | 1rbEKAnsO7Gy5mK40NTkWvhnrkhb3pfw6bPjVT9fCBws | 2025-08-02 13:08:40 +0900 | 2025-08-02 13:08:40 +0900 |
+# >> | 142 | 1lgmX-OuQuMisvRwxVFkUGcn4egkY8yFHz3UU_JGo1LI | 2025-08-14 13:33:31 +0900 | 2025-08-14 13:33:31 +0900 |
+# >> | 143 | 1ahucSBfBIS5TEXaO1ejd64qC1bvAsdWzwNeQ4N8YM_A | 2025-08-14 13:36:46 +0900 | 2025-08-14 13:36:46 +0900 |
 # >> |-----+----------------------------------------------+---------------------------+---------------------------|
