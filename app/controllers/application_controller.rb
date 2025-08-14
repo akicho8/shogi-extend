@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
 
   # for devise
   # ログインしたあとに移動するパス
-  # https://notsleeeping.com/archives/2487
+  # https://noppleeeping.com/archives/2487
   def after_sign_in_path_for(resource_or_scope)
     return_to = session[:return_to] || :root
     session[:return_to] = nil

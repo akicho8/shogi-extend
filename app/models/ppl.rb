@@ -1,26 +1,31 @@
-module Tsl
+module Ppl
   def self.table_name_prefix
     name.underscore.gsub("/", "_") + "_"
   end
 
-  # rails r 'Tsl.setup(reset: true)'
+  # Ppl.setup(reset: true)
   def self.setup(options = {})
     if options[:reset]
-      Tsl.destroy_all
+      destroy_all
     end
-    Tsl::Result.setup(options)
-    Tsl::League.setup(options)
+    Result.setup(options)
+    League.setup(options)
   end
 
   def self.destroy_all
     [
-      Tsl::League,
-      Tsl::User,
+      League,
+      User,
     ].each(&:destroy_all)
   end
 
   def self.reset_all
     destroy_all
     setup
+  end
+
+  def self.setup_for_workbench
+    destroy_all
+    Result.setup
   end
 end

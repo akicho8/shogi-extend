@@ -1,5 +1,5 @@
 require "#{__dir__}/setup"
-tp Tsl::ResultInfo
+tp Ppl::ResultInfo
 # >> |------|
 # >> | 昇段 |
 # >> | 降段 |

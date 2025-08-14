@@ -1,4 +1,4 @@
-module Tsl
+module Ppl
   module NameNormalizer
     extend self
 

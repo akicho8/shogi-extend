@@ -73,9 +73,9 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |              swars_zip_dl_logs | 1    |
 # >> |                       taggings | 98   |
 # >> |                           tags | 28   |
-# >> |                    tsl_leagues | 4    |
-# >> |                tsl_memberships | 122  |
-# >> |                      tsl_users | 68   |
+# >> |                    ppl_leagues | 4    |
+# >> |                ppl_memberships | 122  |
+# >> |                      ppl_users | 68   |
 # >> |                          users | 4    |
 # >> |               wkbk_access_logs | 1    |
 # >> |              wkbk_answer_kinds | 2    |

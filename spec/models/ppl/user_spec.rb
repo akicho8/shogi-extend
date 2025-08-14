@@ -33,9 +33,9 @@
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-# == Tsl::Schema Tsl::Information ==
+# == Ppl::Schema Ppl::Information ==
 #
-# ユーザー (users as Tsl::User)
+# ユーザー (users as Ppl::User)
 #
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 # | name                   | desc                       | type        | opts                | refs | index |
@@ -44,12 +44,12 @@
 # | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Tsl::Name input at              | datetime    |                     |      |       |
+# | name_input_at          | Ppl::Name input at              | datetime    |                     |      |       |
 # | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
 # | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
 # | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
 # | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Tsl::Reset password token       | string(255) |                     |      | C!    |
+# | reset_password_token   | Ppl::Reset password token       | string(255) |                     |      | C!    |
 # | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
 # | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
 # | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
@@ -62,22 +62,36 @@
 # | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
 # | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
 # | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Tsl::Unlock token               | string(255) |                     |      | E!    |
+# | unlock_token           | Ppl::Unlock token               | string(255) |                     |      | E!    |
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 require "rails_helper"
 
-RSpec.describe Tsl::User, type: :model do
-  before do
-    Tsl.setup
-  end
-
-  let :record do
-    Tsl::User.first
+RSpec.describe Ppl::User, type: :model do
+  it "plus_minus_search" do
+    Ppl.setup_for_workbench
+    Ppl::Updater.update_raw(5, { name: "XA", })
+    Ppl::Updater.update_raw(6, { name: "BX", })
+    assert { Ppl::User.plus_minus_search("A -B").collect(&:name) == ["XA"] }
   end
 
   it "works" do
-    assert { record.valid? }
+    Ppl.setup_for_workbench
+    Ppl::Updater.update_raw(5, { name: "alice", result_key: "維持", age: 1, win: 3 })
+    Ppl::Updater.update_raw(6, { name: "alice", result_key: "次点", age: 2, win: 2 })
+    Ppl::Updater.update_raw(7, { name: "alice", result_key: "昇段", age: 3, win: 1 })
+    user = Ppl::User["alice"]
+    assert { user.min_age                                == 1 }
+    assert { user.max_age                                == 3 }
+    assert { user.runner_up_count                        == 1 }
+    assert { user.max_win                                == 3 }
+    assert { user.promotion_membership.league.generation == 7 }
+    assert { user.promotion_generation                   == 7 }
+    assert { user.promotion_win                          == 1 }
+    assert { user.min_membership.league.generation       == 5 }
+    assert { user.max_membership.league.generation       == 7 }
+    assert { user.min_generation                         == 5 }
+    assert { user.max_generation                         == 7 }
   end
 end

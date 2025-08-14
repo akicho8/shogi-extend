@@ -2,7 +2,7 @@
 
 # == Schema Information ==
 #
-# League (tsl_leagues as Tsl::League)
+# League (ppl_leagues as Ppl::League)
 #
 # |------------+------------+------------+-------------+------+-------|
 # | name       | desc       | type       | opts        | refs | index |
@@ -13,9 +13,17 @@
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
-module Tsl
+module Ppl
   class League < ApplicationRecord
     class << self
+      def setup(options = {})
+        if Rails.env.local?
+          Ppl::Updater.resume_crawling(generations: (58..60))
+        else
+          Ppl::Updater.resume_crawling(options)
+        end
+      end
+
       def min_generation
         oldest_order.first&.generation
       end
@@ -34,14 +42,5 @@ module Tsl
 
     scope :newest_order, -> { order(generation: :desc) }
     scope :oldest_order, -> { order(generation: :asc)  }
-
-    def source_url
-      Spider.new(generation: generation).source_url
-    end
-
-    # 最新か？
-    def newest_record?
-      self.class.newest_order.first == self
-    end
   end
 end

@@ -2,7 +2,7 @@
 
 # == Schema Information ==
 #
-# Membership (tsl_memberships as Tsl::Membership)
+# Membership (ppl_memberships as Ppl::Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|
 # | name                     | desc                     | type        | opts        | refs       | index |
@@ -26,18 +26,53 @@
 # User.has_one :profile
 # --------------------------------------------------------------------------------
 
-require "rails_helper"
+module Ppl
+  class Membership < ApplicationRecord
+    belongs_to :league                                                                  # 対局
+    belongs_to :user, counter_cache: true                                               # 参加者
+    custom_belongs_to :result, ar_model: Result, st_model: ResultInfo, default: :retain # 結果
 
-RSpec.describe Tsl::Membership, type: :model do
-  before do
-    Tsl.setup
-  end
+    before_validation do
+      self.start_pos ||= 0
+      self.win ||= 0
+      self.lose ||= 0
+      self.ox ||= ""
+    end
 
-  let :record do
-    Tsl::Membership.first
-  end
+    with_options presence: true do
+      validates :start_pos
+      validates :win
+      validates :lose
+    end
 
-  it "works" do
-    assert { record.valid? }
+    after_save do
+      if saved_change_to_attribute?(:age) && age
+        user.min_age = [age, (user.min_age || Float::INFINITY)].min
+        user.max_age = [age, (user.max_age || 0)].max
+      end
+
+      if saved_change_to_attribute?(:result_id)
+        case result.key
+        when "promotion"        # 昇段
+          user.promotion_membership = self
+          user.promotion_generation = league.generation
+          user.promotion_win = win
+        when "runner_up"        # 次点
+          user.runner_up_count += 1
+        end
+      end
+
+      # 在籍の開始と終了のレコードを一発で引けるようにしておく
+      memberships = user.memberships.minmax_by { |e| e.league.generation }
+      user.min_membership, user.max_membership = memberships
+      user.min_generation, user.max_generation = memberships.collect { |e| e&.league.generation }
+
+      # 最大勝数を保持しておく
+      if saved_change_to_attribute?(:win) && win
+        user.max_win = [(user.max_win || 0), win].max
+      end
+
+      user.save!
+    end
   end
 end

@@ -39,12 +39,9 @@ module GoogleApi
     end
 
     def json_content
-      if false
-        Rails.root.join("config/google_account_json/shogi-web-production-93737ceaabf3.json").read
-        Rails.root.join("config/google_account_json/shogi-web-development-2792594c71a6.json").read
-      else
-        Rails.application.credentials.dig(:google_api, Rails.env).to_json
-      end
+      # return Rails.root.join("config/google_account_json/production.json").read
+      # return Rails.root.join("config/google_account_json/local.json").read
+      Rails.application.credentials.dig(:google_api, Rails.env).to_json
     end
 
     def spreadsheet_create(title = nil)

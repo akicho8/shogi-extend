@@ -1,4 +1,4 @@
-module Tsl
+module Ppl
   class ResultInfo
     include ApplicationMemoryRecord
     memory_record [

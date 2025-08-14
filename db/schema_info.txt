@@ -323,7 +323,7 @@
 
 # == Schema Information ==
 #
-# User (tsl_users as Tsl::User)
+# User (ppl_users as Ppl::User)
 #
 # |---------------------+---------------------+-------------+-------------+------+-------|
 # | name                | desc                | type        | opts        | refs | index |
@@ -341,7 +341,7 @@
 
 # == Schema Information ==
 #
-# Membership (tsl_memberships as Tsl::Membership)
+# Membership (ppl_memberships as Ppl::Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|
 # | name                     | desc                     | type        | opts        | refs       | index |
@@ -367,7 +367,7 @@
 
 # == Schema Information ==
 #
-# League (tsl_leagues as Tsl::League)
+# League (ppl_leagues as Ppl::League)
 #
 # |------------+------------+------------+-------------+------+-------|
 # | name       | desc       | type       | opts        | refs | index |

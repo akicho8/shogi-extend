@@ -7,7 +7,7 @@ class MainBatch
 
   def production
     # 奨励会三段リーグ
-    Tsl::League.setup(verbose: false)
+    Ppl::League.setup(verbose: false)
 
     # 動画変換
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する

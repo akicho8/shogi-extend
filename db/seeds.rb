@@ -13,7 +13,7 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Swars,
   Swars::Battle,
   User,
-  Tsl,
+  Ppl,
   XyMaster,
 ].each do |e|
   e.setup

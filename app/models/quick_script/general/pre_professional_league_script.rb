@@ -1,27 +1,27 @@
 # frozen-string-literal: true
 
-# http://localhost:4000/lab/general/three-stage-league
+# http://localhost:4000/lab/general/pre-professional-league
 
 module QuickScript
   module General
-    class ThreeStageLeagueScript < Base
+    class PreProfessionalLeagueScript < Base
       self.title = "奨励会三段リーグ早見表"
-      self.description = "アプリログの一覧を表示する"
+      self.description = "奨励会三段リーグの一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"
       self.title_click_behaviour = :force_reload
-      self.per_page_default = 1000
+      self.json_link = true
 
       def form_parts
         super + [
           {
-            :label   => "この棋士たちと同期を抽出する (氏名完全一致・複数指定可)",
+            :label   => "この棋士たちの同期を抽出する (完全一致・複数指定可)",
             :key     => :name_rel,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:name_rel].presence,
-                # :help_message => %(この棋士と同期の棋士の情報を抽出する),
+                :help_message => %(例: "西山朋佳 里見香奈")
               }
             },
           },
@@ -32,8 +32,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:generation_rel].presence,
-                # :help_message => %("a -b c -d" → a と c を含むが b と d は含まない。数字は期の指定とする。例1: "藤 -佐" → 藤井はマッチするが佐藤はマッチしない。例2: "75 76" → 75期と76期に絡んでいる人),
-                # :help_message => %("a -b c -d" → a と c を含むが b と d は含まない。例: "藤 -佐" → 藤井はマッチするが佐藤はマッチしない),
+                :help_message => %(例: "58 59 60")
               }
             },
           },
@@ -44,7 +43,6 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:query].presence,
-                # :help_message => %("a -b c -d" → a と c を含むが b と d は含まない。数字は期の指定とする。例1: "藤 -佐" → 藤井はマッチするが佐藤はマッチしない。例2: "75 76" → 75期と76期に絡んでいる人),
                 :help_message => %("a -b c -d" → a と c を含むが b と d は含まない。例: "藤 -佐" → 藤井はマッチするが佐藤はマッチしない),
               }
             },
@@ -56,55 +54,46 @@ module QuickScript
         v_stack([league_links, user_links], :class => "gap_small")
       end
 
-      def call
-        params[:generation_rel] ||= Tsl::League.max_generation
-
-        # if fetch_index == 0 && params[:generation_rel].blank?
-          #   params[:generation_rel] = Tsl::League.max_generation
-        # end
-        if request_get?
-          rows = current_scope.collect do |e|
-            {
-              "名前" => { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { name_rel: e.name, __prefer_url_params__: 1 }) }, :class => e.promoted_or_rights ? "has-text-weight-bold" : nil },
-              "昇齢"   => e.promotion_age,
-              "期間"   => e.memberships_count,
-              "齢〜"   => e.min_age,
-              "〜齢"   => e.max_age,
-              "次点"   => e.runner_up_count,
-              "昇期"   => e.promotion_generation,
-              "昇勝"   => e.promotion_membership&.win,
-              "最勝"   => e.memberships.collect(&:win).max,
-              **memberhip_fields(e),
-            }
-          end
-          simple_table(rows)
+      # http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general
+      def as_general_json
+        current_scope.collect do |user|
+          {
+            "名前"         => user.name,
+            "昇段時の年齢" => user.promotion_age,
+            "昇段時の期"   => user.promotion_generation,
+            "昇段時の勝数" => user.promotion_win,
+            "在籍期間"     => user.memberships_count,
+            "年齢から"     => user.min_age,
+            "年齢まで"     => user.max_age,
+            "次点回数"     => user.runner_up_count,
+            "最大勝数"     => user.max_win,
+            "成績"         => user.memberships.inject({}) { |a, m| a.merge(m.league.generation => m.win) },
+          }
         end
+      end
+
+      def call
+        params[:generation_rel] ||= Ppl::League.max_generation
+
+        rows = current_scope.collect do |e|
+          {
+            "名前" => { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { name_rel: e.name, generation_rel: "", query: "", __prefer_url_params__: 1 }) }, :class => e.promoted_or_rights ? "has-text-weight-bold" : nil },
+            "期間" => e.memberships_count,
+            "齢〜" => e.min_age,
+            "〜齢" => e.max_age,
+            "次点" => e.runner_up_count,
+            "最勝" => e.max_win,
+            "昇齢" => e.promotion_age,
+            "昇期" => e.promotion_generation,
+            "昇勝" => e.promotion_win,
+            **memberhip_fields(e),
+          }
+        end
+        simple_table(rows)
       end
 
       def current_scope
-        scope = Tsl::User.all
-        scope = scope.plus_minus_search(params[:query])
-
-        # この棋士たち同期を抽出する (氏名完全一致・複数指定可)
-        if target_users.present?
-          target_users.each do |user|
-            scope = scope.where(id: user.leagues.flat_map(&:user_ids))
-          end
-        end
-
-        # この期の同期を抽出する (複数指定可)
-        if target_leagues.present?
-          target_leagues.each do |league|
-            scope = scope.where(id: league.user_ids)
-          end
-        end
-
-        scope = scope.includes(memberships: [:user, :league, :result])
-        scope = scope.table_order
-      end
-
-      def target_users
-        @target_users ||= Tsl::User.where(name: params[:name_rel].to_s.scan(/\S+/))
+        @current_scope ||= Ppl::User.search(params)
       end
 
       def memberships_hash
@@ -142,25 +131,9 @@ module QuickScript
 
       ################################################################################
 
-      def target_generations
-        @target_generations ||= params[:generation_rel].to_s.scan(/\d+/).collect(&:to_i).to_set
-      end
-
-      def target_leagues
-        @target_leagues ||= Tsl::League.where(generation: target_generations)
-      end
-
-      ################################################################################
-
-      # def query
-      #   @query ||= params[:query].to_s.scan(/\S+/).to_set
-      # end
-
-      ################################################################################
-
       def league_links
         h_stack(:class => "gap_small") do
-          blocks = Tsl::League.newest_order.collect do |e|
+          blocks = Ppl::League.newest_order.collect do |e|
             params = { name_rel: "", generation_rel: e.generation, query: "", __prefer_url_params__: 1 }
             { _nuxt_link: e.generation, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-small is-light" }
           end
@@ -175,7 +148,7 @@ module QuickScript
 
       def user_links
         h_stack(:class => "gap_small") do
-          Tsl::User.link_order.collect do |e|
+          Ppl::User.link_order.collect do |e|
             params = { name_rel: e.name, generation_rel: "", query: "", __prefer_url_params__: 1 }
             css_klass = button_css_class
             if e.promoted_or_rights
@@ -190,7 +163,41 @@ module QuickScript
         @button_css_class ||= ["button", "is-small", "is-light"]
       end
 
-      ################################################################################
+      # ################################################################################
+      #
+      # concerning :SearchMethods do
+      #   def current_scope
+      #     scope = Ppl::User.all
+      #     scope = scope.plus_minus_search(params[:query])
+      #
+      #     # この棋士たち同期を抽出する (氏名完全一致・複数指定可)
+      #     if target_users.present?
+      #       user_ids = target_users.flat_map { |user| user.leagues.flat_map(&:user_ids) }
+      #       scope = scope.where(id: user_ids)
+      #     end
+      #
+      #     # この期の同期を抽出する (複数指定可)
+      #     if target_leagues.present?
+      #       user_ids = target_leagues.flat_map { |league| league.user_ids }
+      #       scope = scope.where(id: user_ids)
+      #     end
+      #
+      #     scope = scope.includes(memberships: [:user, :league, :result])
+      #     scope = scope.table_order
+      #   end
+      #
+      #   def target_users
+      #     @target_users ||= Ppl::User.where(name: params[:name_rel].to_s.scan(/\S+/))
+      #   end
+      #
+      #   def target_generations
+      #     @target_generations ||= params[:generation_rel].to_s.scan(/\d+/).collect(&:to_i).to_set
+      #   end
+      #
+      #   def target_leagues
+      #     @target_leagues ||= Ppl::League.where(generation: target_generations)
+      #   end
+      # end
     end
   end
 end

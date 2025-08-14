@@ -1,7 +1,6 @@
 require "#{__dir__}/setup"
-Tsl.destroy_all
-Tsl::Result.setup
-tp Tsl::Result
+Ppl.setup_for_workbench
+tp Ppl::Result
 # >> |----+-----------+----------+---------------------------+---------------------------|
 # >> | id | key       | position | created_at                | updated_at                |
 # >> |----+-----------+----------+---------------------------+---------------------------|
