@@ -5,7 +5,7 @@
 module QuickScript
   module General
     class PreProfessionalLeagueScript < Base
-      self.title = "奨励会三段リーグ早見表"
+      self.title = "奨励会三段リーグ成績早見表"
       self.description = "奨励会三段リーグの一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"
@@ -15,7 +15,7 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "名前の絞り込み (部分一致)",
+            :label   => "弟子名で絞り込み (部分一致)",
             :key     => :query,
             :type    => :string,
             :dynamic_part => -> {
@@ -32,7 +32,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:season_number].presence,
-                :help_message => %(例: "58 59 60" → 58 59 60 のどれかに在籍していたメンバーを抽出する)
+                :help_message => %(例: "58 59 60" → 58 59 60 のどれかに在籍していたメンバーで絞る)
               }
             },
           },
@@ -43,7 +43,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:name].presence,
-                :help_message => %(例: "藤井聡太 伊藤匠" → 「藤井聡太」または「伊藤匠」と当たったかもしれないメンバーを抽出する ※本人を含む)
+                :help_message => %(例: "藤井聡太 伊藤匠" → 「藤井聡太」または「伊藤匠」と当たったかもしれないメンバーで絞る ※本人を含む)
               }
             },
           },
@@ -54,7 +54,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:mentor_name].presence,
-                :help_message => %(例: "井上 森信" → "「井上」と「森信」の弟子を抽出する ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
+                :help_message => %(例: "井上 森信" → "「井上」と「森信」の弟子で絞る ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
               }
             },
           },
@@ -65,7 +65,7 @@ module QuickScript
       def as_general_json
         current_scope.collect do |user|
           {
-            "名前"         => user.name,
+            "弟子"         => user.name,
             "師匠"         => user.mentor.name,
             "昇段時の年齢" => user.promotion_age,
             "昇段時の期"   => user.promotion_season_number,
@@ -85,7 +85,7 @@ module QuickScript
 
         rows = current_scope.collect do |user|
           {
-            "名前" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => css_class(user) },
+            "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => css_class(user) },
             "師匠" => user_mentor_name(user),
             "期間" => user.memberships_count,
             "齢〜" => user.age_min,
