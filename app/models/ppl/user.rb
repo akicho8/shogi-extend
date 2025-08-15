@@ -28,6 +28,8 @@ module Ppl
     # 最近昇段した人ほど手前にくる
     scope :link_order,  -> { order(promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
 
+    scope :json_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
+
     scope :plus_minus_search, -> query do
       scope = all
       SimpleQueryParser.parse(query.to_s).each do |plus, queries|

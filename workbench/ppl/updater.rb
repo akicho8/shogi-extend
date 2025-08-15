@@ -10,4 +10,4 @@ Ppl.setup_for_workbench
 
 # JSONからDB
 rows = JSON.parse(Pathname("all.json").read, symbolize_names: true)
-rows.each.with_index { |e, i| Ppl::Updater.update_raw(i, e) }
+rows.each.with_index(128) { |e, i| Ppl::Updater.update_raw(i, e) }

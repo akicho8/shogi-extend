@@ -12,6 +12,12 @@ module QuickScript
       self.title_click_behaviour = :force_reload
       self.json_link = true
 
+      def header_link_items
+        super + [
+          { name: "推移図", icon: "chart-box", _v_bind: { href: "/lab/general/pre-professional-league.html", target: "_self", }, },
+        ]
+      end
+
       def form_parts
         super + [
           {
@@ -32,7 +38,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:season_number].presence,
-                :help_message => %(例: "58 59 60" → 58 59 60 のどれかに在籍していたメンバーで絞る)
+                :help_message => %(例: "58 59 60" → 58〜60期のどこかに在籍していたメンバーで絞る)
               }
             },
           },
@@ -43,7 +49,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:name].presence,
-                :help_message => %(例: "藤井聡太 伊藤匠" → 「藤井聡太」または「伊藤匠」と当たったかもしれないメンバーで絞る ※本人を含む)
+                :help_message => %(例: "藤井聡太 伊藤匠" → 藤井聡太か伊藤匠と当たったかもしれないメンバーで絞る ※本人を含む)
               }
             },
           },
@@ -54,7 +60,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:mentor_name].presence,
-                :help_message => %(例: "井上 森信" → "「井上」と「森信」の弟子で絞る ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
+                :help_message => %(例: "井上 森信" → "井上か森信の門下で絞る ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
               }
             },
           },
@@ -63,20 +69,35 @@ module QuickScript
 
       # http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general
       def as_general_json
-        current_scope.collect do |user|
-          {
-            "弟子"         => user.name,
-            "師匠"         => user.mentor.name,
-            "昇段時の年齢" => user.promotion_age,
-            "昇段時の期"   => user.promotion_season_number,
-            "昇段時の勝数" => user.promotion_win,
-            "在籍期間"     => user.memberships_count,
-            "年齢から"     => user.age_min,
-            "年齢まで"     => user.age_max,
-            "次点回数"     => user.runner_up_count,
-            "最大勝数"     => user.win_max,
-            "成績"         => user.memberships.inject({}) { |a, m| a.merge(m.league_season.season_number => m.win) },
-          }
+        if false
+          # このネストした形式は R の前処理がややこしくなりすぎて自分にはさっぱりわからん
+          current_scope.collect do |user|
+            {
+              "弟子"         => user.name,
+              "師匠"         => user.mentor.name,
+              "昇段時の年齢" => user.promotion_age,
+              "昇段時の期"   => user.promotion_season_number,
+              "昇段時の勝数" => user.promotion_win,
+              "在籍期間"     => user.memberships_count,
+              "年齢から"     => user.age_min,
+              "年齢まで"     => user.age_max,
+              "次点回数"     => user.runner_up_count,
+              "最大勝数"     => user.win_max,
+              "成績"         => user.memberships.inject({}) { |a, m| a.merge(m.league_season.season_number => m.win) },
+            }
+          end
+        else
+          # R にやさしいハッシュの配列にする
+          current_scope.unscope(:order).json_order.flat_map do |user|
+            user.memberships.collect do |membership|
+              {
+                "期次" => membership.league_season.season_number,
+                "名前" => membership.user.name,
+                "結果" => membership.result.name,
+                "勝数" => membership.win,
+              }
+            end
+          end
         end
       end
 

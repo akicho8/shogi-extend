@@ -52,5 +52,5 @@ yarn-debug.log*
 
 # R
 /nuxt_side/static/lab/**/*_files
+/nuxt_side/static/lab/**/*.html
 /Rplots.pdf
-/nuxt_side/static/lab/swars/*.html
