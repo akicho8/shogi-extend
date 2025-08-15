@@ -13,7 +13,7 @@ module Swars
     end
 
     def protected_user_keys
-      group(:pro, :semi_pro, :protected)
+      group # group(:pro, :semi_pro, :protected)
     end
 
     def group(*keys)
