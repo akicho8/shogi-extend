@@ -7,7 +7,7 @@ module Ppl
 
     def initialize(params = {})
       @params = {
-        :max     => 256,
+        :take_size    => 256,
         :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
         :sleep   => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 1 : 0,
       }.merge(params)
@@ -15,7 +15,7 @@ module Ppl
 
     def call
       if str = html_fetch
-        Nokogiri::HTML(str).search("tbody tr").take(max).collect do |tr_el|
+        Nokogiri::HTML(str).search("tbody tr").take(take_size).collect do |tr_el|
           attributes_from(tr_el)
         end
       end
@@ -64,8 +64,8 @@ module Ppl
       [:age, :win, :lose, :start_pos]
     end
 
-    def max
-      (params[:max].presence || 256).to_i
+    def take_size
+      (params[:take_size].presence || 256).to_i
     end
 
     def season_number
