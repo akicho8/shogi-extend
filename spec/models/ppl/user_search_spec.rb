@@ -11,4 +11,10 @@ RSpec.describe Ppl::UserSearch, type: :model do
     assert { Ppl::User.search(mentor_name: "X").collect(&:name)   == ["alice"]                 }
     assert { Ppl::User.search(query: "a").collect(&:name)         == ["alice", "carol"]        }
   end
+
+  it "[BUGFIX] Mentor を join しているとき name カラムの所有テーブルがはっきりしなくなる" do
+    Ppl.setup_for_workbench
+    Ppl::Updater.update_raw(5, { mentor: "X", name: "alice", })
+    assert { Ppl::User.search(mentor_name: "X", query: "a").collect(&:name) == ["alice"] }
+  end
 end

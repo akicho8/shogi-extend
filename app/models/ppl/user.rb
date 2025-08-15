@@ -33,7 +33,7 @@ module Ppl
       SimpleQueryParser.parse(query.to_s).each do |plus, queries|
         queries.each do |query|
           sanitized = ActiveRecord::Base.sanitize_sql_like(query.downcase)
-          scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(name) LIKE ?)", "%#{sanitized}%")
+          scope = scope.where("#{plus ? '' : 'NOT'} (LOWER(#{table_name}.name) LIKE ?)", "%#{sanitized}%")
         end
       end
       scope
