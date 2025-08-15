@@ -7,9 +7,9 @@
 # ▼削除実行 (production)
 # # ↓必要であれば
 # cap production deploy:upload FILES=app/models/swars/battle/cleaner_methods.rb
-# # RAILS_ENV=production bundle exec bin/rails r 'Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true, old_only: 50.days).call'
+# # RAILS_ENV=production bundle exec bin/rails r 'Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true, old_only: 50.days).call'
 # # ↓引数を全部書けばコードを変更する必要はない
-# RAILS_ENV=production nohup bundle exec bin/rails r 'Swars::Battle.drop_scope1.cleaner(subject: "一般", execute: true, old_only: 50.days, xmode_only: ["野良", "大会"], verbose: true).call' &
+# RAILS_ENV=production nohup bundle exec bin/rails r 'Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true, old_only: 50.days, xmode_only: ["野良", "大会"], verbose: true).call' &
 # tailf nohup.out
 module Swars
   class Battle
@@ -74,7 +74,7 @@ module Swars
         # 消さない棋譜に集計が偏るため集計では直近3ヶ月とした方がいいかもしれない
 
         # 一般ユーザー
-        scope :drop_scope1, -> (options = {}) {
+        scope :destroyable_n, -> (options = {}) {
           options = {
             :xmode_only  => ["野良", "大会"],
             :ban_except  => false,
@@ -85,7 +85,7 @@ module Swars
         }
 
         # VIPユーザー
-        scope :drop_scope2, -> (options = {}) {
+        scope :destroyable_s, -> (options = {}) {
           options = {
             :xmode_only  => ["野良", "大会"],
             :ban_except  => false,
@@ -101,13 +101,13 @@ module Swars
         # rails r 'Swars::Battle.cleaner1.call'
         def cleaner1(options = {})
           cleaner_options_old_only_validation!(options)
-          drop_scope1(options).cleaner({ subject: "一般" }.merge(options))
+          destroyable_n(options).cleaner({ subject: "一般" }.merge(options))
         end
 
         # rails r 'Swars::Battle.cleaner2.call'
         def cleaner2(options = {})
           cleaner_options_old_only_validation!(options)
-          drop_scope2(options).cleaner({ subject: "VIP" }.merge(options))
+          destroyable_s(options).cleaner({ subject: "VIP" }.merge(options))
         end
 
         private

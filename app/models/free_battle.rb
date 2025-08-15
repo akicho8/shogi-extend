@@ -50,7 +50,7 @@ class FreeBattle < ApplicationRecord
   belongs_to :user, required: false
 
   scope :old_only,        -> expires_in { where(arel_table[:accessed_at].lteq(expires_in.seconds.ago)) } # 古いもの
-  scope :deleteable_only, -> { where(arel_table[:use_key].eq_any(["adapter", "share_board"])) }          # 削除していいもの
+  scope :destroyable, -> { where(arel_table[:use_key].eq_any(["adapter", "share_board"])) }          # 削除していいもの
 
   class << self
     def generate_unique_secure_token(*)

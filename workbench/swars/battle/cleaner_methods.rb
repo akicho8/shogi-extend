@@ -11,5 +11,5 @@ Swars::Battle.limit(nil).xmode_only("指導").count         # =>
 Swars::Battle.limit(nil).xmode_except("指導").count       # =>
 Swars::Battle.limit(nil).coaching_only.count              # =>
 Swars::Battle.limit(nil).coaching_except.count            # =>
-Swars::Battle.drop_scope1.count                    # =>
-Swars::Battle.drop_scope2.count                    # =>
+Swars::Battle.destroyable_n.count                    # =>
+Swars::Battle.destroyable_s.count                    # =>
