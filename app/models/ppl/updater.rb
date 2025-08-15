@@ -36,10 +36,11 @@ module Ppl
         rows.each do |attrs|
           user = User.find_or_create_by!(name: attrs[:name])
           if v = attrs[:mentor].presence
-            if user.mentor && user.mentor.name != NameNormalizer.normalize(v)
-              tp({"前" => user.mentor.name, "新" => NameNormalizer.normalize(v)})
+            mentor = Mentor.find_or_create_by!(name: v)
+            if user.mentor && user.mentor.name != mentor.name
+              tp({"対象" => user.name, "前師匠" => user.mentor.name, "新師匠" => mentor.name})
             end
-            user.update!(mentor: Mentor.find_or_create_by!(name: v))
+            user.update!(mentor: mentor)
           end
 
           membership = user.memberships.find_or_initialize_by(league_season: league_season)
