@@ -121,7 +121,7 @@ RSpec.describe Kiwi::Lemon, type: :model, kiwi: true do
     lemon1.main_process
     lemon1.reload
     assert { lemon1.real_path.exist? }
-    Kiwi::Lemon.cleanup(expires_in: 0, execute: true)
+    Kiwi::Lemon.cleaner(expires_in: 0, execute: true).call
     assert { !lemon1.real_path.exist? }
     assert { !Kiwi::Lemon.exists?(lemon1.id) }
   end

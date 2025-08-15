@@ -1,9 +1,15 @@
 # public/system/x-files 以下の、ライブラリ登録されていないLemonのレコードに結びついた mp4 を削除する
-# rails r Kiwi::Lemon.cleanup
+# rails r Kiwi::Lemon.cleaner
 
 module Kiwi
   class Lemon
-    class Cleanup
+    class Cleaner
+      class << self
+        def call(...)
+          new(...).call
+        end
+      end
+
       def initialize(options = {})
         @options = {
           :execute    => false,

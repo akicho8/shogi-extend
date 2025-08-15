@@ -21,7 +21,6 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 #   runner [
 #     "ActiveRecord::Base.logger = nil",
 #     "Swars::Crawler::ReserveUserCrawler.call",
-#     "Swars::Battle.cleanup(time_limit: nil)",
 #   ].join(";")
 # end
 

@@ -2,9 +2,9 @@ module Kiwi
   class Lemon
     concern :BuildMethods do
       class_methods do
-        # rails r Kiwi::Lemon.cleanup
-        def cleanup(...)
-          Cleanup.new(...).call
+        # rails r Kiwi::Lemon.cleaner
+        def cleaner(...)
+          Cleaner.new(...)
         end
 
         # Queueに入っている数
