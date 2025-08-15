@@ -23,7 +23,7 @@ module Swars
             :subject          => "直近数日で注目されているユーザー",
             :period           => 3.days, # この期間で
             :at_least         => 5,      # N件以上検索されている(多い順)
-            :limit            => 25,     # ユーザーを最大N件
+            :limit            => 5,      # ユーザーを最大N件
             :hard_crawled_old => 3.days, # 全体クロールしてN日以上経過している人たち
           })
       end

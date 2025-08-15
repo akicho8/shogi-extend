@@ -13,7 +13,7 @@ class MainBatch
     if Rails.env.production?
       Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
       Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
-      # Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
+      Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
     end
 
     # 削除シリーズ
@@ -21,7 +21,7 @@ class MainBatch
     XfileCleaner.call(execute: true)          # public/system/x-files 以下の古い png と rb を削除する
     MediaBuilder.old_media_file_clean(keep: 3, execute: true)
 
-    # GeneralCleaner シリーズ
+    # ActiveRecord 関連を GeneralCleaner で削除するシリーズ
     FreeBattle.destroyable.old_only(30.days).cleaner(subject: "FreeBattle", execute: true).call
     Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true).call  # 30分かかる
     Swars::Battle.destroyable_s.cleaner(subject: "特別", execute: true).call
