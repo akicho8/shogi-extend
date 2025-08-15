@@ -98,14 +98,14 @@ module Swars
       end
 
       class_methods do
-        # rails r 'Swars::Battle.cleaner1.call'
-        def cleaner1(options = {})
+        # rails r 'Swars::Battle.cleaner_n.call'
+        def cleaner_n(options = {})
           cleaner_options_old_only_validation!(options)
           destroyable_n(options).cleaner({ subject: "一般" }.merge(options))
         end
 
-        # rails r 'Swars::Battle.cleaner2.call'
-        def cleaner2(options = {})
+        # rails r 'Swars::Battle.cleaner_s.call'
+        def cleaner_s(options = {})
           cleaner_options_old_only_validation!(options)
           destroyable_s(options).cleaner({ subject: "VIP" }.merge(options))
         end

@@ -127,7 +127,7 @@ RSpec.describe Swars::Battle::CleanerMethods, type: :model, swars_spec: true do
     assert { Swars::Battle.count == 1 }
   end
 
-  describe "cleaner1 / cleaner2" do
+  describe "cleaner_n / cleaner_s" do
     def case1
       user_key = Swars::User::Vip.long_time_keep_user_keys.first
       Swars::Battle.create! do |e|
@@ -135,15 +135,15 @@ RSpec.describe Swars::Battle::CleanerMethods, type: :model, swars_spec: true do
       end
     end
 
-    it "cleaner1: しばらく棋譜を残しておく利用者のため棋譜はまだ残っている" do
+    it "cleaner_n: しばらく棋譜を残しておく利用者のため棋譜はまだ残っている" do
       case1
-      Swars::Battle.cleaner1(execute: true).call
+      Swars::Battle.cleaner_n(execute: true).call
       assert { Swars::Battle.count == 1 }
     end
 
-    it "cleaner2: しばらく棋譜を残しておく利用者だがそれでもいつかは削除する" do
+    it "cleaner_s: しばらく棋譜を残しておく利用者だがそれでもいつかは削除する" do
       case1
-      Swars::Battle.cleaner2(execute: true).call
+      Swars::Battle.cleaner_s(execute: true).call
       assert { Swars::Battle.count == 0 }
     end
   end
