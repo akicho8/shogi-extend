@@ -1,8 +1,14 @@
 # public/system/x-files 以下の読み出しがない "_" をファイル名に含まないファイルを削除する
-# rails r XfilesCleanup.new.call
-# XfilesCleanup.new(expires_in: 300.days)
+# rails r XfileCleaner.new.call
+# XfileCleaner.new(expires_in: 300.days)
 
-class XfilesCleanup
+class XfileCleaner
+  class << self
+    def call(...)
+      new(...).call
+    end
+  end
+
   def initialize(options = {})
     @options = {
       :execute    => false,
