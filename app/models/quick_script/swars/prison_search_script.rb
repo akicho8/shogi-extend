@@ -56,8 +56,8 @@ module QuickScript
         scope = scope.includes(:memberships) # for e.memberships.size (存在しないのもあるため joins してはいけない)
         current_queries.each do |query|
           sanitized_query = ActiveRecord::Base.sanitize_sql_like(query.downcase)
-          c1 = ::Swars::User.where("LOWER(swars_users.user_key) LIKE ?", "%#{sanitized_query}%")
-          c2 = ::Swars::Grade.unscoped.where("`swars_grades`.`key` LIKE ?", "%#{sanitized_query}%")
+          c1 = ::Swars::User.where("LOWER(#{::Swars::User.table_name}.user_key) LIKE ?", "%#{sanitized_query}%")
+          c2 = ::Swars::Grade.unscoped.where("#{::Swars::Grade.table_name}.key LIKE ?", "%#{sanitized_query}%")
           scope = scope.and(c1.or(c2))
         end
         scope
