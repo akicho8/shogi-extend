@@ -86,7 +86,7 @@ module QuickScript
         rows = current_scope.collect do |user|
           {
             "名前" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => css_class(user) },
-            "師匠" => user.mentor ? { _nuxt_link: user.mentor.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(mentor_name: user.mentor.name)) }, :class => "is_decoration_off" } : "",
+            "師匠" => user_mentor_name(user),
             "期間" => user.memberships_count,
             "齢〜" => user.age_min,
             "〜齢" => user.age_max,
@@ -99,6 +99,15 @@ module QuickScript
           }
         end
         simple_table(rows)
+      end
+
+      def user_mentor_name(user)
+        if false
+          # 本当はリンクしたいが表示する値自体がソート対象値なのでリンクにしてしまうとソートできなくなる
+          user.mentor ? { _nuxt_link: user.mentor.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(mentor_name: user.mentor.name)) }, :class => "is_decoration_off" } : ""
+        else
+          user.mentor&.name || ""
+        end
       end
 
       def current_scope
@@ -186,9 +195,6 @@ module QuickScript
           Ppl::Mentor.link_order.collect do |e|
             params = default_params.merge(mentor_name: e.name)
             css_klass = button_css_class
-            # if e.promoted_or_rights
-            #   css_klass += ["has-text-weight-bold"]
-            # end
             { _nuxt_link: "#{e.name}(#{e.users_count})", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => css_klass.join(" ") }
           end
         end
