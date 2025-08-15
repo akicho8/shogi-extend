@@ -1,0 +1,2136 @@
+|-------+--------------------------------------------------------------|
+|    期 | 28                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/28/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+-----+------+--------------------|
+| result_key | start_pos | name       | win | lose | ox                 |
+|------------+-----------+------------+-----+------+--------------------|
+| 維         |         1 | 松本秀介   |   6 |   12 | xxoxoxoxxxoxxxoxox |
+| 次         |         2 | 佐藤佳一郎 |  11 |    7 | ooxooxxoooxooxxoxo |
+| 昇         |         3 | 橋本崇載   |  15 |    3 | ooooxoooooxooxoooo |
+| 維         |         4 | 三須智弘   |  11 |    7 | oxoxxooxxooxxooooo |
+| 維         |         5 | 城間春樹   |   9 |    9 | ooxxxoxxoooooxoxxx |
+| 維         |         6 | 村中秀史   |  11 |    7 | xooxooxxoxxxoooooo |
+| 維         |         7 | 宮田敦史   |  11 |    7 | xooooooooxoxxxoxxo |
+| 維         |         8 | 大平武洋   |   8 |   10 | oxxoxxooxxoooxxxxo |
+| 昇         |         9 | 佐々木慎   |  15 |    3 | oooooxooxoooxooooo |
+| 維         |        10 | 水津隆義   |  10 |    8 | xxoxxoxxooxxoooooo |
+| 維         |        11 | 熊坂学     |   9 |    9 | xxooxooooxooxxxxxo |
+| 維         |        12 | 村田智弘   |  11 |    7 | xooooooxxoxoxoxoox |
+| 維         |        13 | 佐藤和俊   |   8 |   10 | oxoxxoxxoxooxooxxx |
+| 維         |        14 | 片上大輔   |  11 |    7 | xoxooxxoxoxxoooooo |
+| 維         |        15 | 横山泰明   |   7 |   11 | ooxxxxoxoxoxoxxxox |
+| 維         |        16 | 津山慎悟   |   7 |   11 | xxxxoxoxxxooxooxox |
+| 維         |        17 | 堀尾博洋   |   8 |   10 | xoxxxoxooxxooxoxxo |
+| 維         |        18 | 石塚徹     |   8 |   10 | oxxxoooxxoxooxxxxo |
+| 維         |        19 | 高野悟志   |   8 |   10 | oxooooxoxxxxxoxoxx |
+| 維         |        20 | 島本亮     |   5 |   13 | xxxxxxoooxxoxoxxxx |
+| 維         |        21 | 西尾明     |   8 |   10 | oxxoxxxoxxoxooooxx |
+| 維         |        22 | 遠山雄亮   |   8 |   10 | xoooxxxxooxxxoxoox |
+| 維         |        23 | 阪口悟     |   7 |   11 | xxxoxxoxxooooxxoxx |
+| 維         |        24 | 本田啓二   |   5 |   13 | xxooxooxoxxxxxxxxx |
+| 維         |        25 | 平田竜樹   |   8 |   10 | ooxxoxxoxoxoxoxxxo |
+|------------+-----------+------------+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 29                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/29/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 佐藤佳一郎 | 青野   |  23 |  11 |    7 | xxoxxoxoooooooxoox |
+| 維         |         2 | 三須智弘   | 長谷部 |  26 |  10 |    8 | oxxoxxxoxxooooxooo |
+| 維         |         3 | 村中秀史   | 高柳   |  20 |   9 |    9 | oooxxxoxoxoxoxoxox |
+| 昇         |         4 | 宮田敦史   | 所司   |  19 |  15 |    3 | oooooooooxxxoooooo |
+| 昇         |         5 | 村田智弘   | 淡路   |  19 |  14 |    4 | oooxooxxoooooxoooo |
+| 維         |         6 | 片上大輔   | 森信   |  19 |   9 |    9 | xoxxxooxxooooxoxox |
+| 維         |         7 | 水津隆義   | 橋本   |  23 |   9 |    9 | xooxoxoxooxxxxooxo |
+| 維         |         8 | 城間春樹   | 泉     |  24 |  11 |    7 | ooxooxoxooxoxoooxx |
+| 維         |         9 | 熊坂学     | 中原   |  23 |   8 |   10 | xxxoxooooxxxxooxxo |
+| 維         |        10 | 大平武洋   | 桐谷   |  23 |  10 |    8 | xoooooooxoxxxxxoxo |
+| 維         |        11 | 佐藤和俊   | 加瀬   |  22 |   8 |   10 | ooooxxxxxoxxxooxox |
+| 次         |        12 | 堀尾博洋   | 所司   |  20 |  12 |    6 | xooooooxxxooooooxx |
+| 維         |        13 | 石塚徹     | 小林健 |  28 |   8 |   10 | oxxxoxxoxxxooxooxo |
+| 維         |        14 | 高野悟志   | 佐伯   |  21 |   9 |    9 | xxoxoxxxxxooooooox |
+| 維         |        15 | 西尾明     | 青野   |  21 |   7 |   11 | xoxxxoooxxxoxoxxxo |
+| 維         |        16 | 遠山雄亮   | 加瀬   |  21 |   6 |   12 | xxxxxooxxooxxxxoxo |
+| 維         |        17 | 平田竜樹   | 森信   |  22 |   8 |   10 | oxxooxxooxxxxoxxoo |
+| 維         |        18 | 横山泰明   | 桜井   |  20 |  10 |    8 | oooooxxooxooxxxxxo |
+| 維         |        19 | 津山慎悟   | 有吉   |  21 |  10 |    8 | ooxxxooooxooxooxxx |
+| 維         |        20 | 阪口悟     | 木下晃 |  22 |   4 |   14 | oxxooxxoxxxxxxxxxx |
+| 維         |        21 | 島本亮     | 小林健 |  20 |   4 |   14 | xxxxxxxxxooxoxxxox |
+| 維         |        22 | 本田啓二   | 有吉   |  22 |  10 |    8 | oxxoooxxoooxooxxox |
+| 維         |        23 | 佐藤慎一   | 剱持   |  18 |   4 |   14 | xxooxxxxxoxxxxxoxx |
+| 維         |        24 | 藤倉勇樹   | 桜井   |  21 |  10 |    8 | xxoxxoooooxooxxxoo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 30                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/30/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+-----+------+--------------------|
+| result_key | start_pos | name       | win | lose | ox                 |
+|------------+-----------+------------+-----+------+--------------------|
+| 維         |         1 | 堀尾博洋   |   6 |   12 | xoxxxxxoxoxxxoxoox |
+| 維         |         2 | 佐藤佳一郎 |  11 |    7 | ooxoxooxxoxxoxoooo |
+| 維         |         3 | 城間春樹   |  10 |    8 | oxxoooxooxxoooxxox |
+| 維         |         4 | 三須智弘   |   8 |   10 | xxoooxoxxxxoxxxooo |
+| 昇         |         5 | 大平武洋   |  16 |    2 | ooooooxooooooooxoo |
+| 維         |         6 | 横山泰明   |  10 |    8 | oxoxxooooxoxoxooxx |
+| 維         |         7 | 津山慎悟   |   9 |    9 | xoxooxxxooxxoooxxo |
+| 維         |         8 | 本田啓二   |   9 |    9 | xxooxooxxxoxoooxxo |
+| 維         |         9 | 藤倉勇樹   |   5 |   13 | ooxxxoxxxxxxxoxoxx |
+| 維         |        10 | 村中秀史   |   9 |    9 | oxxxxooxxooooooxxx |
+| 維         |        11 | 片上大輔   |   9 |    9 | oooxxooxooxxxxoxxo |
+| 維         |        12 | 水津隆義   |   8 |   10 | xooxxxxoxoxoooxxxo |
+| 次         |        13 | 高野悟志   |  12 |    6 | xoxoxooooxooooxoox |
+| 昇         |        14 | 熊坂学     |  13 |    5 | xooooxxxxooooooooo |
+| 維         |        15 | 佐藤和俊   |  10 |    8 | oxoooxooxxoxxxxooo |
+| 維         |        16 | 平田竜樹   |   5 |   13 | xxxxxoxxxooxoxxxxo |
+| 維         |        17 | 西尾明     |   9 |    9 | oxoxoxxoooxxoooxxx |
+| 維         |        18 | 遠山雄亮   |  12 |    6 | ooxooooooxxxoxoxoo |
+| 維         |        19 | 阪口悟     |   7 |   11 | xxxxoxoooxoxxxxxoo |
+| 維         |        20 | 島本亮     |   7 |   11 | xxoxxoooxoxxxxxoox |
+| 維         |        21 | 佐藤慎一   |   6 |   12 | oxxoxoxxoooxxxxxxx |
+| 維         |        22 | 菊池隆     |   7 |   11 | xxoxxxxooxxoxxooox |
+| 維         |        23 | 菊地裕太   |  12 |    6 | oooxxoooooooxoxoxx |
+| 維         |        24 | 前田真周   |   4 |   14 | oxoooxxxxxxxxxxxxx |
+| 維         |        25 | 村山慈明   |  11 |    7 | xxoooxxxxoooooooox |
+|------------+-----------+------------+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 31                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/31/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 高野悟志   | 佐伯   |  22 |   8 |   10 | xoooxxoxoxooxxxxxo |
+| 維         |         2 | 遠山雄亮   | 加瀬   |  22 |   7 |   11 | xxxxoxooxxooxoxxxo |
+| 維         |         3 | 菊地裕太   | 大島   |  18 |   8 |   10 | xxxxoxoxoxoooooxxx |
+| 維         |         4 | 佐藤佳一郎 | 青野   |  24 |  11 |    7 | oooooxxxxooxoooxox |
+| 維         |         5 | 村山慈明   | 桜井   |  17 |  10 |    8 | ooooxxxxooxoxxxooo |
+| 維         |         6 | 城間春樹   | 泉     |  25 |  11 |    7 | xoooooxxoxoxooxxoo |
+| 昇         |         7 | 横山泰明   | 桜井   |  21 |  12 |    6 | oxooooxoooxoxxxooo |
+| 維         |         8 | 佐藤和俊   | 加瀬   |  23 |  11 |    7 | ooxxxxxoxoxooooooo |
+| 維         |         9 | 津山慎悟   | 有吉   |  22 |  11 |    7 | xoxoxoooooooxxxoxo |
+| 維         |        10 | 本田啓二   | 有吉   |  23 |   6 |   12 | oxxoxxxxxxoxoxooxx |
+| 維         |        11 | 村中秀史   | 高柳   |  21 |  10 |    8 | xoxoooooxxxoxxxooo |
+| 次         |        12 | 片上大輔   | 森信   |  20 |  12 |    6 | oooxxxooooxoooxoxo |
+| 維         |        13 | 西尾明     | 青野   |  22 |  12 |    6 | oooxxooooxxxoooxoo |
+| 維         |        14 | 水津隆義   | 西本   |  24 |   1 |   17 | xxxxxxxxxxxxxxxoxx |
+| 維         |        15 | 阪口悟     | 木下晃 |  23 |   9 |    9 | oooxxooxxoxxxooxox |
+| 維         |        16 | 島本亮     | 小林健 |  21 |   7 |   11 | xxxxooooxoxxxoxxox |
+| 維         |        17 | 菊池隆     | 森安   |  22 |   7 |   11 | xxoxxxoxoxoooxoxxx |
+| 維         |        18 | 堀尾博洋   | 所司   |  21 |  12 |    6 | xoooooxoxxooxoooxo |
+| 維         |        19 | 佐藤慎一   | 剱持   |  19 |  10 |    8 | oxooooxxooxxxoooxx |
+| 昇         |        20 | 藤倉勇樹   | 桜井   |  22 |  13 |    5 | xoxoooxooooxoooxoo |
+| 維         |        21 | 平田竜樹   | 森信   |  23 |   7 |   11 | oxxooxxooxxxoxxxox |
+| 維         |        22 | 前田真周   | 剱持   |  21 |   4 |   14 | xxxxxxoxxooxxxoxxx |
+| 維         |        23 | 伊藤真吾   | 桜井   |  20 |  10 |    8 | oxxxooooxoxxoxooox |
+| 維         |        24 | 野島崇宏   | 剱持   |  24 |   7 |   11 | oxoxxoxxxxoooxxoxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 32                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/32/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 片上大輔   | 森信   |  21 |  10 |    8 | oooooxoxxxoooxxoxx |
+| 昇         |         2 | 西尾明     | 青野   |  23 |  11 |    7 | xooooxxoooxxxoooxo |
+| 維         |         3 | 堀尾博洋   | 所司   |  21 |   9 |    9 | xxxoxoxxoxoxooooox |
+| 維         |         4 | 佐藤佳一郎 | 青野   |  25 |   9 |    9 | oxxooxooxxxxxxoooo |
+| 維         |         5 | 城間春樹   | 泉     |  25 |   9 |    9 | ooxxoxooxoxooxxxxo |
+| 維         |         6 | 佐藤和俊   | 加瀬   |  24 |   8 |   10 | xooxxoxoxoxxxoxoox |
+| 維         |         7 | 津山慎悟   | 有吉   |  22 |   9 |    9 | xoxxxxxooooxoxooxo |
+| 次         |         8 | 村山慈明   | 桜井   |  18 |  11 |    7 | oooooooooxxxxooxxx |
+| 維         |         9 | 村中秀史   | 高柳   |  21 |  10 |    8 | oxxoxooxxooxxoxooo |
+| 維         |        10 | 佐藤慎一   | 剱持   |  20 |   8 |   10 | ooooooxxxoxxxoxxxx |
+| 維         |        11 | 伊藤真吾   | 桜井   |  20 |   9 |    9 | oxoxxooxooxxxooxxo |
+| 維         |        12 | 阪口悟     | 木下晃 |  24 |  10 |    8 | ooxooxoxoxoooxxxox |
+| 維         |        13 | 高野悟志   | 佐伯   |  23 |  11 |    7 | xoooxxoooxxooxooox |
+| 維         |        14 | 菊地裕太   | 大島   |  18 |   9 |    9 | xooxxooooxxooxxoxx |
+| 維         |        15 | 遠山雄亮   | 加瀬   |  22 |  11 |    7 | xxxxooooxxoooooxoo |
+| 昇         |        16 | 島本亮     | 小林健 |  22 |  12 |    6 | oxooxxxxoooooooxoo |
+| 維         |        17 | 菊池隆     | 森安   |  22 |  11 |    7 | oooxooxxxooxxxoooo |
+| 維         |        18 | 平田竜樹   | 森信   |  23 |   6 |   12 | xxoxxxxxxooooxxoxx |
+| 維         |        19 | 野島崇宏   | 剱持   |  24 |   6 |   12 | ooxxxooxxxxxxxxxoo |
+| 維         |        20 | 本田啓二   | 有吉   |  23 |   5 |   13 | xxxxoxxxxxxooxoxox |
+| 維         |        21 | 水津隆義   | 西本   |  24 |  11 |    7 | xoxoooxoooxoxoxxoo |
+| 維         |        22 | 中村亮介   | 高橋   |  17 |  10 |    8 | xxxoxoxooooooxooxx |
+| 維         |        23 | 中村裕介   | 神谷   |  21 |   2 |   16 | xxxxxxxxxoxoxxxxxx |
+| 維         |        24 | 和田澄人   | 森信   |  16 |   9 |    9 | oxxxxxoooxoxooxxoo |
+| 維         |        25 | 佐藤天彦   | 中田功 |  14 |  11 |    7 | oxooooooooxxxxxoxo |
+| 維         |        26 | 廣瀬章人   | 勝浦   |  15 |  11 |    7 | xooxoxxoxxooooooox |
+| 維         |        27 | 天野貴元   | 石田   |  16 |   8 |   10 | oxoxxoxxxxooxooxxo |
+| 維         |        28 | 関口武史   | 小林健 |  22 |   6 |   12 | xxxooxoxoxoxxoxxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 33                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/33/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 村山慈明   | 桜井   |  18 |  15 |    3 | ooooxoxoooooooooxo |
+| 維         |         2 | 高野悟志   | 佐伯   |  23 |  11 |    7 | xoooxooxooxoooxxxo |
+| 維         |         3 | 遠山雄亮   | 加瀬   |  23 |  10 |    8 | oxoxxxxxoooxooxooo |
+| 維         |         4 | 菊池隆     | 森安   |  23 |   9 |    9 | oxoxxxxxoxxxoooooo |
+| 維         |         5 | 水津隆義   | 西本   |  25 |  12 |    6 | oxooxooxooxoxoooxo |
+| 維         |         6 | 佐藤天彦   | 中田功 |  15 |  10 |    8 | xoxxoxxoooxooxooxo |
+| 維         |         7 | 廣瀬章人   | 勝浦   |  16 |   9 |    9 | xxxxooxoxooxxoxooo |
+| 維         |         8 | 片上大輔   | 森信   |  21 |  11 |    7 | xoxoxoooxxoooxooox |
+| 維         |         9 | 村中秀史   | 高柳   |  22 |   7 |   11 | xxoxoxoxxooooxxxxx |
+| 維         |        10 | 阪口悟     | 木下晃 |  24 |  11 |    7 | oooooxooxoooxxxxox |
+| 維         |        11 | 中村亮介   | 高橋   |  17 |  12 |    6 | ooxoxoooxoooxoooxx |
+| 維         |        12 | 堀尾博洋   | 所司   |  22 |   8 |   10 | xoxooxxxxoxooxxoxo |
+| 維         |        13 | 佐藤佳一郎 | 青野   |  25 |   5 |   13 | ooxxoxxxxxxxxxooxx |
+| 維         |        14 | 津山慎悟   | 有吉   |  23 |   7 |   11 | xxoooxxooxoxoxxxxx |
+| 維         |        15 | 伊藤真吾   | 桜井   |  21 |   5 |   13 | xxxxxxoooxoxxoxxxx |
+| 維         |        16 | 菊地裕太   | 大島   |  19 |   9 |    9 | xxxooxoxoxxxoxoooo |
+| 維         |        17 | 和田澄人   | 森信   |  16 |  11 |    7 | oxxoxooxoxooxoooox |
+| 昇         |        18 | 佐藤和俊   | 加瀬   |  24 |  14 |    4 | ooooooxooxxoxooooo |
+| 維         |        19 | 佐藤慎一   | 剱持   |  20 |  10 |    8 | oxoxooxooxoxxoxoox |
+| 維         |        20 | 天野貴元   | 石田   |  17 |   5 |   13 | xxxxooxxxxxxxxoxoo |
+| 維         |        21 | 平田竜樹   | 森信   |  24 |   6 |   12 | xxxxxoxoxxxoxooxxo |
+| 維         |        22 | 野島崇宏   | 剱持   |  25 |   5 |   13 | xoooxoxxxxxxxoxxxx |
+| 維         |        23 | 関口武史   | 小林健 |  22 |   5 |   13 | xoxxoxoxoxxxxxxoxx |
+| 維         |        24 | 本田啓二   | 有吉   |  24 |   9 |    9 | oxxoxooxxoxoooxxox |
+| 維         |        25 | 中村裕介   | 神谷   |  22 |   9 |    9 | oxoxxoooxooxxxoxox |
+| 維         |        26 | 金井恒太   | 飯野   |  16 |   9 |    9 | ooxxoxxoooxxoxoxox |
+| 維         |        27 | 長岡裕也   | 米長   |  17 |   6 |   12 | xoxoxxoxxxoxoxxxxo |
+| 次         |        28 | 高崎一生   | 米長   |  16 |  13 |    5 | ooooooxoxooxooxxoo |
+| 維         |        29 | 荒木宣貴   | 米長   |  16 |   7 |   11 | xxoxxxoxxoooxxoxxo |
+| 維         |        30 | 戸辺誠     | 加瀬   |  16 |  10 |    8 | oooxoxoooxxooxxxox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 34                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/34/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name     | mentor | age | win | lose | ox                 |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 髙埼一生 | 米長   |  16 |  10 |    8 | xoxxxoxoxoxoooooox |
+| 維         |         2 | 水津隆義 | 西本   |  25 |  11 |    7 | oxoooxooooxoxoxxxo |
+| 昇         |         3 | 中村亮介 | 高橋   |  18 |  13 |    5 | xxoooooxoooxooooox |
+| 維         |         4 | 高野悟志 | 佐伯   |  24 |   7 |   11 | ooxxxxooxxxxxoooxx |
+| 昇         |         5 | 片上大輔 | 森信   |  22 |  16 |    2 | ooooooooooooxooxoo |
+| 維         |         6 | 阪口悟   | 木下晃 |  25 |  10 |    8 | oooxooxoxxoxoxxoxo |
+| 維         |         7 | 和田澄人 | 森信   |  17 |  10 |    8 | xxooooxxooxoxooxxo |
+| 維         |         8 | 遠山雄亮 | 加瀬   |  23 |  10 |    8 | xoxoxooxxooxxoooox |
+| 次         |         9 | 佐藤天彦 | 中田功 |  15 |  13 |    5 | xoxooooooxooooxoxo |
+| 維         |        10 | 佐藤慎一 | 剱持   |  21 |   7 |   11 | oxxxoxoxoooxxxxxox |
+| 維         |        11 | 戸辺誠   | 加瀬   |  17 |   9 |    9 | xxoxoooooxxxoooxxx |
+| 維         |        12 | 菊池隆   | 森安   |  23 |  10 |    8 | oooooxxxxxoooxxxoo |
+| 維         |        13 | 廣瀬章人 | 勝浦   |  16 |  10 |    8 | xxoooxxooooxxxooox |
+| 維         |        14 | 菊地裕太 | 大島   |  19 |   4 |   14 | xxxoxxxoxxxooxxxxx |
+| 維         |        15 | 本田啓二 | 有吉   |  24 |   7 |   11 | ooxxxooxoxxxxxoxox |
+| 維         |        16 | 中村裕介 | 神谷   |  22 |   5 |   13 | xxxxxxxxxxxooooxox |
+| 維         |        17 | 金井恒太 | 飯野   |  17 |   8 |   10 | oooxxxoxxoxxxxxooo |
+| 維         |        18 | 堀尾博洋 | 所司   |  22 |   7 |   11 | xxoxxxxxoxooxxoxoo |
+| 維         |        19 | 村中秀史 | 高柳   |  22 |  11 |    7 | xooxxxoooxoxooxooo |
+| 維         |        20 | 津山慎悟 | 有吉   |  23 |  11 |    7 | oooxooxxoooxoxxoxo |
+| 維         |        21 | 荒木宣貴 | 米長   |  17 |   8 |   10 | oxxxoxooxooxoxxoxx |
+| 維         |        22 | 平田竜樹 | 森信   |  24 |   2 |   16 | xxxxxxxxxoxoxxxxxx |
+| 維         |        23 | 長岡裕也 | 米長   |  18 |  10 |    8 | oxxooooooxxoooxxxx |
+| 維         |        24 | 伊藤真吾 | 桜井   |  21 |   8 |   10 | oooxxxxooxxxoooxxx |
+| 維         |        25 | 天野貴元 | 石田   |  17 |   7 |   11 | xxxoooxxxoxxxxooxo |
+| 維         |        26 | 野島崇宏 | 剱持   |  25 |  11 |    7 | oooooxoxooxoxxxoxo |
+| 維         |        27 | 関口武史 | 小林健 |  23 |   8 |   10 | oxxoxxxxxxxxoooooo |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 35                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/35/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name     | mentor | age | win | lose | ox                 |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| 次         |         1 | 佐藤天彦 | 中田功 |  16 |  12 |    6 | xoooxoxooxxooooxoo |
+| 維         |         2 | 水津隆義 | 西本   |  26 |  10 |    8 | oooooxooxoxxoxxxox |
+| 昇         |         3 | 村中秀史 | 高柳   |  23 |  14 |    4 | ooxoooooooooxxooox |
+| 維         |         4 | 津山慎悟 | 有吉   |  24 |  12 |    6 | xxxoooxooooooxxooo |
+| 維         |         5 | 野島崇宏 | 剱持   |  26 |   5 |   13 | xxoxooxxoxxxxxxxox |
+| 維         |         6 | 高崎一生 | 米長   |  17 |  10 |    8 | oooxxxxxoxoooxooox |
+| 昇         |         7 | 阪口悟   | 木下晃 |  25 |  14 |    4 | ooxooxoxooooooooxo |
+| 維         |         8 | 和田澄人 | 森信   |  17 |  11 |    7 | xxoxxoxxoooooxoooo |
+| 維         |         9 | 遠山雄亮 | 加瀬   |  24 |   7 |   11 | oxxxxxooooxxooxxxx |
+| 維         |        10 | 菊池隆   | 森安   |  24 |   5 |   13 | xxxxooxoxxoxxxoxxx |
+| 維         |        11 | 廣瀬章人 | 勝浦   |  17 |  11 |    7 | ooxoxoooxxxoxooxoo |
+| 維         |        12 | 長岡裕也 | 米長   |  18 |  12 |    6 | oooooooxxxxoxxoooo |
+| 維         |        13 | 戸辺誠   | 加瀬   |  17 |  12 |    6 | ooxxoxooooxoxoooox |
+| 維         |        14 | 金井恒太 | 飯野   |  17 |  11 |    7 | ooxooxxoxoooooxxxo |
+| 維         |        15 | 荒木宣貴 | 米長   |  17 |   8 |   10 | xoxoooooxxxxoxoxxx |
+| 維         |        16 | 伊藤真吾 | 桜井   |  22 |   8 |   10 | oxxoxooxxoooxxxoxx |
+| 維         |        17 | 関口武史 | 小林健 |  23 |   5 |   13 | xxxxxxxooxxxxxooxo |
+| 維         |        18 | 高野悟志 | 佐伯   |  24 |   7 |   11 | ooxxxxoxxxxxxoooox |
+| 維         |        19 | 佐藤慎一 | 剱持   |  21 |   7 |   11 | oxooxoxxoxxooxxxxx |
+| 維         |        20 | 本田啓二 | 有吉   |  25 |   9 |    9 | oxoxoooxxxxoxoxoxo |
+| 維         |        21 | 堀尾博洋 | 所司   |  23 |  11 |    7 | xoooxxoxoooooxxoxo |
+| 維         |        22 | 天野貴元 | 石田   |  18 |   9 |    9 | oxoxooxxooxoxoxxox |
+| 維         |        23 | 中村裕介 | 神谷   |  23 |   8 |   10 | xooooxoxoxxxxooxxx |
+| 維         |        24 | 菊地裕太 | 大島   |  20 |  12 |    6 | xoxxoxoooooxooxooo |
+| 維         |        25 | 平田竜樹 | 森信   |  25 |   5 |   13 | xxxxooxxxoxxxxxxoo |
+| 維         |        26 | 村田顕弘 | 中田章 |  17 |   9 |    9 | xxooxxooxxxoxoooxo |
+| 維         |        27 | 中村太地 | 米長   |  15 |   9 |    9 | xoooxxxoxoooxoxxxo |
+| 維         |        28 | 石井直樹 | 中原   |  17 |   2 |   16 | xxxxxxxxxxoxxoxxxx |
+| 維         |        29 | 和田真治 | 桜井   |  20 |   6 |   12 | xxxxxxxoxoxxoooxxo |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 36                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/36/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name     | mentor | age | win | lose | ox                 |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 佐藤天彦 | 中田功 |  16 |  10 |    8 | oxxooxxoooxooxxoxo |
+| 維         |         2 | 津山慎悟 | 有吉   |  24 |   7 |   11 | xxooxxoxoxoxoxxxxo |
+| 昇         |         3 | 長岡裕也 | 米長   |  19 |  14 |    4 | oxxooooxooxooooooo |
+| 維         |         4 | 戸辺誠   | 加瀬   |  18 |  11 |    7 | ooxooxoxxxooooxoox |
+| 維         |         5 | 菊地裕太 | 大島   |  20 |  10 |    8 | xoxooxxoxooooxooxx |
+| 維         |         6 | 和田澄人 | 森信   |  18 |   9 |    9 | ooxxoxooxoxxoxxxoo |
+| 昇         |         7 | 広瀬章人 | 勝浦   |  17 |  15 |    3 | oxooooooxooxoooooo |
+| 維         |         8 | 金井恒太 | 飯野   |  18 |   9 |    9 | xoooxxxoxooxoxoxox |
+| 維         |         9 | 堀尾博洋 | 所司   |  23 |  12 |    6 | xoooooxxoxooxooxoo |
+| 維         |        10 | 水津隆義 | 西本   |  26 |  12 |    6 | oxxooxoxoxooooxooo |
+| 維         |        11 | 髙埼一生 | 米長   |  17 |  10 |    8 | xooxoooooxxoxoxoxx |
+| 維         |        12 | 本田啓二 | 有吉   |  25 |   8 |   10 | ooxxxxxxxoxoxoooxo |
+| 維         |        13 | 天野貴元 | 石田   |  18 |   7 |   11 | xoxxxxxxoxoxxxoooo |
+| 維         |        14 | 村田顕弘 | 中田章 |  18 |  11 |    7 | xxoxxooxxooxoooooo |
+| 維         |        15 | 中村太地 | 米長   |  16 |  12 |    6 | oooooooooxxxoxoxxo |
+| 維         |        16 | 荒木宣貴 | 米長   |  18 |   5 |   13 | oxoxoxxoxxxxxoxxxx |
+| 次         |        17 | 伊藤真吾 | 桜井   |  22 |  14 |    4 | xooxooooooooxoxooo |
+| 維         |        18 | 中村裕介 | 神谷   |  23 |   5 |   13 | oxxoxxxxxoxooxxxxx |
+| 維         |        19 | 遠山雄亮 | 加瀬   |  24 |  10 |    8 | ooxxxoxooxoxoxoxoo |
+| 維         |        20 | 高野悟志 | 佐伯   |  25 |  11 |    7 | oxoxooooooxxxoooxx |
+| 維         |        21 | 佐藤慎一 | 剱持   |  22 |   6 |   12 | xoxoxooxxxxxxoxoxx |
+| 降         |        22 | 和田真治 | 桜井   |  21 |   2 |   16 | xxoxxxxxxoxxxxxxxx |
+| 維         |        23 | 菊池隆   | 森安   |  24 |  11 |    7 | oxooxoxooxoooxoxox |
+| 維         |        24 | 関口武史 | 小林健 |  24 |   6 |   12 | xoxxoooooxxxxxxxxx |
+| 維         |        25 | 平田竜樹 | 森信   |  25 |   4 |   14 | oooxxoxxxxxxxxxxxx |
+| 維         |        26 | 石井直樹 | 中原   |  18 |   5 |   13 | xxxxxoxoxxxoxoxxxo |
+| 維         |        27 | 田中悠一 | 関根   |  19 |   5 |   13 | xoxxxxxxoooxxxoxxx |
+| 維         |        28 | 豊島将之 | 桐山   |  14 |  10 |    8 | oxooxxoxxxooxxoooo |
+| 維         |        29 | 及川拓馬 | 伊藤果 |  17 |   6 |   12 | xxxoxxoxxoxoxoxxox |
+| 維         |        30 | 糸谷哲郎 | 森信   |  15 |  13 |    5 | xxoxooxoooooooooox |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 37                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/37/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name     | mentor | age | win | lose | ox                 |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 伊藤真吾 | 桜井   |  23 |  11 |    7 | oxoooxooxxoxxoooxo |
+| 次         |         2 | 糸谷哲郎 | 森信   |  16 |  12 |    6 | xooxoooxoooxoooxox |
+| 維         |         3 | 加來博洋 | 所司   |  24 |  11 |    7 | oxxxoooooxxxooxooo |
+| 維         |         4 | 水津隆義 | 西本   |  27 |  10 |    8 | xoooooxoxxxooxooxx |
+| 維         |         5 | 中村太地 | 米長   |  16 |  11 |    7 | oooxooxxxxxoooooxo |
+| 維         |         6 | 戸辺誠   | 加瀬   |  18 |   9 |    9 | xoxxxxooxooooooxxx |
+| 維         |         7 | 村田顕弘 | 中田章 |  18 |  11 |    7 | ooooxoxoxoxoxoxoxo |
+| 維         |         8 | 高野悟志 | 佐伯   |  25 |   8 |   10 | ooxoooxxooxxxxxxox |
+| 維         |         9 | 菊池隆   | 森安   |  25 |   7 |   11 | xoxoxxxxoooooxxxxx |
+| 維         |        10 | 佐藤天彦 | 中田功 |  17 |  12 |    6 | oxoxooooxoxoxoooxo |
+| 維         |        11 | 菊地裕太 | 大島   |  21 |   6 |   12 | xxooxxxxooxxxxoxxo |
+| 昇         |        12 | 高崎一生 | 米長   |  18 |  13 |    5 | ooxxoxooxooooooxoo |
+| 昇         |        13 | 遠山雄亮 | 加瀬   |  25 |  13 |    5 | ooooxooooxoooxoxxo |
+| 維         |        14 | 豊島将之 | 桐山   |  14 |   6 |   12 | xxoxxooxoxoxxxxxox |
+| 維         |        15 | 和田澄人 | 森信   |  18 |  10 |    8 | xoxxxxooooooxoxxoo |
+| 維         |        16 | 金井恒太 | 飯野   |  18 |   8 |   10 | xxooxoxxxxxxoxoooo |
+| 維         |        17 | 津山慎悟 | 有吉   |  25 |  10 |    8 | xxxoooxooooxxoxoox |
+| 維         |        18 | 天野貴元 | 石田   |  19 |   8 |   10 | oxxxoxxoxoxooxooxx |
+| 維         |        19 | 佐藤慎一 | 剱持   |  22 |   9 |    9 | xoxooxooxxooxxxxoo |
+| 維         |        20 | 関口武史 | 小林健 |  24 |   9 |    9 | xxxxooxxoxxoxooooo |
+| 維         |        21 | 及川拓馬 | 伊藤果 |  17 |  11 |    7 | oooxoxoxooxxxoooxo |
+| 維         |        22 | 荒木宣貴 | 米長   |  18 |  10 |    8 | ooxoxxxoxoxooxxooo |
+| 維         |        23 | 中村裕介 | 神谷   |  24 |   8 |   10 | oxxoxooxxoxxoxxoox |
+| 維         |        24 | 石井直樹 | 中原   |  18 |   6 |   12 | xxoxxxxoxxooooxxxx |
+| 維         |        25 | 田中悠一 | 関根   |  20 |   4 |   14 | oxoxxxxxoxoxxxxxxx |
+| 降         |        26 | 和田真治 | 桜井   |  21 |   3 |   15 | oxxoxoxxxxxxxxxxxx |
+| 維         |        27 | 一瀬浩司 | 米長   |  24 |   9 |    9 | ooxoxxoooxoxxxxoox |
+| 維         |        28 | 殿岡裕里 | 加瀬   |  26 |  10 |    8 | xooxoxoxooooxooxxx |
+| 維         |        29 | 稲葉陽   | 井上   |  16 |   5 |   13 | xxooxxxxxxoxoxxxox |
+| 維         |        30 | 宮本広志 | 森安   |  19 |  10 |    8 | xxxxoooxoxxxoooooo |
+|------------+-----------+----------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 38                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/38/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 糸谷哲郎   | 森信   |  16 |  14 |    4 | ooxxoooooxooxooooo |
+| 維         |         2 | 佐藤天彦   | 中田功 |  17 |  12 |    6 | xxooooxoxoxooxoooo |
+| 維         |         3 | 伊藤真吾   | 桜井   |  23 |  10 |    8 | xxoxxxoxooooooooxx |
+| 維         |         4 | 加來博洋   | 所司   |  24 |  10 |    8 | ooooxxxoxxooxoxxoo |
+| 昇         |         5 | 中村太地   | 米長   |  17 |  13 |    5 | xoooooooxoxoxooxoo |
+| 維         |         6 | 村田顕弘   | 中田章 |  19 |  11 |    7 | ooxoooxoooxxxoxoox |
+| 維         |         7 | 及川拓馬   | 伊藤果 |  18 |   8 |   10 | xoxxoxxxxoxoxxoooo |
+| 維         |         8 | 水津隆義   | 西本   |  27 |  10 |    8 | xoxxxoxxooooxooxoo |
+| 維         |         9 | 和田澄人   | 森信   |  19 |   6 |   12 | oxxooxxxxxxxxxoxoo |
+| 維         |        10 | 津山慎悟   | 有吉   |  25 |   9 |    9 | xxoooxooxoxxooxoxx |
+| 維         |        11 | 荒木宣貴   | 米長   |  19 |  10 |    8 | oxooxxoooxoxoxxoox |
+| 維         |        12 | 殿岡裕里   | 加瀬   |  26 |   7 |   11 | xxooxooxoooxxxxxxx |
+| 維         |        13 | 宮本広志   | 森安   |  19 |   5 |   13 | oxxxoxxxoxxoxxoxxx |
+| 維         |        14 | 戸辺誠     | 加瀬   |  19 |  12 |    6 | oxxoooxooxoooxxooo |
+| 維         |        15 | 佐藤慎一   | 剱持   |  23 |   9 |    9 | ooxxxoxxooooxxxxoo |
+| 維         |        16 | 関口武史   | 小林健 |  25 |   7 |   11 | ooxxxxoxxxoxoxxoxo |
+| 維         |        17 | 一瀬浩司   | 米長   |  24 |   9 |    9 | xxooxoooooxxoxxxox |
+| 維         |        18 | 金井恒太   | 飯野   |  19 |   6 |   12 | xoxoxxoxxxxxoxoxxo |
+| 維         |        19 | 天野貴元   | 石田   |  19 |  11 |    7 | xooxxxooxooooxoxoo |
+| 維         |        20 | 中村裕介   | 神谷   |  24 |  10 |    8 | xoxxoooxxxxxoooooo |
+| 維         |        21 | 菊池隆     | 森安   |  25 |   8 |   10 | xoxxxxooxxxoooooxx |
+| 維         |        22 | 菊地裕太   | 大島   |  21 |   8 |   10 | oxxxoooxxxoxxoooxx |
+| 維         |        23 | 豊島将之   | 桐山   |  15 |  12 |    6 | oxoxoxoooxxoooxooo |
+| 維         |        24 | 石井直樹   | 中原   |  19 |   4 |   14 | oxxxxxxoxxoxxoxxxx |
+| 次         |        25 | 稲葉陽     | 井上   |  17 |  13 |    5 | ooooooxoxoxoooooxx |
+| 維         |        26 | 田中悠一   | 関根   |  20 |  12 |    6 | xxooxooxoxooooxooo |
+| 維         |        27 | 門倉啓太   | 石田   |  18 |   6 |   12 | ooxooxxxoxxxoxxxxx |
+| 維         |        28 | 岡畑明範   | 所司   |  19 |   6 |   12 | oxooxoxxoxxxxxxxxo |
+| 維         |        29 | 松井義信   | 淡路   |  21 |   7 |   11 | xoooxxoxxooxoxxxxx |
+| 維         |        30 | 池田将之   | 若松   |  21 |   8 |   10 | oxxxxoxoooooxxoxxx |
+| 維         |        30 | 牧野光則   | 木下晃 |  17 |   7 |   11 | xooxooxxxoxxxoxoxx |
+| 維         |        32 | 阿部健治郎 | 西村   |  16 |   8 |   10 | xxoxoxxooooxxooxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 39                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/39/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 稲葉陽     | 井上   |  17 |  13 |    5 | oxoooxoxxxoooooooo |
+| 昇         |         2 | 佐藤天彦   | 中田功 |  18 |  14 |    4 | xoooxoooooxooxoooo |
+| 昇         |         3 | 戸辺誠     | 加瀬   |  19 |  15 |    3 | oooooxoxoxoooooooo |
+| 次         |         4 | 豊島将之   | 桐山   |  15 |  14 |    4 | xooooooxoooooooxxo |
+| 維         |         5 | 田中悠一   | 関根   |  21 |   6 |   12 | xxxxoxxxxxxooooxxo |
+| 維         |         6 | 村田顕弘   | 中田章 |  19 |  13 |    5 | oooooooxxooxoxxooo |
+| 維         |         7 | 天野貴元   | 石田   |  20 |  11 |    7 | oxooxxooooooooxxxx |
+| 維         |         8 | 伊藤真吾   | 桜井   |  24 |  14 |    4 | ooxxoooooxooooooxo |
+| 維         |         9 | 加來博洋   | 所司   |  25 |  12 |    6 | oxooxoooooxxxoxooo |
+| 維         |        10 | 水津隆義   | 西本   |  28 |  10 |    8 | ooooxxoxooxoxxooxx |
+| 維         |        11 | 荒木宣貴   | 米長   |  19 |   8 |   10 | xxoxoxoxoxxooxooxx |
+| 維         |        12 | 中村裕介   | 神谷   |  25 |   7 |   11 | xoxxxxxxxoxoxoooox |
+| 維         |        13 | 佐藤慎一   | 剱持   |  23 |   8 |   10 | oxxooxoxxooxoxxxox |
+| 維         |        14 | 一瀬浩司   | 米長   |  25 |   7 |   11 | xxxxooooxoxxxxoxxo |
+| 維         |        15 | 及川拓馬   | 伊藤果 |  18 |  13 |    5 | oooxxoooooooooxxox |
+| 維         |        16 | 菊地裕太   | 大島   |  22 |  12 |    6 | ooxxxooxxooxoooooo |
+| 維         |        17 | 池田将之   | 若松   |  22 |   6 |   12 | xxooxoxxxxoxoxxxxo |
+| 維         |        18 | 阿部健治郎 | 西村   |  17 |   5 |   13 | oxxxoxxxxoxxoxxxox |
+| 維         |        19 | 殿岡裕里   | 加瀬   |  27 |   9 |    9 | oxooooxxxoxxxoxoxo |
+| 維         |        20 | 関口武史   | 小林健 |  25 |   9 |    9 | xoxxxxoooxoxxoxooo |
+| 維         |        21 | 松井義信   | 淡路   |  22 |   4 |   14 | xxxxxoxxxxxoxxxxoo |
+| 維         |        22 | 牧野光則   | 木下晃 |  17 |   5 |   13 | xooxxxxxoxxxoxoxxx |
+| 維         |        23 | 和田澄人   | 森信   |  19 |   9 |    9 | oxooxoxooxoxxoxoxx |
+| 維         |        24 | 金井恒太   | 飯野   |  19 |   8 |   10 | xooxooxxooxxxxxoox |
+| 維         |        25 | 門倉啓太   | 石田   |  18 |   5 |   13 | xxxooxxxooxxxoxxxx |
+| 維         |        26 | 岡畑明範   | 所司   |  20 |   6 |   12 | oxoxxxxoxxxoxooxxx |
+| 維         |        27 | 宮本広志   | 森安   |  20 |   7 |   11 | xoxooxxoxxoxxxxxoo |
+| 維         |        28 | 石井直樹   | 中原   |  19 |   6 |   12 | xoxxxxoxxooxxoxxox |
+| 維         |        29 | 佐藤秀和   | 桜井   |  22 |  10 |    8 | oxxooxoxxoooxooxox |
+| 維         |        30 | 和田真治   | 桜井   |  22 |   4 |   14 | xxxxxxxooxxxxooxxx |
+| 維         |        31 | 船江恒平   | 井上   |  18 |   9 |    9 | oxxooooooxxoxxoxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 40                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/40/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 豊島将之   | 桐山   |  16 |  14 |    4 | xoooxooxoooxoooooo |
+| 次         |         2 | 伊藤真吾   | 桜井   |  24 |  13 |    5 | ooxooooxoxxoooooxo |
+| 維         |         3 | 稲葉陽     | 井上   |  18 |  12 |    6 | oooooxxoxoxoxoxooo |
+| 維         |         4 | 村田顕弘   | 中田章 |  20 |   9 |    9 | xxooxxoxooooxxxoxo |
+| 維         |         5 | 及川拓馬   | 伊藤果 |  19 |  13 |    5 | oooxooxooxooxoxooo |
+| 維         |         6 | 加來博洋   | 所司   |  25 |  11 |    7 | ooxooxoxxooxooooxx |
+| 維         |         7 | 菊地裕太   | 大島   |  22 |   9 |    9 | oxooxxxxoooooxoxxx |
+| 維         |         8 | 天野貴元   | 石田   |  20 |   9 |    9 | ooooxooxxoxxxoxxxo |
+| 維         |         9 | 水津隆義   | 西本   |  28 |  11 |    7 | oxoxxoooooxxooooxx |
+| 維         |        10 | 佐藤秀和   | 桜井   |  23 |   4 |   14 | xxxoxoxoxxxoxxxxxx |
+| 維         |        11 | 殿岡裕里   | 加瀬   |  27 |  11 |    7 | ooxxxxooooxoxoooxo |
+| 維         |        12 | 和田澄人   | 森信   |  20 |   3 |   15 | oxxxxoxxxxxxxxxxxo |
+| 維         |        13 | 船江恒平   | 井上   |  19 |   8 |   10 | xxxxooxooxooxoxxox |
+| 維         |        14 | 荒木宣貴   | 米長   |  20 |   8 |   10 | xxoooxooxxooxxxxxo |
+| 維         |        15 | 佐藤慎一   | 剱持   |  24 |  10 |    8 | oooxoooxoxooxxoxxx |
+| 昇         |        16 | 金井恒太   | 飯野   |  20 |  14 |    4 | xxoooxxooooooooooo |
+| 維         |        17 | 中村裕介   | 神谷   |  25 |   9 |    9 | xooxoxxoxxooooxxox |
+| 維         |        18 | 一瀬浩司   | 米長   |  25 |   8 |   10 | oooxxoxoxxxxooxxox |
+| 維         |        19 | 宮本広志   | 森安   |  20 |   7 |   11 | ooxxoooxxxxxoxxxox |
+| 維         |        20 | 田中悠一   | 関根   |  21 |  10 |    8 | oxooxxoxooxxxoooxo |
+| 維         |        21 | 池田将之   | 若松   |  22 |   8 |   10 | xxxooxxoooxoxooxxx |
+| 維         |        22 | 岡畑明範   | 所司   |  20 |   9 |    9 | ooxxooxxxooxoxoxox |
+| 維         |        23 | 石井直樹   | 中原   |  20 |   7 |   11 | xoxxxxooxxoxxxxooo |
+| 維         |        24 | 阿部健治郎 | 西村   |  17 |  12 |    6 | xoxxoxxoooooxooooo |
+| 維         |        25 | 牧野光則   | 木下晃 |  18 |   8 |   10 | xxxooxxoxxoooxoxxo |
+| 維         |        26 | 門倉啓太   | 石田   |  19 |   8 |   10 | oxxxooooxxxxoxxoox |
+| 維         |        27 | 松井義信   | 淡路   |  22 |  10 |    8 | oxoxxooxooxxxxoooo |
+| 維         |        28 | 和田真治   | 桜井   |  23 |   8 |   10 | xoxxxoxoooxoxoxoxx |
+| 維         |        29 | 渡辺愛生   | 安恵   |  18 |   5 |   13 | xxoxxxxxoxxoxooxxx |
+| 維         |        29 | 森村賢平   | 宮田利 |  17 |   7 |   11 | oxxxoxxooxxooxxxxo |
+| 維         |        31 | 鵜木学     | 石田   |  22 |   7 |   11 | xoxoxxxoxooxxoxxox |
+| 維         |        32 | 大石直嗣   | 森信   |  17 |  13 |    5 | xxooooooooxxooooox |
+| 維         |        33 | 渡辺大夢   | 石田   |  18 |   6 |   12 | xxoxoxoxxxoxoxxxox |
+| 維         |        34 | 三宅潤     | 中村修 |  20 |   4 |   14 | xxooxxxoxxxxxxxxox |
+| 維         |        34 | 西川和宏   | 西川   |  20 |  10 |    8 | ooxxoxxxxxoxoooooo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 41                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/41/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 及川拓馬   | 伊藤果 |  20 |  13 |    5 | ooxooooxoooxoooxox |
+| 維         |         2 | 大石直嗣   | 森信   |  18 |   7 |   11 | ooxxxxxoxxxxooxxoo |
+| 維         |         3 | 稲葉陽     | 井上   |  19 |  12 |    6 | ooxooxooooxxxoooxo |
+| 維         |         4 | 阿部健治郎 | 西村   |  18 |   8 |   10 | xoxxoooxxxoooxoxxx |
+| 維         |         5 | 加來博洋   | 所司   |  26 |  11 |    7 | ooxxxooooxoxxooxoo |
+| 維         |         6 | 殿岡裕里   | 加瀬   |  28 |   8 |   10 | xxooxoooxxoxxxxoxo |
+| 維         |         7 | 佐藤慎一   | 剱持   |  25 |   8 |   10 | xxoxxxxoxxooxoooxo |
+| 維         |         8 | 田中悠一   | 関根   |  22 |   8 |   10 | xxxoxoxooxoooxxxxo |
+| 維         |         9 | 松井義信   | 淡路   |  23 |   5 |   13 | xoxxxxxxoxoxoxoxxx |
+| 維         |        10 | 西川和宏   | 西川   |  21 |   9 |    9 | oxxooxoxoxxoooxoxx |
+| 昇         |        11 | 村田顕弘   | 中田章 |  21 |  15 |    3 | oooxxoooxooooooooo |
+| 維         |        12 | 菊地裕太   | 大島   |  23 |  12 |    6 | oxooooxxooooooxxxo |
+| 維         |        13 | 天野貴元   | 石田   |  21 |   9 |    9 | xoooxoxxxxooxxxooo |
+| 維         |        14 | 岡畑明範   | 所司   |  21 |   8 |   10 | oooxxxxxoxoxoxxoxo |
+| 維         |        15 | 船江恒平   | 井上   |  20 |  10 |    8 | ooxoooxoxxxoxxooox |
+| 維         |        16 | 荒木宣貴   | 米長   |  21 |   7 |   11 | xxoxxxoxooxxxoxoox |
+| 次         |        17 | 一瀬浩司   | 米長   |  26 |  13 |    5 | oxooxooooxooxoxooo |
+| 維         |        18 | 池田将之   | 若松   |  23 |   5 |   13 | oxxxxxoxxxxoxxxxoo |
+| 維         |        19 | 牧野光則   | 木下晃 |  19 |  10 |    8 | oxxxxoxoooooxoxoox |
+| 維         |        20 | 門倉啓太   | 石田   |  20 |   9 |    9 | xxoxxoooooxxxoxxoo |
+| 維         |        21 | 和田真治   | 桜井   |  24 |   6 |   12 | xxoxoxxoxoxoxxxoxx |
+| 維         |        22 | 宮本広志   | 森安   |  21 |  11 |    7 | oxoooxoxoxxxooooox |
+| 維         |        23 | 石井直樹   | 中原   |  21 |  11 |    7 | xoxooxxxooxooxoooo |
+| 維         |        24 | 森村賢平   | 宮田利 |  18 |   7 |   11 | xooxxxxoxoxooxxoxx |
+| 維         |        25 | 鵜木学     | 石田   |  23 |   9 |    9 | xxoooooxxooxoxxoxx |
+| 維         |        26 | 渡辺大夢   | 石田   |  19 |  10 |    8 | oxxoooooxoxoxoxxxo |
+| 維         |        27 | 渡辺愛生   | 安恵   |  19 |   8 |   10 | xoxxoooxxxxooooxxx |
+| 維         |        28 | 佐藤秀和   | 桜井   |  23 |   7 |   11 | xxxxxxxoxooxoooxxo |
+| 維         |        29 | 三宅潤     | 中村修 |  21 |   5 |   13 | xooxoxoxxxxxxxxxox |
+| 維         |        30 | 星野良生   | 西村   |  19 |  10 |    8 | xoooxoxoxooxxoooxx |
+| 維         |        31 | 田嶋尉     | 武者野 |  23 |   6 |   12 | oxoxxoxxxxoxxooxxx |
+| 維         |        32 | 竹内貴浩   | 杉本   |  20 |   9 |    9 | oooxoxxoxoxxooxxox |
+| 維         |        33 | 今泉健司   | 桐谷   |  34 |  11 |    7 | xxoooooooooxxxxxoo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 42                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/42/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 一瀬浩司   | 米長   |  27 |   5 |   13 | xxooxxoxoxxxxxxxox |
+| 昇         |         2 | 稲葉陽     | 井上   |  19 |  13 |    5 | ooxoxooxxooooooxoo |
+| 維         |         3 | 菊地裕太   | 大島   |  23 |   7 |   11 | xoxxxxoxoxoooxxoxx |
+| 維         |         4 | 加來博洋   | 所司   |  27 |   8 |   10 | oxxxooxooxoxxoxoxx |
+| 維         |         5 | 宮本広志   | 森安   |  21 |   9 |    9 | xxxxxooooxxooooxxo |
+| 維         |         6 | 石井直樹   | 中原   |  21 |   6 |   12 | xxxxxoxxoxoxoxoxxo |
+| 維         |         7 | 今泉健司   | 桐谷   |  34 |   6 |   12 | oxoxoxxxxoxxxooxxx |
+| 維         |         8 | 船江恒平   | 井上   |  20 |  11 |    7 | xoxooooooxooxxooxx |
+| 維         |         9 | 牧野光則   | 木下晃 |  19 |  11 |    7 | oxoxoxoxxxooooooox |
+| 維         |        10 | 渡辺大夢   | 石田   |  19 |  12 |    6 | oxooooxoxoooooxxxo |
+| 維         |        11 | 星野良生   | 西村   |  19 |   9 |    9 | xoooooxxxxxoxxoxoo |
+| 維         |        12 | 西川和宏   | 西川   |  21 |  10 |    8 | oxoxoooxxooxxoxoxo |
+| 維         |        13 | 天野貴元   | 石田   |  22 |  11 |    7 | ooooxxoooxoooxoxxx |
+| 維         |        14 | 門倉啓太   | 石田   |  20 |   7 |   11 | xooxoxxxoxxxxoxoox |
+| 維         |        15 | 鵜木学     | 石田   |  24 |  11 |    7 | ooxxoooxxoxoxoxooo |
+| 維         |        16 | 竹内貴浩   | 杉本   |  20 |   7 |   11 | oxxoxoxoxxooxxxxxo |
+| 維         |        17 | 阿部健治郎 | 西村   |  18 |  11 |    7 | oxoxooxxooxoxoxooo |
+| 維         |        18 | 佐藤慎一   | 剱持   |  25 |   8 |   10 | xxoooxoooxxxxxooxx |
+| 昇         |        19 | 田中悠一   | 関根   |  22 |  13 |    5 | xooooooooxoxoooxxo |
+| 維         |        20 | 岡畑明範   | 所司   |  22 |   6 |   12 | xoxoxxoxoxxoxxxxox |
+| 維         |        21 | 渡辺愛生   | 安恵   |  19 |   9 |    9 | xxooxxooxooxxoxoox |
+| 維         |        22 | 大石直嗣   | 森信   |  18 |  12 |    6 | xxooxoooxoxxoooooo |
+| 維         |        23 | 荒木宣貴   | 米長   |  21 |  12 |    6 | ooxxoxxoxooooxoooo |
+| 維         |        24 | 森村賢平   | 宮田利 |  18 |  11 |    7 | xxoxoxoooooxoxxooo |
+| 維         |        25 | 佐藤秀和   | 桜井   |  24 |   6 |   12 | oooxxoxoxxxxxxxoxx |
+| 維         |        26 | 和田真治   | 桜井   |  24 |   1 |   17 | xxxxxxxxxoxxxxxxxx |
+| 維         |        27 | 田嶋尉     | 武者野 |  23 |  12 |    6 | ooxoooxxooxxoxoooo |
+| 維         |        28 | 松井義信   | 淡路   |  24 |   8 |   10 | oxoxoxxooooxxoxxxx |
+| 維         |        29 | 池田将之   | 若松   |  24 |   6 |   12 | xoxxxxxoxoxxoxxxoo |
+| 維         |        30 | 三宅潤     | 中村修 |  21 |   9 |    9 | xoxoxoxoxxoooooxxx |
+| 維         |        31 | 藤森哲也   | 塚田   |  20 |   7 |   11 | oxxoxoxxxxxooxoxox |
+| 次         |        32 | 吉田正和   | 神吉   |  21 |  13 |    5 | oooooxooooooxooxxx |
+| 維         |        33 | 小泉祐     | 西村   |  18 |  11 |    7 | xoxoxxoxxoxooooooo |
+| 維         |        34 | 都成竜馬   | 谷川   |  17 |   8 |   10 | ooxxxxxxooxxoxxooo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 43                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/43/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 次         |         1 | 吉田正和   | 神吉   |  22 |  13 |    5 | oooxxooooooxoxxooo |
+| 維         |         2 | 渡辺大夢   | 石田   |  19 |   8 |   10 | oxoxxoxxxooxoooxxx |
+| 維         |         3 | 大石直嗣   | 森信   |  18 |  13 |    5 | oooxoxoxooxoxooooo |
+| 維         |         4 | 荒木宣貴   | 米長   |  21 |   8 |   10 | xoxxxoxooooxoxxxxo |
+| 維         |         5 | 田嶋尉     | 武者野 |  24 |   7 |   11 | oxxoxxxooxoxxooxxx |
+| 維         |         6 | 船江恒平   | 井上   |  20 |  10 |    8 | ooxoxxxxxoooxooxoo |
+| 維         |         7 | 牧野光則   | 木下晃 |  19 |   6 |   12 | xoxoxxxxoxxoooxxxx |
+| 維         |         8 | 天野貴元   | 石田   |  22 |  12 |    6 | xxoxoooxxoxooooooo |
+| 維         |         9 | 鵜木学     | 石田   |  24 |   7 |   11 | xxxxxooooxxxoxxoxo |
+| 維         |        10 | 阿部健治郎 | 西村   |  19 |  11 |    7 | xoxxoxooooxxooxooo |
+| 維         |        11 | 森村賢平   | 宮田利 |  18 |   5 |   13 | xxxxoxoxxxxoxxoxox |
+| 維         |        12 | 小泉祐     | 西村   |  19 |   8 |   10 | xoxoxxooooxxxxoxox |
+| 昇         |        13 | 西川和宏   | 西川   |  21 |  14 |    4 | ooooxoooxxooooooxo |
+| 維         |        14 | 宮本広志   | 森安   |  22 |  12 |    6 | oxxoxooooxxooooxoo |
+| 維         |        15 | 星野良生   | 西村   |  19 |   8 |   10 | xoxxooxxxxxoxoooxo |
+| 維         |        16 | 渡辺愛生   | 安恵   |  20 |   8 |   10 | oooooxxxxxxxooxoxx |
+| 維         |        17 | 三宅潤     | 中村修 |  21 |   5 |   13 | xooxoxxoxxoxxxxxxx |
+| 昇         |        18 | 佐藤慎一   | 剱持   |  25 |  15 |    3 | xooooooxoooooooxoo |
+| 維         |        19 | 松井義信   | 淡路   |  24 |   6 |   12 | xxoxxxxxxoooxxxoox |
+| 維         |        20 | 都成竜馬   | 谷川   |  18 |   9 |    9 | xoxoooxoxxoxoxxoox |
+| 維         |        21 | 菊地裕太   | 大島   |  24 |   7 |   11 | oxooooxoxxxoxxxxxx |
+| 維         |        22 | 門倉啓太   | 石田   |  20 |   7 |   11 | oxxoxxxxxoxoooxxxo |
+| 維         |        23 | 竹内貴浩   | 杉本   |  20 |   9 |    9 | xoooxxxoooxxxoxxoo |
+| 維         |        24 | 藤森哲也   | 塚田   |  20 |   9 |    9 | oxooooxxoxooxoxxxx |
+| 維         |        25 | 石井直樹   | 中原   |  21 |  10 |    8 | xxxooxoxoooooxxoox |
+| 維         |        26 | 今泉健司   | 桐谷   |  34 |  11 |    7 | oxoxooooxoxooxxoox |
+| 維         |        27 | 岡畑明範   | 所司   |  22 |   8 |   10 | xxxxooooooxxxxooxx |
+| 維         |        28 | 佐藤秀和   | 桜井   |  24 |   5 |   13 | xxoxxxxxxxooxxoxox |
+| 維         |        29 | 池田将之   | 若松   |  24 |   8 |   10 | oooxxoxxxxoxxoxoxo |
+| 維         |        30 | 和田真治   | 桜井   |  24 |   4 |   14 | oxxxoooxxxxxxxxxxx |
+| 維         |        31 | 澤田真吾   | 森信   |  16 |   8 |   10 | ooxxxxoooooxxxoxxx |
+| 維         |        31 | 菅井竜也   | 井上   |  15 |  11 |    7 | xxoooxoooxxxoxoooo |
+| 維         |        33 | 永瀬拓矢   | 安恵   |  15 |  13 |    5 | ooooooxxxxoxoooooo |
+| 維         |        34 | 斎藤慎太郎 | 畠山鎮 |  14 |  11 |    7 | oxxoxxooooooxxooxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 44                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/44/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 大石直嗣   | 森信   |  19 |  13 |    5 | oxxoxooxxooooooooo |
+| 維         |         2 | 永瀬拓矢   | 安恵   |  16 |  10 |    8 | ooxxxoxoxoxoooxoxo |
+| 維         |         3 | 天野貴元   | 石田   |  22 |  11 |    7 | xxoooxooxxooxxoooo |
+| 維         |         4 | 宮本広志   | 森安   |  22 |  10 |    8 | xxooxooooxoooxxoxx |
+| 次         |         5 | 阿部健治郎 | 西村   |  19 |  12 |    6 | xxoooxooooxxxooooo |
+| 維         |         6 | 今泉健司   | 桐谷   |  35 |   5 |   13 | oxxxxxxxxoooxxxxox |
+| 維         |         7 | 菅井竜也   | 井上   |  16 |  12 |    6 | oxoxoxxoooooooooxx |
+| 維         |         8 | 斎藤慎太郎 | 畠山鎮 |  15 |  12 |    6 | ooooxxxoooooooxxxo |
+| 維         |         9 | 船江恒平   | 井上   |  21 |   7 |   11 | ooxxxxooxxxxxoxoox |
+| 維         |        10 | 石井直樹   | 中原   |  22 |   6 |   12 | xxxxxoxxxxooxxooxo |
+| 維         |        11 | 都成竜馬   | 谷川   |  18 |  10 |    8 | xooxooxxoooxoxxoox |
+| 維         |        12 | 竹内貴浩   | 杉本   |  21 |   8 |   10 | oxxooxxxxoxxoooxxo |
+| 維         |        13 | 藤森哲也   | 塚田   |  21 |  11 |    7 | ooxxoxxooooxooxxoo |
+| 維         |        14 | 渡辺大夢   | 石田   |  20 |   8 |   10 | xoxooxxxoxoooxoxxx |
+| 維         |        15 | 荒木宣貴   | 米長   |  22 |   7 |   11 | xoxxoxooooxoxxxxxx |
+| 維         |        16 | 小泉祐     | 西村   |  19 |   7 |   11 | xxoooxoxxxxxxoxxoo |
+| 維         |        17 | 星野良生   | 西村   |  20 |  10 |    8 | oxxoooxooxxoxxooxo |
+| 維         |        18 | 渡辺愛生   | 安恵   |  20 |   7 |   11 | xxxxoooxxoxxoxxoox |
+| 維         |        19 | 岡畑明範   | 所司   |  22 |   3 |   15 | xxxoxxxoxoxxxxxxxx |
+| 維         |        20 | 池田将之   | 若松   |  24 |  12 |    6 | ooooooxooxoxoxooxx |
+| 昇         |        21 | 澤田真吾   | 森信   |  16 |  14 |    4 | xoooxooooxooxooooo |
+| 維         |        22 | 田嶋尉     | 武者野 |  24 |  10 |    8 | ooooxoooxxoxxoxoxx |
+| 維         |        23 | 鵜木学     | 石田   |  24 |   8 |   10 | xoxooxxxxoxxoxxooo |
+| 維         |        24 | 菊地裕太   | 大島   |  24 |   9 |    9 | xxxoxooxxooxoooxxo |
+| 維         |        25 | 門倉啓太   | 石田   |  21 |   9 |    9 | xoooxooxxxxoxooxxo |
+| 維         |        26 | 牧野光則   | 木下晃 |  20 |   9 |    9 | oxxoooxooooxxxxxox |
+| 維         |        27 | 松井義信   | 淡路   |  24 |   8 |   10 | oxxxoxoxoxxoxooxox |
+| 維         |        28 | 森村賢平   | 宮田利 |  19 |   8 |   10 | oxxxxxoxooxooxxoox |
+| 維         |        29 | 三宅潤     | 中村修 |  22 |   7 |   11 | xooxxoxxxxxxxooxoo |
+| 維         |        30 | 佐藤秀和   | 桜井   |  25 |   8 |   10 | xooxoooxooxoxxxxxx |
+| 維         |        31 | 佐々木勇気 | 石田   |  14 |  12 |    6 | xooxoxoooooooxxoxo |
+| 維         |        32 | 西田拓也   | 森信   |  17 |   9 |    9 | oxoxooxxxxxoxoooox |
+| 維         |        33 | 竹内雄悟   | 森信   |  20 |   5 |   13 | oxoxxxxxxoxxxooxxx |
+| 維         |        34 | 石田直裕   | 所司   |  19 |   9 |    9 | ooxxoxoxxxoooxxxoo |
+| 維         |        35 | 杉本和陽   | 米長   |  17 |   9 |    9 | oooxxooooxxxxxoxxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 45                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/45/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 阿部健治郎 | 西村   |  20 |  13 |    5 | xoxoooooxoooxoooxo |
+| 次         |         2 | 菅井竜也   | 井上   |  17 |  12 |    6 | ooooxoxoxxoxoooxoo |
+| 維         |         3 | 斎藤慎太郎 | 畠山鎮 |  16 |  11 |    7 | oxxooooxoxooxoxoox |
+| 維         |         4 | 池田将之   | 若松   |  25 |   7 |   11 | xoxooxxooooxxxxxxx |
+| 維         |         5 | 佐々木勇気 | 石田   |  14 |   9 |    9 | ooxxxoxxoooxoxxxoo |
+| 維         |         6 | 天野貴元   | 石田   |  23 |  10 |    8 | oooxooxoxoxxoxxoxo |
+| 維         |         7 | 藤森哲也   | 塚田   |  22 |   5 |   13 | oxxooxoxxxxxoxxxxx |
+| 昇         |         8 | 永瀬拓矢   | 安恵   |  16 |  14 |    4 | oxooxoooooxoooxooo |
+| 維         |         9 | 宮本広志   | 森安   |  23 |  11 |    7 | ooooxoxxooxxxooxoo |
+| 維         |        10 | 都成竜馬   | 谷川   |  19 |  12 |    6 | oxooxooxoxxoooxooo |
+| 維         |        11 | 星野良生   | 西村   |  20 |   8 |   10 | xxxoxxxxxooxoxoooo |
+| 維         |        12 | 田嶋尉     | 武者野 |  25 |   9 |    9 | oooxxooxxoxoxxooxx |
+| 維         |        13 | 菊地裕太   | 大島   |  25 |  10 |    8 | xxoxoxxxoxooxooooo |
+| 維         |        14 | 門倉啓太   | 石田   |  22 |  11 |    7 | xooooxxxoxoooooxox |
+| 維         |        15 | 牧野光則   | 木下晃 |  21 |  12 |    6 | xooxxxoooxooooxooo |
+| 維         |        16 | 西田拓也   | 森信   |  17 |   6 |   12 | oxxxoxxxoxxoxxxoxo |
+| 維         |        17 | 石田直裕   | 所司   |  20 |  10 |    8 | xxxooooooooxxxooxx |
+| 維         |        18 | 杉本和陽   | 米長   |  17 |   5 |   13 | xxxxooxxxxxoxxoxox |
+| 維         |        19 | 竹内貴浩   | 杉本   |  21 |  11 |    7 | ooooxxoxxxooxooxoo |
+| 維         |        20 | 渡辺大夢   | 石田   |  20 |  10 |    8 | xxxxxxoooooooxxooo |
+| 維         |        21 | 鵜木学     | 石田   |  25 |   7 |   11 | xoxxxoxooxoooxxxxx |
+| 維         |        22 | 松井義信   | 淡路   |  25 |   9 |    9 | oxxoxoxoxoxxxooxoo |
+| 維         |        23 | 森村賢平   | 宮田利 |  20 |   6 |   12 | xoooxxxxxxxooxxxxo |
+| 維         |        24 | 佐藤秀和   | 桜井   |  25 |   4 |   14 | xxxxxxxxxxoxxoxoxo |
+| 維         |        25 | 船江恒平   | 井上   |  22 |   8 |   10 | xooxooxxxxxxooooxx |
+| 維         |        26 | 荒木宣貴   | 米長   |  23 |  11 |    7 | oxoxoooxoooxoxooxx |
+| 維         |        27 | 小泉祐     | 西村   |  20 |  10 |    8 | xxxooxooooxxoooxox |
+| 維         |        28 | 渡辺愛生   | 安恵   |  21 |   8 |   10 | oooxoxoxxoxxxoxoxx |
+| 維         |        29 | 三宅潤     | 中村修 |  23 |   7 |   11 | oxoxxxooooxxxoxxxx |
+| 維         |        30 | 石井直樹   | 中原   |  23 |   6 |   12 | xoxxoxooxxxooxxxxx |
+| 維         |        31 | 竹内雄悟   | 森信   |  21 |  10 |    8 | oxoxoooooooxxxxxox |
+| 維         |        32 | 岡畑明範   | 所司   |  23 |   7 |   11 | xxoxooxooxxxxooxxx |
+| 維         |        33 | 阿部光瑠   | 中村修 |  14 |   8 |   10 | ooxxxxxoxxoxoxooox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 46                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/46/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 菅井竜也   | 井上   |  17 |  15 |    3 | xoxoooooooooooooox |
+| 維         |         2 | 都成竜馬   | 谷川   |  19 |   7 |   11 | xxxxxooxoxoxxoxoox |
+| 昇         |         3 | 牧野光則   | 木下晃 |  21 |  14 |    4 | oooooxoxooooxooxoo |
+| 維         |         4 | 斎藤慎太郎 | 畠山鎮 |  16 |  10 |    8 | ooxoooxoxoooxxxxox |
+| 維         |         5 | 宮本広志   | 森安   |  23 |  10 |    8 | oxxxoxoxooooxoxxoo |
+| 維         |         6 | 門倉啓太   | 石田   |  22 |   8 |   10 | xxoxxoxoxxxxooxooo |
+| 維         |         7 | 竹内貴浩   | 杉本   |  22 |  10 |    8 | xxooooxxoxoooxoxxo |
+| 維         |         8 | 荒木宣貴   | 米長   |  23 |   7 |   11 | xoxxoxooxxooxxxoxx |
+| 維         |         9 | 天野貴元   | 石田   |  23 |   8 |   10 | xoxoooxxxooxxoxxxo |
+| 維         |        10 | 菊地裕太   | 大島   |  25 |  10 |    8 | oxoooxxxoxoxxoooxo |
+| 維         |        11 | 石田直裕   | 所司   |  20 |   5 |   13 | oxxxoxooxxxxxxxxox |
+| 次         |        12 | 渡辺大夢   | 石田   |  21 |  13 |    5 | xxxoxooxoooooooooo |
+| 維         |        13 | 小泉祐     | 西村   |  20 |   7 |   11 | xooxxxoxooxoxoxxxx |
+| 維         |        14 | 竹内雄悟   | 森信   |  21 |  11 |    7 | ooxxxoxoxoxoooxooo |
+| 維         |        15 | 佐々木勇気 | 石田   |  15 |  13 |    5 | ooxooxooooxoxoooxo |
+| 維         |        16 | 田嶋尉     | 武者野 |  25 |   9 |    9 | ooxxoxooxxxoxoxoox |
+| 維         |        17 | 松井義信   | 淡路   |  25 |   7 |   11 | oxooxoxoxxxxxxooxx |
+| 維         |        18 | 星野良生   | 西村   |  21 |   4 |   14 | xxxxxxxooxxoxxxoxx |
+| 維         |        19 | 船江恒平   | 井上   |  22 |  12 |    6 | xoooxxoooxoxoxoooo |
+| 維         |        20 | 渡辺愛生   | 安恵   |  21 |   7 |   11 | xxooxoxoxoxooxxxxx |
+| 維         |        21 | 阿部光瑠   | 中村修 |  14 |  10 |    8 | ooxxxooxxoooxooxxo |
+| 維         |        22 | 池田将之   | 若松   |  25 |   9 |    9 | ooxxoxxxxoxoxxoooo |
+| 維         |        23 | 鵜木学     | 石田   |  25 |   2 |   16 | xxxxxxxoxxxxoxxxxx |
+| 維         |        24 | 三宅潤     | 中村修 |  23 |   4 |   14 | xxoxxxoxxxxxxxxxoo |
+| 維         |        25 | 岡畑明範   | 所司   |  23 |   3 |   15 | xxxxxxxxxxxxooxoxx |
+| 維         |        26 | 西田拓也   | 森信   |  18 |  10 |    8 | oxoooxoxoxxooxxxoo |
+| 維         |        27 | 森村賢平   | 宮田利 |  20 |  12 |    6 | oooxooxoooxooxooxx |
+| 維         |        28 | 石井直樹   | 中原   |  23 |   7 |   11 | xoooxoooxoxxxxxxxx |
+| 維         |        29 | 藤森哲也   | 塚田   |  22 |  12 |    6 | ooxooxoxoooooxooxx |
+| 維         |        30 | 杉本和陽   | 米長   |  18 |  13 |    5 | ooooooxoxxxxoooooo |
+| 維         |        31 | 井出隼平   | 田丸   |  18 |  10 |    8 | xoooxxoxxooxooooxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 47                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/47/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 渡辺大夢   | 石田   |  21 |   7 |   11 | xoooxoxxoxxxoxxoxx |
+| 昇         |         2 | 佐々木勇気 | 石田   |  15 |  14 |    4 | oxoxoooxoxoooooooo |
+| 維         |         3 | 杉本和陽   | 米長   |  18 |   6 |   12 | xxxoxxoxooxxoxoxxx |
+| 昇         |         4 | 船江恒平   | 井上   |  22 |  13 |    5 | oxoxxoxooooooooxoo |
+| 維         |         5 | 森村賢平   | 宮田利 |  20 |   8 |   10 | ooxxxoxxxooxxxooxo |
+| 維         |         6 | 藤森哲也   | 塚田   |  22 |   9 |    9 | xoooooxoxxxoxxxoxo |
+| 次         |         7 | 竹内雄悟   | 森信   |  22 |  13 |    5 | oooooxoooooxoxxoxo |
+| 維         |         8 | 斎藤慎太郎 | 畠山鎮 |  16 |  13 |    5 | ooooooxoooxxxoxooo |
+| 維         |         9 | 宮本広志   | 森安   |  24 |  13 |    5 | ooxoooxoxxoxoooooo |
+| 維         |        10 | 竹内貴浩   | 杉本   |  22 |   7 |   11 | xxxoxxxxxxooooooxx |
+| 維         |        11 | 菊地裕太   | 大島   |  26 |  10 |    8 | oxoxxooooxxoxooxox |
+| 維         |        12 | 阿部光瑠   | 中村修 |  15 |   7 |   11 | oxxoxoxxoooxoxxxxx |
+| 維         |        13 | 西田拓也   | 森信   |  18 |   3 |   15 | xoxxxxooxxxxxxxxxx |
+| 維         |        14 | 井出隼平   | 田丸   |  18 |   6 |   12 | oxxxoxoxxxxxoxxoxo |
+| 維         |        15 | 門倉啓太   | 石田   |  22 |  11 |    7 | xoooooxxoooxoxxoxo |
+| 維         |        16 | 天野貴元   | 石田   |  24 |   9 |    9 | oxoxxxxoxxxoooooox |
+| 維         |        17 | 都成竜馬   | 谷川   |  20 |   7 |   11 | xxoxxxxoxxoxooxxoo |
+| 維         |        18 | 荒木宣貴   | 米長   |  23 |  12 |    6 | oooxoooooxooxxooxx |
+| 維         |        19 | 小泉祐     | 西村   |  21 |   7 |   11 | xxoxxxooxooxxxxoxo |
+| 維         |        20 | 渡辺愛生   | 安恵   |  22 |  10 |    8 | xoxoxxxooxoooooxxo |
+| 維         |        21 | 石井直樹   | 中原   |  23 |   6 |   12 | xxoxxxoxxoxxoxxoox |
+| 維         |        22 | 石田直裕   | 所司   |  21 |   4 |   14 | xxxoxoxxoxxxxoxxxx |
+| 維         |        23 | 星野良生   | 西村   |  21 |  12 |    6 | oxooooooxoooxxooxx |
+| 維         |        24 | 三宅潤     | 中村修 |  23 |   8 |   10 | xoxooooxxoxxoxxxxo |
+| 維         |        25 | 森下裕也   | 小林健 |  24 |   9 |    9 | xoxxoxoxxooooxxoox |
+| 維         |        25 | 伊藤和夫   | 剱持   |  21 |  11 |    7 | ooxxxxxoooxxoooooo |
+| 維         |        27 | 鈴木肇     | 所司   |  22 |   9 |    9 | ooxooooxxoxoxoxxxx |
+| 維         |        28 | 慶田義法   | 井上   |  17 |  10 |    8 | xxoxooxoxxxooooxoo |
+| 維         |        29 | 高見泰地   | 石田   |  16 |   9 |    9 | ooxxxoxoxooxooxxox |
+| 維         |        30 | 池永天志   | 小林健 |  16 |   5 |   13 | xoxxooxxoxxxxxxxox |
+| 維         |        31 | 石井健太郎 | 所司   |  17 |   8 |   10 | oxxooxoxoxoxxxxoox |
+| 維         |        32 | 千田翔太   | 森信   |  15 |  10 |    8 | xxooxxoxooxooxoo   |
+| 維         |        33 | 八代弥     | 青野   |  16 |  11 |    7 | oxooxxxooxooooxoxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 48                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/48/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 竹内雄悟   | 森信   |  22 |   9 |    9 | oxxooxxxooxxoooxxo |
+| 次         |         2 | 斎藤慎太郎 | 畠山鎮 |  17 |  12 |    6 | oxoxxxooxoooooxooo |
+| 維         |         3 | 宮本広志   | 森安   |  24 |   9 |    9 | xxxxxooxxxoooxoooo |
+| 維         |         4 | 荒木宣貴   | 米長   |  24 |  12 |    6 | oxoooooooxoxxooxxo |
+| 維         |         5 | 星野良生   | 西村   |  22 |  12 |    6 | xooxxxoooxooxooooo |
+| 昇         |         6 | 門倉啓太   | 石田   |  23 |  13 |    5 | oooxxooooooxoxooxo |
+| 維         |         7 | 伊藤和夫   | 剣持   |  21 |   5 |   13 | oxxxoxxoxxoxxoxxxx |
+| 維         |         8 | 八代弥     | 青野   |  16 |   8 |   10 | xxxoxxoxooxxoxooox |
+| 維         |         9 | 菊地裕太   | 大島   |  26 |  10 |    8 | ooxoxoxxoxxxxooooo |
+| 維         |        10 | 渡辺愛生   | 安恵   |  22 |  12 |    6 | oxoxoxoxoxooooooox |
+| 維         |        11 | 慶田義法   | 井上   |  18 |   3 |   15 | xxxooxxxxxxoxxxxxx |
+| 維         |        12 | 千田翔太   | 森信   |  16 |  11 |    7 | ooooooooxoxoxxoxxx |
+| 維         |        13 | 藤森哲也   | 塚田   |  23 |  11 |    7 | xxxoooxoooooooxoxx |
+| 維         |        14 | 天野貴元   | 石田   |  24 |   7 |   11 | xxxoxoxoxoxxxoxoxo |
+| 維         |        15 | 森下裕也   | 小林健 |  25 |   9 |    9 | oooxxxoxxxoxooooxx |
+| 維         |        16 | 鈴木肇     | 所司   |  23 |   4 |   14 | xxxoxxxxoooxxxxxxx |
+| 維         |        17 | 高見泰地   | 石田   |  17 |  12 |    6 | ooooxxxxooooooooxx |
+| 維         |        18 | 森村賢平   | 宮田利 |  21 |   4 |   14 | xxoxoxooxxxxxxxxxx |
+| 維         |        19 | 三宅潤     | 中村修 |  24 |   7 |   11 | xoxxooxxxxooxxxoox |
+| 維         |        20 | 石井健太郎 | 所司   |  18 |  11 |    7 | xoxoxxoxoxxooooooo |
+| 維         |        21 | 渡辺大夢   | 石田   |  22 |   9 |    9 | ooxxooxoxoxxxooxox |
+| 維         |        22 | 竹内貴浩   | 杉本   |  23 |   8 |   10 | xxooxooooxxxoxxxxo |
+| 昇         |        23 | 阿部光瑠   | 中村修 |  15 |  13 |    5 | xooooooxooooxoooxx |
+| 維         |        24 | 都成竜馬   | 谷川   |  20 |  12 |    6 | xoxoooxooooxoxooxo |
+| 維         |        25 | 小泉祐     | 西村   |  21 |   8 |   10 | xoxooooxxxxxxoxxoo |
+| 維         |        26 | 杉本和陽   | 米長   |  19 |  11 |    7 | ooxxxxxoxoooooxooo |
+| 維         |        27 | 井出隼平   | 田丸   |  19 |   9 |    9 | oxxoxoooxoxxoxoxxo |
+| 維         |        28 | 石井直樹   | 中原   |  24 |   7 |   11 | xxoxxxxooxooxxxxoo |
+| 維         |        29 | 池永天志   | 小林健 |  17 |   4 |   14 | xoxxxxoxxxoxxxxxxo |
+| 維         |        30 | 石田直裕   | 所司   |  21 |   9 |    9 | oxooxxoxxoxxxxoooo |
+| 維         |        31 | 西田拓也   | 森信   |  19 |  11 |    7 | oooxooxoooooxoxxxx |
+| 維         |        32 | 福間健太   | 伊藤博 |  21 |   8 |   10 | ooxoxoxxoxxxoxoxox |
+| 維         |        33 | 大橋貴洸   | 所司   |  18 |   8 |   10 | oxoxxooxxooxxxxoox |
+| 維         |        34 | 上村亘     | 中村修 |  23 |   8 |   10 | oxooooxxoxoxxxxxox |
+| 維         |        35 | 黒沢怜生   | 高橋   |  18 |   9 |    9 | xooxxxxooxoooxxxoo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 49                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/49/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 斎藤慎太郎 | 畠山鎮 |  18 |  11 |    7 | xooooxooxooxooxxxo |
+| 維         |         2 | 荒木宣貴   | 米長   |  25 |   7 |   11 | ooxxxxxoxoxoxxxoox |
+| 維         |         3 | 星野良生   | 西村   |  22 |   9 |    9 | xxxxooooxooxoxxoxo |
+| 維         |         4 | 渡辺愛生   | 安恵   |  23 |   6 |   12 | oxoxxxoxoxoxxxxxox |
+| 昇         |         5 | 高見泰地   | 石田   |  17 |  13 |    5 | oxoooooooxooxooxox |
+| 維         |         6 | 都成竜馬   | 谷川   |  21 |  11 |    7 | xoxxooooxxoooooxxo |
+| 維         |         7 | 千田翔太   | 森信   |  17 |  11 |    7 | xoooxxooxoxooooxox |
+| 昇         |         8 | 藤森哲也   | 塚田   |  24 |  12 |    6 | xoxoxxooxooooxoooo |
+| 次         |         9 | 石井健太郎 | 所司   |  19 |  12 |    6 | oooxooxoooxxoxxooo |
+| 維         |        10 | 杉本和陽   | 米長   |  19 |   9 |    9 | xxxxooxoxooooxoxox |
+| 維         |        11 | 西田拓也   | 森信   |  19 |  11 |    7 | xxooxxxxooooooooxo |
+| 維         |        12 | 菊地裕太   | 大島   |  27 |   7 |   11 | xoxooxxoxxoxoxxxox |
+| 維         |        13 | 竹内雄悟   | 森信   |  23 |   5 |   13 | oxxoxxxxoxxxxxxoxo |
+| 維         |        14 | 宮本広志   | 森安   |  25 |  12 |    6 | xoooxooooxxxxooooo |
+| 維         |        15 | 森下裕也   | 小林健 |  26 |   7 |   11 | xxxxoxxxooooxoxoxx |
+| 維         |        16 | 渡辺大夢   | 石田   |  22 |  10 |    8 | oxoxooooxxxxxoxooo |
+| 維         |        17 | 井出隼平   | 田丸   |  20 |  10 |    8 | xoxooooxooxoxxoxxo |
+| 維         |        18 | 石田直裕   | 所司   |  22 |   7 |   11 | oxxooxxoxxxxxooxox |
+| 維         |        19 | 黒沢怜生   | 高橋   |  19 |   8 |   10 | ooxoxxxxxxoooxoxox |
+| 維         |        20 | 八代弥     | 青野   |  17 |   9 |    9 | oxxxxxoooxoxxooxoo |
+| 維         |        21 | 竹内貴浩   | 杉本   |  23 |  12 |    6 | oooooxoxooxxooxoxo |
+| 維         |        22 | 小泉祐     | 西村   |  22 |  11 |    7 | oooxoxxxooxoxoooxo |
+| 維         |        23 | 福間健太   | 伊藤博 |  22 |  10 |    8 | xxxooooxoooxxxxooo |
+| 維         |        24 | 大橋貴洸   | 所司   |  18 |   9 |    9 | xxooxxoxooxoooxxox |
+| 維         |        25 | 上村亘     | 中村修 |  24 |  12 |    6 | ooooxoxxoxxoooooox |
+| 維         |        26 | 天野貴元   | 石田   |  25 |   6 |   12 | xxoxxxoxxooxoxoxxx |
+| 維         |        27 | 三宅潤     | 中村修 |  25 |   7 |   11 | oxxoooxxxoxxooxxxx |
+| 維         |        28 | 石井直樹   | 中原   |  25 |   7 |   11 | xoxxooxxxoxoxxxoxo |
+| 維         |        29 | 伊藤和夫   | 剣持   |  22 |   8 |   10 | oooxxoxxxxoxoxxxoo |
+| 維         |        30 | 鈴木肇     | 所司   |  23 |   8 |   10 | ooxxxoxooxxxxoooxx |
+| 維         |        31 | 森村賢平   | 宮田利 |  22 |   7 |   11 | xxoxxooooxxoxxxoxx |
+| 維         |        32 | 池永天志   | 小林健 |  18 |   7 |   11 | oxooxoxxxxooxxxoxx |
+| 維         |        33 | 慶田義法   | 井上   |  19 |   7 |   11 | oxxxoxxoxxxooooxxx |
+| 維         |        34 | 折田翔吾   | 森安正 |  21 |   8 |   10 | xooxxooxoxoxxxoxxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 50                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/50/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 石井健太郎 | 所司   |  19 |  11 |    7 | ooooooxxoxxoooxxxo |
+| 維         |         2 | 宮本広志   | 森安   |  25 |  11 |    7 | oxoooxooooxxoxooxx |
+| 維         |         3 | 竹内貴浩   | 杉本   |  24 |  10 |    8 | oxxoxooooxxooxoxox |
+| 維         |         4 | 上村亘     | 中村修 |  25 |   5 |   13 | xoxxxxxoooxxxxxxox |
+| 昇         |         5 | 斎藤慎太郎 | 畠山鎮 |  18 |  15 |    3 | ooooooxooooxxooooo |
+| 維         |         6 | 都成竜馬   | 谷川   |  21 |  10 |    8 | xoxxooxxoooxooxoox |
+| 維         |         7 | 千田翔太   | 森信   |  17 |  10 |    8 | ooooxooxxxoxxooxox |
+| 維         |         8 | 西田拓也   | 森信   |  20 |  11 |    7 | ooxxxoxxxoooooooox |
+| 維         |         9 | 小泉祐     | 西村   |  22 |   5 |   13 | xxoxoxxoxxoxxoxxxx |
+| 維         |        10 | 渡辺大夢   | 石田   |  23 |   8 |   10 | oxxxoxoxoxoxxoxxoo |
+| 維         |        11 | 井出隼平   | 田丸   |  20 |   8 |   10 | xxxxxxoooxxooooxox |
+| 次         |        12 | 福間健太   | 伊藤博 |  23 |  12 |    6 | oxoxxoooooxoxoxooo |
+| 維         |        13 | 星野良生   | 西村   |  23 |   8 |   10 | oooxoxxoxooxxxxoxx |
+| 維         |        14 | 杉本和陽   | 米長   |  20 |  10 |    8 | xooooxooooxxxxooxx |
+| 昇         |        15 | 八代弥     | 青野   |  17 |  14 |    4 | ooooooooooxxoxooxo |
+| 維         |        16 | 大橋貴洸   | 所司   |  19 |   6 |   12 | xxoxxxxxxoooxooxxx |
+| 維         |        17 | 黒沢怜生   | 高橋   |  19 |   9 |    9 | xxoxxoxxoooooxxoxo |
+| 維         |        18 | 伊藤和夫   | 剣持   |  23 |   7 |   11 | xoxooxxxxxoxoxxxoo |
+| 維         |        19 | 鈴木肇     | 所司   |  24 |   4 |   14 | xooxoxxxxxxxxxxoxx |
+| 維         |        20 | 折田翔吾   | 森安正 |  22 |   7 |   11 | oooxxxoxoxxxxoxxxo |
+| 維         |        21 | 荒木宣貴   | 米長   |  25 |  11 |    7 | oxxooooooxxxoooxxo |
+| 維         |        22 | 森下裕也   | 小林健 |  26 |   8 |   10 | ooxoxxxxoxoxxoxoox |
+| 維         |        23 | 石田直裕   | 所司   |  23 |  10 |    8 | oxoxoooxxxooxxooxo |
+| 維         |        24 | 三宅潤     | 中村修 |  25 |   3 |   15 | xxxxxxxxxxooxxoxxx |
+| 維         |        25 | 石井直樹   | 中原   |  25 |   8 |   10 | xxooxooxoxxxxxooxo |
+| 維         |        26 | 森村賢平   | 宮田利 |  22 |  10 |    8 | xxxooxxxooooooxoxo |
+| 維         |        27 | 池永天志   | 小林健 |  18 |   8 |   10 | oxxxoooxooxoxxxxox |
+| 維         |        28 | 慶田義法   | 井上   |  19 |  12 |    6 | xooxooxoxoooooxoxo |
+| 維         |        29 | 渡辺愛生   | 安恵   |  23 |  12 |    6 | oxoxoooxooxxooxooo |
+| 維         |        30 | 天野貴元   | 石田   |  26 |   4 |   14 | xxxxxoxxxxoxxxoxox |
+| 維         |        31 | 竹内雄悟   | 森信   |  24 |  12 |    6 | ooxoxoxoxoxoooooox |
+| 維         |        32 | 望月陵     | 石田   |  25 |   7 |   11 | xxoxxxxoxxxoooxxoo |
+| 維         |        33 | 谷合廣紀   | 中座   |  18 |  11 |    7 | xoxoooxoooxooxxoxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 51                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/51/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 福間健太   | 伊藤博 |  23 |  10 |    8 | xxoxooooooxxoxoxox |
+| 維         |         2 | 慶田義法   | 井上   |  19 |   9 |    9 | oxooooxxxooxxxoxox |
+| 維         |         3 | 渡辺愛生   | 安恵   |  24 |   3 |   15 | xxoxoxxxxxxxxxoxxx |
+| 維         |         4 | 竹内雄悟   | 森信   |  24 |   7 |   11 | xxxoxoxxooxoxxxoxo |
+| 維         |         5 | 石井健太郎 | 所司   |  19 |  10 |    8 | oxoxxoooxooxoxxxoo |
+| 維         |         6 | 宮本広志   | 森安正 |  26 |  12 |    6 | oooooxoxooooxxoxox |
+| 維         |         7 | 西田拓也   | 森信   |  20 |   9 |    9 | xoxoxxxoxoxooxxooo |
+| 維         |         8 | 荒木宣貴   | 米長   |  25 |   6 |   12 | oxxxooxxoxxxooxxxx |
+| 維         |         9 | 谷合廣紀   | 中座   |  18 |   9 |    9 | oxxxxooxxxxooxoooo |
+| 維         |        10 | 竹内貴浩   | 杉本   |  24 |   8 |   10 | oooxxxxooxxoooxxxx |
+| 維         |        11 | 都成竜馬   | 谷川   |  22 |  10 |    8 | xoxxoxxxoooooooxxo |
+| 維         |        12 | 千田翔太   | 森信   |  17 |  12 |    6 | oxooxooxoxooxoxooo |
+| 維         |        13 | 杉本和陽   | 米長   |  20 |  12 |    6 | ooxxxoooxxooooxooo |
+| 昇         |        14 | 石田直裕   | 所司   |  23 |  13 |    5 | ooooooooxooxxxoxoo |
+| 維         |        15 | 森村賢平   | 宮田利 |  22 |  10 |    8 | ooxooxxxoooooxxoxx |
+| 維         |        16 | 黒沢怜生   | 高橋   |  20 |  10 |    8 | xoxoooooxxxoxooxxo |
+| 次         |        17 | 渡辺大夢   | 石田   |  23 |  13 |    5 | ooooxoxxooooxooxoo |
+| 維         |        18 | 井出隼平   | 田丸   |  20 |  11 |    7 | oooooxxxxooxooxoox |
+| 維         |        19 | 星野良生   | 西村   |  23 |   9 |    9 | xooooxooxoxxxxooxx |
+| 維         |        20 | 森下裕也   | 小林健 |  26 |  11 |    7 | oxooooxxxxxoooxooo |
+| 維         |        21 | 石井直樹   | 中原   |  25 |   7 |   11 | ooxxxxoxooxxoxxxox |
+| 維         |        22 | 池永天志   | 小林健 |  18 |   3 |   15 | xxxoxxxoxxxxxoxxxx |
+| 維         |        23 | 伊藤和夫   | 劔持   |  23 |   7 |   11 | xoxoxooxxxxoxoxxox |
+| 維         |        24 | 折田翔吾   | 森安正 |  22 |   9 |    9 | xxoxxxoooxxoxoooxo |
+| 維         |        25 | 望月陵     | 石田   |  25 |   6 |   12 | xoxoxxxooxxxoxxoxx |
+| 維         |        26 | 大橋貴洸   | 所司   |  19 |   7 |   11 | xxoxoxxxooxoxxooxx |
+| 昇         |        27 | 上村亘     | 中村修 |  25 |  14 |    4 | xooxooooooxoxooooo |
+| 維         |        28 | 小泉祐     | 西村   |  23 |   9 |    9 | oxoxxxxoooxxxoooox |
+| 維         |        29 | 鈴木肇     | 所司   |  24 |   8 |   10 | xxxxooooxxoxxooxxo |
+| 維         |        30 | 三宅潤     | 中村修 |  25 |   7 |   11 | xoxoxooxxxooxxxxox |
+| 維         |        31 | 坂井信哉   | 宮田利 |  19 |   4 |   14 | xxxoxxxxoxxxoxxxxo |
+| 維         |        32 | 藤原結樹   | 森信   |  22 |  10 |    8 | xxxxoooxoxoxooooxo |
+| 維         |        33 | 増田康宏   | 森下   |  14 |  12 |    6 | oxxooxooxoooooxoxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 52                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/52/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 次         |         1 | 宮本広志   | 森安正 |  26 |  12 |    6 | xxxoooooooooxooxox |
+| 昇         |         2 | 千田翔太   | 森信   |  18 |  15 |    3 | ooooxoooooooooxoxo |
+| 維         |         3 | 杉本和陽   | 伊藤能 |  21 |   8 |   10 | xoxxxoooxxooxxoxxo |
+| 維         |         4 | 増田康宏   | 森下   |  14 |  10 |    8 | xoooxxoxxxxooooxoo |
+| 維         |         5 | 井出隼平   | 田丸   |  21 |  11 |    7 | oxoooxooooooxxoxxx |
+| 維         |         6 | 森下裕也   | 小林健 |  27 |   8 |   10 | ooxxxoxoxxoxooxxox |
+| 維         |         7 | 福間健太   | 伊藤博 |  23 |   6 |   12 | oxoxxxoxxxxoxxxxoo |
+| 維         |         8 | 石井健太郎 | 所司   |  20 |  11 |    7 | ooxxoxooxoxooxooox |
+| 維         |         9 | 都成竜馬   | 谷川   |  22 |  12 |    6 | oxooxoooxxoooxooxo |
+| 維         |        10 | 森村賢平   | 宮田利 |  23 |  10 |    8 | ooxooxooxooxxoxoxx |
+| 維         |        11 | 黒沢怜生   | 高橋   |  20 |   9 |    9 | xxoxooxoxooxxooxxo |
+| 維         |        12 | 藤原結樹   | 森信   |  23 |  10 |    8 | oxoxxxxxooxoooooox |
+| 維         |        13 | 慶田義法   | 井上   |  20 |  10 |    8 | xooxooxoxooxooxxxo |
+| 維         |        14 | 西田拓也   | 森信   |  21 |  10 |    8 | xxooooooxoxoxxxoox |
+| 維         |        15 | 谷合廣紀   | 中座   |  18 |   7 |   11 | xoxoxxoxooxxoxxxxo |
+| 維         |        16 | 星野良生   | 西村   |  24 |   6 |   12 | xoxxoxxxxoxxxooxox |
+| 維         |        17 | 折田翔吾   | 森安正 |  22 |   6 |   12 | oxxxxxoxoxxxoxxoox |
+| 維         |        18 | 小泉祐     | 西村   |  23 |   8 |   10 | xxxxooxooxxoxxxooo |
+| 維         |        19 | 竹内貴浩   | 杉本   |  25 |   9 |    9 | ooxoxxoxoxoxxxooxo |
+| 維         |        20 | 鈴木肇     | 所司   |  25 |   7 |   11 | xoooxxxxoxxxooxoxx |
+| 昇         |        21 | 竹内雄悟   | 森信   |  24 |  13 |    5 | oxooooxxoooxooxooo |
+| 維         |        22 | 伊藤和夫   | 劔持   |  23 |   9 |    9 | oxxxxoxooooxoxoxox |
+| 維         |        23 | 大橋貴洸   | 所司   |  19 |   7 |   11 | xxoooxxxoxxxxxxooo |
+| 維         |        24 | 望月陵     | 石田和 |  26 |   6 |   12 | oxxxxxxoxoxooxxoxx |
+| 維         |        25 | 坂井信哉   | 宮田利 |  20 |  12 |    6 | xoxooooxoxoxxooooo |
+| 維         |        26 | 渡辺愛生   | 安恵   |  24 |   6 |   12 | oxoxoxooxxxxxoxxxx |
+| 維         |        27 | 池永天志   | 小林健 |  19 |  11 |    7 | xoxoxoxxoooooxoxoo |
+| 維         |        28 | 青嶋未来   | 安恵   |  17 |   8 |   10 | oooxxoxxoxxxoooxxx |
+| 維         |        29 | 石川泰     | 淡路   |  18 |   8 |   10 | xoooooxxxxooxxoxxx |
+| 維         |        30 | 梶浦宏孝   | 鈴木大 |  17 |   5 |   13 | xxxxoxxxxxxoxoxoxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 53                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/53/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 宮本広志   | 森安正 |  27 |  10 |    8 | oxxxxoxoxoooxoxooo |
+| 維         |         2 | 都成竜馬   | 谷川   |  23 |   9 |    9 | xoxxoxoxooxxoooxxo |
+| 維         |         3 | 坂井信哉   | 宮田利 |  20 |   8 |   10 | xxxoooxooxxxooxxxo |
+| 維         |         4 | 井出隼平   | 田丸   |  21 |   9 |    9 | oxoooxxoxxxooooxxx |
+| 昇         |         5 | 石井健太郎 | 所司   |  20 |  15 |    3 | ooooooxoooooooxoox |
+| 維         |         6 | 池永天志   | 小林健 |  19 |   8 |   10 | xoooxxxxxoxxxooxoo |
+| 維         |         7 | 増田康宏   | 森下   |  15 |  12 |    6 | xooxoooxoxooooooxx |
+| 維         |         8 | 森村賢平   | 宮田利 |  23 |   6 |   12 | oxxxxxoooxxxxxooxx |
+| 維         |         9 | 藤原結樹   | 森信   |  23 |   7 |   11 | xoxxxoxxxoxooxxxoo |
+| 維         |        10 | 慶田義法   | 井上   |  20 |  12 |    6 | xxoxoooooxooxxoooo |
+| 次         |        11 | 西田拓也   | 森信   |  21 |  13 |    5 | xooooxoxooooooxoxo |
+| 維         |        12 | 黒沢怜生   | 高橋   |  21 |   7 |   11 | ooxxxoooxxooxxxxxx |
+| 維         |        13 | 竹内貴浩   | 杉本   |  25 |  10 |    8 | xxoxoxooooxxoxxooo |
+| 維         |        14 | 伊藤和夫   | 剱持   |  24 |  11 |    7 | oooxoxoxooxooooxxx |
+| 維         |        15 | 杉本和陽   | 伊藤能 |  21 |   7 |   11 | oooxxxxxxxooxoxxox |
+| 維         |        16 | 小泉祐     | 西村   |  24 |   7 |   11 | xxxxxxoxxooxooxxoo |
+| 維         |        17 | 青嶋未来   | 安恵   |  18 |   8 |   10 | xoxxxooooxoxxxoxox |
+| 維         |        18 | 石川泰     | 淡路   |  19 |   8 |   10 | oooxxxxoxxoxoxxoxo |
+| 維         |        19 | 谷合廣紀   | 中座   |  19 |  11 |    7 | ooooooxxxoxoooxxox |
+| 維         |        20 | 鈴木肇     | 所司   |  25 |   9 |    9 | ooxoxxoxooxxoxxoox |
+| 維         |        21 | 大橋貴洸   | 所司   |  20 |  10 |    8 | oxxoxooooxoxxxoxoo |
+| 維         |        22 | 福間健太   | 伊藤博 |  24 |  11 |    7 | xxoxooxooooxxoooxo |
+| 維         |        23 | 星野良生   | 西村   |  24 |  13 |    5 | oxooxxooooxooooxoo |
+| 維         |        24 | 折田翔吾   | 森安正 |  23 |   7 |   11 | xoxooxoxxxxxxxooxo |
+| 維         |        25 | 望月陵     | 石田   |  26 |  11 |    7 | oxxoxoxxooooooxoxo |
+| 維         |        26 | 渡辺愛生   | 安恵   |  25 |   5 |   13 | oxxoxxxxxxxoxxxoox |
+| 維         |        27 | 梶浦宏孝   | 鈴木大 |  17 |   5 |   13 | xxxoooxxxxooxxxxxx |
+| 維         |        28 | 知花賢     | 所司   |  26 |   9 |    9 | oooooxooxxxxxxooxx |
+| 維         |        28 | 荒木隆     | 森信   |  22 |   8 |   10 | xxoxxooooxxooxxxox |
+| 維         |        30 | 黒田尭之   | 畠山鎮 |  16 |   8 |   10 | xooxoxxooxoxxxoxxo |
+| 昇         |        31 | 三枚堂達也 | 内藤   |  19 |  14 |    4 | ooooxoooxooxooooox |
+| 維         |        32 | 川崎直人   | 勝浦   |  22 |   9 |    9 | xooooxxxoooxxxooxx |
+| 維         |        33 | 三田敏弘   | 中田章 |  17 |   3 |   15 | xxxxxxxxxxxoxxoxxo |
+| 維         |        34 | 石川優太   | 森信   |  18 |   8 |   10 | oxxxoooxxoxxoxooxx |
+| 維         |        35 | 出口若武   | 井上   |  17 |   7 |   11 | xxxoxoxxxxooxoxoox |
+| 維         |        35 | 冨田誠也   | 小林健 |  17 |   9 |    9 | oxxoooxoxoxxxoxxoo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 54                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/54/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 西田拓也   | 森信   |  22 |  11 |    7 | oooxoxoooxooxoxxxo |
+| 昇         |         2 | 星野良生   | 西村   |  25 |  13 |    5 | xooooooxooxooooxxo |
+| 維         |         3 | 増田康宏   | 森下   |  15 |  11 |    7 | xooxxxxxooooooxooo |
+| 維         |         4 | 慶田義法   | 井上   |  21 |  11 |    7 | oooooooxxoooxxxxxo |
+| 維         |         5 | 伊藤和夫   | 劔持   |  24 |   8 |   10 | xoxoxoxooxxxxoxxoo |
+| 維         |         6 | 谷合廣紀   | 中座   |  19 |  10 |    8 | oxoxooxxxooxoooxox |
+| 維         |         7 | 福間健太   | 伊藤博 |  24 |  10 |    8 | oxoxooxxxooxooooxx |
+| 維         |         8 | 望月陵     | 石田和 |  27 |   5 |   13 | xxxooxooxxxxoxxxxx |
+| 昇         |         9 | 宮本広志   | 森安正 |  27 |  13 |    5 | xoooxooooxoxoxoooo |
+| 維         |        10 | 竹内貴浩   | 杉本   |  26 |   7 |   11 | oxxxoxxxxxoxxooxoo |
+| 次         |        11 | 大橋貴洸   | 所司   |  21 |  13 |    5 | oooooxoooxooxoxxoo |
+| 維         |        12 | 都成竜馬   | 谷川   |  23 |  12 |    6 | xooxxoooxoooxoxooo |
+| 維         |        13 | 井出隼平   | 田丸   |  22 |   8 |   10 | xoooxoxoxxxxoooxxx |
+| 維         |        14 | 知花賢     | 所司   |  26 |   9 |    9 | oxooxooxxxxxoxooox |
+| 維         |        15 | 川崎直人   | 勝浦   |  22 |   4 |   14 | xxxxoxxxoxooxxxxxx |
+| 維         |        16 | 冨田誠也   | 小林健 |  17 |   8 |   10 | xoxoxxooxoxoxxoxox |
+| 維         |        17 | 坂井信哉   | 宮田利 |  21 |  10 |    8 | xxoxooxxoooxoxooox |
+| 維         |        18 | 池永天志   | 小林健 |  20 |  10 |    8 | oxoxxxxoxooxoooxoo |
+| 維         |        19 | 青嶋未来   | 安恵   |  18 |  11 |    7 | xoxoxoxoxooxooooox |
+| 維         |        20 | 石川泰     | 淡路   |  19 |  11 |    7 | oxoooxxooxxoxoooxo |
+| 維         |        21 | 荒木隆     | 森信   |  23 |   8 |   10 | oxooxxooxxxxxxooxo |
+| 維         |        22 | 黒田尭之   | 畠山鎮 |  17 |   5 |   13 | oxxxxxxxxxooxxoxxo |
+| 維         |        23 | 石川優太   | 森信   |  18 |   8 |   10 | oxoxoooxxooxxxxoxx |
+| 維         |        24 | 藤原結樹   | 森信   |  24 |   9 |    9 | xxxooooooxxxoxxoxo |
+| 維         |        25 | 黒沢怜生   | 高橋   |  21 |  11 |    7 | xxoxooxooxxooooxoo |
+| 維         |        26 | 杉本和陽   | 伊藤能 |  22 |  11 |    7 | xoxooxxxoooooxooox |
+| 維         |        27 | 小泉祐     | 西村   |  24 |   9 |    9 | xoxoxxoooxxooooxxx |
+| 維         |        28 | 折田翔吾   | 森安正 |  23 |   7 |   11 | oxxxxooxoxoxxoxxox |
+| 維         |        28 | 出口若武   | 井上   |  18 |   9 |    9 | xoxxxxooxoxxooooox |
+| 維         |        30 | 森村賢平   | 宮田利 |  24 |   8 |   10 | xoxxxoxoooxxxooxxo |
+| 維         |        31 | 渡辺愛生   | 安恵   |  25 |   3 |   15 | ooxxxxxoxxxxxxxxxx |
+| 維         |        32 | 梶浦宏孝   | 鈴木大 |  18 |  13 |    5 | ooooxoxooxoooxoxoo |
+| 維         |        33 | 三田敏弘   | 中田章 |  17 |   5 |   13 | oxxxoxxxxoxxoxxxxo |
+| 維         |        34 | 渡辺和史   | 豊川   |  18 |   1 |   17 | xxxxxxxxoxxxxxxxxx |
+| 維         |        35 | 甲斐日向   | 武者野 |  21 |  11 |    7 | xooooxooooxxxxxooo |
+| 維         |        36 | 近藤誠也   | 所司   |  17 |   9 |    9 | ooxoxoxxoxoxoxxoox |
+| 維         |        37 | 佐々木大地 | 深浦   |  18 |  11 |    7 | xxxxoooooxooxoooox |
+| 維         |        38 | 関矢寛之   | 武者野 |  20 |   8 |   10 | oxoxxxxxxoooooxoxx |
+| 維         |        39 | 高野智史   | 木村一 |  19 |  10 |    8 | ooooxoooxxoxxxxoox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 55                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/55/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 大橋貴洸   | 所司   |  21 |  11 |    7 | oxooooxoooxoxxooxx |
+| 維         |         2 | 梶浦宏孝   | 鈴木大 |  19 |  11 |    7 | xxooxoooxoooxoooxx |
+| 維         |         3 | 都成竜馬   | 谷川   |  24 |   9 |    9 | oxoxxoooooxxxxooxx |
+| 維         |         4 | 西田拓也   | 森信   |  22 |   6 |   12 | xoxxxxxxoxooxxxoox |
+| 昇         |         5 | 増田康宏   | 森下   |  16 |  13 |    5 | oxxoxooxxooooooooo |
+| 維         |         6 | 慶田義法   | 井上   |  22 |   6 |   12 | oxxoxxooxooxxxxxxx |
+| 維         |         7 | 青嶋未来   | 安恵   |  19 |  12 |    6 | xoxoxoooxooooxooxo |
+| 維         |         8 | 石川泰     | 淡路   |  20 |   9 |    9 | xoxooxoxoxoxxooxxo |
+| 昇         |         9 | 黒沢怜生   | 高橋   |  22 |  13 |    5 | ooxxoxoxoxoooooooo |
+| 維         |        10 | 杉本和陽   | 伊藤能 |  22 |  11 |    7 | oxoxooxxoooooxxxoo |
+| 維         |        11 | 甲斐日向   | 武者野 |  22 |  12 |    6 | ooooooooxxooxoxxxo |
+| 次         |        12 | 佐々木大地 | 深浦   |  19 |  13 |    5 | xooooooooxoxoxooox |
+| 維         |        13 | 谷合廣紀   | 中座   |  20 |  13 |    5 | oooxxooxooxoooxooo |
+| 維         |        14 | 福間健太   | 伊藤博 |  25 |  13 |    5 | xooooxoooooooooxxx |
+| 維         |        15 | 坂井信哉   | 宮田利 |  21 |  11 |    7 | ooooxxoxxoxoxoooox |
+| 維         |        16 | 池永天志   | 小林健 |  21 |  13 |    5 | ooxxooooxxxooooooo |
+| 維         |        17 | 高野智史   | 木村一 |  20 |  11 |    7 | xoxooxoxooooxxooox |
+| 維         |        18 | 知花賢     | 所司   |  27 |   7 |   11 | oxxxxoxoooxxoxxxxo |
+| 維         |        19 | 藤原結樹   | 森信   |  25 |   7 |   11 | xoxxoxxxxoxxooxxoo |
+| 維         |        20 | 小泉祐     | 西村   |  25 |   7 |   11 | oxoxxoxoxoxoxxxxox |
+| 維         |        21 | 出口若武   | 井上   |  19 |  10 |    8 | xxoooxoooooxoxxxxo |
+| 維         |        22 | 近藤誠也   | 所司   |  18 |   8 |   10 | xoxooxxoxxooxoxxox |
+| 維         |        23 | 伊藤和夫   | 剱持   |  25 |   5 |   13 | xxoxooxxxxxxxxoxxo |
+| 維         |        24 | 井出隼平   | 田丸   |  23 |   6 |   12 | xxoxxxxoxoxxxoxoox |
+| 維         |        25 | 冨田誠也   | 小林健 |  18 |   8 |   10 | oooxxxxxxoxxxoooxo |
+| 維         |        26 | 荒木隆     | 森信   |  23 |   9 |    9 | oxxoxxoxxxxoooxooo |
+| 維         |        27 | 石川優太   | 森信   |  19 |  10 |    8 | xxxoxoxooxoxoxoooo |
+| 維         |        28 | 森村賢平   | 宮田利 |  25 |   6 |   12 | xoxxoxoooxxxoxxxxx |
+| 維         |        28 | 関矢寛之   | 武者野 |  20 |   9 |    9 | xoooxoxoxxoxoxxxoo |
+| 維         |        30 | 折田翔吾   | 森安正 |  24 |   7 |   11 | xxoooxxxxxooxoxxox |
+| 維         |        31 | 黒田尭之   | 畠山鎮 |  17 |   5 |   13 | oxxoxxxxxxxxooxoxx |
+| 維         |        32 | 三田敏弘   | 中田章 |  18 |   8 |   10 | oxoxxoxxxxooxxoxoo |
+| 維         |        33 | 川崎直人   | 勝浦   |  23 |   5 |   13 | xoxxooxxoxxxxoxxxx |
+| 維         |        34 | 渡辺和史   | 豊川   |  19 |   8 |   10 | oxxxxxoooxxxooooxx |
+| 維         |        35 | 里見香奈   | 森けい |  22 |   0 |    0 |                    |
+| 維         |        35 | 藤田彰一   | 森安正 |  22 |   6 |   12 | xxxxooxxooxxxxoxxo |
+| 維         |        37 | 菅野倫太郎 | 中田功 |  24 |   6 |   12 | oooxoxxxoxxxoxxxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 56                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/56/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 佐々木大地 | 深浦   |  19 |  11 |    7 | ooxooxooxxoxxoxooo |
+| 維         |         2 | 谷合廣紀   | 中座   |  20 |  11 |    7 | ooxxooooxoxxxoooox |
+| 維         |         3 | 福間健太   | 伊藤博 |  25 |   6 |   12 | oxxxxxooxxxxxoxxoo |
+| 維         |         4 | 池永天志   | 小林健 |  21 |   5 |   13 | oxooxxxxxxxoxxxoxx |
+| 昇         |         5 | 青嶋未来   | 安恵   |  19 |  16 |    2 | ooooooooooxxoooooo |
+| 維         |         6 | 甲斐日向   | 武者野 |  22 |   9 |    9 | ooxooooxooxoxxxxxx |
+| 維         |         7 | 大橋貴洸   | 所司   |  22 |  11 |    7 | xxxxoooooxxoxooooo |
+| 昇         |         8 | 梶浦宏孝   | 鈴木大 |  19 |  13 |    5 | ooooooxoxxooxoxooo |
+| 次         |         9 | 杉本和陽   | 伊藤能 |  23 |  12 |    6 | ooooooxxoooxxxoxoo |
+| 維         |        10 | 坂井信哉   | 宮田利 |  22 |   7 |   11 | xooxxxxoxoxooxxxox |
+| 維         |        11 | 高野智史   | 木村一 |  20 |  12 |    6 | ooxoxoxxoooxooooox |
+| 維         |        12 | 出口若武   | 井上   |  19 |  12 |    6 | oxoxxoxoooxxoooooo |
+| 維         |        13 | 石川優太   | 森信   |  19 |  10 |    8 | xxoooxoxoooooxoxxx |
+| 維         |        14 | 都成竜馬   | 谷川   |  24 |  11 |    7 | xxooxoxoxxooooooxo |
+| 維         |        15 | 石川泰     | 淡路   |  20 |  10 |    8 | oooooxoxooxxxxooxx |
+| 維         |        16 | 荒木隆     | 森信   |  24 |   7 |   11 | oooxoxoxxxxoxoxxxx |
+| 維         |        17 | 関矢寛之   | 武者野 |  21 |   9 |    9 | xoxxxxoxooxooooxxo |
+| 維         |        18 | 近藤誠也   | 所司   |  18 |  12 |    6 | ooooxxxxooooooxoox |
+| 維         |        19 | 冨田誠也   | 小林健 |  18 |   9 |    9 | xxoxxooxxoxxoxoooo |
+| 維         |        20 | 三田敏弘   | 中田章 |  18 |   8 |   10 | xxoxxxxoxoxooxooox |
+| 維         |        21 | 渡辺和史   | 豊川   |  19 |   9 |    9 | xoxxooxxxxooxooxoo |
+| 維         |        22 | 知花賢     | 所司   |  27 |  10 |    8 | xooxxoxoxxoxxooooo |
+| 維         |        23 | 藤原結樹   | 森信   |  25 |   9 |    9 | xxxoxooxoooxoxooxx |
+| 維         |        24 | 小泉祐     | 西村   |  25 |   5 |   13 | xxxoxxxooooxxxxxxx |
+| 維         |        25 | 折田翔吾   | 森安正 |  24 |   5 |   13 | oxxxoxxoooxxxxxxxx |
+| 維         |        26 | 西田拓也   | 森信   |  23 |   8 |   10 | xxxoxxoooxoooxxxxo |
+| 維         |        27 | 慶田義法   | 井上   |  22 |   9 |    9 | xxxxoxooxxooooxoox |
+| 維         |        28 | 井出隼平   | 田丸   |  23 |   7 |   11 | xxoxxooxoooxxxxxxo |
+| 維         |        29 | 森村賢平   | 宮田利 |  25 |   9 |    9 | xxxooxxooooooxxxxo |
+| 維         |        30 | 藤田彰一   | 森安正 |  22 |   4 |   14 | xxxxxxxxxooxxooxxx |
+| 維         |        31 | 菅野倫太郎 | 中田功 |  24 |   3 |   15 | ooxxxxxxxxxxxxxxox |
+| 維         |        32 | 伊藤和夫   | 剱持   |  25 |   7 |   11 | xooooxxxxxooxxxoxx |
+| 維         |        33 | 黒田尭之   | 畠山鎮 |  17 |  12 |    6 | ooooxooxxxoxoooxoo |
+| 維         |        34 | 川崎直人   | 勝浦   |  23 |   8 |   10 | xoxooooxoxxxxooxxx |
+| 維         |        35 | 桝田悠介   | 井上   |  21 |   9 |    9 | oxxoooxoxxoxoxxxoo |
+| 維         |        36 | 里見香奈   | 森けい |  22 |   0 |    0 |                    |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 57                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/57/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 杉本和陽   | 伊藤能 |  23 |  10 |    8 | oxoooxoxxxoooooxxx |
+| 昇         |         2 | 高野智史   | 木村一 |  21 |  13 |    5 | oooxoxxooooooooxxo |
+| 維         |         3 | 出口若武   | 井上   |  19 |  10 |    8 | oooooxooxxoxxoxxox |
+| 昇         |         4 | 近藤誠也   | 所司   |  18 |  13 |    5 | oxoooooooooxxooxxo |
+| 維         |         5 | 黒田尭之   | 畠山鎮 |  17 |  11 |    7 | xooxxxxooooooooxox |
+| 維         |         6 | 佐々木大地 | 深浦   |  19 |   9 |    9 | xxoxxxoooxooxoxoox |
+| 維         |         7 | 谷合廣紀   | 中座   |  21 |  11 |    7 | xooxoooxxxooxxoooo |
+| 維         |         8 | 大橋貴洸   | 所司   |  21 |   8 |   10 | ooxoxoxxoxxxoxoxxo |
+| 維         |         9 | 都成竜馬   | 谷川   |  25 |   8 |   10 | oxoxxxoooooxxxxoxx |
+| 維         |        10 | 石川優太   | 森信   |  20 |   7 |   11 | xoxxxooxoxoxxxxoxo |
+| 次         |        11 | 石川泰     | 淡路   |  21 |  13 |    5 | ooxxooxoooxoooooox |
+| 維         |        12 | 知花賢     | 所司   |  28 |   9 |    9 | xxxxooxxooxooxxooo |
+| 維         |        13 | 甲斐日向   | 武者野 |  22 |   7 |   11 | oxxxoxxoxxxxoxoxoo |
+| 維         |        14 | 関矢寛之   | 武者野 |  21 |  12 |    6 | xoooooooooxooxxxox |
+| 維         |        15 | 冨田誠也   | 小林健 |  19 |   9 |    9 | xoxoxxxoxoxoooxxoo |
+| 維         |        16 | 渡辺和史   | 豊川   |  20 |  12 |    6 | ooxooxooooxoxoxxoo |
+| 維         |        17 | 藤原結樹   | 森信   |  25 |   7 |   11 | xxxxxoooxooxoxxoxx |
+| 維         |        18 | 慶田義法   | 井上   |  22 |   6 |   12 | oxooxxoxxxoxxxxxxo |
+| 維         |        19 | 森村賢平   | 宮田利 |  25 |   5 |   13 | xoxxxxoxxxooxxxxox |
+| 維         |        20 | 桝田悠介   | 井上   |  21 |  11 |    7 | xxoooxoxoooxooooxx |
+| 維         |        21 | 三田敏弘   | 中田章 |  19 |   4 |   14 | oxxxxoxxxxxxoxoxxx |
+| 維         |        22 | 西田拓也   | 森信   |  23 |  12 |    6 | oxooxoxxoxooooooxo |
+| 維         |        23 | 川崎直人   | 勝浦   |  24 |   6 |   12 | xoxxoxxxxxoxxooxox |
+| 維         |        24 | 坂井信哉   | 宮田利 |  22 |   8 |   10 | xoooxooxxxxxoxxoox |
+| 維         |        25 | 荒木隆     | 森信   |  24 |   8 |   10 | xxoxooooxoxoxxxoxx |
+| 維         |        26 | 井出隼平   | 田丸   |  23 |  11 |    7 | xxooxoxoooxoxoooox |
+| 維         |        27 | 池永天志   | 小林健 |  21 |  11 |    7 | ooxoxoxooxooxxxooo |
+| 維         |        28 | 折田翔吾   | 森安正 |  25 |   8 |   10 | xxxooxxoxoxxoooxox |
+| 維         |        29 | 藤田彰一   | 森安正 |  23 |   5 |   13 | ooxxxxoxxxxoxxoxxx |
+| 降         |        30 | 菅野倫太郎 | 中田功 |  25 |   4 |   14 | xxxxxxoxxxxxxooxxo |
+| 維         |        31 | 本田奎     | 宮田利 |  17 |  10 |    8 | ooxooxxxoxoooxxoxo |
+| 維         |        32 | 荒田敏史   | 石田和 |  21 |  11 |    7 | xoooooxoooxxxxxooo |
+| 維         |        33 | 黒川智記   | 石川   |  22 |   8 |   10 | oxxxoxoxxxxxooxooo |
+| 維         |        34 | 里見香奈   | 森けい |  23 |   0 |    0 |                    |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 58                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/58/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 石川泰     | 淡路   |  21 |  10 |    8 | ooooxoxooxxooxoxxx |
+| 維         |         2 | 関矢寛之   | 武者野 |  22 |   8 |   10 | xxoxxoxxooxxoooxxo |
+| 維         |         3 | 渡辺和史   | 豊川   |  20 |  11 |    7 | oooxoooxooooxoxxxx |
+| 維         |         4 | 西田拓也   | 森信   |  24 |   9 |    9 | xxxooooxxxooxxxooo |
+| 維         |         5 | 黒田尭之   | 畠山鎮 |  19 |  11 |    7 | ooxooooxxoxooxoxox |
+| 維         |         6 | 谷合廣紀   | 中座   |  21 |   9 |    9 | xoxoxxoxooxooxxoxo |
+| 維         |         7 | 桝田悠介   | 井上   |  22 |   7 |   11 | xxooxxooxxxxooxoxx |
+| 昇         |         8 | 井出隼平   | 田丸   |  24 |  12 |    6 | xxxoxooxooooooxooo |
+| 維         |         9 | 池永天志   | 小林健 |  22 |  11 |    7 | oxoxxoooooxoxoxoxo |
+| 維         |        10 | 荒田敏史   | 石田和 |  22 |   9 |    9 | xxxooxxoxxoxxooooo |
+| 維         |        11 | 杉本和陽   | 伊藤能 |  24 |  11 |    7 | xoooooxoxoxxoxoxoo |
+| 維         |        12 | 出口若武   | 井上   |  20 |   8 |   10 | xxxxxxoxxoooxoooox |
+| 維         |        13 | 本田奎     | 宮田利 |  18 |   9 |    9 | xoooxoooxxxoxxoxox |
+| 次         |        14 | 佐々木大地 | 深浦   |  20 |  12 |    6 | oooxoooxxoooxxooxo |
+| 維         |        15 | 冨田誠也   | 小林健 |  19 |   8 |   10 | ooxoxxoooooxxxxxxx |
+| 維         |        16 | 大橋貴洸   | 所司   |  21 |  12 |    6 | xxooxoooooxoxoooxo |
+| 昇         |        17 | 都成竜馬   | 谷川   |  25 |  14 |    4 | oooooxxoooooooooxx |
+| 維         |        18 | 坂井信哉   | 宮田利 |  23 |   9 |    9 | oxoxoxxoxxxoooxxoo |
+| 維         |        19 | 荒木隆     | 森信   |  25 |   8 |   10 | oxxxoxxxoooxooxxxo |
+| 維         |        20 | 折田翔吾   | 森安正 |  25 |   5 |   13 | xxxxoxxxxxxoxxoxoo |
+| 維         |        21 | 黒川智記   | 石川   |  23 |   6 |   12 | xoxxoxooxxxxxoxoxx |
+| 維         |        22 | 石川優太   | 森信   |  20 |  12 |    6 | oooxooxooooxxooxox |
+| 維         |        23 | 甲斐日向   | 武者野 |  23 |  11 |    7 | ooxoxoxxoxoxooxooo |
+| 維         |        24 | 慶田義法   | 井上   |  23 |   6 |   12 | xooxxxxoxoxxoxxxox |
+| 維         |        25 | 川崎直人   | 勝浦   |  24 |   5 |   13 | oxxxxxxxoxxxxxoxoo |
+| 維         |        26 | 藤田彰一   | 森安正 |  23 |   8 |   10 | xxxxooxxoxoooxooxx |
+| 維         |        27 | 三田敏弘   | 中田章 |  19 |   9 |    9 | ooxooxoxxxxxoxooxo |
+| 維         |        28 | 山本博志   | 小倉   |  19 |   7 |   11 | ooxxxoooxxoxxxxxox |
+| 維         |        28 | 齋藤明日斗 | 宮田利 |  17 |   8 |   10 | oxooxxxoxxoxooxxox |
+| 維         |        30 | 里見香奈   | 森けい |  23 |   5 |   13 | xxoxoxxxoxoxxxxoxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 59                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/59/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 大橋貴洸   | 所司   |  23 |  12 |    6 | oooxoxoxoooxxoooox |
+| 維         |         2 | 石川優太   | 森信   |  21 |   7 |   11 | ooxoxoxxoxoxxxxoxx |
+| 維         |         3 | 渡辺和史   | 豊川   |  21 |  10 |    8 | xooxooooxxxooxxxoo |
+| 次         |         4 | 黒田尭之   | 畠山鎮 |  19 |  12 |    6 | ooooxxoxoxoxooxooo |
+| 維         |         5 | 池永天志   | 小林健 |  22 |  12 |    6 | ooxooxoooxxooxooox |
+| 維         |         6 | 杉本和陽   | 伊藤能 |  24 |  12 |    6 | oxoxoxoooxxooxoooo |
+| 維         |         7 | 甲斐日向   | 武者野 |  23 |  11 |    7 | xxoooooooxoooxoxxx |
+| 維         |         8 | 西田拓也   | 森信   |  24 |  11 |    7 | oxxoxoxxxoooooxooo |
+| 維         |         9 | 谷合廣紀   | 中座   |  22 |  10 |    8 | xooxooxxoxoxooxxoo |
+| 維         |        10 | 荒田敏史   | 石田和 |  22 |   8 |   10 | oxxoxoxoxoxxoxooxx |
+| 維         |        11 | 本田奎     | 宮田利 |  18 |  10 |    8 | xoxooxooooxxxoxoxo |
+| 維         |        12 | 坂井信哉   | 宮田利 |  23 |   9 |    9 | oxoxxxoxoxoxooxxoo |
+| 維         |        13 | 三田敏弘   | 中田章 |  20 |   7 |   11 | xoxooxooxoxxoxxxxx |
+| 維         |        14 | 関矢寛之   | 武者野 |  22 |   9 |    9 | xoxxooxxxoxoxoooxo |
+| 維         |        15 | 出口若武   | 井上   |  20 |  12 |    6 | xxooxoxxoooooxoooo |
+| 維         |        16 | 冨田誠也   | 小林健 |  20 |  11 |    7 | xooxooxooxoxoooxox |
+| 維         |        17 | 荒木隆     | 森信   |  25 |   9 |    9 | xxxxxoooxoooooxxox |
+| 維         |        18 | 藤田彰一   | 森安正 |  24 |   4 |   14 | xxxxoxxxxoxoxoxxxx |
+| 維         |        19 | 齋藤明日斗 | 宮田利 |  17 |   9 |    9 | xoxoxoxoxxooxoxoox |
+| 維         |        20 | 桝田悠介   | 井上   |  22 |   6 |   12 | oxxxoxxoxooxxxxoxx |
+| 維         |        21 | 山本博志   | 小倉   |  19 |  11 |    7 | oxoxxxooooxxoooxoo |
+| 維         |        22 | 黒川智記   | 石川   |  23 |   5 |   13 | xxxoxxxxoxoxxxxoxo |
+| 維         |        23 | 慶田義法   | 井上   |  23 |  10 |    8 | oooxoooxooxxoxxoxx |
+| 維         |        24 | 川崎直人   | 勝浦   |  25 |   5 |   13 | xxxxoxxxxxxoxoxxoo |
+| 維         |        25 | 里見香奈   | 森けい |  24 |   7 |   11 | oooooxxxxoxxoxxxxx |
+| 維         |        26 | 長谷部浩平 | 大平   |  21 |   5 |   13 | xxxoxxoxxxoxxxoxxo |
+| 昇         |        27 | 藤井聡太   | 杉本   |  13 |  13 |    5 | oxoooooxoxoooxooxo |
+| 維         |        28 | 西山朋佳   | 伊藤博 |  20 |  10 |    8 | ooooxoxxxooxxxooox |
+| 維         |        29 | 柵木幹太   | 増田裕 |  18 |   4 |   14 | xxxxxxooxxxxoxoxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 60                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/60/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 黒田尭之   | 畠山鎮 |  19 |  10 |    8 | oxxxoxxxoooxoxoooo |
+| 維         |         2 | 池永天志   | 小林健 |  23 |   8 |   10 | xxooxxooxoxxxoxxoo |
+| 昇         |         3 | 杉本和陽   | 中川   |  25 |  12 |    6 | xxooxoxoooooxooxoo |
+| 維         |         4 | 出口若武   | 井上   |  21 |  11 |    7 | ooxxoooxxxxoooooox |
+| 維         |         5 | 甲斐日向   | 武者野 |  24 |  10 |    8 | oxoxxxoooxxooxoxoo |
+| 昇         |         6 | 西田拓也   | 森信   |  25 |  15 |    3 | ooooooooooooooxxox |
+| 維         |         7 | 冨田誠也   | 小林健 |  20 |  10 |    8 | xoxoxooxxoxxooooxo |
+| 維         |         8 | 山本博志   | 小倉   |  20 |   8 |   10 | xoooxxxooxxooxxoxx |
+| 維         |         9 | 渡辺和史   | 豊川   |  21 |   4 |   14 | xxxxoxxxxooxxxxoxx |
+| 次         |        10 | 谷合廣紀   | 中座   |  22 |  12 |    6 | oxxooxoxooooooxxoo |
+| 維         |        11 | 本田奎     | 宮田利 |  19 |  12 |    6 | xoxoooooxooooxxxoo |
+| 維         |        12 | 慶田義法   | 井上   |  24 |   8 |   10 | xxoooxxoooxxooxxxx |
+| 維         |        13 | 西山朋佳   | 伊藤博 |  21 |   6 |   12 | oxxooxxxxoxxxxoxxo |
+| 維         |        14 | 坂井信哉   | 宮田利 |  24 |  10 |    8 | oooxoxxooxoxxxooox |
+| 維         |        15 | 関矢寛之   | 武者野 |  23 |   9 |    9 | xxxxooooooxoxxoxxo |
+| 維         |        16 | 齋藤明日斗 | 宮田利 |  18 |  10 |    8 | ooxoxxxxxooxooxooo |
+| 維         |        17 | 荒田敏史   | 石田和 |  23 |   8 |   10 | oxooxoxxxxoooxxoxx |
+| 維         |        18 | 石川優太   | 森信   |  21 |   8 |   10 | xoxxooxoxxxoxxxooo |
+| 維         |        19 | 三田敏弘   | 中田章 |  20 |   8 |   10 | xoooxxooxxxoxxoxox |
+| 維         |        20 | 里見香奈   | 森けい |  24 |   8 |   10 | xooooxxxooxxoxoxxx |
+| 維         |        21 | 桝田悠介   | 井上   |  23 |   8 |   10 | xooxoxooxxxxxoxoox |
+| 維         |        22 | 黒川智記   | 石川   |  24 |  10 |    8 | ooxxxooxxoooxoxxoo |
+| 維         |        23 | 川崎直人   | 勝浦   |  25 |   8 |   10 | oxxxxooxoxxoxxooxo |
+| 維         |        24 | 長谷部浩平 | 大平   |  22 |  10 |    8 | xxooxoooooxxxooxox |
+| 維         |        25 | 藤田彰一   | 森安正 |  24 |   7 |   11 | oxoxxoxxoxoxxooxxx |
+| 維         |        26 | 柵木幹太   | 増田裕 |  18 |   7 |   11 | ooxxxxoxxxoxoxxoxo |
+| 維         |        27 | 岡部怜央   | 加瀬   |  17 |   7 |   11 | xoooxxxxxxoxxoooxx |
+| 維         |        28 | 古森悠太   | 小林健 |  21 |  11 |    7 | xooxooxoxooooxoxxo |
+| 維         |        29 | 三浦孝介   | 島     |  18 |  10 |    8 | oxooooxxoxxoxxxooo |
+| 維         |        30 | 古田龍生   | 宮田利 |  19 |   7 |   11 | xxxxxoooxxoxooxoxx |
+| 維         |        31 | 秋山純希   | 北島   |  20 |   8 |   10 | oxxxoooooxxxooxxxx |
+| 維         |        32 | 山岸亮平   | 行方   |  19 |   8 |   10 | ooxxxxxxoxooxoooxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 61                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/61/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 谷合廣紀   | 中座   |  23 |   7 |   11 | xxooxxxxoxoxxoxoox |
+| 維         |         2 | 本田奎     | 宮田利 |  19 |   8 |   10 | xxooxxxxoxoxooooxx |
+| 維         |         3 | 出口若武   | 井上   |  21 |  10 |    8 | xxxooooooxoxxooxox |
+| 昇         |         4 | 古森悠太   | 小林健 |  21 |  12 |    6 | xooxooooooxooxoxox |
+| 維         |         5 | 黒田尭之   | 畠山鎮 |  20 |   7 |   11 | ooxxoxxxoxxoxxxoxo |
+| 次         |         6 | 甲斐日向   | 武者野 |  24 |  12 |    6 | oxoxooxoxoooxxoooo |
+| 維         |         7 | 冨田誠也   | 小林健 |  21 |  12 |    6 | ooxxooooxooooxoxxo |
+| 維         |         8 | 坂井信哉   | 宮田利 |  24 |  10 |    8 | oooxxxoxxxxooxoooo |
+| 昇         |         9 | 齋藤明日斗 | 宮田利 |  18 |  14 |    4 | oxoooxooooooxoooox |
+| 維         |        10 | 黒川智記   | 石川   |  24 |   8 |   10 | oxxoooxxooxxoxxxox |
+| 維         |        11 | 長谷部浩平 | 大平   |  22 |  11 |    7 | ooxxoxooxooxxoooox |
+| 維         |        12 | 三浦孝介   | 島     |  19 |  11 |    7 | ooooxxooxxxxooooox |
+| 維         |        13 | 関矢寛之   | 武者野 |  23 |  12 |    6 | xoooxxoxooooooxoox |
+| 維         |        14 | 池永天志   | 小林健 |  23 |  11 |    7 | ooxooxxxxoooooxoxo |
+| 維         |        15 | 山本博志   | 小倉   |  20 |   8 |   10 | xoooxoxoxxxxxoxoox |
+| 維         |        16 | 慶田義法   | 井上   |  24 |   9 |    9 | oxoxoxxxoxxooooxxo |
+| 維         |        17 | 荒田敏史   | 石田和 |  23 |   6 |   12 | oxxxxxxxoooxxoxxxo |
+| 維         |        18 | 石川優太   | 森信   |  22 |   8 |   10 | xoxooooxxxxxoxxoxo |
+| 維         |        19 | 三田敏弘   | 中田章 |  21 |   9 |    9 | xxxxoooxoxxooxxooo |
+| 維         |        20 | 里見香奈   | 森けい |  25 |   7 |   11 | xxooxxoxxxxoxoxoxo |
+| 維         |        21 | 桝田悠介   | 井上   |  23 |   7 |   11 | xooxoxooxxxxxxoxxo |
+| 維         |        22 | 秋山純希   | 北島   |  20 |   6 |   12 | xxxxoxxooxooxxxxxo |
+| 維         |        23 | 山岸亮平   | 行方   |  19 |   4 |   14 | xxxxooxxxxxooxxxxx |
+| 維         |        24 | 藤田彰一   | 森安正 |  25 |  11 |    7 | ooooxoxoxoooxoxxox |
+| 維         |        25 | 柵木幹太   | 増田裕 |  19 |  11 |    7 | xooxoxxoooooxxoxoo |
+| 維         |        26 | 岡部怜央   | 加瀬   |  17 |   7 |   11 | xxxoxoxxxoxooooxxx |
+| 維         |        27 | 古田龍生   | 宮田利 |  20 |  10 |    8 | oxxxooooxooxoxooxx |
+| 維         |        28 | 西山朋佳   | 伊藤博 |  21 |   9 |    9 | ooxxooooxxoxxoxxox |
+| 維         |        29 | 渡辺和史   | 豊川   |  22 |   8 |   10 | xooxoxxoooxxxxxoxo |
+| 維         |        30 | 岡井良樹   | 大野   |  22 |   6 |   12 | xxxoooxxxxxxxooxxo |
+| 維         |        31 | 井田明宏   | 小林健 |  20 |   8 |   10 | ooxxxxxooooxoxxxox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 62                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/62/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 甲斐日向   | 武者野 |  25 |  12 |    6 | ooooxxoxoooxxoooox |
+| 維         |         2 | 冨田誠也   | 小林健 |  21 |  12 |    6 | oxoxoxoxooooxxoooo |
+| 維         |         3 | 関矢寛之   | 武者野 |  24 |  10 |    8 | xxooxoooxoxoxoxoxo |
+| 昇         |         4 | 長谷部浩平 | 大平   |  23 |  14 |    4 | xooooooxooxooooxoo |
+| 維         |         5 | 三浦孝介   | 島     |  19 |   5 |   13 | xxxoooxxoxxxoxxxxx |
+| 昇         |         6 | 池永天志   | 小林健 |  24 |  14 |    4 | ooxoxooooooxooxooo |
+| 維         |         7 | 藤田彰一   | 森安正 |  25 |   9 |    9 | xxoxooxxoooxxoooxx |
+| 維         |         8 | 柵木幹太   | 増田裕 |  19 |   9 |    9 | oxoooxxxoxxxxoxooo |
+| 維         |         9 | 出口若武   | 井上   |  22 |   9 |    9 | xoooxxxoooooxxxoxx |
+| 維         |        10 | 坂井信哉   | 宮田利 |  25 |  12 |    6 | xxooooxxoooooxooxo |
+| 維         |        11 | 古田龍生   | 宮田利 |  20 |   6 |   12 | oxxxxooxoxoxoxxxxx |
+| 維         |        12 | 慶田義法   | 井上   |  25 |   8 |   10 | ooxxoxooooxxxxxxox |
+| 維         |        13 | 三田敏弘   | 中田章 |  21 |  10 |    8 | xoxooooxxoxooxooxx |
+| 維         |        14 | 西山朋佳   | 伊藤博 |  22 |   7 |   11 | ooxxxxxooxxxxxooxo |
+| 維         |        15 | 本田奎     | 宮田利 |  20 |   7 |   11 | xxxxooxxxxxxooxooo |
+| 維         |        16 | 黒川智記   | 石川   |  25 |   6 |   12 | xoxxxxxoxxxoxoxxoo |
+| 維         |        17 | 山本博志   | 小倉   |  21 |  11 |    7 | oooxxxooxooxooooxx |
+| 維         |        18 | 石川優太   | 森信   |  22 |   8 |   10 | oxxoxooxoxoxoxxxxo |
+| 維         |        19 | 渡辺和史   | 豊川   |  22 |  10 |    8 | xoooxooooxxoxooxxx |
+| 維         |        20 | 井田明宏   | 小林健 |  20 |   9 |    9 | oxxooxooxoxxxoxxoo |
+| 維         |        21 | 谷合廣紀   | 中座   |  23 |  11 |    7 | ooooxoxoxooxooxxox |
+| 維         |        22 | 黒田尭之   | 畠山鎮 |  21 |  13 |    5 | oxxxooooxooooooxoo |
+| 維         |        23 | 里見香奈   | 森けい |  25 |   7 |   11 | oxoxoxxooxooxxxxxx |
+| 維         |        24 | 桝田悠介   | 井上   |  24 |  10 |    8 | oxxxxoxoxxooxooooo |
+| 維         |        25 | 岡部怜央   | 加瀬   |  18 |   8 |   10 | xoxxxoxoxxoxoxooxo |
+| 維         |        26 | 荒田敏史   | 石田和 |  24 |   8 |   10 | xoxxoxxxxooooxxoxo |
+| 維         |        27 | 秋山純希   | 北島   |  21 |   8 |   10 | xxoxoooxxxxoxoooxx |
+| 維         |        28 | 岡井良樹   | 大野   |  22 |   6 |   12 | xoxoxxoxxxxxoxoxox |
+| 維         |        29 | 古賀悠聖   | 中田功 |  16 |   6 |   12 | ooxxoxxxoxoxxxoxxx |
+| 次         |        30 | 服部慎一郎 | 中田章 |  18 |  14 |    4 | oooxoxooooxooooxoo |
+| 維         |        30 | 川村悠人   | 小倉   |  18 |   3 |   15 | xxooxxxxxxxoxxxxxx |
+| 維         |        32 | 小高悠太郎 | 所司   |  21 |   8 |   10 | oxxoxxxoxxooxoxoxo |
+| 維         |        33 | 山川泰熙   | 広瀬   |  19 |   9 |    9 | oxoooxoxxxxooxoxox |
+| 維         |        34 | 横山友紀   | 井上   |  17 |   5 |   13 | xoxxxxxxxooxxxxxoo |
+| 維         |        35 | 貫島永州   | 小林健 |  19 |  12 |    6 | xoooxoxoooxxooooox |
+| 維         |        36 | 小山直希   | 戸辺   |  17 |   8 |   10 | xxoxooooxxxooxxxox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 63                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/63/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 服部慎一郎 | 中田章 |  18 |  11 |    7 | xooooxoooxoxxoxxoo |
+| 維         |         2 | 黒田尭之   | 畠山鎮 |  21 |  12 |    6 | oxoxxooxxooooooxoo |
+| 維         |         3 | 甲斐日向   | 武者野 |  25 |   7 |   11 | xoxxxxoooxooxoxxxx |
+| 維         |         4 | 冨田誠也   | 小林健 |  22 |  11 |    7 | ooooxxooxoooxxxxoo |
+| 維         |         5 | 坂井信哉   | 宮田利 |  25 |  11 |    7 | oxxoxoxoxooxooooxo |
+| 維         |         6 | 貫島永州   | 小林健 |  19 |   7 |   11 | xoxxooxxxxxooxxoxo |
+| 昇         |         7 | 山本博志   | 小倉   |  21 |  13 |    5 | ooxoooxoooxoxoooxo |
+| 維         |         8 | 谷合廣紀   | 中座   |  24 |  11 |    7 | ooooooxoxxxxxxoooo |
+| 維         |         9 | 関矢寛之   | 武者野 |  24 |   9 |    9 | xxoxooxxxoxoxoxooo |
+| 維         |        10 | 三田敏弘   | 中田章 |  22 |   2 |   16 | xxxxxxxxxxxxxoxoxx |
+| 維         |        11 | 渡辺和史   | 豊川   |  23 |  11 |    7 | oxooxooooxoxoxoxxo |
+| 次         |        12 | 桝田悠介   | 井上   |  24 |  13 |    5 | xooooxooooxoooxxoo |
+| 維         |        13 | 柵木幹太   | 増田裕 |  20 |   9 |    9 | xoxxxoxxxooxooooox |
+| 維         |        14 | 出口若武   | 井上   |  22 |  11 |    7 | ooxoxxooooooxoxxxo |
+| 維         |        15 | 井田明宏   | 小林健 |  21 |  12 |    6 | xooooxooooxxxoooxo |
+| 維         |        16 | 山川泰熙   | 広瀬   |  19 |   8 |   10 | oxxxoxoxoooxxooxxx |
+| 維         |        17 | 慶田義法   | 井上   |  25 |   3 |   15 | xoxxxxxxxoxxoxxxxx |
+| 維         |        18 | 石川優太   | 森信   |  23 |   6 |   12 | xooxooxxoxxxxoxxxx |
+| 維         |        19 | 岡部怜央   | 加瀬   |  18 |  13 |    5 | oxooxooooxooxoooxo |
+| 維         |        20 | 荒田敏史   | 石田和 |  24 |   5 |   13 | oxxxxoxoxxxoxoxxxx |
+| 維         |        21 | 秋山純希   | 北島   |  21 |   8 |   10 | xxooooxxxooxoxxoxx |
+| 維         |        22 | 小高悠太郎 | 所司   |  22 |   8 |   10 | oxxxxoxxoxxxooooox |
+| 維         |        23 | 小山直希   | 戸辺   |  18 |   7 |   11 | xxxxxxxoxooooxoxox |
+| 維         |        24 | 西山朋佳   | 伊藤博 |  22 |  11 |    7 | oxooxoxooxoxxxoooo |
+| 昇         |        25 | 本田奎     | 宮田利 |  20 |  15 |    3 | ooooxoxooooooooxoo |
+| 維         |        26 | 古田龍生   | 宮田利 |  21 |   5 |   13 | oxxoxoxxxxxoxxxoxx |
+| 維         |        27 | 黒川智記   | 石川   |  25 |   9 |    9 | xoxxoxooxoooxxxxoo |
+| 維         |        28 | 岡井良樹   | 大野   |  23 |   9 |    9 | oooxxxxxxoooxxoxoo |
+| 維         |        29 | 古賀悠聖   | 中田功 |  17 |   8 |   10 | xxoxoooxxooxxxooxx |
+| 維         |        30 | 三浦孝介   | 島     |  20 |   8 |   10 | xxoxoxooooxxoxxxox |
+| 維         |        31 | 横山友紀   | 井上   |  18 |  11 |    7 | xooxoooxoxxoxooxoo |
+| 維         |        32 | 川村悠人   | 小倉   |  19 |   5 |   13 | xxxoxxoxxxxxoxxoox |
+| 維         |        33 | 徳田拳士   | 小林健 |  20 |  10 |    8 | oxxoxooxoxoooxooxx |
+| 維         |        34 | 相川浩治   | 安恵   |  21 |   7 |   11 | xxooxxoxoxoxoxxxxo |
+| 維         |        35 | 伊藤匠     | 宮田利 |  15 |  10 |    8 | ooxoxooxoxxooxxoox |
+| 維         |        36 | 宮田大暉   | 杉本昌 |  19 |   6 |   12 | xxoxxoxxxxoxoxoxox |
+| 維         |        37 | 齊藤優希   | 深浦   |  21 |  11 |    7 | oooooxooxxxxooooxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 64                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/64/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 桝田悠介   | 井上   |  25 |   8 |   10 | oxoxxoxooxoxoxxxox |
+| 維         |         2 | 岡部怜央   | 加瀬   |  19 |   9 |    9 | xooxoxooxxxoxoooxx |
+| 昇         |         3 | 黒田尭之   | 畠山鎮 |  22 |  13 |    5 | ooooooxxooooxxooox |
+| 維         |         4 | 井田明宏   | 小林健 |  21 |  12 |    6 | oooxoooooxooxxxoxo |
+| 維         |         5 | 服部慎一郎 | 中田章 |  19 |  10 |    8 | oxxoooxoxooxxooxox |
+| 維         |         6 | 冨田誠也   | 小林健 |  22 |  11 |    7 | oxxxooooxooooxoxox |
+| 維         |         7 | 坂井信哉   | 宮田利 |  26 |  11 |    7 | xxoooooxxooooxxoxo |
+| 維         |         8 | 谷合廣紀   | 中座   |  24 |  12 |    6 | oxooooxxooxoxooxoo |
+| 維         |         9 | 渡辺和史   | 豊川   |  23 |  10 |    8 | ooxxxxooooxxoxxooo |
+| 昇         |        10 | 出口若武   | 井上   |  23 |  14 |    4 | ooooooooooxooooxxx |
+| 維         |        11 | 西山朋佳   | 伊藤博 |  23 |   5 |   13 | xxxxxooxxxxxxooxxo |
+| 維         |        12 | 横山友紀   | 井上   |  18 |   8 |   10 | ooxoxxxoooxxxxooxx |
+| 維         |        13 | 齊藤優希   | 深浦   |  22 |   9 |    9 | xxoxoxxxxooxxooooo |
+| 維         |        14 | 徳田拳士   | 小林健 |  20 |   8 |   10 | xoxooxxooxxxxoxoxo |
+| 維         |        15 | 伊藤匠     | 宮田利 |  15 |  12 |    6 | xoxooxoxoxooooooxo |
+| 維         |        16 | 関矢寛之   | 武者野 |  25 |  10 |    8 | xxxooxxoxooxoxoooo |
+| 維         |        17 | 柵木幹太   | 増田裕 |  20 |  10 |    8 | xooxxooooxxxxoooxo |
+| 維         |        18 | 岡井良樹   | 大野   |  23 |   6 |   12 | xxxooxxxxxoxxooxxo |
+| 維         |        19 | 山川泰熙   | 広瀬   |  20 |   7 |   11 | xxxooxxxxxooxxxooo |
+| 維         |        20 | 秋山純希   | 北島   |  22 |   6 |   12 | oxxxxxxooxooxxxxox |
+| 維         |        21 | 小高悠太郎 | 所司   |  22 |   3 |   15 | xoxxxxxxoxxxxxxoxx |
+| 維         |        22 | 古賀悠聖   | 中田功 |  17 |  10 |    8 | oooxxoxoxoxoooxxox |
+| 維         |        23 | 三浦孝介   | 島     |  20 |  10 |    8 | oxxoxooooxoxoxxxoo |
+| 維         |        24 | 貫島永州   | 小林健 |  20 |  11 |    7 | xoooxxxxooxoooooox |
+| 維         |        25 | 小山直希   | 戸辺   |  18 |   7 |   11 | xxoxxxoxxoxxooxoxo |
+| 維         |        26 | 相川浩治   | 安恵   |  22 |   3 |   15 | xxxxxxxooxxxxxxxxo |
+| 次         |        27 | 石川優太   | 森信   |  23 |  13 |    5 | ooooxoooooxooxooxx |
+| 維         |        28 | 宮田大暉   | 杉本昌 |  19 |  11 |    7 | oooooooxoxxoxxoxox |
+| 維         |        29 | 荒田敏史   | 石田和 |  25 |  10 |    8 | xoooxoxoooxxooxoxx |
+| 維         |        30 | 古田龍生   | 宮田利 |  21 |   7 |   11 | oxxoxxxxxxooooxoxx |
+| 維         |        31 | 川村悠人   | 小倉   |  19 |   5 |   13 | xxxxoooxxxxoxoxxxx |
+| 維         |        32 | 三田敏弘   | 中田章 |  22 |  12 |    6 | xoooxoxxooooooxxoo |
+| 維         |        33 | 上野裕寿   | 井上   |  15 |   4 |   14 | oxxxoxxxxxoxxxxxox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 65                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/65/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 石川優太   | 森信   |  24 |  13 |    5 | oxooooxoooxxooooxo |
+| 維         |         2 | 井田明宏   | 小林健 |  22 |  10 |    8 | oxooxxxxoxoooxooox |
+| 維         |         3 | 谷合廣紀   | 中座   |  25 |  11 |    7 | ooxoooooxxoxoxoxox |
+| 維         |         4 | 伊藤匠     | 宮田利 |  16 |  10 |    8 | xoooxxxxoooxooxxoo |
+| 維         |         5 | 三田敏弘   | 中田章 |  23 |   9 |    9 | xxxxxooxoooxoxoxoo |
+| 維         |         6 | 冨田誠也   | 小林健 |  23 |   8 |   10 | xxoooxxoxooxxoxoxx |
+| 維         |         7 | 坂井信哉   | 宮田利 |  26 |   8 |   10 | oxxxoxxxooxoxoxoox |
+| 維         |         8 | 貫島永州   | 小林健 |  20 |   9 |    9 | ooxoxxoxxxooxooxox |
+| 維         |         9 | 宮田大暉   | 杉本昌 |  20 |   4 |   14 | xoxxooxxxxoxxxxxxx |
+| 維         |        10 | 服部慎一郎 | 中田章 |  19 |  12 |    6 | xoooooxxoooxxoooxo |
+| 昇         |        11 | 渡辺和史   | 豊川   |  24 |  16 |    2 | oooooxooxooooooooo |
+| 維         |        12 | 関矢寛之   | 武者野 |  26 |  12 |    6 | oxoooxoooooxooxoxx |
+| 維         |        13 | 柵木幹太   | 増田裕 |  21 |  11 |    7 | xxoxoxoxoooooxxooo |
+| 次         |        14 | 古賀悠聖   | 中田功 |  18 |  13 |    5 | xxxooxoxoooooooooo |
+| 維         |        15 | 三浦孝介   | 島     |  21 |   9 |    9 | xooxxxoooxxxooooxx |
+| 維         |        16 | 荒田敏史   | 石田和 |  25 |  11 |    7 | oooxxooxxooxoxoxoo |
+| 維         |        17 | 岡部怜央   | 加瀬   |  19 |  10 |    8 | xooooooxxoxxooxoxx |
+| 維         |        18 | 齊藤優希   | 深浦   |  22 |   8 |   10 | xxxxoxoooxxxooooxx |
+| 維         |        19 | 桝田悠介   | 井上   |  25 |   9 |    9 | oxxxxoooxoxoxooxox |
+| 維         |        20 | 横山友紀   | 井上   |  19 |   7 |   11 | oxxxooxoxxooxxoxxx |
+| 維         |        21 | 徳田拳士   | 小林健 |  21 |   8 |   10 | xxoxooooxxxooxxxxo |
+| 維         |        22 | 山川泰熙   | 広瀬   |  20 |   9 |    9 | ooxxoxxxxxooxoxooo |
+| 維         |        23 | 小山直希   | 戸辺   |  19 |   9 |    9 | oxoxxoooxoxoxxooxx |
+| 維         |        24 | 古田龍生   | 宮田利 |  22 |   7 |   11 | ooooxxxxoxxxxxxxoo |
+| 維         |        25 | 岡井良樹   | 大野   |  24 |   9 |    9 | xoxoooooxxxxxxooox |
+| 維         |        26 | 西山朋佳   | 伊藤博 |  23 |   7 |   11 | xoxxxxooxoooxxxxxo |
+| 維         |        27 | 川村悠人   | 小倉   |  20 |   6 |   12 | oxoxxoxxoxoxxxxxxo |
+| 維         |        28 | 上野裕寿   | 井上   |  15 |  10 |    8 | xoxoxoxoxooxooxxoo |
+| 維         |        29 | 小高悠太郎 | 所司   |  23 |   7 |   11 | xxxxoxxoxoxoooxxxo |
+| 維         |        30 | 相川浩治   | 安恵   |  22 |   6 |   12 | oxoxxoxxxxxxoxoxxo |
+| 維         |        31 | 田中大貴   | 北島   |  20 |   5 |   13 | oxxxxoxooxxxxoxxxx |
+| 維         |        32 | 中沢良輔   | 飯野   |  20 |   7 |   11 | oooxxxxxoxxxoxxoxo |
+| 維         |        33 | 森本才跳   | 小林健 |  17 |   7 |   11 | xxooxoxoxxoxxxxoox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 66                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/66/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 古賀悠聖   | 中田功 |  18 |   6 |   12 | oxxoxxxoxxxxooxxxo |
+| 昇         |         2 | 服部慎一郎 | 中田章 |  20 |  14 |    4 | ooooooxoxooooxxooo |
+| 維         |         3 | 関矢寛之   | 武者野 |  26 |   9 |    9 | xxooooxoxxoxxoxoxo |
+| 昇         |         4 | 谷合廣紀   | 中座   |  25 |  14 |    4 | xxoxooooooooooooox |
+| 維         |         5 | 柵木幹太   | 増田裕 |  21 |  10 |    8 | xoxoxxooxoxooxooxo |
+| 維         |         6 | 荒田敏史   | 石田和 |  26 |   8 |   10 | xxxxoxoxxxxoooooox |
+| 維         |         7 | 井田明宏   | 小林健 |  22 |  13 |    5 | ooxooxooxoooxoxooo |
+| 維         |         8 | 伊藤匠     | 宮田利 |  16 |   9 |    9 | xooxxooxxxooxxooox |
+| 維         |         9 | 岡部怜央   | 加瀬   |  20 |   8 |   10 | xoxxooxoxooxxxoxxo |
+| 維         |        10 | 上野裕寿   | 井上   |  16 |   7 |   11 | xooxxoooxxxoxxoxxx |
+| 維         |        11 | 三田敏弘   | 中田章 |  23 |   9 |    9 | oxoooxoxooxxxxxoxo |
+| 維         |        12 | 貫島永州   | 小林健 |  21 |  11 |    7 | ooxoooxooxxoxooxox |
+| 維         |        13 | 山川泰煕   | 広瀬   |  21 |   8 |   10 | xoooxxxoxxoxxxxooo |
+| 維         |        14 | 小山直希   | 戸辺   |  19 |  13 |    5 | oooxxoxxooooxooooo |
+| 維         |        15 | 岡井良樹   | 大野   |  24 |   8 |   10 | oxxxoxoxooxooxxoxx |
+| 維         |        16 | 冨田誠也   | 小林健 |  23 |   6 |   12 | xxxoxxxxooxxoxoxox |
+| 維         |        17 | 齊藤優希   | 深浦   |  23 |  10 |    8 | ooxooxooxxxoxooxxo |
+| 維         |        18 | 徳田拳士   | 小林健 |  21 |  11 |    7 | xoxooooxoxoxooooxx |
+| 維         |        19 | 横山友紀   | 井上   |  19 |   9 |    9 | xxoxxooooxoxooxxxo |
+| 維         |        20 | 古田龍生   | 宮田利 |  22 |   6 |   12 | xxoxxxxxxooxoxoxox |
+| 次         |        21 | 西山朋佳   | 伊藤博 |  24 |  14 |    4 | oxoooooxoooxoxoooo |
+| 維         |        22 | 小髙悠太郎 | 所司   |  23 |   8 |   10 | oxoxxxooxooxooxxxx |
+| 維         |        23 | 中沢良輔   | 飯野   |  21 |   8 |   10 | ooxoxoxxoxxxooxxox |
+| 維         |        24 | 森本才跳   | 小林健 |  18 |  10 |    8 | oxxxxxxxooooxooooo |
+| 維         |        25 | 川村悠人   | 小倉   |  20 |   8 |   10 | ooxoxxoxoxxoxoxxox |
+| 維         |        26 | 相川浩治   | 安恵   |  23 |  10 |    8 | xooooooxoxooxxxxxo |
+| 維         |        27 | 田中大貴   | 北島   |  20 |   3 |   15 | xxoxxoxxxxxxxxxxox |
+| 維         |        28 | 宮田大暉   | 杉本昌 |  20 |   4 |   14 | oxxxoxxxxoxxoxxxxx |
+| 維         |        29 | 宮嶋健太   | 大野   |  20 |   9 |    9 | oooxxxxoooxxoxooxx |
+| 維         |        30 | 狩山幹生   | 井上   |  17 |   7 |   11 | xxxxooxooxxoxoxxxo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 67                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/67/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 西山朋佳   | 伊藤博 |  24 |   7 |   11 | xooxxoooooxxxxxxxx |
+| 維         |         2 | 井田明宏   | 小林健 |  23 |  11 |    7 | oxoxoxoxxooxoooxoo |
+| 維         |         3 | 小山直希   | 戸辺   |  20 |   6 |   12 | ooxxoxxxoxxxxoxoxx |
+| 維         |         4 | 貫島永州   | 小林健 |  21 |  11 |    7 | oxxoooxooooxoxxoxo |
+| 維         |         5 | 徳田拳士   | 小林健 |  22 |  10 |    8 | ooooxxxxxoxxoooxoo |
+| 維         |         6 | 柵木幹太   | 増田裕 |  22 |   9 |    9 | ooxoxoxxxxoxooxoxo |
+| 維         |         7 | 齊藤優希   | 深浦   |  23 |   9 |    9 | xoxxoxoooxoooxxoxx |
+| 維         |         8 | 森本才跳   | 小林健 |  18 |  10 |    8 | oxoxooxoxoxoooxxxo |
+| 維         |         9 | 相川浩治   | 安恵   |  23 |   8 |   10 | xxoxxxxxoxooxooxoo |
+| 昇         |        10 | 伊藤匠     | 宮田利 |  17 |  15 |    3 | xooooxooooooooooxo |
+| 維         |        11 | 三田敏弘   | 中田章 |  24 |   7 |   11 | oxxxxooxxoxxoxxoox |
+| 維         |        12 | 横山友紀   | 井上   |  20 |  12 |    6 | ooxoxooooxxxooxooo |
+| 維         |        13 | 宮嶋健太   | 大野   |  20 |  10 |    8 | oxooxoxooooxxxooxx |
+| 維         |        14 | 岡部怜央   | 加瀬   |  20 |  10 |    8 | xoooxxoxooooxoxoxx |
+| 維         |        15 | 山川泰煕   | 広瀬   |  21 |   7 |   11 | xxxxoxooxxxxxoooox |
+| 維         |        16 | 岡井良樹   | 大野   |  25 |  11 |    7 | xoxoooxxoxooxoooox |
+| 維         |        17 | 小髙悠太郎 | 所司   |  24 |   8 |   10 | oxxooxxoxxxoooxxox |
+| 維         |        18 | 中沢良輔   | 飯野   |  21 |   5 |   13 | xxxoxxxxxxxxoxxooo |
+| 維         |        19 | 川村悠人   | 小倉   |  21 |   6 |   12 | xxxoxxxooooxoxxxxx |
+| 維         |        20 | 上野裕寿   | 井上   |  16 |   9 |    9 | ooxxooooxxxxxoxxoo |
+| 維         |        21 | 狩山幹生   | 井上   |  17 |  11 |    7 | xoooooxooxxooxoxox |
+| 昇         |        22 | 古賀悠聖   | 中田功 |  19 |  13 |    5 | oxooxoooooxoooxxoo |
+| 昇         |        23 | 冨田誠也   | 小林健 |  24 |  14 |    4 | oooooxoxxoooxooooo |
+| 維         |        24 | 古田龍生   | 宮田利 |  24 |   6 |   12 | xoxxxxoooxxxxxoxxo |
+| 維         |        25 | 田中大貴   | 北島   |  21 |   5 |   13 | oxoxxxxxxxooxxoxxx |
+| 維         |        26 | 吉田桂悟   | 木村一 |  19 |  10 |    8 | oxxooooxxxooxxooox |
+| 維         |        27 | 広森航汰   | 中座   |  19 |   9 |    9 | xoxooooxxooxxxxoxo |
+| 維         |        28 | 中西悠真   | 久保   |  18 |  11 |    7 | oxxxooxooxoooooxxo |
+| 維         |        29 | 高田明浩   | 森信   |  17 |   8 |   10 | xoxxxxoxooooxxoxox |
+| 維         |        30 | 片山史龍   | 飯塚   |  15 |   7 |   11 | xxooxoxxooxxxxoxox |
+| 維         |        31 | 斎藤光寿   | 門倉   |  19 |   4 |   14 | xooxxxxxoxxxxxxoxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 68                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/68/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 横山友紀   | 井上   |  20 |  12 |    6 | oooxooxoooxxooxoxo |
+| 昇         |         2 | 井田明宏   | 小林健 |  23 |  13 |    5 | oooxoxoooooxxoxooo |
+| 維         |         3 | 貫島永州   | 小林健 |  22 |   8 |   10 | ooxxxxxxoxooxoxxoo |
+| 維         |         4 | 岡井良樹   | 大野   |  25 |  11 |    7 | xooxoxxooxxoxooooo |
+| 維         |         5 | 狩山幹生   | 井上   |  18 |  11 |    7 | xoooxxxoxooooxooxo |
+| 維         |         6 | 中西悠真   | 久保   |  19 |   8 |   10 | xxxooooxxxoooxxxox |
+| 維         |         7 | 徳田拳士   | 小林健 |  22 |   8 |   10 | oxoxooxxxxooxxoxox |
+| 維         |         8 | 森本才跳   | 小林健 |  19 |  10 |    8 | xoooxxooxxxooxoxoo |
+| 維         |         9 | 宮嶋健太   | 大野   |  21 |   9 |    9 | xxoxoxoxooxxxoooxo |
+| 維         |        10 | 岡部怜央   | 加瀬   |  21 |   9 |    9 | oxxxoxxooxooxooxox |
+| 維         |        11 | 吉田桂悟   | 木村一 |  20 |   6 |   12 | oxxxxooxxoxxooxxxx |
+| 維         |        12 | 柵木幹太   | 増田裕 |  22 |  11 |    7 | oxoooooxxxooxxoxoo |
+| 維         |        13 | 齊藤優希   | 深浦   |  24 |  12 |    6 | xooooxoxooxoooxoox |
+| 維         |        14 | 上野裕寿   | 井上   |  17 |  11 |    7 | xoxoxoooxxoooxxooo |
+| 維         |        15 | 広森航汰   | 中座   |  19 |   8 |   10 | oxooxxxoxxxoxxooox |
+| 維         |        16 | 相川浩治   | 安恵   |  24 |   6 |   12 | ooxoxoxxxxxxxooxxx |
+| 維         |        17 | 小髙悠太郎 | 所司   |  24 |  10 |    8 | ooxooooxxxxoooxxox |
+| 昇         |        18 | 高田明浩   | 森信   |  18 |  13 |    5 | ooxoxooxoooxooooxo |
+| 維         |        19 | 西山朋佳   | 伊藤博 |  25 |   9 |    9 | xoxooooxoooxxxxxxo |
+| 次         |        20 | 三田敏弘   | 中田章 |  24 |  13 |    5 | xoooooooooxxooxoox |
+| 維         |        21 | 山川泰煕   | 広瀬   |  22 |   8 |   10 | oxxxoxxxooxxxoooxo |
+| 維         |        22 | 片山史龍   | 飯塚   |  16 |   9 |    9 | xoooxoxoxoxxoxxoxo |
+| 維         |        23 | 小山直希   | 戸辺   |  20 |   8 |   10 | xooxxooxxxoxoxoxox |
+| 維         |        24 | 川村悠人   | 小倉   |  21 |  10 |    8 | ooooxoxoooxxxoxoxx |
+| 維         |        25 | 古田龍生   | 宮田利 |  23 |   9 |    9 | oxxxxxooooooxooxxx |
+| 維         |        26 | 中沢良輔   | 飯野   |  22 |   8 |   10 | xoxooxxooxooxxxxxo |
+| 維         |        27 | 田中大貴   | 北島   |  21 |  11 |    7 | ooxxxooxxooxooxooo |
+| 維         |        28 | 斎藤光寿   | 門倉   |  20 |   6 |   12 | xxoxoxoxoxoxxxoxxx |
+| 維         |        29 | 高橋佑二郎 | 加瀬   |  21 |   6 |   12 | xxxxooxoxxxoxoxoxx |
+| 維         |        30 | 関祐人     | 井上   |  19 |   4 |   14 | xxoxoxxoxxxxxxxoxx |
+| 維         |        31 | 岡本詢也   | 井上   |  18 |   7 |   11 | xxxoxoxoooxxxxoxxo |
+| 維         |        32 | 入馬尚輝   | 所司   |  19 |   7 |   11 | xxxoxxxoxooooxoxxx |
+| 維         |        33 | 熊谷俊紀   | 所司   |  23 |   6 |   12 | xxxxxxxoxoooooxxxx |
+| 維         |        34 | 中七海     | 井上   |  22 |   6 |   12 | oxxxxxxxoxxxoxoxoo |
+| 維         |        35 | 宮田大暉   | 杉本昌 |  21 |  11 |    7 | oxoxxxoxooxooxoooo |
+| 維         |        36 | 福田晴紀   | 中川   |  19 |  10 |    8 | oxoooooxxxoxoxxoox |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 69                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/69/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 三田敏弘   | 中田章 |  25 |  11 |    7 | ooooxxoxoooxoxxoox |
+| 昇         |         2 | 横山友紀   | 井上   |  21 |  13 |    5 | oxoxxoooooooxoooox |
+| 維         |         3 | 齊藤優希   | 深浦   |  24 |  11 |    7 | xxoxxooxoxoooxoooo |
+| 維         |         4 | 岡井良樹   | 大野   |  26 |   9 |    9 | oxxoxoooxoooxxxxxo |
+| 昇         |         5 | 狩山幹生   | 井上   |  19 |  13 |    5 | oooooxoooxxoxoooxo |
+| 次         |         6 | 柵木幹太   | 増田裕 |  23 |  13 |    5 | xoxoooooooooxooxox |
+| 維         |         7 | 上野裕寿   | 井上   |  17 |  10 |    8 | oxoxoooxoxoxoooxxx |
+| 維         |         8 | 田中大貴   | 北島   |  22 |   9 |    9 | xxoxxoxooxoxxoooox |
+| 維         |         9 | 宮田大暉   | 杉本昌 |  22 |  10 |    8 | oxxooxoxxxoooxxooo |
+| 維         |        10 | 森本才跳   | 小林健 |  19 |   7 |   11 | xoooxxxoxoxooxxxxx |
+| 維         |        11 | 小髙悠太郎 | 所司   |  25 |   5 |   13 | xoxxxxoxoxxxoxxxox |
+| 維         |        12 | 川村悠人   | 小倉   |  22 |   9 |    9 | xoooxooooxxxoxxxxo |
+| 維         |        13 | 福田晴紀   | 中川   |  20 |   8 |   10 | oooxoxooxxxoxxxoxx |
+| 維         |        14 | 宮嶋健太   | 大野   |  21 |  12 |    6 | oxooxxooxoxxoooooo |
+| 維         |        15 | 岡部怜央   | 加瀬   |  21 |  12 |    6 | xxooooxoooxoxooxoo |
+| 維         |        16 | 片山史龍   | 飯塚   |  16 |   9 |    9 | xoxooxoxxxooooxxxo |
+| 維         |        17 | 古田龍生   | 宮田利 |  24 |   9 |    9 | oxoxxoxxxoxoooxoxo |
+| 維         |        18 | 貫島永州   | 小林健 |  22 |  12 |    6 | oxxoooooxoxoxooxoo |
+| 維         |        19 | 中西悠真   | 久保   |  19 |   3 |   15 | xoxxxoxxxxoxxxxxxx |
+| 維         |        20 | 徳田拳士   | 小林健 |  23 |   9 |    9 | oooxoxxoxoxxxoxoxo |
+| 維         |        21 | 広森航汰   | 中座   |  20 |   9 |    9 | xoxoxooxoxoxooxoxx |
+| 維         |        22 | 山川泰熙   | 広瀬   |  22 |  12 |    6 | xoooooxxoxoooxooox |
+| 維         |        23 | 小山直希   | 戸辺   |  21 |   9 |    9 | xxoxooxxoxoxooxoox |
+| 維         |        24 | 中沢良輔   | 飯野   |  22 |   7 |   11 | ooooxxxxxooxoxxxxx |
+| 維         |        25 | 岡本詢也   | 井上   |  18 |   7 |   11 | oxxxoxxxoxxooxooxx |
+| 維         |        26 | 入馬尚輝   | 所司   |  20 |   8 |   10 | ooxooxxoxooxxxoxxx |
+| 維         |        27 | 吉田桂悟   | 木村一 |  20 |  12 |    6 | oooxxoxooooxxoooox |
+| 維         |        28 | 相川浩治   | 安恵   |  24 |   7 |   11 | xooxxooxxxxxoxxxoo |
+| 維         |        29 | 斎藤光寿   | 門倉   |  20 |   5 |   13 | xxxxoxooxxxxxoxxox |
+| 維         |        30 | 高橋佑二郎 | 加瀬   |  21 |   9 |    9 | xoxxoxxxooxoxxoooo |
+| 維         |        31 | 熊谷俊紀   | 所司   |  24 |   6 |   12 | xxoxoxxooxxxoxxxxo |
+| 維         |        32 | 中七海     | 井上   |  22 |   5 |   13 | xxxxxxxxxxoooxxxoo |
+| 維         |        33 | 関祐人     | 井上   |  19 |  11 |    7 | oxxxooxxxooooxoooo |
+| 維         |        34 | 木村友亮   | 門倉   |  20 |   5 |   13 | xoxxoxxxoxoxxxxxxo |
+| 維         |        35 | 宮原暁月   | 中川   |  19 |   7 |   11 | xxxxoooxxoxxoxxoxo |
+| 維         |        36 | 倉谷将弘   | 井上   |  25 |  10 |    8 | oxoxoxoooxxxxoooox |
+| 維         |        37 | 生垣寛人   | 井上   |  17 |  10 |    8 | oxooxxxoxooxooooxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 70                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/70/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 柵木幹太   | 増田裕 |  23 |  12 |    6 | ooxooooooooxoxxxxo |
+| 維         |         2 | 宮嶋健太   | 大野   |  22 |   9 |    9 | oxxoooxxoxxoxoxoxo |
+| 昇         |         3 | 岡部怜央   | 加瀬   |  22 |  15 |    3 | oooooooooooxxoooxo |
+| 維         |         4 | 貫島永州   | 小林健 |  23 |   9 |    9 | xxoxxoooxooxxooxxo |
+| 維         |         5 | 山川泰煕   | 広瀬   |  23 |   8 |   10 | xoxooxxxxxoooxoxxo |
+| 維         |         6 | 吉田桂悟   | 木村一 |  21 |   6 |   12 | xoxxxxxoxooooxxxxx |
+| 維         |         7 | 三田敏弘   | 中田章 |  25 |  12 |    6 | oooooxoxoxoooxxoox |
+| 維         |         8 | 齊藤優希   | 深浦   |  25 |  12 |    6 | xooooxoxxoooxooxoo |
+| 維         |         9 | 関祐人     | 井上   |  20 |   8 |   10 | xxoxoxoxoxxxxoxooo |
+| 維         |        10 | 上野裕寿   | 井上   |  18 |  13 |    5 | ooooxxooxooxooxooo |
+| 維         |        11 | 宮田大暉   | 杉本昌 |  22 |  13 |    5 | oxoxoooooooxooxxoo |
+| 維         |        12 | 倉谷将弘   | 井上   |  26 |   7 |   11 | xooxxoxxoxxxoxoxxo |
+| 維         |        13 | 生垣寛人   | 井上   |  18 |   3 |   15 | ooxxxxxxxxxxxxoxxx |
+| 維         |        14 | 田中大貴   | 北島   |  22 |   9 |    9 | xxoooxxoxxooxoooxx |
+| 維         |        15 | 川村悠人   | 小倉   |  22 |   6 |   12 | xxxoxooooxxoxxxxxx |
+| 次         |        16 | 片山史龍   | 飯塚   |  17 |  14 |    4 | ooxooxooooooxoooxo |
+| 維         |        17 | 古田龍生   | 宮田利 |  24 |  13 |    5 | xxoxooooxoooxooooo |
+| 昇         |        18 | 徳田拳士   | 小林健 |  23 |  15 |    3 | oxooooxoooooooooox |
+| 維         |        19 | 広森航汰   | 中座   |  20 |  12 |    6 | xxooxoooxoooxoooox |
+| 維         |        20 | 小山直希   | 戸辺   |  21 |   9 |    9 | oxxxooxooxxoxoxoox |
+| 維         |        21 | 高橋佑二郎 | 加瀬   |  22 |  10 |    8 | xooxooxoooxxxxooox |
+| 維         |        22 | 福田晴紀   | 中川   |  20 |   8 |   10 | xxoxoxoxoxxxxoooxo |
+| 維         |        23 | 入馬尚輝   | 所司   |  20 |   6 |   12 | xxxoxoxoxxoxxxoxxo |
+| 維         |        24 | 森本才跳   | 小林健 |  20 |   7 |   11 | ooxxxxxxooxxxooxox |
+| 維         |        25 | 中沢良輔   | 飯野   |  23 |   8 |   10 | ooxoxxxooxoxoxxxox |
+| 維         |        26 | 岡本詢也   | 井上   |  19 |   9 |    9 | oxxoxooxxoooxxxxoo |
+| 維         |        27 | 相川浩治   | 安恵   |  25 |   4 |   14 | xxxooxxxoxxxoxxxxx |
+| 維         |        28 | 宮原暁月   | 中川   |  20 |   7 |   11 | ooxooxxxxxxxxxooox |
+| 維         |        29 | 熊谷俊紀   | 所司   |  24 |   6 |   12 | oxxxxxoxxxoxoooxxx |
+| 維         |        30 | 小高悠太郎 | 所司   |  25 |   9 |    9 | oxoxxxooxoooooxxxx |
+| 維         |        31 | 斎藤光寿   | 門倉   |  21 |   5 |   13 | xooxoxxxxxxoxxxxox |
+| 維         |        32 | 中七海     | 井上   |  23 |   9 |    9 | ooxooxoxxooxxxxoxo |
+| 維         |        33 | 木村友亮   | 門倉   |  21 |   8 |   10 | ooxxxoxoooxxoxxoxx |
+| 維         |        34 | 中西悠真   | 久保   |  20 |   2 |   16 | xxxxxxxxxxxxoxxxxo |
+| 維         |        35 | 西山晴大   | 中田功 |  26 |   8 |   10 | xxoxxoxxoxxoooooxx |
+| 維         |        36 | 小窪碧     | 中村修 |  15 |   7 |   11 | xxxoxxxooooxoxxoxx |
+| 維         |        37 | 岩村凛太朗 | 飯塚   |  15 |  11 |    7 | ooxoxxxxooxoooxooo |
+| 維         |        38 | 麻生喜久   | 増田裕 |  24 |   6 |   12 | xoxxxoxoxxoxoxoxxx |
+| 維         |        39 | 藤本渚     | 井上   |  16 |  13 |    5 | xooooooxoxxooxoooo |
+| 維         |        40 | 山城正樹   | 北浜   |  19 |  11 |    7 | oxoxxooooxoxxooxoo |
+| 維         |        41 | 北村啓太郎 | 小倉   |  17 |  10 |    8 | ooxxxoxoxxxxoooooo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 71                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/71/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 片山史龍   | 飯塚   |  17 |   9 |    9 | ooxxoxxooxxoooxxox |
+| 次         |         0 | 上野裕寿   | 井上   |  18 |  12 |    6 | xooxxoooxoxooxoooo |
+| 維         |         3 | 宮田大暉   | 杉本昌 |  23 |   7 |   11 | xxxxxoxoxxxoooxxoo |
+| 維         |         4 | 古田龍生   | 宮田利 |  25 |  12 |    6 | ooxooooxoxxoooooxx |
+| 昇         |         5 | 藤本渚     | 井上   |  16 |  13 |    5 | oxxxooooxoooxooooo |
+| 維         |         6 | 柵木幹太   | 増田裕 |  24 |  10 |    8 | xoooooxxoxxoxxxooo |
+| 維         |         7 | 三田敏弘   | 中田章 |  26 |   9 |    9 | xoooxxoxxoxoooxoxx |
+| 維         |         8 | 齊藤優希   | 深浦   |  25 |  10 |    8 | ooxoxoxoxooxxoxoxo |
+| 維         |         9 | 廣森航汰   | 中座   |  21 |   5 |   13 | xxxxxxooxxoxxoxoxx |
+| 維         |        10 | 岩村凛太朗 | 飯塚   |  15 |  12 |    6 | oooxoxoxoxoooxooxo |
+| 維         |        11 | 山城正樹   | 北浜   |  19 |   5 |   13 | ooxxxxxxxxoxxxooxx |
+| 維         |        12 | 高橋佑二郎 | 加瀬   |  22 |   6 |   12 | oxxooxoxxxxxxoxoxx |
+| 維         |        13 | 北村啓太郎 | 小倉   |  18 |  11 |    7 | ooxxxooooxoooxoxxo |
+| 維         |        14 | 宮嶋健太   | 大野   |  22 |  10 |    8 | xooxoxoxoxoooxoxox |
+| 維         |        15 | 貫島永州   | 小林健 |  23 |  10 |    8 | xxoooxoxoooxoxooxx |
+| 維         |        16 | 田中大貴   | 北島   |  23 |   9 |    9 | oxxoooxooxooxoxxxx |
+| 維         |        17 | 小山直希   | 戸辺   |  22 |  12 |    6 | oxooxooxoooxoxooox |
+| 維         |        18 | 岡本詢也   | 井上   |  19 |   8 |   10 | ooooxoxoxxxxxxxoxo |
+| 維         |        19 | 中七海     | 井上   |  23 |   7 |   11 | xooxoxoxxoooxxxxxx |
+| 維         |        20 | 山川泰煕   | 広瀬   |  23 |  10 |    8 | ooxxoxoxooxooxxxoo |
+| 維         |        21 | 関祐人     | 井上   |  20 |   7 |   11 | xxxxooxxoxxxooooxx |
+| 維         |        22 | 福田晴紀   | 中川   |  21 |   7 |   11 | xxxxxxooxxxxoooxoo |
+| 維         |        23 | 中沢良輔   | 飯野   |  23 |   5 |   13 | xxxoxxooxoxxxxxxxo |
+| 維         |        24 | 木村友亮   | 門倉   |  21 |  10 |    8 | oxoxooxoooxxxxooox |
+| 維         |        25 | 西山晴大   | 中田功 |  26 |   8 |   10 | xoooxxoooxxxxoxxox |
+| 維         |        26 | 倉谷将弘   | 井上   |  26 |   9 |    9 | xoooxooxxxxxoxxooo |
+| 維         |        27 | 森本才跳   | 小林健 |  20 |  11 |    7 | xxooooxxoooxooxxoo |
+| 維         |        28 | 宮原暁月   | 中川   |  20 |   8 |   10 | oxoxxxxooooxooxxxx |
+| 維         |        29 | 小窪碧     | 中村修 |  16 |   9 |    9 | xxooxxxxxoooxooxoo |
+| 維         |        30 | 吉田桂悟   | 木村一 |  21 |   9 |    9 | xxoxxxxoooxxxooooo |
+| 維         |        31 | 川村悠人   | 小倉   |  23 |   5 |   13 | xxxoxoxxxxoxxxooxx |
+| 維         |        32 | 入馬尚輝   | 所司   |  21 |  11 |    7 | oooooxxoxoxooxoxox |
+| 維         |        33 | 熊谷俊紀   | 所司   |  25 |   5 |   13 | oxoxxxxxxxoxxoxoxx |
+| 維         |        34 | 麻生喜久   | 増田裕 |  25 |   6 |   12 | xxooxxoxxxooxxxxox |
+| 維         |        35 | 斎藤光寿   | 門倉   |  21 |   8 |   10 | oxxxoooooxoxoxxxxx |
+| 維         |        36 | 相川浩治   | 安恵   |  25 |   9 |    9 | ooooooxxxooxxxoxxx |
+| 維         |        37 | 生垣寛人   | 井上   |  18 |  12 |    6 | ooxoxxoxoooooxoxoo |
+| 維         |        38 | 吉池隆真   | 室岡   |  17 |  12 |    6 | xoxxooooxoxooxoooo |
+| 昇         |        39 | 齊藤裕也   | 杉本昌 |  24 |  13 |    5 | oxxoooxoooooxoooxo |
+| 維         |        40 | 清水航     | 伊藤博 |  24 |  10 |    8 | xooxxoxoooxxoxooxo |
+| 維         |        41 | 増田晃之郎 | 加瀬   |  21 |   8 |   10 | xoxxoxoxoxoxoxxxoo |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 72                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/72/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 上野裕寿   | 井上   |  19 |  12 |    6 | xooxooooxooxoxooox |
+| 維         |         2 | 古田龍生   | 宮田利 |  25 |   5 |   13 | xxxxoxxxxooxooxxxx |
+| 維         |         3 | 岩村凛太朗 | 飯塚   |  16 |   9 |    9 | xoooooxoxxxoxxxoox |
+| 昇         |         4 | 小山直希   | 戸辺   |  22 |  13 |    5 | ooooxxxoxooooxoooo |
+| 維         |         5 | 生垣寛人   | 井上   |  19 |   9 |    9 | oxoxoooxoxxxxxxooo |
+| 維         |         6 | 吉池隆真   | 室岡   |  17 |   9 |    9 | oxxxoooooooxxxxxxo |
+| 維         |         7 | 北村啓太郎 | 小倉   |  18 |   9 |    9 | xoxxxooxxoooxooxxo |
+| 昇         |         8 | 森本才跳   | 小林健 |  21 |  13 |    5 | xxoxoooxoxoooooooo |
+| 維         |         9 | 入馬尚輝   | 所司   |  21 |   8 |   10 | ooxoxooxxxxxooxoxx |
+| 昇         |        10 | 柵木幹太   | 増田裕 |  24 |  13 |    5 | ooxooooxooooxxoxoo |
+| 維         |        11 | 齊藤優希   | 深浦   |  26 |  13 |    5 | xoxooxxoooooooooxo |
+| 維         |        12 | 宮嶋健太   | 大野   |  23 |  10 |    8 | xooxooxxoxooxoxoxo |
+| 維         |        13 | 貫島永州   | 小林健 |  24 |  10 |    8 | oxoxoxooooxoxxxxoo |
+| 維         |        14 | 山川泰煕   | 広瀬   |  24 |   9 |    9 | oxoxxxoxooxoooxxox |
+| 維         |        15 | 木村友亮   | 門倉   |  22 |  12 |    6 | oxxoooooxoxoxoooxo |
+| 維         |        16 | 清水航     | 伊藤博 |  25 |   8 |   10 | xooxoxxxxooxoxoxox |
+| 維         |        17 | 片山史龍   | 飯塚   |  18 |  13 |    5 | ooooxooooxoxoxooxo |
+| 維         |        18 | 田中大貴   | 北島   |  23 |   5 |   13 | xxoooxxxxxoxxxxxox |
+| 維         |        19 | 倉谷将弘   | 井上   |  27 |   7 |   11 | ooxoxoxxoxxxoxxxxo |
+| 維         |        20 | 小窪碧     | 中村修 |  16 |   3 |   15 | xxxxoxxoxxxoxxxxxx |
+| 維         |        21 | 吉田桂悟   | 木村一 |  22 |   9 |    9 | ooxoxooxoooxxxxxxo |
+| 維         |        22 | 岡本詢也   | 井上   |  19 |   8 |   10 | xxooxoxoooxxxooxxx |
+| 維         |        23 | 西山晴大   | 中田功 |  27 |   9 |    9 | xoxxxxoxoxoxoooxoo |
+| 維         |        24 | 宮原暁月   | 中川   |  21 |  10 |    8 | oxoxoxoooxxooxooxx |
+| 維         |        25 | 斎藤光寿   | 門倉   |  22 |  10 |    8 | oxoxoooxxxxooxooox |
+| 維         |        26 | 増田晃之郎 | 加瀬   |  22 |  10 |    8 | oxxooxxooooxxxxooo |
+| 維         |        27 | 宮田大暉   | 杉本昌 |  23 |  12 |    6 | xoooxooxooooooxoxx |
+| 維         |        28 | 中七海     | 井上   |  24 |  10 |    8 | oxooooxoxxxxooxoox |
+| 維         |        29 | 関祐人     | 井上   |  21 |   7 |   11 | xxxoxxooxxoxoooxxx |
+| 維         |        30 | 福田晴紀   | 中川   |  21 |   8 |   10 | ooooxxxxoooxxxoxxx |
+| 維         |        31 | 高橋佑二郎 | 加瀬   |  23 |   8 |   10 | oooxxoxoxxxxoxoxox |
+| 維         |        32 | 麻生喜久   | 増田裕 |  25 |   4 |   14 | xxxxoxxxxxxxxoxxoo |
+| 維         |        33 | 廣森航汰   | 中座   |  21 |  13 |    5 | oooooxoxxoxoooooxo |
+| 維         |        34 | 山城正樹   | 北浜   |  20 |   4 |   14 | xxxoxxxxxxxxooxxox |
+| 維         |        35 | 中沢良輔   | 飯野   |  24 |   7 |   11 | oxxxxxooxoxooxxxxo |
+| 維         |        36 | 川村悠人   | 小倉   |  23 |  10 |    8 | xoxxxxxooxoxoooooo |
+| 維         |        37 | 熊谷俊紀   | 所司   |  25 |   5 |   13 | oxxxxxxxxoxoxooxxx |
+| 維         |        38 | 古井丈大   | 石川陽 |  18 |   7 |   11 | xxoxxoxooxxxoxxoox |
+| 維         |        39 | 藤原悠暉   | 田村   |  21 |   9 |    9 | oxxxooxooxxxxoxooo |
+| 維         |        40 | 山下数毅   | 森信   |  14 |   9 |    9 | xxxoxxooooxxoxooox |
+| 維         |        41 | 村田楽     | 井上   |  19 |  10 |    8 | xoooxoxoooooxxoxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 73                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/73/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name         | mentor | age | win | lose | ox                 |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 齊藤優希     | 深浦   |  26 |  11 |    7 | oooxoxxooooxooxxox |
+| 維         |         2 | 片山史龍     | 飯塚   |  18 |   6 |   12 | xxxxxxoxooxxooxxox |
+| 維         |         3 | 廣森航汰     | 中座   |  22 |  10 |    8 | oxoxoooxxoxoxxooxo |
+| 昇         |         4 | 上野裕寿     | 井上   |  19 |  14 |    4 | ooooxoxoooooxoooox |
+| 維         |         5 | 木村友亮     | 門倉   |  22 |  12 |    6 | oxooxoxoooxxooxooo |
+| 維         |         6 | 宮田大暉     | 杉本昌 |  24 |  12 |    6 | ooxooxxooxoooooxxo |
+| 昇         |         7 | 宮嶋健太     | 大野   |  23 |  15 |    3 | oxoooxooooooooooxo |
+| 維         |         8 | 貫島永州     | 小林健 |  24 |   9 |    9 | xooxxxxoxoxoxoooox |
+| 維         |         9 | 宮原暁月     | 中川   |  21 |   6 |   12 | oxoxxoxxxoxxxoxoxx |
+| 維         |        10 | 齋藤光寿     | 門倉   |  22 |   7 |   11 | oxxoxoxxoxxxxxxooo |
+| 維         |        11 | 増田晃之郎   | 加瀬   |  22 |  10 |    8 | ooxxxxooxooooxxoox |
+| 維         |        12 | 中七海       | 井上   |  24 |   9 |    9 | oxoooxxxxoxxxoooxo |
+| 維         |        13 | 川村悠人     | 小倉   |  24 |  10 |    8 | oooooxxoooxooxxxxx |
+| 維         |        14 | 村田楽       | 井上   |  20 |   7 |   11 | ooxxxxoxooxoxxoxxx |
+| 維         |        15 | 岩村凛太朗   | 飯塚   |  16 |   6 |   12 | xxoooxxxxxxxooxxxo |
+| 維         |        16 | 生垣寛人     | 井上   |  19 |  11 |    7 | xoxooooooxoxxxxooo |
+| 維         |        17 | 吉池隆真     | 室岡   |  18 |   9 |    9 | xxxxoooxooooxxxxoo |
+| 維         |        18 | 北村啓太郎   | 小倉   |  19 |  10 |    8 | xooxxoooxxooxxoxoo |
+| 維         |        19 | 山川泰煕     | 広瀬   |  24 |  10 |    8 | oxxooxoxxxooxxoooo |
+| 維         |        20 | 吉田桂悟     | 木村   |  22 |   9 |    9 | xooxooooxxoxxoxoxx |
+| 維         |        21 | 西山晴大     | 中田功 |  27 |   6 |   12 | oxxxxxxoxxoxooxoxx |
+| 維         |        22 | 藤原悠暉     | 田村   |  21 |  11 |    7 | xoooxoxoooxxoxooxo |
+| 次         |        23 | 山下数毅     | 森信   |  14 |  13 |    5 | oooooxoxxooooooxox |
+| 維         |        24 | 入馬尚輝     | 所司   |  22 |   9 |    9 | oxxoxxoxoooooxxxox |
+| 維         |        25 | 清水航       | 伊藤博 |  25 |  10 |    8 | xoxxooooxooxoxoxxo |
+| 維         |        26 | 岡本詢也     | 井上   |  20 |   7 |   11 | oxxxooxxxxxooxxxoo |
+| 維         |        27 | 福田晴紀     | 中川   |  22 |   6 |   12 | xoxxoxoooxxoxxxxxx |
+| 維         |        28 | 高橋佑二郎   | 加瀬   |  23 |   8 |   10 | xoxxxxxoooxxxooxoo |
+| 維         |        29 | 倉谷将弘     | 井上   |  27 |   7 |   11 | xxxoooxooxoxxxxxxo |
+| 維         |        30 | 関祐人       | 井上   |  21 |  10 |    8 | xooooooxoxxxoxooxx |
+| 維         |        31 | 中沢良輔     | 飯野   |  24 |   6 |   12 | xooxxoxoxxooxxxxxx |
+| 維         |        32 | 古井丈大     | 石川陽 |  18 |  12 |    6 | oooxxooxoxooooxxoo |
+| 維         |        33 | 田中大貴     | 北島   |  24 |   7 |   11 | xxxoooxxxxooxooxxx |
+| 維         |        34 | 麻生喜久     | 増田裕 |  26 |   5 |   13 | xxxxxxooxxxxxoxoox |
+| 維         |        35 | 山城正樹     | 北浜   |  20 |   6 |   12 | xxxoxxoxxxxoxxooox |
+| 維         |        36 | 小窪碧       | 中村修 |  17 |  12 |    6 | xoooxoxxoxooooxooo |
+| 維         |        37 | 鳥巣友希     | 安恵   |  19 |  12 |    6 | oooxoooxooxxoooxox |
+| 維         |        38 | 鈴木廉太郎   | 飯塚   |  20 |   6 |   12 | xxxoxxxoxxoxxxooxo |
+| 維         |        39 | 獺ヶ口笑保人 | 森信   |  23 |   5 |   13 | oxoxxxoxxxxxoxoxxx |
+| 維         |        40 | 高坂直矢     | 木村   |  15 |   9 |    9 | xxxoooxxxoxxooooxo |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 74                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/74/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name         | mentor | age | win | lose | ox                 |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 山下数毅     | 森信   |  15 |  11 |    7 | oxoooxxoxxoooooxxo |
+| 維         |         2 | 木村友亮     | 門倉   |  23 |  11 |    7 | xxooxoooooxoooxoxx |
+| 維         |         3 | 宮田大暉     | 杉本昌 |  24 |   6 |   12 | oxxoooxxooxxxxxxxx |
+| 維         |         4 | 古井丈大     | 石川陽 |  19 |  11 |    7 | xoxoxoooxxooxoooox |
+| 維         |         5 | 小窪碧       | 中村修 |  17 |   8 |   10 | oxoxoxoxxooxoxxxxo |
+| 維         |         6 | 鳥巣友希     | 安恵   |  20 |  10 |    8 | oooxxoxxoxxoooxoox |
+| 維         |         7 | 齊藤優希     | 深浦   |  27 |  11 |    7 | xxxoxxxoooooxooooo |
+| 維         |         8 | 生垣寛人     | 井上   |  20 |  12 |    6 | oooxxxooooooxooxox |
+| 維         |         9 | 藤原悠暉     | 田村   |  22 |   7 |   11 | xoooxooxxoxxxxxxox |
+| 維         |        10 | 廣森航汰     | 中座   |  22 |   9 |    9 | ooxxoxxoooxxxxooxo |
+| 維         |        11 | 増田晃之郎   | 加瀬   |  23 |   9 |    9 | xoxxooxoxxoxxxoooo |
+| 維         |        12 | 川村悠人     | 小倉   |  24 |   6 |   12 | xoxoxooxxxxxxxoxox |
+| 維         |        13 | 北村啓太郎   | 小倉   |  19 |  11 |    7 | oxoxooxooxxooxooox |
+| 昇         |        14 | 山川泰熙     | 広瀬   |  25 |  14 |    4 | oooooooxoxooooxxoo |
+| 維         |        15 | 清水航       | 伊藤博 |  26 |   9 |    9 | xoxxoxooooooxxxxxo |
+| 維         |        16 | 関祐人       | 井上   |  22 |   8 |   10 | xxooxxxxxoooxxooxo |
+| 維         |        17 | 貫島永州     | 小林健 |  25 |  11 |    7 | xoxxxooxoooooooxxo |
+| 維         |        18 | 中七海       | 井上   |  25 |   8 |   10 | ooxoxxoxxxxxxoooox |
+| 維         |        19 | 吉池隆真     | 室岡   |  18 |  12 |    6 | oxxxoxxooooooxoooo |
+| 維         |        20 | 吉田桂悟     | 木村   |  23 |   9 |    9 | oxooxxoxoxxxxoxooo |
+| 維         |        21 | 入馬尚輝     | 所司   |  22 |   5 |   13 | ooxxxxxxxxxxooxxxo |
+| 維         |        22 | 高坂直矢     | 木村   |  15 |  10 |    8 | oxoxooooxxoooxxxxo |
+| 昇         |        23 | 高橋佑二郎   | 加瀬   |  24 |  14 |    4 | ooxoooooxoxooooxoo |
+| 維         |        24 | 齋藤光寿     | 門倉   |  23 |   2 |   16 | xxxxoxxxxxxxxxxoxx |
+| 維         |        25 | 村田楽       | 井上   |  20 |   9 |    9 | xooxxoxxoxooxxooxo |
+| 維         |        26 | 岡本詢也     | 井上   |  20 |   8 |   10 | xxooxoxxoxoxooxxox |
+| 維         |        27 | 田中大貴     | 北島   |  24 |  10 |    8 | oxoooxooxoooxxxxox |
+| 維         |        28 | 片山史龍     | 飯塚   |  19 |  10 |    8 | xoooxxoxxoooxoxxoo |
+| 維         |        29 | 宮原暁月     | 中川   |  22 |   9 |    9 | xxoxooxxoooxooxoxx |
+| 次         |        30 | 岩村凛太朗   | 飯塚   |  17 |  13 |    5 | ooooxoxooooxooxoxo |
+| 維         |        31 | 西山晴大     | 中田功 |  28 |   6 |   12 | xoxxxoxooxxoxxxoxx |
+| 維         |        32 | 福田晴紀     | 中川   |  22 |   4 |   14 | xxooxxoxxxxxxxxxxo |
+| 維         |        33 | 中沢良輔     | 飯野   |  25 |   9 |    9 | oxxoxoxxxoooxxooox |
+| 維         |        34 | 山城正樹     | 北浜   |  21 |  10 |    8 | oooooxoooxxxxoxxox |
+| 維         |        35 | 鈴木廉太郎   | 飯塚   |  21 |   6 |   12 | xxxoxxoxxxxoxxooxo |
+| 維         |        36 | 麻生喜久     | 増田裕 |  26 |   7 |   11 | oxoxxxoxxxoooxxxxo |
+| 維         |        37 | 獺ヶ口笑保人 | 森信   |  23 |   9 |    9 | xxxxxoooooxxooxxoo |
+| 維         |        38 | 松本大輝     | 中田功 |  17 |   6 |   12 | xxxxoxoxxxoxxooxox |
+| 維         |        39 | 村田丞       | 杉本昌 |  24 |   5 |   13 | ooxxxxxxxxxxoxxoxo |
+| 維         |        40 | 炭崎俊毅     | 井上   |  15 |   9 |    9 | ooxxxooxxoxxxoooox |
+| 維         |        41 | 桐山大翔     | 宮田利 |  16 |  10 |    8 | xxoooooxxooxxooxox |
+| 維         |        42 | 渋江朔矢     | 杉本昌 |  18 |  10 |    8 | xooooxxooxxooxooxx |
+| 維         |        43 | 清水将馬     | 森信   |  20 |   8 |   10 | xxoooxxooxxoxoxoxx |
+| 維         |        44 | 村上邦和     | 佐藤慎 |  20 |  12 |    6 | ooxxoooooxoooooxxx |
+| 維         |        45 | 是枝直樹     | 戸辺   |  18 |  11 |    7 | xxooxxoooxxooxoooo |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 75                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/75/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name         | mentor | age | win | lose | ox                 |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+| 維         |         1 | 岩村凛太朗   | 飯塚   |  17 |   7 |   11 | xxxoxxoxoooxxooxxx |
+| 維         |         2 | 生垣寛人     | 井上   |  20 |   7 |   11 | xooooxoxxxxoxxoxxx |
+| 昇         |         3 | 吉池隆真     | 室岡   |  19 |  14 |    4 | oooxooooxoxxoooooo |
+| 維         |         4 | 村上邦和     | 佐藤慎 |  20 |   6 |   12 | oxxoxooxoxxxxxoxxx |
+| 維         |         5 | 山下数毅     | 森信   |  15 |  10 |    8 | ooxoxoxoooxooxxxxo |
+| 維         |         6 | 木村友亮     | 門倉   |  23 |   7 |   11 | oooxxxxooxoxxxxoxx |
+| 維         |         7 | 古井丈大     | 石川陽 |  19 |  12 |    6 | oooooxxoxoxoooxoox |
+| 次         |         8 | 齊藤優希     | 深浦   |  27 |  13 |    5 | xxoxooooooooxooxoo |
+| 維         |         9 | 北村啓太郎   | 小倉   |  20 |   8 |   10 | xoooxxoxxoooxxxoxx |
+| 維         |        10 | 貫島永州     | 小林健 |  25 |   9 |    9 | oxxxoxoooxoxxoxoxo |
+| 維         |        11 | 是枝直樹     | 戸辺   |  18 |  12 |    6 | oxoxoxxooxxooooooo |
+| 維         |        12 | 鳥巣友希     | 安恵   |  20 |   6 |   12 | xxxoxxxoxxxooxxoox |
+| 維         |        13 | 高坂直矢     | 木村   |  16 |  11 |    7 | ooxoxooxooxoxoxxoo |
+| 維         |        14 | 田中大貴     | 北島   |  25 |   9 |    9 | xooxoxxxxoooooxxxo |
+| 維         |        15 | 片山史龍     | 飯塚   |  19 |   9 |    9 | oxxxooxooxxoxoxoxo |
+| 維         |        16 | 山城正樹     | 北浜   |  21 |   6 |   12 | xoxooxxoxxxoxxxxxo |
+| 維         |        17 | 桐山大翔     | 宮田利 |  17 |   9 |    9 | oooxxoxxxoxxoxoxoo |
+| 維         |        18 | 渋江朔矢     | 杉本昌 |  19 |   6 |   12 | xxxxoxxxoxooxooxxx |
+| 維         |        19 | 廣森航汰     | 中座   |  23 |  10 |    8 | xxxoooxxxoooxooxoo |
+| 維         |        20 | 増田晃之郎   | 加瀬   |  23 |  12 |    6 | xooxoxooxoxooooxoo |
+| 維         |        21 | 清水航       | 伊藤博 |  26 |  11 |    7 | xxoxxoooooooxooxox |
+| 維         |        22 | 吉田桂悟     | 木村   |  23 |  11 |    7 | xooxooooxxxoxxoooo |
+| 維         |        23 | 村田楽       | 井上   |  21 |  10 |    8 | ooxoxooxoxxxooxoox |
+| 維         |        24 | 宮原暁月     | 中川   |  22 |  13 |    5 | oxoooooooooooxoxxx |
+| 維         |        25 | 中沢良輔     | 飯野   |  25 |   6 |   12 | oxxxxxxoxxxxoxooox |
+| 昇         |        26 | 獺ヶ口笑保人 | 森信   |  24 |  15 |    3 | ooxooooooooxooooxo |
+| 維         |        27 | 炭崎俊毅     | 井上   |  15 |   9 |    9 | oxxxxoxxxooxooooxo |
+| 維         |        28 | 小窪碧       | 中村修 |  18 |  11 |    7 | xxooooxoooxxooxxoo |
+| 維         |        29 | 関祐人       | 井上   |  22 |   6 |   12 | ooooxxoxxoxxxxxxxx |
+| 維         |        30 | 中七海       | 井上   |  25 |   8 |   10 | oxxxoooxooxoxxxoxx |
+| 維         |        31 | 岡本詢也     | 井上   |  21 |   7 |   11 | oxxoxxxoxxxxxoooxo |
+| 維         |        32 | 清水将馬     | 森信   |  21 |   8 |   10 | xoxxxoxxoooxooxoxx |
+| 維         |        33 | 藤原悠暉     | 田村   |  22 |   8 |   10 | xooxoooxoxoxxxxxox |
+| 維         |        34 | 宮田大暉     | 杉本昌 |  25 |  12 |    6 | oooooxxxxxoxoooooo |
+| 維         |        35 | 川村悠人     | 小倉   |  25 |   6 |   12 | xooxxxoxxxoxoxxxox |
+| 維         |        36 | 鈴木廉太郎   | 飯塚   |  21 |   8 |   10 | xxoxxxxoooxoooxxox |
+| 維         |        37 | 松本大輝     | 中田功 |  18 |  10 |    8 | oxxooxxooxoooxoxxo |
+| 維         |        38 | 入馬尚輝     | 所司   |  23 |   7 |   11 | xxxxxooxxxoxoxooxo |
+| 維         |        39 | 村田丞       | 杉本昌 |  24 |   6 |   12 | xxooxooxxxxxxxxoxo |
+| 維         |        40 | 福田晴紀     | 中川   |  23 |   8 |   10 | xoxxooxxxxoxoxooox |
+| 維         |        41 | 齋藤光寿     | 門倉   |  23 |   5 |   13 | xxxxxxxoxooxxxxxoo |
+| 維         |        42 | 山口裕誠     | 伊藤真 |  22 |  12 |    6 | oxooooooxxooxooxox |
+| 維         |        43 | 戸川悠二郎   | 久保   |  19 |   7 |   11 | ooxoxxxxoxxoxxxoox |
+| 維         |        44 | 吉田響太     | 所司   |  21 |   9 |    9 | xoooxxoxoooxoxxoxx |
+|------------+-----------+--------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 76                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/76/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox                 |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+| 昇         |         1 | 齊藤優希   | 深浦   |  28 |  17 |    1 | ooooooooooooooooox |
+| 維         |         2 | 宮原暁月   | 中川   |  23 |   9 |    9 | xoooxoxxoxoxoxxoxo |
+| 次         |         3 | 古井丈大   | 石川陽 |  20 |  13 |    5 | ooooxooxoxoxoxoooo |
+| 維         |         4 | 是枝直樹   | 戸辺   |  19 |  12 |    6 | xoxxoxxoooooxooooo |
+| 維         |         5 | 増田晃之郎 | 加瀬   |  24 |   5 |   13 | oxxoxxxxxoxxxoxxox |
+| 維         |         6 | 宮田大暉   | 杉本昌 |  25 |   8 |   10 | xooxooxoxoxxxooxxx |
+| 維         |         7 | 山口裕誠   | 伊藤真 |  23 |   9 |    9 | ooxoxxxoooooxoxxxx |
+| 維         |         8 | 高坂直矢   | 木村   |  16 |   8 |   10 | ooxoooooxxxxxxxxxo |
+| 維         |         9 | 清水航     | 伊藤博 |  27 |   8 |   10 | xoxoxoooxxoxxxooxx |
+| 維         |        10 | 吉田桂悟   | 木村   |  24 |  12 |    6 | ooooxoxooooxooxxxo |
+| 維         |        11 | 小窪碧     | 中村修 |  18 |  11 |    7 | oooxooxxxoxxooooxo |
+| 維         |        12 | 山下数毅   | 森信   |  16 |  12 |    6 | oxxooxooooxoxoooox |
+| 維         |        13 | 廣森航汰   | 中座   |  23 |   9 |    9 | xooxxxxxooooxoooxx |
+| 維         |        14 | 村田楽     | 井上   |  21 |  11 |    7 | xoxoxoooxooooxooxx |
+| 維         |        15 | 松本大輝   | 中田功 |  18 |   8 |   10 | oooxoxxxxoxoxxxoxo |
+| 維         |        16 | 田中大貴   | 北島   |  25 |   6 |   12 | xxxxoxxooxxoooxxxx |
+| 維         |        17 | 片山史龍   | 飯塚   |  20 |  10 |    8 | ooxoooxxxxxxoxoooo |
+| 維         |        18 | 桐山大翔   | 宮田利 |  17 |   3 |   15 | xxxxxxxxxxxxoxooxx |
+| 昇         |        19 | 炭崎俊毅   | 井上   |  16 |  15 |    3 | oooooxooxoooooxooo |
+| 維         |        20 | 吉田響太   | 所司   |  22 |   8 |   10 | oxoxoxooxxxxoxoxox |
+| 維         |        21 | 北村啓太郎 | 小倉   |  20 |   9 |    9 | xoxxooooooxxxxoxxo |
+| 維         |        22 | 清水将馬   | 森信   |  21 |  12 |    6 | xooxoxxxooooooooox |
+| 維         |        23 | 藤原悠暉   | 田村   |  23 |   9 |    9 | oooxxxoooxoxxxxxoo |
+| 維         |        24 | 鈴木廉太郎 | 飯塚   |  22 |   2 |   16 | xxxxxxoxxxxxxxxxox |
+| 維         |        25 | 福田晴紀   | 中川   |  23 |   8 |   10 | xxoxooxoxooxxxxxoo |
+| 維         |        26 | 岩村凛太朗 | 飯塚   |  18 |   9 |    9 | oxxxxxoxoxooxooxoo |
+| 維         |        27 | 生垣寛人   | 井上   |  21 |  12 |    6 | oxooooxxoxxooxoooo |
+| 維         |        28 | 木村友亮   | 門倉   |  24 |  10 |    8 | oxooxoxoxxooxoxoox |
+| 維         |        29 | 岡本詢也   | 井上   |  21 |   7 |   11 | xxxxxxooxoxxoooxox |
+| 維         |        30 | 入馬尚輝   | 所司   |  23 |   7 |   11 | xxxxxooxxxoxoxxooo |
+| 維         |        31 | 戸川悠二郎 | 久保   |  20 |   8 |   10 | xxxxoxxxooooxoxoxo |
+| 維         |        32 | 村上邦和   | 佐藤慎 |  21 |  10 |    8 | oxoooxxxoxoxxoooox |
+| 維         |        33 | 鳥巣友希   | 安恵   |  21 |   9 |    9 | xxoooooooxxoxxxxox |
+| 維         |        34 | 山城正樹   | 北浜   |  22 |   4 |   14 | xxxxxxoooxxxoxxxxx |
+| 維         |        35 | 渋江朔矢   | 杉本昌 |  19 |  10 |    8 | xxxoxoxxxooooxoooo |
+| 維         |        36 | 関祐人     | 井上   |  23 |  11 |    7 | oooxooooooxxooxxxx |
+| 維         |        37 | 川村悠人   | 小倉   |  25 |  11 |    7 | oxxooxoxooxxoooxoo |
+| 維         |        38 | 村田丞     | 杉本昌 |  25 |   5 |   13 | xoxoxxxoxxxooxxxxx |
+| 維         |        39 | 齋藤光寿   | 門倉   |  24 |   7 |   11 | oxoxxooxxxxoxoxxxo |
+| 維         |        40 | 祝井優希   | 中座   |  16 |  13 |    5 | oxooxoxoxoooxooooo |
+| 維         |        41 | 永井大     | 神谷   |  20 |  13 |    5 | ooxooooxooooxoxoxo |
+| 維         |        42 | 菅野晴太   | 小林裕 |  20 |   4 |   14 | xxxoxxoxxxxooxxxxx |
+| 維         |        43 | 崎原実地歩 | 矢倉   |  18 |   8 |   10 | xooxoxoxoxoxxxoxxo |
+| 維         |        44 | 石田竜一   | 森信   |  24 |   4 |   14 | xxoxxoxxxxxooxxxxx |
+|------------+-----------+------------+--------+-----+-----+------+--------------------|
+|-------+--------------------------------------------------------------|
+|    期 | 77                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/77/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|
+|------------+-----------+------------+--------+-----+-----+------+----------------|
+| result_key | start_pos | name       | mentor | age | win | lose | ox             |
+|------------+-----------+------------+--------+-----+-----+------+----------------|
+| 維         |         1 | 古井丈大   | 石川陽 |  20 |   6 |    8 | oxxoooxoxxxxxo |
+| 維         |         2 | 祝井優希   | 中座   |  17 |   6 |    8 | xxoooxxxxooxox |
+| 維         |         3 | 永井大     | 神谷   |  20 |   8 |    6 | oxooooxxoxxoxo |
+| 維         |         4 | 是枝直樹   | 戸辺   |  19 |   5 |    9 | xxxoxoxoxoxxxo |
+| 維         |         5 | 吉田桂悟   | 木村   |  24 |   8 |    6 | ooxxxxoooooxox |
+| 維         |         6 | 山下数毅   | 森信   |  16 |   8 |    6 | xooxooxxxoooox |
+| 維         |         7 | 清水将馬   | 森信   |  22 |   6 |    8 | xoxooxoxxoxoxx |
+| 維         |         8 | 生垣寛人   | 井上   |  21 |   9 |    5 | xoxxooooxxoooo |
+| 維         |         9 | 小窪碧     | 中村修 |  19 |   8 |    6 | oxoxxooxoxooxo |
+| 維         |        10 | 村田楽     | 井上   |  22 |   8 |    6 | xxoooxxxoooxoo |
+| 維         |        11 | 関祐人     | 井上   |  23 |   5 |    9 | xoxxxxxoxxxooo |
+| 維         |        12 | 川村悠人   | 小倉   |  26 |   9 |    5 | oooxxooxooxxoo |
+| 維         |        13 | 片山史龍   | 飯塚   |  20 |  10 |    4 | ooxxoxooooxooo |
+| 維         |        14 | 木村友亮   | 門倉   |  24 |   9 |    5 | ooxoooxooxxoox |
+| 維         |        15 | 村上邦和   | 佐藤慎 |  21 |   8 |    6 | xxooooxooxooxx |
+| 維         |        16 | 渋江朔矢   | 杉本昌 |  20 |   5 |    9 | xooxxxxoxxxoox |
+| 維         |        17 | 宮原暁月   | 中川   |  23 |   6 |    8 | oxxxooxoooxxxx |
+| 維         |        18 | 山口裕誠   | 伊藤真 |  23 |   5 |    9 | xxooxxxooxxoxx |
+| 維         |        19 | 廣森航汰   | 中座   |  24 |   8 |    6 | oxooxoooxoxxox |
+| 維         |        20 | 北村啓太郎 | 小倉   |  21 |   9 |    5 | oxooxoxooooxxo |
+| 維         |        21 | 藤原悠暉   | 田村   |  23 |   7 |    7 | xxxooxoooxoxxo |
+| 維         |        22 | 岩村凛太朗 | 飯塚   |  18 |  11 |    3 | oooxxoooooooox |
+| 維         |        23 | 鳥巣友希   | 安恵   |  21 |   8 |    6 | oxoooooxxxxoxo |
+| 維         |        24 | 高坂直矢   | 木村   |  17 |   8 |    6 | xooooxoxxxooox |
+| 維         |        25 | 松本大輝   | 中田功 |  19 |   4 |   10 | xxxxxxooxxoxxo |
+| 維         |        26 | 吉田響太   | 所司   |  22 |   8 |    6 | xoxooxoxxooxoo |
+| 維         |        27 | 福田晴紀   | 中川   |  24 |   9 |    5 | oooxxxoooooxxo |
+| 維         |        28 | 戸川悠二郎 | 久保   |  20 |   6 |    8 | oxxoxoxxxooxox |
+| 維         |        29 | 崎原実地歩 | 矢倉   |  19 |   8 |    6 | oxoooooxxooxxx |
+| 維         |        30 | 岡本詢也   | 井上   |  22 |   7 |    7 | ooxxxooxoooxxx |
+| 維         |        31 | 入馬尚輝   | 所司   |  24 |  10 |    4 | xoooooooxoxxoo |
+| 維         |        32 | 齋藤光寿   | 門倉   |  24 |   7 |    7 | oxxxxoxxooxooo |
+| 維         |        33 | 増田晃之郎 | 加瀬   |  24 |   6 |    8 | oxxxooxooxxoxx |
+| 維         |        34 | 村田丞     | 杉本昌 |  25 |   5 |    9 | xoxxoxxxxxooxo |
+| 維         |        35 | 山城正樹   | 北浜   |  22 |   3 |   11 | xxxxxxoxxxxoxo |
+| 維         |        36 | 菅野晴太   | 小林裕 |  20 |   5 |    9 | ooxxxxxooxxxox |
+| 維         |        37 | 桐山大翔   | 宮田利 |  18 |   8 |    6 | xooooxoxxxooxo |
+| 維         |        38 | 鈴木廉太郎 | 飯塚   |  22 |   4 |   10 | ooxxxxoxxxxxox |
+| 維         |        39 | 國井勝太   | 木村   |  16 |   7 |    7 | xoooxxxxooooxx |
+| 維         |        40 | 長崎天飛   | 井上   |  15 |   3 |   11 | xxoxxxxxoxxxox |
+|------------+-----------+------------+--------+-----+-----+------+----------------|
+|-------+--------------------------------------------------------------|
+|    期 | 78                                                           |
+|   URL | https://www.shogi.or.jp/match/shoreikai/sandan/78/index.html |
+| sleep | 1                                                            |
+|-------+--------------------------------------------------------------|

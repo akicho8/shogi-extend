@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
-# http://localhost:4000/lab/general/pre-professional-league_season
+# http://localhost:4000/lab/general/pre-professional-league
 
 module QuickScript
   module General
@@ -15,50 +15,58 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "この棋士たちの同期を抽出する (完全一致・複数指定可)",
-            :key     => :name_rel,
-            :type    => :string,
-            :dynamic_part => -> {
-              {
-                :default => params[:name_rel].presence,
-                :help_message => %(例: "西山朋佳 里見香奈")
-              }
-            },
-          },
-          {
-            :label   => "この期のメンバーを抽出する (複数指定可)",
-            :key     => :season_number_rel,
-            :type    => :string,
-            :dynamic_part => -> {
-              {
-                :default => params[:season_number_rel].presence,
-                :help_message => %(例: "58 59 60")
-              }
-            },
-          },
-          {
-            :label   => "棋士名フィルタ",
+            :label   => "名前の絞り込み (部分一致)",
             :key     => :query,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:query].presence,
-                :help_message => %("a -b c -d" → a と c を含むが b と d は含まない。例: "藤 -佐" → 藤井はマッチするが佐藤はマッチしない),
+                :help_message => %("a -b c -d" → a と c を含むが b と d は除く。例: "藤 -佐" →「藤井」や「伊藤」はマッチするが「佐藤」は除く),
+              }
+            },
+          },
+          {
+            :label   => "このシーズンのメンバー",
+            :key     => :season_number,
+            :type    => :string,
+            :dynamic_part => -> {
+              {
+                :default => params[:season_number].presence,
+                :help_message => %(例: "58 59 60" → 58 59 60 のどれかに在籍していたメンバーを抽出する)
+              }
+            },
+          },
+          {
+            :label   => "この棋士の同期 (完全一致)",
+            :key     => :name,
+            :type    => :string,
+            :dynamic_part => -> {
+              {
+                :default => params[:name].presence,
+                :help_message => %(例: "藤井聡太 伊藤匠" → 「藤井聡太」または「伊藤匠」と当たったかもしれないメンバーを抽出する ※本人を含む)
+              }
+            },
+          },
+          {
+            :label   => "この師匠の弟子 (完全一致)",
+            :key     => :mentor_name,
+            :type    => :string,
+            :dynamic_part => -> {
+              {
+                :default => params[:mentor_name].presence,
+                :help_message => %(例: "井上 森信" → "「井上」と「森信」の弟子を抽出する ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
               }
             },
           },
         ]
       end
 
-      def top_content
-        v_stack([league_season_links, user_links], :class => "gap_small")
-      end
-
-      # http://localhost:3000/api/lab/general/pre-professional-league_season.json?json_type=general
+      # http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general
       def as_general_json
         current_scope.collect do |user|
           {
             "名前"         => user.name,
+            "師匠"         => user.mentor.name,
             "昇段時の年齢" => user.promotion_age,
             "昇段時の期"   => user.promotion_season_number,
             "昇段時の勝数" => user.promotion_win,
@@ -73,20 +81,21 @@ module QuickScript
       end
 
       def call
-        params[:season_number_rel] ||= Ppl::LeagueSeason.season_number_max
+        params[:season_number] ||= Ppl::LeagueSeason.season_number_max
 
-        rows = current_scope.collect do |e|
+        rows = current_scope.collect do |user|
           {
-            "名前" => { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { name_rel: e.name, season_number_rel: "", query: "", __prefer_url_params__: 1 }) }, :class => e.promoted_or_rights ? "has-text-weight-bold" : nil },
-            "期間" => e.memberships_count,
-            "齢〜" => e.age_min,
-            "〜齢" => e.age_max,
-            "次点" => e.runner_up_count,
-            "最勝" => e.win_max,
-            "昇齢" => e.promotion_age,
-            "昇期" => e.promotion_season_number,
-            "昇勝" => e.promotion_win,
-            **memberhip_fields(e),
+            "名前" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => css_class(user) },
+            "師匠" => user.mentor ? { _nuxt_link: user.mentor.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(mentor_name: user.mentor.name)) }, :class => "is_decoration_off" } : "",
+            "期間" => user.memberships_count,
+            "齢〜" => user.age_min,
+            "〜齢" => user.age_max,
+            "次点" => user.runner_up_count,
+            "最勝" => user.win_max,
+            "昇齢" => user.promotion_age,
+            "昇期" => user.promotion_season_number,
+            "昇勝" => user.promotion_win,
+            **memberhip_fields(user),
           }
         end
         simple_table(rows)
@@ -125,17 +134,31 @@ module QuickScript
         end
       end
 
+      def css_class(user)
+        av = ["is_decoration_off"]
+        if user.promoted_or_rights
+          av << "has-text-weight-bold"
+        end
+        av
+      end
+
+      ################################################################################
+
       def title
         @title ||= "#{super} (#{current_scope.count})"
       end
 
       ################################################################################
 
+      def top_content
+        v_stack([league_season_links, user_links, mentor_links], :class => "gap_small")
+      end
+
       def league_season_links
         h_stack(:class => "gap_small") do
           blocks = Ppl::LeagueSeason.newest_order.collect do |e|
-            params = default_params.merge(season_number_rel: e.season_number)
-            { _nuxt_link: e.season_number, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-small is-light" }
+            params = default_params.merge(season_number: e.season_number)
+            { _nuxt_link: e.season_number, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
           end
           [*blocks, all_link]
         end
@@ -148,7 +171,7 @@ module QuickScript
       def user_links
         h_stack(:class => "gap_small") do
           Ppl::User.link_order.collect do |e|
-            params = default_params.merge(name_rel: e.name)
+            params = default_params.merge(name: e.name)
             css_klass = button_css_class
             if e.promoted_or_rights
               css_klass += ["has-text-weight-bold"]
@@ -158,13 +181,28 @@ module QuickScript
         end
       end
 
+      def mentor_links
+        h_stack(:class => "gap_small") do
+          Ppl::Mentor.link_order.collect do |e|
+            params = default_params.merge(mentor_name: e.name)
+            css_klass = button_css_class
+            # if e.promoted_or_rights
+            #   css_klass += ["has-text-weight-bold"]
+            # end
+            { _nuxt_link: "#{e.name}(#{e.users_count})", _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => css_klass.join(" ") }
+          end
+        end
+      end
+
       def button_css_class
         @button_css_class ||= ["button", "is-small", "is-light"]
       end
 
       def default_params
-        { name_rel: "", season_number_rel: "", query: "", __prefer_url_params__: 1 }
+        { name: "", season_number: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
       end
+
+      ################################################################################
     end
   end
 end

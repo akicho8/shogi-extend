@@ -35,9 +35,15 @@ module Ppl
         league_season = LeagueSeason.find_or_create_by!(season_number: season_number)
         rows.each do |attrs|
           user = User.find_or_create_by!(name: attrs[:name])
+          if v = attrs[:mentor].presence
+            if user.mentor && user.mentor.name != NameNormalizer.normalize(v)
+              tp({"前" => user.mentor.name, "新" => NameNormalizer.normalize(v)})
+            end
+            user.update!(mentor: Mentor.find_or_create_by!(name: v))
+          end
+
           membership = user.memberships.find_or_initialize_by(league_season: league_season)
-          membership.assign_attributes(attrs.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
-          user.save!
+          membership.update!(attrs.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
         end
       end
     end

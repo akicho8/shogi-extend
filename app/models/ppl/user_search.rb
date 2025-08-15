@@ -25,22 +25,31 @@ module Ppl
         scope = scope.where(id: user_ids)
       end
 
+      # この師匠の弟子を抽出する
+      if target_mentors.present?
+        scope = scope.joins(:mentor).merge(target_mentors)
+      end
+
       # この期の同期を抽出する (複数指定可)
       if target_league_seasons.present?
         user_ids = target_league_seasons.flat_map { |league_season| league_season.user_ids }
         scope = scope.where(id: user_ids)
       end
 
-      scope = scope.includes(memberships: [:user, :league_season, :result])
+      scope = scope.includes(mentor: [], memberships: [:league_season, :result])
       scope = scope.table_order
     end
 
     def target_users
-      @target_users ||= User.where(name: params[:name_rel].to_s.scan(/\S+/))
+      @target_users ||= User.where(name: StringToolkit.split(params[:name].to_s))
+    end
+
+    def target_mentors
+      @target_mentors ||= Mentor.where(name: StringToolkit.split(params[:mentor_name].to_s))
     end
 
     def target_season_numbers
-      @target_season_numbers ||= params[:season_number_rel].to_s.scan(/\d+/).collect(&:to_i).to_set
+      @target_season_numbers ||= params[:season_number].to_s.scan(/\d+/).collect(&:to_i)
     end
 
     def target_league_seasons

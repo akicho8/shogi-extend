@@ -16,6 +16,7 @@ module Ppl
     [
       LeagueSeason,
       User,
+      Mentor,
     ].each(&:destroy_all)
   end
 

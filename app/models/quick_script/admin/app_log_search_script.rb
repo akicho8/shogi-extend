@@ -20,7 +20,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:query].presence,
-                :help_message => %("a -b c -d" → a と c を含むが b と d は含まない),
+                :help_message => %("a -b c -d" → a と c を含むが b と d は除く),
               }
             },
           },

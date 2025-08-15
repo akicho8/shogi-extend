@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_12_000000) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_12_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -300,6 +300,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_000000) do
     t.index ["win"], name: "index_ppl_memberships_on_win"
   end
 
+  create_table "ppl_mentors", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "name", null: false, comment: "師匠名"
+    t.integer "users_count", default: 0, null: false, comment: "弟子数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_ppl_mentors_on_name", unique: true
+  end
+
   create_table "ppl_results", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
@@ -310,6 +318,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_000000) do
   end
 
   create_table "ppl_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "mentor_id", comment: "師匠"
     t.string "name", null: false, comment: "棋士名"
     t.integer "age_min", comment: "リーグ入り年齢"
     t.integer "age_max", comment: "リーグ最後の年齢"
@@ -322,13 +331,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_12_000000) do
     t.integer "season_number_min", comment: "最初に参加したときの期"
     t.bigint "memberships_last_id", comment: "最後に参加したときの成績"
     t.integer "season_number_max", comment: "最後に参加したときの期"
-    t.integer "memberships_count", default: 0, comment: "参加期間相当"
+    t.integer "memberships_count", default: 0, null: false, comment: "参加期間相当"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["age_max"], name: "index_ppl_users_on_age_max"
     t.index ["age_min"], name: "index_ppl_users_on_age_min"
     t.index ["memberships_first_id"], name: "index_ppl_users_on_memberships_first_id"
     t.index ["memberships_last_id"], name: "index_ppl_users_on_memberships_last_id"
+    t.index ["mentor_id"], name: "index_ppl_users_on_mentor_id"
     t.index ["name"], name: "index_ppl_users_on_name", unique: true
     t.index ["promotion_membership_id"], name: "index_ppl_users_on_promotion_membership_id"
     t.index ["promotion_season_number"], name: "index_ppl_users_on_promotion_season_number"

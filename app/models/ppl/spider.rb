@@ -7,17 +7,22 @@ module Ppl
 
     def initialize(params = {})
       @params = {
-        :take_size    => 256,
-        :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
-        :sleep   => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 1 : 0,
+        :take_size => 256,
+        :verbose   => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
+        :sleep     => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 1 : 0,
       }.merge(params)
     end
 
     def call
       if str = html_fetch
-        Nokogiri::HTML(str).search("tbody tr").take(take_size).collect do |tr_el|
+        rows = Nokogiri::HTML(str).search("tbody tr").take(take_size).collect do |tr_el|
           attributes_from(tr_el)
         end
+        if params[:verbose]
+          tp rows
+        end
+        Rails.logger.info(rows.to_t)
+        rows
       end
     end
 
@@ -55,7 +60,7 @@ module Ppl
         if season_number.in?(OLD_TYPE_GENERATIONS)
           [:result_key, :start_pos, :name, :win, :lose]
         else
-          [:result_key, :start_pos, :name, :_mentor, :age, :win, :lose] # _mentor は未使用
+          [:result_key, :start_pos, :name, :mentor, :age, :win, :lose]
         end
       end
     end

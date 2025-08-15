@@ -15,6 +15,7 @@ b-table.QuickScriptViewValueAsTable(
   :per-page     = "value.per_page"
   @page-change="page => QS.page_change_or_sort_handle({page: page})"
   )
+  //- field に設定したカラム名が指す値がソート時の対象になる
   template(v-for="column_name in column_names")
     b-table-column(
       v-slot="{row}"

@@ -11,6 +11,8 @@ module Ppl
     has_many :memberships, dependent: :destroy   # 対局時の情報(複数)
     has_many :league_seasons, through: :memberships     # 対局(複数)
 
+    belongs_to :mentor, counter_cache: true, optional: true # 師匠
+
     with_options class_name: "Ppl::Membership", optional: true do
       belongs_to :memberships_first
       belongs_to :memberships_last
@@ -44,6 +46,14 @@ module Ppl
     before_validation do
       self.runner_up_count ||= 0
       self.win_max ||= 0
+    end
+
+    with_options presence: true do
+      validates :name
+    end
+
+    with_options allow_blank: true do
+      validates :name, uniqueness: true
     end
 
     # 昇段または次点2つで権利を獲得したか？
