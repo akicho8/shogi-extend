@@ -11,7 +11,6 @@ RSpec.describe Swars::User::Vip, type: :model, swars_spec: true do
   end
 
   it ".protected_user_keys" do
-    assert { Swars::User::Vip.protected_user_keys.include?("BOUYATETSU5") }
-    assert { Swars::User::Vip.protected_user_keys.include?("SiroChannel") }
+    assert { Swars::User::Vip.protected_user_keys == [] }
   end
 end
