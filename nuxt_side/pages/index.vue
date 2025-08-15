@@ -79,7 +79,7 @@
       .columns
         .column.has-text-right
           p.is-size-7 Last Update: {{$config.CSR_BUILD_VERSION}}
-          p.is-size-7 Powered by <a href="https://www.ruby-lang.org/ja/" target="_blank">Ruby 3.4.2</a>, <a href="https://rubyonrails.org/" target="_blank">Rails 8.0.2</a>, <a href="https://nuxt.com/" target="_blank">Nuxt.js 2.18.1</a>
+          p.is-size-7 Powered by <a href="https://www.ruby-lang.org/ja/" target="_blank">Ruby 3.4.2</a>, <a href="https://rubyonrails.org/" target="_blank">Rails 8.0.2.1</a>, <a href="https://nuxt.com/" target="_blank">Nuxt.js 2.18.1</a>
 </template>
 
 <script>
