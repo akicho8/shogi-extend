@@ -21,45 +21,49 @@ module QuickScript
       def form_parts
         super + [
           {
-            :label   => "弟子名で絞り込み (部分一致)",
+            :label   => "弟子名で絞り込み (部分一致・複数指定はAND条件)",
             :key     => :query,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:query].presence,
+                :placeholder => "藤 -佐",
                 :help_message => %("a -b c -d" → a と c を含むが b と d は除く。例: "藤 -佐" →「藤井」や「伊藤」はマッチするが「佐藤」は除く),
               }
             },
           },
           {
-            :label   => "このシーズンのメンバー",
+            :label   => "このシーズンのメンバー (複数指定はOR条件)",
             :key     => :season_number,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:season_number].presence,
+                :placeholder => "58 59 60",
                 :help_message => %(例: "58 59 60" → 58〜60期のどこかに在籍していたメンバーで絞る)
               }
             },
           },
           {
-            :label   => "この棋士の同期 (完全一致)",
+            :label   => "この棋士の同期 (完全一致・複数指定はOR条件)",
             :key     => :name,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:name].presence,
+                :placeholder => "藤井聡太 伊藤匠",
                 :help_message => %(例: "藤井聡太 伊藤匠" → 藤井聡太か伊藤匠と当たったかもしれないメンバーで絞る ※本人を含む)
               }
             },
           },
           {
-            :label   => "この師匠の弟子 (完全一致)",
+            :label   => "この師匠の弟子 (完全一致・複数指定はOR条件)",
             :key     => :mentor_name,
             :type    => :string,
             :dynamic_part => -> {
               {
                 :default => params[:mentor_name].presence,
+                :placeholder => "井上 森信",
                 :help_message => %(例: "井上 森信" → "井上か森信の門下で絞る ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
               }
             },
@@ -91,10 +95,10 @@ module QuickScript
           current_scope.unscope(:order).json_order.flat_map do |user|
             user.memberships.collect do |membership|
               {
-                "期次" => membership.league_season.season_number,
                 "名前" => membership.user.name,
-                "結果" => membership.result.name,
                 "勝数" => membership.win,
+                "結果" => membership.result.name,
+                "期次" => membership.league_season.season_number,
               }
             end
           end
@@ -222,7 +226,7 @@ module QuickScript
       end
 
       def button_css_class
-        @button_css_class ||= ["button", "is-small", "is-light"]
+        @button_css_class ||= ["button", "is-small", "is-light", "is_active_unset_direct"]
       end
 
       def default_params
