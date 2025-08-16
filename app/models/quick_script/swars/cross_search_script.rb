@@ -515,7 +515,7 @@ module QuickScript
           raise "must not happen"
         end
         @processed_at = Time.current
-        @processed_second = TimeTrial.realtime { found_ids }
+        @processed_second = TimeTrial.second { found_ids }
         if download_info.key == :on
           download_content
         end
@@ -1101,7 +1101,7 @@ module QuickScript
       def to_zip
         @to_zip ||= yield_self do
           io = nil
-          processed_second = TimeTrial.realtime { io = zip_builder.to_blob }
+          processed_second = TimeTrial.second { io = zip_builder.to_blob }
           AppLog.info(subject: "ZIP生成 (#{found_ids.size})", body: ActiveSupport::Duration.build(processed_second).inspect)
           io
         end

@@ -32,7 +32,7 @@ module ShareBoard
         end
         response = nil
 
-        seconds = TimeTrial.realtime do
+        seconds = TimeTrial.second do
           response = client.chat(
             :parameters => {
               :model        => "gpt-4o", # https://platform.openai.com/docs/models

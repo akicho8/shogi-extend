@@ -31,7 +31,7 @@ module QuickScript
 
       def prepare_aggregation_cache
         rows = DashboardItemInfo.find_all(&:cache_expires_in).collect do |item|
-          duration = TimeTrial.realtime { item.result }
+          duration = TimeTrial.second { item.result }
           { "項目" => item.name, "実行時間" => ActiveSupport::Duration.build(duration).inspect }
         end
         AppLog.info(subject: "[ダッシュボード][事前集計]", body: rows.to_t)
@@ -42,7 +42,7 @@ module QuickScript
       def computed_items
         DashboardItemInfo.collect do |item|
           result = nil
-          duration = TimeTrial.realtime { result = item.result }
+          duration = TimeTrial.second { result = item.result }
           [item, result, duration]
         end
       end
