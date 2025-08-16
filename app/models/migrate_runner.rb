@@ -14,10 +14,9 @@ class MigrateRunner
   def call
     public_methods.grep(/\A(step\w+)/).sort.each do |e|
       p [Time.now.to_s, e, :begin]
-      AppLog.important(subject: "[#{e}][開始]")
-      sec = TimeTrial.realtime { public_send(e) }
-      sec_human = ActiveSupport::Duration.build(sec).inspect
-      AppLog.important(subject: "[#{e}][完了] #{sec_human}")
+      AppLog.info(subject: "[#{e}][開始]")
+      bmx = Bmx.call { public_send(e) }
+      AppLog.info(subject: "[#{e}][完了]", body: bmx)
       p [Time.now.to_s, e, :end]
     end
     nil

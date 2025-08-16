@@ -1,27 +1,63 @@
+# ▼ローカル更新
+# rails r MainBatch.call
+#
+# ▼本番更新
+# cap production deploy:upload FILES=app/models/main_batch.rb
+# # RAILS_ENV=production bundle exec bin/rails r 'MainBatch.call'
+# RAILS_ENV=production nohup bundle exec bin/rails r 'MainBatch.call' &
+# tailf nohup.out
+#
+
 class MainBatch
+  class << self
+    def call(...)
+      new(...).call
+    end
+  end
+
   def call
-    AppLog.important(subject: "バッチ処理 開始")
+    AppLog.important(subject: "[バッチ処理][開始]")
     public_send(Rails.env)
-    AppLog.important(subject: "バッチ処理 終了")
+    AppLog.important(subject: "[バッチ処理][終了]")
+    nil
+  rescue => error
+    AppLog.important(error)
+    raise error
+  end
+
+  def staging
+    production
   end
 
   def production
-    # 動画変換
-    Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
+    public_methods.grep(/\A(step)/).sort.each do |method|
+      p [Time.now.to_s, method, :begin]
+      AppLog.info(subject: "[#{method}][開始]")
+      bmx = Bmx.call { public_send(method) }
+      AppLog.info(subject: "[#{method}][完了]", body: bmx)
+      p [Time.now.to_s, method, :end]
+    end
+  end
 
-    # 将棋ウォーズ棋譜検索クロール
+  def step1_動画変換
+    Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
+  end
+
+  def step2_将棋ウォーズ棋譜検索クロール
     if Rails.env.production?
       Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
       Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
       Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
     end
+  end
 
-    # 削除シリーズ
+  def step3_削除シリーズ
     Kiwi::Lemon.cleaner(execute: true).call   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     XfileCleaner.call(execute: true)          # public/system/x-files 以下の古い png と rb を削除する
     MediaBuilder.old_media_file_clean(keep: 3, execute: true)
+  end
 
-    # ActiveRecord 関連を GeneralCleaner で削除するシリーズ
+  def step4_ActiveRecord関連をGeneralCleanerで削除するシリーズ
     FreeBattle.destroyable.old_only(30.days).cleaner(subject: "FreeBattle", execute: true).call
     Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true).call  # 30分かかる
     Swars::Battle.destroyable_s.cleaner(subject: "特別", execute: true).call
@@ -29,8 +65,10 @@ class MainBatch
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
     AppLog.old_only(1.weeks).cleaner(subject: "アプリログ", execute: true).call
     ShareBoard::ChatMessage.old_only(30.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
+  end
 
-    # 集計 (自動的に cache_write があるクラスを集めるのも考えたがそれはやりすぎなので絶対やるなよ)
+  def step5_集計
+    # 自動的に cache_write があるクラスを集めるのも考えたがそれはやりすぎなので絶対やるなよ
     QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
     QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
 
@@ -39,18 +77,16 @@ class MainBatch
     QuickScript::Swars::TacticStatScript.new.cache_write       # 戦法一覧・戦法勝率ランキング
     QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
     QuickScript::Swars::TacticCrossScript.new.cache_write      # 将棋ウォーズ戦法人気ランキング (棋力別)
+  end
 
-    # BattleIdMining 系
+  def step6_戦法発掘
     QuickScript::Swars::TacticBattleMiningScript.new.cache_write # 戦法
     QuickScript::Swars::GradeBattleMiningScript.new.cache_write  # 棋力
     QuickScript::Swars::PresetBattleMiningScript.new.cache_write # 手合
     QuickScript::Swars::StyleBattleMiningScript.new.cache_write  # スタイル
-
-    # 検証
-    Swars::SystemValidator.new.call
   end
 
-  def staging
-    production
+  def step7_検証
+    Swars::SystemValidator.new.call
   end
 end

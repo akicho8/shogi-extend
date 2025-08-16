@@ -10,4 +10,9 @@ module TimeTrial
   def second(&block)
     ActiveSupport::Benchmark.realtime(:float_second, &block)
   end
+
+  def realtime(...)
+    ActiveSupport::Deprecation.warn("あかん")
+    second(...)
+  end
 end
