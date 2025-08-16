@@ -226,7 +226,7 @@ module QuickScript
       end
 
       def button_css_class
-        @button_css_class ||= ["button", "is-small", "is-light", "is_active_unset_direct"]
+        @button_css_class ||= ["button", "is-small", "is-light"]
       end
 
       def default_params
