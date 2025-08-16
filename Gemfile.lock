@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: b1a6b1f5e40c4b9d2c7ad228e9a35d57373a4835
+  revision: ec147239017f4ca997bbe6b33ddcbf078a07722a
   branch: main
   specs:
     bioshogi (0.0.17)
@@ -798,4 +798,4 @@ RUBY VERSION
    ruby 3.4.2p28
 
 BUNDLED WITH
-   2.6.6
+   2.7.1
