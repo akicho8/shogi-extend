@@ -7,7 +7,7 @@ module Swars
       # マッチしたら break なので上にあるほど優先度が高い
       {
         key: "不安定マン",
-        message: "不安定な環境で対局を開始して迷惑をかけた",
+        message: "不安定な通信環境で対局を開始して相手に迷惑をかけた",
         badge_params: "📵",
         if_cond: -> m {
           if m.judge_key == "lose"
@@ -65,7 +65,7 @@ module Swars
       },
       {
         key: "絶対投了しないマン",
-        message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },
+        message: -> m { "悔しさを嫌がらせに変えて時間切れになるまで#{m.think_last_s}放置した" },
         badge_params: "💩",
         if_cond: -> m {
           if m.judge_key == "lose"
@@ -83,7 +83,7 @@ module Swars
         # 「絶対投了しないマン」より後に判定すること
         key: "相手退席待ちマン",
         message: -> m { "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗した" },
-        badge_params: "🧌",
+        badge_params: "🪰",
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.turn_max >= Config.seiritsu_gteq
@@ -202,7 +202,7 @@ module Swars
       },
       {
         key: "千日手逃げマン",
-        message: "先手なのに千日手",
+        message: "先手なのに千日手にした",
         badge_params: "🍌",
         if_cond: -> m {
           if m.judge_key == "draw"
@@ -266,10 +266,44 @@ module Swars
         message: "入玉で勝った",
         badge_params: "🏈",
         if_cond: -> m {
-          if m.judge_key == "win"
-            if m.all_tag_names_set.include?(:"入玉")
-              m.battle.final_info.toryo_or_tsumi
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "win"
+              if m.all_tag_names_set.include?(:"入玉")
+                m.battle.final_info.toryo_or_tsumi
+              end
             end
+          end
+        },
+      },
+      {
+        key: "ロケットマン",
+        message: "多段ロケットを食らわして勝った",
+        badge_params: "🚀",
+        if_cond: -> m {
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "win"
+              m.all_tag_names_set.include?(:"3段ロケット") # 6段ロケットは3段ロケットを持つ
+            end
+          end
+        },
+      },
+      {
+        key: "王手飛車マン",
+        message: "王手飛車を食らわして勝った",
+        badge_params: "🦄",
+        if_cond: -> m {
+          if m.judge_key == "win"
+            m.all_tag_names_set.include?(:"王手飛車")
+          end
+        },
+      },
+      {
+        key: "王手角マン",
+        message: "王手角を食らわして勝った",
+        badge_params: "🐲",
+        if_cond: -> m {
+          if m.judge_key == "win"
+            m.all_tag_names_set.include?(:"王手角")
           end
         },
       },

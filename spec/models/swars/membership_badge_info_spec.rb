@@ -12,6 +12,7 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
         end
       end
       { black: black, white: white }.inject({}) do |a, (k, v)|
+        # p v.memberships.first.badge_info.key
         a.merge(k => v.memberships.first.badge_info.key.to_s)
       end
     end
@@ -21,6 +22,9 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
       assert { case1("飛車不成", :win)[:black] == "飛車不成マン" }
       assert { case1("屍の舞", :win)[:black]   == "背水マン"     }
       assert { case1("入玉", :win)[:black]     == "入玉勝ちマン" }
+      assert { case1("王手飛車", :win)[:black] == "王手飛車マン" }
+      assert { case1("王手角", :win)[:black]   == "王手角マン"   }
+      assert { case1("3段ロケット", :win)[:black] == "ロケットマン" }
     end
   end
 
@@ -47,7 +51,7 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
         e.memberships.build(user: @black, judge_key: :lose)
         e.memberships.build(user: @white, judge_key: :win)
       end
-      battle.memberships.first.badge_key_with_messsage == [:"絶対投了しないマン", "悔しかったので時間切れになるまで9分59秒放置した"]
+      battle.memberships.first.badge_key_with_messsage == [:絶対投了しないマン, "悔しさを嫌がらせに変えて時間切れになるまで9分59秒放置した"]
     end
 
     it "works" do
