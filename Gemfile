@@ -229,3 +229,7 @@ gem "google-api-client"
 
 # 統計
 gem "geom_craft"
+
+# RorvsWildで十分すぎる！Rails APM選択の新常識 - コスパ最強vs高級ツール比較
+# https://zenn.dev/yamitake/articles/rorvswild-rails-apm-best-choice
+gem "rorvswild"

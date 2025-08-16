@@ -173,6 +173,7 @@ class MigrateRunner
   #   end
   # end
 
+  # Swars::Battle.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}").count
   def step7_rebuild
     s = Swars::Battle.all
     batch_size = 1000

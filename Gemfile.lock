@@ -513,6 +513,7 @@ GEM
     rmagick (6.1.2)
       observer (~> 0.1)
       pkg-config (~> 1.4)
+    rorvswild (1.9.2)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -756,6 +757,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   retryable
   rmagick
+  rorvswild
   rspec
   rspec-core
   rspec-expectations

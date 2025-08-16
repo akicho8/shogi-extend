@@ -21,12 +21,9 @@ class MainBatch
     AppLog.important(subject: "[バッチ処理][終了]")
     nil
   rescue => error
+    RorVsWild.record_error(error)
     AppLog.important(error)
     raise error
-  end
-
-  def staging
-    production
   end
 
   def production
@@ -37,6 +34,10 @@ class MainBatch
       AppLog.info(subject: "[#{method}][完了]", body: bmx)
       p [Time.now.to_s, method, :end]
     end
+  end
+
+  def staging
+    production
   end
 
   def step1_動画変換
