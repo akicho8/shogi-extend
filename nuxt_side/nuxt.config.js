@@ -92,7 +92,10 @@ const config = {
     // },
 
     // https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-router/#linkactiveclass
-    linkActiveClass: "is-active",
+    // これを付けると非常にやっかいで自分ページに飛ぶ画面内のリンクすべて is-active 状態の色になってしまったりして、
+    // さらにこれが強すぎて is-active を無効化するのがむつかしい
+    // だからそもそも指定しない方がいい
+    // linkActiveClass: "is-active",
 
     // クエリ文字列のパース方法をカスタマイズ
     // https://v2.nuxt.com/ja/docs/configuration-glossary/configuration-router/#parsequery--stringifyquery
