@@ -137,8 +137,9 @@ module Swars
       {
         key: "大長考マン",
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をした" },
-        badge_params: "⚠",
+        badge_params: "😪",
         if_cond: -> m {
+          # 順番的に「負け」以外が該当する
           if m.battle.imode_info.key == :normal
             if t = m.battle.rule_info.kangaesugi_like_houti_sec
               m.think_max >= t
