@@ -2,16 +2,14 @@ module QuickScript
   module Admin
     OrderedIndex = [
       DashboardScript,
-
       AppLogSearchScript,
+      BookmarkScript,
 
       ShareBoardBattleSearchScript,
       ShareBoardRoomSearchScript,
       ShareBoardChatMessageSearchScript,
 
       ActionCableInfoScript,
-
-      BookmarkScript,
 
       SwarsZipDlLogScript,
 

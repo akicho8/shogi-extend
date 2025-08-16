@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  scope "/admin" do
+    mount MaintenanceTasks::Engine, at: "/maintenance_tasks"
+  end
+
   root "tops#show"
 
   get "health" => HealthResponder
