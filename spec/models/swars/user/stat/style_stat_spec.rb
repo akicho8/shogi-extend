@@ -9,11 +9,11 @@ RSpec.describe Swars::User::Stat::StyleStat, type: :model, swars_spec: true do
         e.memberships.build(user: black)
         e.memberships.build(user: white)
       end
-      white.stat.style_stat
+      black.stat.style_stat
     end
 
     it "works" do
-      style_stat = case1("新米長玉")
+      style_stat = case1("オザワシステム")
       assert { style_stat.counts_hash  == { :"変態" => 1 } }
       assert { style_stat.ratios_hash  == { :"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 0.0, :"変態" => 1.0 } }
       assert { style_stat.denominator  == 1 }
@@ -23,7 +23,7 @@ RSpec.describe Swars::User::Stat::StyleStat, type: :model, swars_spec: true do
 
     it "to_chart" do
       assert do
-        case1("新米長玉").to_chart == [
+        case1("オザワシステム").to_chart == [
           { :name => "王道",   :value => 0 },
           { :name => "準王道", :value => 0 },
           { :name => "準変態", :value => 0 },

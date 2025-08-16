@@ -19,7 +19,7 @@ class Bmx
   end
 
   def call
-    @second = TimeTrial.realtime(&block)
+    @second = TimeTrial.second(&block)
   end
 
   def to_s
