@@ -30,7 +30,7 @@ module Swars
       def friend_kill_ratio
         if win_lose_total(:"友達") >= MINIMUM_NUMBER_OF_BATTLES
           if v = ratio_by_xmode_key(:"友達")
-            ab = 0.8..1.00
+            ab = 0.75..1.00
             if v >= ab.min
               map_range(v, *ab.minmax, 0.0, 1.0)
             end
