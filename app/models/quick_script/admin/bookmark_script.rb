@@ -14,6 +14,7 @@ module QuickScript
           { "Site" => { _link_to: "Rorvswild local",      _v_bind: { href: "https://www.rorvswild.com/applications/136518/requests?range=1h", target: "_blank" }, }, },
           { "Site" => { _link_to: "Rorvswild staging",    _v_bind: { href: "https://www.rorvswild.com/applications/136520/requests?range=1h", target: "_blank" }, }, },
           { "Site" => { _link_to: "Rorvswild production", _v_bind: { href: "https://www.rorvswild.com/applications/136519/requests?range=1h", target: "_blank" }, }, },
+          { "Site" => { _link_to: "Mackerel production",  _v_bind: { href: "https://mackerel.io/orgs/shogi-web-production/hosts/3RWVXVWncbG", target: "_blank" }, }, },
         ]
       end
     end
