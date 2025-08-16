@@ -37,11 +37,6 @@
 
 module Api
   class SwarsController < ::Api::ApplicationController
-    # http://localhost:3000/api/swars/tag_frequency
-    def tag_frequency
-      render json: Swars::TagFrequency.new(params.to_unsafe_h.to_options)
-    end
-
     concerning :CustomSearchMethods do
       # curl http://localhost:3000/api/swars/custom_search_setup
       def custom_search_setup

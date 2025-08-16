@@ -115,7 +115,6 @@ Rails.application.routes.draw do
 
     get "swars/download_config_fetch(.:format)", to: "swars#download_config_fetch"
     get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
-    get "swars/tag_frequency(.:format)",    to: "swars#tag_frequency"
     get "swars/user_stat(.:format)",             to: "swars#user_stat"
 
     namespace :wkbk, format: :json do
