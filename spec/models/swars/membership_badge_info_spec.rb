@@ -25,6 +25,7 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
       assert { case1("王手飛車", :win)[:black] == "王手飛車マン" }
       assert { case1("王手角", :win)[:black]   == "王手角マン"   }
       assert { case1("3段ロケット", :win)[:black] == "ロケットマン" }
+      # assert { case1("急戦", :win)[:black] == "急戦マン" }
     end
   end
 

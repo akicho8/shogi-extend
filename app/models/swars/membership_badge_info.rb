@@ -307,6 +307,18 @@ module Swars
           end
         },
       },
+      # {
+      #   key: "急戦マン",
+      #   message: "急戦で勝った",
+      #   badge_params: "🐝",
+      #   if_cond: -> m {
+      #     if m.judge_key == "win"
+      #       if m.all_tag_names_set.include?(:"急戦")
+      #         m.battle.final_info.toryo_or_tsumi
+      #       end
+      #     end
+      #   },
+      # },
       {
         key: "段級位差",
         message: nil,
