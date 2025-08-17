@@ -35,6 +35,8 @@ module Swars
         scope :imode_only,   -> imode_keys {     where(imode: Imode.where(key: imode_keys)) }                    # 特定の開始モードのみ
         scope :imode_except, -> imode_keys { where.not(imode: Imode.where(key: imode_keys)) }                    # 特定の開始モードを除く
 
+        scope :old_analysis_version, -> { where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}") }            # 戦法抽出バージョンが古いもの
+
         # 削除対象
         scope :cleaner_scope, -> (options = {}) {
           options = {}.merge(options)
