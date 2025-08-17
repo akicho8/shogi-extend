@@ -39,6 +39,9 @@ for (i in seq_along(names_list)) {
   # 最初の4人だけ表示、その他は非表示
   visible_status <- if (i <= 4) TRUE else "legendonly"
 
+  # マーカーサイズ：昇段なら大きく
+  sub_df$marker_size <- ifelse(sub_df$結果 == "昇段", 18, 10)
+
   p <- add_trace(
     p,
     data = sub_df,
@@ -48,7 +51,7 @@ for (i in seq_along(names_list)) {
     mode = "lines+markers+text",
     name = name_i,
     line = list(width = 3, shape = "spline"),
-    marker = list(size = 10, opacity = 0.8),
+    marker = list(size = ~marker_size, opacity = 0.8),
     text = ~テキスト,
     textposition = "top center",
     hovertext = ~hover,
