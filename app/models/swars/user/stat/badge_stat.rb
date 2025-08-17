@@ -27,7 +27,7 @@ module Swars
       end
 
       def active_badges
-        BadgeInfo.find_all { |e| stat.instance_eval(&e.if_cond) || badge_debug }
+        BadgeInfo.find_all { |e| stat.instance_exec(&e.if_cond) || badge_debug }
       end
 
       def active_badge_keys
@@ -39,7 +39,7 @@ module Swars
       end
 
       def active?(key)
-        stat.instance_eval(&BadgeInfo[key].if_cond)
+        stat.instance_exec(&BadgeInfo[key].if_cond)
       end
 
       def to_debug_hash
@@ -67,7 +67,7 @@ module Swars
       def execution_time_explain(sort: true)
         av = BadgeInfo.values.shuffle.collect { |e|
           if_cond = nil
-          ms = TimeTrial.ms { if_cond = !!stat.instance_eval(&e.if_cond) }
+          ms = TimeTrial.ms { if_cond = !!stat.instance_exec(&e.if_cond) }
           [ms, e, if_cond]
         }
         if sort

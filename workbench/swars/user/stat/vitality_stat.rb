@@ -1,6 +1,6 @@
 require "./setup"
-# _ { Swars::User["SugarHuuko"].stat(sample_max: 1000).vitality_stat.level } # => "127.57 ms"
-# s { Swars::User["SugarHuuko"].stat(sample_max: 1000).vitality_stat.level } # => 0.0
+# _ { Swars::User["SugarHuuko"].stat(sample_max: 1000).vitality_stat.vital_ratio } # => "127.57 ms"
+# s { Swars::User["SugarHuuko"].stat(sample_max: 1000).vitality_stat.vital_ratio } # => 0.0
 
 sql
 Swars::User["SugarHuuko"].stat(sample_max: 1000).vitality_stat.win_only.to_a # => []

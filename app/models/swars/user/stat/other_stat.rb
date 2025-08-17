@@ -17,7 +17,7 @@ module Swars
           av = av.reject(&:local_only)
         end
         av.each_with_object([]) do |e, m|
-          body = @stat.instance_eval(&e.body)
+          body = @stat.instance_exec(&e.body)
           body = not_zero_allow_then_zero_as_nil(e, body)
           if body.present? || Rails.env.local?
             hv = {
@@ -37,7 +37,7 @@ module Swars
       def execution_time_explain(sort: true)
         av = OtherInfo.collect { |e|
           body = nil
-          ms = TimeTrial.ms { body = @stat.instance_eval(&e.body) }
+          ms = TimeTrial.ms { body = @stat.instance_exec(&e.body) }
           [ms, e, body]
         }
         if sort
