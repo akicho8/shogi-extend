@@ -15,12 +15,24 @@ module Swars
         ]
       end
 
+      ################################################################################ win
+
       def win_only
         @win_only ||= ids_scope.win_only
       end
 
       def win_count
         @win_count ||= win_only.count
+      end
+
+      def win_ratio
+        @win_ratio ||= yield_self do
+          if ids_count.positive?
+            win_count.fdiv(ids_count)
+          else
+            0.0
+          end
+        end
       end
 
       ################################################################################ lose
@@ -43,17 +55,7 @@ module Swars
         @draw_count ||= draw_only.count
       end
 
-      ################################################################################ other
-
-      def win_ratio
-        @win_ratio ||= yield_self do
-          if ids_count.positive?
-            win_count.fdiv(ids_count)
-          else
-            0.0
-          end
-        end
-      end
+      ################################################################################
     end
   end
 end
