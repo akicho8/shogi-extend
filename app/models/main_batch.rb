@@ -60,12 +60,16 @@ class MainBatch
 
   def step4_ActiveRecord関連をGeneralCleanerで削除するシリーズ
     FreeBattle.destroyable.old_only(30.days).cleaner(subject: "FreeBattle", execute: true).call
-    Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true).call  # 30分かかる
-    Swars::Battle.destroyable_s.cleaner(subject: "特別", execute: true).call
     Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
     AppLog.old_only(1.weeks).cleaner(subject: "アプリログ", execute: true).call
     ShareBoard::ChatMessage.old_only(30.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
+
+    # Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true).call  # 30分かかる
+    # Swars::Battle.destroyable_s.cleaner(subject: "特別", execute: true).call
+
+    Swars::NormalDestroyBatch.call(name: "棋譜削除一般", execute: true)
+    Swars::SpecialDestroyBatch.call(name: "棋譜削除特別", execute: true)
   end
 
   def step5_集計
