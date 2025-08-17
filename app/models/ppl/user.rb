@@ -47,7 +47,16 @@ module Ppl
 
     before_validation do
       self.runner_up_count ||= 0
+
       self.win_max ||= 0
+      self.total_win ||= 0
+      self.total_lose ||= 0
+      self.win_ratio ||= 0
+
+      denominator = total_win + total_lose
+      if denominator.nonzero?
+        self.win_ratio = total_win.fdiv(denominator)
+      end
     end
 
     with_options presence: true do

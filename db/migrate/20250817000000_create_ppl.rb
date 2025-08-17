@@ -18,6 +18,10 @@ class CreatePpl < ActiveRecord::Migration[6.0]
       t.integer :runner_up_count,         null: false, index: false,             comment: "次点個数"
       t.integer :win_max,                 null: false, index: true,              comment: "最大勝ち数"
 
+      t.integer :total_win,               null: true,  index: false,             comment: "総勝数"
+      t.integer :total_lose,              null: true,  index: false,             comment: "総負数"
+      t.float :win_ratio,                 null: false, index: true,              comment: "勝率"
+
       t.belongs_to :promotion_membership, null: true,  index: true,              comment: "プロになったときの成績"
       t.integer :promotion_season_number, null: true,  index: true,              comment: "プロになった期"
       t.integer :promotion_win,           null: true,  index: true,              comment: "プロになったときの勝ち数"

@@ -7,7 +7,7 @@ module Ppl
 
     def initialize(params = {})
       @params = {
-        :take_size => 256,
+        :take_size => nil,
         :verbose   => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
         :sleep     => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 1 : 0,
       }.merge(params)
@@ -70,7 +70,7 @@ module Ppl
     end
 
     def take_size
-      (params[:take_size].presence || 256).to_i
+      (params[:take_size].presence || 1000).to_i
     end
 
     def season_number

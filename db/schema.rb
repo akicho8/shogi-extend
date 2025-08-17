@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_16_071535) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -345,6 +345,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_16_071535) do
     t.integer "age_max", comment: "リーグ最後の年齢"
     t.integer "runner_up_count", null: false, comment: "次点個数"
     t.integer "win_max", null: false, comment: "最大勝ち数"
+    t.integer "total_win", comment: "総勝数"
+    t.integer "total_lose", comment: "総負数"
+    t.float "win_ratio", null: false, comment: "勝率"
     t.bigint "promotion_membership_id", comment: "プロになったときの成績"
     t.integer "promotion_season_number", comment: "プロになった期"
     t.integer "promotion_win", comment: "プロになったときの勝ち数"
@@ -367,6 +370,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_16_071535) do
     t.index ["season_number_max"], name: "index_ppl_users_on_season_number_max"
     t.index ["season_number_min"], name: "index_ppl_users_on_season_number_min"
     t.index ["win_max"], name: "index_ppl_users_on_win_max"
+    t.index ["win_ratio"], name: "index_ppl_users_on_win_ratio"
   end
 
   create_table "presets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
