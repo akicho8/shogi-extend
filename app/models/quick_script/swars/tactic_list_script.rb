@@ -33,6 +33,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default     => query,
+                :help_message => %("a -b c -d" → a と c を含むが b と d は除く),
                 :placeholder => "戦 アヒル -裏",
               }
             },
@@ -50,25 +51,27 @@ module QuickScript
       end
 
       def human_rows
-        current_items.collect do |item|
-          {}.tap do |row|
-            row["名前"] = item_search_link(item)
-            row["勝率"] = tactics_hash.dig(item.key, :"勝率").try { "%.3f" % self } || "?"
-            row["出現率"] = "%.4f" % (tactics_hash.dig(item.key, :"出現率") || 0.0)
-            row["人気度"] = "%.4f" % (tactics_hash.dig(item.key, :"人気度") || 0.0)
-            row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
-            row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
-            row["スタイル"] = item.style_info.name
-            row["種類"] = item.human_name
-            row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
-            if AppConfig[:encyclopedia_link]
-              row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
+        @human_rows ||= yield_self do
+          current_items.collect do |item|
+            {}.tap do |row|
+              row["名前"] = item_search_link(item)
+              row["勝率"] = tactics_hash.dig(item.key, :"勝率").try { "%.3f" % self } || "?"
+              row["出現率"] = "%.4f" % (tactics_hash.dig(item.key, :"出現率") || 0.0)
+              row["人気度"] = "%.4f" % (tactics_hash.dig(item.key, :"人気度") || 0.0)
+              row["出現回数"] = tactics_hash.dig(item.key, :"出現回数") || 0
+              row["使用人数"] = tactics_hash.dig(item.key, :"使用人数") || 0
+              row["スタイル"] = item.style_info.name
+              row["種類"] = item.human_name
+              row["発掘"] = battle_id_collector.tactic_battle_ids_count(item)
+              if AppConfig[:encyclopedia_link]
+                row[header_blank_column(0)] = { _nuxt_link: "判定局面", _v_bind: { to: { path: "/lab/general/encyclopedia", query: { tag: item.name }, }, }, }
+              end
+              if Rails.env.local?
+                row[header_blank_column(1)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
+                row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
+              end
+              row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }
             end
-            if Rails.env.local?
-              row[header_blank_column(1)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
-              row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
-            end
-            row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }
           end
         end
       end
@@ -108,6 +111,10 @@ module QuickScript
         @battle_id_collector ||= BattleIdCollector.new
       end
 
+      def show_all
+        params[:show_all]
+      end
+
       concerning :FilterFunction do
         def query
           params[:query].to_s
@@ -123,7 +130,12 @@ module QuickScript
             Array(g[false]).each do |m|
               av = av.reject { |e| e.to_s.include?(m) }
             end
-            av.collect(&:item).sort_by(&:key)
+            av = av.collect(&:item).sort_by(&:key)
+            if params[:all]
+            else
+              av = av.find_all { |e| tactics_hash.has_key?(e.key) }
+            end
+            av
           end
         end
 
