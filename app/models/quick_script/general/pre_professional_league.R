@@ -39,8 +39,39 @@ for (i in seq_along(names_list)) {
   # 最初の4人だけ表示、その他は非表示
   visible_status <- if (i <= 4) TRUE else "legendonly"
 
-  # マーカーサイズ：昇段なら大きく
-  sub_df$marker_size <- ifelse(sub_df$結果 == "昇段", 18, 10)
+  # マーカーサイズ（昇段は大きく、次点も個別に指定、その他は通常）
+  sub_df$marker_size <- ifelse(
+    sub_df$結果 == "昇段", 18,
+    ifelse(sub_df$結果 == "次点", 18,  # 次点は 14 に設定
+      10  # それ以外は 10
+    )
+  )
+
+  # マーカー形状（結果ごとに指定）
+  sub_df$marker_symbol <- ifelse(
+    sub_df$結果 == "昇段", "star",
+    ifelse(sub_df$結果 == "次点", "circle",
+      ifelse(sub_df$結果 == "降段", "triangle-down",
+        ifelse(sub_df$結果 == "維持", "circle", "circle")  # 維持は丸
+      )
+    )
+  )
+
+  # テキストは最後の期次だけ名前を表示
+  sub_df$テキスト <- ifelse(sub_df$期次_num == max(sub_df$期次_num), name_i, "")
+
+  # 前の点との差分を計算
+  sub_df$勝数_diff <- c(NA, diff(sub_df$勝数))
+
+  # textposition を決定
+  # - 勝数が前の期次より下がっている場合 → "bottom center"
+  # - それ以外 → "top center"
+  sub_df$text_position <- ifelse(
+    sub_df$勝数_diff < 0, "bottom center", "top center"
+  )
+
+  # 最初の点は NA なので top にしておく
+  sub_df$text_position[1] <- "top center"
 
   p <- add_trace(
     p,
@@ -51,9 +82,9 @@ for (i in seq_along(names_list)) {
     mode = "lines+markers+text",
     name = name_i,
     line = list(width = 3, shape = "spline"),
-    marker = list(size = ~marker_size, opacity = 0.8),
+    marker = list(size = ~marker_size, opacity = 0.8, symbol = ~marker_symbol),
     text = ~テキスト,
-    textposition = "top center",
+    textposition = ~text_position,
     hovertext = ~hover,
     hoverinfo = "text",
     visible = visible_status
