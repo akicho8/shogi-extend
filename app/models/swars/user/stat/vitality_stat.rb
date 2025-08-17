@@ -20,14 +20,12 @@ module Swars
         vital_ratio > 1.0 && win_ratio <= 0.5
       end
 
-      private
-
-      ################################################################################
-
       # 最近の1日あたりの対局数 = 勢い
       def vital_ratio
         @vital_ratio ||= count.fdiv(FREE_BATTLE_COUNT * PERIOD_DAYS)
       end
+
+      private
 
       ################################################################################
 
