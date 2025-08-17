@@ -142,10 +142,10 @@ module Swars
 
         ################################################################################ 不成
 
-        { key: "不成勝ちマン",           icon: "🤡",   message: "不成して勝った",     if_cond: proc { tag_stat.win_with?(:"角不成") || tag_stat.win_with?(:"飛車不成") }  },
-        { key: "不成負けマン",           icon: "🦟",   message: "不成して負けた",     if_cond: proc { tag_stat.lose_with?(:"角不成") || tag_stat.lose_with?(:"飛車不成") }  },
-        { key: "VS不成勝ちマン",         icon: "👮‍♂️",   message: "不成者を成敗した",   if_cond: proc { op_tag_stat.lose_with?(:"角不成") || op_tag_stat.lose_with?(:"飛車不成") } },
-        { key: "VS不成負けマン",         icon: "🌚",   message: "不成者に負けた",     if_cond: proc { op_tag_stat.win_with?(:"角不成") || op_tag_stat.win_with?(:"飛車不成") } },
+        { key: "不成勝ちマン",           icon: "🤡",   message: "舐めプして勝った",    if_cond: proc { tag_stat.win_with?(:"角不成") || tag_stat.win_with?(:"飛車不成") }  },
+        { key: "不成負けマン",           icon: "🦟",   message: "舐めプして負けた",    if_cond: proc { tag_stat.lose_with?(:"角不成") || tag_stat.lose_with?(:"飛車不成") }  },
+        { key: "VS不成勝ちマン",         icon: "👮‍♂️",   message: "成らず者を成敗した",  if_cond: proc { op_tag_stat.lose_with?(:"角不成") || op_tag_stat.lose_with?(:"飛車不成") } },
+        { key: "VS不成負けマン",         icon: "🌚",   message: "成らず者に負けた",    if_cond: proc { op_tag_stat.win_with?(:"角不成") || op_tag_stat.win_with?(:"飛車不成") } },
 
         ################################################################################ 全駒・玉単騎
 
