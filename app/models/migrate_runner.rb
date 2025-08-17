@@ -59,7 +59,7 @@ class MigrateRunner
   def step2_両者の最終対局がかなり前の対局を全部消す
     Swars::Battle.in_batches do |scope|
       # scope = scope.vip_except
-      scope = scope.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
+      scope = scope.analysis_version_old_only
       scope = scope.joins(memberships: :user)
       scope = scope.group("swars_battles.id")
       scope = scope.having("MAX(swars_users.latest_battled_at) < ?", 1.month.ago)
@@ -88,7 +88,7 @@ class MigrateRunner
         scope.each do |user|
           battles_max2 = battles_max_gt
           battles = user.battles
-          battles = battles.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
+          battles = battles.analysis_version_old_only
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           process_count += battles.size
           tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
@@ -122,7 +122,7 @@ class MigrateRunner
         scope.each do |user|
           battles_max2 = battles_max_gt
           battles = user.battles
-          battles = battles.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
+          battles = battles.analysis_version_old_only
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           process_count += battles.size
           tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
@@ -176,7 +176,7 @@ class MigrateRunner
   #   end
   # end
 
-  # Swars::Battle.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}").count
+  # Swars::Battle.analysis_version_old_only.count
   def step7_rebuild
     s = Swars::Battle.all
     batch_size = 1000
@@ -185,7 +185,7 @@ class MigrateRunner
       p [batch, all_count, batch.fdiv(all_count)]
       # s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/10/28 12:25")))
       # s = s.where.not(analysis_version: Bioshogi::ANALYSIS_VERSION - 1)
-      s = s.where("analysis_version < #{Bioshogi::ANALYSIS_VERSION}")
+      s = s.analysis_version_old_only
       # s = s.where("analysis_version < 2")
       s.each { |e| e.rebuild(tries: 1) }
       puts
