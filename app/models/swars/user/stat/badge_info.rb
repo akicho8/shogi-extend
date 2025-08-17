@@ -117,7 +117,8 @@ module Swars
 
         ################################################################################ 連勝
 
-        { key: "勢いがある",             icon: "🔥",   message: "勢いがある",           if_cond: proc { vitality_stat.badge? }, },
+        { key: "勢いマン",               icon: "🔥",   message: "勢いがある",           if_cond: proc { vitality_stat.vital_and_strong? }, },
+        { key: "勢いだけマン",           icon: "🔥",   message: "勢いだけはある",       if_cond: proc { vitality_stat.vital_but_weak? }, },
         { key: "5連勝",                  icon: "🍰",   message: "5連勝した",            if_cond: proc { win_lose_streak_stat.five_win? }, },
         { key: "10連勝",                 icon: "🎂",   message: "10連勝した",           if_cond: proc { win_lose_streak_stat.ten_win? }, },
         { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい", if_cond: proc { win_lose_streak_stat.waves_strong? }, },

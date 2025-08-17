@@ -1,0 +1,8 @@
+require "#{__dir__}/setup"
+sql { Swars::User["SugarHuuko"].stat.total_judge_stat.win_ratio } # => 0.78
+# >>   Swars::User Load (0.4ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user.rb:45:in 'Swars::User.[]'
+# >>   Swars::Membership Ids (11.4ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50 /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:31:in 'Swars::User::Stat::ScopeExt#scope_ids'
+# >>   Swars::Membership Count (0.7ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (128141870, 128141873, 128141874, 128141876, 128141879, 128141880, 128141883, 128015255, 128015258, 128015259, 128015261, 128015263, 128015265, 128015267, 128015270, 128015271, 128015273, 128015276, 128015280, 128015284, 128015286, 128015242, 128005819, 128015243, 128015245, 128015248, 128015249, 128015252, 128015254, 128001335, 128001336, 128001338, 128001341, 128001342, 128001345, 128001346, 128001349, 128001350, 127823018, 127823020, 127805035, 127364566, 127364568, 127364570, 127364574, 127364575, 127364577, 127364580, 127364582, 127364584) GROUP BY `judges`.`key` /*application='ShogiWeb'*/
+# >>   ↳ app/models/swars/user/stat/membership_global_extension.rb:14:in 'Swars::User::Stat::MembershipGlobalExtension::ClassMethods#total_judge_counts'
