@@ -62,7 +62,7 @@ module Swars
       # Swars::Membership Ids (40.7ms)  SELECT swars_memberships.id FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.user_id = 17413 ORDER BY swars_battles.battled_at DESC LIMIT 50
       #
       def base_scope
-        s = @scope.joins(:battle).merge(Battle.newest_order)
+        s = @scope.joins(:battle).merge(Battle.latest_order)
         if ids = filtered_battle_ids
           s = s.where(battle: ids)
         end

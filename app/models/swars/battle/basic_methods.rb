@@ -34,7 +34,7 @@ module Swars
 
         scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
         scope :draw_only,     -> { where(win_user_id: nil) }     # 引き分けのもの
-        scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
+        scope :latest_order, -> { order(battled_at: :desc) }     # 新しい順
         scope :valid_match_only, -> { where(arel_table[:turn_max].gteq(Config.seiritsu_gteq)) } # 成立していると見なす対局に絞る
 
         custom_belongs_to :rule,  ar_model: Rule,  st_model: RuleInfo,  default: "10分"

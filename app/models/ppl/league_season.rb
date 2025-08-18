@@ -40,7 +40,7 @@ module Ppl
     has_many :memberships, dependent: :destroy
     has_many :users, through: :memberships
 
-    scope :newest_order, -> { order(season_number: :desc) }
+    scope :latest_order, -> { order(season_number: :desc) }
     scope :oldest_order, -> { order(season_number: :asc)  }
   end
 end

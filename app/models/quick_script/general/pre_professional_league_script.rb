@@ -193,7 +193,7 @@ module QuickScript
 
       def league_season_links
         h_stack(:class => "gap_small") do
-          blocks = Ppl::LeagueSeason.newest_order.collect do |e|
+          blocks = Ppl::LeagueSeason.latest_order.collect do |e|
             params = default_params.merge(season_number: e.season_number)
             { _nuxt_link: e.season_number, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
           end

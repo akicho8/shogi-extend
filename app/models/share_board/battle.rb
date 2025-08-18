@@ -56,7 +56,7 @@ module ShareBoard
 
     has_many :users, through: :memberships
 
-    scope :newest_order, -> { order(position: :desc) }
+    scope :latest_order, -> { order(position: :desc) }
 
     before_validation on: :create do
       self.key ||= SecureRandom.hex
