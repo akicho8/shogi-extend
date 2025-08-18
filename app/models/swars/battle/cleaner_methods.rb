@@ -79,9 +79,9 @@ module Swars
         # 一般ユーザー
         scope :destroyable_n, -> (options = {}) {
           options = {
-            :xmode_only  => ["野良", "大会"],
+            :xmode_only  => nil, # ["野良", "大会"],
             :ban_except  => false,
-            :old_only    => Rails.env.local? ? 0.days : 30.days,
+            :old_only    => Rails.env.local? ? 0.days : 45.days,
             :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
@@ -90,7 +90,7 @@ module Swars
         # VIPユーザー
         scope :destroyable_s, -> (options = {}) {
           options = {
-            :xmode_only  => ["野良", "大会"],
+            :xmode_only  => nil, # ["野良", "大会"],
             :ban_except  => false,
             :old_only    => Rails.env.local? ? 0.days : 60.days,
             :user_only   => Swars::User::Vip.long_time_keep_user_keys, # こちらに含まれていても
