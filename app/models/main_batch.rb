@@ -44,21 +44,13 @@ class MainBatch
     Kiwi::Lemon.background_job_for_cron   # 動画変換。job時間が 0...0 ならcronで実行する
   end
 
-  def step2_将棋ウォーズ棋譜検索クロール
-    if Rails.env.production?
-      Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
-      Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
-      Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
-    end
-  end
-
-  def step3_削除シリーズ
+  def step2_削除シリーズ
     Kiwi::Lemon.cleaner(execute: true).call   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     XfileCleaner.call(execute: true)          # public/system/x-files 以下の古い png と rb を削除する
     MediaBuilder.old_media_file_clean(keep: 3, execute: true)
   end
 
-  def step4_ActiveRecord関連をGeneralCleanerで削除するシリーズ
+  def step3_ActiveRecord関連をGeneralCleanerで削除するシリーズ
     FreeBattle.destroyable.old_only(30.days).cleaner(subject: "FreeBattle", execute: true).call
     Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
@@ -70,6 +62,14 @@ class MainBatch
 
     Swars::NormalDestroyBatch.call(name: "棋譜削除一般", execute: true)
     Swars::SpecialDestroyBatch.call(name: "棋譜削除特別", execute: true)
+  end
+
+  def step3_将棋ウォーズ棋譜検索クロール
+    if Rails.env.production?
+      Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
+      Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
+      Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
+    end
   end
 
   def step5_集計
