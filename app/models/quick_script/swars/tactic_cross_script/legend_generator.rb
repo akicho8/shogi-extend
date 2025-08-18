@@ -6,7 +6,7 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
 
   def top_names
     [
-      "居飛車", "振り飛車",
+      # "居飛車", "振り飛車",
       # "急戦", "持久戦",
       # "短手数", "長手数",
       # "手損角交換型", "手得角交換型",
@@ -66,7 +66,8 @@ class QuickScript::Swars::TacticCrossScript::LegendGenerator
     raw_data = URI.open(api_url).read
     items = JSON.parse(raw_data)
 
-    categories = ["備考", "手筋", "戦法", "囲い"]
+    # categories = ["備考", "手筋", "戦法", "囲い"]
+    categories = ["戦法", "囲い", "手筋", "備考"]
     group = items.group_by { |e| e["種類"] }
     sorted_items = categories.flat_map do |category|
       # group[category].sort_by { |e| -e["人気度"] }

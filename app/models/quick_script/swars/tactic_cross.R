@@ -10,7 +10,10 @@ library(htmlwidgets)
 # api_url <- "http://localhost:3000/api/lab/swars/tactic-cross.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/swars/tactic-cross.json?json_type=general"
 
-visible_names <- c("居飛車", "振り飛車") # 初期表示する戦法
+# visible_names <- c("居飛車", "振り飛車") # 初期表示する戦法
+visible_names_s <- c("居飛車", "振り飛車") # 出現率
+# visible_names_n <- c("四間飛車", "三間飛車", "中飛車") # 人気度
+visible_names_n <- c("居飛車", "振り飛車") # 人気度
 
 rank_order <- c(
   "10級", "9級", "8級", "7級", "6級", "5級", "4級", "3級", "2級", "1級",
@@ -75,7 +78,7 @@ for (name in target_names) {
     textfont = list(color = "white", size = 18),
     hovertext = ~hover,
     hoverinfo = "text",
-    visible = if (name %in% visible_names) TRUE else "legendonly",
+    visible = if (name %in% visible_names_s) TRUE else "legendonly",
     marker = list(size = 12, symbol = "circle", opacity = 0.8),
     line = list(width = 4, shape = "spline"),
     yaxis = "y"
@@ -94,7 +97,7 @@ for (name in target_names) {
     textfont = list(color = "white", size = 18),
     hovertext = ~hover,
     hoverinfo = "text",
-    visible = if (name %in% visible_names) TRUE else "legendonly",
+    visible = if (name %in% visible_names_n) TRUE else "legendonly",
     marker = list(size = 12, symbol = "circle", opacity = 0.8),
     line = list(width = 4, dash = "dot", shape = "spline"),
     yaxis = "y2"
