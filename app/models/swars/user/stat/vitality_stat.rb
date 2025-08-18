@@ -25,6 +25,11 @@ module Swars
         @vital_ratio ||= count.fdiv(FREE_BATTLE_COUNT * PERIOD_DAYS)
       end
 
+      # 最近の対局数
+      def count
+        @count ||= local_scope.count
+      end
+
       private
 
       ################################################################################
@@ -59,11 +64,6 @@ module Swars
           s = s.joins(:battle)
           s = s.where(Battle.arel_table[:battled_at].gteq(PERIOD_DAYS.days.ago))
         end
-      end
-
-      # 最近の対局数
-      def count
-        @count ||= local_scope.count
       end
 
       ################################################################################
