@@ -2,21 +2,27 @@
 
 module Ppl
   class User < ApplicationRecord
+    PROMOTABLE_RUNNER_UP_COUNT = 2 # 昇段の権利を取得できる次点の数
+
     class << self
       def [](name)
         find_by(name: name)
       end
+
+      def fetch(name)
+        find_by!(name: name)
+      end
     end
 
-    has_many :memberships, dependent: :destroy   # 対局時の情報(複数)
-    has_many :league_seasons, through: :memberships     # 対局(複数)
+    has_many :memberships, dependent: :destroy      # 対局時の情報(複数)
+    has_many :league_seasons, through: :memberships # 対局(複数)
 
-    belongs_to :mentor, counter_cache: true, optional: true # 師匠
+    belongs_to :mentor, counter_cache: true, optional: true # 師匠 (いない人もいる)
 
     with_options class_name: "Ppl::Membership", optional: true do
-      belongs_to :memberships_first
-      belongs_to :memberships_last
-      belongs_to :promotion_membership
+      belongs_to :memberships_first    # 所属開始したときの時期
+      belongs_to :memberships_last     # 所属終了したときの時期
+      belongs_to :promotion_membership # 昇段したときの時期
     end
 
     # 最優先で「昇段している人」「昇段していない人」の順にする
@@ -26,7 +32,16 @@ module Ppl
     scope :table_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :asc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
 
     # 最近昇段した人ほど手前にくる
-    scope :link_order,  -> { order(promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
+    scope :link_order,  -> {
+      order([
+          {promotion_season_number: :desc},
+          {promotion_win: :desc},
+          Arel.sql("deactivated_season_number IS NOT NULL"),
+          {runner_up_count: :desc},
+          {age_min: :asc},
+          {memberships_count: :asc},
+        ])
+      }
 
     scope :json_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
 
@@ -67,18 +82,71 @@ module Ppl
       validates :name, uniqueness: true
     end
 
-    # 昇段または次点2つで権利を獲得したか？
-    # ・次点2つの場合は昇段したか
+    # 「昇段」or「次点2つ」か？
     def promoted_or_rights
-      promotion_membership_id || runner_up_count >= 2
+      promotion_membership_id || promotion_by_runner_up_count?
     end
 
+    # 「次点2つ」によって昇段の権利を得たか？
+    def promotion_by_runner_up_count?
+      runner_up_count >= PROMOTABLE_RUNNER_UP_COUNT
+    end
+
+    # 昇段した年齢
     def promotion_age
       promotion_membership&.age
     end
 
+    # 所属した範囲
     def season_number_range
       season_number_min..season_number_max
+    end
+
+    # 退会した？
+    def deactivated?
+      deactivated_season_number
+    end
+
+    # 現役会員と思われる？
+    def active?
+      !deactivated_season_number
+    end
+
+    # 状態
+    def status
+      case
+      when promotion_membership_id
+        "昇段"
+      when promotion_by_runner_up_count?
+        "フリ"
+      when active?
+        "現役"
+      when deactivated?
+        ""
+      else
+        ""
+      end
+    end
+
+    # 退会することにしたシーズンを得る
+    def update_deactivated_season_number
+      scope = Ppl::LeagueSeason.where(Ppl::LeagueSeason.arel_table[:season_number].gt(season_number_max)).oldest_order
+      scope = scope.includes(:users)
+      league_season = scope.first
+
+      if league_season
+        if league_season.users.include?(self)
+          # 次のシーズンに参加している (シーズン > season_number_max としているのでここにくることはない)
+          raise "must not happen"
+        else
+          # 次のシーズンがあるのに参加していないということは season_number_max を最後に退会したということ
+          self.deactivated_season_number = season_number_max
+        end
+      else
+        # 次のシーズンがないということは最新のシーズン所属している
+        self.deactivated_season_number = nil
+      end
+      save!
     end
   end
 end

@@ -46,6 +46,8 @@ module Ppl
           membership = user.memberships.find_or_initialize_by(league_season: league_season)
           membership.update!(attrs.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
         end
+
+        User.find_each(&:update_deactivated_season_number)
       end
     end
 

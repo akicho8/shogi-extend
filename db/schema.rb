@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000000) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -355,6 +355,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000000) do
     t.integer "season_number_min", comment: "最初に参加したときの期"
     t.bigint "memberships_last_id", comment: "最後に参加したときの成績"
     t.integer "season_number_max", comment: "最後に参加したときの期"
+    t.integer "deactivated_season_number", comment: "この期を最後に退会した"
     t.integer "memberships_count", default: 0, null: false, comment: "参加期間相当"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

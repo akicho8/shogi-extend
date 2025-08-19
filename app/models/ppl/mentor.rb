@@ -6,6 +6,10 @@ module Ppl
       def [](name)
         find_by(name: name)
       end
+
+      def fetch(name)
+        find_by!(name: name)
+      end
     end
 
     has_many :users, dependent: :destroy   # 弟子たち

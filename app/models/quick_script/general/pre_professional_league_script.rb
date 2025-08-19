@@ -110,16 +110,17 @@ module QuickScript
 
         rows = current_scope.collect do |user|
           {
-            "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => css_class(user) },
+            "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => user_css_class(user) },
             "師匠" => user_mentor_name(user),
             "期間" => user.memberships_count,
-            "入期" => user.season_number_min,
-            "出期" => user.season_number_max,
-            "入齢" => user.age_min,
-            "出齢" => user.age_max,
+            "期→" => user.season_number_min,
+            "←期" => user.season_number_max,
+            "齢→" => user.age_min,
+            "←齢" => user.age_max,
             "次点" => user.runner_up_count,
             "最勝" => user.win_max,
             "勝率" => user.win_ratio.try { "%.3f" % self },
+            "状況" => user.status,
             "昇齢" => user.promotion_age,
             "昇期" => user.promotion_season_number,
             "昇勝" => user.promotion_win,
@@ -171,10 +172,13 @@ module QuickScript
         end
       end
 
-      def css_class(user)
+      def user_css_class(user)
         av = ["is_decoration_off"]
         if user.promoted_or_rights
           av << "has-text-weight-bold"
+        end
+        if user.active?
+          av << "has-text-primary"
         end
         av
       end
@@ -212,6 +216,9 @@ module QuickScript
             css_klass = button_css_class
             if e.promoted_or_rights
               css_klass += ["has-text-weight-bold"]
+            end
+            if e.active?
+              css_klass += ["is-primary"]
             end
             { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => css_klass.join(" ") }
           end

@@ -32,6 +32,8 @@ class CreatePpl < ActiveRecord::Migration[6.0]
       t.belongs_to :memberships_last,     null: true,  index: true,              comment: "最後に参加したときの成績"
       t.integer :season_number_max,       null: true,  index: true,              comment: "最後に参加したときの期"
 
+      t.integer :deactivated_season_number, null: true, index: false,            comment: "この期を最後に退会した"
+
       t.integer :memberships_count,       null: false, index: false, default: 0, comment: "参加期間相当"
       t.timestamps
     end

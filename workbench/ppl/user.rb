@@ -3,44 +3,29 @@ Ppl.setup_for_workbench
 Ppl::Updater.update_raw(5, { name: "XA", result_key: "維持" })
 Ppl::Updater.update_raw(6, { name: "BX", result_key: "維持" })
 Ppl::User.plus_minus_search("A -B").collect(&:name) == ["XA"] # => true
+exit
+
+Ppl.setup_for_workbench
+Ppl::Updater.update_raw(5, { name: "XA", result_key: "維持" })
+Ppl::Updater.update_raw(6, { name: "BX", result_key: "維持" })
+Ppl::User.plus_minus_search("A -B").collect(&:name) == ["XA"] # => 
 
 Ppl.setup_for_workbench
 Ppl::Updater.update_raw(5, { name: "alice", result_key: "維持", age: 1, win: 3 })
 Ppl::Updater.update_raw(6, { name: "alice", result_key: "次点", age: 2, win: 2 })
 Ppl::Updater.update_raw(7, { name: "alice", result_key: "昇段", age: 3, win: 1 })
 user = Ppl::User["alice"]
-user.age_min                                # => 1
-user.age_max                                # => 3
-user.runner_up_count                        # => 1
-user.win_max                                # => 3
-user.promotion_membership.league_season.season_number # => 7
-user.promotion_season_number                   # => 7
-user.promotion_win                          # => 1
-user.memberships_first.league_season.season_number       # => 5
-user.memberships_last.league_season.season_number       # => 7
-user.season_number_min                         # => 5
-user.season_number_max                         # => 7
+user.age_min                                # => 
+user.age_max                                # => 
+user.runner_up_count                        # => 
+user.win_max                                # => 
+user.promotion_membership.league_season.season_number # => 
+user.promotion_season_number                   # => 
+user.promotion_win                          # => 
+user.memberships_first.league_season.season_number       # => 
+user.memberships_last.league_season.season_number       # => 
+user.season_number_min                         # => 
+user.season_number_max                         # => 
 tp Ppl::LeagueSeason
 tp Ppl::User
 tp Ppl::Membership
-# >> "ppl_users"
-# >> "ppl_users"
-# >> |-----+---------------+---------------------------+---------------------------|
-# >> | id  | season_number | created_at                | updated_at                |
-# >> |-----+---------------+---------------------------+---------------------------|
-# >> | 533 |             5 | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> | 534 |             6 | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> | 535 |             7 | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> |-----+---------------+---------------------------+---------------------------|
-# >> |------+-----------+-------+---------+---------+-----------------+---------+-------------------------+-------------------------+---------------+----------------------+-------------------+---------------------+-------------------+-------------------+---------------------------+---------------------------|
-# >> | id   | mentor_id | name  | age_min | age_max | runner_up_count | win_max | promotion_membership_id | promotion_season_number | promotion_win | memberships_first_id | season_number_min | memberships_last_id | season_number_max | memberships_count | created_at                | updated_at                |
-# >> |------+-----------+-------+---------+---------+-----------------+---------+-------------------------+-------------------------+---------------+----------------------+-------------------+---------------------+-------------------+-------------------+---------------------------+---------------------------|
-# >> | 2166 |           | alice |       1 |       3 |               1 |       3 |                   14106 |                       7 |             1 |                14104 |                 5 |               14106 |                 7 |                 3 | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> |------+-----------+-------+---------+---------+-----------------+---------+-------------------------+-------------------------+---------------+----------------------+-------------------+---------------------+-------------------+-------------------+---------------------------+---------------------------|
-# >> |-------+------------------+---------+-----------+-----------+-----+-----+------+----+---------------------------+---------------------------|
-# >> | id    | league_season_id | user_id | result_id | start_pos | age | win | lose | ox | created_at                | updated_at                |
-# >> |-------+------------------+---------+-----------+-----------+-----+-----+------+----+---------------------------+---------------------------|
-# >> | 14104 |              533 |    2166 |         4 |         0 |   1 |   3 |    0 |    | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> | 14105 |              534 |    2166 |         3 |         0 |   2 |   2 |    0 |    | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> | 14106 |              535 |    2166 |         1 |         0 |   3 |   1 |    0 |    | 2025-08-15 15:24:11 +0900 | 2025-08-15 15:24:11 +0900 |
-# >> |-------+------------------+---------+-----------+-----------+-----+-----+------+----+---------------------------+---------------------------|
