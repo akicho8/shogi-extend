@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000001) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000002) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -329,6 +329,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000001) do
     t.index ["name"], name: "index_ppl_mentors_on_name", unique: true
   end
 
+  create_table "ppl_ranks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_ppl_ranks_on_key", unique: true
+    t.index ["position"], name: "index_ppl_ranks_on_position"
+  end
+
   create_table "ppl_results", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
@@ -339,6 +348,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000001) do
   end
 
   create_table "ppl_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "rank_id", null: false, comment: "種類"
     t.bigint "mentor_id", comment: "師匠"
     t.string "name", null: false, comment: "棋士名"
     t.integer "age_min", comment: "リーグ入り年齢"
@@ -368,6 +378,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000001) do
     t.index ["promotion_membership_id"], name: "index_ppl_users_on_promotion_membership_id"
     t.index ["promotion_season_number"], name: "index_ppl_users_on_promotion_season_number"
     t.index ["promotion_win"], name: "index_ppl_users_on_promotion_win"
+    t.index ["rank_id"], name: "index_ppl_users_on_rank_id"
     t.index ["season_number_max"], name: "index_ppl_users_on_season_number_max"
     t.index ["season_number_min"], name: "index_ppl_users_on_season_number_min"
     t.index ["win_max"], name: "index_ppl_users_on_win_max"

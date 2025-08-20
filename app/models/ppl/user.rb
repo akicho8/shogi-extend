@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# frozen-string-literal: true
 
 module Ppl
   class User < ApplicationRecord
@@ -19,6 +19,8 @@ module Ppl
 
     belongs_to :mentor, counter_cache: true, optional: true # 師匠 (いない人もいる)
 
+    custom_belongs_to :rank, ar_model: Rank, st_model: RankInfo, default: :active_member # 昇段→フリ→現役→退会
+
     with_options class_name: "Ppl::Membership", optional: true do
       belongs_to :memberships_first    # 所属開始したときの時期
       belongs_to :memberships_last     # 所属終了したときの時期
@@ -29,21 +31,30 @@ module Ppl
     # 非常にわかりにくいが promotion_season_number IS NULL で値があれば false つまり 0 になるため上にくる
     # そのあとで promotion_season_number: asc なので昇段している中ではなるべく先輩から表示する
     # このようにすることで、期を絞ったときその期で昇段した人が上にくるのでわかりやすい
-    scope :table_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :asc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
-
-    # 最近昇段した人ほど手前にくる
-    scope :link_order,  -> {
+    scope :table_order,  -> {
       order([
-          {promotion_season_number: :desc},
+          Rank.arel_table[:position].asc,
+          {promotion_season_number: :asc},
           {promotion_win: :desc},
-          Arel.sql("deactivated_season_number IS NOT NULL"),
           {runner_up_count: :desc},
           {age_min: :asc},
           {memberships_count: :asc},
         ])
       }
 
-    scope :json_order, -> { order(Arel.sql("promotion_season_number IS NULL"), promotion_season_number: :desc, promotion_win: :desc, runner_up_count: :desc, age_min: :asc, memberships_count: :asc) }
+    # 最近昇段した人ほど手前にくる
+    scope :link_order,  -> {
+      order([
+          Rank.arel_table[:position].asc,
+          {promotion_season_number: :desc},
+          {promotion_win: :desc},
+          {runner_up_count: :desc},
+          {age_min: :asc},
+          {memberships_count: :asc},
+        ])
+      }
+
+    scope :json_order, -> { link_order }
 
     scope :plus_minus_search, -> query do
       scope = all
@@ -102,7 +113,7 @@ module Ppl
       season_number_min..season_number_max
     end
 
-    # 退会した？
+    # 退会した？ (連盟が「降」を書かないため退会したのか降段なのかわからない)
     def deactivated?
       deactivated_season_number
     end
@@ -113,18 +124,17 @@ module Ppl
     end
 
     # 状態
-    def status
-      case
-      when promotion_membership_id
-        "昇段"
-      when promotion_by_runner_up_count?
-        "フリ"
-      when active?
-        "現役"
-      when deactivated?
-        ""
+    def rank_key_without_rank
+      if promotion_membership
+        if promotion_membership.result_key == "promotion"
+          :true_professional
+        else
+          :substitute_professional
+        end
+      elsif deactivated_season_number
+        :resigned
       else
-        ""
+        :active_member
       end
     end
 
@@ -146,6 +156,9 @@ module Ppl
         # 次のシーズンがないということは最新のシーズン所属している
         self.deactivated_season_number = nil
       end
+
+      self.rank_key = rank_key_without_rank
+
       save!
     end
   end

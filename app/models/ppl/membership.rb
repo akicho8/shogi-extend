@@ -64,13 +64,13 @@ module Ppl
 
     def user_result_set
       if saved_change_to_attribute?(:result_id)
-        case result.key
-        when "promotion"        # 昇段
+        if result.key == "runner_up"
+          user.runner_up_count += 1
+        end
+        if result.key == "promotion" || user.runner_up_count >= User::PROMOTABLE_RUNNER_UP_COUNT
           user.promotion_membership = self
           user.promotion_season_number = league_season.season_number
           user.promotion_win = win
-        when "runner_up"        # 次点
-          user.runner_up_count += 1
         end
       end
     end

@@ -111,7 +111,7 @@ module QuickScript
         rows = current_scope.collect do |user|
           {
             "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => user_css_class(user) },
-            "師匠" => user_mentor_name(user),
+            "師匠" => menter_name_of(user),
             "期間" => user.memberships_count,
             "期→" => user.season_number_min,
             "←期" => user.season_number_max,
@@ -120,17 +120,17 @@ module QuickScript
             "次点" => user.runner_up_count,
             "最勝" => user.win_max,
             "勝率" => user.win_ratio.try { "%.3f" % self },
-            "状況" => user.status,
+            "状況" => user.rank.pure_info.short_name,
             "昇齢" => user.promotion_age,
             "昇期" => user.promotion_season_number,
             "昇勝" => user.promotion_win,
-            **memberhip_fields(user),
+            **memberhip_fields_of(user),
           }
         end
         simple_table(rows)
       end
 
-      def user_mentor_name(user)
+      def menter_name_of(user)
         if false
           # 本当はリンクしたいが表示する値自体がソート対象値なのでリンクにしてしまうとソートできなくなる
           user.mentor ? { _nuxt_link: user.mentor.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(mentor_name: user.mentor.name)) }, :class => "is_decoration_off" } : ""
@@ -162,7 +162,7 @@ module QuickScript
         @field_season_numbers ||= Range.new(*memberships_hash.keys.minmax).to_a.reverse
       end
 
-      def memberhip_fields(user)
+      def memberhip_fields_of(user)
         field_season_numbers.each_with_object({}) do |season_number, m|
           value = nil
           if memberhip = memberships_hash.dig(season_number, user.id)
@@ -173,14 +173,7 @@ module QuickScript
       end
 
       def user_css_class(user)
-        av = ["is_decoration_off"]
-        if user.promoted_or_rights
-          av << "has-text-weight-bold"
-        end
-        if user.active?
-          av << "has-text-primary"
-        end
-        av
+        ["is_decoration_off", *user.rank.pure_info.table_css_class].join(" ")
       end
 
       ################################################################################
@@ -211,15 +204,9 @@ module QuickScript
 
       def user_links
         h_stack(:class => "gap_small") do
-          Ppl::User.link_order.collect do |e|
+          Ppl::User.includes(:rank).link_order.collect do |e|
             params = default_params.merge(name: e.name)
-            css_klass = button_css_class
-            if e.promoted_or_rights
-              css_klass += ["has-text-weight-bold"]
-            end
-            if e.active?
-              css_klass += ["is-primary"]
-            end
+            css_klass = [button_css_class, *e.rank.pure_info.nav_css_class]
             { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => css_klass.join(" ") }
           end
         end

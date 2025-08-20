@@ -9,6 +9,7 @@ module Ppl
       destroy_all
     end
     Result.setup(options)
+    Rank.setup(options)
     LeagueSeason.setup(options)
   end
 
@@ -28,5 +29,6 @@ module Ppl
   def self.setup_for_workbench
     destroy_all
     Result.setup
+    Rank.setup
   end
 end

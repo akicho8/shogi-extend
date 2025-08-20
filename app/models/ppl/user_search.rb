@@ -36,7 +36,7 @@ module Ppl
         scope = scope.where(id: user_ids)
       end
 
-      scope = scope.includes(mentor: [], memberships: [:user, :league_season, :result])
+      scope = scope.includes(rank: nil, mentor: nil, memberships: { user: nil, league_season: nil, result: nil })
       scope = scope.table_order
     end
 

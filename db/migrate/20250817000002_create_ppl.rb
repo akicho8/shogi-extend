@@ -11,7 +11,9 @@ class CreatePpl < ActiveRecord::Migration[6.0]
     end
 
     create_table :ppl_users, force: true do |t|
+      t.belongs_to :rank,                 null: false, index: true,              comment: "種類"
       t.belongs_to :mentor,               null: true,  index: true,              comment: "師匠"
+
       t.string :name,                     null: false, index: { unique: true },  comment: "棋士名"
       t.integer :age_min,                 null: true,  index: true,              comment: "リーグ入り年齢"
       t.integer :age_max,                 null: true,  index: true,              comment: "リーグ最後の年齢"
@@ -62,8 +64,18 @@ class CreatePpl < ActiveRecord::Migration[6.0]
       t.timestamps         null: false
     end
 
+    create_table :ppl_ranks, force: true do |t|
+      t.string :key,       null: false, index: { unique: true }
+      t.integer :position, null: true,  index: true, comment: "順序"
+      t.timestamps         null: false
+    end
+
     Ppl::Result.reset_column_information
     Ppl::Result.setup
     tp Ppl::Result
+
+    Ppl::Rank.reset_column_information
+    Ppl::Rank.setup
+    tp Ppl::Rank
   end
 end
