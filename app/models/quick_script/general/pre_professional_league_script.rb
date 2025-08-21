@@ -64,7 +64,7 @@ module QuickScript
               {
                 :default => params[:mentor_name].presence,
                 :placeholder => "井上 森信",
-                :help_message => %(例: "井上 森信" → "井上か森信の門下で絞る ※連盟の表記にばらつきがあるため正確ではないる結果になる場合がある)
+                :help_message => %(例: "井上 森信" → "井上か森信の門下で絞る ※表記にばらつきがあるため正確ではない結果になる場合がある)
               }
             },
           },
