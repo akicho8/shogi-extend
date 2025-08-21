@@ -6,10 +6,11 @@
     SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="APP.query_for_link")
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
-  .tactic_tags(v-if="available_tag_list_names.length >= 1")
+  b-taglist.mb-1(v-if="available_tag_list_names.length >= 1")
     template(v-for="key in available_tag_list_names")
       template(v-for="name in membership[key]")
-        nuxt-link.tactic_tag(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()") {{name}}
+        nuxt-link.tag.is-rounded.is-marginless(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")
+          | {{name}}
 </template>
 
 <script>
@@ -50,34 +51,12 @@ export default {
     justify-content: flex-start
     font-size: $size-5
 
-  // Bulma の .tags tag があまりにも複雑で何やっても謎のスペースがあくので自分で書く
-  // (おそらく inline-flex が原因だとは思う)
-  .tactic_tags
-    display: flex
-    flex-wrap: wrap
-    gap: 2px                    // 全体の隙間
-    .tactic_tag
-      // とにかく真ん中
-      display: flex
-      align-items: center
-      justify-content: center
-      // 折り返さない
-      white-space: nowrap
-      // サイズ
-      font-size: $size-small
-      height: 2em
-      line-height: 1.0
-      // 装飾
-      background-color: $background
-      border-radius: $radius-rounded
-      color: $text
-      // なかの余白
-      padding-left: 0.75em
-      padding-right: 0.75em
+  .tags
+    gap: 3px
 
   // バッジがあってタブレット以上なら戦法の左をアイコンのぶんだけずらしておく
   &.has_badge
-    .tactic_tags
+    .tags
       +tablet
         margin-left: 1.5rem
 
@@ -98,7 +77,7 @@ export default {
         // 名前を右寄せ
         justify-content: flex-end
 
-    .tactic_tags
+    .tags
       // タグを右寄せ
       justify-content: flex-end
 
@@ -106,6 +85,6 @@ export default {
   .SwarsBattleIndexMembership
     .icon_with_name
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .tactic_tags
+    .tags
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
