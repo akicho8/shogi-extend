@@ -71,6 +71,7 @@ import { mod_sidebar              } from "./mod_sidebar.js"
 import { mod_storage              } from "./mod_storage.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
+import { TacticInfo      } from "@/components/models/tactic_info.js"
 
 import { ParamInfo  } from "./models/param_info.js"
 import { SceneInfo  } from "../models/scene_info.js"
@@ -227,6 +228,7 @@ export default {
 
   computed: {
     ExternalAppInfo() { return ExternalAppInfo },
+    TacticInfo()      { return TacticInfo },
     ParamInfo()       { return ParamInfo },
 
     SceneInfo()     { return SceneInfo                         },

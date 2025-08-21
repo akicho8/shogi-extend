@@ -6,12 +6,10 @@
     SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="APP.query_for_link")
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
-  b-taglist(v-if="APP.column_visible_p('attack_tag_list') || APP.column_visible_p('defense_tag_list')")
-    template(v-for="key in ['attack_tag_list', 'defense_tag_list', 'technique_tag_list', 'note_tag_list']")
-      template(v-if="APP.column_visible_p(key)")
-        template(v-for="name in membership[key]")
-          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")
-            b-tag(rounded) {{name}}
+  .tactic_tags(v-if="available_tag_list_names.length >= 1")
+    template(v-for="key in available_tag_list_names")
+      template(v-for="name in membership[key]")
+        nuxt-link.tactic_tag(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()") {{name}}
 </template>
 
 <script>
@@ -35,7 +33,11 @@ export default {
     },
   },
   computed: {
-    has_badge() { return this.APP.column_visible_p('badge') },
+    // バッジを表示するか？
+    has_badge() { return this.APP.column_visible_p("badge") },
+
+    // 表示するタグ変数名たち
+    available_tag_list_names() { return this.APP.TacticInfo.values.map(e => e.tag_list_name).filter(e => this.APP.column_visible_p(e)) },
   },
 }
 </script>
@@ -48,18 +50,34 @@ export default {
     justify-content: flex-start
     font-size: $size-5
 
-  .tags
-    margin-bottom: 0
-    .tag
-      margin-bottom: 0
-    a
-      margin: 0           // 右方向にあるマージを除去
-      &:not(:first-child)
-        margin-left: 2px  // タグ同士の隙間
+  // Bulma の .tags tag があまりにも複雑で何やっても謎のスペースがあくので自分で書く
+  // (おそらく inline-flex が原因だとは思う)
+  .tactic_tags
+    display: flex
+    flex-wrap: wrap
+    gap: 2px                    // 全体の隙間
+    .tactic_tag
+      // とにかく真ん中
+      display: flex
+      align-items: center
+      justify-content: center
+      // 折り返さない
+      white-space: nowrap
+      // サイズ
+      font-size: $size-small
+      height: 2em
+      line-height: 1.0
+      // 装飾
+      background-color: $background
+      border-radius: $radius-rounded
+      color: $text
+      // なかの余白
+      padding-left: 0.75em
+      padding-right: 0.75em
 
   // バッジがあってタブレット以上なら戦法の左をアイコンのぶんだけずらしておく
   &.has_badge
-    .tags
+    .tactic_tags
       +tablet
         margin-left: 1.5rem
 
@@ -70,26 +88,24 @@ export default {
     //   &:hover
     //     color: $link
 
-// 縦表示のとき
+// モバイル時(縦表示)のとき
 .has-mobile-cards
   +mobile
     .SwarsBattleIndexMembership
-      // モバイルのときは縦表示になるので名前を大きくする
       .icon_with_name
+        // 名前を大きくする
         font-size: $size-4
+        // 名前を右寄せ
         justify-content: flex-end
 
-    // モバイル時は折り返しありの右より
-    .tags
-      flex-wrap: wrap
+    .tactic_tags
+      // タグを右寄せ
       justify-content: flex-end
-      align-items: center
-      align-content: flex-start
 
-.STAGE-development
+.STAGE-development-x
   .SwarsBattleIndexMembership
     .icon_with_name
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .tags
+    .tactic_tags
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
