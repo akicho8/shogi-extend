@@ -6,11 +6,11 @@ library(htmlwidgets)
 # データ取得
 # api_url <- "http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general"
 api_url <- "https://www.shogi-extend.com/api/lab/general/pre-professional-league.json?json_type=general"
-df <- fromJSON(api_url)
+df <- fromJSON(api_url)$成績行列
+# df <- fromJSON(api_url)
 
-# 期次順に並べる
-期次_order <- sort(unique(df$期次))
-df$期次 <- factor(df$期次, levels = 期次_order)
+# x 軸用に数値として保持（数値変換を忘れない）
+df$期次_num <- as.numeric(df$期次)
 
 # プロット初期化
 p <- plot_ly()
@@ -23,10 +23,10 @@ for (i in seq_along(names_list)) {
   name_i <- names_list[i]
   sub_df <- subset(df, 名前 == name_i)
 
-  # 期次を因子のまま使う場合でも、開始点判定用に数値に変換
-  sub_df$期次_num <- as.numeric(as.character(sub_df$期次))
+  # 期次順にソート
+  sub_df <- sub_df[order(sub_df$期次_num), ]
 
-  # その棋士の最後の期次だけテキスト表示
+  # 最後の期次だけ名前を表示
   sub_df$テキスト <- ifelse(sub_df$期次_num == max(sub_df$期次_num), name_i, "")
 
   # ホバーテキスト
@@ -39,44 +39,29 @@ for (i in seq_along(names_list)) {
   # 最初の4人だけ表示、その他は非表示
   visible_status <- if (i <= 4) TRUE else "legendonly"
 
-  # マーカーサイズ（昇段は大きく、次点も個別に指定、その他は通常）
+  # マーカーサイズ
   sub_df$marker_size <- ifelse(
     sub_df$結果 == "昇段", 18,
-    ifelse(sub_df$結果 == "次点", 18,  # 次点は 14 に設定
-      10  # それ以外は 10
-    )
+    ifelse(sub_df$結果 == "次点", 18, 10)
   )
 
-  # マーカー形状（結果ごとに指定）
+  # マーカー形状
   sub_df$marker_symbol <- ifelse(
     sub_df$結果 == "昇段", "star",
     ifelse(sub_df$結果 == "次点", "circle",
-      ifelse(sub_df$結果 == "降段", "triangle-down",
-        ifelse(sub_df$結果 == "維持", "circle", "circle")  # 維持は丸
-      )
+      ifelse(sub_df$結果 == "降段", "triangle-down", "circle")
     )
   )
 
-  # テキストは最後の期次だけ名前を表示
-  sub_df$テキスト <- ifelse(sub_df$期次_num == max(sub_df$期次_num), name_i, "")
-
-  # 前の点との差分を計算
+  # 前の点との差分
   sub_df$勝数_diff <- c(NA, diff(sub_df$勝数))
-
-  # textposition を決定
-  # - 勝数が前の期次より下がっている場合 → "bottom center"
-  # - それ以外 → "top center"
-  sub_df$text_position <- ifelse(
-    sub_df$勝数_diff < 0, "bottom center", "top center"
-  )
-
-  # 最初の点は NA なので top にしておく
+  sub_df$text_position <- ifelse(sub_df$勝数_diff < 0, "bottom center", "top center")
   sub_df$text_position[1] <- "top center"
 
   p <- add_trace(
     p,
     data = sub_df,
-    x = ~期次,
+    x = ~期次_num,
     y = ~勝数,
     type = "scatter",
     mode = "lines+markers+text",
@@ -99,8 +84,8 @@ p <- layout(
     font = list(size = 24, color = "white")
   ),
   xaxis = list(
-    categoryorder = "array",
-    categoryarray = 期次_order,
+    tickvals = df$期次_num,
+    ticktext = df$期次,
     tickfont = list(color = "#aaa"),
     showgrid = TRUE,
     gridcolor = "#444",

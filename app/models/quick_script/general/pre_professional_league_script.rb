@@ -14,7 +14,7 @@ module QuickScript
 
       def header_link_items
         super + [
-          { name: "推移図", icon: "chart-box", _v_bind: { href: "/lab/general/pre-professional-league.html", target: "_self", }, },
+          { name: "グラフ", icon: "chart-box", _v_bind: { href: "/lab/general/pre-professional-league.html", target: "_self", }, },
         ]
       end
 
@@ -73,34 +73,47 @@ module QuickScript
 
       # http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general
       def as_general_json
-        if false
-          # このネストした形式は R の前処理がややこしくなりすぎて自分にはさっぱりわからん
-          current_scope.collect do |user|
+        {
+          "総合成績" => as_general_json_list,
+          "成績行列" => as_general_json_matrix,
+        }
+      end
+
+      # R 側では未使用だけど誰かが使うかもしれないので入れている
+      def as_general_json_list
+        current_scope.collect do |user|
+          {
+            "弟子" => user.name,
+            "師匠" => user.mentor&.name,
+            "期間" => user.memberships_count,
+            "期→" => user.season_number_min,
+            "←期" => user.season_number_max,
+            "齢→" => user.age_min,
+            "←齢" => user.age_max,
+            "次点" => user.runner_up_count,
+            "最勝" => user.win_max,
+            "勝率" => user.win_ratio,
+            "状況" => user.rank.pure_info.short_name,
+            "昇齢" => user.promotion_age,
+            "昇期" => user.promotion_season_number,
+            "昇勝" => user.promotion_win,
+            # このネストした形式は R の前処理がややこしくなりすぎて自分にはさっぱりわからんので R 側では「成績行列」の方だけを使っている
+            "成績" => user.memberships.inject({}) { |a, m| a.merge(m.league_season.season_number => m.win) },
+          }
+        end
+      end
+
+      # memberships の順番は不確定なのでDBの状況によって変わる
+      # したがって R 側で並べる必要がある
+      def as_general_json_matrix
+        current_scope.unscope(:order).json_order.flat_map do |user|
+          user.memberships.collect do |membership|
             {
-              "弟子"         => user.name,
-              "師匠"         => user.mentor.name,
-              "昇段時の年齢" => user.promotion_age,
-              "昇段時の期"   => user.promotion_season_number,
-              "昇段時の勝数" => user.promotion_win,
-              "在籍期間"     => user.memberships_count,
-              "年齢から"     => user.age_min,
-              "年齢まで"     => user.age_max,
-              "次点回数"     => user.runner_up_count,
-              "最大勝数"     => user.win_max,
-              "成績"         => user.memberships.inject({}) { |a, m| a.merge(m.league_season.season_number => m.win) },
+              "名前" => membership.user.name,
+              "勝数" => membership.win,
+              "結果" => membership.result.name,
+              "期次" => membership.league_season.season_number,
             }
-          end
-        else
-          # R にやさしいハッシュの配列にする
-          current_scope.unscope(:order).json_order.flat_map do |user|
-            user.memberships.collect do |membership|
-              {
-                "名前" => membership.user.name,
-                "勝数" => membership.win,
-                "結果" => membership.result.name,
-                "期次" => membership.league_season.season_number,
-              }
-            end
           end
         end
       end

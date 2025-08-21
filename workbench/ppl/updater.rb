@@ -2,7 +2,7 @@ require "#{__dir__}/setup"
 Ppl.setup_for_workbench
 
 # ネットからDB
-#  Ppl::Updater.resume_crawling
+# Ppl::Updater.resume_crawling
 
 # ネットからJSON
 # all = (28..77).collect { |e| Ppl::Spider.new(season_number: e).call }
