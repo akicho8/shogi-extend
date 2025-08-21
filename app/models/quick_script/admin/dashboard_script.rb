@@ -7,6 +7,22 @@ module QuickScript
       self.description = ""
       self.title_click_behaviour = :force_reload
 
+      RORVSWILD_URLS = {
+        "test"        => "https://www.rorvswild.com/applications/136518/requests?range=1h",
+        "development" => "https://www.rorvswild.com/applications/136518/requests?range=1h",
+        "staging"     => "https://www.rorvswild.com/applications/136520/requests?range=1h",
+        "production"  => "https://www.rorvswild.com/applications/136519/requests?range=1h",
+      }
+
+      def header_link_items
+        super + [
+          { name: "RorVsWild",   _v_bind: { href: RORVSWILD_URLS[Rails.env],                         target: "_blank" }, },
+          { name: "Sidekiq",     _v_bind: { href: UrlProxy.full_url_for("/admin/sidekiq"),           target: "_blank" }, },
+          { name: "Maintenance", _v_bind: { href: UrlProxy.full_url_for("/admin/maintenance_tasks"), target: "_blank" }, },
+          { name: "Top",         _v_bind: { href: UrlProxy.full_url_for("/"),                        target: "_blank" }, },
+        ]
+      end
+
       def call
         tag.div(:class => "columns is-mobile is-multiline") do
           computed_items.collect { |item, result, duration|
