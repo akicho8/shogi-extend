@@ -11,7 +11,6 @@
 # | league_season_id                | LeagueSeason                   | integer(8)  | NOT NULL    |            | A! B  |
 # | user_id                  | User                     | integer(8)  | NOT NULL    | => User#id | A! C  |
 # | result_key               | Result key               | string(255) | NOT NULL    |            | D     |
-# | start_pos                | Start pos                | integer(4)  | NOT NULL    |            | E     |
 # | age                      | Age                      | integer(4)  |             |            |       |
 # | win                      | Win                      | integer(4)  |             |            | F     |
 # | lose                     | Lose                     | integer(4)  |             |            | G     |
@@ -33,14 +32,12 @@ module Ppl
     custom_belongs_to :result, ar_model: Result, st_model: ResultInfo, default: :retain # 結果
 
     before_validation do
-      self.start_pos ||= 0
       self.win ||= 0
       self.lose ||= 0
       self.ox ||= ""
     end
 
     with_options presence: true do
-      validates :start_pos
       validates :win
       validates :lose
     end

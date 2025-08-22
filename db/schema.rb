@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000003) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000004) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -306,7 +306,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000003) do
     t.bigint "league_season_id", null: false, comment: "リーグ"
     t.bigint "user_id", null: false, comment: "棋士"
     t.bigint "result_id", null: false, comment: "結果"
-    t.integer "start_pos", null: false, comment: "初期順位"
     t.integer "age", comment: "年齢"
     t.integer "win", null: false, comment: "勝ち数"
     t.integer "lose", null: false, comment: "負け数"
@@ -316,7 +315,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000003) do
     t.index ["league_season_id", "user_id"], name: "index_ppl_memberships_on_league_season_id_and_user_id", unique: true
     t.index ["league_season_id"], name: "index_ppl_memberships_on_league_season_id"
     t.index ["result_id"], name: "index_ppl_memberships_on_result_id"
-    t.index ["start_pos"], name: "index_ppl_memberships_on_start_pos"
     t.index ["user_id"], name: "index_ppl_memberships_on_user_id"
     t.index ["win"], name: "index_ppl_memberships_on_win"
   end

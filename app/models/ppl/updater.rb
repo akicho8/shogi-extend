@@ -14,7 +14,7 @@ module Ppl
     # Ppl::Updater.resume_crawling(sleep: 1, season_numbers: (75..))
     def resume_crawling(options = {})
       options = {
-        :season_numbers => ((LeagueSeason.season_number_max || Spider::BASE_GENERATION)...),
+        :season_numbers => ((LeagueSeason.season_number_max || UnofficialSpider.accept_season_number_range.min)..),
       }.merge(options)
 
       options[:season_numbers].each do |season_number|
@@ -25,7 +25,7 @@ module Ppl
 
     # Ppl::Updater.update_from_web(59)
     def update_from_web(season_number, options = {})
-      rows = Spider.new(options.merge(season_number: season_number)).call
+      rows = SeasonNumberVo[season_number].spider.call(options.merge(season_number: season_number))
       update_raw(season_number, rows)
     end
 
@@ -44,7 +44,7 @@ module Ppl
           end
 
           membership = user.memberships.find_or_initialize_by(league_season: league_season)
-          membership.update!(attrs.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
+          membership.update!(attrs.slice(:result_key, :age, :win, :lose, :ox))
         end
 
         User.find_each(&:update_deactivated_season_number)

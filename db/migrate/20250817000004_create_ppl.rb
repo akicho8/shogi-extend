@@ -49,7 +49,6 @@ class CreatePpl < ActiveRecord::Migration[6.0]
       t.belongs_to :league_season, null: false, index: true,  comment: "リーグ"
       t.belongs_to :user,          null: false, index: true,  comment: "棋士"
       t.belongs_to :result,        null: false, index: true,  comment: "結果"
-      t.integer :start_pos,        null: false, index: true,  comment: "初期順位"
       t.integer :age,              null: true,  index: false, comment: "年齢"
       t.integer :win,              null: false, index: true,  comment: "勝ち数"
       t.integer :lose,             null: false, index: false, comment: "負け数"
