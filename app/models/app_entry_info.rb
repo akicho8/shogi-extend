@@ -186,7 +186,7 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/pre-professional-league" },
-      title: "奨励会三段リーグ成績早見表",
+      title: "奨励会三段リーグDB",
       og_image_key: "quick_script/general/pre_professional_league_script",
       description: "いろいろまとめて見たいときにどうぞ",
       features: [

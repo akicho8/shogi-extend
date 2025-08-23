@@ -19,8 +19,8 @@ module Ppl
     class << self
       def setup(options = {})
         if Rails.env.local?
-          Ppl::Updater.resume_crawling(season_key_begin: "S62", limit: 2)
-          Ppl::Updater.resume_crawling(season_key_begin: "30",  limit: 2)
+          Ppl::Updater.resume_crawling(start: "S62", limit: 2)
+          Ppl::Updater.resume_crawling(start: "30",  limit: 2)
         else
           Ppl::Updater.resume_crawling(options)
         end
@@ -38,7 +38,7 @@ module Ppl
         oldest_order.first&.key
       end
 
-      def latest_key_or_base
+      def latest_or_base_key
         latest_key || AntiquitySpider.accept_range.min
       end
     end
@@ -52,5 +52,9 @@ module Ppl
 
     scope :latest_order, -> { order(position: :desc) }
     scope :oldest_order, -> { order(position: :asc)  }
+
+    def to_vo
+      SeasonKeyVo[key]
+    end
   end
 end

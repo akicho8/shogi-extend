@@ -20,7 +20,7 @@ module Ppl
         raise TypeError, key.inspect
       end
 
-      unless spider_klass
+      unless spider_class
         raise SpiderKlassNotFound, key.inspect
       end
     end
@@ -54,20 +54,27 @@ module Ppl
       self.class.new(v)
     end
 
-    def spider_klass
-      [
-        AntiquitySpider,
-        MedievalSpider,
-        ModernitySpider,
-      ].find { |e| e.accept_range.include?(key) }
+    def spider_class
+      spider_class_list.find { |e| e.accept_range.include?(key) }
     end
 
     def spider(options = {})
-      spider_klass.new(options.merge(season_key_vo: self))
+      spider_class.new(options.merge(season_key_vo: self))
     end
 
     def records(options = {})
       spider.call
+    end
+
+    private
+
+    # 順不同
+    def spider_class_list
+      [
+        AntiquitySpider,
+        MedievalSpider,
+        ModernitySpider,
+      ]
     end
   end
 end

@@ -5,7 +5,7 @@
 module QuickScript
   module General
     class PreProfessionalLeagueScript < Base
-      self.title = "奨励会三段リーグ成績早見表"
+      self.title = "奨励会三段リーグDB"
       self.description = "奨励会三段リーグの一覧を表示する"
       self.form_method = :get
       self.button_label = "検索"
@@ -246,6 +246,17 @@ module QuickScript
 
       def default_params
         { name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
+      end
+
+      ################################################################################
+
+      def bottom_content
+        h_stack(:class => "gap_small") do
+          Ppl::Season.latest_order.collect do |e|
+            params = default_params.merge(season_key: e.key)
+            { _link_to: e.key, _v_bind: { href: e.to_vo.spider.source_url, target: "_blank" }, :class => button_css_class.join(" ") }
+          end
+        end
       end
 
       ################################################################################

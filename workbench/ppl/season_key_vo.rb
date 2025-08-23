@@ -1,7 +1,7 @@
 require "#{__dir__}/setup"
-Ppl::SeasonKeyVo["S49"].spider_klass  # => Ppl::AntiquitySpider
-Ppl::SeasonKeyVo["30"].spider_klass   # => Ppl::MedievalSpider
-Ppl::SeasonKeyVo["31"].spider_klass   # => Ppl::ModernitySpider
+Ppl::SeasonKeyVo["S49"].spider_class  # => Ppl::AntiquitySpider
+Ppl::SeasonKeyVo["30"].spider_class   # => Ppl::MedievalSpider
+Ppl::SeasonKeyVo["31"].spider_class   # => Ppl::ModernitySpider
 Ppl::SeasonKeyVo.start                # => S49
 
 e = Ppl::SeasonKeyVo.start

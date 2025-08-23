@@ -154,7 +154,7 @@ module Ppl
           :substitute_professional
         end
       elsif deactivated_membership
-        :resigned
+        :withdrawal_or_demotion
       else
         :active_member
       end

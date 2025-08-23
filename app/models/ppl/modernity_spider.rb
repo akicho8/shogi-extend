@@ -3,7 +3,7 @@
 # tp Ppl::ModernitySpider.call(season_key_vo: 31)
 
 module Ppl
-  class ModernitySpider < SpiderShared
+  class ModernitySpider < Spider
     class << self
       def accept_range
         "31".."200"
@@ -46,7 +46,7 @@ module Ppl
       hv[:win]        = row["勝"]
       hv[:lose]       = row["敗"]
       hv[:age]        = row["年齢"]
-      hv[:ox]         = win_lose_normalize(row.values.join)
+      hv[:ox]         = ox_normalize(row.values.join)
       hv
     end
   end
