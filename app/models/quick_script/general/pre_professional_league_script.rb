@@ -34,11 +34,11 @@ module QuickScript
           },
           {
             :label   => "このシーズンのメンバー (複数指定はOR条件)",
-            :key     => :season_number,
+            :key     => :season_key,
             :type    => :string,
             :dynamic_part => -> {
               {
-                :default => params[:season_number].presence,
+                :default => params[:season_key].presence,
                 :placeholder => "58 59 60",
                 :help_message => %(例: "58 59 60" → 58〜60期のどこかに在籍していたメンバーで絞る)
               }
@@ -76,6 +76,7 @@ module QuickScript
         {
           "総合成績" => as_general_json_list,
           "成績行列" => as_general_json_matrix,
+          "シーズン" => as_general_json_seasons,
         }
       end
 
@@ -86,8 +87,8 @@ module QuickScript
             "弟子" => user.name,
             "師匠" => user.mentor&.name,
             "期間" => user.memberships_count,
-            "期→" => user.season_number_min,
-            "←期" => user.season_number_max,
+            "期→" => user.memberships_first.try { season.key },
+            "←期" => user.memberships_last.try { season.key },
             "齢→" => user.age_min,
             "←齢" => user.age_max,
             "次点" => user.runner_up_count,
@@ -95,10 +96,19 @@ module QuickScript
             "勝率" => user.win_ratio,
             "状況" => user.rank.pure_info.short_name,
             "昇齢" => user.promotion_age,
-            "昇期" => user.promotion_season_number,
+            "昇期" => user.promotion_season_position,
             "昇勝" => user.promotion_win,
             # このネストした形式は R の前処理がややこしくなりすぎて自分にはさっぱりわからんので R 側では「成績行列」の方だけを使っている
-            "成績" => user.memberships.inject({}) { |a, m| a.merge(m.league_season.season_number => m.win) },
+            "成績" => user.memberships.inject({}) { |a, m| a.merge(m.season.key => m.win) },
+          }
+        end
+      end
+
+      def as_general_json_seasons
+        active_seasons.collect do |e|
+          {
+            "名前" => e.key,
+            "順序" => e.position,
           }
         end
       end
@@ -112,32 +122,32 @@ module QuickScript
               "名前" => membership.user.name,
               "勝数" => membership.win,
               "結果" => membership.result.name,
-              "期次" => membership.league_season.season_number,
+              "期次" => membership.season.key,
             }
           end
         end
       end
 
       def call
-        params[:season_number] ||= Ppl::LeagueSeason.season_number_max
+        params[:season_key] ||= Ppl::Season.latest_key
 
         rows = current_scope.collect do |user|
           {
             "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => user_css_class(user) },
             "師匠" => menter_name_of(user),
             "期間" => user.memberships_count,
-            "期→" => user.season_number_min,
-            "←期" => user.season_number_max,
+            "期→" => user.memberships_first.try { season.key },
+            "←期" => user.memberships_last.try { season.key },
             "齢→" => user.age_min,
             "←齢" => user.age_max,
             "次点" => user.runner_up_count,
-            "最勝" => user.win_max,
+            "最勝" => user.win_max || "?",
             "勝率" => user.win_ratio.try { "%.3f" % self },
             "状況" => user.rank.pure_info.short_name,
             "昇齢" => user.promotion_age,
-            "昇期" => user.promotion_season_number,
+            "昇期" => user.promotion_membership.try { season.key },
             "昇勝" => user.promotion_win,
-            **memberhip_fields_of(user),
+            **season_every_win_count_of(user),
           }
         end
         simple_table(rows)
@@ -158,12 +168,10 @@ module QuickScript
 
       def memberships_hash
         @memberships_hash ||= yield_self do
-          hv = {}
+          hv = Hash.new { |h, k| h[k] = {} }
           current_scope.each do |user|
             user.memberships.each do |membership|
-              season_number = membership.league_season.season_number
-              hv[season_number] ||= {}
-              hv[season_number][user.id] = membership
+              hv[membership.season][user.id] = membership
             end
           end
           hv
@@ -171,17 +179,14 @@ module QuickScript
       end
 
       # [77, 76, ...]
-      def field_season_numbers
-        @field_season_numbers ||= Range.new(*memberships_hash.keys.minmax).to_a.reverse
+      def active_seasons
+        # @active_seasons = Ppl::Season.order(:position).find(memberships_hash.keys)
+        @active_seasons = memberships_hash.keys.sort_by { |e| -e.position }
       end
 
-      def memberhip_fields_of(user)
-        field_season_numbers.each_with_object({}) do |season_number, m|
-          value = nil
-          if memberhip = memberships_hash.dig(season_number, user.id)
-            value = memberhip.win
-          end
-          m["#{column_name_prefix}#{season_number}"] = value
+      def season_every_win_count_of(user)
+        active_seasons.each_with_object({}) do |season, m|
+          m["#{column_name_prefix_for_avoid_js_bad_spec}#{season.key}"] = memberships_hash.dig(season, user.id).try { win || "?" }
         end
       end
 
@@ -198,14 +203,14 @@ module QuickScript
       ################################################################################
 
       def top_content
-        v_stack([league_season_links, user_links, mentor_links], :class => "gap_small")
+        v_stack([season_links, user_links, mentor_links], :class => "gap_small")
       end
 
-      def league_season_links
+      def season_links
         h_stack(:class => "gap_small") do
-          blocks = Ppl::LeagueSeason.latest_order.collect do |e|
-            params = default_params.merge(season_number: e.season_number)
-            { _nuxt_link: e.season_number, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
+          blocks = Ppl::Season.latest_order.collect do |e|
+            params = default_params.merge(season_key: e.key)
+            { _nuxt_link: e.key, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
           end
           [*blocks, all_link]
         end
@@ -240,7 +245,7 @@ module QuickScript
       end
 
       def default_params
-        { name: "", season_number: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
+        { name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
       end
 
       ################################################################################

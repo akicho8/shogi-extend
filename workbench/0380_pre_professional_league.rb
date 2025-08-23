@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-# tp Ppl::OfficialSpider.new(generation: 32).user_infos
+# tp Ppl::ModernitySpider.new(generation: 32).user_infos
 
 Ppl.setup(reset: true)
 
 (28..67).each do |generation|
-  Ppl::OfficialSpider.new(generation: generation).call.each do |e|
+  Ppl::ModernitySpider.new(generation: generation).call.each do |e|
     if v = e[:age]
       if v < 10
         p generation

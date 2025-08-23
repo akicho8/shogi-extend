@@ -9,7 +9,7 @@
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | value      | Value    | json        | NOT NULL    |      |       |
+# | value      | Value    | json        |             |      |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|

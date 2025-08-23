@@ -4,22 +4,20 @@
 #
 # Membership (ppl_memberships as Ppl::Membership)
 #
-# |--------------------------+--------------------------+-------------+-------------+------------+-------|
-# | name                     | desc                     | type        | opts        | refs       | index |
-# |--------------------------+--------------------------+-------------+-------------+------------+-------|
-# | id                       | ID                       | integer(8)  | NOT NULL PK |            |       |
-# | league_season_id                | LeagueSeason                   | integer(8)  | NOT NULL    |            | A! B  |
-# | user_id                  | User                     | integer(8)  | NOT NULL    | => User#id | A! C  |
-# | result_key               | Result key               | string(255) | NOT NULL    |            | D     |
-# | age                      | Age                      | integer(4)  |             |            |       |
-# | win                      | Win                      | integer(4)  |             |            | F     |
-# | lose                     | Lose                     | integer(4)  |             |            | G     |
-# | ox                       | Ox                       | string(255) | NOT NULL    |            |       |
-# | previous_runner_up_count | Previous runner up count | integer(4)  | NOT NULL    |            | H     |
-# | seat_count               | Seat count               | integer(4)  | NOT NULL    |            |       |
-# | created_at               | 作成日時                 | datetime    | NOT NULL    |            |       |
-# | updated_at               | 更新日時                 | datetime    | NOT NULL    |            |       |
-# |--------------------------+--------------------------+-------------+-------------+------------+-------|
+# |------------------+---------------+-------------+-------------+------------+-------|
+# | name             | desc          | type        | opts        | refs       | index |
+# |------------------+---------------+-------------+-------------+------------+-------|
+# | id               | ID            | integer(8)  | NOT NULL PK |            |       |
+# | season_id | League season | integer(8)  | NOT NULL    |            | A! B  |
+# | user_id          | User          | integer(8)  | NOT NULL    | => User#id | A! C  |
+# | result_id        | Result        | integer(8)  | NOT NULL    |            | D     |
+# | age              | Age           | integer(4)  |             |            |       |
+# | win              | Win           | integer(4)  | NOT NULL    |            | E     |
+# | lose             | Lose          | integer(4)  | NOT NULL    |            |       |
+# | ox               | Ox            | string(255) | NOT NULL    |            |       |
+# | created_at       | 作成日時      | datetime    | NOT NULL    |            |       |
+# | updated_at       | 更新日時      | datetime    | NOT NULL    |            |       |
+# |------------------+---------------+-------------+-------------+------------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -27,19 +25,13 @@
 
 module Ppl
   class Membership < ApplicationRecord
-    belongs_to :league_season                                                                  # 対局
+    belongs_to :season                                                           # 対局
     belongs_to :user, counter_cache: true                                               # 参加者
     custom_belongs_to :result, ar_model: Result, st_model: ResultInfo, default: :retain # 結果
 
     before_validation do
-      self.win ||= 0
-      self.lose ||= 0
+      self.age ||= 0
       self.ox ||= ""
-    end
-
-    with_options presence: true do
-      validates :win
-      validates :lose
     end
 
     after_save :user_record_update
@@ -62,11 +54,12 @@ module Ppl
     def user_result_set
       if saved_change_to_attribute?(:result_id)
         if result.key == "runner_up"
+          user.runner_up_count ||= 0
           user.runner_up_count += 1
         end
-        if result.key == "promotion" || user.runner_up_count >= User::PROMOTABLE_RUNNER_UP_COUNT
+        if result.key == "promotion" || (user.runner_up_count || 0) >= User::PROMOTABLE_RUNNER_UP_COUNT
           user.promotion_membership = self
-          user.promotion_season_number = league_season.season_number
+          user.promotion_season_position = season.position
           user.promotion_win = win
         end
       end
@@ -74,16 +67,34 @@ module Ppl
 
     # 在籍の開始と終了のレコードを一発で引けるようにしておく
     def user_term_set
-      memberships = user.memberships.minmax_by { |e| e.league_season.season_number }
-      user.memberships_first, user.memberships_last = memberships
-      user.season_number_min, user.season_number_max = memberships.collect { |e| e&.league_season.season_number }
+      user.memberships_first, user.memberships_last = user.memberships.minmax_by { |e| e.season.position }
     end
 
     # 勝ち負けに関する情報を反映する
     def user_win_lose_set
-      user.win_max    = user.memberships.maximum(:win)
-      user.total_win  = user.memberships.sum(:win)
-      user.total_lose = user.memberships.sum(:lose)
+      user.win_max = user.memberships.collect(&:win).compact.max
+
+      if true
+        # 通常の三段リーグではこちらでよいのだが、
+        # user.total_win  = user.memberships.sum(:win)
+        # user.total_lose = user.memberships.sum(:lose)
+
+        # なければ memberships に勝ち負けがなければ nil を設定するため DB の sum は使うな
+        # user.total_win  = user.memberships.collect(&:win).compact.reduce(:+)
+        # user.total_lose = user.memberships.collect(&:lose).compact.reduce(:+)
+
+        # S49 頃の三段リーグは win, lose を昇段時のみに利用しているので勝率を出すにはこちらでないとだめ
+        total_win  = user.memberships.sum { |e| e.ox.count("o") }
+        total_lose = user.memberships.sum { |e| e.ox.count("x") }
+
+        # win_ratio 更新
+        if total_win && total_lose
+          denominator = total_win + total_lose
+          if denominator.nonzero?
+            user.win_ratio = total_win.fdiv(denominator)
+          end
+        end
+      end
     end
 
     ################################################################################

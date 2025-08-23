@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000004) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000005) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -289,10 +289,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000004) do
   end
 
   create_table "ppl_league_seasons", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.integer "season_number", null: false, comment: "期"
+    t.string "key", null: false, comment: "キー (表示名)"
+    t.integer "position", comment: "順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["season_number"], name: "index_ppl_league_seasons_on_season_number"
+    t.index ["key"], name: "index_ppl_league_seasons_on_key"
+    t.index ["position"], name: "index_ppl_league_seasons_on_position"
   end
 
   create_table "ppl_leagues", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -303,18 +305,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000004) do
   end
 
   create_table "ppl_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.bigint "league_season_id", null: false, comment: "リーグ"
+    t.bigint "season_id", null: false, comment: "リーグ"
     t.bigint "user_id", null: false, comment: "棋士"
     t.bigint "result_id", null: false, comment: "結果"
-    t.integer "age", comment: "年齢"
-    t.integer "win", null: false, comment: "勝ち数"
-    t.integer "lose", null: false, comment: "負け数"
+    t.integer "age", null: false, comment: "年齢"
+    t.integer "win", comment: "勝ち数"
+    t.integer "lose", comment: "負け数"
     t.string "ox", null: false, comment: "勝敗"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["league_season_id", "user_id"], name: "index_ppl_memberships_on_league_season_id_and_user_id", unique: true
-    t.index ["league_season_id"], name: "index_ppl_memberships_on_league_season_id"
     t.index ["result_id"], name: "index_ppl_memberships_on_result_id"
+    t.index ["season_id", "user_id"], name: "index_ppl_memberships_on_season_id_and_user_id", unique: true
+    t.index ["season_id"], name: "index_ppl_memberships_on_season_id"
     t.index ["user_id"], name: "index_ppl_memberships_on_user_id"
     t.index ["win"], name: "index_ppl_memberships_on_win"
   end
@@ -345,40 +347,44 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000004) do
     t.index ["position"], name: "index_ppl_results_on_position"
   end
 
+  create_table "ppl_seasons", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false, comment: "キー (表示名)"
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_ppl_seasons_on_key"
+    t.index ["position"], name: "index_ppl_seasons_on_position"
+  end
+
   create_table "ppl_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "rank_id", null: false, comment: "種類"
     t.bigint "mentor_id", comment: "師匠"
     t.string "name", null: false, comment: "棋士名"
-    t.integer "age_min", comment: "リーグ入り年齢"
-    t.integer "age_max", comment: "リーグ最後の年齢"
-    t.integer "runner_up_count", null: false, comment: "次点個数"
-    t.integer "win_max", null: false, comment: "最大勝ち数"
-    t.integer "total_win", comment: "総勝数"
-    t.integer "total_lose", comment: "総負数"
-    t.float "win_ratio", null: false, comment: "勝率"
+    t.integer "age_min", null: false, comment: "リーグ入り年齢"
+    t.integer "age_max", null: false, comment: "リーグ最後の年齢"
+    t.integer "runner_up_count", comment: "次点個数"
+    t.integer "win_max", comment: "最大勝ち数"
+    t.float "win_ratio", comment: "勝率"
     t.bigint "promotion_membership_id", comment: "プロになったときの成績"
-    t.integer "promotion_season_number", comment: "プロになった期"
     t.integer "promotion_win", comment: "プロになったときの勝ち数"
+    t.integer "promotion_season_position", comment: "プロになったときのシーズンの順序"
     t.bigint "memberships_first_id", comment: "最初に参加したときの成績"
-    t.integer "season_number_min", comment: "最初に参加したときの期"
     t.bigint "memberships_last_id", comment: "最後に参加したときの成績"
-    t.integer "season_number_max", comment: "最後に参加したときの期"
-    t.integer "deactivated_season_number", comment: "この期を最後に退会した"
+    t.bigint "deactivated_membership_id", comment: "退会時したときの成績"
     t.integer "memberships_count", default: 0, null: false, comment: "参加期間相当"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["age_max"], name: "index_ppl_users_on_age_max"
     t.index ["age_min"], name: "index_ppl_users_on_age_min"
+    t.index ["deactivated_membership_id"], name: "index_ppl_users_on_deactivated_membership_id"
     t.index ["memberships_first_id"], name: "index_ppl_users_on_memberships_first_id"
     t.index ["memberships_last_id"], name: "index_ppl_users_on_memberships_last_id"
     t.index ["mentor_id"], name: "index_ppl_users_on_mentor_id"
     t.index ["name"], name: "index_ppl_users_on_name", unique: true
     t.index ["promotion_membership_id"], name: "index_ppl_users_on_promotion_membership_id"
-    t.index ["promotion_season_number"], name: "index_ppl_users_on_promotion_season_number"
+    t.index ["promotion_season_position"], name: "index_ppl_users_on_promotion_season_position"
     t.index ["promotion_win"], name: "index_ppl_users_on_promotion_win"
     t.index ["rank_id"], name: "index_ppl_users_on_rank_id"
-    t.index ["season_number_max"], name: "index_ppl_users_on_season_number_max"
-    t.index ["season_number_min"], name: "index_ppl_users_on_season_number_min"
     t.index ["win_max"], name: "index_ppl_users_on_win_max"
     t.index ["win_ratio"], name: "index_ppl_users_on_win_ratio"
   end

@@ -38,7 +38,7 @@ Swars::QueryResolver.resolve(query_info: QueryInfo["2024_0203"]).exists?        
 Swars::UserKeyValidator.valid?("443443443") # => true
 Swars::UserKey["443443443"]                 # => <443443443>
 Swars::User["443443443"]        # => nil
-Swars::User["443443443"].battles.count # => 
+Swars::User["443443443"].battles.count # =>
 Swars::QueryResolver.resolve(query_info: QueryInfo["443443443"])
 # ~> -:41:in '<main>': undefined method 'battles' for nil (NoMethodError)
 # >> 2025-08-10 11:53:41 1/1 100.00 % T1 TacticBattleMiningScript 四間飛車

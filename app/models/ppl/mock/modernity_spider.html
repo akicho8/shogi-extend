@@ -2,6 +2,159 @@
 <html>
 <head>
 <title>第66回奨励会三段リーグ戦</title>
+<style type="text/css">
+<!--
+*{margin:0;padding: 0}
+body{text-align:center;background-color:#ffffff;margin:0;padding:10px 0;color:#000000; font-style: normal;font-family:"ＭＳ Ｐゴシック",verdana,arial,helvetica,Sans-Serif;}
+h1,h2,h3,h4,h5,h6{margin: 0;padding: 0;}
+p	{margin:0;}
+a:link {color: #000099;text-decoration: underline;}
+a:visited {color: #3399ff;text-decoration: underline;}
+a:hover {color: #ff0000;text-decoration: underline;}
+#container	{width: 1000px; margin:0 auto;}
+#title{
+width:100%;
+height:90px;
+margin: 0px auto;
+background-image:url(images/title_bg.gif);
+background-repeat:no-repeat;
+vertical-align:middle;}
+.ttl01{
+color:#000;
+font-size: 120%;
+font-weight:bold;
+padding: 17px 0px 5px 0px;	}
+.ttl02{
+color:#333;
+font-size: 85%;
+font-weight:bold;
+padding: 0px 0px 5px 0px;	}
+.ttl03{
+color:#6600ff;
+font-size: 85%;
+font-weight:bold;
+}
+.pagetop{
+font-size: 80%;
+margin: 10px 0;
+}
+table.linktop{
+width: 100%;
+text-align:left;}
+.tbg{
+text-align:right;}
+.icon{
+padding:0px 5px 0px 0px;
+vertical-align:middle;}
+.date	{
+font-size: 80%;
+text-align:right;
+margin: 0 auto 5px;
+color: #333;
+width:1000px;}
+.rules	{
+font-size: 80%;
+width: 100%px;
+margin: 20px auto 5px;
+text-align: left;}
+.kisenhyo{
+clear:both;
+margin: 20px;}
+.playoff{
+margin: 10px auto;}
+table.league {
+width: 1000px;
+font-size: 73%;
+margin: 20px auto 0;
+background-color:#fff;
+border-right: solid 1px #999;}
+table.league thead th{
+text-align:center;
+padding:2px 1px;
+border-left: solid 1px #999;
+border-top: solid 1px #999;
+font-weight:normal;}
+table.league tfoot th{
+text-align:center;
+padding:2px 1px;
+border-left: solid 1px #999;
+border-bottom: solid 1px #999;
+font-weight:normal;
+}
+table.league tbody td {
+padding:5px 1px;
+text-align:center;
+border-left: solid 1px #999;
+border-bottom: solid 1px #999;
+}
+.game1,.game3,.game5,.game7,.game9,.game11,.game13,.game15,.game17,.game19,.game21{background-color:#fff;}
+.game2,.game4,.game6,.game8,.game10,.game12,.game14,.game16,.game18,.game20,.game22{background-color:#eee;}
+.game_no	{background-color: #666666;color:#fff;}
+.game_date	{background-color:#e5e5e5;color:#333;}
+.result{background-color:#666;width: 25px;color:#fff;}
+.rank{width:20px;}
+.playrersname{}
+.age{width: 25px;background-color:#eee;}
+.master{}
+.kati{background-color:#f2e6e9;width: 25px;}
+.make{background-color:#dfe4f4;width: 25px;}
+#nobox	{background-color: #fff;border:none;text-align:left;vertical-align: bottom;}
+#nobox_under	{background-color: #fff;border-bottom: solid 1px #fff;border-left: solid 1px #fff;vertical-align: top;text-align:left;}
+.victory	{color:#da1515;font-weight:bold;}
+.bg_victory	{background-color:#f4dcdc;}
+.bg_nogame	{}
+.rankup	{color: #ff9999;font-weight: bold;}
+.kei_up	{border-top: solid 1px #999;}
+.rankdown{color: #fff;}
+.star	{background-color:#ff9999; }
+#sample_box	{width: 100%;margin: 10px auto;padding-top:10px;text-align:left;font-size: 80%;}
+#sample_box	.ten_sample	{background-color: #666;color: #fff;border: solid 1px #999;width: 20px;text-align: center;padding: 3px 0;}
+#sample_box	.ten_sample_shou	{border: solid 1px #999;width: 20px;text-align: center;padding: 3px 0;color: #ff9999;font-weight: bold;background-color: #666;}
+#sample_box .star_sample	{border: solid 1px #999;width: 20px;text-align: center;padding: 3px 0;background-color:#ff9999; }
+.style1 {font-size: 100%}
+-->
+</style>
+<script type="text/javascript" src="../jquery.js"></script> 
+<script type="text/javascript" src="../jquery-tablesorter.js"></script> 
+<script type="text/javascript">
+$(document).ready(function() { 
+    $("table").tablesorter({ 
+        headers: { 
+            0: {sorter: false}, 
+            2: {sorter: false}, 
+            3: {sorter: false}, 
+            4: {sorter: false},
+            7: {sorter: false},
+            8: {sorter: false},
+            9: {sorter: false},
+            10: {sorter: false},
+            11: {sorter: false},
+            12: {sorter: false},
+            13: {sorter: false},
+            14: {sorter: false},
+            15: {sorter: false},
+            16: {sorter: false},
+            17: {sorter: false},
+            18: {sorter: false},
+            19: {sorter: false},
+            20: {sorter: false},
+            21: {sorter: false},
+            22: {sorter: false},
+            23: {sorter: false},
+            24: {sorter: false},
+            25: {sorter: false}
+			} 
+    }); 
+    $("#trigger-link").click(function() { 
+        // set sorting column and direction, this will sort on the first and third column the column index starts at zero 
+        var sorting = [[5,1],[6,0]]; 
+        // sort on the first column 
+        $("table").trigger("sorton",[sorting]); 
+        // return false to stop default link action 
+        return false; 
+    }); 
+});
+</script>
 </head>
 <body>
 <div id="container">
@@ -14,10 +167,10 @@
 
 <p id="btn_order">
 <br>
-<a href="index.html"><img src="../../../kisenhyo_images/btn_rankorder.gif" alt="順位順" border="0" /></a> <a href="#" id="trigger-link"><img src="../../../kisenhyo_images/btn_victoryorder.gif" alt="成績順" border="0" /></a>
+<a href="index.html"><img src="../../../kisenhyo_images/btn_rankorder.gif" alt="順位順" border="0" /></a>　<a href="#" id="trigger-link"><img src="../../../kisenhyo_images/btn_victoryorder.gif" alt="成績順" border="0" /></a>
 </p>
 
-<table border="0" cellspacing="0" cellpadding="0" class="league_season tablesorter" id="myTable" >
+<table border="0" cellspacing="0" cellpadding="0" class="league tablesorter" id="myTable" >
 <col class="result">
 <col class="rank">
 <col class="playrersname">
@@ -48,7 +201,7 @@
 <thead>
 <tr class="game_date">
 <th colspan="5" id="nobox" rowspan="2"></th>
-<th colspan="2">関 東</th>
+<th colspan="2">関　東</th>
 <th colspan="2" rowspan="2">10/5</th>
 <th colspan="2">11/2</th>
 <th colspan="2">11/23</th>
@@ -60,7 +213,7 @@
 <th colspan="2" rowspan="2">3/7</th>
 </tr>
 <tr class="game_date">
-<th colspan="2">関 西</th>
+<th colspan="2">関　西</th>
 <th colspan="2">11/4</th>
 <th colspan="2">11/16</th>
 <th colspan="2">12/21</th>
@@ -71,21 +224,21 @@
 </tr>
 
 <tr class="game_no">
-<th width="26"> </th>
+<th width="26">　</th>
 <th width="15">順<br>位</th>
 <th width="84">氏名</th>
 <th width="52">師匠</th>
 <th width="21">年<br>齢</th>
 <th width="23" id="bg_kati">勝</th>
 <th width="23" id="bg_make">敗</th>
-<th width="36">1</th>
-<th width="41">2</th>
-<th width="39">3</th>
-<th width="40">4</th>
-<th width="36">5</th>
-<th width="40">6</th>
-<th width="40">7</th>
-<th width="40">8</th>
+<th width="36">１</th>
+<th width="41">２</th>
+<th width="39">３</th>
+<th width="40">４</th>
+<th width="36">５</th>
+<th width="40">６</th>
+<th width="40">７</th>
+<th width="40">８</th>
 <th width="40">9</th>
 <th width="40">10</th>
 <th width="36">11</th>
@@ -99,6 +252,7 @@
 </tr>
 </thead>
 <tbody>
+
 
 <tr>
 <td></td>
@@ -115,7 +269,7 @@
 <td>●<br>井田</td>
 <td>●<br>貫島</td>
 <td>●<br>
-  小鄕</td>
+  小髙</td>
 <td>○<br>伊藤</td>
 <td>●<br>川村</td>
 <td>●<br>柵木</td>
@@ -154,7 +308,7 @@
 <td>●<br>荒田</td>
 <td>○<br>貫島</td>
 <td>○<br>岡部</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 </tr>
 
 <tr>
@@ -169,7 +323,7 @@
 <td>●<br>柵木</td>
 <td>○<br>川村</td>
 <td>○<br>谷合</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>古田</td>
 <td>●<br>西山</td>
 <td>○<br>岡井</td>
@@ -208,7 +362,7 @@
 <td>○<br>田中</td>
 <td>○<br>山川</td>
 <td>○<br>川村</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>柵木</td>
 <td>●<br>狩山</td>
 </tr>
@@ -223,7 +377,7 @@
 <td>8</td>
 <td>●<br>中沢</td>
 <td>○<br>関矢</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>○<br>横山</td>
 <td>●<br>服部</td>
 <td>●<br>上野</td>
@@ -259,7 +413,7 @@
 <td>●<br>横山</td>
 <td>●<br>谷合</td>
 <td>●<br>小山</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>○<br>関矢</td>
 <td>○<br>相川</td>
 <td>○<br>伊藤</td>
@@ -300,7 +454,7 @@
 <tr>
 <td></td>
 <td>8</td>
-<td>伊藤 匠</td>
+<td>伊藤　匠</td>
 <td>宮田利</td>
 <td>16</td>
 <td>9</td>
@@ -317,7 +471,7 @@
 <td>●<br>古田</td>
 <td>○<br>川村</td>
 <td>○<br>田中</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>●<br>荒田</td>
 <td>○<br>山川</td>
 <td>○<br>岡部</td>
@@ -362,7 +516,7 @@
 <td>7</td>
 <td>11</td>
 <td>●<br>岡井</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>狩山</td>
 <td>●<br>相川</td>
 <td>●<br>西山</td>
@@ -392,7 +546,7 @@
 <td>○<br>関矢</td>
 <td>●<br>岡部</td>
 <td>○<br>井田</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>小山</td>
 <td>●<br>谷合</td>
 <td>○<br>宮嶋</td>
@@ -481,7 +635,7 @@
 <td>○<br>森本</td>
 <td>●<br>岡井</td>
 <td>●<br>谷合</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>荒田</td>
 <td>○<br>上野</td>
 <td>○<br>横山</td>
@@ -571,7 +725,7 @@
 <td>○<br>中沢</td>
 <td>●<br>宮田</td>
 <td>○<br>柵木</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>●<br>岡井</td>
 <td>●<br>貫島</td>
 <td>○<br>宮嶋</td>
@@ -592,7 +746,7 @@
 <td>○<br>横山</td>
 <td>○<br>宮田</td>
 <td>○<br>狩山</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>○<br>関矢</td>
 <td>●<br>井田</td>
 <td>○<br>宮嶋</td>
@@ -682,7 +836,7 @@
 <td>○<br>貫島</td>
 <td>●<br>柵木</td>
 <td>○<br>小山</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>○<br>相川</td>
 <td>○<br>古田</td>
 <td>○<br>横山</td>
@@ -692,7 +846,7 @@
 <tr>
 <td></td>
 <td>22</td>
-<td>小髙謔瑯、ェ驛/td>
+<td>小髙悠太郎</td>
 <td>所司</td>
 <td>23</td>
 <td>8</td>
@@ -730,7 +884,7 @@
 <td>●<br>西山</td>
 <td>○<br>荒田</td>
 <td>●<br>岡部</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>●<br>井田</td>
 <td>●<br>宮嶋</td>
 <td>○<br>古田</td>
@@ -769,7 +923,7 @@
 <td>○<br>古田</td>
 <td>○<br>宮田</td>
 <td>○<br>狩山</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>○<br>岡井</td>
 </tr>
 
@@ -792,7 +946,7 @@
 <td>○<br>古賀</td>
 <td>●<br>森本</td>
 <td>●<br>伊藤</td>
-<td>○<br>小鄕</td>
+<td>○<br>小髙</td>
 <td>●<br>服部</td>
 <td>○<br>宮嶋</td>
 <td>●<br>谷合</td>
@@ -846,7 +1000,7 @@
 <td>●<br>柵木</td>
 <td>●<br>貫島</td>
 <td>●<br>西山</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>●<br>岡部</td>
 <td>●<br>伊藤</td>
 <td>●<br>谷合</td>
@@ -921,7 +1075,7 @@
 <td>17</td>
 <td>7</td>
 <td>11</td>
-<td>●<br>小鄕</td>
+<td>●<br>小髙</td>
 <td>●<br>中沢</td>
 <td>●<br>上野</td>
 <td>●<br>古賀</td>
@@ -943,10 +1097,11 @@
 
 </tbody>
 
+
 <tfoot>
 <tr class="game_date">
 <th colspan="5" id="nobox" rowspan="2"></th>
-<th colspan="2">関 東</th>
+<th colspan="2">関　東</th>
 <th colspan="2" rowspan="2">10/5</th>
 <th colspan="2">11/2</th>
 <th colspan="2">11/23</th>
@@ -958,7 +1113,7 @@
 <th colspan="2" rowspan="2">3/7</th>
 </tr>
 <tr class="game_date">
-<th colspan="2">関 西</th>
+<th colspan="2">関　西</th>
 <th colspan="2">11/4</th>
 <th colspan="2">11/16</th>
 <th colspan="2">12/21</th>
@@ -977,8 +1132,8 @@
 <td class="ten_sample_t">次点</td>
 <td class="ten_sample">降</td>
 <td class="ten_sample_t">降段</td>
-<td class="star_sample"> </td>
-<td class="ten_sample_t">過去の次点。次点2回で四段昇段(フリ—クラス入り)の権利獲得</td>
+<td class="star_sample">　</td>
+<td class="ten_sample_t">過去の次点。次点２回で四段昇段（フリ—クラス入り）の権利獲得</td>
 </tr>
 </table>
 <img src="../Copy of 50/images/dot.gif" alt="" width="1000" height="1">

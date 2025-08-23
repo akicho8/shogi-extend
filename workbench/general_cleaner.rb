@@ -7,7 +7,7 @@ GeneralCleaner.new(verbose: true, subject: "subject").call
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'
 # >>   TRANSACTION (1.1ms)  COMMIT /*application='ShogiWeb'*/
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'
-# >> 
+# >>
 # >> 2025-07-28T10:46:22.130Z pid=42898 tid=yg2 INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
 # >>   TRANSACTION (0.4ms)  BEGIN /*application='ShogiWeb'*/
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'

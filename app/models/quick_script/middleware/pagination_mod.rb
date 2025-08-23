@@ -56,8 +56,8 @@ module QuickScript
         [(params[:per_page].presence || per_page_default).to_i, per_page_max].min
       end
 
-      # [KEYWORD] __COLUMN_NAME_PREFIX__ column_name_prefix
-      def column_name_prefix
+      # [KEYWORD] :COLUMN_NAME_PREFIX_FOR_AVOID_JS_BAD_SPEC:
+      def column_name_prefix_for_avoid_js_bad_spec
         "_"
       end
     end

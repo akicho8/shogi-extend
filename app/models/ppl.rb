@@ -10,12 +10,12 @@ module Ppl
     end
     Result.setup(options)
     Rank.setup(options)
-    LeagueSeason.setup(options)
+    Season.setup(options)
   end
 
   def self.destroy_all
     [
-      LeagueSeason,
+      Season,
       User,
       Mentor,
     ].each(&:destroy_all)
@@ -30,5 +30,8 @@ module Ppl
     destroy_all
     Result.setup
     Rank.setup
+  end
+
+  class SpiderKlassNotFound < StandardError
   end
 end

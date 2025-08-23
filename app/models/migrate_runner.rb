@@ -91,7 +91,7 @@ class MigrateRunner
           battles = battles.analysis_version_old_only
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           process_count += battles.size
-          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size }])
           STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
@@ -125,7 +125,7 @@ class MigrateRunner
           battles = battles.analysis_version_old_only
           battles = battles.order(accessed_at: :desc).offset(battles_max2)
           process_count += battles.size
-          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size}])
+          tp([{ "日時" => Time.current, ID: user.id, "名前" => user.key, "削除件数" => battles.size }])
           STDOUT.flush
           begin
             Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do

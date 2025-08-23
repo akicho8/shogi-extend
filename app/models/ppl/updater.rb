@@ -1,53 +1,61 @@
-# |----------------------+--------------------------------------------------------|
-# | 本番用セットアップ   | Ppl::Updater.resume_crawling                           |
-# | ローカルで全読み込み | Ppl::Updater.resume_crawling                           |
-# | 範囲 N 以降          | Ppl::Updater.resume_crawling(season_numbers: (75..))   |
-# | 範囲 A と B          | Ppl::Updater.resume_crawling(season_numbers: [59, 77]) |
-# |----------------------+--------------------------------------------------------|
+# |----------------------+------------------------------------------------------------------------|
+# | 本番用セットアップ   | Ppl::Updater.resume_crawling                                           |
+# | ローカルで全読み込み | Ppl::Updater.resume_crawling                                           |
+# | 範囲 N から 2 件     | Ppl::Updater.resume_crawling(season_key_begin: "S49", limit: 2) |
+# |----------------------+------------------------------------------------------------------------|
 
 module Ppl
   module Updater
     extend self
 
+    def latest_key
+      Season.latest_key || AntiquitySpider.accept_range.min
+    end
+
     # Ppl::Updater.resume_crawling
-    # Ppl::Updater.resume_crawling(sleep: 1, season_numbers: (75..))
-    # Ppl::Updater.resume_crawling(sleep: 1, season_numbers: (75..))
+    # Ppl::Updater.resume_crawling(sleep: 1, season_key_begin: "75", limit: 2)
     def resume_crawling(options = {})
       options = {
-        :season_numbers => ((LeagueSeason.season_number_max || UnofficialSpider.accept_season_number_range.min)..),
+        :season_key_begin => Season.latest_key_or_base,
+        :limit => nil,
       }.merge(options)
 
-      options[:season_numbers].each do |season_number|
-        update_from_web(season_number, options)
+      season_key_vo = SeasonKeyVo[options[:season_key_begin]]
+      (0..).each do |i|
+        if options[:limit] && i >= options[:limit]
+          break
+        end
+        update_from_web(season_key_vo, options)
+        season_key_vo = season_key_vo.succ
       end
     rescue OpenURI::HTTPError
     end
 
-    # Ppl::Updater.update_from_web(59)
-    def update_from_web(season_number, options = {})
-      rows = SeasonNumberVo[season_number].spider.call(options.merge(season_number: season_number))
-      update_raw(season_number, rows)
+    # Ppl::Updater.update_from_web(SeasonKeyVo["59"])
+    def update_from_web(season_key_vo, options = {})
+      update_raw(season_key_vo, season_key_vo.records(options))
     end
 
-    def update_raw(season_number, rows)
-      rows = Array.wrap(rows)
-      if rows.present?
-        league_season = LeagueSeason.find_or_create_by!(season_number: season_number)
-        rows.each do |attrs|
-          user = User.find_or_create_by!(name: attrs[:name])
-          if v = attrs[:mentor].presence
+    def update_raw(season_key_vo, records = [{}])
+      season_key_vo = SeasonKeyVo[season_key_vo]
+      records = Array.wrap(records)
+      if records.present?
+        season = season_key_vo.season
+        records.each do |record|
+          user = User.find_or_create_by!(name: record[:name] || "(name#{User.count.next})")
+          if v = record[:mentor].presence
             mentor = Mentor.find_or_create_by!(name: v)
             if user.mentor && user.mentor.name != mentor.name
-              tp({"対象" => user.name, "前師匠" => user.mentor.name, "新師匠" => mentor.name})
+              tp({ "対象" => user.name, "前師匠" => user.mentor.name, "新師匠" => mentor.name })
             end
             user.update!(mentor: mentor)
           end
 
-          membership = user.memberships.find_or_initialize_by(league_season: league_season)
-          membership.update!(attrs.slice(:result_key, :age, :win, :lose, :ox))
+          membership = user.memberships.find_or_initialize_by(season: season)
+          membership.update!(record.slice(:result_key, :age, :win, :lose, :ox))
         end
 
-        User.find_each(&:update_deactivated_season_number)
+        User.find_each(&:update_deactivated_season)
       end
     end
 

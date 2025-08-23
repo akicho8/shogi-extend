@@ -42,7 +42,7 @@ export default {
   methods: {
     // JS でハッシュキーに数値文字列を使うと順序が変わってしまう対策で "_7" などとしたとき実際には 7 を表示する
     column_name_decorator(colum_name) {
-      return colum_name.replace(/^_/, "") // [KEYWORD] __COLUMN_NAME_PREFIX__ column_name_prefix
+      return colum_name.replace(/^_/, "") // [KEYWORD] :COLUMN_NAME_PREFIX_FOR_AVOID_JS_BAD_SPEC:
     },
   },
   computed: {

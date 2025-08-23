@@ -83,7 +83,7 @@ module QuickScript
         pagination_for(current_scope, always_table: true) do |scope|
           scope.collect do |e|
             {
-              "ID"   => { _nuxt_link: e.id, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "app_log_show", params: {id: e.id}), } },
+              "ID"   => { _nuxt_link: e.id, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "app_log_show", params: { id: e.id }), } },
               "日時" => e.created_at.to_fs(:ymdhms),
               "LV"   => e.level,
               "絵"   => e.emoji,

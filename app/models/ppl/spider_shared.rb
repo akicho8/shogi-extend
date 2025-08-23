@@ -1,7 +1,7 @@
 module Ppl
   class SpiderShared
     class << self
-      def accept_season_number_range
+      def accept_range
         raise NotImplementedError, "#{__method__} is not implemented"
       end
     end
@@ -15,16 +15,23 @@ module Ppl
     attr_reader :params
 
     def initialize(params = {})
-      @params = {
-        :take_size => nil,
-        :verbose   => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
-        :sleep     => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 0.5 : 0,
-        :validate  => false,
-      }.merge(params)
+      @params = default_params.merge(params)
+
+      season_key_vo
+    end
+
+    def default_params
+      {
+        :take_size            => nil,
+        :verbose              => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
+        :sleep                => (Rails.env.development? || Rails.env.staging? || Rails.env.production?) ? 0.5 : 0,
+        :promotion_count_gteq => 0,
+        :mock                 => Rails.env.test?,
+      }
     end
 
     def call
-      rows = source_rows.collect.with_index do |row, i|
+      rows = table_hash_array.collect.with_index do |row, i|
         row = attributes_from(row, i)
         integer_type_column_names.each do |e|
           if v = row[e]
@@ -40,21 +47,37 @@ module Ppl
 
       Rails.logger.info(rows.to_t)
 
-      if params[:validate]
-        validate!(rows)
-      end
+      validate!(rows)
 
       rows
     end
 
     def validate!(rows)
-      unless rows.count { |e| e[:result_key] == "昇" } >= 2
-        raise "「昇」が2つ以上ない"
+      if gteq = params[:promotion_count_gteq]
+        unless rows.count { |e| e[:result_key] == "昇" } >= gteq
+          raise "「昇」が#{gteq}つ以上ない"
+        end
       end
     end
 
-    def source_rows
-      raise NotImplementedError, "#{__method__} is not implemented"
+    def table_hash_array
+      header = header_normalize(table_values_array.first)
+      table_values_array.drop(1).take(take_size).collect do |values|
+        header.zip(values).to_h
+      end
+    end
+
+    # header_normalize(["a", "b", "a", "a"]) → ["a", "b", "a2", "a3"]
+    def header_normalize(header)
+      counts = Hash.new(0)
+      av = []
+      header.collect do |str|
+        counts[str] += 1
+        if counts[str] >= 2
+          str = [str, counts[str]].join
+        end
+        str
+      end
     end
 
     def source_url
@@ -77,8 +100,8 @@ module Ppl
       (params[:take_size].presence || 1000).to_i
     end
 
-    def season_number
-      params.fetch(:season_number).to_i
+    def season_key_vo
+      @season_key_vo ||= SeasonKeyVo[params.fetch(:season_key_vo)]
     end
 
     def doc
@@ -88,15 +111,14 @@ module Ppl
     # 当初ここをキャッシュしていたがそれは設計ミス
     # 毎回呼ぶわけではないのでキャッシュする意味がないし大量にメモリを消費するため割に合わない
     def html_fetch
-      if Rails.env.test?
+      if params[:verbose]
+        tp({ "担当" => self.class.name, "期" => season_key_vo, "URL" => source_url, sleep: params[:sleep] })
+      end
+
+      if params[:mock]
         body = Pathname("#{__dir__}/mock/#{self.class.name.demodulize.underscore}.html").read
       else
-        if params[:verbose]
-          tp({ "期" => season_number, "URL" => source_url, sleep: params[:sleep] })
-        end
-
         sleep(params[:sleep])
-
         body = URI(source_url).read
       end
 

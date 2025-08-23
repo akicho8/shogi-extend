@@ -1,24 +1,21 @@
 # https://www.ne.jp/asahi/yaston/shogi/syoreikai/3dan/league/3dan_league01.htm
 
-# tp Ppl::UnofficialSpider.call(season_number: 1)
+# tp Ppl::MedievalSpider.call(season_key_vo: 1)
 
 module Ppl
-  class UnofficialSpider < SpiderShared
+  class MedievalSpider < SpiderShared
     class << self
-      def accept_season_number_range
-        1..30
+      def accept_range
+        "1".."30"
       end
     end
 
-    def source_rows
-      header = header_normalize(source_lines.first)
-      source_lines.drop(1).take(take_size).collect do |values|
-        header.zip(values).to_h
-      end
+    def default_params
+      super.merge(promotion_count_gteq: 2)
     end
 
-    def source_lines
-      @source_lines ||= doc.at("table").search("tr").collect do |tr|
+    def table_values_array
+      @table_values_array ||= doc.at("table").search("tr").collect do |tr|
         tr.search("td").collect { |e| e.text.remove(/\p{Space}+/) }
       end
     end
@@ -40,8 +37,7 @@ module Ppl
     end
 
     def source_url
-      zero_padding_number = "%02d" % season_number
-      "https://www.ne.jp/asahi/yaston/shogi/syoreikai/3dan/league/3dan_league#{zero_padding_number}.htm"
+      "https://www.ne.jp/asahi/yaston/shogi/syoreikai/3dan/league/3dan_league#{season_key_vo.to_zero_padding_s}.htm"
     end
 
     def attributes_from(row, index)
@@ -67,19 +63,6 @@ module Ppl
       end
 
       hv
-    end
-
-    # header_normalize(["a", "b", "a", "a"]) → ["a", "b", "a2", "a3"]
-    def header_normalize(header)
-      counts = Hash.new(0)
-      av = []
-      header.collect do |str|
-        counts[str] += 1
-        if counts[str] >= 2
-          str = [str, counts[str]].join
-        end
-        str
-      end
     end
   end
 end

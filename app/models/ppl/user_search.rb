@@ -21,7 +21,7 @@ module Ppl
 
       # この棋士たちの同期を抽出する (氏名完全一致・複数指定可)
       if target_users.present?
-        user_ids = target_users.flat_map { |user| user.league_seasons.flat_map(&:user_ids) }
+        user_ids = target_users.flat_map { |user| user.seasons.flat_map(&:user_ids) }
         scope = scope.where(id: user_ids)
       end
 
@@ -31,12 +31,12 @@ module Ppl
       end
 
       # この期の同期を抽出する (複数指定可)
-      if target_league_seasons.present?
-        user_ids = target_league_seasons.flat_map { |league_season| league_season.user_ids }
+      if target_seasons.present?
+        user_ids = target_seasons.flat_map { |season| season.user_ids }
         scope = scope.where(id: user_ids)
       end
 
-      scope = scope.includes(rank: nil, mentor: nil, memberships: { user: nil, league_season: nil, result: nil })
+      scope = scope.includes(rank: nil, mentor: nil, memberships: { user: nil, season: nil, result: nil })
       scope = scope.table_order
     end
 
@@ -48,12 +48,8 @@ module Ppl
       @target_mentors ||= Mentor.where(name: StringToolkit.split(params[:mentor_name].to_s))
     end
 
-    def target_season_numbers
-      @target_season_numbers ||= params[:season_number].to_s.scan(/\d+/).collect(&:to_i)
-    end
-
-    def target_league_seasons
-      @target_league_seasons ||= LeagueSeason.where(season_number: target_season_numbers)
+    def target_seasons
+      @target_seasons ||= Season.where(key: StringToolkit.split(params[:season_key].to_s))
     end
   end
 end

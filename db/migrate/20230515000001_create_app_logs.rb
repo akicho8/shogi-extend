@@ -13,7 +13,7 @@
 # | subject    | 件名     | string(255) | NOT NULL    |      |       |
 # | body       | 内容     | text(65535) | NOT NULL    |      |       |
 # | process_id | Process  | integer(4)  | NOT NULL    |      |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      | A     |
 # |------------+----------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------

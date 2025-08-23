@@ -32,7 +32,7 @@ RSpec.describe Swars::User::Stat::Main, type: :model, swars_spec: true do
       assert { @as_json["day_items"]       == [{ "battled_on" => "1999-12-31", "day_type" => nil, "judge_counts" => { "win" => 1, "lose" => 0 } }] }
       assert { @as_json["vs_grade_items"]  == [{ "grade_name" => "30級", "judge_counts" => { "win" => 1 }, "appear_ratio" => 1.0 }] }
       assert { @as_json["my_attack_items"] == [{ "tag" => "嬉野流", "appear_ratio" => 1.0, "judge_counts" => { "win" => 1, "lose" => 0 } }, { "tag" => "新嬉野流", "appear_ratio" => 1.0, "judge_counts" => { "win" => 1, "lose" => 0 } }] }
-      assert { @as_json["vs_attack_items"] == [{ "tag" => "2手目△3二飛戦法", "appear_ratio" => 1.0, "judge_counts" => { "lose" => 0, "win" => 1 } }, {"tag" => "三間飛車", "appear_ratio" => 1.0, "judge_counts" => {"win" => 1, "lose" => 0}}] }
+      assert { @as_json["vs_attack_items"] == [{ "tag" => "2手目△3二飛戦法", "appear_ratio" => 1.0, "judge_counts" => { "lose" => 0, "win" => 1 } }, { "tag" => "三間飛車", "appear_ratio" => 1.0, "judge_counts" => { "win" => 1, "lose" => 0 } }] }
       assert { @as_json["my_defense_items"] == [] }
       assert { @as_json["vs_defense_items"] == [] }
       assert { @as_json["my_technique_items"] == [] }

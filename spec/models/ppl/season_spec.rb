@@ -2,24 +2,24 @@
 
 # == Schema Information ==
 #
-# Permanent variable (permanent_variables as PermanentVariable)
+# League season (ppl_seasons as Ppl::Season)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | value      | Value    | json        |             |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A     |
+# | position   | 順序     | integer(4)  |             |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
 
-class CreatePermanentVariables < ActiveRecord::Migration[6.0]
-  def up
-    create_table :permanent_variables, force: true do |t|
-      t.string :key, null: false, index: { unique: true }, comment: "キー"
-      t.json :value, null: false, index: false,            comment: "値" # 最大 1G
-      t.timestamps
-    end
+require "rails_helper"
+
+RSpec.describe Ppl::Season, type: :model do
+  it "works" do
+    Ppl.setup_for_workbench
+    Ppl::Updater.update_raw("5", { name: "alice" })
+    assert { Ppl::User["alice"].seasons.sole.key == "5" }
   end
 end
