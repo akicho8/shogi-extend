@@ -11,32 +11,45 @@ module Ppl
       def start
         self[AntiquitySpider.accept_range.min]
       end
+
+      def all
+        av = []
+        e = start
+        while e.valid?
+          av << e
+          e = e.succ
+        end
+        av
+      end
     end
+
+    include Comparable
 
     def initialize(...)
       @cache = {}
-
       super
-
-      if key.kind_of? Integer
-        raise TypeError, key.inspect
-      end
-
-      unless spider_class
-        raise SpiderKlassNotFound, key.inspect
-      end
     end
 
-    def season
-      Season.find_or_create_by!(key: key)
+    def <=>(other)
+      [spider_type_info.code, to_i] <=> [other.spider_type_info.code, other.to_i]
     end
+
+    ################################################################################ アクセサ
+
+    # def priority
+    #   SpiderTypeInfo.priority_map.fetch(key)
+    # end
 
     def to_i
-      key[/\d+/].to_i
+      @cache[:to_i] ||= key[/\d+/].to_i
     end
 
     def to_zero_padding_s
       "%02d" % to_i
+    end
+
+    def name
+      key
     end
 
     def to_s
@@ -56,8 +69,22 @@ module Ppl
       self.class.new(v)
     end
 
+    ################################################################################ クローラ
+
+    def valid?
+      spider_type_info
+    end
+
+    def invalid?
+      !valid?
+    end
+
     def spider_class
-      @cache[:spider_class] ||= spider_class_list.find { |e| e.accept_range.include?(key) }
+      spider_type_info.klass
+    end
+
+    def spider_type_info
+      @cache[:spider_type_info] ||= SpiderTypeInfo.find { |e| e.klass.accept_range.include?(key) }
     end
 
     def spider(options = {})
@@ -72,17 +99,27 @@ module Ppl
       spider(...).source_url
     end
 
-    def import_to_db(...)
-      Updater.update_by_records(self, records(...))
+    ################################################################################ DB更新
+
+    def season
+      find_or_create
     end
 
-    def update_by_records(records = [])
-      season = Season.find_or_create_by!(key: key)
+    def find_or_create
+      @cache[:find_or_create] ||= Season.find_or_create_by!(key: self)
+    end
+
+    def users_update_from_web(...)
+      users_update(records(...))
+    end
+
+    def users_update(records = [])
+      season = find_or_create
       Array.wrap(records).each do |record|
         user = User.find_or_create_by!(name: record[:name] || "(name#{User.count.next})")
         if v = record[:mentor].presence
           mentor = Mentor.find_or_create_by!(name: v)
-          mentor_change_log(user, mentor)
+          mentor_change_log(user:, mentor:)
           user.update!(mentor: mentor)
         end
         membership = user.memberships.find_or_initialize_by(season: season)
@@ -91,15 +128,18 @@ module Ppl
       User.find_each(&:update_deactivated_season)
     end
 
+    def test(name, result_key)
+      users_update({ name: name, result_key: result_key })
+    end
+
+    ################################################################################
+
     private
 
-    # 順不同
-    def spider_class_list
-      [
-        AntiquitySpider,
-        MedievalSpider,
-        ModernitySpider,
-      ]
+    def mentor_change_log(user:, mentor:)
+      if user.mentor && user.mentor.name != mentor.name
+        tp({ "対象" => user.name, "前師匠" => user.mentor.name, "新師匠" => mentor.name })
+      end
     end
   end
 end

@@ -41,7 +41,7 @@ module Ppl
     end
 
     def target_users
-      @target_users ||= User.where(name: StringToolkit.split(params[:name].to_s))
+      @target_users ||= User.where(name: StringToolkit.split(params[:user_name].to_s))
     end
 
     def target_mentors

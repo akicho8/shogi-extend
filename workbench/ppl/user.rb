@@ -1,18 +1,18 @@
 require "#{__dir__}/setup"
 Ppl.setup_for_workbench
-Ppl::SeasonKeyVo["5"].update_by_records({ name: "XA", result_key: "維持" })
-Ppl::SeasonKeyVo["6"].update_by_records({ name: "BX", result_key: "維持" })
+Ppl::SeasonKeyVo["5"].users_update({ name: "XA", result_key: "維持" })
+Ppl::SeasonKeyVo["6"].users_update({ name: "BX", result_key: "維持" })
 Ppl::User.plus_minus_search("A -B").collect(&:name) == ["XA"] # => true
 
 Ppl.setup_for_workbench
-Ppl::SeasonKeyVo["5"].update_by_records({ name: "XA", result_key: "維持" })
-Ppl::SeasonKeyVo["6"].update_by_records({ name: "BX", result_key: "維持" })
+Ppl::SeasonKeyVo["5"].users_update({ name: "XA", result_key: "維持" })
+Ppl::SeasonKeyVo["6"].users_update({ name: "BX", result_key: "維持" })
 Ppl::User.plus_minus_search("A -B").collect(&:name) == ["XA"] # => true
 
 Ppl.setup_for_workbench
-Ppl::SeasonKeyVo["5"].update_by_records({ name: "alice", result_key: "維持", age: 1, win: 3 })
-Ppl::SeasonKeyVo["6"].update_by_records({ name: "alice", result_key: "次点", age: 2, win: 2 })
-Ppl::SeasonKeyVo["7"].update_by_records({ name: "alice", result_key: "昇段", age: 3, win: 1 })
+Ppl::SeasonKeyVo["5"].users_update({ name: "alice", result_key: "維持", age: 1, win: 3 })
+Ppl::SeasonKeyVo["6"].users_update({ name: "alice", result_key: "次点", age: 2, win: 2 })
+Ppl::SeasonKeyVo["7"].users_update({ name: "alice", result_key: "昇段", age: 3, win: 1 })
 user = Ppl::User["alice"]
 user.age_min                         # => 1
 user.age_max                         # => 3
@@ -25,9 +25,9 @@ user.memberships_first.season.key    # => "5"
 user.memberships_last.season.key     # => "7"
 
 Ppl.setup_for_workbench
-Ppl::SeasonKeyVo["5"].update_by_records({ name: "alice", result_key: "維持" })
+Ppl::SeasonKeyVo["5"].users_update({ name: "alice", result_key: "維持" })
 Ppl::User["alice"].deactivated_membership # => nil
-Ppl::SeasonKeyVo["6"].update_by_records({ name: "bob",   result_key: "維持" })
+Ppl::SeasonKeyVo["6"].users_update({ name: "bob",   result_key: "維持" })
 Ppl::User["alice"].deactivated_membership # => #<Ppl::Membership id: 5354, season_id: 201, user_id: 816, result_id: 4, age: 0, win: nil, lose: nil, ox: "", created_at: "2025-08-24 10:51:51.965650000 +0900", updated_at: "2025-08-24 10:51:51.965650000 +0900">
 
 tp Ppl::Season

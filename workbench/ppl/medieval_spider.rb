@@ -1,5 +1,5 @@
 require "#{__dir__}/setup"
-e = Ppl::MedievalSpider.new(season_key_vo: "1", take_size: nil, verbose: false, sleep: 0)
+e = Ppl::MedievalSpider.new(season_key_vo: Ppl::SeasonKeyVo["1"], take_size: nil, verbose: false, sleep: 0)
 tp e.table_values_array
 tp e.table_hash_array
 tp e.call

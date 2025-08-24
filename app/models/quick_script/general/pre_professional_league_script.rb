@@ -46,11 +46,11 @@ module QuickScript
           },
           {
             :label   => "この棋士の同期 (完全一致・複数指定はOR条件)",
-            :key     => :name,
+            :key     => :user_name,
             :type    => :string,
             :dynamic_part => -> {
               {
-                :default => params[:name].presence,
+                :default => params[:user_name].presence,
                 :placeholder => "藤井聡太 伊藤匠",
                 :help_message => %(例: "藤井聡太 伊藤匠" → 藤井聡太か伊藤匠と当たったかもしれないメンバーで絞る ※本人を含む)
               }
@@ -87,8 +87,8 @@ module QuickScript
             "弟子" => user.name,
             "師匠" => user.mentor&.name,
             "期間" => user.memberships_count,
-            "期→" => user.memberships_first.try { season.key },
-            "←期" => user.memberships_last.try { season.key },
+            "期→" => user.memberships_first.try { season.key.name },
+            "←期" => user.memberships_last.try { season.key.name },
             "齢→" => user.age_min,
             "←齢" => user.age_max,
             "次点" => user.runner_up_count,
@@ -99,7 +99,7 @@ module QuickScript
             "昇期" => user.promotion_season_position,
             "昇勝" => user.promotion_win,
             # このネストした形式は R の前処理がややこしくなりすぎて自分にはさっぱりわからんので R 側では「成績行列」の方だけを使っている
-            "成績" => user.memberships.inject({}) { |a, m| a.merge(m.season.key => m.win) },
+            "成績" => user.memberships.inject({}) { |a, m| a.merge(m.season.key.name => m.win) },
           }
         end
       end
@@ -107,7 +107,7 @@ module QuickScript
       def as_general_json_seasons
         active_seasons.collect do |e|
           {
-            "名前" => e.key,
+            "名前" => e.key.name,
             "順序" => e.position,
           }
         end
@@ -122,22 +122,22 @@ module QuickScript
               "名前" => membership.user.name,
               "勝数" => membership.win,
               "結果" => membership.result.name,
-              "期次" => membership.season.key,
+              "期次" => membership.season.key.name,
             }
           end
         end
       end
 
       def call
-        params[:season_key] ||= Ppl::Season.latest_key
+        params[:season_key] ||= Ppl::Season.latest_or_base_key.name
 
         rows = current_scope.collect do |user|
           {
-            "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(name: user.name)) }, :class => user_css_class(user) },
+            "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(user_name: user.name)) }, :class => user_css_class(user) },
             "師匠" => menter_name_of(user),
             "期間" => user.memberships_count,
-            "期→" => user.memberships_first.try { season.key },
-            "←期" => user.memberships_last.try { season.key },
+            "期→" => user.memberships_first.try { season.key.name },
+            "←期" => user.memberships_last.try { season.key.name },
             "齢→" => user.age_min,
             "←齢" => user.age_max,
             "次点" => user.runner_up_count,
@@ -145,7 +145,7 @@ module QuickScript
             "勝率" => user.win_ratio.try { "%.3f" % self },
             "状況" => user.rank.pure_info.short_name,
             "昇齢" => user.promotion_age,
-            "昇期" => user.promotion_membership.try { season.key },
+            "昇期" => user.promotion_membership.try { season.key.name },
             "昇勝" => user.promotion_win,
             **season_every_win_count_of(user),
           }
@@ -209,8 +209,8 @@ module QuickScript
       def season_links
         h_stack(:class => "gap_small") do
           blocks = Ppl::Season.latest_order.collect do |e|
-            params = default_params.merge(season_key: e.key)
-            { _nuxt_link: e.key, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
+            params = default_params.merge(season_key: e.key.name)
+            { _nuxt_link: e.key.name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => button_css_class.join(" ") }
           end
           [*blocks, all_link]
         end
@@ -223,7 +223,7 @@ module QuickScript
       def user_links
         h_stack(:class => "gap_small") do
           Ppl::User.includes(:rank).link_order.collect do |e|
-            params = default_params.merge(name: e.name)
+            params = default_params.merge(user_name: e.name)
             css_klass = [button_css_class, *e.rank.pure_info.nav_css_class]
             { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => css_klass.join(" ") }
           end
@@ -245,7 +245,7 @@ module QuickScript
       end
 
       def default_params
-        { name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
+        { user_name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
       end
 
       ################################################################################
@@ -253,8 +253,8 @@ module QuickScript
       def bottom_content
         h_stack(:class => "gap_small") do
           Ppl::Season.latest_order.collect do |e|
-            params = default_params.merge(season_key: e.key)
-            { _link_to: e.key, _v_bind: { href: e.to_vo.url, target: "_blank" }, :class => button_css_class.join(" ") }
+            params = default_params.merge(season_key: e.key.name)
+            { _link_to: e.key.name, _v_bind: { href: e.to_vo.url, target: "_blank" }, :class => button_css_class.join(" ") }
           end
         end
       end

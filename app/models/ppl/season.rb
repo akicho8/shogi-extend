@@ -35,20 +35,20 @@ module Ppl
       end
 
       def latest_key
-        oldest_order.first&.key
+        latest_order.first&.key
       end
 
       def latest_or_base_key
-        SeasonKeyVo[latest_key || AntiquitySpider.accept_range.min]
+        latest_key || SeasonKeyVo[AntiquitySpider.accept_range.min]
       end
     end
+
+    composed_of :key, class_name: "Ppl::SeasonKeyVo"
 
     acts_as_list touch_on_update: false, top_of_list: 0
 
     has_many :memberships, dependent: :destroy
     has_many :users, through: :memberships
-
-    normalizes :key, with: -> e { e.to_s }
 
     scope :latest_order, -> { order(position: :desc) }
     scope :oldest_order, -> { order(position: :asc)  }

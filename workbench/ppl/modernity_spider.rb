@@ -1,5 +1,5 @@
 require "#{__dir__}/setup"
-e = Ppl::ModernitySpider.new(season_key_vo: "66", take_size: nil, verbose: false, sleep: 0, mock: false)
+e = Ppl::ModernitySpider.new(season_key_vo: Ppl::SeasonKeyVo["66"], take_size: nil, verbose: false, sleep: 0, mock: false)
 tp e.table_values_array
 tp e.table_hash_array
 tp e.call
@@ -73,34 +73,34 @@ tp e.call
 # >> |------------+------------+--------+-----+-----+------+--------------------|
 # >> | result_key | name       | mentor | age | win | lose | ox                 |
 # >> |------------+------------+--------+-----+-----+------+--------------------|
-# >> | 維         | 古賀悠聖   | 中田功 |  18 |   6 |      | oxxoxxxoxxxxooxxxo |
-# >> | 昇         | 服部慎一郎 | 中田章 |  20 |  14 |      | ooooooxoxooooxxooo |
-# >> | 維         | 関矢寛之   | 武者野 |  26 |   9 |      | xxooooxoxxoxxoxoxo |
-# >> | 昇         | 谷合廣紀   | 中座   |  25 |  14 |      | xxoxooooooooooooox |
-# >> | 維         | 柵木幹太   | 増田裕 |  21 |  10 |      | xoxoxxooxoxooxooxo |
-# >> | 維         | 荒田敏史   | 石田和 |  26 |   8 |      | xxxxoxoxxxxoooooox |
-# >> | 維         | 井田明宏   | 小林健 |  22 |  13 |      | ooxooxooxoooxoxooo |
-# >> | 維         | 伊藤匠     | 宮田利 |  16 |   9 |      | xooxxooxxxooxxooox |
-# >> | 維         | 岡部怜央   | 加瀬   |  20 |   8 |      | xoxxooxoxooxxxoxxo |
-# >> | 維         | 上野裕寿   | 井上   |  16 |   7 |      | xooxxoooxxxoxxoxxx |
-# >> | 維         | 三田敏弘   | 中田章 |  23 |   9 |      | oxoooxoxooxxxxxoxo |
-# >> | 維         | 貫島永州   | 小林健 |  21 |  11 |      | ooxoooxooxxoxooxox |
-# >> | 維         | 山川泰煕   | 広瀬   |  21 |   8 |      | xoooxxxoxxoxxxxooo |
-# >> | 維         | 小山直希   | 戸辺   |  19 |  13 |      | oooxxoxxooooxooooo |
-# >> | 維         | 岡井良樹   | 大野   |  24 |   8 |      | oxxxoxoxooxooxxoxx |
-# >> | 維         | 冨田誠也   | 小林健 |  23 |   6 |      | xxxoxxxxooxxoxoxox |
-# >> | 維         | 齊藤優希   | 深浦   |  23 |  10 |      | ooxooxooxxxoxooxxo |
-# >> | 維         | 徳田拳士   | 小林健 |  21 |  11 |      | xoxooooxoxoxooooxx |
-# >> | 維         | 横山友紀   | 井上   |  19 |   9 |      | xxoxxooooxoxooxxxo |
-# >> | 維         | 古田龍生   | 宮田利 |  22 |   6 |      | xxoxxxxxxooxoxoxox |
-# >> | 次         | 西山朋佳   | 伊藤博 |  24 |  14 |      | oxoooooxoooxoxoooo |
-# >> | 維         | 小髙悠太郎 | 所司   |  23 |   8 |      | oxoxxxooxooxooxxxx |
-# >> | 維         | 中沢良輔   | 飯野   |  21 |   8 |      | ooxoxoxxoxxxooxxox |
-# >> | 維         | 森本才跳   | 小林健 |  18 |  10 |      | oxxxxxxxooooxooooo |
-# >> | 維         | 川村悠人   | 小倉   |  20 |   8 |      | ooxoxxoxoxxoxoxxox |
-# >> | 維         | 相川浩治   | 安恵   |  23 |  10 |      | xooooooxoxooxxxxxo |
-# >> | 維         | 田中大貴   | 北島   |  20 |   3 |      | xxoxxoxxxxxxxxxxox |
-# >> | 維         | 宮田大暉   | 杉本昌 |  20 |   4 |      | oxxxoxxxxoxxoxxxxx |
-# >> | 維         | 宮嶋健太   | 大野   |  20 |   9 |      | oooxxxxoooxxoxooxx |
-# >> | 維         | 狩山幹生   | 井上   |  17 |   7 |      | xxxxooxooxxoxoxxxo |
+# >> | 維         | 古賀悠聖   | 中田功 |  18 |   6 |   12 | oxxoxxxoxxxxooxxxo |
+# >> | 昇         | 服部慎一郎 | 中田章 |  20 |  14 |    4 | ooooooxoxooooxxooo |
+# >> | 維         | 関矢寛之   | 武者野 |  26 |   9 |    9 | xxooooxoxxoxxoxoxo |
+# >> | 昇         | 谷合廣紀   | 中座   |  25 |  14 |    4 | xxoxooooooooooooox |
+# >> | 維         | 柵木幹太   | 増田裕 |  21 |  10 |    8 | xoxoxxooxoxooxooxo |
+# >> | 維         | 荒田敏史   | 石田和 |  26 |   8 |   10 | xxxxoxoxxxxoooooox |
+# >> | 維         | 井田明宏   | 小林健 |  22 |  13 |    5 | ooxooxooxoooxoxooo |
+# >> | 維         | 伊藤匠     | 宮田利 |  16 |   9 |    9 | xooxxooxxxooxxooox |
+# >> | 維         | 岡部怜央   | 加瀬   |  20 |   8 |   10 | xoxxooxoxooxxxoxxo |
+# >> | 維         | 上野裕寿   | 井上   |  16 |   7 |   11 | xooxxoooxxxoxxoxxx |
+# >> | 維         | 三田敏弘   | 中田章 |  23 |   9 |    9 | oxoooxoxooxxxxxoxo |
+# >> | 維         | 貫島永州   | 小林健 |  21 |  11 |    7 | ooxoooxooxxoxooxox |
+# >> | 維         | 山川泰煕   | 広瀬   |  21 |   8 |   10 | xoooxxxoxxoxxxxooo |
+# >> | 維         | 小山直希   | 戸辺   |  19 |  13 |    5 | oooxxoxxooooxooooo |
+# >> | 維         | 岡井良樹   | 大野   |  24 |   8 |   10 | oxxxoxoxooxooxxoxx |
+# >> | 維         | 冨田誠也   | 小林健 |  23 |   6 |   12 | xxxoxxxxooxxoxoxox |
+# >> | 維         | 齊藤優希   | 深浦   |  23 |  10 |    8 | ooxooxooxxxoxooxxo |
+# >> | 維         | 徳田拳士   | 小林健 |  21 |  11 |    7 | xoxooooxoxoxooooxx |
+# >> | 維         | 横山友紀   | 井上   |  19 |   9 |    9 | xxoxxooooxoxooxxxo |
+# >> | 維         | 古田龍生   | 宮田利 |  22 |   6 |   12 | xxoxxxxxxooxoxoxox |
+# >> | 次         | 西山朋佳   | 伊藤博 |  24 |  14 |    4 | oxoooooxoooxoxoooo |
+# >> | 維         | 小髙悠太郎 | 所司   |  23 |   8 |   10 | oxoxxxooxooxooxxxx |
+# >> | 維         | 中沢良輔   | 飯野   |  21 |   8 |   10 | ooxoxoxxoxxxooxxox |
+# >> | 維         | 森本才跳   | 小林健 |  18 |  10 |    8 | oxxxxxxxooooxooooo |
+# >> | 維         | 川村悠人   | 小倉   |  20 |   8 |   10 | ooxoxxoxoxxoxoxxox |
+# >> | 維         | 相川浩治   | 安恵   |  23 |  10 |    8 | xooooooxoxooxxxxxo |
+# >> | 維         | 田中大貴   | 北島   |  20 |   3 |   15 | xxoxxoxxxxxxxxxxox |
+# >> | 維         | 宮田大暉   | 杉本昌 |  20 |   4 |   14 | oxxxoxxxxoxxoxxxxx |
+# >> | 維         | 宮嶋健太   | 大野   |  20 |   9 |    9 | oooxxxxoooxxoxooxx |
+# >> | 維         | 狩山幹生   | 井上   |  17 |   7 |   11 | xxxxooxooxxoxoxxxo |
 # >> |------------+------------+--------+-----+-----+------+--------------------|

@@ -17,7 +17,9 @@ module Ppl
     def initialize(params = {})
       @params = default_params.merge(params)
 
-      season_key_vo
+      if season_key_vo.spider_class != self.class
+        raise "must not happen"
+      end
     end
 
     def call

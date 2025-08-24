@@ -1,5 +1,5 @@
 require "#{__dir__}/setup"
-e = Ppl::AntiquitySpider.new(season_key_vo: "S50", take_size: nil, verbose: false, sleep: 0, mock: false)
+e = Ppl::AntiquitySpider.new(season_key_vo: Ppl::SeasonKeyVo["S50"], take_size: nil, verbose: false, sleep: 0, mock: false)
 tp e.table_values_array
 tp e.table_hash_array
 tp e.call
