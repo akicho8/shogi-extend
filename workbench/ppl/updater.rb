@@ -11,7 +11,7 @@ Ppl.setup_for_workbench
 Ppl::Updater.import_from_json
 
 # rows = Ppl::AntiquitySpider.new("S49", take_size: nil, verbose: false, sleep: 0, mock: true).call
-# Ppl::Updater.update_raw("S49", rows)
+# Ppl::SeasonKeyVo["S49"].update_by_records(rows)
 
 # Ppl::Updater.resume_crawling(start: "S62", limit: 2)
 # Ppl::Updater.resume_crawling(start: "30",  limit: 2)

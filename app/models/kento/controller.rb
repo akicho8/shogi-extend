@@ -20,9 +20,8 @@ module Kento
 
     def kento_responder_params
       {
-        :scope => current_swars_user.memberships.where(battle_id: current_index_scope), # これいるん？
-        :user  => current_swars_user,                                                   # こっちだけでよくね？
-        :max   => params[:limit],
+        :user => current_swars_user,
+        :max  => params[:limit],
         :notify_params => {
           :referer    => request.referer,
           :user_agent => request.user_agent,

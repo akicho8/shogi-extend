@@ -30,6 +30,12 @@ module Kento
 
     attr_reader :params
 
+    class << self
+      def call(...)
+        new(...).call
+      end
+    end
+
     def initialize(params)
       @params = params
     end
@@ -59,11 +65,10 @@ module Kento
 
     def to_a
       @to_a ||= yield_self do
-        s = main_scope
-        s = s.joins(:battle)      # for order
+        s = user.memberships
         s = s.order(Swars::Battle.arel_table[:battled_at].desc)
         s = s.limit(max)
-        s = s.preload(battle: { memberships: [:grade, :user], rule: nil }, judge: nil, taggings: :tag) # battle.title のときに battle.membership.{grade,user} を参照するため
+        s = s.includes(battle: { memberships: [:grade, :user], rule: nil }, judge: nil) # battle.title のときに battle.membership.{grade,user} を参照するため
         s.collect(&method(:membership_as_hash))
       end
     end
@@ -79,9 +84,8 @@ module Kento
 
     def tag_list_of(membership)
       [
-        "将棋ウォーズ(#{membership.battle.rule_info.name})",
-        membership.judge_info.name,
-        *membership.tag_names_for(:attack).take(1),
+        "将棋ウォーズ(#{membership.battle.rule.name})",
+        membership.judge.name,
       ]
     end
 
@@ -91,10 +95,6 @@ module Kento
 
     def user
       params.fetch(:user)
-    end
-
-    def main_scope
-      params[:scope] || user.memberships
     end
 
     def notify_params

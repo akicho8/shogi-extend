@@ -14,6 +14,8 @@ module Ppl
     end
 
     def initialize(...)
+      @cache = {}
+
       super
 
       if key.kind_of? Integer
@@ -55,15 +57,38 @@ module Ppl
     end
 
     def spider_class
-      spider_class_list.find { |e| e.accept_range.include?(key) }
+      @cache[:spider_class] ||= spider_class_list.find { |e| e.accept_range.include?(key) }
     end
 
     def spider(options = {})
       spider_class.new(options.merge(season_key_vo: self))
     end
 
-    def records(options = {})
-      spider.call
+    def records(...)
+      spider(...).records
+    end
+
+    def url(...)
+      spider(...).source_url
+    end
+
+    def import_to_db(...)
+      Updater.update_by_records(self, records(...))
+    end
+
+    def update_by_records(records = [])
+      season = Season.find_or_create_by!(key: key)
+      Array.wrap(records).each do |record|
+        user = User.find_or_create_by!(name: record[:name] || "(name#{User.count.next})")
+        if v = record[:mentor].presence
+          mentor = Mentor.find_or_create_by!(name: v)
+          mentor_change_log(user, mentor)
+          user.update!(mentor: mentor)
+        end
+        membership = user.memberships.find_or_initialize_by(season: season)
+        membership.update!(record.slice(:result_key, :age, :win, :lose, :ox))
+      end
+      User.find_each(&:update_deactivated_season)
     end
 
     private

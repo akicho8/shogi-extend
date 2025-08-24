@@ -39,7 +39,7 @@ module Ppl
       end
 
       def latest_or_base_key
-        latest_key || AntiquitySpider.accept_range.min
+        SeasonKeyVo[latest_key || AntiquitySpider.accept_range.min]
       end
     end
 

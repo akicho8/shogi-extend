@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 Ppl.setup_for_workbench
-Ppl::Updater.update_raw("5", { name: "alice", result_key: "維持", age: 1, win: 3, lose: 1 })
+Ppl::SeasonKeyVo["5"].update_by_records({ name: "alice", result_key: "維持", age: 1, win: 3, lose: 1 })
 user = Ppl::User["alice"]
 membership = user.memberships.sole
 membership.result_info.name     # => "維持"

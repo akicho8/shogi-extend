@@ -10,4 +10,9 @@ RSpec.describe Ppl::SeasonKeyVo, type: :model do
   it ".start" do
     assert { Ppl::SeasonKeyVo.start.to_s == "S49" }
   end
+
+  it ".succ" do
+    assert { Ppl::SeasonKeyVo["S62"].succ == Ppl::SeasonKeyVo["1"] }
+    assert { Ppl::SeasonKeyVo["30"].succ == Ppl::SeasonKeyVo["31"] }
+  end
 end

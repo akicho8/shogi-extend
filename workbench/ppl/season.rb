@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 Ppl.setup_for_workbench
-Ppl::Updater.update_raw("5", { name: "alice" })
+Ppl::SeasonKeyVo["5"].update_by_records({ name: "alice" })
 tp Ppl::User["alice"].seasons
 Ppl::User["alice"].seasons.sole.key == 5
 # >> |----+-----+----------+---------------------------+---------------------------|

@@ -19,7 +19,7 @@ require "rails_helper"
 RSpec.describe Ppl::Season, type: :model do
   it "works" do
     Ppl.setup_for_workbench
-    Ppl::Updater.update_raw("5", { name: "alice" })
+    Ppl::SeasonKeyVo["5"].update_by_records({ name: "alice" })
     assert { Ppl::User["alice"].seasons.sole.key == "5" }
   end
 end

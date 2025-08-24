@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 Ppl.setup_for_workbench
-Ppl::Updater.update_raw(5, { mentor: "親", name: "子", result_key: "維持", })
+Ppl::Updater.update_by_records(5, { mentor: "親", name: "子", result_key: "維持", })
 Ppl::Mentor["親"].users_count   # => 1
 tp Ppl::Mentor
 # >> |----+------+-------------+---------------------------+---------------------------|

@@ -122,7 +122,7 @@ module Ppl
     end
 
     def season_key_vo
-      @season_key_vo ||= SeasonKeyVo[params.fetch(:season_key_vo)]
+      params.fetch(:season_key_vo)
     end
 
     def doc
