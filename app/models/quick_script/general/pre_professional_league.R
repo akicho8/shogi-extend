@@ -4,8 +4,8 @@ library(plotly)
 library(htmlwidgets)
 
 # データ取得
-api_url <- "http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general"
-# api_url <- "https://www.shogi-extend.com/api/lab/general/pre-professional-league.json?json_type=general"
+# api_url <- "http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general"
+api_url <- "https://www.shogi-extend.com/api/lab/general/pre-professional-league.json?json_type=general"
 all = fromJSON(api_url)
 df <- all$成績行列
 
