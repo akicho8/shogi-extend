@@ -1,8 +1,9 @@
-# |----------------------+-------------------------------------------------------------------|
-# | 本番用セットアップ   | Ppl::Updater.resume_crawling                                      |
-# | ローカルで全読み込み | Ppl::Updater.resume_crawling                                      |
-# | 範囲 N から 2 件     | Ppl::Updater.resume_crawling(start: SeasonKeyVo["S49"], limit: 2) |
-# |----------------------+-------------------------------------------------------------------|
+# |----------------------+-------------------------------|
+# | 本番用セットアップ   | Ppl::Updater.resume_crawling  |
+# | ローカルで全読み込み | Ppl::Updater.resume_crawling  |
+# | ネット → JSON生成   | Ppl::Updater.json_write       |
+# | JSON → DB           | Ppl::Updater.import_from_json |
+# |----------------------+-------------------------------|
 
 module Ppl
   module Updater

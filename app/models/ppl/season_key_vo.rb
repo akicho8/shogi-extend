@@ -1,12 +1,6 @@
 module Ppl
   SeasonKeyVo = Data.define(:key) do
     class << self
-      # def [](key)
-      #   if key.kind_of? self
-      #     return key
-      #   end
-      #   new(key)
-      # end
       def start
         self[AntiquitySpider::ACCEPT_RANGE_FIRST_STRING]
       end

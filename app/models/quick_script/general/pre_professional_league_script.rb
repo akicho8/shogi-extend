@@ -201,7 +201,7 @@ module QuickScript
         @title ||= "#{super} (#{current_scope.count})"
       end
 
-      ################################################################################
+      ################################################################################ top
 
       def top_content
         v_stack([season_links, user_links, mentor_links], :class => "gap_small")
@@ -241,26 +241,25 @@ module QuickScript
         end
       end
 
-      def button_css_class
-        @button_css_class ||= ["button", "is-small", "is-light"]
-      end
-
       def default_params
         { user_name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
       end
 
-      ################################################################################
+      ################################################################################ bottom
 
       def bottom_content
         h_stack(:class => "gap_small") do
           Ppl::Season.latest_order.collect do |e|
-            params = default_params.merge(season_key: e.key.name)
             { _link_to: e.key.name, _v_bind: { href: e.key.url, target: "_blank" }, :class => button_css_class.join(" ") }
           end
         end
       end
 
       ################################################################################
+
+      def button_css_class
+        @button_css_class ||= ["button", "is-small", "is-light"]
+      end
     end
   end
 end
