@@ -255,7 +255,7 @@ module QuickScript
         h_stack(:class => "gap_small") do
           Ppl::Season.latest_order.collect do |e|
             params = default_params.merge(season_key: e.key.name)
-            { _link_to: e.key.name, _v_bind: { href: e.to_vo.url, target: "_blank" }, :class => button_css_class.join(" ") }
+            { _link_to: e.key.name, _v_bind: { href: e.key.url, target: "_blank" }, :class => button_css_class.join(" ") }
           end
         end
       end

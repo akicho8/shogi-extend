@@ -52,9 +52,5 @@ module Ppl
 
     scope :latest_order, -> { order(position: :desc) }
     scope :oldest_order, -> { order(position: :asc)  }
-
-    def to_vo
-      SeasonKeyVo[key]
-    end
   end
 end
