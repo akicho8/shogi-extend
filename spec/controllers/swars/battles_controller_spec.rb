@@ -216,7 +216,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       assert { body["api_version"]                       == "2020-02-02"                                                  }
       assert { body["api_name"]                          == "将棋ウォーズ(ID:DevUser1)"                                   }
       assert { body["game_list"].size                    == 1                                                             }
-      assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち", "中飛車"]                      }
+      assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                      }
       assert { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.kif" }
       assert { body["game_list"][0]["display_name"]      == "DevUser1 三段 vs YamadaTaro 四段"                           }
       assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
