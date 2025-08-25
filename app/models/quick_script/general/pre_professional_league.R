@@ -4,13 +4,13 @@ library(plotly)
 library(htmlwidgets)
 
 # データ取得
-# api_url <- "http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general"
-api_url <- "https://www.shogi-extend.com/api/lab/general/pre-professional-league.json?json_type=general"
-df <- fromJSON(api_url)$成績行列
-# df <- fromJSON(api_url)
+api_url <- "http://localhost:3000/api/lab/general/pre-professional-league.json?json_type=general"
+# api_url <- "https://www.shogi-extend.com/api/lab/general/pre-professional-league.json?json_type=general"
+all = fromJSON(api_url)
+df <- all$成績行列
 
-# x 軸用に数値として保持（数値変換を忘れない）
-df$期次_num <- as.numeric(df$期次)
+# 「シーズン名」は文字列として保持
+df$シーズン名 <- as.character(df$シーズン名)
 
 # プロット初期化
 p <- plot_ly()
@@ -23,11 +23,11 @@ for (i in seq_along(names_list)) {
   name_i <- names_list[i]
   sub_df <- subset(df, 名前 == name_i)
 
-  # 期次順にソート
-  sub_df <- sub_df[order(sub_df$期次_num), ]
+  # シーズンインデックス順にソート
+  sub_df <- sub_df[order(sub_df$シーズンインデックス), ]
 
-  # 最後の期次だけ名前を表示
-  sub_df$テキスト <- ifelse(sub_df$期次_num == max(sub_df$期次_num), name_i, "")
+  # 最後のシーズン名だけ名前を表示
+  sub_df$テキスト <- ifelse(sub_df$シーズンインデックス == max(sub_df$シーズンインデックス), name_i, "")
 
   # ホバーテキスト
   sub_df$hover <- paste0(
@@ -61,7 +61,7 @@ for (i in seq_along(names_list)) {
   p <- add_trace(
     p,
     data = sub_df,
-    x = ~期次_num,
+    x = ~シーズンインデックス,   # 数値インデックスで描画
     y = ~勝数,
     type = "scatter",
     mode = "lines+markers+text",
@@ -84,8 +84,8 @@ p <- layout(
     font = list(size = 24, color = "white")
   ),
   xaxis = list(
-    tickvals = df$期次_num,
-    ticktext = df$期次,
+    tickvals = unique(df$シーズンインデックス),
+    ticktext = unique(df$シーズン名),
     tickfont = list(color = "#aaa"),
     showgrid = TRUE,
     gridcolor = "#444",

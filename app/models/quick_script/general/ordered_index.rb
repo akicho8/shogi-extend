@@ -1,8 +1,9 @@
 module QuickScript
   module General
     OrderedIndex = [
-      EncyclopediaScript,
+      PreProfessionalLeagueScript,
       PiyoShogiConfigScript,
+      EncyclopediaScript,
     ]
   end
 end

@@ -122,7 +122,8 @@ module QuickScript
               "名前" => membership.user.name,
               "勝数" => membership.win,
               "結果" => membership.result.name,
-              "期次" => membership.season.key.name,
+              "シーズン名" => membership.season.key.name,
+              "シーズンインデックス" => membership.season.position,
             }
           end
         end
