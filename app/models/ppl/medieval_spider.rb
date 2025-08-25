@@ -1,12 +1,15 @@
 # https://www.ne.jp/asahi/yaston/shogi/syoreikai/3dan/league/3dan_league01.htm
 
-# tp Ppl::MedievalSpider.call(season_key_vo: 1)
+# tp Ppl::MedievalSpider.call(season_key_vo: Ppl::SeasonKeyVo["1"])
 
 module Ppl
   class MedievalSpider < Spider
+    ACCEPT_RANGE = 1..30
+    ACCEPT_RANGE_FIRST_STRING = "1"
+
     class << self
-      def accept_range
-        "1".."30"
+      def accept_range?(key)
+        ACCEPT_RANGE.cover?(key.to_i)
       end
     end
 

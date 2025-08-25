@@ -16,10 +16,6 @@ RSpec.describe Ppl::SeasonKeyVo, type: :model do
     assert { Ppl::SeasonKeyVo["30"].succ == Ppl::SeasonKeyVo["31"] }
   end
 
-  it ".all" do
-    assert { Ppl::SeasonKeyVo.all }
-  end
-
   it ".to_zero_padding_s" do
     assert { Ppl::SeasonKeyVo["1"].to_zero_padding_s == "01" }
   end

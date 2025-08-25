@@ -1,12 +1,12 @@
 # https://www.shogi.or.jp/match/shoreikai/sandan/31/index.html
 
-# tp Ppl::ModernitySpider.call(season_key_vo: 31)
+# tp Ppl::ModernitySpider.call(season_key_vo: Ppl::SeasonKeyVo["31"])
 
 module Ppl
   class ModernitySpider < Spider
     class << self
-      def accept_range
-        "31".."200"
+      def accept_range?(key)
+        key.to_i > MedievalSpider::ACCEPT_RANGE.max
       end
     end
 

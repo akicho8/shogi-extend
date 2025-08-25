@@ -1,12 +1,18 @@
 # https://www.ne.jp/asahi/yaston/shogi/syoreikai/iitoko/seiseki/49nendo_3dan.htm
 
-# tp Ppl::AntiquitySpider.call(season_key_vo: 1)
+# tp Ppl::AntiquitySpider.call(season_key_vo: Ppl::SeasonKeyVo["S49"])
 
 module Ppl
   class AntiquitySpider < Spider
+    ACCEPT_RANGE = 49..62
+    ACCEPT_RANGE_FIRST_STRING = "S49"
+    ACCEPT_RANGE_LAST_STRING  = "S62"
+
     class << self
-      def accept_range
-        "S49".."S62"
+      def accept_range?(key)
+        if md = key.match(/S(?<number>\d+)/)
+          ACCEPT_RANGE.cover?(md[:number].to_i)
+        end
       end
     end
 

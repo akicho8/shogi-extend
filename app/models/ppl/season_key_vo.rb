@@ -1,44 +1,50 @@
 module Ppl
   SeasonKeyVo = Data.define(:key) do
     class << self
-      def [](key)
-        if key.kind_of? self
-          return key
-        end
-        new(key)
-      end
-
+      # def [](key)
+      #   if key.kind_of? self
+      #     return key
+      #   end
+      #   new(key)
+      # end
       def start
-        self[AntiquitySpider.accept_range.min]
-      end
-
-      def all
-        av = []
-        e = start
-        while e.valid?
-          av << e
-          e = e.succ
-        end
-        av
+        self[AntiquitySpider::ACCEPT_RANGE_FIRST_STRING]
       end
     end
-
-    include Comparable
 
     def initialize(...)
       @cache = {}
       super
     end
 
+    ################################################################################ (a..b) ここが汚ないのは仕方がない
+
+    include Comparable
+
     def <=>(other)
-      [spider_type_info.code, to_i] <=> [other.spider_type_info.code, other.to_i]
+      position <=> other.position
+    end
+
+    def position
+      @cache[:position] ||= yield_self do
+        if key.start_with?("S")
+          key[1..].to_i - AntiquitySpider::ACCEPT_RANGE.min
+        else
+          key.to_i + AntiquitySpider::ACCEPT_RANGE.size
+        end
+      end
+    end
+
+    def succ
+      if key == AntiquitySpider::ACCEPT_RANGE_LAST_STRING
+        v = MedievalSpider::ACCEPT_RANGE_FIRST_STRING
+      else
+        v = key.succ
+      end
+      self.class.new(v)
     end
 
     ################################################################################ アクセサ
-
-    # def priority
-    #   SpiderTypeInfo.priority_map.fetch(key)
-    # end
 
     def to_i
       @cache[:to_i] ||= key[/\d+/].to_i
@@ -60,31 +66,14 @@ module Ppl
       to_s
     end
 
-    def succ
-      if key == AntiquitySpider.accept_range.max
-        v = MedievalSpider.accept_range.min
-      else
-        v = key.succ
-      end
-      self.class.new(v)
-    end
-
     ################################################################################ クローラ
-
-    def valid?
-      spider_type_info
-    end
-
-    def invalid?
-      !valid?
-    end
 
     def spider_class
       spider_type_info.klass
     end
 
     def spider_type_info
-      @cache[:spider_type_info] ||= SpiderTypeInfo.find { |e| e.klass.accept_range.include?(key) }
+      @cache[:spider_type_info] ||= SpiderTypeInfo.find { |e| e.klass.accept_range?(key) }
     end
 
     def spider(options = {})
