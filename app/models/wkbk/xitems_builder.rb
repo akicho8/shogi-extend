@@ -80,7 +80,7 @@ module Wkbk
       if current_user
         @xitems.each do |e|
           list = answer_log_stat_records
-          hash = list.inject({}) { |a, e| a.merge(e.article_id => e) }
+          hash = list.index_by(&:article_id)
           if v = hash[e[:article]["id"]]
             a = e[:answer_stat]
             a[:correct_count] = v.correct_count

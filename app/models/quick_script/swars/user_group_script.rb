@@ -230,7 +230,7 @@ EOS
 
       # ウォーズIDから名前を求めるためのテーブル
       def user_tactics_hash
-        @user_tactics_hash ||= user_items.inject({}) { |a, e| a.merge(e[:swars_key] => e) }
+        @user_tactics_hash ||= user_items.index_by { it[:swars_key] }
       end
 
       # DBに存在するユニークなウォーズIDたち

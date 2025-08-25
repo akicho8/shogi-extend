@@ -14,7 +14,7 @@ module BackendScript
                            "DATE(#{MysqlToolkit.column_tokyo_timezone_cast(:created_at)}) AS created_on",
                            "COUNT(*)                              AS count_all",
                          ].join(", ")).group("created_on")
-      access_log_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+      access_log_hash = records.index_by { it[:created_on] }
 
       now = Time.current
       current_length.times.collect do |i|

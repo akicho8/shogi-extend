@@ -235,7 +235,7 @@ module QuickScript
       end
 
       def period_agg_hash
-        @period_agg_hash ||= period_agg.inject({}) { |a, e| a.merge(e[:"名前"].to_sym => e) }
+        @period_agg_hash ||= period_agg.index_by { it[:"名前"].to_sym }
       end
 
       ################################################################################
@@ -281,7 +281,7 @@ module QuickScript
           @tactics_hash ||= yield_self do
             if aggregate.present?
               if records = aggregate.dig(:infinite)
-                records.inject({}) { |a, e| a.merge(e[:"名前"].to_sym => e) }
+                records.index_by { it[:"名前"].to_sym }
               end
             end
           end

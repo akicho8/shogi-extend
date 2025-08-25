@@ -63,7 +63,7 @@ module Kento
     end
 
     def attributes
-      @cache[:attributes] ||= attr_names.inject({}) { |a, e| a.merge(e => send(e)) }
+      @cache[:attributes] ||= attr_names.index_with { send(it) }
     end
 
     def info

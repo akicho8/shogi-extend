@@ -23,7 +23,7 @@ module BackendScript
       #       "COUNT(answer_kind_id = #{Swars::AnswerKind.fetch(:mistake).id} or NULL) AS mistake_count", # x
       #     ].join(", ")).group("created_on")                                  # 日付毎
       #   # 日付から一発で対応するレコードを求められるようにハッシュ化
-      #   answer_log_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+      #   answer_log_hash = records.index_by { it[:created_on] }
       # end
 
       # 日別の問題作成回数を求める
@@ -38,7 +38,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        battle_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        battle_hash = records.index_by { it[:created_on] }
       end
 
       # 日別の問題作成回数を求める
@@ -52,7 +52,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        user_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        user_hash = records.index_by { it[:created_on] }
       end
 
       # 検索数
@@ -67,7 +67,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        search_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        search_hash = records.index_by { it[:created_on] }
       end
 
       # 古い棋譜の補完
@@ -82,7 +82,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 件数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        crawl_reservation_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        crawl_reservation_hash = records.index_by { it[:created_on] }
       end
 
       # # 日別の問題集作成回数を求める
@@ -97,7 +97,7 @@ module BackendScript
       #       "COUNT(*)                              AS count_all",            # 新規問題作成数
       #     ].join(", ")).group("created_on")                                  # 日付毎
       #   # 日付から一発で対応するレコードを求められるようにハッシュ化
-      #   book_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+      #   book_hash = records.index_by { it[:created_on] }
       # end
 
       now = Time.current

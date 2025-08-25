@@ -19,7 +19,7 @@ module BackendScript
             "COUNT(answer_kind_id = #{Wkbk::AnswerKind.fetch(:mistake).id} or NULL) AS mistake_count", # x
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        answer_log_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        answer_log_hash = records.index_by { it[:created_on] }
       end
 
       # 日別の問題作成回数を求める
@@ -34,7 +34,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        article_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        article_hash = records.index_by { it[:created_on] }
       end
 
       # 日別の問題集作成回数を求める
@@ -49,7 +49,7 @@ module BackendScript
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
-        book_hash = records.inject({}) { |a, e| a.merge(e[:created_on] => e) }
+        book_hash = records.index_by { it[:created_on] }
       end
 
       now = Time.current.to_date
