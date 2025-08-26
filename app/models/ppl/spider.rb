@@ -73,7 +73,13 @@ module Ppl
     def validate!(records)
       if v = params[:promotion_count_gteq]
         unless records.count { |e| e[:result_key] == "昇" } >= v
-          raise "昇が#{gteq}つ以上ない"
+          raise "#{season_key_vo}には昇段者が#{v}人以上いません"
+        end
+      end
+      records.each do
+        if it[:age].blank?
+          tp it
+          raise "#{season_key_vo}に年齢が含まれていません"
         end
       end
     end

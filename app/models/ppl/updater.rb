@@ -1,9 +1,10 @@
-# |----------------------+-------------------------------|
-# | 本番用セットアップ   | Ppl::Updater.resume_crawling  |
-# | ローカルで全読み込み | Ppl::Updater.resume_crawling  |
-# | ネット → JSON生成   | Ppl::Updater.json_write       |
-# | JSON → DB           | Ppl::Updater.import_from_json |
-# |----------------------+-------------------------------|
+# |----------------------+--------------------------------------------------------------------------------------|
+# | 本番用セットアップ   | Ppl::Updater.resume_crawling                                                         |
+# | ローカルで全読み込み | Ppl::Updater.resume_crawling                                                         |
+# | ネット → JSON生成   | Ppl::Updater.json_write                                                              |
+# | JSON → DB           | Ppl::Updater.import_from_json                                                        |
+# | 指定範囲のみ更新     | (Ppl::SeasonKeyVo["S31前"]..Ppl::SeasonKeyVo["S33前"]).each(&:users_update_from_web) |
+# |----------------------+--------------------------------------------------------------------------------------|
 
 module Ppl
   module Updater

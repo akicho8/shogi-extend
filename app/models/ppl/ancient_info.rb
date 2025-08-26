@@ -1,0 +1,43 @@
+module Ppl
+  class AncientInfo
+    include ApplicationMemoryRecord
+    memory_record [
+      { key: "S31前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/31nendo_yobi0102.htm" },
+      { key: "S31後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/31nendo_yobi0102.htm" },
+      { key: "S32前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/32nendo_yobi0304.htm" },
+      { key: "S32後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/32nendo_yobi0304.htm" },
+      { key: "S33前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/33nendo_yobi0506.htm" },
+      { key: "S33後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/33nendo_yobi0506.htm" },
+      { key: "S34前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/34nendo1_yobi07.htm"  },
+      { key: "S34後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/34nendo2_yobi08.htm"  },
+      { key: "S35前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/35nendo1_yobi09.htm"  },
+      { key: "S35後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/35nendo2_yobi10.htm"  },
+      { key: "S36前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/36nendo1_yobi11.htm"  },
+      { key: "S36後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/36nendo2_yobi12.htm"  },
+      { key: "S37前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/37nendo1_Akumi13.htm" },
+      { key: "S37後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/37nendo2_Akumi14.htm" },
+      { key: "S38前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/38nendo1_Akumi15.htm" },
+      { key: "S38後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/38nendo2_Akumi16.htm" },
+      { key: "S39前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/39nendo1_Akumi17.htm" },
+      { key: "S39後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/39nendo2_Akumi18.htm" },
+      { key: "S40前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/40nendo1_Akumi19.htm" },
+      { key: "S40後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/40nendo2_Akumi20.htm" },
+      { key: "S41前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/41nendo1_Akumi21.htm" },
+      { key: "S41後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/41nendo2_Akumi22.htm" },
+      { key: "S42前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/42nendo1_Akumi23.htm" },
+      { key: "S42後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/42nendo2_Akumi24.htm" },
+      { key: "S43前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/43nendo1_Akumi25.htm" },
+      { key: "S43後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/43nendo2_Akumi26.htm" },
+      { key: "S44前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/44nendo1_Akumi27.htm" },
+      { key: "S44後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/44nendo2_Akumi28.htm" },
+      { key: "S45前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/45nendo1_Akumi29.htm" },
+      { key: "S45後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/45nendo2_Akumi30.htm" },
+      { key: "S46前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/46nendo1_Akumi31.htm" },
+      { key: "S46後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/46nendo2_Akumi32.htm" },
+      { key: "S47前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/47nendo1_Akumi33.htm" },
+      { key: "S47後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/47nendo2_Akumi34.htm" },
+      { key: "S48前", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/48nendo1_Akumi35.htm" },
+      { key: "S48後", url: "https://www.ne.jp/asahi/yaston/shogi/syoreikai/yobi_and_Akumi/league/48nendo2_Akumi36.htm" },
+    ]
+  end
+end

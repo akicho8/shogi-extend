@@ -2,18 +2,20 @@ require "rails_helper"
 
 RSpec.describe Ppl::SeasonKeyVo, type: :model do
   it "spider" do
-    assert { Ppl::SeasonKeyVo["S49"].spider_class == Ppl::AntiquitySpider }
-    assert { Ppl::SeasonKeyVo["30"].spider_class  == Ppl::MedievalSpider  }
-    assert { Ppl::SeasonKeyVo["31"].spider_class  == Ppl::ModernitySpider }
+    assert { Ppl::SeasonKeyVo["S31前"].spider_class == Ppl::AncientSpider   }
+    assert { Ppl::SeasonKeyVo["S49"].spider_class   == Ppl::AntiquitySpider }
+    assert { Ppl::SeasonKeyVo["30"].spider_class    == Ppl::MedievalSpider  }
+    assert { Ppl::SeasonKeyVo["31"].spider_class    == Ppl::ModernitySpider }
   end
 
   it ".start" do
-    assert { Ppl::SeasonKeyVo.start.to_s == "S49" }
+    assert { Ppl::SeasonKeyVo.start.to_s == "S31前" }
   end
 
   it ".succ" do
-    assert { Ppl::SeasonKeyVo["S62"].succ == Ppl::SeasonKeyVo["1"] }
-    assert { Ppl::SeasonKeyVo["30"].succ == Ppl::SeasonKeyVo["31"] }
+    assert { Ppl::SeasonKeyVo["S48前"].succ.name == "S48後" }
+    assert { Ppl::SeasonKeyVo["S48後"].succ.name == "S49"   }
+    assert { Ppl::SeasonKeyVo["S62"].succ.name   == "1"     }
   end
 
   it ".to_zero_padding_s" do

@@ -6,7 +6,9 @@ module Ppl
   class ModernitySpider < Spider
     class << self
       def accept_range?(key)
-        key.to_i > MedievalSpider::ACCEPT_RANGE.max
+        if key.match?(/\A\d+\z/)
+          key.to_i > MedievalSpider::ACCEPT_RANGE.max
+        end
       end
     end
 
@@ -45,7 +47,7 @@ module Ppl
       hv[:mentor]     = row["師匠"]
       hv[:win]        = row["勝"]
       hv[:lose]       = row["敗"]
-      hv[:age]        = row["年齢"]
+      hv[:age]        = row["年齢"] || row["年"]
       hv[:ox]         = ox_normalize(row.values.join)
       hv
     end

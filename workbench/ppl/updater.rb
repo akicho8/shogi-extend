@@ -7,7 +7,6 @@ Ppl.setup_for_workbench
 # ネット → JSON生成
 # Ppl::Updater.json_write
 
-
 # JSON → DB
 Ppl::Updater.import_from_json
 

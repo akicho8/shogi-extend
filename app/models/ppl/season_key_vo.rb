@@ -2,7 +2,7 @@ module Ppl
   SeasonKeyVo = Data.define(:key) do
     class << self
       def start
-        self[AntiquitySpider::ACCEPT_RANGE_FIRST_STRING]
+        self[OrderInfo.first.name]
       end
     end
 
@@ -11,7 +11,7 @@ module Ppl
       super
     end
 
-    ################################################################################ (a..b) ここが汚ないのは仕方がない
+    ################################################################################ (a..b)
 
     include Comparable
 
@@ -20,22 +20,20 @@ module Ppl
     end
 
     def position
-      @cache[:position] ||= yield_self do
-        if key.start_with?("S")
-          key[1..].to_i - AntiquitySpider::ACCEPT_RANGE.min
-        else
-          key.to_i + AntiquitySpider::ACCEPT_RANGE.size
-        end
-      end
+      @cache[:position] ||= order_info&.code || OrderInfo.values.size + to_i.pred
     end
 
     def succ
-      if key == AntiquitySpider::ACCEPT_RANGE_LAST_STRING
-        v = MedievalSpider::ACCEPT_RANGE_FIRST_STRING
+      if order_info
+        if info = OrderInfo[order_info.code.next]
+          str = info.name
+        else
+          str = "1"
+        end
       else
-        v = key.succ
+        str = to_i.next.to_s
       end
-      self.class.new(v)
+      self.class.new(str)
     end
 
     ################################################################################ アクセサ
@@ -58,6 +56,10 @@ module Ppl
 
     def inspect
       to_s
+    end
+
+    def order_info
+      OrderInfo[key]
     end
 
     ################################################################################ クローラ

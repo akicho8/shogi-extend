@@ -5,11 +5,12 @@
 module Ppl
   class MedievalSpider < Spider
     ACCEPT_RANGE = 1..30
-    ACCEPT_RANGE_FIRST_STRING = "1"
 
     class << self
       def accept_range?(key)
-        ACCEPT_RANGE.cover?(key.to_i)
+        if key.match?(/\A\d+\z/)
+          ACCEPT_RANGE.cover?(key.to_i)
+        end
       end
     end
 

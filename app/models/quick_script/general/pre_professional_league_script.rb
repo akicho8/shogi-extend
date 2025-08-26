@@ -45,7 +45,7 @@ module QuickScript
             },
           },
           {
-            :label   => "この棋士の同期 (完全一致・複数指定はOR条件)",
+            :label   => "この棋士と同期 (完全一致・複数指定はOR条件)",
             :key     => :user_name,
             :type    => :string,
             :dynamic_part => -> {
@@ -136,26 +136,29 @@ module QuickScript
           {
             "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(user_name: user.name)) }, :class => user_css_class(user) },
             "師匠" => menter_name_of(user),
+            "状況" => user.rank.pure_info.short_name,
+            "勝率" => user.win_ratio.try { "%.3f" % self },
+            "昇齢" => user.promotion_age,
+            "昇勝" => user.promotion_win,
+            "最勝" => user.win_max || "?",
+
+            "齢→" => user.age_min,
+            "←齢" => user.age_max,
+
             "期間" => user.memberships_count,
             "期→" => user.memberships_first.try { season.key.name },
             "←期" => user.memberships_last.try { season.key.name },
-            "齢→" => user.age_min,
-            "←齢" => user.age_max,
-            "次点" => user.runner_up_count,
-            "最勝" => user.win_max || "?",
-            "勝率" => user.win_ratio.try { "%.3f" % self },
-            "状況" => user.rank.pure_info.short_name,
-            "昇齢" => user.promotion_age,
+
             "昇期" => user.promotion_membership.try { season.key.name },
-            "昇勝" => user.promotion_win,
+            "次点" => user.runner_up_count,
             **season_every_win_count_of(user),
           }
         end
-        simple_table(rows)
+        simple_table(rows, always_table: true)
       end
 
       def menter_name_of(user)
-        if false
+        if true
           # 本当はリンクしたいが表示する値自体がソート対象値なのでリンクにしてしまうとソートできなくなる
           user.mentor ? { _nuxt_link: user.mentor.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(mentor_name: user.mentor.name)) }, :class => "is_decoration_off" } : ""
         else
@@ -186,6 +189,9 @@ module QuickScript
       end
 
       def season_every_win_count_of(user)
+        if params[:matrix] == "false"
+          return {}
+        end
         active_seasons.each_with_object({}) do |season, m|
           m["#{column_name_prefix_for_avoid_js_bad_spec}#{season.key}"] = memberships_hash.dig(season, user.id).try { win || "?" }
         end
@@ -218,7 +224,7 @@ module QuickScript
       end
 
       def all_link
-        { _nuxt_link: "ALL", _v_bind: { to: qs_nuxt_link_to(params: default_params) }, :class => button_css_class.join(" ") }
+        { _nuxt_link: "ALL", _v_bind: { to: qs_nuxt_link_to(params: default_params.merge("matrix" => "false")) }, :class => button_css_class.join(" ") }
       end
 
       def user_links
@@ -263,3 +269,6 @@ module QuickScript
     end
   end
 end
+# ~> -:7:in '<module:General>': uninitialized constant QuickScript::General::Base (NameError)
+# ~>    from -:6:in '<module:QuickScript>'
+# ~>    from -:5:in '<main>'

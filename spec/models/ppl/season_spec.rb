@@ -25,7 +25,7 @@ RSpec.describe Ppl::Season, type: :model do
 
   it "#latest_or_base_key" do
     Ppl.setup_for_workbench
-    assert { Ppl::Season.latest_or_base_key.name == "S49" }
+    assert { Ppl::Season.latest_or_base_key.name == "S31前" }
     Ppl::SeasonKeyVo["1"].find_or_create
     assert { Ppl::Season.latest_or_base_key.name == "1" }
   end
