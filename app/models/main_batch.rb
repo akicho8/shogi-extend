@@ -48,6 +48,7 @@ class MainBatch
     Kiwi::Lemon.cleaner(execute: true).call   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     XfileCleaner.call(execute: true)          # public/system/x-files 以下の古い png と rb を削除する
     MediaBuilder.old_media_file_clean(keep: 3, execute: true)
+    SystemFileCacheCleanerAll.call
   end
 
   def step3_ActiveRecord関連をGeneralCleanerで削除するシリーズ

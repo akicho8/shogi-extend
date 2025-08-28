@@ -10,12 +10,14 @@ module Talk
       end
     end
 
+    attr_accessor :source_text
+
     def initialize(source_text)
       @source_text = source_text
     end
 
     def to_s
-      s = @source_text
+      s = source_text
       s = pictorial_chars_delete(s)
       s = word_replace(s)
       s = long_url_replace(s)

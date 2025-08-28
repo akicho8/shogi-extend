@@ -2,8 +2,6 @@ class MediaBuilder
   include SystemFileMethods
 
   class << self
-    # delegate :logger, to: "Rails"
-
     # base64で来ているデータを実際のファイルにしてパラメータを変更
     def params_rewrite!(params)
       logger.tagged(:params_rewrite!) do
