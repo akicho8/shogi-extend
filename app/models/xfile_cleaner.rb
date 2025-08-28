@@ -38,7 +38,7 @@ class XfileCleaner
 
   def file_process(file)
     if file.file?
-      if file.atime <= @options[:expires_in].seconds.ago
+      if file.mtime <= @options[:expires_in].seconds.ago
         if file.basename.to_s.include?("_") # 2_20210824130750_1024x768_8s.png のようなファイルは除く
           @skip_files << file_info(file)
         else
@@ -63,6 +63,6 @@ class XfileCleaner
   end
 
   def file_info(file)
-    { file: file, accessed_at: file.atime.strftime("%F %T") }
+    { file: file, mtime: file.mtime.strftime("%F %T") }
   end
 end
