@@ -1,5 +1,5 @@
 # cap production deploy:upload FILES=app/models/system_file_cache_cleaner_one.rb,app/models/system_file_cache_cleaner_all.rb
-# rails r SystemFileCacheCleanerOne.call(target_dir: "")
+# rails r SystemFileCacheCleanerAll.call
 class SystemFileCacheCleanerOne
   class << self
     def call(...)
@@ -12,8 +12,8 @@ class SystemFileCacheCleanerOne
 
   def initialize(params = {})
     @params = {
-      cutoff_time: 30.days.ago,
-      verbose: Rails.env.local?,
+      :cutoff_time => 30.days.ago,
+      :verbose     => Rails.env.local?,
     }.merge(params)
 
   end
@@ -24,19 +24,24 @@ class SystemFileCacheCleanerOne
       tp log_body
     end
     if target_dir.exist?
-      target_dir.find do |e|
-        if e.file? && e.extname == target_extname
-          counts[:file_count] += 1
-          if params[:limit] && counts[:file_count] > params[:limit]
-            break
-          end
-          if e.mtime < cutoff_time
-            counts[:target_count] += 1
-            if execute?
-              e.delete
+      target_dir.find do |path|
+        if path.file?
+          if path.extname == target_extname
+            if params[:limit] && counts[:file_count] >= params[:limit]
+              break
             end
-            unless e.exist?
-              counts[:deleted_count] += 1
+            counts[:file_count] += 1
+            if mtime_update_all?
+              FileUtils.touch(path)
+            end
+            if path.mtime < cutoff_time
+              counts[:target_count] += 1
+              if execute?
+                path.delete
+              end
+              unless path.exist?
+                counts[:deleted_count] += 1
+              end
             end
           end
         end
@@ -47,6 +52,8 @@ class SystemFileCacheCleanerOne
     end
     AppLog.important(subject: log_subject, body: log_body.to_t)
   end
+
+  private
 
   def target_dir
     @params[:target_dir]
@@ -62,6 +69,10 @@ class SystemFileCacheCleanerOne
 
   def verbose?
     @params[:verbose]
+  end
+
+  def mtime_update_all?
+    @params[:mtime_update_all]
   end
 
   def execute?
