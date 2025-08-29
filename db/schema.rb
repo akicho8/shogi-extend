@@ -476,7 +476,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000006) do
     t.bigint "room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "対局者"
     t.integer "win_count", null: false, comment: "勝数"
-    t.integer "lose_count", null: false, comment: "負数"
+    t.integer "lose_count", null: false, comment: "敗数"
     t.integer "battles_count", null: false, comment: "対局数"
     t.float "win_rate", null: false, comment: "勝率"
     t.integer "score", null: false, comment: "スコア"

@@ -90,10 +90,10 @@ list = [
     row.update(["師匠", "年齢", "出身"].zip(values[4].split(/・/)).to_h)
     row.update(["勝敗", "新順位"].zip(values.last(2)).to_h)
     row["勝数"] = 0
-    row["負数"] = 0
+    row["敗数"] = 0
     if md = row["勝敗"].match(/(?<win>\d+)-(?<lose>\d+)/)
       row["勝数"] = md[:win].to_i
-      row["負数"] = md[:lose].to_i
+      row["敗数"] = md[:lose].to_i
       row.delete("勝敗")
     end
 
@@ -102,8 +102,8 @@ list = [
     if row["勝数"] && (row["勝数"] != ox.count("o"))
       p [row["氏名"], "勝数とoの数の不一致", row["勝数"], ox.count("o")]
     end
-    if row["負数"] && (row["負数"] != ox.count("x"))
-      p [row["氏名"], "負数とoの数の不一致", row["負数"], ox.count("x")]
+    if row["敗数"] && (row["敗数"] != ox.count("x"))
+      p [row["氏名"], "敗数とoの数の不一致", row["敗数"], ox.count("x")]
     end
 
     if kessho_ox = kessho_hv[row["氏名"]]
@@ -113,7 +113,7 @@ list = [
       if kessho_ox == "o"
         row["勝数"] += 1
       else
-        row["負数"] += 1
+        row["敗数"] += 1
       end
     end
 

@@ -29,7 +29,7 @@ module Ppl
       hv[:mentor] = row["師匠"]
       hv[:age]    = row["年齢"]
       hv[:win]    = row["勝数"]
-      hv[:lose]   = row["負数"]
+      hv[:lose]   = row["敗数"]
       hv[:ox]     = row["ox"]
 
       if row["結果"] == "昇段"
