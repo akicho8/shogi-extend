@@ -6,6 +6,8 @@
 module QuickScript
   module General
     class PreProfessionalLeaguePlayerScript < Base
+      include PreProfessionalLeagueShared
+
       self.title = "奨励会三段リーグ個別履歴"
       self.description = "奨励会三段リーグの任意のプレイヤーの情報のみを表示する"
       self.form_method = :get
@@ -93,8 +95,23 @@ module QuickScript
         end
       end
 
-      ################################################################################
+      ################################################################################ bottom
 
+      def bottom_content
+        if target_user
+          season_ids = Ppl::Membership.where(user_id: target_user).distinct.pluck(:season_id)
+          users = Ppl::User.joins(:memberships).merge(Ppl::Membership.where(season_id: season_ids).distinct)
+          users = users.includes(:rank)
+          users = users.link_order
+
+          h_stack(:class => "gap_small") do
+            users.collect do |e|
+              css_klass = [button_css_class, *e.rank.pure_info.nav_css_class]
+              { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { user_name: e.name, __prefer_url_params__: 1 }) }, :class => css_klass.join(" ") }
+            end
+          end
+        end
+      end
     end
   end
 end

@@ -5,6 +5,8 @@
 module QuickScript
   module General
     class PreProfessionalLeagueScript < Base
+      include PreProfessionalLeagueShared
+
       self.title = "奨励会三段リーグDB"
       self.description = "奨励会三段リーグの全体的な情報を表示する"
       self.form_method = :get
@@ -264,13 +266,6 @@ module QuickScript
       end
 
       ################################################################################
-
-      def button_css_class
-        @button_css_class ||= ["button", "is-small", "is-light"]
-      end
     end
   end
 end
-# ~> -:7:in '<module:General>': uninitialized constant QuickScript::General::Base (NameError)
-# ~>    from -:6:in '<module:QuickScript>'
-# ~>    from -:5:in '<main>'
