@@ -121,6 +121,7 @@ module QuickScript
             {
               "名前" => membership.user.name,
               "勝数" => membership.win,
+              "敗数" => membership.lose,
               "結果" => membership.result.name,
               "シーズン名" => membership.season.key.name,
               "シーズンインデックス" => membership.season.position,
@@ -134,6 +135,7 @@ module QuickScript
 
         rows = current_scope.collect do |user|
           {
+            ""     => { _nuxt_link: "🔍", _v_bind: { to: qs_nuxt_link_to(qs_page_key: "pre_professional_league_player", params: { user_name: user.name }) }, :class => user_css_class(user) },
             "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(user_name: user.name)) }, :class => user_css_class(user) },
             "師匠" => menter_name_of(user),
             "状況" => user.rank.pure_info.short_name,

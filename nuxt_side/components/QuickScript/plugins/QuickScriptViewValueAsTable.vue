@@ -73,6 +73,8 @@ export default {
           if (_.isPlainObject(v)) {
             if ("_v_text" in v) {
               v = v["_v_text"]
+            } else if ("_nuxt_link" in v) {
+              v = v["_nuxt_link"]
             }
           }
 
