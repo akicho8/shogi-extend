@@ -2,6 +2,7 @@
 
 # http://localhost:4000/lab/general/pre-professional-league-player
 # http://localhost:4000/lab/general/pre-professional-league-player?user_name=佐藤天彦
+# http://localhost:4000/lab/general/pre-professional-league-player?user_name=今泉健司
 
 module QuickScript
   module General
@@ -52,15 +53,16 @@ module QuickScript
 
       def call
         if target_user
-          rows = current_memberships.collect do |membership|
+          rows = current_memberships.collect.with_index(1) { |membership, index|
             {
+              "#"    => index,
               "年齢" => membership.age,
               "○期" => { _nuxt_link: membership.season.key.name, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "pre_professional_league", params: { season_key: membership.season.key.name }) }, :class => "", },
               "勝数" => membership.win,
               "敗数" => membership.lose,
               "結果" => membership.result.pure_info.short_name,
             }
-          end
+          }
           simple_table(rows, always_table: true)
         end
       end
@@ -73,7 +75,7 @@ module QuickScript
         @current_memberships ||= yield_self do
           if target_user
             scope = target_user.memberships
-            scope = scope.order(Ppl::Season.arel_table[:position].desc)
+            scope = scope.order(Ppl::Season.arel_table[:position].asc)
             scope = scope.includes(:season, :result)
           end
         end

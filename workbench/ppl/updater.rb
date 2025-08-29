@@ -5,7 +5,7 @@ Ppl.setup_for_workbench
 # Ppl::Updater.resume_crawling
 
 # ネット → JSON生成
-# Ppl::Updater.json_write
+Ppl::Updater.json_write
 
 # JSON → DB
 Ppl::Updater.import_from_json
