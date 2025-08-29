@@ -6,7 +6,7 @@ module QuickScript
   module General
     class PreProfessionalLeagueScript < Base
       self.title = "奨励会三段リーグDB"
-      self.description = "奨励会三段リーグの一覧を表示する"
+      self.description = "奨励会三段リーグの全体的な情報を表示する"
       self.form_method = :get
       self.button_label = "検索"
       self.title_click_behaviour = :force_reload
