@@ -112,7 +112,7 @@ module Swars
         "BAN日時"      => ban_at&.to_fs(:ymdhms),
         "BAN確認数"    => profile.ban_crawled_count,
         "BAN確認日時"  => profile.ban_crawled_at&.to_fs(:ymdhms),
-        "検索数"       => search_logs_count,
+        "検索数"       => search_logs.count,
         "直近検索"     => last_reception_at&.to_fs(:ymdhms),
         "登録日時"     => created_at.to_fs(:ymdhms),
         "現在日時"     => Time.current.to_fs(:ymdhms),

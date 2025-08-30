@@ -7,7 +7,7 @@ module BackendScript
       records.collect do |e|
         {
           "ウォーズID" => e.name_with_grade,
-          "回数"       => e.search_logs_count,
+          "回数"       => e.search_logs.count,
           "最終利用"   => e.last_reception_at&.to_fs(:distance),
         }
       end

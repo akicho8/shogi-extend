@@ -63,6 +63,8 @@ class MainBatch
 
     Swars::NormalDestroyBatch.call(name: "棋譜削除一般", execute: true)
     Swars::SpecialDestroyBatch.call(name: "棋譜削除特別", execute: true)
+
+    # Swars::User.find_each { Swars::User.reset_counters(it.id, :search_logs) } # 修復
   end
 
   def step3_将棋ウォーズ棋譜検索クロール
