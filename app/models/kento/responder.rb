@@ -54,13 +54,19 @@ module Kento
 
     def to_h
       @to_h ||= yield_self do
-        AppLog.info(subject: "KENTO API", body: [user.key, *notify_params.values].compact.inspect, emoji: ":KENTO_SOME:")
-        {
-          **REQUIRED_HEADER,
-          :api_name  => "将棋ウォーズ(ID:#{user.key})",  # (required) 任意のAPI名
-          :game_list => to_a,
-        }
+        hv = nil
+        bmx = Bmx.call { hv = to_h_without_measurement }
+        AppLog.info(subject: "KENTO API", body: [bmx, user.key, *notify_params.values].compact.inspect, emoji: ":KENTO_SOME:")
+        hv
       end
+    end
+
+    def to_h_without_measurement
+      {
+        **REQUIRED_HEADER,
+        :api_name  => "将棋ウォーズ(ID:#{user.key})",  # (required) 任意のAPI名
+        :game_list => to_a,
+      }
     end
 
     def to_a
