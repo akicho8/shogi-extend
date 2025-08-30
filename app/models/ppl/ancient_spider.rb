@@ -25,12 +25,13 @@ module Ppl
     def attributes_from(row, _index)
       hv = {}
 
-      hv[:name]   = row["氏名"]
-      hv[:mentor] = row["師匠"]
-      hv[:age]    = row["年齢"]
-      hv[:win]    = row["勝数"]
-      hv[:lose]   = row["敗数"]
-      hv[:ox]     = row["ox"]
+      hv[:name]        = row["氏名"]
+      hv[:mentor]      = row["師匠"]
+      hv[:age]         = row["年齢"]
+      hv[:win]         = row["勝数"]
+      hv[:lose]        = row["敗数"]
+      hv[:ox]          = row["ox"]
+      hv[:ranking_pos] = row["新順位"]
 
       if row["結果"] == "昇段"
         hv[:result_key] = "昇"
@@ -45,10 +46,10 @@ module Ppl
       super
 
       records.each do |hv|
-        if hv[:win].to_i != hv[:ox].count("o")
+        if hv[:win].to_i != hv[:ox].to_s.count("o")
           raise hv.inspect
         end
-        if hv[:lose].to_i != hv[:ox].count("x")
+        if hv[:lose].to_i != hv[:ox].to_s.count("x")
           raise hv.inspect
         end
       end

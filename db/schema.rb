@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000007) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_17_000008) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -312,6 +312,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000007) do
     t.integer "win", comment: "勝ち数"
     t.integer "lose", comment: "負け数"
     t.string "ox", null: false, comment: "勝敗"
+    t.integer "ranking_pos", comment: "最終順位"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["result_id"], name: "index_ppl_memberships_on_result_id"

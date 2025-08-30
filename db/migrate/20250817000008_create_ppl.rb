@@ -50,6 +50,7 @@ class CreatePpl < ActiveRecord::Migration[6.0]
       t.integer :win,              null: true,  index: true,  comment: "勝ち数"
       t.integer :lose,             null: true, index: false, comment: "負け数"
       t.string :ox,                null: false, index: false, comment: "勝敗"
+      t.integer :ranking_pos,      null: true, index: false, comment: "最終順位"
       t.index [:season_id, :user_id], unique: true
       t.timestamps
     end

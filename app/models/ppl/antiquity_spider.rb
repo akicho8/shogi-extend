@@ -46,17 +46,22 @@ module Ppl
       av = str.split("・")
       hv.update([:mentor, :age, "出身"].zip(av).to_h)
 
-      hv[:result_key] = "維"
-      if md = row.values.join.match(/昇段(?<win>\d+)勝(?<lose>\d+)敗/)
-        hv[:result_key] = "昇"
+      one_line = row.values.join
+      one_line = one_line.remove(/昇段の一番を逃した後\d+連勝での/) # https://www.ne.jp/asahi/yaston/shogi/syoreikai/iitoko/seiseki/61nendo_3dan.htm
+
+      hv[:result_key] = "維持"
+      if md = one_line.match(/昇段(?<win>\d+)勝(?<lose>\d+)敗/)
+        hv[:result_key] = "昇段"
         hv.update(md.named_captures(symbolize_names: true))
-      elsif md = row.values.join.match(/昇段(?<win>\d+)連勝/)
-        hv[:result_key] = "昇"
+      elsif md = one_line.match(/昇段(?<win>\d+)連勝/)
+        hv[:result_key] = "昇段"
         hv[:win] = md[:win]
         hv[:lose] = 0
+      elsif one_line.match?(/退会/)
+        hv[:result_key] = "退会"
       end
 
-      hv[:ox] = ox_normalize(row.values.join)
+      hv[:ox] = ox_normalize(one_line)
 
       # 現行の三段リーグは半年あたりの勝数なのに対してこちらは一年間なのでそのまま反映してしまうと「最勝」でソートする意味がなくなってしまう
       # hv[:win]  = hv[:ox].count("o")

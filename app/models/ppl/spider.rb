@@ -72,14 +72,21 @@ module Ppl
 
     def validate!(records)
       if v = params[:promotion_count_gteq]
-        unless records.count { |e| e[:result_key] == "昇" } >= v
-          raise "#{season_key_vo}には昇段者が#{v}人以上いません"
+        unless records.count { |e| e[:result_key].in?(["昇", "昇段"]) } >= v
+          raise "#{season_key_vo}には昇段者が#{v}人以上いない"
         end
       end
       records.each do
         if it[:age].blank?
           tp it
-          raise "#{season_key_vo}に年齢が含まれていません"
+          raise "#{season_key_vo}に年齢が含まれていない"
+        end
+      end
+      records.each do
+        if v = it[:ranking_pos]
+          unless v >= 1
+            raise "順位が1以上になっていない : #{v.inspect}"
+          end
         end
       end
     end
@@ -118,11 +125,11 @@ module Ppl
     end
 
     def require_column_names
-      [:result_key, :name, :mentor, :age, :win, :lose, :ox]
+      [:result_key, :name, :mentor, :age, :win, :lose, :ox, :ranking_pos]
     end
 
     def integer_type_column_names
-      [:age, :win, :lose]
+      [:age, :win, :lose, :ranking_pos]
     end
 
     def take_size

@@ -140,20 +140,24 @@ module QuickScript
             ""     => { _nuxt_link: "🔍", _v_bind: { to: qs_nuxt_link_to(qs_page_key: "pre_professional_league_player", params: { user_name: user.name }) }, :class => user_css_class(user) },
             "弟子" => { _nuxt_link: user.name, _v_bind: { to: qs_nuxt_link_to(params: default_params.merge(user_name: user.name)) }, :class => user_css_class(user) },
             "師匠" => menter_name_of(user),
+
             "状況" => user.rank.pure_info.short_name,
-            "勝率" => user.win_ratio.try { "%.3f" % self },
-            "昇齢" => user.promotion_age,
-            "昇勝" => user.promotion_win,
-            "最勝" => user.win_max || "?",
 
             "齢→" => user.age_min,
             "←齢" => user.age_max,
+
+            "勝率" => user.win_ratio.try { "%.3f" % self },
+
+            "最勝" => user.win_max || "?",
+
+            "昇齢" => user.promotion_age,
+            "昇勝" => user.promotion_win,
+            "昇期" => user.promotion_membership.try { season.key.name },
 
             "期間" => user.memberships_count,
             "期→" => user.memberships_first.try { season.key.name },
             "←期" => user.memberships_last.try { season.key.name },
 
-            "昇期" => user.promotion_membership.try { season.key.name },
             "次点" => user.runner_up_count,
             **season_every_win_count_of(user),
           }

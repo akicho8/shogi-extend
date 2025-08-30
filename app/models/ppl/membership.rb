@@ -34,6 +34,16 @@ module Ppl
       self.ox ||= ""
     end
 
+    with_options allow_blank: true do
+      validates :ranking_pos, numericality: { greater_than_or_equal_to: 1 }
+
+      if false
+        # 順位は重複するためユニーク制限してはいけない
+        # https://www.ne.jp/asahi/yaston/shogi/syoreikai/3dan/league/3dan_league02.htm
+        validates :ranking_pos, uniqueness: { scope: :season_id }
+      end
+    end
+
     after_save :user_record_update
 
     ################################################################################
@@ -84,8 +94,8 @@ module Ppl
         # user.total_lose = user.memberships.collect(&:lose).compact.reduce(:+)
 
         # S49 頃の三段リーグは win, lose を昇段時のみに利用しているので勝率を出すにはこちらでないとだめ
-        total_win  = user.memberships.sum { |e| e.ox.count("o") }
-        total_lose = user.memberships.sum { |e| e.ox.count("x") }
+        total_win  = user.memberships.sum(&:o_count_of_ox)
+        total_lose = user.memberships.sum(&:x_count_of_ox)
 
         # win_ratio 更新
         if total_win && total_lose
@@ -94,6 +104,31 @@ module Ppl
             user.win_ratio = total_win.fdiv(denominator)
           end
         end
+      end
+    end
+
+    ################################################################################
+
+    def o_count_of_ox
+      @o_count_of_ox ||= ox.count("o")
+    end
+
+    def x_count_of_ox
+      @x_count_of_ox ||= ox.count("x")
+    end
+
+    def ox_win_ratio
+      @ox_win_ratio ||= yield_self do
+        denominator = o_count_of_ox + x_count_of_ox
+        if denominator.nonzero?
+          o_count_of_ox.fdiv(denominator)
+        end
+      end
+    end
+
+    def ox_win_ratio_to_s
+      if ox_win_ratio
+        "%.3f" % ox_win_ratio
       end
     end
 

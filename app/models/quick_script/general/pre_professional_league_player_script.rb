@@ -41,9 +41,11 @@ module QuickScript
           current_memberships.collect do |membership|
             {
               "年齢" => membership.age,
-              "○期" => membership.season.key.name,
+              "勝率" => membership.ox_win_ratio_to_s,
               "勝数" => membership.win,
               "敗数" => membership.lose,
+              "期"   => membership.season.key.name,
+              "順位" => membership.ranking_pos,
               "結果" => membership.result.name,
               "勝敗" => membership.ox,
             }
@@ -53,16 +55,21 @@ module QuickScript
 
       def call
         if target_user
-          rows = current_memberships.collect.with_index(1) { |membership, index|
+          rows = current_memberships.collect.with_index(1) do |membership, index|
             {
               "#"    => index,
               "年齢" => membership.age,
-              "○期" => { _nuxt_link: membership.season.key.name, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "pre_professional_league", params: { season_key: membership.season.key.name }) }, :class => "", },
-              "勝数" => membership.win,
-              "敗数" => membership.lose,
-              "結果" => membership.result.pure_info.short_name,
+              "勝率" => membership.ox_win_ratio_to_s,
+              "勝数" => membership.win  || { _v_text: membership.o_count_of_ox, :class => "has-text-grey-lighter" },
+              "敗数" => membership.lose || { _v_text: membership.x_count_of_ox, :class => "has-text-grey-lighter" },
+              "期"   => { _nuxt_link: membership.season.key.name, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "pre_professional_league", params: { season_key: membership.season.key.name }) }, :class => "", },
+              "順位" => membership.ranking_pos,
+              ""     => membership.result.pure_info.short_name,
             }
-          }
+          end
+          if rows.none? { it["順位"] }
+            rows.each { it.delete("順位") }
+          end
           simple_table(rows, always_table: true)
         end
       end
@@ -88,8 +95,11 @@ module QuickScript
           if target_user
             [
               target_user.name,
+              # "(#{target_user.memberships_first.age}-#{target_user.memberships_last.age})",
               target_user.win_ratio.try { "%.3f" % self },
+              # "#{target_user.memberships_first.season.key}-#{target_user.memberships_last.season.key}期",
               target_user.rank.pure_info.short_name,
+              # "(#{target_user.mentor.name})",
             ].compact_blank.join(" ")
           else
             super

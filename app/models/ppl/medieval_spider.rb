@@ -33,10 +33,12 @@ module Ppl
 
       hv[:name] = row["氏名"]
 
+      hv[:ranking_pos] = row["順位2"] # 同じカラムが2つあるため後者側の順位を見る
+
       # 「後段点」は「後段」とは異なる
-      hv[:result_key] = "維"
+      hv[:result_key] = "維持"
       if result_key_by_index[index] == "昇段"
-        hv[:result_key] = "昇"
+        hv[:result_key] = "昇段"
       end
 
       hv

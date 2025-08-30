@@ -108,7 +108,7 @@ module Ppl
           user.update!(mentor: mentor)
         end
         membership = user.memberships.find_or_initialize_by(season: season)
-        membership.update!(record.slice(:result_key, :age, :win, :lose, :ox))
+        membership.update!(record.slice(:result_key, :age, :win, :lose, :ox, :ranking_pos))
       end
       User.find_each(&:update_deactivated_season)
     end
