@@ -69,7 +69,7 @@ module QuickScript
       def top_content
         blocks = AppLogSearchKeywordInfo.collect { |e|
           av = e.keywords.collect do |word|
-            params = { query: "", log_level_keys: "", __prefer_url_params__: 1, page: 1 }
+            params = { query: "", log_level_keys: "", __prefer_url_params__: true, page: 1 }
             params[e.param_key] = word
             { _nuxt_link: word, _v_bind: { to: qs_nuxt_link_to(params: params) }, :class => "button is-small #{e.css_klass}" }
           end

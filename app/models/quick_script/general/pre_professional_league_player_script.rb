@@ -119,7 +119,7 @@ module QuickScript
           h_stack(:class => "gap_small") do
             users.collect do |e|
               css_klass = [button_css_class, *e.rank.pure_info.nav_css_class]
-              { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { user_name: e.name, __prefer_url_params__: 1 }) }, :class => css_klass.join(" ") }
+              { _nuxt_link: e.name, _v_bind: { to: qs_nuxt_link_to(params: { user_name: e.name, __prefer_url_params__: true }) }, :class => css_klass.join(" ") }
             end
           end
         end

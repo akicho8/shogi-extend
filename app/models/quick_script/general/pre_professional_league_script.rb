@@ -256,7 +256,7 @@ module QuickScript
       end
 
       def default_params
-        { user_name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: 1 }
+        { user_name: "", season_key: "", mentor_name: "", query: "", __prefer_url_params__: true }
       end
 
       ################################################################################ bottom

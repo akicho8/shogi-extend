@@ -10,10 +10,10 @@ http://localhost:4000/lab/prison?a=1 は http://localhost:4000/lab/chore/index?a
 
 * __prefer_url_params__
 
-URL に __prefer_url_params__=1 をつけると URL 側のパラメータを必ず反映するようになる。
+URL に __prefer_url_params__=true をつけると URL 側のパラメータを必ず反映するようになる。
 これはナビゲーションからフォームでも指定してあるものをつけて同じページにリンクしたときフォームの値の方が優先されてしまうのを防ぐ。
 具体的には xxx のページのフォームで query=foo としてあるとき URL で xxx?query=bar としても bar が反映されない。
-そのときに __prefer_url_params__=1 をつける。
+そのときに __prefer_url_params__=true をつける。
 
 * nuxt の問題点
 

@@ -68,7 +68,7 @@ module QuickScript
               end
               if Rails.env.local?
                 row[header_blank_column(1)] = { _nuxt_link: "横断棋譜検索", _v_bind: { to: { path: "/lab/swars/cross-search",   query: { x_tags: item.name }, }, }, }
-                row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: 1 }, }, }, } : ""
+                row["親"] = item.parent ? { _nuxt_link: item.parent.name, _v_bind: { to: { path: "/lab/swars/tactic-list", query: { query: item.parent.name, __prefer_url_params__: true }, }, }, } : ""
               end
               row["別名"] = { _v_html: tag.small(item.alias_names * ", ") }
             end
