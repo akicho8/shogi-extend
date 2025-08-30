@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class LiftCancelActionInfo extends ApplicationMemoryRecord {
-  static field_label = "持った駒をいったん元に戻すのはどこをタップしたとき？"
+  static field_label = "持ち上げた駒をいったん元に戻すのはどこをタップしたとき？"
   static field_message = "右クリックやESCキーでもキャンセルできる"
 
   static get define() {
