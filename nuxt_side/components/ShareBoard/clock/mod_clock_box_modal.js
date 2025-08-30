@@ -95,7 +95,7 @@ export const mod_clock_box_modal = {
         this.cc_play_confirim({
           onCancel: () => {
             this.$sound.play_click()
-            this.toast_ok("メニューの中の上の方に「初期配置に戻す」があります")
+            this.toast_ok("最初の局面に戻すにはメニュー内の上の方にある「初期配置に戻す」を選択してください")
           },
           onConfirm: () => {
             this.cbm_play_core_handle()

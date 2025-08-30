@@ -427,12 +427,12 @@ export const mod_clock_box = {
 
     cc_play_confirim(params = {}) {
       this.$sound.play_click()
-      this.sb_talk(`ちょっと待って。${this.current_turn}手目から開始していいの？`)
+      this.sb_talk(`ちょっと待って。${this.current_turn}手目から始めていいの？`)
       this.dialog_confirm({
         title: "ちょっと待って",
         // type: "is-warning",
         hasIcon: false,
-        message: `${this.current_turn}手目から開始していいの？`,
+        message: `${this.current_turn}手目から始めていいの？`,
         cancelText: "いいえ",
         confirmText: "はい",
         focusOn: "cancel",
