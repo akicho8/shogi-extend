@@ -56,7 +56,8 @@ module Kento
       @to_h ||= yield_self do
         hv = nil
         bmx = Bmx.call { hv = to_h_without_measurement }
-        AppLog.info(subject: "KENTO API", body: [bmx, user.key, *notify_params.values].compact.inspect, emoji: ":KENTO_SOME:")
+        body = [bmx, user.key, to_a.size, *information_to_add_to_the_log.values]
+        AppLog.info(subject: "KENTO API", body: body.compact.inspect, emoji: ":KENTO_SOME:")
         hv
       end
     end
@@ -103,8 +104,8 @@ module Kento
       params.fetch(:user)
     end
 
-    def notify_params
-      params[:notify_params] || {}
+    def information_to_add_to_the_log
+      params[:information_to_add_to_the_log] || {}
     end
   end
 end

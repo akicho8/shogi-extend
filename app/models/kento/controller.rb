@@ -31,7 +31,7 @@ module Kento
       {
         :user => current_swars_user,
         :max  => params[:limit],
-        :notify_params => {
+        :information_to_add_to_the_log => {
           :referer    => request.referer,
           :user_agent => request.user_agent,
           :remote_ip  => request.remote_ip,
