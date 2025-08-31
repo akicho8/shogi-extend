@@ -61,14 +61,14 @@ export class ClockBox {
       // ここらのハッシュキーはリアクティブにするため null でも定義が必要
       initial_main_sec:  null,  // 持ち時間(初期値)
       initial_read_sec:  null,  // 秒読み(初期値)
-      initial_extra_sec: null,  // 猶予(初期値)
+      initial_extra_sec: null,  // 考慮時間(初期値)
       every_plus:        null,  // 1手ごと加算
 
       time_zero_fn:        () => {}, // 残り時間が 0 になったときの処理 (切れ負け/勝ち判定用)
       switched_fn:         () => {}, // 時計を切り替えた瞬間の処理 (用途不明)
       second_decriment_fn: () => {}, // 時間が減るたびに呼ぶ処理 (主に秒読み用)
       read_koreyori_fn:    () => {}, // 「これより1手N秒でお願いします」と言いたい場合の処理
-      extra_koreyori_fn:   () => {}, // 「深考時間が0になったら負けです」と言いたい場合の処理
+      extra_koreyori_fn:   () => {}, // 「考慮時間が0になったら負けです」と言いたい場合の処理
       pause_tick_fn:       () => {}, // 一時停止中に「1分経過」と言いたい場合の処理
 
       active_value_zero_css_class:    "",

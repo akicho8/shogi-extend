@@ -23,7 +23,7 @@ export const mod_clock_box = {
     this.cc_setup_by_url_params()
 
     if (this.development_p && false) {
-      this.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }]
+      this.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_min: 10, every_plus: 5 }]
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
@@ -43,12 +43,12 @@ export const mod_clock_box = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_sec = 0, every_plus = 0) {
+    cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_min = 0, every_plus = 0) {
       this.cc_params = [
         {
           initial_main_min: initial_main_min,
           initial_read_sec: initial_read_sec,
-          initial_extra_sec: initial_extra_sec,
+          initial_extra_min: initial_extra_min,
           every_plus: every_plus,
         }
       ]
@@ -61,7 +61,7 @@ export const mod_clock_box = {
       [
         "initial_main_min",
         "initial_read_sec",
-        "initial_extra_sec",
+        "initial_extra_min",
         "every_plus",
       ].forEach(column => {
         const key = `clock_box.${column}`
@@ -184,7 +184,7 @@ export const mod_clock_box = {
 
     cc_extra_koreyori(sec) {
       Gs.delay_block(CC_KOREYORI_DELAY, () => {
-        this.cc_talk(`深考時間が0になったら負けなので御注意ください`)
+        this.cc_talk(`考慮時間が0になったら負けなので御注意ください`)
       })
     },
 
@@ -254,10 +254,15 @@ export const mod_clock_box = {
     // 共有将棋盤では扱いやすいように持ち時間は分にしている
     // 一方、時計は秒で管理しているため秒単位に変換する
     cc_params_one_to_clock_box_params(params) {
+      Gs.assert(Gs.present_p(params.initial_main_min), "Gs.present_p(params.initial_main_min)")
+      Gs.assert(Gs.present_p(params.initial_read_sec), "Gs.present_p(params.initial_read_sec)")
+      Gs.assert(Gs.present_p(params.initial_extra_min), "Gs.present_p(params.initial_extra_min)")
+      Gs.assert(Gs.present_p(params.every_plus), "Gs.present_p(params.every_plus)")
+
       return {
         initial_main_sec:  params.initial_main_min * 60,
         initial_read_sec:  params.initial_read_sec,
-        initial_extra_sec: params.initial_extra_sec,
+        initial_extra_sec: params.initial_extra_min * 60, // ここで undefined * 60 をすると NaN になって NaN ?? 0 も NaN になってしまうので絶対に整数は入ってないとバグる
         every_plus:        params.every_plus,
       }
     },

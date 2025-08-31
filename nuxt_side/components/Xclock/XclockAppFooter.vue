@@ -12,10 +12,10 @@
 
     template(v-if="development_p")
       b-dropdown-item(:separator="true")
-      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
-      b-dropdown-item(@click="base.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
-      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
-      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60})") 3行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min: 0,  every_plus: 0})") 1行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_min: 0,  every_plus: 0})") 1行 5文字
+      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min: 1,  every_plus: 0})") 2行 7文字
+      b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:60, initial_extra_min: 1,  every_plus:60})") 3行 7文字
 
   .item(@click="base.play_handle")
     b-icon(icon="play")

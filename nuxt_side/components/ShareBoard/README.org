@@ -64,27 +64,27 @@
 
 * URLパラメータ
 
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
-  | key                         | desc                                                    | Example                                                                             |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
-  | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=alice                       |
-  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                     |
-  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                     |
-  | fixed_order_state           | 順番設定方法                                            |                                                                                     |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
-  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=bob                 |
-  | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                     |
-  | RS_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=alice&RS_SUCCESS_DELAY=-1 |
-  | RS_RESEND_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                     |
-  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                     |
-  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                     |
-  | clock_box.initial_extra_sec | 深考時間(秒)                                                |                                                                                     |
-  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                     |
-  | clock_auto_start            | true なら即開始                                         |                                                                                     |
-  | xmatch_auth_key             |                                                         |                                                                                     |
-  | xmatch_wait_max             |                                                         |                                                                                     |
-  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                     |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
+  |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
+  | key                         | desc                                                    | Example                                                                          |
+  |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
+  | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=alice                     |
+  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                  |
+  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                  |
+  | fixed_order_state           | 順番設定方法                                            |                                                                                  |
+  |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
+  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=bob               |
+  | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                  |
+  | RS_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=alice&RS_SUCCESS_DELAY=-1 |
+  | RS_RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
+  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                  |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                  |
+  | clock_box.initial_extra_min | 考慮時間(分)                                            |                                                                                  |
+  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                  |
+  | clock_auto_start            | true なら即開始                                         |                                                                                  |
+  | xmatch_auth_key             |                                                         |                                                                                  |
+  | xmatch_wait_max             |                                                         |                                                                                  |
+  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                  |
+  |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
 
 * 開発用URL
 
@@ -127,7 +127,7 @@
 
 ** 時計設定済みで入退室には？
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_min=60&clock_box.every_plus=0&clock_auto_start=true
 
 ** プリセット指定
 
@@ -139,8 +139,8 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_auto_start=true
-   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&clock_auto_start=true
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 

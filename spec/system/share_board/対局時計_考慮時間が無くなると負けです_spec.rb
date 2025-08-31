@@ -13,12 +13,12 @@ RSpec.describe type: :system, share_board_spec: true do
     Capybara.within(".SingleClock0") { assert_system_variable(:extra_koreyori_count, 0) }
   end
 
-  it "持ち時間があって秒読みがない場合も猶予に入ったとき発動する" do
+  it "持ち時間があって秒読みがない場合も考慮時間に入ったとき発動する" do
     case1([1, 0, 30, 0])
     assert_extra_koreyori_true
   end
 
-  it "秒読みがあって猶予に入ったときに発動する" do
+  it "秒読みがあって考慮時間に入ったときに発動する" do
     case1([0, 1, 30, 0])
     assert_extra_koreyori_true
   end
@@ -28,13 +28,13 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_extra_koreyori_true
   end
 
-  it "深考時間が残っていないときは発動しない" do
+  it "考慮時間が残っていないときは発動しない" do
     case1([0, 1, 0, 0])
     find(".TimeoutModal .close_handle").click
     assert_extra_koreyori_false
   end
 
-  it "いきなり猶予の場合は発動しない" do
+  it "いきなり考慮時間の場合は発動しない" do
     case1([0, 0, 30, 0])
     assert_extra_koreyori_false
   end

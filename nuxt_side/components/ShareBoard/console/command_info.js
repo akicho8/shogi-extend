@@ -156,7 +156,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
           //   context.order_switch_share({order_enable_p: true})
           // }
           // if (Gs.blank_p(context.clock_box)) {
-          context.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }]
+          context.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_min: 10, every_plus: 5 }]
           context.cc_create()
           context.cc_params_apply()
           context.clock_box.play_handle()

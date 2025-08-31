@@ -147,9 +147,9 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
           //- b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
           //-   span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
           //- b-dropdown-item(:separator="true")
-          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 7文字
-          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0})") 1行 5文字
-          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0})") 2行 7文字
+          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min:  0,  every_plus: 0})") 1行 7文字
+          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_min:  0,  every_plus: 0})") 1行 5文字
+          //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min: 60,  every_plus: 0})") 2行 7文字
 
         //- template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
         //-   nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="$sound.play_click()") 編集

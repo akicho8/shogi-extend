@@ -68,7 +68,7 @@ module ShareBoard
 
     def clock_box_share(data)
       values = data["cc_params"].collect do |e|
-        e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
+        e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_min", "every_plus")
       end
       message = [data["cc_behavior_key"], values.inspect, data["member_data"], data["current_url"]].compact.join("\n\n")
       track(data, subject: "対局時計", body: message, emoji: ":対局時計:", level: data["log_level"])

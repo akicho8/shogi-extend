@@ -25,7 +25,7 @@ export class SingleClock {
 
     this.initial_main_sec  = base.params.initial_main_sec ?? SEC_PER_MIN * 3
     this.initial_extra_sec = base.params.initial_extra_sec ?? 0
-    this.initial_read_sec  = base.params.initial_read_sec ?? 0
+    this.initial_read_sec  = base.params.initial_read_sec ?? SEC_PER_MIN * 0
     this.every_plus        = base.params.every_plus ?? 0
 
     this.variable_reset()
@@ -123,12 +123,12 @@ export class SingleClock {
       }
 
       // FIXME: ここは extra_sec が最初に 1 減ったときをトリガーとすべきかもしれない。秒読みの場合、回復してしまう。→ extra_koreyori_count を入れているのでその必要はないはず
-      // 「深考時間が0になったら負けです」
+      // 「考慮時間が0になったら負けです」
       if (this.extra_koreyori_count === 0) {                           // 初回なら
         if ((previous_changes.main_sec >= 1 && this.main_sec === 0) || // 残り時間 1 -> 0 または
             (previous_changes.read_sec >= 1 && this.read_sec === 0)) { // 秒読み   1 -> 0 のタイミングで
-          if (this.extra_sec >= 1) {                                   // 深考時間が残っていれば
-            this.base.params.extra_koreyori_fn(this)                   // 「深考時間が0になったら負けです」
+          if (this.extra_sec >= 1) {                                   // 考慮時間が残っていれば
+            this.base.params.extra_koreyori_fn(this)                   // 「考慮時間が0になったら負けです」
             this.extra_koreyori_count += 1                             // 実行回数を記録しておく
           }
         }
@@ -284,12 +284,12 @@ export class SingleClock {
 
   //////////////////////////////////////////////////////////////////////////////// for v-model
 
-  get main_minute_for_vmodel() {
+  get initial_main_min_for_vmodel() {
     return Math.trunc(this.initial_main_sec / SEC_PER_MIN)
   }
 
-  set main_minute_for_vmodel(v) {
-    this.initial_main_sec = Math.trunc(v * SEC_PER_MIN)
+  set initial_main_min_for_vmodel(min) {
+    this.initial_main_sec = Math.trunc(min * SEC_PER_MIN)
     this.main_sec = this.initial_main_sec
     // this.read_sec_set()
   }
@@ -298,18 +298,18 @@ export class SingleClock {
     return this.initial_read_sec
   }
 
-  set initial_read_sec_for_v_model(v) {
-    this.initial_read_sec = v
+  set initial_read_sec_for_v_model(sec) {
+    this.initial_read_sec = sec
     this.read_sec_set()
   }
 
-  get initial_extra_sec_for_v_model() {
-    return this.initial_extra_sec
+  get initial_extra_min_for_v_model() {
+    return Math.trunc(this.initial_extra_sec / SEC_PER_MIN)
   }
 
-  set initial_extra_sec_for_v_model(v) {
-    this.initial_extra_sec = v
-    this.extra_sec = v
+  set initial_extra_min_for_v_model(min) {
+    this.initial_extra_sec = Math.trunc(min * SEC_PER_MIN)
+    this.extra_sec = this.initial_extra_sec
   }
 
   //////////////////////////////////////////////////////////////////////////////// for serialize

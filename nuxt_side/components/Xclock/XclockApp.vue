@@ -18,13 +18,13 @@
             .inactive_current_bar(v-else)
             .wide_container.form.is-flex
               b-field(label="持ち時間(分)" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.main_minute_for_vmodel" :min="0" :max="60*9" :exponential="true" @pointerdown.native.stop="" :checkHtml5Validity="false")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_main_min_for_vmodel" :min="0" :max="60*9" :exponential="true" @pointerdown.native.stop="" :checkHtml5Validity="false")
               b-field(label="1手ごとに加算(秒)" custom-class="is-small")
                 b-numberinput(size="is-small" controls-position="compact" v-model="e.every_plus" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
               b-field(label="秒読み" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
-              b-field(label="深考時間(秒)" custom-class="is-small")
-                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true" @pointerdown.native.stop="")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_read_sec_for_v_model" :min="0" :max="60" :exponential="true" @pointerdown.native.stop="")
+              b-field(label="考慮時間(分)" custom-class="is-small")
+                b-numberinput(size="is-small" controls-position="compact" v-model="e.initial_extra_min_for_v_model" :min="0" :max="60" :exponential="true" @pointerdown.native.stop="")
       XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
@@ -128,13 +128,13 @@ export default {
     })
 
     // 初期値
-    this.rule_set({initial_main_min: 5, initial_read_sec:0, initial_extra_sec: 0, every_plus: 5})
+    this.rule_set({initial_main_min: 5, initial_read_sec:0, initial_extra_min: 0, every_plus: 5})
 
     if (this.development_p) {
-      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 7文字
-      this.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_sec:  0,  every_plus: 0}) // 1行 5文字
-      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_sec: 60,  every_plus: 0}) // 2行 7文字
-      this.rule_set({initial_main_min: 60*2, initial_read_sec:60, initial_extra_sec: 60,  every_plus:60}) // 3行 7文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min:  0,  every_plus: 0}) // 1行 7文字
+      this.rule_set({initial_main_min: 30,   initial_read_sec:0,  initial_extra_min:  0,  every_plus: 0}) // 1行 5文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min:  1,  every_plus: 0}) // 2行 7文字
+      this.rule_set({initial_main_min: 60*2, initial_read_sec:60, initial_extra_min:  2,  every_plus:60}) // 3行 7文字
     }
   },
   mounted() {
@@ -278,7 +278,8 @@ export default {
     rule_set(params) {
       params = {...params}
       Gs.assert("initial_main_min" in params, '"initial_main_min" in params')
-      params.initial_main_sec = params.initial_main_min * 60
+      params.initial_main_sec  = params.initial_main_min * 60
+      params.initial_extra_sec = params.initial_extra_min * 60
       this.clock_box.rule_set_all(params)
     },
     behavior_notify(behavior) {

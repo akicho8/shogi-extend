@@ -166,8 +166,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory({
           "cc_behavior_key" => "cc_behavior_start",
           "cc_params" => [
-            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
-            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
+            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_min" => 2, "every_plus" => 3 },
+            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_min" => 2, "every_plus" => 3 },
           ],
           "current_url" => SecureRandom.hex,
         })
