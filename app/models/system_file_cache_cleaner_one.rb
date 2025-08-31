@@ -26,7 +26,7 @@ class SystemFileCacheCleanerOne
     if target_dir.exist?
       target_dir.find do |path|
         if path.file?
-          if path.extname == target_extname
+          if target_regexp && path.basename.to_s.match?(target_regexp)
             if params[:limit] && counts[:file_count] >= params[:limit]
               break
             end
@@ -59,8 +59,8 @@ class SystemFileCacheCleanerOne
     @params[:target_dir]
   end
 
-  def target_extname
-    @params[:target_extname]
+  def target_regexp
+    @params[:target_regexp]
   end
 
   def cutoff_time
@@ -86,7 +86,7 @@ class SystemFileCacheCleanerOne
   def log_body
     {
       "対象ディレクトリ"     => target_dir,
-      "対象ファイル拡張子"   => target_extname,
+      "対象ファイル拡張子"   => target_regexp,
       "条件: 最終更新日時 <" => cutoff_time.to_fs(:ymdhms),
       "全体のファイル数"     => counts[:file_count],
       "削除対象件数"         => counts[:target_count],

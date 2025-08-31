@@ -13,20 +13,22 @@ class SystemFileCacheCleanerAll
 
     # ~/src/shogi-extend/public/system/talk
     SystemFileCacheCleanerOne.call({
-        :subject          => "発言mp3のキャッシュ削除",
+        :subject          => "100日間使われていない発言mp3の削除",
         :target_dir       => Talk::Main.output_root_dir,
-        :target_extname   => ".mp3",
+        :target_regexp    => /\A[\da-f]+\.mp3\z/i,
         :cutoff_time      => 100.days.ago,
         :mtime_update_all => false,
         :execute          => true,
       })
 
-    # x-files 以下は XfileCleaner で削除しているでいらない
-    # SystemFileCacheCleanerOne.call({
-    #     :subject        => "動画",
-    #     :target_dir     => MediaBuilder.output_root_dir,
-    #     :target_extname => ".mp3",
-    #     :cutoff_time    => 30.days.ago,
-    #   })
+    # ~/src/shogi-extend/public/system/x-files
+    SystemFileCacheCleanerOne.call({
+        :subject          => "100日間使われていない盤面画像の削除",
+        :target_dir       => MediaBuilder.output_root_dir,
+        :target_regexp    => /\A[\da-f]+\.png\z/i,
+        :cutoff_time      => 100.days.ago,
+        :mtime_update_all => false,
+        :execute          => true,
+      })
   end
 end

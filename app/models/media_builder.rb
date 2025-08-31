@@ -261,7 +261,9 @@ class MediaBuilder
   def force_build_core
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
-    Pathname("#{real_path}.rb").write(build_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
+    if Rails.env.local?
+      Pathname("#{real_path}.rb").write(build_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
+    end
   end
 
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
