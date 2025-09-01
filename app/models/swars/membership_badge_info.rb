@@ -277,7 +277,7 @@ module Swars
       },
       {
         key: "ロケットマン",
-        message: "多段ロケットを食らわして勝った",
+        message: "多段ロケットで勝った",
         badge_params: "🚀",
         if_cond: -> m {
           if m.battle.imode_info.key == :normal
@@ -289,7 +289,7 @@ module Swars
       },
       {
         key: "王手飛車マン",
-        message: "王手飛車を食らわして勝った",
+        message: "王手飛車で勝った",
         badge_params: "🦄",
         if_cond: -> m {
           if m.judge_key == "win"
@@ -299,7 +299,7 @@ module Swars
       },
       {
         key: "王手角マン",
-        message: "王手角を食らわして勝った",
+        message: "王手角で勝った",
         badge_params: "🐲",
         if_cond: -> m {
           if m.judge_key == "win"
