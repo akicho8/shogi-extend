@@ -12,4 +12,8 @@ RSpec.describe "読み上げ用テキスト正規化" do
   it "語尾の草" do
     assert { Talk::YomiageNormalizer.normalize("●wｗ") == "●わらわら" }
   end
+
+  it "[BUGFIX] nil.remove でエラーにならない" do
+    assert { Talk::YomiageNormalizer.normalize("http:/") == "" }
+  end
 end

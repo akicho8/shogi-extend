@@ -45,7 +45,7 @@ module Talk
     # "●http://www.xxx-yyy.com/●" -> "●example com●
     def long_url_replace(s)
       s.gsub(/(?:https?):[[:graph:]&&[:ascii:]]+/) { |url|
-        host = URI(url.strip).host            # => "www.xxx-yyy.com"
+        host = URI(url.strip).host || ""      # => "www.xxx-yyy.com"
         host = host.remove(/^(?:www)\b/)      # => "xxx-yyy.com"
         host.scan(/\w+/).join(" ")            # => "xxx yyy com"
       }
