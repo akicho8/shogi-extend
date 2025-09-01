@@ -11,7 +11,10 @@
           | {{SB.clock_box.pause_sec_human}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
-    a.mx-2.close_handle_for_capybara.delete(@click="SB.cc_modal_close_handle" v-if="development_p")
+    a.close_handle_for_capybara.delete(@click="SB.cc_modal_close_handle" v-if="development_p")
+
+    template(v-if="SB.clock_box && !SB.clock_box.pause_or_play_p")
+      b-switch.cbm_cc_unique_mode_sete_handle(:value="SB.cc_unique_p" @input="SB.cbm_cc_unique_mode_sete_handle" size="is-small") 個別
 
     template(v-if="!SB.clock_box || !SB.clock_box.pause_or_play_p")
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="SB.cbm_main_switch_handle") 設置
@@ -41,7 +44,6 @@
 
       .forms_block(v-if="!SB.clock_box.pause_or_play_p")
         ClockBoxInputTable
-        b-switch.cbm_cc_unique_mode_sete_handle.mt-5(:value="SB.cc_unique_p" @input="SB.cbm_cc_unique_mode_sete_handle" size="is-small") 個別設定
 
   .modal-card-foot
     b-button.cc_modal_close_handle.has-text-weight-normal(@click="SB.cc_modal_close_handle" icon-left="chevron-left")
@@ -86,6 +88,9 @@ export default {
 
 .ClockBoxModal
   +modal_width(24rem)
+
+  .modal-card-head
+    gap: 0.5rem
 
   .modal-card-body
     padding: 1.5rem
