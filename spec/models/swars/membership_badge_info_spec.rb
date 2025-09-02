@@ -1,31 +1,24 @@
 require "rails_helper"
 
 RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
-  describe "タグ依存バッジ" do
-    def case1(tactic_keys, win_or_lose)
+  describe "ほぼタグ依存バッジ" do
+    def case1(strike_plan)
       black = Swars::User.create!
-      white = Swars::User.create!
-      Array(tactic_keys).each do |e|
-        Swars::Battle.create!(strike_plan: e) do |e|
-          e.memberships.build(user: black, judge_key: win_or_lose)
-          e.memberships.build(user: white)
-        end
+      battle = Swars::Battle.create!(strike_plan: strike_plan) do |e|
+        e.memberships.build(user: black)
       end
-      { black: black, white: white }.inject({}) do |a, (k, v)|
-        # p v.memberships.first.badge_info.key
-        a.merge(k => v.memberships.first.badge_info.key.to_s)
-      end
+      black.memberships.first.badge_info.key.to_s
     end
 
     it "works" do
-      assert { case1("角不成", :win)[:black]   == "角不成マン"   }
-      assert { case1("飛車不成", :win)[:black] == "飛車不成マン" }
-      assert { case1("屍の舞", :win)[:black]   == "背水マン"     }
-      assert { case1("入玉", :win)[:black]     == "入玉勝ちマン" }
-      assert { case1("王手飛車", :win)[:black] == "王手飛車マン" }
-      assert { case1("王手角", :win)[:black]   == "王手角マン"   }
-      assert { case1("3段ロケット", :win)[:black] == "ロケットマン" }
-      # assert { case1("急戦", :win)[:black] == "急戦マン" }
+      assert { case1("角不成")      == "角不成マン"   }
+      assert { case1("飛車不成")    == "飛車不成マン" }
+      assert { case1("屍の舞")      == "背水マン"     }
+      assert { case1("入玉")        == "入玉勝ちマン" }
+      assert { case1("王手飛車")    == "王手飛車マン" }
+      assert { case1("王手角")      == "王手角マン"   }
+      assert { case1("3段ロケット") == "ロケットマン" }
+      assert { case1("道場出禁")    == "道場出禁マン" }
     end
   end
 
@@ -110,7 +103,7 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
   end
 
   describe "長考" do
-    def test(min, judge_key)
+    def case1(min, judge_key)
       seconds = min.minutes
 
       @black = Swars::User.create!
@@ -123,9 +116,9 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
     end
 
     it "works" do
-      assert { test(2.5, :lose) == [:長考マン, "考えすぎて負けた。ちなみにいちばん長かったのは2分30秒"] }
-      assert { test(3.0, :win)  == [:大長考マン, "対局放棄と受け取られかねない3分の長考をした"] }
-      assert { test(3.0, :lose) == [:大長考負けマン, "対局放棄と受け取られかねない3分の長考をしたあげく負けた"] }
+      assert { case1(2.5, :lose) == [:長考マン, "考えすぎて負けた。ちなみにいちばん長かったのは2分30秒"] }
+      assert { case1(3.0, :win)  == [:大長考マン, "対局放棄と受け取られかねない3分の長考をした"] }
+      assert { case1(3.0, :lose) == [:大長考負けマン, "対局放棄と受け取られかねない3分の長考をしたあげく負けた"] }
     end
   end
 
@@ -209,7 +202,7 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
   end
 
   describe "運営支えマン" do
-    def test(pattern)
+    def case1(pattern)
       @black = Swars::User.create!
       @white = Swars::User.create!
       battle = Swars::Battle.create!(csa_seq: Swars::KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
@@ -220,8 +213,22 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
     end
 
     it "works" do
-      assert { test(:fraud_pattern) == :"運営支えマン" }
-      assert { test(:no_fraud_pattern) != :"運営支えマン" }
+      assert { case1(:fraud_pattern) == :"運営支えマン" }
+      assert { case1(:no_fraud_pattern) != :"運営支えマン" }
+    end
+  end
+
+  describe "回線不安定マン" do
+    def case1
+      @black = Swars::User.create!
+      Swars::Battle.create!(csa_seq: Swars::KifuGenerator.generate_n(1), final_key: :DISCONNECT) do |e|
+        e.memberships.build(user: @black, judge_key: :lose)
+      end
+      @black.memberships.first.badge_info.key
+    end
+
+    it "works" do
+      assert { case1 == :"回線不安定マン"   }
     end
   end
 

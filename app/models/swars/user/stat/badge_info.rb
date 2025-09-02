@@ -20,6 +20,7 @@ module Swars
         { key: "必勝形焦らしマン",       icon: "🎃",   message: "必勝形から焦らして悦に入った",             if_cond: -> { taunt_timeout_stat.count.positive? } },
         { key: "相手退席待ちマン",       icon: "🪰",   message: AITETAISEKIMATMAN_MESSAGE,                  if_cond: -> { waiting_to_leave_stat.count.positive? } },
         { key: "友対無双マン",           icon: "💔",   message: "適切な手合割を選択せず友達相手に無双した", if_cond: -> { xmode_judge_stat.friend_kill_ratio } },
+        { key: "道場出禁マン",           icon: "🈲",   message: "道場を出禁になるレベルの将棋を指した",     if_cond: -> { tag_stat.exist?(:"道場出禁") } },
 
         ################################################################################ 種類
 

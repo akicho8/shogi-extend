@@ -33,7 +33,7 @@ module Swars
 
         ################################################################################
 
-        { key: "指導対局でプロに平手で勝った", body: -> { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProSkillExceedStat.search_params, }, },
+        { key: "指導対局でプロに平手で勝つ", body: -> { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProSkillExceedStat.search_params, }, },
 
         ################################################################################
 
@@ -41,15 +41,16 @@ module Swars
 
         ################################################################################
 
+        { key: "道場なら出禁",                     local_only: false, body: -> { tag_stat.counts_hash[:"道場出禁"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "道場出禁", } }, },
         { key: "切断逃亡",                         local_only: false, body: -> { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { "結末" => "切断", "勝敗" => "負け", "手数" => [">=", Config.establish_gteq].join }, }, },
         { key: "通信環境が不安定なのに対局",       local_only: false, body: -> { unstable_network_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: UnstableNetworkStat.search_params, }, },
         { key: "逆棋力詐欺",                       local_only: false, body: -> { gdiff_stat.row_grade_pretend_count            }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: GdiffStat.search_params, }, },
-        { key: "投了せずに放置",                   local_only: false, body: -> { leave_alone_stat.count                        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: LeaveAloneStat.search_params, }, },
+        { key: "投了せずに放置する",               local_only: false, body: -> { leave_alone_stat.count                        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: LeaveAloneStat.search_params, }, },
 
         { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: -> { waiting_to_leave_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: WaitingToLeaveStat.search_params, }, },
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: -> { prolonged_deliberation_stat.count             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProlongedDeliberationStat.search_params, }, },
-        { key: "1手詰を焦らして悦に入った",        local_only: false, body: -> { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntMateStat.search_params, }, },
-        { key: "必勝形から焦らして悦に入った",     local_only: false, body: -> { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntTimeoutStat.search_params, }, },
+        { key: "1手詰を焦らして悦に入る",          local_only: false, body: -> { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntMateStat.search_params, }, },
+        { key: "必勝形から焦らして悦に入る",       local_only: false, body: -> { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntTimeoutStat.search_params, }, },
         { key: "無気力な対局",                     local_only: false, body: -> { lethargy_stat.count                           }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: LethargyStat.search_params, }, },
         { key: "わざと負けて棋力調整",             local_only: false, body: -> { skill_adjust_stat.count                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: SkillAdjustStat.search_params, }, },
         { key: "角不成",                           local_only: false, body: -> { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "角不成", } }, },
