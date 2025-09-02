@@ -21,7 +21,13 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60*6" @input="SB.cc_input_handle")
     tr
-      th 秒読み
+      th
+        //- https://buefy.org/documentation/tooltip
+        b-tooltip(position="is-right" multilined type="is-light" dashed)
+          template(v-slot:content)
+            .is-flex.is-flex-direction-column
+              p 毎回、回復する持ち時間です
+          | 秒読み
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60" @input="SB.cc_input_handle")
     tr
@@ -38,7 +44,13 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
       th
       td(v-for="e in SB.cc_params")
     tr
-      th 1手毎加算(秒)
+      th
+        //- https://buefy.org/documentation/tooltip
+        b-tooltip(position="is-right" multilined type="is-light" dashed)
+          template(v-slot:content)
+            .is-flex.is-flex-direction-column
+              p フィッシャー用です。ややこしくなるのでこれを設定したときは<b>秒読み</b>と<b>考慮時間</b>を 0 にしとくべし
+          | 1手毎加算(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.every_plus(v-bind="input_default_attrs" v-model="e.every_plus" :max="60*60" @input="SB.cc_input_handle")
 </template>
