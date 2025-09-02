@@ -41,7 +41,7 @@ module Swars
 
         ################################################################################
 
-        { key: "道場なら出禁",                     local_only: false, body: -> { tag_stat.counts_hash[:"道場出禁"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "道場出禁", } }, },
+        { key: "道場出禁",                         local_only: false, body: -> { tag_stat.counts_hash[:"道場出禁"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "道場出禁", } }, },
         { key: "切断逃亡",                         local_only: false, body: -> { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { "結末" => "切断", "勝敗" => "負け", "手数" => [">=", Config.establish_gteq].join }, }, },
         { key: "通信環境が不安定なのに対局",       local_only: false, body: -> { unstable_network_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: UnstableNetworkStat.search_params, }, },
         { key: "逆棋力詐欺",                       local_only: false, body: -> { gdiff_stat.row_grade_pretend_count            }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: GdiffStat.search_params, }, },
