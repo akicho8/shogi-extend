@@ -22,10 +22,8 @@ module Kiwi
         @count = @scope.count
         @target_records_t = @scope.collect(&:info).to_t
         @target_files = @scope.flat_map { |e| e.related_output_files || [] }
-        @free_changes = FreeSpace.new.call do
-          if @options[:execute]
-            @scope.destroy_all
-          end
+        if @options[:execute]
+          @scope.destroy_all
         end
         AppLog.important(subject: subject, body: body)
       end
@@ -36,7 +34,6 @@ module Kiwi
         [
           "動画削除",
           "#{@count}個",
-          @free_changes.join("→"),
         ].join(" ")
       end
 
