@@ -37,10 +37,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         _if: (c, e) => e.key === "4",
         call: (c, e) => c.scene_key_set("turn_max", e),
       }, {
-        _if: (c, e) => e.key === "i",
+        _if: (c, e) => c.keyboard_single_key_equal(e, "i"),
         call: (c, e) => c.goto_player_info(e),
       }, {
-        _if: (c, e) => e.key === "f",
+        _if: (c, e) => c.keyboard_single_key_equal(e, "f"),
         call: (c, e) => c.goto_custom_search(e),
       }, {
         _if: (c, e) => e.key === "?",
