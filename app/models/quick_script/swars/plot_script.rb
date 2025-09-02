@@ -2,13 +2,13 @@ module QuickScript
   module Swars
     class PlotScript < Base
       self.title = "グラフまとめ"
-      self.description = ""
+      self.description = "あちこちにあるグラフへのリンク集"
 
       def call
         elems = parts.collect do |e|
-          path = "/lab/swars/#{e}.html"
+          path = "/lab/#{e.dasherize}.html"
           [
-            %(<a href="#{path}" class="has-text-weight-bold">固定リンク</a>),
+            %(<a href="#{path}" class="has-text-weight-bold">開く</a>),
             %(<iframe width="800" height="600" frameborder="0" src="#{path}"></iframe>),
           ].join("<br>")
         end
@@ -18,11 +18,12 @@ module QuickScript
 
       def parts
         [
-          "hourly-active-user",
-          "tactic-stat",
-          "tactic-cross",
-          "turn-average",
-          "lose-pattern",
+          "swars/hourly_active_user",
+          "swars/tactic_stat",
+          "swars/tactic_cross",
+          "swars/turn_average",
+          "swars/lose_pattern",
+          # "general/pre_professional_league",
         ]
       end
     end
