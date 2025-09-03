@@ -16,7 +16,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p 秒読みに入る前の回復しない持ち時間です
+              p 秒読みに入る前の持ち時間です
           | 持ち時間(分)
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60*6" @input="SB.cc_input_handle")
@@ -36,10 +36,10 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p 秒読みが切れた後の回復しない持ち時間です
+              p 秒読みが切れた後の持ち時間です
               p
-                | 勝負どころで使うための時間であり、切れ負け防止用の猶予ではありません
-                | （秒読み自体が猶予であるため考慮時間を含めて猶予とみなすと双方の意味がなくなる）
+                | 勝負どころのための時間であり、切れ負け防止用の猶予設定ではありません
+                | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
           | 考慮時間(分)
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_min(v-bind="input_default_attrs" v-model="e.initial_extra_min" :max="60" @input="SB.cc_input_handle")
