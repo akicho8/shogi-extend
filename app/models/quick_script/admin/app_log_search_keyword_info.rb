@@ -11,6 +11,7 @@ module QuickScript
             "将棋ドリル",
             "短縮URL",
             "KENTO API",
+            "shogimap",
             "ぴよ将棋",
             "囚人",
             "棋譜コピー",

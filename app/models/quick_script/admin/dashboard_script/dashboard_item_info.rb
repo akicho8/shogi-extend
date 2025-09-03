@@ -173,6 +173,11 @@ module QuickScript
             func: -> { AppLog.subject_like("KENTO API").where(created_at: 24.hours.ago..).count },
           },
           {
+            name: "SECRET API",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "any_source_to" }),
+            func: -> { AppLog.subject_like("any_source_to").where(created_at: 24.hours.ago..).count },
+          },
+          {
             name: "hibinotatsuya",
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "hibinotatsuya" }),
             func: -> { AppLog.search("hibinotatsuya").where(created_at: 24.hours.ago..).count },
