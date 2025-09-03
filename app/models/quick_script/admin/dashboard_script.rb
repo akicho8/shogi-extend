@@ -19,6 +19,7 @@ module QuickScript
           { name: "RorVsWild",   _v_bind: { href: RORVSWILD_URLS[Rails.env],                         target: "_blank" }, },
           { name: "Sidekiq",     _v_bind: { href: UrlProxy.full_url_for("/admin/sidekiq"),           target: "_blank" }, },
           { name: "Maintenance", _v_bind: { href: UrlProxy.full_url_for("/admin/maintenance_tasks"), target: "_blank" }, },
+          { name: "GA",          _v_bind: { href: "https://analytics.google.com/analytics/web/#/a109851345p350440237/reports/intelligenthome", target: "_blank" }, },
           { name: "Top",         _v_bind: { href: UrlProxy.full_url_for("/"),                        target: "_blank" }, },
         ]
       end
