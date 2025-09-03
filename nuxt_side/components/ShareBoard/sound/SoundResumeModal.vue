@@ -1,7 +1,7 @@
 <template lang="pug">
-.SoundResumeModalInside.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(@click="click_handle")
-  .is-size-5.has-text-white.is-unselectable
-    | 画面をタップしてください
+.SoundResumeModalInside.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column.is-size-5.has-text-white.is-unselectable(@click="click_handle")
+  p 画面をタップしてください
+  p.is-size-6 よそ見すると正常に対局できなくなる恐れがあります
 </template>
 
 <script>
@@ -23,4 +23,6 @@ export default {
 .SoundResumeModal
   .modal-background
     background-color: hsla(0, 0%, 0%, 0.75)
+  .SoundResumeModalInside
+    gap: 2rem
 </style>
