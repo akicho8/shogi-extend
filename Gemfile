@@ -230,10 +230,11 @@ gem "google-api-client"
 # 統計
 gem "geom_craft"
 
-# RorvsWildで十分すぎる！Rails APM選択の新常識 - コスパ最強vs高級ツール比較
-# https://zenn.dev/yamitake/articles/rorvswild-rails-apm-best-choice
-gem "rorvswild"
-
 # maintenance_tasks gemで実現する実践的なデータ移行・バッチ処理
 # https://zenn.dev/yamitake/articles/maintenance-tasks-practical-guide
 gem "maintenance_tasks"
+
+# RorvsWildで十分すぎる！Rails APM選択の新常識 - コスパ最強vs高級ツール比較
+# https://zenn.dev/yamitake/articles/rorvswild-rails-apm-best-choice
+# https://mail.google.com/mail/u/0/#inbox/WhctKLbmkCNGsPXVGwBrNwzzfjKqbbcQjWgCjfHWkhKpHfRrJBJQhSTtdbztKMpswDsKwdv
+# gem "rorvswild"
