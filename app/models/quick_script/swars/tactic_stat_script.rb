@@ -19,7 +19,7 @@ module QuickScript
       self.form_method  = :get
       self.button_label = "集計"
       self.debug_mode   = Rails.env.local?
-      self.json_link = true
+      self.json_link    = true
 
       def header_link_items
         super + [
