@@ -39,7 +39,8 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "lose",        name: "負け",           volume: 0.40, source: require("@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"),                              },
       { key: "win",         name: "勝ち",           volume: 0.20, source: require("@/static/sound_effect/soundeffect_lab/kansei.mp3"),                                },
 
-      { key: "se_pon",      name: "ポン",           volume: 0.40, source: require("@/assets/USF/CARTOON/POP_Mouth_mono.wav"),                                         },
+      { key: "se_pon",      name: "ポン(高)",       volume: 0.10, source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                               },
+      { key: "se_po",       name: "ポ(低)",         volume: 0.20, source: require("@/assets/USF/CARTOON/POP_Mouth_mono.wav"),                                         },
       { key: "se_poon",     name: "綺麗なポォーン", volume: 0.10, source: require("@/assets/USF/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"), },
 
       { key: "se_deden",    name: "デデン",         volume: 0.30, source: require("@/static/sound_effect/soundeffect_lab/deden.mp3"),                                 },
@@ -50,7 +51,6 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "draw",                                volume: 0.20, source: require("@/static/sound_effect/soundeffect_lab/stupid5.mp3"),                               },
       { key: "new_challenge",                       volume: 0.30, source: require("@/static/sound_effect/soundeffect_lab/decision5.mp3"),                             },
       { key: "notify",                              volume: 0.30, source: require("@/static/sound_effect/soundeffect_lab/decision29.mp3"),                            },
-      { key: "spon",                                volume: 0.50, source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                               },
 
       // ▼駒音
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/static/sound_effect/soundeffect_lab/shogi_piece_puton.mp3"),                               },
@@ -90,7 +90,9 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
 
       { key: "se_niwatori",                  name: "コケコッコー",             volume: 0.5,  source: require("@/assets/USF/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"),                                      },
 
-      { key: "se_chat_message_receive",      name: "チャットの発言受信",       volume: 0.50, source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"),                                            },
+      { key: "se_chat_message_receive",      name: "チャットの発言受信",       volume: 0.1, source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                                         },
+      // { key: "se_chat_message_receive",      name: "チャットの発言受信",       volume: 0.50, source: require("@/assets/USF/CARTOON/POP_Mouth_Darker_mono.wav"),                                            },
+      // { key: "se_pon",                       name: "ポン(高)",                 volume: 0.10, source: require("@/static/sound_effect/oto_logic/Onmtp-Pop01-4.mp3"),                               },
 
       // { key: "se_ping",                   name: "PING",                     volume: 0.50, source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_01_mono.wav"),                 },
       // { key: "se_pong",                   name: "PONG",                     volume: 0.50, source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_02_mono.wav"),                 },
