@@ -83,7 +83,12 @@ export default {
     input_handle(e) {
       if (false) {
       } else if (this.buttons_p) {
-        this.$sound.play("se_select")
+        if (false) {
+          // se_select は本来ラジオボタン専用に作られているが2回クリック音が鳴ることに違和感しかない
+          this.$sound.play("se_select")
+        } else {
+          this.$sound.play_click()
+        }
       } else if (this.slider_p) {
       } else {
         this.$sound.play_click()
