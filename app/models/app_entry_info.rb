@@ -190,9 +190,7 @@ class AppEntryInfo
       og_image_key: "quick_script/general/pre_professional_league_script",
       description: "いろいろまとめて見たいときにどうぞ",
       features: [
-        # "スマホに最適化",
-        # "個人毎の総成績表示",
-        # "在籍期間の表示",
+        "昭和31年〜現行リーグまで対応",
       ],
     },
     {

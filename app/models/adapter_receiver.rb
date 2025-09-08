@@ -14,6 +14,7 @@ class AdapterReceiver
   end
 
   attr_reader :params
+  attr_reader :record
 
   def initialize(params)
     @params = params
@@ -22,7 +23,7 @@ class AdapterReceiver
   def call
     @record = FreeBattle.create!(kifu_body: params[:input_text], use_key: "adapter")
     AppLog.info(**logger_params)
-    @record.as_json(root: :record, methods: [:all_kifs, :display_turn, :piyo_shogi_base_params])
+    record.as_json(root: :record, methods: [:all_kifs, :display_turn, :piyo_shogi_base_params])
   rescue Bioshogi::BioshogiError => @error
     AppLog.error(**logger_params)
     raise @error
@@ -35,8 +36,8 @@ class AdapterReceiver
   end
 
   def turn_max
-    if @record
-      @record.turn_max
+    if record
+      record.turn_max
     end
   end
 
@@ -83,9 +84,9 @@ class AdapterReceiver
     av << params[:input_text]&.strip
     av << ""
 
-    if @record
+    if record
       av << "▼棋譜(変換後)"
-      av << @record.to_xxx(:kif)
+      av << record.to_xxx(:kif)
       av << ""
     end
 

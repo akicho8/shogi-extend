@@ -23,9 +23,9 @@ module AliasMod
 
       # instance に値を定義する場合
       @invert_table ||= inject({}.with_indifferent_access) do |a, object|
-        value = object.respond_to?(:secondary_key) ? object.secondary_key : nil
-        Array(value).flatten.compact.inject(a) do |a, value|
-          a.merge(value => object)
+        keys = object.try(:secondary_key)
+        Array(keys).flatten.compact.inject(a) do |a, key|
+          a.merge(key => object)
         end
       end
     end
