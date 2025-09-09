@@ -15,12 +15,6 @@ RSpec.describe "基本的な挙動", type: :system, share_board_spec: true do
     assert_selector(".place_7_6 .ThinkMark", text: "alice", exact_text: true)
   end
 
-  it "印モードは無効でもシフトを押しながらであれば印が出る" do
-    visit_app
-    find(".place_7_6").click(:shift)
-    assert_selector(".place_7_6 .ThinkMark")
-  end
-
   it "印モードは無効でも副ボタンであれば印が出る" do
     visit_app
     find(".place_7_6").right_click

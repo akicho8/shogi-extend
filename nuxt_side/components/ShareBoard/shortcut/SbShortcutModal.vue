@@ -87,10 +87,6 @@
           .sc_buttons
             b-tag(type="is-primary") 副ボタン
         .sc_item
-          .sc_label 思考印を書く / 消す
-          .sc_buttons
-            b-tag(type="is-primary") ⇧主ボタン
-        .sc_item
           .sc_label 思考印モードのトグル
           .sc_buttons
             b-tag(type="is-primary") m

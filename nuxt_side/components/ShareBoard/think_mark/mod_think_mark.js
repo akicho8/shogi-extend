@@ -88,11 +88,6 @@ export const mod_think_mark = {
         return true
       }
 
-      // 誰でもメタキーを押しながらでもマークできる
-      if (this.play_mode_p && event && this.keyboard_meta_p(event)) {
-        return true
-      }
-
       // 誰でも副ボタンを押せばマークできる
       if (this.play_mode_p && event.button !== MOUSE_MAIN_BUTTON) {
         return true
