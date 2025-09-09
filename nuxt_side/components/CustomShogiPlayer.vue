@@ -8,9 +8,7 @@ import ShogiPlayer from "shogi-player/components/ShogiPlayer.vue"
 export default {
   name: "CustomShogiPlayer",
   inheritAttrs: false, // すべて $attrs に入れるため
-  components: {
-    ShogiPlayer,
-  },
+  components: { ShogiPlayer },
   methods: {
     sp_object() {
       const v = this.$refs.sp_object
@@ -19,8 +17,6 @@ export default {
     },
   },
   computed: {
-    // Howl() { return Howl },
-
     component_params() {
       return {
         ...this.default_params,
@@ -52,7 +48,7 @@ export default {
   &.is_piece_variant_portella
     +setvar(sp_board_piece_size, 1.0)
 
-// bulma の .table のなかにあると td の padding が影響してしまう
+// bulma の .table のなかにあると td の padding が影響してしまうのを防ぐ
 .table
   .detail-container
     .CustomShogiPlayer
