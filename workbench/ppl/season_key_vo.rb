@@ -11,19 +11,19 @@ exit
 end
 exit
 
-(Ppl::SeasonKeyVo["S61"]..Ppl::SeasonKeyVo["2"]).to_a.collect(&:to_s) # => 
+(Ppl::SeasonKeyVo["S61"]..Ppl::SeasonKeyVo["2"]).to_a.collect(&:to_s) # =>
 
-Ppl::SeasonKeyVo["S49"].spider_class    # => 
-Ppl::SeasonKeyVo["30"].spider_class     # => 
-Ppl::SeasonKeyVo["31"].spider_class     # => 
-Ppl::SeasonKeyVo["1"].to_zero_padding_s # => 
-Ppl::SeasonKeyVo.start                  # => 
+Ppl::SeasonKeyVo["S49"].spider_class    # =>
+Ppl::SeasonKeyVo["30"].spider_class     # =>
+Ppl::SeasonKeyVo["31"].spider_class     # =>
+Ppl::SeasonKeyVo["1"].to_zero_padding_s # =>
+Ppl::SeasonKeyVo.start                  # =>
 
 # Ppl::SeasonKeyVo["S49"].users_update_from_web(mock: true)
 
-Ppl::SeasonKeyVo["S48前"].succ.name # => 
-Ppl::SeasonKeyVo["S48後"].succ.name # => 
-Ppl::SeasonKeyVo["S62"].succ.name   # => 
+Ppl::SeasonKeyVo["S48前"].succ.name # =>
+Ppl::SeasonKeyVo["S48後"].succ.name # =>
+Ppl::SeasonKeyVo["S62"].succ.name   # =>
 
 rows = []
 e = Ppl::SeasonKeyVo.start

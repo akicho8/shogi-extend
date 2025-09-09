@@ -88,9 +88,9 @@ module SystemFileMethods
 
   def not_exist_then_build
     if @options[:cache_feature] && file_exist?
-      Rails.logger.debug { {"mtime更新前" => real_path.mtime.to_fs(:ymdhms)}.to_t }
+      Rails.logger.debug { { "mtime更新前" => real_path.mtime.to_fs(:ymdhms) }.to_t }
       FileUtils.touch(real_path)
-      Rails.logger.debug { {"mtime更新後" => real_path.mtime.to_fs(:ymdhms)}.to_t }
+      Rails.logger.debug { { "mtime更新後" => real_path.mtime.to_fs(:ymdhms) }.to_t }
       log! "[already_existd]"
       return
     end

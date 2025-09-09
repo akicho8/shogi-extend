@@ -15,7 +15,6 @@ class SystemFileCacheCleanerOne
       :cutoff_time => 30.days.ago,
       :verbose     => Rails.env.local?,
     }.merge(params)
-
   end
 
   def call
