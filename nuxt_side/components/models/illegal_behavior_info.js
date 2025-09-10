@@ -29,7 +29,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_newbie",
         name: "できない",
-        message: "緊張感↓ 逆転の余地↓ 盛り上がり↓ (初心者向け)",
+        message: "緊張感↓ 逆転の余地↓ 盛り上がり↓ (超初心者向け)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,

@@ -49,15 +49,15 @@
         .sc_item
           .sc_label 順番設定
           .sc_buttons
-            b-tag(type="is-primary") 2
-            | or
             b-tag(type="is-primary") o
+            | or
+            b-tag(type="is-primary") 2
         .sc_item
           .sc_label 対局時計 起動
           .sc_buttons
-            b-tag(type="is-primary") 3
-            | or
             b-tag(type="is-primary") t
+            | or
+            b-tag(type="is-primary") 3
         .sc_item
           .sc_label 一時停止 / 再開
           .sc_buttons
