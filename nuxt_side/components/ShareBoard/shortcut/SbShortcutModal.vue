@@ -38,6 +38,10 @@
           .sc_label 局面編集 / 完了
           .sc_buttons
             b-tag(type="is-primary") ⇧ e
+        .sc_item
+          .sc_label 現局面を本譜とする
+          .sc_buttons
+            b-tag(type="is-primary") !
 
     .column.is-half-desktop.is-half-tablet
       .sc_sub_title 対局

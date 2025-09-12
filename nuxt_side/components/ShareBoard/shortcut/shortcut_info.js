@@ -53,6 +53,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.play_mode_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && e.key === "!",
+        call: c => c.honpu_main_setup(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "c"),
         call: c => c.kifu_copy_handle("kif_utf8"),
       },
