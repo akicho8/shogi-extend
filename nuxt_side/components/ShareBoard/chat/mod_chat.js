@@ -135,16 +135,20 @@ export const mod_chat = {
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {
-      if (false) {               // 常に表示する
+      // 常に表示するなら
+      if (false) {
         return true
       }
 
+      // 観戦者が1人以上いるなら
+      // しかし、これだと利用者はボタンが出る条件が予想つかないかもしれない
       if (false) {
-        // 必要最低限表示したいときはこちらだけど利用者はボタンが出る条件が予想つかないかもしれない
-        return this.watching_member_count >= 1 // 観戦者が1人以上いる場合
+        return this.watching_member_count >= 1
       }
+
+      // 単に順番設定しているなら
       if (true) {
-        return this.order_enable_p // 単に順番設定している場合
+        return this.order_enable_p
       }
     },
   },
