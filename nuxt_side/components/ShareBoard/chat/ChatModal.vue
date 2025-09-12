@@ -63,7 +63,10 @@ export default {
     this.SB.mh_chat_close()
   },
   methods: {
-    close_handle() {
+    close_handle(e) {
+      if (e.pointerType === "mouse") {
+        this.toast_ok("チャット欄は ENTER キーで開閉できますよ")
+      }
       this.SB.chat_modal_close_handle()
     },
     change_handle(key) {
