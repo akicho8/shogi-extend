@@ -94,14 +94,12 @@ export const mod_clock_box_modal = {
       if (this.current_turn >= 1) {
         this.cc_play_confirim({
           onCancel: () => {
-            this.$sound.play_click()
-            this.toast_ok("最初の局面に戻すにはメニュー内の上の方にある「初期配置に戻す」を選択してください")
+            this.toast_ok(`途中の局面から対局を開始しました`)
+            this.cbm_play_core_handle()
           },
           onConfirm: () => {
+            this.force_sync_turn_zero()
             this.cbm_play_core_handle()
-            // this.$sound.play_click()
-            // this.force_sync_turn_zero()
-            // this.cbm_play_core_handle()
           },
         })
         return
