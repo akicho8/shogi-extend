@@ -313,6 +313,12 @@ module Swars
           end
         },
       },
+      {
+        key: "ミニマリストマン",
+        message: "ミリマリスト",
+        badge_params: "Ⓜ️",
+        if_cond: -> m { m.all_tag_names_set.include?(:"ミニマリスト") },
+      },
       # {
       #   key: "急戦マン",
       #   message: "急戦で勝った",

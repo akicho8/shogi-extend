@@ -72,6 +72,7 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "金底マン",         strike_plan: "金底の歩",           n_times: 1,  },
   { expected_badge_key: "駒柱マン",         strike_plan: "駒柱",               n_times: 1,  },
   { expected_badge_key: "都詰めマン",       strike_plan: "都詰め",             n_times: 1,  },
+  { expected_badge_key: "ミニマリストマン", strike_plan: "ミニマリスト",       n_times: 1,  },
   { expected_badge_key: "吊るし桂マン",     strike_plan: "吊るし桂",           n_times: 1,  },
   { expected_badge_key: "雪隠詰めマン",     strike_plan: "雪隠詰め",           n_times: 1,  },
   { expected_badge_key: "姿焼マン",         strike_plan: "穴熊の姿焼き",       n_times: 1,  },

@@ -11,14 +11,15 @@ RSpec.describe Swars::MembershipBadgeInfo, type: :model, swars_spec: true do
     end
 
     it "works" do
-      assert { case1("角不成")      == "角不成マン"   }
-      assert { case1("飛車不成")    == "飛車不成マン" }
-      assert { case1("屍の舞")      == "背水マン"     }
-      assert { case1("入玉")        == "入玉勝ちマン" }
-      assert { case1("王手飛車")    == "王手飛車マン" }
-      assert { case1("王手角")      == "王手角マン"   }
-      assert { case1("3段ロケット") == "ロケットマン" }
-      assert { case1("道場出禁")    == "道場出禁マン" }
+      assert { case1("角不成")       == "角不成マン"       }
+      assert { case1("飛車不成")     == "飛車不成マン"     }
+      assert { case1("屍の舞")       == "背水マン"         }
+      assert { case1("入玉")         == "入玉勝ちマン"     }
+      assert { case1("王手飛車")     == "王手飛車マン"     }
+      assert { case1("王手角")       == "王手角マン"       }
+      assert { case1("ミニマリスト") == "ミニマリストマン" }
+      assert { case1("3段ロケット")  == "ロケットマン"     }
+      assert { case1("道場出禁")     == "道場出禁マン"     }
     end
   end
 

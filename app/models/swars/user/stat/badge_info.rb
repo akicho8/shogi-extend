@@ -14,7 +14,7 @@ module Swars
 
         { key: "絶対投了しないマン",     icon: "💩",   message: "悔しかったので時間切れまで放置した",       if_cond: -> { leave_alone_stat.count.positive? } },
         { key: "無気力マン",             icon: "🦥",   message: "無気力な対局をした",                       if_cond: -> { lethargy_stat.exist? } },
-        { key: "棋力調整マン",           icon: "🩸",   message: "わざと負けて棋力を調整した",               if_cond: -> { skill_adjust_stat.count.positive? } },
+        { key: "棋力調整マン",           icon: "⛔",   message: "わざと負けて棋力を調整した",               if_cond: -> { skill_adjust_stat.count.positive? } },
         { key: "大長考マン",             icon: "😴",   message: "対局放棄と受け取られかねない長考をした",   if_cond: -> { prolonged_deliberation_stat.count.positive? } },
         { key: "1手詰焦らしマン",        icon: "😈",   message: "1手詰を焦らして歪んだ優越感に浸った",      if_cond: -> { taunt_mate_stat.count.positive? } },
         { key: "必勝形焦らしマン",       icon: "🎃",   message: "必勝形から焦らして悦に入った",             if_cond: -> { taunt_timeout_stat.count.positive? } },
@@ -54,7 +54,7 @@ module Swars
         { key: "王手飛車マン",   icon: "🦄",   message: "王手飛車を決めた",   if_cond: -> { win_stat.exist?(:"王手飛車") }, },
         { key: "王手角マン",     icon: "🐲",   message: "王手角を決めた",     if_cond: -> { win_stat.exist?(:"王手角") }, },
         { key: "両取りマン",     icon: "🌻",   message: "両取りを決めた",     if_cond: -> { win_stat.exist?(:"両取り") }, },
-        { key: "守りの馬マン",   icon: "🐴",   message: "？",                 if_cond: -> { win_stat.exist?(:"守りの馬") }, },
+        { key: "守りの馬マン",   icon: "🐴",   message: "馬の使い方が上手",   if_cond: -> { win_stat.exist?(:"守りの馬") }, },
 
         ################################################################################ 戦法でかなり勝っているシリーズ
 
@@ -99,6 +99,7 @@ module Swars
         { key: "雪隠詰めマン",           icon: "🚽",   message: "雪隠詰めで勝った",               if_cond: -> { tag_stat.exist?(:"雪隠詰め") } },
         { key: "姿焼マン",               icon: "🍖",   message: "穴熊を姿焼きにした",             if_cond: -> { tag_stat.exist?(:"穴熊の姿焼き") } },
         { key: "都詰めマン",             icon: "🪬",   message: "都詰めで勝った (超レア)",        if_cond: -> { tag_stat.exist?(:"都詰め") } },
+        { key: "ミニマリストマン",       icon: "Ⓜ️",   message: "ミニマリスト",                   if_cond: -> { tag_stat.exist?(:"ミニマリスト") }, },
 
         ################################################################################ 文言が特殊
 
@@ -169,7 +170,7 @@ module Swars
 
         { key: "切断マン",       icon: "🪳",   message: "切断逃亡の使い手",   if_cond: -> { judge_final_stat.count_by(:lose, :DISCONNECT).try { self >= 1 } }, },
         { key: "投了マン",       icon: "🤚",   message: "投了を究めし者",     if_cond: -> { judge_final_stat.master_ratio(:TORYO).try { self == 1.0 } }, },
-        { key: "詰まされマン",   icon: "Ⓜ️",   message: "マゾの傾向がある",   if_cond: -> { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
+        { key: "詰まされマン",   icon: "🩸️",   message: "マゾの傾向がある",   if_cond: -> { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "時間の使い方が下手", if_cond: -> { judge_final_stat.master_ratio(:TIMEOUT).try { self >= 0.25 } }, },
         { key: "タイムキーパー", icon: "⏰",   message: "時間の使い方が上手", if_cond: -> { judge_final_stat.master_ratio(:TIMEOUT).try { self == 0 } }, },
 
