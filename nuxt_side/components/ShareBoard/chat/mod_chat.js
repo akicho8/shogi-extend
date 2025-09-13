@@ -33,13 +33,19 @@ export const mod_chat = {
       }
     },
 
-    chat_modal_open_handle() {
+    chat_modal_open_handle(e = null) {
+      if (e && e.pointerType === "mouse") {
+        this.toast_ok("チャット欄は ENTER キーで開けるよ")
+      }
       this.sidebar_p = false
       this.$sound.play_click()
       this.chat_modal_open()
     },
 
-    chat_modal_close_handle() {
+    chat_modal_close_handle(e = null) {
+      if (e && e.pointerType === "mouse") {
+        this.toast_ok("チャット欄は ENTER キーで閉じれるよ")
+      }
       this.sidebar_p = false
       this.$sound.play_click()
       this.chat_modal_close()

@@ -64,10 +64,7 @@ export default {
   },
   methods: {
     close_handle(e) {
-      if (e.pointerType === "mouse") {
-        this.toast_ok("チャット欄は ENTER キーで開閉できますよ")
-      }
-      this.SB.chat_modal_close_handle()
+      this.SB.chat_modal_close_handle(e)
     },
     change_handle(key) {
       this.$sound.play_click()
