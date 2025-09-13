@@ -29,6 +29,10 @@ module QuickScript
             flash[:notice] = "囚人のウォーズIDを入力してください"
             return
           end
+          if ::Swars::UserKeyValidator.invalid?(current_swars_user_key)
+            flash[:notice] = "それはウォーズIDではありません"
+            return
+          end
           unless throttle.call
             flash[:notice] = "あと #{throttle.ttl_sec} 秒待ってから実行してください"
             return
