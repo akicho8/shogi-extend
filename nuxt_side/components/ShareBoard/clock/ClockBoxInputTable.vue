@@ -38,7 +38,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
             .is-flex.is-flex-direction-column
               p 秒読みが切れた後の持ち時間です
               p
-                | 勝負どころのための時間であり、切れ負け防止用の猶予設定ではありません
+                | 勝負どころのための時間であり、切れ負け防止用の猶予ではありません
                 | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
           | 考慮時間(分)
       td(v-for="e in SB.cc_params")
@@ -52,7 +52,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p フィッシャー用です。ややこしくなるのでこれを設定したときは<b>秒読み</b>と<b>考慮時間</b>は 0 にしよう
+              p これを設定するときは<b>秒読み</b>と<b>考慮時間</b>を 0 にするのをおすすめします
           | 1手毎加算(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.every_plus(v-bind="input_default_attrs" v-model="e.every_plus" :max="60*60" @input="SB.cc_input_handle")
