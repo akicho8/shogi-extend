@@ -1,3 +1,10 @@
+# judge_calc = JudgeCalc.new(win: 3, lose: 7)
+# judge_calc.win                  # => 3
+# judge_calc.lose                 # => 7
+# judge_calc.draw                 # => 0
+# judge_calc.count                # => 10
+# judge_calc.ratio                # => 0.3
+
 class JudgeCalc
   def initialize(hv)
     @hv = hv
@@ -20,8 +27,10 @@ class JudgeCalc
   end
 
   def ratio
-    if count.nonzero?
-      win.fdiv(count)
+    @ratio ||= yield_self do
+      if count.nonzero?
+        win.fdiv(count)
+      end
     end
   end
 end
