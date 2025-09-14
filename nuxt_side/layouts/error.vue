@@ -88,8 +88,27 @@ export default {
     english_message()       { return this.error?.message                                  }, // 英語の文言はわかりにくいので使わない
     primary_error_message() { return this.error?.__RESPONSE_DATA__?.primary_error_message }, // 最優先して表示したい文言
     default_message()       { return this.response_status_code_info?.message              }, // 代替文言
-    offline_message()       { return this.is_online ? null : "通信環境が不安定です"       }, // オフラインの場合
-    message()               { return this.primary_error_message ?? this.default_message ?? this.offline_message ?? "ぶっこわれました" }, // 最終的に表示する文言
+
+    // オフラインの場合
+    offline_message() {
+      if (!this.is_online) {
+        return "インターネットが切れました" // ← 実際にはオフラインになっても is_online が真にならないため使えない
+      }
+
+      if (this.english_message === "Network Error") {
+        return "たぶんインターネットに繋っていません"
+      }
+    },
+
+    // 最終的に表示する文言
+    message() {
+      let str = null
+      str ??= this.primary_error_message
+      str ??= this.default_message
+      str ??= this.offline_message
+      str ??= "ぶっこわれました"
+      return str
+    },
 
     meta() {
       return {
