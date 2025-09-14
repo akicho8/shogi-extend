@@ -2,9 +2,8 @@ module Swars
   class Battle
     concern :StatMethods do
       included do
-        # TODO: created_at に index がない
-        scope :with_today,     -> t = Time.current { where(created_at: t.beginning_of_day...t.beginning_of_day.tomorrow) }                     # 本日取得分
-        scope :with_yesterday, -> t = Time.current { where(created_at: t.yesterday.beginning_of_day...t.yesterday.beginning_of_day.tomorrow) } # 昨日取得分
+        scope :with_today,     -> { where(created_at: 0.days.ago.all_day) } # 本日取得分
+        scope :with_yesterday, -> { where(created_at: 1.days.ago.all_day) } # 昨日取得分
       end
 
       class_methods do
@@ -16,8 +15,8 @@ module Swars
 
         def stat_without_elapsed
           {
-            :all_count => count,
-            :today_import_count => with_today.count,
+            :all_count              => count,
+            :today_import_count     => with_today.count,
             :yesterday_import_count => with_yesterday.count,
           }
         end
