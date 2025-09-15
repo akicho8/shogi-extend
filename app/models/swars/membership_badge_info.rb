@@ -18,10 +18,10 @@ module Swars
         },
       },
       {
-        key: "道場出禁マン",
-        message: "道場の平和を乱す将棋を指した",
-        badge_params: "🈲",
-        if_cond: -> m { m.all_tag_names_set.include?(:"道場出禁") }
+        key: "運営支えマン",
+        message: "将棋ウォーズの運営を支える力がある",
+        badge_params: "🧙‍♂️",
+        if_cond: -> m { m.fraud? },
       },
       {
         key: "切断マン",
@@ -34,12 +34,6 @@ module Swars
             end
           end
         },
-      },
-      {
-        key: "運営支えマン",
-        message: "将棋ウォーズの運営を支える力がある",
-        badge_params: "🧙‍♂️",
-        if_cond: -> m { m.fraud? },
       },
       {
         key: "1手詰焦らしマン",
@@ -101,6 +95,18 @@ module Swars
             end
           end
         },
+      },
+      {
+        key: "道場出禁マン",
+        message: "道場の平和を乱す将棋を指した",
+        badge_params: "🈲",
+        if_cond: -> m { m.all_tag_names_set.include?(:"道場出禁") }
+      },
+      {
+        key: "ミニマリストマン",
+        message: "ミリマリスト",
+        badge_params: "Ⓜ️",
+        if_cond: -> m { m.all_tag_names_set.include?(:"ミニマリスト") },
       },
       {
         key: "背水マン",
@@ -185,9 +191,7 @@ module Swars
         badge_params: "⌛",
         if_cond: -> m {
           if m.judge_key == "lose"
-            if m.battle.final_info.key == :TIMEOUT
-              true
-            end
+            m.battle.final_info.key == :TIMEOUT
           end
         },
       },
@@ -200,9 +204,7 @@ module Swars
         badge_params: "❓",
         if_cond: -> m {
           if m.judge_key == "draw"
-            if m.battle.turn_max == Config.sennitite_eq
-              true
-            end
+            m.battle.turn_max == Config.sennitite_eq
           end
         },
       },
@@ -213,9 +215,7 @@ module Swars
         if_cond: -> m {
           if m.judge_key == "draw"
             if m.location.key == "black"
-              if m.battle.turn_max > Config.penalty_sennitite_gt
-                true
-              end
+              m.battle.turn_max > Config.penalty_sennitite_gt
             end
           end
         },
@@ -226,9 +226,7 @@ module Swars
         badge_params: "🍌",
         if_cond: -> m {
           if m.judge_key == "draw"
-            if m.battle.turn_max > Config.sennitite_eq
-              true
-            end
+            m.battle.turn_max > Config.sennitite_eq
           end
         },
       },
@@ -243,9 +241,7 @@ module Swars
           if m.battle.imode_info.key == :normal
             if m.judge_key == "lose"
               if m.battle.turn_max < Config.seiritsu_gteq
-                if m.battle.final_info.toryo_or_tsumi
-                  true
-                end
+                m.battle.final_info.toryo_or_tsumi
               end
             end
           end
@@ -259,9 +255,7 @@ module Swars
           if m.battle.imode_info.key == :normal
             if m.judge_key == "lose"
               if m.battle.turn_max.between?(Config.seiritsu_gteq, Config.mukiryoku_lteq)
-                if m.battle.final_info.toryo_or_tsumi
-                  true
-                end
+                m.battle.final_info.toryo_or_tsumi
               end
             end
           end
@@ -312,12 +306,6 @@ module Swars
             m.all_tag_names_set.include?(:"王手角")
           end
         },
-      },
-      {
-        key: "ミニマリストマン",
-        message: "ミリマリスト",
-        badge_params: "Ⓜ️",
-        if_cond: -> m { m.all_tag_names_set.include?(:"ミニマリスト") },
       },
       # {
       #   key: "急戦マン",
