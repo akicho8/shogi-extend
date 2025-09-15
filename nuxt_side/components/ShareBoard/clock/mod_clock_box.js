@@ -432,12 +432,12 @@ export const mod_clock_box = {
 
     cc_play_confirim(params = {}) {
       this.$sound.play_click()
-      this.sb_talk(`ちょっと待って。途中の局面になっているのでいったん初期配置に戻してから開始しますか？`)
+      this.sb_talk(`ちょっと待って。途中の局面になっています。初期配置に戻してから開始しますか？`)
       this.dialog_confirm({
         title: "ちょっと待って",
         // type: "is-warning",
         hasIcon: false,
-        message: `初期配置に戻してから開始しますか？`,
+        message: `<p>途中の局面になっています</p><p>初期配置に戻してから開始しますか？</p>`,
         confirmText: "はい",
         cancelText: `いいえ`,
         focusOn: "confirm",
