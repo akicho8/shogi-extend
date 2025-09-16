@@ -22,7 +22,7 @@ module QuickScript
               row["ID"] = e.id
               row["部屋"] = { _nuxt_link: e.room.key, _v_bind: { to: qs_nuxt_link_to(params: { room_id: e.room.id }), }, }
               row["名前"] = { _nuxt_link: e.user.name, _v_bind: { to: qs_nuxt_link_to(params: { user_id: e.user.id }), }, }
-              row["発言"] = { _autolink: e.content }
+              row["発言"] = { _autolink: e.strip_tagged_content }
               row["日時"] = e.created_at.to_fs(:ymdhms)
             end
           end

@@ -85,6 +85,10 @@ module ShareBoard
       session_user&.avatar_path
     end
 
+    def strip_tagged_content
+      StringToolkit.strip_tags(content)
+    end
+
     def responder_res_job_run
       ResponderResJob.perform_later(id)
     end
