@@ -140,6 +140,9 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/対局中",
         preformat: true,
         command_fn: (context, args) => {
+          if (!context.debug_mode_p) {
+            return
+          }
           if (Gs.blank_p(context.room_key)) {
             context.room_key = "test_room"
           }
