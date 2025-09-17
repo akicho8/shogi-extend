@@ -81,7 +81,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :RS_ENABLE       => "false",
       })
     perpetual_trigger
-    assert_selector(".IllegalModal", text: "千日手で☖の勝ち！")
+    assert_selector(".IllegalModal", text: "千日手で☖の勝ち")
     illegal_modal_close
     assert_order_off  # 自動投了が有効だったため順番設定がOFFになっている
   end

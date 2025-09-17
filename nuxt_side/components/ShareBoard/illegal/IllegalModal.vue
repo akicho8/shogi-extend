@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{reason}}で{{current_location.name}}の勝ち！
+      | {{reason}}で{{current_location.name}}の勝ち
   .modal-card-body
     template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
       p 終局です

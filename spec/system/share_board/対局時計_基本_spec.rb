@@ -34,11 +34,11 @@ RSpec.describe "対局時計_基本", type: :system, share_board_spec: true do
       assert_clock_active_white                    # bob側も後手がアクティブになっている
       sleep(@INITIAL_SEC)                          # ここでは3秒ぐらいになってるけどさらに秒読みぶん待つ
       assert_white_read_sec(0)                     # 秒読みが0になっている
-      assert_text("時間切れで☗の勝ち！")           # 時間切れのダイアログの表示(1回目)
+      assert_text("時間切れで☗の勝ち")           # 時間切れのダイアログの表示(1回目)
       find(".button.is-primary").click             # それを閉じる
     end
     a_block do
-      assert_text("時間切れで☗の勝ち！")           # alice側でも時間切れのダイアログが表示されている
+      assert_text("時間切れで☗の勝ち")           # alice側でも時間切れのダイアログが表示されている
       find(".button.is-primary").click             # それを閉じる
     end
     b_block do
@@ -55,12 +55,12 @@ RSpec.describe "対局時計_基本", type: :system, share_board_spec: true do
     b_block do
       assert_clock_active_white                    # bob側もbob側にの時計に切り替わった
       sleep(@INITIAL_SEC)                          # bobは再び時間切れになるまで待った
-      assert_text("時間切れで☗の勝ち！")          # 2度目のダイアログが出た
+      assert_text("時間切れで☗の勝ち")          # 2度目のダイアログが出た
       cc_timeout_modal_close                         # いったん閉じないと assert_white_read_sec が失敗するため
       assert_white_read_sec(0)                     # また0時間切れになった
     end
     a_block do
-      assert_text("時間切れで☗の勝ち！")           # alice側でもダイアログが出た
+      assert_text("時間切れで☗の勝ち")           # alice側でもダイアログが出た
     end
   end
 end

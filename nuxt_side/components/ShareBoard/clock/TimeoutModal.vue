@@ -6,7 +6,7 @@
         | 時間切れで
       template(v-if="timeout_info.key === 'audo_judge'")
         | 接続切れで
-      | {{snapshot_clock.current.location.flip.name}}の勝ち！
+      | {{snapshot_clock.current.location.flip.name}}の勝ち
   .modal-card-body
     template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
       p 終局です
