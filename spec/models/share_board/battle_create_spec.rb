@@ -19,11 +19,11 @@ RSpec.describe ShareBoard::Room do
   it "works" do
     creator = ShareBoard::BattleCreate.new(params).call
     assert { creator.battle.id }
-    assert { creator.as_json[:message] == "対局を保存しました" }
+    assert { creator.success? }
   end
 
   it "error" do
     creator = ShareBoard::BattleCreate.new(params.merge(fake_error: true)).call
-    assert { creator.call.as_json[:message] == "(fake_error)" }
+    assert { creator.call.as_json[:error][:message] == "(fake_error)" }
   end
 end

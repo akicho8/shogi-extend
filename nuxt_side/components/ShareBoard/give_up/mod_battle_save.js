@@ -13,8 +13,10 @@ export const mod_battle_save = {
         memberships:      this.battle_memberships,
         win_location_key: this.give_up_win_location_key,
       }
-      this.$axios.$post("/api/share_board/battle_create.json", params, {progress: true}).then(e => {
-        this.toast_ok(e.message, {talk: false})
+      this.$axios.$post("/api/share_board/battle_create.json", params, {progress: false}).then(e => {
+        if (e.error) {
+          this.toast_ng(e.error.message, {talk: false})
+        }
       })
     },
   },

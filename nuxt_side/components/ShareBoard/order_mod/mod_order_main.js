@@ -46,7 +46,7 @@ export const mod_order_main = {
 
     // 順番設定を無効化する
     order_switch_off_share() {
-      this.order_switch_share({order_enable_p: false, message: "無効", talk: false})
+      this.order_switch_share({order_enable_p: false, message: "", talk: false})
     },
     order_switch_share(params) {
       this.ac_room_perform("order_switch_share", params) // --> app/channels/share_board/room_channel.rb

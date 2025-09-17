@@ -33,15 +33,15 @@ module ShareBoard
     end
 
     def as_json(...)
-      { message: message }
+      hv = {}
+      if error
+        hv[:error] = { message: error.message }
+      end
+      hv
     end
 
-    def message
-      if @error
-        @error.message
-      else
-        "対局を保存しました"
-      end
+    def success?
+      !error
     end
 
     private
