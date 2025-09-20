@@ -1,4 +1,4 @@
-// 
+//
 // b-menu 内の b-menu-item.is_active_unset 無駄に青くなってしまうのを防ぐ
 // .is_active_unset
 //   .is-active
@@ -45,6 +45,11 @@
       // background-color: $scheme-main
       padding: 0.75rem
       justify-content: space-between
+
+//////// モーダルの背景をぼかす
+
+.modal
+  backdrop-filter: blur(4px)
 
 //////// .modal-background の濃さを切り替える
 //
