@@ -249,7 +249,7 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/gallery" },
-      title: "将棋盤テクスチャ集",
+      title: "将棋盤木目テクスチャ集",
       attention_label: nil,
       og_image_key: "gallery",
       description: "将棋盤用の木をどうぞ",

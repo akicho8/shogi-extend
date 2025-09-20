@@ -7,7 +7,7 @@
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold.px_0_if_mobile(@click.native="title_click_handle")
-          | 木目テクスチャ集
+          | 将棋盤木目テクスチャ集
       template(slot="end")
         b-navbar-item.slider_container.is-hidden-mobile(tag="div")
           b-slider(:min="0" :max="ColumnSizeInfo.values.length - 1" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
@@ -95,7 +95,7 @@ export default {
     base() { return this },
     meta() {
       return {
-        title: "木目テクスチャ集",
+        title: "将棋盤木目テクスチャ集",
         description: "将棋盤用に特化した木目のテクスチャ集です",
         og_image_key: "gallery",
       }
