@@ -58,16 +58,14 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_handle")
           b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.yomikomi_modal_open_handle()")
 
-        b-menu-list(label="SNS共有")
-          b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
-          //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
-
         SbSidebarExport(:base="SB")
           b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_dl_modal_handle")
           b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="SB.video_new_handle")
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
 
         b-menu-list(label="その他")
+          b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
+          //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="SB.general_help_modal_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="SB.title_edit_handle")
           b-menu-item.is_active_unset(icon="account-edit" label="ハンドルネーム変更"          @click="SB.handle_name_modal_handle")
