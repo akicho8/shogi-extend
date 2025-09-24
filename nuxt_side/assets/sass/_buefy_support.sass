@@ -50,6 +50,8 @@
 
 .modal
   backdrop-filter: blur(4px)
+  // iOS では↓これを入れないと効かない
+  -webkit-backdrop-filter: blur(4px)
 
 //////// .modal-background の濃さを切り替える
 //
