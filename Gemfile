@@ -196,7 +196,7 @@ gem "omniauth-github"
 gem "aws-sdk-polly"
 
 # Palette
-gem "color", "~> 1"
+gem "color", ">= 2"
 
 # BOT判定用
 gem "rack-user_agent"

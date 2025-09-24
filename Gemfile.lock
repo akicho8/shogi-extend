@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 1efe2674bea95f8a63564971fd71f2bf0ddac252
+  revision: 8f5a19421baab5c58d2cee3583f7d081d464d506
   branch: main
   specs:
     bioshogi (0.0.18)
       actionview
       activesupport (>= 7.1.0)
       benchmark
-      color (< 2.0.0)
+      color (>= 2.0.0)
       faraday
       memory_record
       nkf
@@ -166,7 +166,7 @@ GEM
     chronic (0.10.2)
     codecov (0.6.0)
       simplecov (>= 0.15, < 0.22)
-    color (1.8)
+    color (2.1.1)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
     crass (1.0.6)
@@ -726,7 +726,7 @@ DEPENDENCIES
   capistrano-yarn
   capybara (>= 3.40)
   codecov
-  color (~> 1)
+  color (>= 2)
   database_cleaner-active_record
   debug
   devise
