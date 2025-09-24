@@ -250,7 +250,7 @@ module QuickScript
           h = (240.fdiv(360) + 1.0.fdiv(highlight_plus.size) * i).modulo(1.0)
           s = 0.4
           l = 0.5
-          Color::HSL.from_fraction(h, s, l).css_hsl
+          Color::HSL.new(h, s, l).css
         end
       end
 

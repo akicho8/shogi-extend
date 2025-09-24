@@ -9,7 +9,7 @@ module CardGenerator
         :width            => 1200,            # 画像横幅
         :height           => 630,             # 画像縦幅
         :font_size        => nil,             # nil:自動的に決める 整数:それを使う
-        :base_color       => [0, 0.5, 0.5],   # ベース色
+        :base_color       => [0.0, 0.5, 0.5], # ベース色
         :format           => "png",           # 出力する画像タイプ
         :debug            => false,
 
@@ -76,7 +76,7 @@ module CardGenerator
     def canvas
       @canvas ||= yield_self do
         Magick::Image.new(*image_rect) do |e|
-          e.background_color = background_color.html
+          e.background_color = background_color.to_rgb.html
         end
       end
     end
@@ -99,8 +99,8 @@ module CardGenerator
       draw.stroke_width   = params[:stroke_width]
       draw.stroke_opacity(params[:stroke_opacity])     # 効いてない (常に1.0)
       draw.stroke_antialias(params[:stroke_antialias]) # 効いてない (常にtrue)
-      draw.stroke         = stroke_color.html
-      draw.fill           = font_color.html
+      draw.stroke         = stroke_color.to_rgb.html
+      draw.fill           = font_color.to_rgb.html
       draw.pointsize      = font_size
       draw.annotate(canvas, 0, 0, 0, 0, body)
     end
@@ -124,19 +124,19 @@ module CardGenerator
     end
 
     def base_color
-      @base_color ||= Color::HSL.from_fraction(*params[:base_color])
+      @base_color ||= Color::HSL.new(*params[:base_color])
     end
 
     def background_color
-      @background_color ||= Color::HSL.from_fraction(hue, base_color.s, base_color.l)
+      @background_color ||= Color::HSL.new(hue, base_color.s, base_color.l)
     end
 
     def font_color
-      @font_color ||= Color::HSL.from_fraction(hue, base_color.s, params[:font_luminance])
+      @font_color ||= Color::HSL.new(hue, base_color.s, params[:font_luminance])
     end
 
     def stroke_color
-      @stroke_color ||= Color::HSL.from_fraction(hue, base_color.s, base_color.l - params[:stroke_darker])
+      @stroke_color ||= Color::HSL.new(hue, base_color.s, base_color.l - params[:stroke_darker])
     end
 
     def draw_context
