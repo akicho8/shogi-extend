@@ -3,7 +3,7 @@ import { Gs } from "@/components/models/gs.js"
 
 export class ClockVolumeInfo extends ApplicationMemoryRecord {
   static field_label   = "秒読み音量"
-  static field_message = "うっかり切れ負けしてしまう人は大きめにしておこう。0 にして実況すると対局の緊張感が損なわれます。（初期値: 0.5）"
+  static field_message = "<span class='has-text-danger'>0 にしないでください。すると切れ負けが多発するでしょう (初期値: 0.5)</span>"
   static input_type    = "slider"
   static min           = 0.0
   static step          = 0.1

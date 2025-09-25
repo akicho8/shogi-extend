@@ -1,6 +1,5 @@
 <template lang="pug">
 b-field.SimpleRadioButton(
-  :message="field_message"
   v-bind="$attrs"
   :class="{'is_scroll_x': buttons_p}"
   )
@@ -11,6 +10,8 @@ b-field.SimpleRadioButton(
     template(v-if="hint_exist_p")
       a.hint_icon(@click="label_click_handle")
         b-icon(icon="help-circle-outline" size="is-small")
+  template(#message)
+    p(v-html="field_message")
 
   template(v-if="real_model.input_type === 'numberinput'")
     b-numberinput(

@@ -7,10 +7,10 @@ import { SettingCategoryLevel4 } from "./setting_category_info/setting_category_
 export class SettingCategoryInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "setting_category1", name: "一般",   list: SettingCategoryLevel1, },
-      { key: "setting_category2", name: "音量",   list: SettingCategoryLevel2, },
-      { key: "setting_category3", name: "その他", list: SettingCategoryLevel3, },
-      { key: "setting_category4", name: "危険",   list: SettingCategoryLevel4, },
+      { key: "setting_category2", name: "音量",       list: SettingCategoryLevel2, },
+      { key: "setting_category1", name: "実況者向け", list: SettingCategoryLevel1, },
+      { key: "setting_category3", name: "その他",     list: SettingCategoryLevel3, },
+      { key: "setting_category4", name: "危険",       list: SettingCategoryLevel4, },
     ]
   }
 }

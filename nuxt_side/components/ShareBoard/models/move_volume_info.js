@@ -2,8 +2,8 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { Gs } from "@/components/models/gs.js"
 
 export class MoveVolumeInfo extends ApplicationMemoryRecord {
-  static field_label   = "パチン音量"
-  static field_message = "いちいち音を立てるのは失礼である派は小さくしよう。実況時など指したタイミングをわかりやすくしたい場合は大きめにしよう。（初期値: 0.3）" // ::SE_PIECE_PUT_VOLUME::
+  static field_label   = "駒音"
+  static field_message = "音を立てるのは失礼である派は小さくすべし (初期値: 0.3)" // ::SE_PIECE_PUT_VOLUME::
   static input_type    = "slider"
   static min           = 0.0
   static step          = 0.1
