@@ -224,7 +224,7 @@ export const mod_room_cable = {
     ////////////////////////////////////////////////////////////////////////////////
     room_is_empty_p() {
       if (Gs.blank_p(this.ac_room)) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.toast_warn("まず部屋を立てよう")
         return true
       }

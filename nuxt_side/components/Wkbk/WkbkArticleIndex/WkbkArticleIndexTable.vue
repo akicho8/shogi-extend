@@ -28,12 +28,12 @@
     :opened-detailed="base.detailed_keys"
     )
     // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
-    // :has-detailed-visible="row => $sound.play_click()"
+    // :has-detailed-visible="row => sfx_play_click()"
 
     b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable :width="1" :visible="!!base.visible_hash.key") {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').name" sortable :visible="true" cell-class="is_line_break_on")
-      nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="$sound.play_click()")
+      nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_play_click()")
         | {{row.title || "(no title)"}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
@@ -55,15 +55,15 @@
 
     b-table-column(v-slot="{row}" custom-key="book_title" field="books.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
       template(v-for="book in row.books")
-        nuxt-link.is-block(:to="{name: 'rack-books-book_key', params: {book_key: book.key}}" @click.native="$sound.play_click()") {{book.title}}
+        nuxt-link.is-block(:to="{name: 'rack-books-book_key', params: {book_key: book.key}}" @click.native="sfx_play_click()") {{book.title}}
 
     b-table-column(v-slot="{row}" custom-key="created_at"        field="created_at"        :label="base.ArticleIndexColumnInfo.fetch('created_at').name"       sortable         :visible="!!base.visible_hash.created_at")       {{$time.format_row(row.created_at)}}
     b-table-column(v-slot="{row}" custom-key="updated_at"        field="updated_at"        :label="base.ArticleIndexColumnInfo.fetch('updated_at').name"       sortable         :visible="!!base.visible_hash.updated_at")       {{$time.format_row(row.updated_at)}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1" cell-class="operation_block")
       .buttons.is-centered.mb-0(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-        nuxt-link.button.is-small.mb-0(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="$sound.play_click()") 編集
-        nuxt-link.button.is-small.mb-0(:to="{name: 'rack-articles-new', query: {source_article_key: row.key}}" @click.native="$sound.play_click()") コピーして新規
+        nuxt-link.button.is-small.mb-0(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sfx_play_click()") 編集
+        nuxt-link.button.is-small.mb-0(:to="{name: 'rack-articles-new', query: {source_article_key: row.key}}" @click.native="sfx_play_click()") コピーして新規
 
     template(slot="empty" v-if="base.articles != null")
       section.section.is-unselectable

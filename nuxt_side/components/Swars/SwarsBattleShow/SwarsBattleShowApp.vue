@@ -35,12 +35,12 @@ client-only
 
       .app_buttons_container
         .buttons.is-centered
-          PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="$sound.play_click()")
-          KentoButton(tag="a" :href="current_kifu_vo.kento_url" @click="$sound.play_click()")
+          PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="sfx_play_click()")
+          KentoButton(tag="a" :href="current_kifu_vo.kento_url" @click="sfx_play_click()")
           KifCopyButton(@click="kifu_copy_button_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
-          TweetButton(:body="permalink_url" @after_click="$sound.play_click()")
+          TweetButton(:body="permalink_url" @after_click="sfx_play_click()")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.is-size-7-mobile
@@ -54,7 +54,7 @@ client-only
         p {{record.description}}
         p {{record.turn_max}}手まで (最後は{{record.final_info.name}})
         p(v-if="record.memberships[0].ek_score_without_cond != null && record.memberships[1].ek_score_without_cond != null")
-          a(href="https://shogiwars.heroz.jp/topics/54293aca7aa25c6e6b000042" target="_blank" @click="$sound.play_click()") 入玉宣言法
+          a(href="https://shogiwars.heroz.jp/topics/54293aca7aa25c6e6b000042" target="_blank" @click="sfx_play_click()") 入玉宣言法
           template(v-if="record.final_info.key === 'ENTERINGKING'")
             | による点数
           template(v-else)
@@ -172,7 +172,7 @@ export default {
 
   methods: {
     tweet_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.tweet_window_popup({text: this.permalink_url})
     },
 
@@ -204,12 +204,12 @@ export default {
     },
 
     sidebar_toggle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.sidebar_p = !this.sidebar_p
     },
 
     back_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.back_to_or({name: "swars-search"})
     },
 
@@ -287,7 +287,7 @@ export default {
 
     other_app_click_handle(app_name) {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.app_log(app_name)
       this.app_log({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
     },

@@ -4,7 +4,7 @@ export const mod_otasuke = {
   methods: {
     // 「？」をクリックしたときの処理
     otasuke_click_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       let info = this.otasuke_current_message_info
       let message = info.message
       if (_.isArray(message)) {

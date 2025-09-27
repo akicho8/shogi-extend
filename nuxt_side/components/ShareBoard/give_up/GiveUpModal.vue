@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     give_up_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
       if (!this.SB.give_up_button_show_p) {
         this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
@@ -35,7 +35,7 @@ export default {
       this.SB.give_up_direct_run_with_valid()
     },
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.give_up_modal_close()
     },
   },

@@ -7,7 +7,7 @@
       component.heading_with_title(
         :is="to_fn ? 'nuxt-link' : 'div'"
         :to="jump_path('win')"
-        @click.native="to_fn && $sound.play_click()"
+        @click.native="to_fn && sfx_play_click()"
         )
         .heading WIN
         .title {{win}}
@@ -31,7 +31,7 @@
       component.heading_with_title(
         :is="to_fn ? 'nuxt-link' : 'div'"
         :to="jump_path('lose')"
-        @click.native="to_fn && $sound.play_click()"
+        @click.native="to_fn && sfx_play_click()"
         )
         .heading LOSE
         .title {{lose}}

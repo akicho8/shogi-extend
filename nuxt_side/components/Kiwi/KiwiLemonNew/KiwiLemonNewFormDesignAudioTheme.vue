@@ -14,7 +14,7 @@
             template(v-if="e.separator")
               b-dropdown-item(separator)
             template(v-else)
-              b-dropdown-item(:value="e.key" @click="$sound.play_click()")
+              b-dropdown-item(:value="e.key" @click="sfx_play_click()")
                 .media
                   .media-left(v-if="e.sample_source")
                     KiwiLemonNewAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.current_play_instance = e")

@@ -25,7 +25,7 @@ export default {
       if (this.click_fn) {
         this.click_fn(e)
       } else {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.$router.push("/lab/account")
       }
     },

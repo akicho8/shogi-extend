@@ -20,14 +20,14 @@
           GalleryTopPagination(:base="base")
           template(v-for="(_, i) in page_items")
             .column.is_texture(:class="column_size_info.column_class" v-if="column_size_code !== null")
-              a.image.is-block(:href="filename_for(i)" target="_blank" @click="$sound.play_click()")
+              a.image.is-block(:href="filename_for(i)" target="_blank" @click="sfx_play_click()")
                 img(:src="filename_for(i)")
                 .image_number
                   .image_number_body
                     | {{display_number_for(i)}}
           GalleryTopPagination(:base="base")
           .column.is-12.cc_container.is-flex.is-justify-content-center
-            a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="$sound.play_click()")
+            a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sfx_play_click()")
               img(src="by-sa.svg")
 </template>
 
@@ -69,7 +69,7 @@ export default {
     },
     slider_change_handle(code) {
       if (this.pc_standby_ok >= 1) {
-        this.$sound.play_click()
+        this.sfx_play_click()
       }
     },
     title_click_handle() {
@@ -77,7 +77,7 @@ export default {
       this.page_change_handle(null)
     },
     page_change_handle(page) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.router_push({page})
     },
     router_push(params) {

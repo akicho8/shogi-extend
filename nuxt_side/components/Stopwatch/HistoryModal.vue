@@ -32,12 +32,12 @@ export default {
   },
   methods: {
     click_handle(row) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.base.memento_restore(row)
       this.$emit("close")
     },
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
   },

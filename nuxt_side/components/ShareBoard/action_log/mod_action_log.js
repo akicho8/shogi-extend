@@ -74,7 +74,7 @@ export const mod_action_log = {
 
     // 「この局面に移動しますか？」のダイアログ発動
     al_click_handle(action_log) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.modal_card_open({
         component: ActionLogModal,
         props: {

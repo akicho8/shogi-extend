@@ -20,6 +20,7 @@ import { vue_scroll            } from "./vue_scroll.js"
 import { vue_mounted_next      } from "./vue_mounted_next.js"
 import { vue_support_route } from "./vue_support_route.js"
 import { vue_talk              } from "./vue_talk.js"
+import { vue_sfx               } from "./vue_sfx.js"
 
 if (!Vue.__client_js_mixin__) {
   Vue.__client_js_mixin__ = true
@@ -33,6 +34,7 @@ if (!Vue.__client_js_mixin__) {
       vue_mounted_next,
       vue_support_route,
       vue_talk,
+      vue_sfx,
     ],
   })
 }

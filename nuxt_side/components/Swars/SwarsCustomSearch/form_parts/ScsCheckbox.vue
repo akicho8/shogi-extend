@@ -29,7 +29,7 @@ export default {
   methods: {
     checked_handle(av, e) {
       const on = av.includes(e.key)
-      this.$sound.play_toggle(on)
+      this.sfx_play_toggle(on)
       if (on) {
         this.talk(e.yomiage ?? e.name ?? e.key)
 

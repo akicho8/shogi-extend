@@ -15,7 +15,7 @@ client-only
 
         b-field.block(label="2. KENTO側で設定")
           .control
-            b-button.jump_to_kento_setting_handle(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="$sound.play_click()") 移動
+            b-button.jump_to_kento_setting_handle(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="sfx_play_click()") 移動
 
         .image.box.mt-5
           img(src="~/assets/kento_settings_api.png")
@@ -31,11 +31,11 @@ export default {
   name: "SwarsUserKeyKentoApi",
   methods: {
     clipboard_copy_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.clipboard_copy(this.kento_api_url)
     },
     back_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.back_to_or({name: "swars-search", query: {query: this.$route.params.key}})
     },
   },

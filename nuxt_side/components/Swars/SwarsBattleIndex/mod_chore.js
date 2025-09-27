@@ -25,7 +25,7 @@ export const mod_chore = {
 
     goto_other_page(e, func) {
       if (this.xi && Gs.present_p(this.xi.current_swars_user_key)) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         const url = this.$router.resolve(func()).href
         if (this.keyboard_meta_p(e)) {
           this.other_window_open(url)
@@ -40,7 +40,7 @@ export const mod_chore = {
 
     show_url_all_open_handle() {
       this.sidebar_close()
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.xi && Gs.present_p(this.xi.records)) {
         this.xi.records.forEach(row => {
           this.other_window_open(this.show_url(row))
@@ -71,7 +71,7 @@ export const mod_chore = {
         format: "kif",
         ...options,
       }
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.kif_clipboard_copy_from_url(`${row.show_path}.${options.format}`)
     },
 
@@ -86,7 +86,7 @@ export const mod_chore = {
     },
 
     kifu_save_handle(row) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     },
 
@@ -103,7 +103,7 @@ export const mod_chore = {
 
     home_bookmark_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
         message: `
@@ -113,14 +113,14 @@ export const mod_chore = {
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',
-        onConfirm: () => this.$sound.play_click(),
-        onCancel:  () => this.$sound.play_click(),
+        onConfirm: () => this.sfx_play_click(),
+        onCancel:  () => this.sfx_play_click(),
       })
     },
 
     external_app_handle(info) {
       if (this.xi.current_swars_user_key) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         MyLocalStorage.set("external_app_setup", true)
         this.$router.push({
           name: 'swars-users-key-direct-open-external_app_key',

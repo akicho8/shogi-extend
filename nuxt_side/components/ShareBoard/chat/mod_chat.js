@@ -25,7 +25,7 @@ export const mod_chat = {
     chat_modal_shortcut_handle() {
       if (this.chat_modal_instance == null) {
         this.sidebar_p = false
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.chat_modal_open()
         return true
         // } else {
@@ -38,7 +38,7 @@ export const mod_chat = {
         this.toast_ok("ENTER キーで開けれるよ")
       }
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.chat_modal_open()
     },
 
@@ -47,7 +47,7 @@ export const mod_chat = {
         this.toast_ok("ENTER キーで閉じれるよ")
       }
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.chat_modal_close()
     },
 
@@ -56,7 +56,7 @@ export const mod_chat = {
       this.chat_modal_instance = this.modal_card_open({
         component: ChatModal,
         onCancel: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.chat_modal_close()
         },
       })
@@ -95,7 +95,7 @@ export const mod_chat = {
       const message_record = MessageRecord.create(params)
       this.ml_push_record(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
-        this.$sound.play("se_chat_message_receive")                           // 「パッ」
+        this.sfx_play("se_chat_message_receive")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
         if (message_record.content_valid_p) {               // 荒らし判定されていなければ
           this.sb_talk(message_record.content)              // しゃべる

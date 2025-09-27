@@ -25,14 +25,14 @@
 
     .media
       .media-left
-        nuxt-link.image.is_avatar_image(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="$sound.play_click()")
+        nuxt-link.image.is_avatar_image(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sfx_play_click()")
           img.is-rounded(:src="base.banana.user.avatar_path" :alt="base.banana.user.name")
 
       .media-content
         .title.is_line_break_on.mb-0.is-5 {{base.banana.title}}
         .nav_line
           .nav_line_left.is_line_break_on.has-text-grey
-            nuxt-link(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="$sound.play_click()")
+            nuxt-link(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sfx_play_click()")
               | {{base.banana.user.name}}
 
             span.ml-3 {{$time.format_diff(base.banana.updated_at)}}
@@ -47,7 +47,7 @@
           .nav_line_right
             .buttons.mb-0
               b-button.mb-0.switch_handle(icon-left="hand-pointing-up" @click="base.switch_handle")
-              b-button.mb-0(type="is-primary" @click.native="$sound.play_click()" tag="nuxt-link" :to="{name: 'video-studio-banana_key-edit', params: {banana_key: base.banana.key}}" v-if="base.banana && base.owner_p") 編集
+              b-button.mb-0(type="is-primary" @click.native="sfx_play_click()" tag="nuxt-link" :to="{name: 'video-studio-banana_key-edit', params: {banana_key: base.banana.key}}" v-if="base.banana && base.owner_p") 編集
 
         KiwiTagList.mt-2(:tag_list="base.banana.tag_list" :tag_click_handle="base.tag_click_handle")
         .content.mt-1(v-if="base.banana.description")

@@ -4,7 +4,7 @@ import QueryString from "query-string"
 export const mod_tweet = {
   methods: {
     tweet_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.tweet_window_popup({text: this.tweet_body})
     },
   },

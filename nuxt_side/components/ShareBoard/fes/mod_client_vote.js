@@ -60,7 +60,7 @@ export const mod_client_vote = {
 
     // お題に投票する
     client_vote_modal_handle() {
-      this.$sound.play("se_deden")
+      this.sfx_play("se_deden")
       Gs.delay_block(0.6, () => this.sb_talk(this.received_odai.subject))
       this.modal_card_open({
         component: ClientVoteModal,
@@ -76,7 +76,7 @@ export const mod_client_vote = {
       this.ac_room_perform("vote_select_share", params) // --> app/channels/share_board/room_channel.rb
     },
     vote_select_share_broadcasted(params) {
-      this.$sound.play("se_pipopipo")
+      this.sfx_play("se_pipopipo")
       this.toast_ok(`${this.user_call_name(params.from_user_name)}が投票しました`)
       this.al_add({...params, label: "投票完了"})
       this.voted_result = this.voted_result.merge({[params.from_user_name]: params.voted_latest_index})

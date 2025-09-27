@@ -7,7 +7,7 @@ export const mod_handle_name = {
     // ハンドルネーム入力
     handle_name_modal_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       if (this.order_enable_p) {
         this.handle_name_alert()

@@ -9,7 +9,7 @@
     //-     b-taglist.fps_values
     //-       template(v-for="fps in [60, 30, 20, 15]")
     //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
-    //-   b-numberinput(key="numberinput-page_duration" v-model="base.page_duration" :min="base.page_duration_step" :max="3" :step="base.page_duration_step" exponential @input="$sound.play_click()")
+    //-   b-numberinput(key="numberinput-page_duration" v-model="base.page_duration" :min="base.page_duration_step" :max="3" :step="base.page_duration_step" exponential @input="sfx_play_click()")
 
     b-field(:message="base.page_duration_message")
       template(#label)
@@ -64,7 +64,7 @@
   //-       template(v-else)
   //-         | 隠す
   //- b-field.field_block(label="FPS")
-  //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="$sound.play_click()")
+  //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sfx_play_click()")
   //- b-field.field_block(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
 

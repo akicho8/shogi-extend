@@ -29,12 +29,12 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     submit_handle() {
       if (this.new_page_duration) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.base.page_duration = this.new_page_duration
         this.$emit("close")
       }

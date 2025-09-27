@@ -20,7 +20,7 @@ export const mod_room_setup_modal = {
     rsm_open_handle() {
       if (this.rsm_instance == null) {
         this.sidebar_p = false
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.rsm_open()
       }
     },
@@ -28,7 +28,7 @@ export const mod_room_setup_modal = {
     rsm_close_handle() {
       if (this.rsm_instance) {
         this.sidebar_p = false
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.rsm_close()
       }
     },
@@ -41,7 +41,7 @@ export const mod_room_setup_modal = {
         this.rsm_instance = this.modal_card_open({
           component: RoomSetupModal,
           onCancel: () => {
-            this.$sound.play_click()
+            this.sfx_play_click()
             this.rsm_close()
           },
         })
@@ -57,7 +57,7 @@ export const mod_room_setup_modal = {
     },
 
     rsm_leave_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.ac_room) {
         this.room_destroy()
       } else {
@@ -66,7 +66,7 @@ export const mod_room_setup_modal = {
     },
 
     rsm_entry_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       this.new_room_key = _.trim(this.new_room_key)
       this.new_user_name = HandleNameNormalizer.normalize(this.new_user_name)

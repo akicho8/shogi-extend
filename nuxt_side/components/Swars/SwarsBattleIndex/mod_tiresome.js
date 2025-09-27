@@ -61,10 +61,10 @@ export const mod_tiresome = {
     },
 
     tiresome_alert_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       this.$gs.delay_block(1, () => {
-        this.$sound.stop_all()
+        this.sfx_stop_all()
         this.talk("ところで毎回ウォーズID入力するの面倒じゃない？")
       })
 
@@ -83,12 +83,12 @@ export const mod_tiresome = {
         confirmText: "やってみる",
         cancelText: "絶対やらない",
         onConfirm: () => {
-          this.$sound.play("o")
+          this.sfx_play("o")
           this.tiresome_modal_selected = "yes"
           this.app_log({emoji: ":CHECK:", subject: subject, body: `[${this.xi.current_swars_user_key}] やってみる`})
         },
         onCancel: () => {
-          this.$sound.play("x")
+          this.sfx_play("x")
           this.tiresome_modal_selected = "no"
           this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 絶対やらない`})
           this.swars_search_default_key_set()

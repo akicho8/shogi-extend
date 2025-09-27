@@ -25,15 +25,15 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     test_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.tl_test()
     },
     clear_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.tl_clear()
     },
   },

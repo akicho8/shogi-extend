@@ -75,7 +75,7 @@ export const mod_think_mark = {
       } else {
         se_key = "se_think_mark_at_cell_off"
       }
-      this.$sound.play(se_key)
+      this.sfx_play(se_key)
     },
 
     //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
@@ -142,7 +142,7 @@ export const mod_think_mark = {
       } else {
         this.think_mark_mode_p = true
       }
-      this.$sound.play_toggle(this.think_mark_mode_p)
+      this.sfx_play_toggle(this.think_mark_mode_p)
       return true
     },
 

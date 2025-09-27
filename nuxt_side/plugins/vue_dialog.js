@@ -18,8 +18,8 @@ export const vue_dialog = {
         type: `is-${options.type}`,
         // hasIcon: true,
         message: message,
-        onConfirm: () => { this.$sound.play_click() },
-        onCancel:  () => { this.$sound.play_click() },
+        onConfirm: () => { this.sfx_play_click() },
+        onCancel:  () => { this.sfx_play_click() },
       })
     },
 
@@ -93,7 +93,7 @@ export const vue_dialog = {
         if (bs_error.board) {
           message += `<div class="mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
         }
-        this.$sound.play("x")
+        this.sfx_play("x")
         this.error_message_dialog(message)
       }
     },
@@ -149,7 +149,7 @@ export const vue_dialog = {
         scroll: "keep",
         animation: "",
         canCancel: ["outside", "escape"],
-        onCancel: () => this.$sound.play_click(),
+        onCancel: () => this.sfx_play_click(),
         ...params,
       })
     },
@@ -161,10 +161,10 @@ export const vue_dialog = {
         cancelText: "キャンセル",
         animation: "",
         inputAttrs: { type: "text", value: "", required: false },
-        onCancel: () => this.$sound.play_click(),
+        onCancel: () => this.sfx_play_click(),
         onConfirm: value => {
           this.debug_alert(value)
-          this.$sound.play_click()
+          this.sfx_play_click()
         },
         ...params,
       })
@@ -176,8 +176,8 @@ export const vue_dialog = {
         message: "本当によいですか？",
         cancelText: "キャンセル",
         animation: "",
-        onCancel: () => this.$sound.play_click(),
-        onConfirm: () => this.$sound.play_click(),
+        onCancel: () => this.sfx_play_click(),
+        onConfirm: () => this.sfx_play_click(),
         ...params,
       })
     },
@@ -187,8 +187,8 @@ export const vue_dialog = {
         animation: "",
         confirmText: "OK",
         onConfirm: () => {
-          this.$sound.stop_all()
-          this.$sound.play_click()
+          this.sfx_stop_all()
+          this.sfx_play_click()
         },
         ...params,
       })

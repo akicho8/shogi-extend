@@ -20,7 +20,7 @@ export const mod_export = {
     kifu_copy_handle(e) {
       e = this.FormatTypeInfo.fetch(e)
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.general_kifu_copy(this.current_sfen, {
         to_format: e.format_key,
         turn: this.current_turn,

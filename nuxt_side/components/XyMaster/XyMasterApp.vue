@@ -11,7 +11,7 @@
           .buttons.is-centered.mb-0(v-if="is_mode_idol")
             b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
 
-            b-dropdown.is-pulled-left(v-model="rule_key" @click.native="$sound.play_click()")
+            b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sfx_play_click()")
               button.button(slot="trigger")
                 span {{rule_info.name}}
                 b-icon(icon="menu-down")
@@ -52,7 +52,7 @@
           .tweet_box_container.mt-4(v-if="mode === 'is_mode_goal'")
             .box.mb-0
               | {{summary}}
-            TweetButton.mt-3(:body="tweet_body" @after_click="$sound.play_click()")
+            TweetButton.mt-3(:body="tweet_body" @after_click="sfx_play_click()")
 
         XyMasterRanking
 
@@ -252,8 +252,8 @@ export default {
     },
 
     start_handle() {
-      this.$sound.stop_all()
-      this.$sound.play_click()
+      this.sfx_stop_all()
+      this.sfx_play_click()
       this.mode = "is_mode_ready"
       this.init_other_variables()
       this.latest_rule = this.rule_info
@@ -280,12 +280,12 @@ export default {
       this.interval_frame.start()
       this.place_next_next_setup()
       this.place_next_set()
-      this.$sound.play("start")
+      this.sfx_play("start")
       this.goal_check()
     },
 
     stop_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()
@@ -341,7 +341,7 @@ export default {
     input_valid(xy) {
       this.tapped_place = xy
       if (this.active_p(xy)) {
-        this.$sound.play("o")
+        this.sfx_play("o")
         this.o_count++
         this.goal_check()
         if (this.mode === "is_mode_run") {
@@ -349,7 +349,7 @@ export default {
         }
       } else {
         this.x_count++
-        this.$sound.play("x")
+        this.sfx_play("x")
         this.too_many_miss_check()
         if (this.NEXT_IF_X === "true") {
           this.place_next_set()

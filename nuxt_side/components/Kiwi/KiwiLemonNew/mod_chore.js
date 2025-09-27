@@ -3,7 +3,7 @@ import { SafeSfen } from "@/components/models/safe_sfen.js"
 export const mod_chore = {
   methods: {
     any_source_edit_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$buefy.dialog.confirm({
         title: "共有将棋盤で編集しますか？",
         message: "あっちのメニューの「動画変換」で戻ってこれます",
@@ -11,9 +11,9 @@ export const mod_chore = {
         confirmText: "編集する",
         // focusOn: "confirm", // confirm or cancel
         animation: "",
-        onCancel: () => this.$sound.play_click(),
+        onCancel: () => this.sfx_play_click(),
         onConfirm: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           const params = { any_source: this.body || "平手" , to_format: "sfen" }
           this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
             this.bs_error_message_dialog(e)

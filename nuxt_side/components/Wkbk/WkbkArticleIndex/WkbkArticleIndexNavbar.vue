@@ -1,13 +1,13 @@
 <template lang="pug">
 MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
-    b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="$sound.play_click()")
+    b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sfx_play_click()")
       b-icon(icon="chevron-left")
     //- NavbarItemHome
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-articles'}") 問題リスト
 
   template(slot="end")
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="$sound.play_click()")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sfx_play_click()")
       b-icon(icon="plus")
 
     //- https://buefy.org/documentation/navbar

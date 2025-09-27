@@ -12,7 +12,7 @@ export const mod_sp = {
 
   methods: {
     // internal_rule_input_handle() {
-    //   this.$sound.play_click()
+    //   this.sfx_play_click()
     // },
 
     // 操作モードで指したときmovesあり棋譜(URLに反映する)
@@ -102,7 +102,7 @@ export const mod_sp = {
       // } else {
       if (this.order_enable_p) {
         this.debug_alert("手番が違うのに操作しようとした")
-        this.$sound.play("se_tebanjanainoni_sawanna")
+        this.sfx_play("se_tebanjanainoni_sawanna")
         const messages = []
         const name = this.current_turn_user_name
         if (Gs.blank_p(name)) {
@@ -134,7 +134,7 @@ export const mod_sp = {
     // 自分が手番だが相手の駒を動かそうとした
     ev_illegal_my_turn_but_oside_click() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
-      this.$sound.play("se_aitenokoma_sawannna")
+      this.sfx_play("se_aitenokoma_sawannna")
       // if (this.development_p) {
       //   this.toast_ok("それは相手の駒です")
       // }

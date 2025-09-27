@@ -21,7 +21,7 @@ export const mod_table = {
   },
   methods: {
     detail_set(enabled) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (enabled) {
         this.detailed_keys = this.bananas.map(e => e.key)
       } else {
@@ -30,7 +30,7 @@ export const mod_table = {
     },
 
     tag_click_handle(tag) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.talk(tag)
       this.router_push({tag})
     },
@@ -43,7 +43,7 @@ export const mod_table = {
     },
 
     sort_handle(sort_column, sort_order) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.router_push({sort_column, sort_order})
     },
 

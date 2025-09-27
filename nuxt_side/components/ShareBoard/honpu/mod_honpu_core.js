@@ -64,7 +64,7 @@ export const mod_honpu_core = {
     honpu_return_click_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る")
       if (this.honpu_main && this.honpu_branch) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.al_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
       }
     },

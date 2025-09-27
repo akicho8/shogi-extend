@@ -85,7 +85,7 @@ export default {
 
   methods: {
     book_save_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")
@@ -107,7 +107,7 @@ export default {
         if (e.book) {
           this.book = new Book(e.book)
 
-          this.$sound.stop_all()
+          this.sfx_stop_all()
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく

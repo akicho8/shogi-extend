@@ -6,7 +6,7 @@
     .panel-block.panel_body.is-justify-content-center
       | {{base.st_summary}}
     .panel-block
-      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.re_ox_tweet_body2" size="" @after_click="$sound.play_click()") ツイート
+      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.re_ox_tweet_body2" size="" @after_click="sfx_play_click()") ツイート
 </template>
 
 <script>

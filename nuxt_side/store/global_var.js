@@ -1,11 +1,12 @@
-// ・合わせて ../plugins/my_common_mixin.js でメソッドを公開する
+// ・合わせて ../components/models/global_var_accessor.js でメソッドを公開する
 // ・グローバル変数の基本的な定義だけにしてクラスのようには書くな
 
-import { VueTalkConfig } from "@/plugins/vue_talk_config.js"
+import { VolumeConfig } from "@/components/models/volume_config.js"
 
 export const state = () => ({
   g_var1: 0,
-  g_talk_volume_scale: VueTalkConfig.VOLUME_SCALE,
+  g_talk_volume_scale: VolumeConfig.default_scale,
+  g_common_volume_scale: VolumeConfig.default_scale,
 })
 
 export const getters = {
@@ -15,14 +16,20 @@ export const getters = {
   g_talk_volume_scale(state) {
     return state.g_talk_volume_scale
   },
+  g_common_volume_scale(state) {
+    return state.g_common_volume_scale
+  },
 }
 
 export const mutations = {
-  g_var1_set(state, payload) {
+  __g_var1_set(state, payload) {
     state.g_var1 = payload
   },
   __g_talk_volume_scale_set(state, payload) {
     state.g_talk_volume_scale = payload
+  },
+  __g_common_volume_scale_set(state, payload) {
+    state.g_common_volume_scale = payload
   },
 }
 

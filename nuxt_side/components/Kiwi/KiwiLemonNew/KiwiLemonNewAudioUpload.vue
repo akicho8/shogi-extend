@@ -35,7 +35,7 @@ export default {
       if (file == null) {
         this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると file が null で呼ばれる")
       } else {
-        this.$sound.play_click()
+        this.sfx_play_click()
         const reader = new FileReader()
         reader.addEventListener("load", () => {
           this.new_file_info = {
@@ -54,7 +54,7 @@ export default {
     },
 
     delete_handle(index) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.new_file_info = null
       this.$emit("update:file_info", this.new_file_info)
       this.toast_ok("削除しました")

@@ -37,7 +37,7 @@ export const mod_badge = {
 
     // 自分のバッジ数を +plus してみんなに伝える(サイドバー用)
     badge_add_to_self_handle(plus) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.badge_add_to_self(plus)
     },
 

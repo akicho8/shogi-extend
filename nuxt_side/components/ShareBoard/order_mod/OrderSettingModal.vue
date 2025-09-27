@@ -99,7 +99,7 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     main_switch_handle(v) {
-      this.$sound.play_toggle(v)
+      this.sfx_play_toggle(v)
       this.SB.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
@@ -114,31 +114,31 @@ export default {
       if (this.SB.os_modal_close_if_not_save_p) {
         this.SB.os_modal_close_confirm({
           onConfirm: () => {
-            this.$sound.play_click()
+            this.sfx_play_click()
             this.SB.os_modal_close()
           },
         })
         return
       }
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.os_modal_close()
     },
 
     test_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.tn_notify()
     },
 
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_v.order_unit.shuffle_all()
       this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_v.order_unit.teams_each_shuffle()
       this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
@@ -152,7 +152,7 @@ export default {
         shakashaka_count: this.$route.query.shakashaka_count,
       })
       const prefix = `振り駒をした結果、${furigoma_pack.message}`
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.SB.new_v.order_unit.first_user(this.SB.start_color)
       Gs.assert(user != null, "user != null")
@@ -164,7 +164,7 @@ export default {
     // 先後入替
     swap_handle() {
       if (this.invalid_case2("先後入替")) { return }
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_v.order_unit.swap_run()
       this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
     },
@@ -173,7 +173,7 @@ export default {
     invalid_case1() {
       const messages = this.SB.new_v.order_unit.error_messages
       if (Gs.present_p(messages)) {
-        this.$sound.play("x")
+        this.sfx_play("x")
         messages.forEach(e => this.toast_warn(e))
         return true
       }
@@ -182,7 +182,7 @@ export default {
     // 偶数人数であること
     invalid_case2(name) {
       if (!this.SB.new_v.order_unit.swap_enable_p) {
-        this.$sound.play("x")
+        this.sfx_play("x")
         this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
       }
@@ -191,7 +191,7 @@ export default {
     // 反映
     apply_handle() {
       if (this.invalid_case1()) { return }
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (!this.SB.new_v.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
         return
@@ -206,33 +206,33 @@ export default {
     },
 
     hint_handle(model) {
-      this.$sound.stop_all()
-      this.$sound.play_click()
+      this.sfx_stop_all()
+      this.sfx_play_click()
       this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
     },
 
     state_toggle_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_v.order_unit.state_toggle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
     odai_maker_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.os_modal_close()
       this.SB.odai_maker_handle()
       this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
     },
 
     voted_result_to_order_apply_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.voted_result_to_order_apply()
       this.SB.al_share({label: "結果反映", message: "投票の結果でチーム分けしました"})
     },
 
     odai_delete_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.odai_delete()
       this.SB.al_share({label: "お題削除", message: "お題を削除しました"})
     },

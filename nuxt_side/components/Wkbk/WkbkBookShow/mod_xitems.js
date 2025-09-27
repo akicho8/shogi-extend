@@ -17,7 +17,7 @@ export const mod_xitems = {
 
   methods: {
     play_start() {
-      this.$sound.play("start")
+      this.sfx_play("start")
       this.app_log({emoji: ":問題集:", subject: "将棋ドリル問題集", body: `[START] ${this.book.title}`})
       this.mode_set("running")
 
@@ -44,12 +44,12 @@ export const mod_xitems = {
     },
 
     skip_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.next_process()
     },
 
     previous_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.next_process(-1)
     },
 
@@ -67,7 +67,7 @@ export const mod_xitems = {
     goal_check() {
       this.$gs.assert(!this.current_xitem)
       this.mode_set("standby")
-      this.$sound.play("win")
+      this.sfx_play("win")
       this.re_ox_stop()
     },
 
@@ -94,7 +94,7 @@ export const mod_xitems = {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
         } else {
           this.toast_ok("正解")
-          this.$sound.play("o")
+          this.sfx_play("o")
         }
       }
     },
@@ -112,7 +112,7 @@ export const mod_xitems = {
     },
 
     description_open_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.description_open_p = !this.description_open_p
     },
 

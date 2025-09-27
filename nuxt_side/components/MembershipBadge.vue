@@ -15,7 +15,7 @@ export default {
     click_handle() {
       const message = this.params.message
       if (message) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.toast_ok(message)
       }
     },

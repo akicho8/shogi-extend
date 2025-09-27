@@ -6,11 +6,11 @@ export const mod_link_to = {
   methods: {
     // 未使用
     show_handle(row) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$router.push(this.show_route_params(row))
     },
 
-    // nuxt-link(:to="APP.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
+    // nuxt-link(:to="APP.show_route_params(row)" @click.native="sfx_play_click()") \#{{row.id}}
     // として使う用だが、Vue や Nuxt を新しくした結果 @click.native が反応しなくなってしまった
     show_route_params(row) {
       const params = {}

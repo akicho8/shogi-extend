@@ -94,10 +94,10 @@ export default {
     this.clock_box = new ClockBox({
       initial_turn: 0,
       switched_fn: () => {
-        this.$sound.play_click()
+        this.sfx_play_click()
       },
       time_zero_fn: e => {
-        this.$sound.play("lose")
+        this.sfx_play("lose")
         this.say("時間切れ")
         this.$buefy.dialog.alert({
           message: "時間切れ",
@@ -151,15 +151,15 @@ export default {
   },
   methods: {
     resume_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.clock_box.resume_handle()
       this.behavior_notify("resume")
-      this.$sound.stop_all()
+      this.sfx_stop_all()
     },
     pause_handle() {
       if (this.clock_box.pause_or_play_p) {
-        this.$sound.stop_all()
-        this.$sound.play_click()
+        this.sfx_stop_all()
+        this.sfx_play_click()
         this.clock_box.pause_handle()
         this.behavior_notify("pause")
 
@@ -182,8 +182,8 @@ export default {
     stop_handle() {
       if (this.clock_box.pause_or_play_p) {
         this.full_screen.off()
-        this.$sound.stop_all()
-        this.$sound.play_click()
+        this.sfx_stop_all()
+        this.sfx_play_click()
         this.clock_box.stop_handle()
         this.behavior_notify("stop")
       }
@@ -192,7 +192,7 @@ export default {
       if (this.clock_box.pause_or_play_p) {
       } else {
         this.full_screen.on()
-        this.$sound.play("start")
+        this.sfx_play("start")
         this.app_log("対局時計●")
         this.say(this.play_talk_message())
         this.clock_box.play_handle()
@@ -223,7 +223,7 @@ export default {
       e.tap_on()
     },
     copy_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.say("左の設定を右にコピーしますか？")
 
       this.$buefy.dialog.confirm({
@@ -235,20 +235,20 @@ export default {
         hasIcon: false,
         trapFocus: true,
         onConfirm: () => {
-          this.$sound.stop_all()
-          this.$sound.play_click()
+          this.sfx_stop_all()
+          this.sfx_play_click()
           this.clock_box.copy_1p_to_2p()
           this.say("コピーしました")
         },
         onCancel: () => {
-          this.$sound.stop_all()
-          this.$sound.play_click()
+          this.sfx_stop_all()
+          this.sfx_play_click()
         },
       })
     },
     keyboard_handle() {
-      this.$sound.play_click()
-      this.$sound.stop_all()
+      this.sfx_play_click()
+      this.sfx_stop_all()
       const dialog = this.$buefy.dialog.alert({
         title: "ショートカットキー",
         message: `
@@ -259,20 +259,20 @@ export default {
         canCancel: ["outside", "escape"],
         trapFocus: true,
         onConfirm: () => {
-          this.$sound.stop_all()
-          this.$sound.play_click()
+          this.sfx_stop_all()
+          this.sfx_play_click()
         },
         onCancel: () => {
-          this.$sound.stop_all()
-          this.$sound.play_click()
+          this.sfx_stop_all()
+          this.sfx_play_click()
         },
       })
     },
     dropdown_active_change(on) {
       if (on) {
-        this.$sound.play_click()
+        this.sfx_play_click()
       } else {
-        this.$sound.play_click()
+        this.sfx_play_click()
       }
     },
     rule_set(params) {

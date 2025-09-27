@@ -37,21 +37,21 @@ export default {
   ],
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     click_handle(e) {
       if (this.base.color_theme_key === e.key) {
       } else {
       }
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.base.color_theme_key = e.key
       this.talk(this.base.color_theme_info.introduction)
       this.$emit("close")
     },
     slider_change_handle(code) {
       if (this.mounted_next_p) {
-        this.$sound.play_click()
+        this.sfx_play_click()
       }
     },
   },

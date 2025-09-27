@@ -111,7 +111,7 @@ export const mod_clock_box = {
         time_zero_fn: e => this.cc_timeout_trigger(),
         pause_tick_fn: this.cc_pause_tick_callback,
         switched_fn: () => {
-          // this.$sound.play_click()
+          // this.sfx_play_click()
         },
         second_decriment_fn: (single_clock, key, sec, mm, ss) => {
           if (1 <= mm && mm <= 10) {
@@ -141,7 +141,7 @@ export const mod_clock_box = {
 
     cc_pause_tick_callback(mm, ss) {
       if (ss === 0 && mm >= 1) {
-        this.$sound.play("se_notification")
+        this.sfx_play("se_notification")
         this.toast_ok(`${mm}分経過`)
       }
     },
@@ -237,9 +237,9 @@ export const mod_clock_box = {
     },
     cc_dropdown_active_change(on) {
       if (on) {
-        this.$sound.play_click()
+        this.sfx_play_click()
       } else {
-        this.$sound.play_click()
+        this.sfx_play_click()
       }
     },
 
@@ -398,7 +398,7 @@ export const mod_clock_box = {
           // this.tn_notify()                 // 牛
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
-        this.$sound.play("se_niwatori")
+        this.sfx_play("se_niwatori")
       }
     },
 
@@ -436,7 +436,7 @@ export const mod_clock_box = {
     },
 
     cc_play_confirim(params = {}) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.sb_talk(`ちょっと待って。途中の局面になっています。初期配置に戻してから開始しますか？`)
       this.dialog_confirm({
         title: "ちょっと待って",

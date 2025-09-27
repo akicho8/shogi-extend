@@ -43,7 +43,7 @@ export default {
       this.SB.general_setting_modal_close_handle()
     },
     input_handle(index) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.sb_talk(this.SB.SettingCategoryInfo.fetch(index).name)
     },
   },

@@ -24,7 +24,7 @@
     //-   | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BananaIndexColumnInfo.fetch('title').name" sortable width="" cell-class="title_column")
-      nuxt-link.is_line_break_on(:to="{name: 'video-watch-banana_key', params: {banana_key: row.key}}" @click.native="$sound.play_click()")
+      nuxt-link.is_line_break_on(:to="{name: 'video-watch-banana_key', params: {banana_key: row.key}}" @click.native="sfx_play_click()")
         | {{row.title}}
         //- .image.avatar_image.is-inline-block
         //-   img(:src="row.avatar_path" :alt="row.title")
@@ -33,7 +33,7 @@
         //- | {{$gs.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BananaIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
-    //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="$sound.play_click()")
+    //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sfx_play_click()")
     //-     KiwiUserName(:user="row.user")
 
     b-table-column(v-slot="{row}" custom-key="access_logs_count" field="access_logs_count" :label="base.BananaIndexColumnInfo.fetch('access_logs_count').name" sortable numeric) {{row.access_logs_count}}
@@ -50,23 +50,23 @@
       //- nuxt-link(:to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}")
       //-   //- b-icon(icon="edit")
       //-   | 編集
-      b-button(tag="nuxt-link" :to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" size="is-small" @click.native="$sound.play_click()") 編集
+      b-button(tag="nuxt-link" :to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" size="is-small" @click.native="sfx_play_click()") 編集
 
       //- nuxt-link(:to="{name: 'video-articles-new', query: {banana_key: row.key}}" v-if="false")
       //-   b-icon(icon="plus")
 
-      //- b-dropdown(append-to-body position="is-bottom-left" @active-change="$sound.play_click()")
+      //- b-dropdown(append-to-body position="is-bottom-left" @active-change="sfx_play_click()")
       //-   b-dropdown-item(has-link)
-      //-     nuxt-link(:to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" @click.native="$sound.play_click()") 編集
+      //-     nuxt-link(:to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" @click.native="sfx_play_click()") 編集
       //-
       //-   a(slot="trigger")
       //-     b-icon(icon="dots-horizontal")
       //-
       //-   template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
       //-     b-dropdown-item(has-link)
-      //-       nuxt-link(:to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" @click.native="$sound.play_click()") 編集
+      //-       nuxt-link(:to="{name: 'video-studio-banana_key-edit', params: {banana_key: row.key}}" @click.native="sfx_play_click()") 編集
       //-     //- b-dropdown-item(has-link)
-      //-     //-   nuxt-link(:to="{name: 'video-articles-new', query: {banana_key: row.key}}"        @click.native="$sound.play_click()") 問題追加
+      //-     //-   nuxt-link(:to="{name: 'video-articles-new', query: {banana_key: row.key}}"        @click.native="sfx_play_click()") 問題追加
       //-     //- b-dropdown-item(separator)
       //-     //- b-dropdown-item(has-link)
       //-     //-   a(@click="base.tweet_handle(row)") ツイート

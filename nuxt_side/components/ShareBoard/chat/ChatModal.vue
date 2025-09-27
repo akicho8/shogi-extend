@@ -16,7 +16,7 @@
       b-button.mh_head_observe( size="is-small" @click="SB.mh_head_observe" ) 監視
       b-button.ml_test(         size="is-small" @click="SB.ml_test"         ) 追加
     b-field(v-if="SB.message_scope_dropdown_show_p")
-      b-dropdown(animation="" position="is-bottom-left" v-model="SB.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
+      b-dropdown(animation="" position="is-bottom-left" v-model="SB.message_scope_key" @active-change="e => e && sfx_play_click()" @change="change_handle")
         template(#trigger)
           b-button.message_scope_dropdown(icon-right="dots-vertical" size="is-small")
         template(v-for="e in SB.MessageScopeInfo.values")
@@ -67,7 +67,7 @@ export default {
       this.SB.chat_modal_close_handle(e)
     },
     change_handle(key) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.sb_talk(this.SB.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
@@ -88,13 +88,13 @@ export default {
           this.SB.chat_modal_close()
           return
         } else {
-          this.$sound.play("x")
+          this.sfx_play("x")
           this.SB.message_body = ""
           this.input_focus()
           return
         }
       }
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.message_share({content: this.SB.message_body})
       this.SB.message_body = ""
       this.input_focus()

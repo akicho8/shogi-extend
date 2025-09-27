@@ -9,7 +9,7 @@
   b-taglist.mb-1(v-if="available_tag_list_names.length >= 1")
     template(v-for="key in available_tag_list_names")
       template(v-for="name in membership[key]")
-        nuxt-link.tag.is-rounded.is-marginless(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")
+        nuxt-link.tag.is-rounded.is-marginless(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sfx_play_click()")
           | {{name}}
 </template>
 

@@ -10,14 +10,14 @@ export const mod_image_dl = {
   methods: {
     image_dl_modal_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.modal_card_open({
         component: ImageDlModal,
       })
     },
 
     image_size_key_change_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.color_theme_loading_start()
     },
 

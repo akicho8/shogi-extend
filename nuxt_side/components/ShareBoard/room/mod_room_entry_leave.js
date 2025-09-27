@@ -6,7 +6,7 @@ export const mod_room_entry_leave = {
     room_entry_call(params) {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
-      this.$sound.play("se_room_entry")
+      this.sfx_play("se_room_entry")
       Gs.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
 
       Gs.delay_block(2.5, () => {
@@ -29,7 +29,7 @@ export const mod_room_entry_leave = {
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
       if (true) {
-        this.$sound.play("se_room_leave")
+        this.sfx_play("se_room_leave")
         Gs.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
       } else {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`)

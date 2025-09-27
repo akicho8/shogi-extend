@@ -58,7 +58,7 @@ export const mod_resend = {
       }
     },
     rs_modal_open() {
-      this.$sound.play("x")
+      this.sfx_play("x")
       this.rs_failed_notify()
       this.rs_modal_with_timer_close()
       this.rs_modal_instance = this.modal_card_open({

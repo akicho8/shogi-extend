@@ -21,19 +21,17 @@ import { SettingCategoryInfo  } from "./setting_category_info.js"
 export const mod_general_setting = {
   mixins: [general_setting_modal],
   beforeDestroy() {
-    this.$sound.common_volume_scale_reset()
+    this.$sound.g_common_volume_scale_reset()
     this.g_talk_volume_scale_reset()
   },
   watch: {
-    common_volume_scale(v) { this.common_volume_scale_init() },
+    common_volume_scale(v)  { this.g_common_volume_scale = v },
     talk_volume_scale(v)    { this.g_talk_volume_scale = v },
   },
   methods: {
-    common_volume_scale_init() { this.$sound.common_volume_scale_set(this.common_volume_scale) },
-
     // 初期値に戻すボタン
     general_setting_reset_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       let count = 0
       this.SettingCategoryInfo.values.forEach(info => {
         info.list.values.forEach(e => {

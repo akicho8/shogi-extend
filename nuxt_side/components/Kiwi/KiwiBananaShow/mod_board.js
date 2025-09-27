@@ -9,7 +9,7 @@ export const mod_board = {
   },
   methods: {
     switch_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.show_mode === "is_video") {
         if (this.main_video()) {
           this.main_video().pause()

@@ -9,7 +9,7 @@ export const mod_sidebar = {
       this.sidebar_set(!this.sidebar_p)
     },
     sidebar_set(v) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.sidebar_p = v
       this.interval_counter_pause(this.sidebar_p)
     },

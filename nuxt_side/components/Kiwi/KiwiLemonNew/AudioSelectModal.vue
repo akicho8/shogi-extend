@@ -54,7 +54,7 @@ export default {
 
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     click_handle(e) {
@@ -65,29 +65,29 @@ export default {
         if (this.new_key === e.key) {
           // this.submit_handle()
         } else {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.new_key = e.key
         }
       }
     },
     submit_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.base.audio_theme_key = this.new_key
       this.talk(this.base.audio_theme_info.introduction)
       this.$emit("close")
     },
     jump_to_source_url_handle(e) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$buefy.dialog.confirm({
         message: `本家に飛びますか？`,
         cancelText: "キャンセル",
         confirmText: `飛ぶ`,
         focusOn: "confirm", // confirm or cancel
         animation: "",
-        onCancel: () => this.$sound.play_click(),
+        onCancel: () => this.sfx_play_click(),
         onConfirm: () => {
           this.base.current_play_instance_stop() // 本家でBGMを聞くのだろうからこちらは消音
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.other_window_open(e.source_url)
         },
       })

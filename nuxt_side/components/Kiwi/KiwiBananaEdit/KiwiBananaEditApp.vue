@@ -81,7 +81,7 @@ export default {
 
   methods: {
     banana_save_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")
@@ -104,7 +104,7 @@ export default {
         if (e.banana) {
           this.banana = new Banana(this, e.banana)
 
-          this.$sound.stop_all()
+          this.sfx_stop_all()
           // this.toast_ok(`${before_save_button_name}しました`)
           this.toast_ok(e.message)
 

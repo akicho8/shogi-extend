@@ -134,8 +134,8 @@ export default {
     },
 
     start_handle() {
-      this.$sound.stop_all()
-      this.$sound.play_click()
+      this.sfx_stop_all()
+      this.sfx_play_click()
       this.init_other_variables()
       this.sp_object().api_viewpoint_set(this.rule_info.viewpoint)
       this.sfen_clear_or_set()
@@ -152,11 +152,11 @@ export default {
       this.mode = "is_mode_run"
       this.place_next_next_setup()
       this.place_next_set()
-      this.$sound.play("start")
+      this.sfx_play("start")
     },
 
     stop_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.mode = "is_mode_stop"
       this.timer_stop()
       // this.scroll_set(true)
@@ -169,10 +169,10 @@ export default {
     input_valid(xy) {
       this.tapped_place = xy
       if (this.active_p(xy)) {
-        this.$sound.play("o")
+        this.sfx_play("o")
         this.place_next_set()
       } else {
-        this.$sound.play("x")
+        this.sfx_play("x")
       }
     },
 

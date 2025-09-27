@@ -8,7 +8,7 @@
             component.box_title(
               :is="row.with_search.params ? 'nuxt-link' : 'div'"
               :to="row.with_search.params && TheApp.search_path(row.with_search.params)"
-              @click.native="row.with_search.params && $sound.play_click()"
+              @click.native="row.with_search.params && sfx_play_click()"
               )
               | {{row.name}}
         .columns.is-gapless.is-centered
@@ -36,7 +36,7 @@ export default {
   methods: {
     pie_click_handle(row, name) {
       if (row.with_search.key) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         const params = {[row.with_search.key]: name}
         const path = this.TheApp.search_path({...row.with_search.params, ...params})
         this.$router.push(path)

@@ -7,7 +7,7 @@
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
-    @choose="() => $sound.play_click()"
+    @choose="() => sfx_play_click()"
     @start="start_handle"
     @end="end_handle"
     draggable=".draggable_item"
@@ -53,7 +53,7 @@ export default {
       this.SB.new_v.os_dnd_count += 1
     },
     end_handle() {
-      this.$sound.play("se_transition_up")
+      this.sfx_play("se_transition_up")
       this.SB.new_v.os_dnd_count -= 1
       this.SB.new_v.order_unit.cache_clear()
     },

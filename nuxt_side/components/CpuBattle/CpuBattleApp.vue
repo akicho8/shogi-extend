@@ -267,7 +267,7 @@ export default {
     start_handle() {
       this.app_log("CPU対戦●")
 
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       this.sp_body_set()
 
@@ -422,7 +422,7 @@ export default {
 
     judge_dialog_display(data) {
       if (data["judge_key"] === "win") {
-        this.$sound.play("win")
+        this.sfx_play("win")
         this.talk(data["message"])
         this.easy_dialog({
           title: "勝利",
@@ -434,7 +434,7 @@ export default {
         })
       }
       if (data["judge_key"] === "lose") {
-        this.$sound.play("lose")
+        this.sfx_play("lose")
         if (data["irregular"]) {
           this.talk("反則負けです")
           this.easy_dialog({

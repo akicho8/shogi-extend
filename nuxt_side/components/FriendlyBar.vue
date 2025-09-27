@@ -222,7 +222,7 @@ export default {
   },
   methods: {
     zoom_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.bar_preset_key = this.BarPresetInfo.fetch(this.$gs.imodulo(this.bar_preset_info.code + 1, this.BarPresetInfo.values.length)).key
       // this._chart_config.options.aspectRatio = this.bar_preset_info.value
       // this.chart_create()

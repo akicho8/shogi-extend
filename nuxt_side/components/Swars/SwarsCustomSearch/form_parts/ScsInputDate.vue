@@ -9,8 +9,8 @@ b-field.field_block.ScsInputDate(custom-class="is-small")
     :icon-right="$gs.present_p(TheApp.battled_at_range) ? 'close-circle' : ''"
     icon-right-clickable
     @icon-right-click.stop="clear_handle"
-    @range-start="$sound.play_click()"
-    @range-end="$sound.play_click()"
+    @range-start="sfx_play_click()"
+    @range-end="sfx_play_click()"
     range
     trap-focus
     :mobile-native="false"
@@ -31,7 +31,7 @@ export default {
   ],
   methods: {
     clear_handle() {
-      this.$sound.play_toggle(false)
+      this.sfx_play_toggle(false)
       this.TheApp.battled_at_range = []
     },
   },

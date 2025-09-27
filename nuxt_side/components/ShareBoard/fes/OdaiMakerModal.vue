@@ -47,11 +47,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     submit_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (VALIDATION_ON) {
         if (this.SB.master_odai.invalid_p) {
           this.toast_warn("ぜんぶ入力してください")

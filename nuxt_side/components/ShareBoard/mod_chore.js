@@ -48,13 +48,13 @@ export const mod_chore = {
     // タイトル編集
     title_edit_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.dialog_prompt({
         title: "タイトル",
         confirmText: "更新",
         inputAttrs: { type: "text", value: this.current_title, required: false },
         onConfirm: value => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.current_title_set(value)
         },
       })
@@ -74,7 +74,7 @@ export const mod_chore = {
 
     // ホームアイコンを押してトップに戻る
     exit_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.exit_warning_p) {
         this.run_or_room_out_confirm(() => this.room_destroy())
         return
@@ -88,7 +88,7 @@ export const mod_chore = {
 
     // 外に出るときはこれをかます
     run_or_room_out_confirm(block = () => {}) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.exit_warning_p) {
         this.room_out_confirm_dialog(block)
         return
@@ -105,11 +105,11 @@ export const mod_chore = {
         confirmText: "退室する",
         focusOn: "cancel",
         onCancel: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.ac_log({subject: "退室", body: "キャンセル"})
         },
         onConfirm: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.ac_log({subject: "退室", body: "実行"})
           block()
         },
@@ -125,10 +125,10 @@ export const mod_chore = {
         confirmText: "終了する",
         focusOn: "cancel",
         onCancel: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
         },
         onConfirm: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           block()
         },
       })

@@ -10,7 +10,7 @@
 
   .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.books")
     //- https://bulma.io/documentation/components/card/
-    nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="$sound.play_click()")
+    nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="sfx_play_click()")
       .card-image
         figure.image
           img(:src="e.avatar_path" :alt="e.title")

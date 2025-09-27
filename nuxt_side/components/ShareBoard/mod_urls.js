@@ -20,20 +20,20 @@ export const mod_urls = {
       Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
       if (Gs.blank_p(this.room_key)) {
         // ここは通らないはず
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.toast_warn("まだ合言葉を設定してません")
         return
       }
 
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       return this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
     current_url_copy_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
     },
 
@@ -43,7 +43,7 @@ export const mod_urls = {
     //
     //  async current_short_url_copy_handle() {
     //    if (false) {
-    //      this.$sound.play_click()
+    //      this.sfx_play_click()
     //      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
     //      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
     //        this.sidebar_p = false
@@ -52,7 +52,7 @@ export const mod_urls = {
     //  }
     //
     async current_short_url_copy_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       const key = Gs.str_to_md5(this.current_url)
 
@@ -79,7 +79,7 @@ export const mod_urls = {
 
     other_app_click_handle(app_name) {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.app_log({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 
       this.al_share({

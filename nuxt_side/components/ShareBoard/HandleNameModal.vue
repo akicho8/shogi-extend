@@ -31,11 +31,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     save_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.new_name = HandleNameNormalizer.normalize(this.new_name)
       if (this.SB.handle_name_invalid_then_toast_warn(this.new_name)) {
         return

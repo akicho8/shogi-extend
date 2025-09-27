@@ -86,8 +86,8 @@ export const mod_clock_box_timeout = {
       Gs.assert(Gs.present_p(this.clock_box), "Gs.present_p(this.clock_box)")
 
       this.tl_alert("時間切れモーダル起動完了")
-      this.$sound.stop_all()
-      this.$sound.play("lose")         // ちーん
+      this.sfx_stop_all()
+      this.sfx_play("lose")         // ちーん
 
       this.cc_timeout_modal_close()
       this.cc_timeout_modal_instance = this.modal_card_open({
@@ -96,7 +96,7 @@ export const mod_clock_box_timeout = {
           timeout_key: timeout_key,
         },
         onCancel: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.cc_timeout_modal_close()
         },
       })

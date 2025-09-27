@@ -9,10 +9,10 @@ export const mod_columns = {
     column_toggle_handle(info) {
       this.$set(this.visible_hash, info.key, !this.visible_hash[info.key])
       if (this.visible_hash[info.key]) {
-        this.$sound.play_toggle(true)
+        this.sfx_play_toggle(true)
         this.talk(info.name)
       } else {
-        this.$sound.play_toggle(false)
+        this.sfx_play_toggle(false)
       }
     },
 

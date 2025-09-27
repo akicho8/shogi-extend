@@ -4,7 +4,7 @@
     .box
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.box_head.double_column
-          nuxt-link.box_title(:to="TheApp.search_path({'日付': $time.format_ymd(row.battled_on)})" @click.native="$sound.play_click()")
+          nuxt-link.box_title(:to="TheApp.search_path({'日付': $time.format_ymd(row.battled_on)})" @click.native="sfx_play_click()")
             | {{$time.format_md_or_ymd(row.battled_on) + " "}}
             .ml-1(:class="TheApp.battled_on_to_css_class(row)")
               | ({{$time.format_wday_name(row.battled_on)}})

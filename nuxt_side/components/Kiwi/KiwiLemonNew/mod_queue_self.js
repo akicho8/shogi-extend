@@ -16,19 +16,19 @@ export const mod_queue_self = {
       this.progress_info = null
       if (data.noisy) {
         if (false) {
-          this.$sound.stop_all()
+          this.sfx_stop_all()
         }
         if (this.done_record.successed_at) {
           if (false) {
-            this.$sound.play("se_niwatori")
+            this.sfx_play("se_niwatori")
             this.$gs.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
           } else {
-            this.$sound.play("o")
+            this.sfx_play("o")
             this.toast_ok(`${this.done_record.id}番が完了しました`)
           }
         }
         if (this.done_record.errored_at) {
-          this.$sound.play("x")
+          this.sfx_play("x")
           this.toast_ok(`${this.done_record.id}番が失敗しました`)
         }
       }

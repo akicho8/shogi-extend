@@ -1,22 +1,26 @@
-// HOWLER.js
-// https://github.com/goldfire/howler.js#documentation
-
-import { VueTalkConfig } from "@/plugins/vue_talk_config.js"
-import { SoundCrafter } from "@/components/models/sound_crafter.js"
+import { VolumeConfig } from "@/components/models/volume_config.js"
 import { Gs } from "@/components/models/gs.js"
 
+const MESSAGE_LENGTH_MAX = 140  // N文字を越えるとしゃべらない
+
+const HOWL_DEFAULT_OPTIONS = {
+  volume: 0.5,  // 音量
+  rate: 1.5,    // 速度
+}
+
 export const vue_talk = {
-  // ここで定義してしまうと各コンポーネント毎の g_talk_volume_scale が存在してしまいグローバルでなくなる
+  // ここで定義しはいけない
+  // コンポーネント毎の変数ができてしまう
   // data() {
   //   return {
-  //     g_talk_volume_scale: VOLUME_SCALE,
+  //     g_talk_volume_scale: scale,
   //   }
   // },
 
   methods: {
     // 音量スケールを元に戻す
     g_talk_volume_scale_reset() {
-      this.g_talk_volume_scale = VueTalkConfig.VOLUME_SCALE
+      this.g_talk_volume_scale = VolumeConfig.default_scale
     },
 
     // しゃべる
@@ -28,18 +32,12 @@ export const vue_talk = {
         return
       }
       if (options.validate_length !== false) {
-        if (message.length > VueTalkConfig.MESSAGE_LENGTH_MAX) {
+        if (message.length > MESSAGE_LENGTH_MAX) {
           return
         }
       }
       if (this.$route.query.__system_test_now__) {
-        options = {
-          rate: VueTalkConfig.RATE,
-          volume: VueTalkConfig.VOLUME_BASE,
-          volume_scale: this.g_talk_volume_scale,
-          ...options,
-        }
-        SoundCrafter.play_now(options)
+        this.sfx_play_now({...options, rate: 2.0, volume: 0, volume_scale: 0})
         return
       }
       const params = {
@@ -48,28 +46,22 @@ export const vue_talk = {
       }
       return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
         if (e.browser_path == null) {
-          // ExclusiveAccess::TimeoutError のときここにくる
-          return Promise.reject("browser_path is blank")
+          return Promise.reject("browser_path is blank") // ExclusiveAccess::TimeoutError のときここにくる
         }
-        this.talk_play(e, options) // onend にフックできればいいので戻値不要
+        this.__talk_core(e, options) // onend にフックできればいいので戻値不要
       })
     },
 
     // private
 
-    talk_play(e, options = {}) {
-      // https://github.com/goldfire/howler.js#documentation
-      options = {
+    // https://github.com/goldfire/howler.js#documentation
+    __talk_core(e, options = {}) {
+      this.sfx_play_now({
+        ...HOWL_DEFAULT_OPTIONS,
         src: e.browser_path,
-        rate: VueTalkConfig.RATE,
-        volume: VueTalkConfig.VOLUME_BASE,
         volume_scale: this.g_talk_volume_scale,
         ...options,
-      }
-      console.log("talk_play")
-      console.log(options)
-      Gs.assert(options.volume != null, "options.volume != null")
-      SoundCrafter.play_now(options) // 戻値不要
+      })
     },
   },
 }

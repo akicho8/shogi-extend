@@ -1,6 +1,6 @@
 <template lang="pug">
 .XclockAppFooter.is-flex
-  nuxt-link.item(:to="{name: 'index'}" @click.native="$sound.play_click()")
+  nuxt-link.item(:to="{name: 'index'}" @click.native="sfx_play_click()")
     b-icon(icon="home")
 
   b-dropdown.cc_preset_dropdown(position="is-top-left" @active-change="e => base.dropdown_active_change(e)" ref="preset_menu_pull_down")

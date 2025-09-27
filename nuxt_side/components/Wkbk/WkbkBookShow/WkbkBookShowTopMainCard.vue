@@ -10,7 +10,7 @@
     .card-content
       .media
         .media-left
-          nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="$sound.play_click()")
+          nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sfx_play_click()")
             img.is-rounded(:src="base.book.user.avatar_path" :alt="base.book.user.name")
         .media-content
           //- p(v-if="base.book.tag_list.length >= 1")
@@ -19,7 +19,7 @@
           //-       a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
           .title.is-4.mb-1 {{base.book.title}}
           .mt-1.is_line_break_on.has-text-grey.is-size-6
-            nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="$sound.play_click()")
+            nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sfx_play_click()")
               | {{base.book.user.name}}
             span.ml-2 {{$time.format_diff(base.book.updated_at)}}
 
@@ -38,8 +38,8 @@
       //-     | START
       .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white.play_start_handle(@click="base.play_start")
         | START
-      //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="$sound.play_click()" v-if="base.owner_p") 問題追加
-      //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="$sound.play_click()" v-if="base.owner_p") 編集
+      //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sfx_play_click()" v-if="base.owner_p") 問題追加
+      //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sfx_play_click()" v-if="base.owner_p") 編集
 </template>
 
 <script>

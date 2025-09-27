@@ -10,7 +10,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
     //- b-button.is-fullwidth(@click="base.op_revert_handle")
     //-   | 元に戻す
   .panel-block
-    b-numberinput(controls-position="compact" expanded v-model="base.current_index_human" :min="1" :max="base.xitems.length" :exponential="true" @click.native="$sound.play_click()")
+    b-numberinput(controls-position="compact" expanded v-model="base.current_index_human" :min="1" :max="base.xitems.length" :exponential="true" @click.native="sfx_play_click()")
     //- b-button.is-fullwidth(@click="base.op_select_x_handle")
     //-   | 不正解のみ残す
   .panel-block.is-block
@@ -55,7 +55,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
       //- :opened-detailed="base.detailed_keys"
 
       // ↓これを追加するとまとめて開いたときすべての音が鳴ってしまう
-      // :has-detailed-visible="row => $sound.play_click()"
+      // :has-detailed-visible="row => sfx_play_click()"
 
       //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.ArticleIndexColumnInfo.fetch('key').name" sortable numeric :width="1" :visible="!!base.visible_hash.key") {{row.key}}
 
@@ -68,7 +68,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
       //- b-table-column(v-slot="{row}" custom-key="position"         field="position"         label="POS"    :width="1" numeric :visible="development_p") {{row.position + 1}}
 
       //- b-table-column(v-slot="{row}" custom-key="key"              field="key"              label="KEY"     :width="1" numeric)
-      //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="$sound.play_click()")
+      //-   nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_play_click()")
       //-     | {{row.key}}
 
       b-table-column(v-slot="{row}" custom-key="index" field="index" :width="'2.5rem'" label="#" centered cell-class="index_column" sortable)
@@ -85,9 +85,9 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
         //- b-table-column(v-slot="e" custom-key="spent_sec" field="spent_sec" label="時間" numeric)
         //-   | {{e.index}}
         //- | {{journal_time_format(journal_hash[e.index])}}
-        //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="$sound.play_click()")
+        //- nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_play_click()")
 
-        //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="$sound.play_click()")
+        //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_play_click()")
         //-   span.has-text-grey-dark
         //-     | {{row.title}}
         template(v-if="row.article.invisible_p")
@@ -114,7 +114,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
       b-table-column(v-slot="{row}" custom-key="difficulty" field="difficulty" label="難易度" :width="1" centered :visible="false")
         | {{row.article.difficulty}}
 
-      //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="$sound.play_click()")
+      //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_play_click()")
       //- | {{$gs.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
       //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
@@ -139,10 +139,10 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
       //-
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-      //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="$sound.play_click()") 編集
+      //-     nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sfx_play_click()") 編集
 
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1")
-      //-   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="$sound.play_click()" @click.native.prevent)
+      //-   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sfx_play_click()" @click.native.prevent)
       //-     b-icon(icon="dots-vertical" slot="trigger")
           //- b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")
           //-   span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}") {{e.name}}
@@ -152,7 +152,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
           //- b-dropdown-item(@click="base.rule_set({initial_main_min: 60*2, initial_read_sec:0,  initial_extra_min: 60,  every_plus: 0})") 2行 7文字
 
         //- template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")
-        //-   nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="$sound.play_click()") 編集
+        //-   nuxt-link(:to="{name: 'rack-articles-article_key-edit', params: {article_key: row.key}}" @click.native="sfx_play_click()") 編集
 
       //- template(slot="empty" v-if="base.xitems != null")
       //-   section.section.is-unselectable
@@ -186,7 +186,7 @@ export default {
     select_handle(row) {
       this.$gs.assert(row.index != null, "row.index != null")
       if (this.base.current_index != row.index) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.base.current_index = row.index
       }
     },

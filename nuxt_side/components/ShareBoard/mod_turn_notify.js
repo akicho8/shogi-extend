@@ -9,9 +9,9 @@ export const mod_turn_notify = {
       this.tn_counter += 1
       this.debug_alert("(通知効果音)")
       if (false) {
-        this.$sound.play_random(["se_moo1", "se_moo2", "se_moo3"])
+        this.sfx_play_random(["se_moo1", "se_moo2", "se_moo3"])
       } else {
-        this.$sound.play("se_notification")
+        this.sfx_play("se_notification")
       }
       this.beat_call("long")
     },

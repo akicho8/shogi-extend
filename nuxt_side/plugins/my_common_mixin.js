@@ -4,10 +4,11 @@ import Vue from "vue"
 
 import { vue_support          } from "./vue_support.js"
 import { vue_browser_and_form } from "./vue_browser_and_form.js"
-import { vue_my_mobile         } from "./vue_my_mobile.js"
+import { vue_my_mobile        } from "./vue_my_mobile.js"
 import { vue_head             } from "./vue_head.js"
 import { vue_auth             } from "./vue_auth.js"
 import { vue_shared_string    } from "./vue_shared_string.js"
+import { global_var_accessor  } from "@/components/models/global_var_accessor.js"
 
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 
@@ -19,19 +20,10 @@ Vue.mixin({
     vue_head,
     vue_auth,
     vue_shared_string,
+    global_var_accessor,
   ],
   methods: {
     // なぜこんな苦行を強いられるのか謎
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ...mapMutations("global_var", [
-      "g_var1_set", // this.$store.commit("global_var/g_var1_set", value) を this.g_var1_set(value) と書けるようにするため
-    ]),
-
-    ...mapMutations("global_var", [
-      "__g_talk_volume_scale_set", // this.$store.commit("global_var/__g_talk_volume_scale_set", value) を this.__g_talk_volume_scale_set(value) と書けるようにするため
-    ]),
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -45,30 +37,6 @@ Vue.mixin({
     ]),
   },
   computed: {
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // // state を直接公開する
-    // ...mapState("global_var", [
-    //   "g_var1",
-    // ]),
-    //
-    // // getters を公開する
-    // ...mapGetters("global_var", [
-    //   "g_var1_get",
-    // ]),
-    //
-    // // attr_accessor :g_var1 相当
-    // g_var1: {
-    //   get()      { return this.$store.state.global_var.g_var1         },
-    //   set(value) { this.$store.commit("global_var/g_var1_set", value) },
-    // },
-
-    // attr_accessor :g_talk_volume_scale
-    g_talk_volume_scale: {
-      get()      { return this.$store.state.global_var.g_talk_volume_scale },
-      set(value) { this.__g_talk_volume_scale_set(value)                   },
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     ...mapState("user", [

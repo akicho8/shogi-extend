@@ -2,7 +2,7 @@
 MainNavbar.WkbkBookEditNavbar(:spaced="false")
   template(v-if="base.book")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="$sound.play_click()")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'rack-books'}" @click.native="sfx_play_click()")
         b-icon(icon="chevron-left")
     template(slot="start")
       template(v-if="base.book.title")
@@ -14,7 +14,7 @@ MainNavbar.WkbkBookEditNavbar(:spaced="false")
         | {{base.save_button_name}}
 
       //- https://buefy.org/documentation/navbar
-      b-navbar-dropdown(arrowless right @click.native="$sound.play_click()")
+      b-navbar-dropdown(arrowless right @click.native="sfx_play_click()")
         //- https://pictogrammers.github.io/@mdi/font/5.4.55/
         b-icon.px_5_if_tablet(icon="dots-vertical" slot="label")
         b-navbar-item(@click.prevent.stop="base.download_handle(base.book)") ダウンロード

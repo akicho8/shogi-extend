@@ -28,7 +28,7 @@ export const mod_update = {
     },
     reload_modal_handle() {
       this.sb_talk(MESSAGE)
-      this.$sound.stop_all()
+      this.sfx_stop_all()
       this.dialog_alert({
         message: MESSAGE,
         onConfirm: () => this.force_reload(),

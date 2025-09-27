@@ -15,11 +15,11 @@ b-field.field_block.ScsInputNumber(custom-class="is-small")
         v-model="xxx_value"
         :min="min"
         :max="max"
-        @input="$sound.play_click()"
+        @input="sfx_play_click()"
         :disabled="!xxx_enabled"
         expanded
         )
-      b-select(v-model="xxx_compare" @input="$sound.play_click()" :disabled="!xxx_enabled" :size="TheApp.input_element_size")
+      b-select(v-model="xxx_compare" @input="sfx_play_click()" :disabled="!xxx_enabled" :size="TheApp.input_element_size")
         option(v-for="e in TheApp.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     switch_handle(v) {
-      this.$sound.play_toggle(v)
+      this.sfx_play_toggle(v)
       if (v) {
         this.talk(this.label)
       }

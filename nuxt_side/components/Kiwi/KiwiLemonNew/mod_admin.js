@@ -7,17 +7,17 @@ export const mod_admin = {
 
   methods: {
     all_info_reload_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$axios.$post("/api/kiwi/lemons/all_info_reload.json", {}).then(e => this.success_proc(e))
     },
 
     zombie_kill_now_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$axios.$post("/api/kiwi/lemons/zombie_kill_now.json", {}).then(e => this.success_proc(e))
     },
 
     background_job_kick_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$axios.$post("/api/kiwi/lemons/background_job_kick.json", {}).then(e => this.success_proc(e))
     },
 

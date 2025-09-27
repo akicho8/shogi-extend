@@ -8,7 +8,7 @@ export const mod_color_theme = {
   },
   methods: {
     color_theme_key_change_handle(key) {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.color_theme_loading_start()
     },
     color_theme_item_click_handle(e) {

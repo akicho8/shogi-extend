@@ -530,7 +530,7 @@ export default {
 
     // 盤面の手数を変更
     api_board_turn_set(turn) {
-      this.$sound.play_click()
+      this.sfx_play_click()
 
       if (turn > this.TheShow.record.turn_max) {
         this.$emit("update:turn", this.TheShow.record.turn_max)
@@ -568,7 +568,7 @@ export default {
 
     // 拡縮を変更したときに呼ぶ
     zoom_key_change_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.zoom_key_change()
     },
     zoom_key_change() {
@@ -590,7 +590,7 @@ export default {
 
     // チャートの種類を変更したときに呼ぶ
     time_chart_variant_key_change_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.TheShow.time_chart_zoom_key = "zoom_minus"
       this.chart_setup_all()
       this.chart_create()

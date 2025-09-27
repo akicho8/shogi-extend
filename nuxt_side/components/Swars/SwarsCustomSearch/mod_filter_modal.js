@@ -6,7 +6,7 @@ export const mod_filter_modal = {
   },
   methods: {
     filter_modal_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.filter_modal_close()
       this.$filter_modal_instance = this.modal_card_open({
         component: SwarsCustomSearchModal,

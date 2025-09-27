@@ -186,7 +186,7 @@ export default {
 
     scene_key_set(info, e) {
       info = this.SceneInfo.fetch(info)
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.talk(info.name)
       if (this.keyboard_meta_p(e)) {
         this.other_window_open(this.tab_switch_router_url({layout_key: "is_layout_board", scene_key: info.key}))
@@ -200,7 +200,7 @@ export default {
 
     layout_key_set(info, e) {
       info = this.LayoutInfo.fetch(info)
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.talk(info.name)
       if (this.keyboard_meta_p(e)) {
         this.other_window_open(this.tab_switch_router_url({layout_key: info.key}))

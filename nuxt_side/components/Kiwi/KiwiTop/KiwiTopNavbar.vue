@@ -14,7 +14,7 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
       KiwiTopSearch(:base="base")
 
   template(slot="end")
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="$sound.play_click()")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sfx_play_click()")
       b-icon(icon="table-cog")
 
     NavbarItemLogin
@@ -22,7 +22,7 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
 
     NavbarItemSidebarOpen(@click="base.sidebar_toggle" v-if="false")
 
-    //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="$sound.play_click()")
+    //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sfx_play_click()")
     //-   b-icon(icon="cog")
 </template>
 

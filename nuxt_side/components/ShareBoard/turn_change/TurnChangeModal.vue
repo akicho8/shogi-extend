@@ -44,11 +44,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.turn_change_modal_close()
     },
     apply_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
       this.SB.turn_change_modal_close()
     },

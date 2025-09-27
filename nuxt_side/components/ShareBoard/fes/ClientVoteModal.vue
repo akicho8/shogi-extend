@@ -39,20 +39,20 @@ export default {
     // 選択
     select_handle(name, index) {
       if (this.SB.voted_latest_index !== index) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.SB.sb_talk(name)
         this.SB.voted_latest_index = index
       }
     },
     // やめとく
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     // このチームに参加する
     submit_handle() {
       if (this.SB.voted_latest_index == null) {
-        this.$sound.play("se_bubuu")
+        this.sfx_play("se_bubuu")
         this.toast_warn("選択してから投票してください")
         return
       }

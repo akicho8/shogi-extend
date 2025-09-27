@@ -20,7 +20,7 @@ export const mod_search = {
     ////////////////////////////////////////////////////////////////////////////////
 
     name_click_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.search_by_user_key_handle()
     },
 

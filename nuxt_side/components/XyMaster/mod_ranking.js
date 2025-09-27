@@ -46,11 +46,11 @@ export const mod_ranking = {
         onConfirm: value => {
           const message = HandleNameValidator.valid_message(value, {name: "名前"})
           if (message) {
-            this.$sound.play("x")
+            this.sfx_play("x")
             this.toast_warn(message)
             this.name_input_dialog()
           } else {
-            this.$sound.play_click()
+            this.sfx_play_click()
             this.entry_name_set_and_record_post(value)
           }
         },

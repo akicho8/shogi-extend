@@ -34,7 +34,7 @@
       b-icon.is-hidden-touch.drag_icon(icon="drag-horizontal-variant" size="is-small")
 
     b-table-column(v-slot="{row}" custom-key="article.title" field="article.title" sortable label="タイトル" cell-class="is_line_break_on title_column" header-class="title_column")
-      nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.article.key}}" @click.native="$sound.play_click()")
+      nuxt-link.article_title(:to="{name: 'rack-articles-article_key', params: {article_key: row.article.key}}" @click.native="sfx_play_click()")
         | {{row.article.title || "(no title)"}}
         b-icon.ml-1(:icon="FolderInfo.fetch(row.article.folder_key).icon" size="is-small" v-if="row.article.folder_key != 'public'")
 

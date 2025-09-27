@@ -3,7 +3,7 @@ export const mod_chore = {
     badge_click_handle(badge) {
       const message = badge.message
       if (message) {
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.toast_ok(message)
       }
     },

@@ -4,7 +4,7 @@
   b-menu-list(label="EXPORT")
     slot
 
-    b-menu-item.is_active_unset(icon="clipboard-plus-outline" @click="$sound.play_click()")
+    b-menu-item.is_active_unset(icon="clipboard-plus-outline" @click="sfx_play_click()")
       template(slot="label" slot-scope="props")
         | 棋譜コピー
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -12,7 +12,7 @@
         template(v-if="e.clipboard")
           b-menu-item.is_active_unset(:label="e.name_with_turn(base.current_turn)" @click="base.kifu_copy_handle(e)")
 
-    b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="$sound.play_click()")
+    b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sfx_play_click()")
       template(slot="label" slot-scope="props")
         | 棋譜表示
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -20,7 +20,7 @@
         template(v-if="e.show")
           b-menu-item.is_active_unset(:label="e.name_with_turn(base.current_turn)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
 
-    b-menu-item.is_active_unset(icon="download" @click="$sound.play_click()")
+    b-menu-item.is_active_unset(icon="download" @click="sfx_play_click()")
       template(slot="label" slot-scope="props")
         | 棋譜ダウンロード
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")

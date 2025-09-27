@@ -47,7 +47,7 @@ export const mod_xmatch = {
     // 自動マッチングモーダル起動
     xmatch_modal_handle() {
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.xmatch_modal_core()
     },
 
@@ -69,7 +69,7 @@ export const mod_xmatch = {
       this.xmatch_modal_instance = this.modal_card_open({
         component: XmatchModal,
         onCancel: () => {
-          this.$sound.play_click()
+          this.sfx_play_click()
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
           this.SB.rule_unselect("${name}がやめました")
           this.xmatch_modal_close()
@@ -152,17 +152,17 @@ export const mod_xmatch = {
         this.current_xmatch_rule_key = params.xmatch_rule_key
       } else {
         // 他の人から自分
-        this.$sound.play_click()
+        this.sfx_play_click()
         this.tl_alert("他者がエントリー")
-        // this.$sound.play_click()
+        // this.sfx_play_click()
       }
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
-      // this.$sound.play_random(["dog1", "dog2", "dog3"])
+      // this.sfx_play_random(["dog1", "dog2", "dog3"])
       this.beat_call("middle")
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       Gs.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
-      // this.$sound.play_click()
+      // this.sfx_play_click()
       // 合言葉がある場合マッチングが成立している
       if (params.room_key) {
         Gs.assert(params.members, "params.members")
@@ -248,7 +248,7 @@ export const mod_xmatch = {
       if (params.delete_result === "deleted") {
         if (params.message) {
           if (!this.received_from_self(params)) {
-            this.$sound.play_click()
+            this.sfx_play_click()
           }
           this.toast_ok(_.template(params.message)({name: this.user_call_name(params.from_user_name)}))
         } else {
@@ -282,7 +282,7 @@ export const mod_xmatch = {
 
     xmatch_interval_counter_callback() {
       if (this.xmatch_rest_seconds <= 1) { // カウンタをインクリメントする直前でコールバックしているため0じゃなくて1
-        this.$sound.play("x")
+        this.sfx_play("x")
         this.rule_unselect("時間内に集まらなかったので${name}を解除しました")
       }
     },

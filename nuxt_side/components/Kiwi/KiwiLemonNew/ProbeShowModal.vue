@@ -5,7 +5,7 @@
       | ファイル情報
     .delete(@click="close_handle")
   .modal-card-body
-    //- b-tabs(expanded type="is-boxed" v-model="list_tab_index" @input="$sound.play_click()")
+    //- b-tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sfx_play_click()")
     //-   b-tab-item(label="a")
     //-     template(v-if="record.ffprobe_info")
     //-       | {{$gs.pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
@@ -43,16 +43,16 @@ export default {
 
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.$emit("close")
     },
     // test_handle() {
-    //   this.$sound.play_click()
+    //   this.sfx_play_click()
     //   this.base.ml_add_test()
     // },
     // submit_handle() {
     //   if (this.$gs.present_p(this.base.message_body2)) {
-    //     this.$sound.play_click()
+    //     this.sfx_play_click()
     //     this.base.message_share({message: this.base.message_body2})
     //     this.base.message_body2 = ""
     //     this.input_focus()

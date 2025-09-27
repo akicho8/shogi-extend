@@ -11,7 +11,7 @@ export const mod_force_sync = {
     force_sync_modal_handle() {
       if (this.room_is_empty_p()) { return }
       this.sidebar_p = false
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.modal_card_open({
         component: ForceSyncModal,
       })

@@ -6,8 +6,8 @@ b-sidebar.KiwiTopSidebar.is-unselectable(fullheight right overlay v-model="base.
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-new'}" label="動画集作成" @click.native="$sound.play_click()")
-          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video'}" label="動画リスト" @click.native="$sound.play_click()")
+          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-new'}" label="動画集作成" @click.native="sfx_play_click()")
+          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video'}" label="動画リスト" @click.native="sfx_play_click()")
 </template>
 
 <script>

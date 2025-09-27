@@ -8,7 +8,7 @@
     .container.is-fluid
       .buttons
         template(v-for="e of SoundPresetInfo.values")
-          b-button(@click="$sound.play(e.key)") {{e.key}}
+          b-button(@click="sfx_play(e.key)") {{e.key}}
 
       .box
         p Howler
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     row_play(row) {
-      this.$sound.play(row.key, {volume: this.volumes[row.key]})
+      this.sfx_play(row.key, {volume: this.volumes[row.key]})
     },
     all_play() {
       SoundPresetInfo.values.forEach(e => this.row_play(e))

@@ -5,7 +5,7 @@
     .media-content
       .content
         p
-          nuxt-link.user_link.has-text-weight-semibold(:to="{name: 'users-id', params: {id: banana_message.user.id}}" @click.native="$sound.play_click()")
+          nuxt-link.user_link.has-text-weight-semibold(:to="{name: 'users-id', params: {id: banana_message.user.id}}" @click.native="sfx_play_click()")
             | {{banana_message.user.name}}
           br
           template(v-if="banana_message.deleted_at")

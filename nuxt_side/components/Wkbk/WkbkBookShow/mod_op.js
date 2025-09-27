@@ -4,7 +4,7 @@ export const mod_op = {
   methods: {
     // 不正解のみ残す
     op_select_x_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.jo_counts.mistake >= 1 && this.jo_counts.correct === 0 && this.jo_counts.blank === 0) {
         this.toast_warn("すでに不正解だけです")
         return
@@ -26,7 +26,7 @@ export const mod_op = {
 
     // 元に戻す
     op_revert_handle() {
-      // this.$sound.play_click()
+      // this.sfx_play_click()
       // if (this.book.xitems.length === this.saved_xitems.length) {
       //   this.toast_warn("すでに元の状態です")
       //   return
@@ -37,7 +37,7 @@ export const mod_op = {
     },
 
     op_shuffle_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       if (this.book.xitems.length <= 1) {
         this.toast_warn("シャッフルするほどの問題がありません")
         return

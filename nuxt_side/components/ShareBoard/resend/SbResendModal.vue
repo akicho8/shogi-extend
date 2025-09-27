@@ -29,11 +29,11 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.rs_modal_with_timer_close()
     },
     resend_handle() {
-      this.$sound.play_click()
+      this.sfx_play_click()
       this.SB.rs_modal_with_timer_close()
       this.SB.sfen_share()
     },

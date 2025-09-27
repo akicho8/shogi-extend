@@ -25,12 +25,12 @@ export const mod_taginput = {
     },
     // 追加した瞬間
     taginput_add_handle(form_part, tag) {
-      this.$sound.play_toggle(true)
+      this.sfx_play_toggle(true)
       this.talk(tag)
     },
     // 削除した瞬間
     taginput_remove_handle(form_part, tag) {
-      this.$sound.play_toggle(false)
+      this.sfx_play_toggle(false)
     },
   },
 }
