@@ -1,7 +1,7 @@
 // |----------------------------------------|
 // | sfx_play(key, options = {})            |
 // | sfx_play_random(keys, options = {})    |
-// | sfx_play_click(options = {})           |
+// | sfx_click(options = {})           |
 // | sfx_play_toggle(enabled, options = {}) |
 // | sfx_stop_all()                         |
 // | sfx_resume_all()                       |
@@ -44,7 +44,7 @@ export const vue_sfx = {
       return this.sfx_play(_.sample(keys), options)
     },
 
-    sfx_play_click(options = {}) {
+    sfx_click(options = {}) {
       this.sfx_play("se_click", options)
     },
 

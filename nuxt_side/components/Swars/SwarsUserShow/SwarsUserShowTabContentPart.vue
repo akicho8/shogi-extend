@@ -5,7 +5,7 @@
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.box_head.double_column
           template(v-if="row.tag")
-            nuxt-link.box_title(:to="TheApp.search_path({[tag_key]: row.tag})" @click.native="sfx_play_click()")
+            nuxt-link.box_title(:to="TheApp.search_path({[tag_key]: row.tag})" @click.native="sfx_click()")
               template(v-if="vs_mode")
                 .vs_mark.is-size-6.has-text-grey-light vs
                 .vs_name {{row.tag}}

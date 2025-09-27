@@ -9,7 +9,7 @@
   KiwiTopTagList(:base="base")
 
   .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.bananas")
-    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-banana_key', params: {banana_key: e.key}}" @click.native="sfx_play_click()")
+    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-banana_key', params: {banana_key: e.key}}" @click.native="sfx_click()")
       .card-image
         template(v-if="e.lemon.thumbnail_browser_path")
           .image.is-16by9

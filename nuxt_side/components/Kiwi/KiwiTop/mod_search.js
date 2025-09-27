@@ -10,22 +10,22 @@ export const mod_search = {
   },
   methods: {
     search_preset_handle(e) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.router_push({search_preset_key: e.key, page: null, tag: null})
     },
     tag_click_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.talk(tag)
       tag = this.$gs.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
     tag_remove_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       tag = this.$gs.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },
     search_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.router_push({})
     },
   },

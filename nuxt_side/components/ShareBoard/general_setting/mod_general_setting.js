@@ -31,7 +31,7 @@ export const mod_general_setting = {
   methods: {
     // 初期値に戻すボタン
     general_setting_reset_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       let count = 0
       this.SettingCategoryInfo.values.forEach(info => {
         info.list.values.forEach(e => {

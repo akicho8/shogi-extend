@@ -44,12 +44,12 @@ export const mod_xitems = {
     },
 
     skip_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.next_process()
     },
 
     previous_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.next_process(-1)
     },
 
@@ -112,7 +112,7 @@ export const mod_xitems = {
     },
 
     description_open_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.description_open_p = !this.description_open_p
     },
 

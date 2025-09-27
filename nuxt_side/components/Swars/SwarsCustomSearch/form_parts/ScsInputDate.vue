@@ -9,8 +9,8 @@ b-field.field_block.ScsInputDate(custom-class="is-small")
     :icon-right="$gs.present_p(TheApp.battled_at_range) ? 'close-circle' : ''"
     icon-right-clickable
     @icon-right-click.stop="clear_handle"
-    @range-start="sfx_play_click()"
-    @range-end="sfx_play_click()"
+    @range-start="sfx_click()"
+    @range-end="sfx_click()"
     range
     trap-focus
     :mobile-native="false"

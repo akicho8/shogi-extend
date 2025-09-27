@@ -42,7 +42,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="SB.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="SB.room_recreate_modal_handle" v-if="SB.debug_mode_p")
           b-menu-item.is_active_unset(icon="home" label="対局履歴" @click="SB.general_dashboard_modal_handle" :disabled="$gs.blank_p(SB.ac_room)")
-          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="対局履歴(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_play_click()" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="対局履歴(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="trophy" label="対局履歴(hrefで別タブ)" :href="SB.dashboard_url" target="_blank" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
 
         b-menu-list(label="検討")
@@ -73,7 +73,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="SB.general_setting_modal_open_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="SB.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="SB.reset_handle" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
-          b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sfx_play_click()" v-if="development_p")
+          b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sfx_click()" v-if="development_p")
       AppearanceUi.mt-5
       .box.mt-5
         b-field(label="音が出なくなったとき用")

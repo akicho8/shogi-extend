@@ -1,6 +1,6 @@
 <template lang="pug">
 .DotsMenuButton
-  b-dropdown(position="is-bottom-left" @click.native="sfx_play_click()")
+  b-dropdown(position="is-bottom-left" @click.native="sfx_click()")
     b-icon.has-text-grey-light.is-inline-block(slot="trigger" icon="dots-vertical")
     slot
 </template>

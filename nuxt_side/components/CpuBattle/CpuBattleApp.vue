@@ -267,7 +267,7 @@ export default {
     start_handle() {
       this.app_log("CPU対戦●")
 
-      this.sfx_play_click()
+      this.sfx_click()
 
       this.sp_body_set()
 

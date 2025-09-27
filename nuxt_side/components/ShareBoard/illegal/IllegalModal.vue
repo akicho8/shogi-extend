@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.illegal_modal_close()
       this.$emit("close")
     },

@@ -21,7 +21,7 @@ export const mod_table = {
   },
   methods: {
     detail_set(enabled) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (enabled) {
         this.detailed_keys = this.books.map(e => e.key)
       } else {
@@ -30,7 +30,7 @@ export const mod_table = {
     },
 
     tag_search_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.talk(tag)
       this.router_push({tag})
     },
@@ -43,7 +43,7 @@ export const mod_table = {
     },
 
     sort_handle(sort_column, sort_order) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.router_push({sort_column, sort_order})
     },
 

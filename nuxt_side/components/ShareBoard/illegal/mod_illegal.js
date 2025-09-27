@@ -39,7 +39,7 @@ export const mod_illegal = {
             illegal_names: illegal_names,
           },
           onCancel: () => {
-            this.sfx_play_click()
+            this.sfx_click()
             this.illegal_modal_close()
           },
         })

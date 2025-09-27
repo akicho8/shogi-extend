@@ -10,7 +10,7 @@ export const mod_urls = {
   methods: {
     // 棋譜コピー
     kifu_copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_kifu_copy(this.new_sfen, {
         to_format: "kif",
         turn: this.new_turn,
@@ -21,7 +21,7 @@ export const mod_urls = {
 
     // 棋譜URLコピー
     current_url_copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
       this.SB.al_share_puts("棋譜URLコピー")
     },
@@ -37,7 +37,7 @@ export const mod_urls = {
 
     // 指定の棋譜を表示
     kifu_show_handle(e) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.window_popup(this.kifu_show_url(e))
       this.SB.al_share_puts("棋譜表示")
     },
@@ -50,7 +50,7 @@ export const mod_urls = {
     // 指定の棋譜をダウンロード
     kifu_download_handle(e) {
       if (typeof window !== 'undefined') {
-        this.sfx_play_click()
+        this.sfx_click()
         window.location.href = this.kifu_download_url(e)
         this.SB.al_share_puts("棋譜ダウンロード")
       }

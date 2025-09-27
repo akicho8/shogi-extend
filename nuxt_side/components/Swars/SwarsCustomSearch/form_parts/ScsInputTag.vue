@@ -66,7 +66,7 @@ export default {
     op_click_handle(e) {
       if (this.current_op !== e.key) {
         this.current_op = e.key
-        this.sfx_play_click()
+        this.sfx_click()
         this.talk(e.yomiage)
       }
     },

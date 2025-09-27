@@ -6,7 +6,7 @@ client-only
     .px-4.py-4
       .columns.is-mobile.is-marginless.is-multiline.is-gapless
         .column.is-12
-          nuxt-link(to="/" @click.native="sfx_play_click()")
+          nuxt-link(to="/" @click.native="sfx_click()")
             b-icon(icon="chevron-left" size="is-large")
         .column.is-12
           .main_column.is_line_break_on

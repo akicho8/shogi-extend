@@ -91,11 +91,11 @@ export default {
       this.base.banana.thumbnail_pos = e.target.currentTime
     },
     thumbnail_pos_set_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.base.banana.thumbnail_pos = this.$refs.video_tag.currentTime
     },
     folder_key_input_handle(e) {
-      this.sfx_play_click()
+      this.sfx_click()
       const folder_info = this.FolderInfo.fetch(e)
       this.talk(folder_info.name)
     },

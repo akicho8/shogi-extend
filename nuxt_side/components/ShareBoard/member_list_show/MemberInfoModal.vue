@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     ping_handle() {

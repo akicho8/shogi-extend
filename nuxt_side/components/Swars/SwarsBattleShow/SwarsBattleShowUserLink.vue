@@ -1,7 +1,7 @@
 <template lang="pug">
 nuxt-link.SwarsBattleShowUserLink(
   :to="{name: 'swars-users-key', params: {key: membership.user.key}, query: {query: query}}"
-  @click.native.stop="sfx_play_click()"
+  @click.native.stop="sfx_click()"
   :class="css_class"
   )
   span(:class="`has-text-${membership.location_key}`" v-if="with_location") ☗

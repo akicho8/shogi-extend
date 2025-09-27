@@ -26,13 +26,13 @@ export const mod_edit_mode = {
         type: "is-danger",
         hasIcon: false,
         onConfirm: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.al_share({label: "局面編集前"})
           this.sp_mode = "edit"
           this.edit_warn_modal_close()
         },
         onCancel: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.edit_warn_modal_close()
         },
       })
@@ -50,7 +50,7 @@ export const mod_edit_mode = {
         return
       }
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       if (this.ac_room) {
         this.edit_warn_modal_handle()
         return
@@ -62,7 +62,7 @@ export const mod_edit_mode = {
     // 編集完了
     play_mode_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
         this.current_sfen = this.edit_mode_sfen
@@ -80,7 +80,7 @@ export const mod_edit_mode = {
 
     // 玉配置/玉回収
     king_formation_auto_set(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (this.sp_king_formation_auto_set_on_off(v)) {
         this.sp_piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
@@ -96,7 +96,7 @@ export const mod_edit_mode = {
     edit_mode_kifu_copy_handle() {
       if (this.edit_mode_sfen) {
         this.sidebar_p = false
-        this.sfx_play_click()
+        this.sfx_click()
         this.general_kifu_copy(this.edit_mode_sfen, {
           to_format: this.FormatTypeInfo.fetch("kif_utf8").format_key,
           turn: 0,

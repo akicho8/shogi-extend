@@ -94,7 +94,7 @@ export default {
     this.clock_box = new ClockBox({
       initial_turn: 0,
       switched_fn: () => {
-        this.sfx_play_click()
+        this.sfx_click()
       },
       time_zero_fn: e => {
         this.sfx_play("lose")
@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     resume_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.clock_box.resume_handle()
       this.behavior_notify("resume")
       this.sfx_stop_all()
@@ -159,7 +159,7 @@ export default {
     pause_handle() {
       if (this.clock_box.pause_or_play_p) {
         this.sfx_stop_all()
-        this.sfx_play_click()
+        this.sfx_click()
         this.clock_box.pause_handle()
         this.behavior_notify("pause")
 
@@ -183,7 +183,7 @@ export default {
       if (this.clock_box.pause_or_play_p) {
         this.full_screen.off()
         this.sfx_stop_all()
-        this.sfx_play_click()
+        this.sfx_click()
         this.clock_box.stop_handle()
         this.behavior_notify("stop")
       }
@@ -223,7 +223,7 @@ export default {
       e.tap_on()
     },
     copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.say("左の設定を右にコピーしますか？")
 
       this.$buefy.dialog.confirm({
@@ -236,18 +236,18 @@ export default {
         trapFocus: true,
         onConfirm: () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
           this.clock_box.copy_1p_to_2p()
           this.say("コピーしました")
         },
         onCancel: () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
         },
       })
     },
     keyboard_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.sfx_stop_all()
       const dialog = this.$buefy.dialog.alert({
         title: "ショートカットキー",
@@ -260,19 +260,19 @@ export default {
         trapFocus: true,
         onConfirm: () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
         },
         onCancel: () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
         },
       })
     },
     dropdown_active_change(on) {
       if (on) {
-        this.sfx_play_click()
+        this.sfx_click()
       } else {
-        this.sfx_play_click()
+        this.sfx_click()
       }
     },
     rule_set(params) {

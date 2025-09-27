@@ -124,7 +124,7 @@ export default {
     },
     clear_handle() {
       if (this.input_text) {
-        this.sfx_play_click()
+        this.sfx_click()
         this.input_text = ""
         this.input_text_focus()
       }
@@ -254,7 +254,7 @@ export default {
     // private
 
     record_fetch(callback) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (this.bs_error) {
         this.error_show()
         return

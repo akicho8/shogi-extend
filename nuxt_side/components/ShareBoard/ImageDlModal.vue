@@ -8,7 +8,7 @@
 
     SbColorThemeDropdown
 
-    b-dropdown.image_size_key_dropdown(v-model="SB.image_size_key" @active-change="e => e && sfx_play_click()" position="is-bottom-left" @change="SB.image_size_key_change_handle")
+    b-dropdown.image_size_key_dropdown(v-model="SB.image_size_key" @active-change="e => e && sfx_click()" position="is-bottom-left" @change="SB.image_size_key_change_handle")
       template(#trigger)
         b-button(:label="SB.image_size_info.name" icon-right="menu-down" size="is-small")
       template(v-for="e in SB.ImageSizeInfo.values")
@@ -38,11 +38,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     download_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.image_dl_run()
     },
   },

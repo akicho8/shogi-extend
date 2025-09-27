@@ -4,7 +4,7 @@
     .box
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.box_head.double_column
-          nuxt-link.box_title(:to="TheApp.search_path({'相手の棋力': row.grade_name})" @click.native="sfx_play_click()")
+          nuxt-link.box_title(:to="TheApp.search_path({'相手の棋力': row.grade_name})" @click.native="sfx_click()")
             .vs_mark.is-size-6.has-text-grey-light vs
             .vs_name {{row.grade_name}}
           .box_title_sub

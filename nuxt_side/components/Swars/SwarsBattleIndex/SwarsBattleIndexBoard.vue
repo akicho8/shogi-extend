@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsBattleIndexBoard.columns.is-multiline.mt-4
   template(v-for="e in APP.xi.records")
-    nuxt-link.column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet(:to="APP.show_route_params(e)" @click.native="sfx_play_click()")
+    nuxt-link.column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet(:to="APP.show_route_params(e)" @click.native="sfx_click()")
       CustomShogiPlayer(
         sp_mode="view"
         sp_layout="vertical"

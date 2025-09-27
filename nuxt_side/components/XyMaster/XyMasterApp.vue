@@ -11,7 +11,7 @@
           .buttons.is-centered.mb-0(v-if="is_mode_idol")
             b-button.has-text-weight-bold(@click="start_handle" type="is-primary") START
 
-            b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sfx_play_click()")
+            b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sfx_click()")
               button.button(slot="trigger")
                 span {{rule_info.name}}
                 b-icon(icon="menu-down")
@@ -52,7 +52,7 @@
           .tweet_box_container.mt-4(v-if="mode === 'is_mode_goal'")
             .box.mb-0
               | {{summary}}
-            TweetButton.mt-3(:body="tweet_body" @after_click="sfx_play_click()")
+            TweetButton.mt-3(:body="tweet_body" @after_click="sfx_click()")
 
         XyMasterRanking
 
@@ -253,7 +253,7 @@ export default {
 
     start_handle() {
       this.sfx_stop_all()
-      this.sfx_play_click()
+      this.sfx_click()
       this.mode = "is_mode_ready"
       this.init_other_variables()
       this.latest_rule = this.rule_info
@@ -285,7 +285,7 @@ export default {
     },
 
     stop_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.mode = "is_mode_stop"
       this.timer_stop()
       this.interval_counter.stop()

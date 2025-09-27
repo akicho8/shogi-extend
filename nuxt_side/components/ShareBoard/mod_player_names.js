@@ -6,7 +6,7 @@ export const mod_player_names = {
   methods: {
     // メンバーの名前をコピーする
     player_names_copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.clipboard_copy(this.player_names_with_title_as_human_text)
     },
   },

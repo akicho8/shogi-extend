@@ -89,11 +89,11 @@ export default {
           // se_select は本来ラジオボタン専用に作られているが2回クリック音が鳴ることに違和感しかない
           this.sfx_play("se_select")
         } else {
-          this.sfx_play_click()
+          this.sfx_click()
         }
       } else if (this.slider_p) {
       } else {
-        this.sfx_play_click()
+        this.sfx_click()
       }
       if (this.real_model.input_handle_callback) {
         this.real_model.input_handle_callback(this, e)
@@ -106,7 +106,7 @@ export default {
     label_click_handle(e) {
       if (this.$gs.present_p(this.hint_str)) {
         this.sfx_stop_all()
-        this.sfx_play_click()
+        this.sfx_click()
         this.toast_ok(this.hint_str, {duration: 1000 * this.duration_sec})
       }
     },

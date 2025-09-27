@@ -25,13 +25,13 @@ export const mod_table = {
     // @sort="base.sort_handle"
 
     sort_handle(sort_column, sort_order) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.debug_alert(sort_column)
       this.book.ordered_bookships = _.orderBy(this.book.ordered_bookships, sort_column, sort_order)
     },
 
     detail_set(enabled) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (enabled) {
         this.detailed_keys = this.articles.map(e => e.key)
       } else {
@@ -40,14 +40,14 @@ export const mod_table = {
     },
 
     tag_search_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.talk(tag)
       tag = this.$gs.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
 
     tag_remove_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       tag = this.$gs.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },

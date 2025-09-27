@@ -13,7 +13,7 @@ export default {
   methods: {
     click_handle() {
       if (this.beep) {
-        this.sfx_play_click()
+        this.sfx_click()
       }
     },
   },

@@ -6,7 +6,7 @@ export const mod_file_upload = {
         this.debug_alert("なぜかファイル情報が空で呼ばれた")
         return
       }
-      // this.sfx_play_click()
+      // this.sfx_click()
 
       const reader = new FileReader()
       reader.addEventListener("load", () => {
@@ -23,7 +23,7 @@ export const mod_file_upload = {
     },
 
     file_upload_cancel_handle(form_part) {
-      // this.sfx_play_click()
+      // this.sfx_click()
       this.$set(this.attributes, form_part.key, null)
       this.toast_ok("削除しました")
     },

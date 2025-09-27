@@ -13,7 +13,7 @@ export const mod_tabs = {
     },
 
     edit_tab_change_handle(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (false) {
         this.talk(this.current_tab_info.name)
       }

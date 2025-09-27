@@ -12,12 +12,12 @@ export const mod_placement = {
   methods: {
     // 棋譜の入力タップ時の処理
     any_source_read_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       const modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
         events: {
           "update:any_source": any_source => {
-            this.sfx_play_click()
+            this.sfx_click()
             this.$axios.$post("/api/general/any_source_to.json", { any_source: any_source, to_format: "sfen" }).then(e => {
               this.bs_error_message_dialog(e)
               if (e.body) {

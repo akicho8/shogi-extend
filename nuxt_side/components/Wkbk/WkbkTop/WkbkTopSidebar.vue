@@ -6,8 +6,8 @@ b-sidebar.WkbkTopSidebar.is-unselectable(fullheight right overlay v-model="base.
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-books-new'}" label="問題集作成" @click.native="sfx_play_click()")
-          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト" @click.native="sfx_play_click()")
+          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-books-new'}" label="問題集作成" @click.native="sfx_click()")
+          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト" @click.native="sfx_click()")
 </template>
 
 <script>

@@ -5,13 +5,13 @@ export const mod_tweet = {
   methods: {
     tweet_modal_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({component: SbTweetModal})
     },
 
     async tweet_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.tweet_window_popup({text: await this.tweet_body()})
     },
 

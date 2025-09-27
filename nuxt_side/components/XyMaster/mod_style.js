@@ -2,7 +2,7 @@ export const mod_style = {
   methods: {
     // スタイルを初期値に戻す
     style_default_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       this.touch_board_width = this.ls_default.touch_board_width
       this.xy_grid_stroke    = this.ls_default.xy_grid_stroke

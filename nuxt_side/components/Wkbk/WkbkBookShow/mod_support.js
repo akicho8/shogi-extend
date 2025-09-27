@@ -7,13 +7,13 @@ export const mod_support = {
   methods: {
     book_edit_handle() {
       if (this.owner_p) {
-        this.sfx_play_click()
+        this.sfx_click()
         this.$router.push({name: "rack-books-book_key-edit", params: {book_key: this.book.key}})
       }
     },
     article_show_handle() {
       if (this.current_article_show_p) {
-        this.sfx_play_click()
+        this.sfx_click()
         if (false) {
           this.$router.push({name: "rack-articles-article_key", params: {article_key: this.current_article.key}})
         } else {
@@ -24,7 +24,7 @@ export const mod_support = {
     },
     article_edit_handle() {
       if (this.current_article_edit_p) {
-        this.sfx_play_click()
+        this.sfx_click()
         if (false) {
           this.$router.push({name: "rack-articles-article_key-edit", params: {article_key: this.current_article.key}})
         } else {
@@ -35,12 +35,12 @@ export const mod_support = {
     },
     article_new_handle() {
       if (this.owner_p) {
-        this.sfx_play_click()
+        this.sfx_click()
         this.$router.push({name: "rack-articles-new", query: {book_key: this.book.key}})
       }
     },
     book_tweet_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.tweet_window_popup({text: this.tweet_body_wrap(null)})
     },
     tweet_body_wrap(str) {
@@ -55,7 +55,7 @@ export const mod_support = {
     },
 
     description_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.sfx_stop_all()
       this.talk(this.book.description)
       this.modal_card_open({
@@ -63,7 +63,7 @@ export const mod_support = {
         props: { base: this.base },
         onCancel:  () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
         },
       })
     },
@@ -71,7 +71,7 @@ export const mod_support = {
     //   return dayjs.unix(this.spent_sec).format("m:ss")
     // },
     tag_search_handle(tag) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.talk(tag)
       this.$router.push({name: "rack", query: {tag: tag}})
     },

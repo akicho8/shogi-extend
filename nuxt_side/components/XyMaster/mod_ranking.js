@@ -50,7 +50,7 @@ export const mod_ranking = {
             this.toast_warn(message)
             this.name_input_dialog()
           } else {
-            this.sfx_play_click()
+            this.sfx_click()
             this.entry_name_set_and_record_post(value)
           }
         },

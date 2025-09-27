@@ -32,7 +32,7 @@ export const mod_sound_effect = {
     },
     // スライダーを自分が動かしたときの音
     ev_action_turn_change_se() {
-      this.sfx_play_click()
+      this.sfx_click()
     },
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている→やめ)
     se_force_sync() {
@@ -41,7 +41,7 @@ export const mod_sound_effect = {
     // ☗☖をタップして反転したときの音
     ev_action_viewpoint_flip() {
       if (this.sp_mode === "play") {
-        this.sfx_play_click()
+        this.sfx_click()
       }
     },
     // 成 or 不成 選択モードに入る

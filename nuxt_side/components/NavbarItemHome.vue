@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item(:tag="tag" :to="to" @click.native="sfx_play_click()" v-bind="$attrs" v-on="$listeners")
+b-navbar-item(:tag="tag" :to="to" @click.native="sfx_click()" v-bind="$attrs" v-on="$listeners")
   b-icon(:icon="icon")
 </template>
 

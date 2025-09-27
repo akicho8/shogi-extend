@@ -5,7 +5,7 @@
   component.a_or_div(
     :is="info.with_search.params ? 'nuxt-link' : 'div'"
     :to="info.with_search.params && TheApp.search_path(info.with_search.params)"
-    @click.native="info.with_search.params && sfx_play_click()"
+    @click.native="info.with_search.params && sfx_click()"
     )
     //- .text_content_block
     template(v-if="info.chart_options.simple_type === 'second'")

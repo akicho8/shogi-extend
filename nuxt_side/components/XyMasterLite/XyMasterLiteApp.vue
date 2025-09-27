@@ -135,7 +135,7 @@ export default {
 
     start_handle() {
       this.sfx_stop_all()
-      this.sfx_play_click()
+      this.sfx_click()
       this.init_other_variables()
       this.sp_object().api_viewpoint_set(this.rule_info.viewpoint)
       this.sfen_clear_or_set()
@@ -156,7 +156,7 @@ export default {
     },
 
     stop_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.mode = "is_mode_stop"
       this.timer_stop()
       // this.scroll_set(true)

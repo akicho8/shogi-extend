@@ -1,5 +1,5 @@
 <template lang="pug">
-// @click.native="sfx_play_click()" すると2連続で呼ばれてしまうので指定してない
+// @click.native="sfx_click()" すると2連続で呼ばれてしまうので指定してない
 // @click.native="toast_ok(1)" すると2回呼ばれていることがわかる
 b-upload.WkbkBookEditFormUpload(@input="base.upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音OFF')")
   figure.image.is-clickable

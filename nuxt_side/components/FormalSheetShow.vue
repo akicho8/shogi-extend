@@ -17,7 +17,7 @@
       b-radio-button.is_font_key_mincho(v-model="font_key" native-value="mincho" size="is-small") 明朝
       b-radio-button.is_font_key_gothic(v-model="font_key" native-value="gothic" size="is-small") ゴシック
     b-field.mt-4(label="文字サイズ(%)" custom-class="is-small")
-      b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sfx_play_click()")
+      b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sfx_click()")
   .position_fixed.is_bottom_right.is_screen_only
     a.usage_dialog_show_handle(@click="usage_dialog_show_handle")
       b-icon(icon="information-outline" size="is-medium" type="is-primary")
@@ -206,17 +206,17 @@ export default {
   },
   watch: {
     font_key() {
-      this.sfx_play_click()
+      this.sfx_click()
     },
   },
   methods: {
     back_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.back_to()
     },
 
     usage_dialog_show_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       this.dialog_alert({
         title: "使い方や注意点",
@@ -237,7 +237,7 @@ export default {
     },
 
     printer_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       if (true) {
         let body = []

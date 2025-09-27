@@ -54,20 +54,20 @@ export default {
   methods: {
     // やめる
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.rule_unselect("${name}がやめました")
       this.$emit("close")
     },
 
     // 選択解除
     unselect_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.rule_unselect("${name}が解除しました")
     },
 
     // ルール選択
     rule_click_handle(event, e) {
-      this.sfx_play_click()
+      this.sfx_click()
 
       // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
       // if (this.$gs.blank_p(this.SB.user_name)) { とする手もある

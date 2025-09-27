@@ -7,7 +7,7 @@ b-sidebar.is-unselectable.KiwiLemonNewSidebar(fullheight right overlay v-model="
       b-menu
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(icon="undo-variant" label="フォームを初期値に戻す" @click="base.pc_data_reset_handle")
-          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-studio'}" label="ライブラリ" @click.native="sfx_play_click()")
+          //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-studio'}" label="ライブラリ" @click.native="sfx_click()")
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方" @click="base.general_help_modal_handle")

@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     search_click_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.app_log({emoji: ":絞込:", subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },

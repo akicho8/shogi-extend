@@ -13,7 +13,7 @@
         v-if="row.grade_name"
         :to="TheApp.search_path(row.search_params)"
         :key="row.key"
-        @click.native="sfx_play_click()"
+        @click.native="sfx_click()"
         )
         span.display_rule_short_name.is-size-7.has-text-grey
           | {{row.short_name}}

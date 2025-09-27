@@ -61,7 +61,7 @@
         b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path" type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" :type="{'is-light': row.banana}"  title="ライブラリ登録")
         b-button.mb-0(@click="base.retry_run_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")
-        b-button.mb-0(@click="sfx_play_click()"                                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
+        b-button.mb-0(@click="sfx_click()"                                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
         b-button.mb-0(@click="base.rails_attachment_show_handle(row)"                     type="is-light"   icon-left="download"                                           title="Rails側のコントローラ経由でダウンロードするテスト")
         b-button.mb-0(@click="base.load_handle(row)"                                    type="is-light"   icon-left="open-in-app"                                        title="プレビューのレコードにコピー")
         b-button.mb-0(@click="base.rails_inline_show_test_handle(row)"                    type="is-light"   icon-left="eye-outline"                                        title="Rails側のコントローラ経由でインライン表示するテスト")

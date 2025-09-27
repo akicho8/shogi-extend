@@ -25,7 +25,7 @@ export const mod_chat = {
     chat_modal_shortcut_handle() {
       if (this.chat_modal_instance == null) {
         this.sidebar_p = false
-        this.sfx_play_click()
+        this.sfx_click()
         this.chat_modal_open()
         return true
         // } else {
@@ -38,7 +38,7 @@ export const mod_chat = {
         this.toast_ok("ENTER キーで開けれるよ")
       }
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.chat_modal_open()
     },
 
@@ -47,7 +47,7 @@ export const mod_chat = {
         this.toast_ok("ENTER キーで閉じれるよ")
       }
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.chat_modal_close()
     },
 
@@ -56,7 +56,7 @@ export const mod_chat = {
       this.chat_modal_instance = this.modal_card_open({
         component: ChatModal,
         onCancel: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.chat_modal_close()
         },
       })

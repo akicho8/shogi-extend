@@ -20,7 +20,7 @@ export const mod_turn_change = {
     turn_change_to_zero_modal_open_handle() {
       if (this.turn_change_modal_instance == null) {
         this.sidebar_p = false
-        this.sfx_play_click()
+        this.sfx_click()
         // if (CONFIRM_METHOD) {
         //   this.turn_change_modal_instance = this.dialog_confirm({
         //     title: "初期配置に戻す (0手目に移動する)",
@@ -30,7 +30,7 @@ export const mod_turn_change = {
         //     focusOn: "cancel",
         //     onCancel: () => this.turn_change_modal_close(),
         //     onConfirm: () => {
-        //       this.sfx_play_click()
+        //       this.sfx_click()
         //       this.force_sync_turn_zero()
         //     },
         //   })
@@ -62,7 +62,7 @@ export const mod_turn_change = {
     turn_change_to_previous_modal_open_handle() {
       if (this.turn_change_modal_instance == null) {
         this.sidebar_p = false
-        this.sfx_play_click()
+        this.sfx_click()
 
         // if (CONFIRM_METHOD) {
         //   this.dialog_confirm({
@@ -72,7 +72,7 @@ export const mod_turn_change = {
         //     type: "is-danger",
         //     focusOn: "cancel",
         //     onConfirm: () => {
-        //       this.sfx_play_click()
+        //       this.sfx_click()
         //       this.force_sync_turn_previous()
         //     },
         //   })

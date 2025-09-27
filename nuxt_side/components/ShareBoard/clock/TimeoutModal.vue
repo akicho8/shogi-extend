@@ -60,7 +60,7 @@ export default {
   // },
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.cc_timeout_modal_close()
       this.$emit("close")
     },

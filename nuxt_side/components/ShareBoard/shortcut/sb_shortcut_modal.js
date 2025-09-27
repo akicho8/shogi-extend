@@ -23,13 +23,13 @@ export const sb_shortcut_modal = {
 
     shortcut_modal_open_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.shortcut_modal_open()
     },
 
     shortcut_modal_close_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.shortcut_modal_close()
     },
 
@@ -38,7 +38,7 @@ export const sb_shortcut_modal = {
       this.shortcut_modal_instance = this.modal_card_open({
         component: SbShortcutModal,
         onCancel: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.shortcut_modal_close()
         },
       })

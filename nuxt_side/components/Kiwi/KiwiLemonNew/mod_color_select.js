@@ -10,7 +10,7 @@ export const mod_color_select = {
   methods: {
     color_select_modal_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({
         component: ColorSelectModal,
         props: { base: this.base },

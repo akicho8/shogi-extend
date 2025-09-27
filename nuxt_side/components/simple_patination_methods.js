@@ -12,7 +12,7 @@ export const simple_patination_methods = {
   // },
   methods: {
     page_change_handle(page) {
-      this.sfx_play_click()
+      this.sfx_click()
     },
   },
   computed: {

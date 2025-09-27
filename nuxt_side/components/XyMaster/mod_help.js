@@ -36,7 +36,7 @@ export const mod_help = {
 
     help_dialog_cancel_process() {
       this.sfx_stop_all()
-      this.sfx_play_click()
+      this.sfx_click()
     },
   },
 }

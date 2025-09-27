@@ -61,7 +61,7 @@ export const mod_tiresome = {
     },
 
     tiresome_alert_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       this.$gs.delay_block(1, () => {
         this.sfx_stop_all()

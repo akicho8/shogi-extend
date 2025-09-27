@@ -28,7 +28,7 @@ export const mod_kifu_copy_buttons = {
 
     // 指定の解答のコピー処理
     answers_kifu_copy_handle(moves_answer) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_kifu_copy(this.article.init_sfen_with(moves_answer), {to_format: "kif"})
     },
 
@@ -41,7 +41,7 @@ export const mod_kifu_copy_buttons = {
 
     // 解答元の指し手のコピー処理
     answer_base_kifu_copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_kifu_copy(this.answer_base_sfen, {to_format: "kif"})
     },
   },

@@ -21,7 +21,7 @@ export default {
   methods: {
     submit_handle() {
       this.sfx_stop_all()
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
   },

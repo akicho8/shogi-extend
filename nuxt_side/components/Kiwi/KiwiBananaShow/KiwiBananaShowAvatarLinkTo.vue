@@ -1,6 +1,6 @@
 <template lang="pug">
 .media-left.KiwiBananaShowAvatarLinkTo
-  nuxt-link.image.is-square(:to="{name: 'users-id', params: {id: user.id}}" @click.native="sfx_play_click()")
+  nuxt-link.image.is-square(:to="{name: 'users-id', params: {id: user.id}}" @click.native="sfx_click()")
     img.is-rounded(:src="user.avatar_path" :alt="user.name")
 </template>
 

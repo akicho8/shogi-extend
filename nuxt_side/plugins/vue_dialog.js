@@ -18,8 +18,8 @@ export const vue_dialog = {
         type: `is-${options.type}`,
         // hasIcon: true,
         message: message,
-        onConfirm: () => { this.sfx_play_click() },
-        onCancel:  () => { this.sfx_play_click() },
+        onConfirm: () => { this.sfx_click() },
+        onCancel:  () => { this.sfx_click() },
       })
     },
 
@@ -149,7 +149,7 @@ export const vue_dialog = {
         scroll: "keep",
         animation: "",
         canCancel: ["outside", "escape"],
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         ...params,
       })
     },
@@ -161,10 +161,10 @@ export const vue_dialog = {
         cancelText: "キャンセル",
         animation: "",
         inputAttrs: { type: "text", value: "", required: false },
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         onConfirm: value => {
           this.debug_alert(value)
-          this.sfx_play_click()
+          this.sfx_click()
         },
         ...params,
       })
@@ -176,8 +176,8 @@ export const vue_dialog = {
         message: "本当によいですか？",
         cancelText: "キャンセル",
         animation: "",
-        onCancel: () => this.sfx_play_click(),
-        onConfirm: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
+        onConfirm: () => this.sfx_click(),
         ...params,
       })
     },
@@ -188,7 +188,7 @@ export const vue_dialog = {
         confirmText: "OK",
         onConfirm: () => {
           this.sfx_stop_all()
-          this.sfx_play_click()
+          this.sfx_click()
         },
         ...params,
       })

@@ -3,7 +3,7 @@ span.SwarsBattleIndexTableCellStyleOne
   template(v-if="style_key")
     template(v-if="true")
       //- 同じURLだった場合は移動しない。href があらかじめわかるので別タブで開ける
-      nuxt-link.is_hover_only_link_color(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="sfx_play_click()") {{name}}
+      nuxt-link.is_hover_only_link_color(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="sfx_click()") {{name}}
     template(v-else)
       //- 同じURLでもアクセスする。href がわからない
       a.is_hover_only_link_color(@click="APP.interactive_search({query: new_query})") {{name}}

@@ -96,7 +96,7 @@ export const mod_clock_box_timeout = {
           timeout_key: timeout_key,
         },
         onCancel: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.cc_timeout_modal_close()
         },
       })

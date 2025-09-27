@@ -8,7 +8,7 @@ export const mod_kifu_mail = {
   methods: {
     // 「メール送信」ボタンが押されたとき
     kifu_mail_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       if (!this.login_and_email_valid_p) {
         this.toast_warn("ログインしてメールアドレスを適切に設定していると使えます")

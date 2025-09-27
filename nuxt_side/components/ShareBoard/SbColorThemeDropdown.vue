@@ -1,5 +1,5 @@
 <template lang="pug">
-b-dropdown.SbColorThemeDropdown(v-model="SB.color_theme_key" @active-change="e => e && sfx_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="SB.color_theme_key_change_handle")
+b-dropdown.SbColorThemeDropdown(v-model="SB.color_theme_key" @active-change="e => e && sfx_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="SB.color_theme_key_change_handle")
   template(#trigger)
     b-button(:label="SB.color_theme_info.name" icon-right="menu-down" size="is-small")
   template(v-for="e in SB.ColorThemeInfo.values")

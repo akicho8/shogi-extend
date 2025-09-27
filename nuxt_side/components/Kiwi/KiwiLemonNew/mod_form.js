@@ -85,7 +85,7 @@ export const mod_form = {
       // this.desktop_focus_to(this.$refs.KiwiLemonNewForm?.$refs.body.$refs?.textarea)
     },
     reset_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.body = ""
 
       this.response_hash = null
@@ -96,7 +96,7 @@ export const mod_form = {
     submit_handle() {
       this.done_record = null
 
-      this.sfx_play_click()
+      this.sfx_click()
 
       if (this.nuxt_login_required()) { return }
 
@@ -158,7 +158,7 @@ export const mod_form = {
     },
 
     rect_size_key_input_handle(rect_size_key) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.width_height_udpate()
     },
 
@@ -172,7 +172,7 @@ export const mod_form = {
     },
 
     adapter_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       const e = this.$router.resolve({
         name: "adapter",
         query: {
@@ -183,7 +183,7 @@ export const mod_form = {
     },
 
     form2_show_toggle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.form2_show_p = !this.form2_show_p
     },
 
@@ -193,7 +193,7 @@ export const mod_form = {
       if (files == null) {
         this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
       } else {
-        this.sfx_play_click()
+        this.sfx_click()
         files.forEach(file => {
           const reader = new FileReader()
           reader.addEventListener("load", () => {
@@ -213,7 +213,7 @@ export const mod_form = {
     },
 
     xaudio_list_delete_at(index) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.base.xaudio_list.splice(index, 1)
       // this.base.xaudio_list_for_v_model.splice(index, 1)
       this.toast_ok("削除しました")
@@ -223,7 +223,7 @@ export const mod_form = {
     active_change_handle(e) {
       // 開いたときだけクリック音
       if (e) {
-        this.sfx_play_click()
+        this.sfx_click()
       } else {
         this.current_play_instance_stop()
       }
@@ -242,7 +242,7 @@ export const mod_form = {
     //   if (files == null) {
     //     this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
     //   } else {
-    //     this.sfx_play_click()
+    //     this.sfx_click()
     //     files.forEach(file => {
     //       const reader = new FileReader()
     //       reader.addEventListener("load", () => {
@@ -262,7 +262,7 @@ export const mod_form = {
     // },
     //
     // u_bg_file_delete_at(index) {
-    //   this.sfx_play_click()
+    //   this.sfx_click()
     //   this.base.u_bg_file.splice(index, 1)
     //   // this.base.u_bg_file_for_v_model.splice(index, 1)
     //   this.toast_ok("削除しました")
@@ -274,7 +274,7 @@ export const mod_form = {
     //     // if (files == null) {
     //     //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
     //     // } else {
-    //     this.sfx_play_click()
+    //     this.sfx_click()
     //     // files.forEach(file => {
     //     const reader = new FileReader()
     //     reader.addEventListener("load", () => {
@@ -293,25 +293,25 @@ export const mod_form = {
     // },
     //
     // ximage_one_delete_handle() {
-    //   this.sfx_play_click()
+    //   this.sfx_click()
     //   this.base.u_bg_file = null
     //   this.toast_ok("削除しました")
     // },
 
     page_duration_set_by_fps(fps) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.page_duration = 1.0 / fps
     },
     page_duration_set_by_value(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.page_duration = v
     },
     page_duration_add(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.page_duration = (new Big(this.page_duration)).plus(v).toNumber()
     },
     page_duration_mul(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.page_duration = (new Big(this.page_duration)).times(v).toNumber()
     },
   },

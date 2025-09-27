@@ -9,7 +9,7 @@
       | {{SB.board_preset_info.handicap_level}}
   .modal-card-body
     .select_container
-      b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_play_click()")
+      b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()")
         option(v-for="e in SB.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
@@ -41,18 +41,18 @@ export default {
   mixins: [support_child],
   methods: {
     next_handle(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       const i = this.SB.board_preset_info.code + v
       const new_index = this.$gs.imodulo(i, this.SB.BoardPresetInfo.values.length)
       const next = this.SB.BoardPresetInfo.fetch(new_index)
       this.SB.board_preset_key = next.key
     },
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.preset_select_modal_close()
     },
     apply_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.force_sync_preset()
       this.SB.preset_select_modal_close()
     },

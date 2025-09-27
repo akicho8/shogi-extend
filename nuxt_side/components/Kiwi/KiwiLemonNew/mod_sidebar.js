@@ -6,11 +6,11 @@ export const mod_sidebar = {
   },
   methods: {
     sidebar_toggle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.sidebar_p = !this.sidebar_p
     },
     sidebar_close() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.sidebar_p = false
     },
   },

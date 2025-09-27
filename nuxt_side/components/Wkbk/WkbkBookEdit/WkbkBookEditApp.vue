@@ -85,7 +85,7 @@ export default {
 
   methods: {
     book_save_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
 
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")

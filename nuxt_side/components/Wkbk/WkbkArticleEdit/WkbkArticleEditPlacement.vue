@@ -59,7 +59,7 @@ export default {
   methods: {
     // 玉配置/玉回収
     king_formation_auto_set(v) {
-      this.sfx_play_click()
+      this.sfx_click()
       if (this.$refs.main_sp.sp_object().xcontainer.king_formation_auto_set_on_off(v)) {
         this.base.piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
@@ -72,7 +72,7 @@ export default {
     },
 
     kifu_copy_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_kifu_copy(this.base.article.init_sfen, {to_format: "kif"})
     },
   },

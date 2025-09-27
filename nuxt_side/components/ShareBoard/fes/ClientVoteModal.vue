@@ -39,14 +39,14 @@ export default {
     // 選択
     select_handle(name, index) {
       if (this.SB.voted_latest_index !== index) {
-        this.sfx_play_click()
+        this.sfx_click()
         this.SB.sb_talk(name)
         this.SB.voted_latest_index = index
       }
     },
     // やめとく
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     // このチームに参加する

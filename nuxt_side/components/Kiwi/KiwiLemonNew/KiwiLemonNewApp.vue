@@ -16,7 +16,7 @@ client-only
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画作成
       template(slot="end")
-        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sfx_play_click()")
+        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sfx_click()")
           b-icon(icon="table-cog")
         NavbarItemLogin
         NavbarItemProfileLink

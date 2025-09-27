@@ -64,7 +64,7 @@
                 b-numberinput(v-model.number="total_timeout_min" :min="0" step="1" controls-position="compact" :expanded="true" :exponential="true")
 
         .column
-          b-tabs.result_body(expanded v-model="format_index" @input="sfx_play_click()")
+          b-tabs.result_body(expanded v-model="format_index" @input="sfx_click()")
             template(v-for="(value, key) in format_all")
               b-tab-item(:label="key")
                 a.is-pulled-right.clipboard_copy(@click.stop.prevent="copy_handle(value)")
@@ -73,7 +73,7 @@
 
           template(v-if="rows.length >= 1")
             .has-text-centered
-              TweetButton(:body="tweet_body" @after_click="sfx_play_click()")
+              TweetButton(:body="tweet_body" @after_click="sfx_click()")
 
   .section(v-if="development_p")
     .container.is-fluid
@@ -145,13 +145,13 @@ export default {
 
   methods: {
     copy_handle(text) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.clipboard_copy(text)
     },
 
     parmalink_modal_show() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({
         component: PermalinkModal,
         props: { base: this },
@@ -160,7 +160,7 @@ export default {
 
     history_modal_show() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({
         component: HistoryModal,
         props: { base: this },
@@ -169,7 +169,7 @@ export default {
 
     keyboard_modal_show() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({
         component: KeyboardModal,
         props: { base: this },
@@ -177,41 +177,41 @@ export default {
     },
 
     quest_text_clear() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.quest_text = ""
     },
 
     quest_text_sort() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.quest_text = _.sortBy(this.quest_list, [e => parseInt(e)]).join(" ")
     },
 
     quest_text_uniq() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.quest_text = _.uniq(this.quest_list).join(" ")
     },
 
     quest_text_shuffle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.quest_text = _.shuffle(this.quest_list).join(" ")
     },
 
     quest_text_reverse() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
     },
 
     quest_generate() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$buefy.dialog.prompt({
         title: "連番生成",
         message: "何問ありますか？",
         confirmText: "生成",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.generate_max, min: 0 },
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         onConfirm: (value) => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.generate_max = parseInt(value, 10)
           this.quest_text = [...Array(this.generate_max).keys()].map(i => 1 + i).join(" ")
         },
@@ -219,45 +219,45 @@ export default {
     },
 
     book_title_input_dialog() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$buefy.dialog.prompt({
         title: "タイトル",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: this.book_title, required: false },
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         onConfirm: value => {
           this.book_title = _.trim(value) || TITLE_DEFAULT
-          this.sfx_play_click()
+          this.sfx_click()
         },
       })
     },
 
     track_input_dialog() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$buefy.dialog.prompt({
         title: "問題番号",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'number', value: this.current_track, min: 1 },
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         onConfirm: (value) => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.current_track = parseInt(value, 10)
         },
       })
     },
 
     lap_counter_input_dialog() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$buefy.dialog.prompt({
         title: "分",
         confirmText: "更新",
         cancelText: "キャンセル",
         inputAttrs: { type: 'text', value: (this.lap_counter / 60) + "" },
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
         onConfirm: (value) => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.lap_counter = parseFloat(value) * 60
         },
       })
@@ -289,14 +289,14 @@ export default {
     },
 
     stop_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.mode = "standby"
       this.interval_runner.stop()
       this.memento_create("stop")
     },
 
     reset_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.reset()
     },
 
@@ -397,7 +397,7 @@ export default {
 
     revert_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       if (this.rows.length >= 1) {
         this.rows.pop()
         this.current_track -= 1
@@ -408,7 +408,7 @@ export default {
 
     rap_reset() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.lap_counter = 0
       this.notice(`最後のタイムだけリセットしました`)
     },
@@ -482,7 +482,7 @@ export default {
 
     reset_by_x() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.reset_by_x_with_drop(null)
     },
 
@@ -512,7 +512,7 @@ export default {
 
     reset_by_x_with_n_seconds() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.$buefy.dialog.prompt({
         message: "秒",
         confirmText: "OK",

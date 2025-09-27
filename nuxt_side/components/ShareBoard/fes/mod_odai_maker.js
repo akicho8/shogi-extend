@@ -16,7 +16,7 @@ export const mod_odai_maker = {
       this.master_odai = Odai.sample
     },
     odai_src_random_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       const odai = OdaiSampleInfo.sample
       if (odai) {
         this.master_odai = odai

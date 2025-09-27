@@ -7,7 +7,7 @@
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
-    @choose="() => sfx_play_click()"
+    @choose="() => sfx_click()"
     @start="start_handle"
     @end="end_handle"
     draggable=".draggable_item"

@@ -23,13 +23,13 @@ export const general_setting_modal = {
 
     general_setting_modal_open_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_setting_modal_open()
     },
 
     general_setting_modal_close_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_setting_modal_close()
     },
 
@@ -38,7 +38,7 @@ export const general_setting_modal = {
       this.general_setting_modal_instance = this.modal_card_open({
         component: GeneralSettingModal,
         onCancel: () => {
-          this.sfx_play_click()
+          this.sfx_click()
           this.general_setting_modal_close()
         },
       })

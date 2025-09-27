@@ -5,7 +5,7 @@ export const mod_chore = {
     //   this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     // },
     official_show_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.window_popup_if_desktop(this.official_show_url, {width: 400, height: 700})
     },
   },

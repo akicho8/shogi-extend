@@ -2,14 +2,14 @@
 .WkbkArticleIndexSidebarBody
   b-menu
     //- b-menu-list(label="Action" v-if="development_p")
-    //-   b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-articles-new'}" label="問題作成" @click.native="sfx_play_click()")
+    //-   b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'rack-articles-new'}" label="問題作成" @click.native="sfx_click()")
 
     b-menu-list(label="コンテンツ")
-      b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト"   @click.native="sfx_play_click()")
-      b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sfx_play_click()")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-articles'}" label="問題リスト"   @click.native="sfx_click()")
+      b-menu-item(tag="nuxt-link" :to="{name: 'rack-books'}"    label="問題集リスト" @click.native="sfx_click()")
 
     b-menu-list(label="表示オプション")
-      b-menu-item.is_active_unset.sidebar_columns_toggle(:disabled="base.display_option_disabled" @click="sfx_play_click()")
+      b-menu-item.is_active_unset.sidebar_columns_toggle(:disabled="base.display_option_disabled" @click="sfx_click()")
         template(slot="label" slot-scope="props")
           | 表示カラム
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -22,7 +22,7 @@
             :label="e.name"
             )
 
-      b-menu-item.is_active_unset(@click="sfx_play_click()" :disabled="base.display_option_disabled")
+      b-menu-item.is_active_unset(@click="sfx_click()" :disabled="base.display_option_disabled")
         template(slot="label" slot-scope="props")
           | 図面表示
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -33,7 +33,7 @@
       b-menu-item.is_active_unset(:disabled="base.display_option_disabled" v-if="development_p")
         template(slot="label")
           span 表示カラム
-          b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sfx_play_click()")
+          b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="sfx_click()")
             b-icon(icon="dots-vertical" slot="trigger")
             template(v-for="e in base.ArticleIndexColumnInfo.values")
               b-dropdown-item.px-4(@click.native.prevent.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.togglable")

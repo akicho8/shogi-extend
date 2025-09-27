@@ -20,7 +20,7 @@ export const mod_kifu_copy_buttons = {
 
     // 指定の解答のコピー処理
     answers_kifu_copy_handle(moves_answer) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.general_kifu_copy(this.current_article.init_sfen_with(moves_answer), {to_format: "kif"})
     },
   },

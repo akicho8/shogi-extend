@@ -12,7 +12,7 @@ export const mod_sp = {
 
   methods: {
     // internal_rule_input_handle() {
-    //   this.sfx_play_click()
+    //   this.sfx_click()
     // },
 
     // 操作モードで指したときmovesあり棋譜(URLに反映する)

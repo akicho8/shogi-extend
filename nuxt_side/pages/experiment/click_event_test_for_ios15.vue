@@ -32,7 +32,7 @@ export default {
       // e.preventDefault()
       // e.stopPropagation()
       console.log(e)
-      this.sfx_play_click()
+      this.sfx_click()
       this.counter += 1
       this.list = [e.type, ...this.list]
       this.list = _.take(this.list, 10)

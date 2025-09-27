@@ -17,7 +17,7 @@ export const mod_give_up = {
   methods: {
     // 投了確認モーダルを開く
     give_up_modal_open() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.give_up_modal_close()
       this.give_up_modal_instance = this.modal_card_open({
         component: GiveUpModal,

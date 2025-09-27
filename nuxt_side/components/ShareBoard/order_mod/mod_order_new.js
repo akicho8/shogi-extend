@@ -37,7 +37,7 @@ export const mod_order_new = {
         if (this.room_is_empty_p()) { return }
 
         this.sidebar_p = false
-        this.sfx_play_click()
+        this.sfx_click()
 
         this.os_modal_init()
 
@@ -50,7 +50,7 @@ export const mod_order_new = {
           // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
           onCancel: () => {
             Gs.assert(false, "must not happen")
-            this.sfx_play_click()
+            this.sfx_click()
             this.os_modal_close()
           },
         })
@@ -89,7 +89,7 @@ export const mod_order_new = {
 
     // 閉じる
     os_modal_close_confirm(params = {}) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.sb_talk("変更を適用せずに閉じようとしています")
       this.dialog_confirm({
         title: "ちょっと待って",

@@ -19,7 +19,7 @@
 //
 //   xxx_handle() {
 //     if (this.pc_standby_ok >= 1) {
-//       this.sfx_play_click()
+//       this.sfx_click()
 //     }
 //   }
 //
@@ -98,7 +98,7 @@ export const params_controller = {
       })
     },
     pc_data_reset_handle(options = {}) {
-      this.sfx_play_click()
+      this.sfx_click()
       if ("sidebar_p" in this) {
         this.sidebar_p = false
       }

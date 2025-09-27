@@ -5,7 +5,7 @@ export const mod_dashboard = {
   methods: {
     general_dashboard_modal_handle() {
       this.sidebar_p = false
-      this.sfx_play_click()
+      this.sfx_click()
       this.modal_card_open({
         component: SbDashboardModal,
       })

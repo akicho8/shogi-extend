@@ -4,7 +4,7 @@ export const mod_source_trim = {
   methods: {
     // 入力済みの棋譜をいったん sfen に変換してから trim する
     any_source_trim_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       const params = {
         any_source: this.body,
         to_format: "sfen",

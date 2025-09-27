@@ -28,7 +28,7 @@ b-table.SwarsBattleIndexTable(
   SwarsBattleIndexTableEmpty(slot="empty" v-if="!APP.loading_p && $route.query.query && APP.xi.total === 0")
 
   b-table-column(v-slot="{row}" field="id" :label="APP.ColumnInfo.fetch('id').name" :visible="APP.column_visible_p('id')" sortable centered numeric)
-    nuxt-link(:to="APP.show_route_params(row)" @click.native="sfx_play_click()") \#{{row.id}}
+    nuxt-link(:to="APP.show_route_params(row)" @click.native="sfx_click()") \#{{row.id}}
 
   b-table-column(v-slot="{row}" :label="APP.xi.current_swars_user_key ? '自分' : 'WIN'" :visible="APP.column_visible_p('membership_left')" cell-class="membership")
     SwarsBattleIndexMembership(:row="row" :membership="row.memberships[0]" :with_user_key="APP.column_visible_p('user_key_left')")
@@ -73,7 +73,7 @@ b-table.SwarsBattleIndexTable(
     | {{row.imode_info.name}}
 
   b-table-column(v-slot="{row}" field="preset_id" :label="APP.ColumnInfo.fetch('preset_key').name" :visible="APP.column_visible_p('preset_key')" sortable centered)
-    nuxt-link.is_hover_only_link_color(:to="{name: 'swars-search', query: {query: row.preset_info.name}}" @click.native="sfx_play_click()")
+    nuxt-link.is_hover_only_link_color(:to="{name: 'swars-search', query: {query: row.preset_info.name}}" @click.native="sfx_click()")
       | {{row.preset_info.name}}
 
   b-table-column(v-slot="{row}" field="battled_at" :label="APP.ColumnInfo.fetch('battled_at').name" :visible="APP.column_visible_p('battled_at')" sortable centered)
@@ -85,14 +85,14 @@ b-table.SwarsBattleIndexTable(
         v-if="APP.column_visible_p('piyo_shogi')"
         type="button"
         :href="APP.kifu_vo(row).piyo_url"
-        @click="sfx_play_click()"
+        @click="sfx_click()"
         )
 
       KentoButton(
         v-if="APP.column_visible_p('kento')"
         tag="a"
         :href="APP.kifu_vo(row).kento_url"
-        @click="sfx_play_click()"
+        @click="sfx_click()"
         )
 
       KifCopyButton.kif_copy(
@@ -126,7 +126,7 @@ b-table.SwarsBattleIndexTable(
         v-if="APP.column_visible_p('show')"
         tag="nuxt-link"
         :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location_key}}"
-        @click.native="sfx_play_click()"
+        @click.native="sfx_click()"
         )
         | 詳細
 </template>

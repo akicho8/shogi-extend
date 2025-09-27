@@ -22,15 +22,15 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     test_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.force_sync("テスト転送")
     },
     sync_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.force_sync_direct()
       this.$emit("close")
     },

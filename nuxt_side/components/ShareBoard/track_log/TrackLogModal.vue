@@ -25,15 +25,15 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     test_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.tl_test()
     },
     clear_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.SB.tl_clear()
     },
   },

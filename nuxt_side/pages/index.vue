@@ -17,7 +17,7 @@
         template(v-for="e in config")
           template(v-if="(e.display_p && !e.experiment_p) || development_p")
             .column.is-one-third-desktop.is-half-tablet
-              nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sfx_play_click()")
+              nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sfx_click()")
                 .card-image
                   figure.image
                     //- b-image.is-marginless(:src="`/ogp/${e.og_image_key}.png`")
@@ -41,7 +41,7 @@
             template(v-for="e in config")
               template(v-if="e.display_p && !e.experiment_p")
                 li
-                  nuxt-link(:to="e.nuxt_link_to" @click.native="sfx_play_click()") {{e.title}}
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sfx_click()") {{e.title}}
 
         .column(v-if="false")
           .title Experiment
@@ -49,17 +49,17 @@
             template(v-for="e in config")
               template(v-if="e.display_p && e.experiment_p")
                 li
-                  nuxt-link(:to="e.nuxt_link_to" @click.native="sfx_play_click()") {{e.title}}
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sfx_click()") {{e.title}}
 
         .column
           .title About
           ul
             li
-              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sfx_play_click()") プライバシーポリシー
+              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sfx_click()") プライバシーポリシー
             li
-              nuxt-link(:to="{path: '/about/terms'}" @click.native="sfx_play_click()") 利用規約
+              nuxt-link(:to="{path: '/about/terms'}" @click.native="sfx_click()") 利用規約
             li
-              nuxt-link(:to="{path: '/about/credit'}" @click.native="sfx_play_click()") クレジット
+              nuxt-link(:to="{path: '/about/credit'}" @click.native="sfx_click()") クレジット
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     title_click_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.toast_ok("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
     },
   },

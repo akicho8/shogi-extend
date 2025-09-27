@@ -260,7 +260,7 @@ export default {
       this.qs_ls_save()
       if (this.params.get_then_axios_get) {
         // URL を書き換えずにこっそり GET したい場合
-        // this.sfx_play_click()
+        // this.sfx_click()
         const new_params2 = {...this.invisible_params, ...this.new_params}
         this.$axios.$get(this.current_api_path, {params: this.params_serialize(new_params2)}).then(params => this.params_receive(params))
       } else {
@@ -285,11 +285,11 @@ export default {
       this.browser_query_delete(new_params2)   // ブラウザ上で表示させたくないパラメータを削除する(new_params2 を破壊する)
       this.$router.push({query: this.params_serialize(new_params2)}, () => {
         this.debug_alert("$router.push 成功")
-        // this.sfx_play_click()
+        // this.sfx_click()
       }, () => {
         if (this.params.router_push_failed_then_fetch) {
           this.debug_alert("$router.push 失敗 (だが自力でfetch)")
-          // this.sfx_play_click()
+          // this.sfx_click()
           this.$fetch()         // Googleシートの場合はこの方法で自力で呼ぶ
         } else {
           this.debug_alert("$router.push 失敗")

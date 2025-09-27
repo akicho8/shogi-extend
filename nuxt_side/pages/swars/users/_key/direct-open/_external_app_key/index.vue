@@ -6,7 +6,7 @@ client-only
         b-navbar-item.has-text-weight-bold.is-size-7-mobile(tag="div") {{long_title}}
     MainSection
       .container
-        b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sfx_play_click()")
+        b-button(tag="nuxt-link" :to="{name: 'swars-search', query: {query: $route.params.key}}" @click.native="sfx_click()")
           | ← 検索に戻る
     DebugPre(v-if="development_p") {{config}}
 </template>
@@ -40,7 +40,7 @@ export default {
         confirmText: "わかった",
         type: 'is-info',
         animation: "", // 最初から表示しているようにしたいのでアニメーションOFF
-        onConfirm: () => this.sfx_play_click(),
+        onConfirm: () => this.sfx_click(),
       })
     } else {
       return this.$axios.$get("/w.json", {params: {query: this.$route.params.key, per: 1}}).then(config => {

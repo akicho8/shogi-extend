@@ -142,7 +142,7 @@ export default {
   inject: ["QS"],
   methods: {
     click_talk_handle(str) {
-      this.sfx_play_click()
+      this.sfx_click()
       this.talk(str)
     },
   },

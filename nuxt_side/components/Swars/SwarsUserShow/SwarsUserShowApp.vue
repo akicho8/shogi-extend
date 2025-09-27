@@ -14,7 +14,7 @@
       PageCloseButton(@click="back_handle" position="is_absolute")
       SwarsUserShowDropdownMenu
       SwarsUserShowHead
-      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sfx_play_click()" @click.native="tab_item_click_handle($event)")
+      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sfx_click()" @click.native="tab_item_click_handle($event)")
         b-tab-item(headerClass="my_tab" label="日")
         b-tab-item(headerClass="vs_tab" label="段")
         b-tab-item(headerClass="my_tab" label="攻")

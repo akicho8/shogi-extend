@@ -10,12 +10,12 @@ export const vue_auth = {
         component: NuxtLoginContainer,
         animation: "",
         // canCancel: [],
-        onCancel: () => this.sfx_play_click(),
+        onCancel: () => this.sfx_click(),
       })
     },
 
     nuxt_login_modal_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.nuxt_login_modal_open()
     },
   },

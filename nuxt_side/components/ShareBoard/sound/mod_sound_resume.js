@@ -50,7 +50,7 @@ export const mod_sound_resume = {
 
     sound_resume_all_with_click() {
       this.sfx_resume_all()    // Howler.unload() の実行
-      this.sfx_play_click()    // Howler.unload() が正しく作動すればここで音が出る
+      this.sfx_click()    // Howler.unload() が正しく作動すればここで音が出る
     },
 
     sound_resume_all_with_rooster() {

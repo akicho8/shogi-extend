@@ -15,11 +15,11 @@ b-field.field_block.ScsInputNumber(custom-class="is-small")
         v-model="xxx_value"
         :min="min"
         :max="max"
-        @input="sfx_play_click()"
+        @input="sfx_click()"
         :disabled="!xxx_enabled"
         expanded
         )
-      b-select(v-model="xxx_compare" @input="sfx_play_click()" :disabled="!xxx_enabled" :size="TheApp.input_element_size")
+      b-select(v-model="xxx_compare" @input="sfx_click()" :disabled="!xxx_enabled" :size="TheApp.input_element_size")
         option(v-for="e in TheApp.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 

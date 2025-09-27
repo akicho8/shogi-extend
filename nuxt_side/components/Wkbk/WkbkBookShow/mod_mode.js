@@ -14,14 +14,14 @@ export const mod_mode = {
       if (this.is_running_p) {
         this.sfx_stop_all()
         this.talk("途中で辞めました")
-        this.sfx_play_click()
+        this.sfx_click()
         this.mode_set("standby")
         this.re_ox_stop()
       }
     },
 
     close_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.mode_set("standby")
     },
   },

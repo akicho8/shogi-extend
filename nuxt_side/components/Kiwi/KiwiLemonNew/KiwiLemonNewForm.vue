@@ -1,6 +1,6 @@
 <template lang="pug">
 .KiwiLemonNewForm.column.is-half.form_block
-  b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sfx_play_click()")
+  b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sfx_click()")
     b-tab-item(label="テキスト")
       KiwiLemonNewFormText(:base="base")
     //- b-tab-item(label="オプション")

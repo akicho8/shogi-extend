@@ -68,11 +68,11 @@ export default {
   },
   methods: {
     close_click_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
     },
     submit_click_handle() {
-      this.sfx_play_click()
+      this.sfx_click()
       this.$emit("close")
       this.app_log({emoji: ":絞込:", subject: "プレイヤー情報カスタム検索", body: [this.user_key, this.new_query_without_user_key]})
       this.$router.push({
