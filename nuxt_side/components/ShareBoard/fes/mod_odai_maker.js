@@ -20,6 +20,7 @@ export const mod_odai_maker = {
       const odai = OdaiSampleInfo.sample
       if (odai) {
         this.master_odai = odai
+        this.talk(this.master_odai.subject)
       }
     },
     odai_maker_handle() {
