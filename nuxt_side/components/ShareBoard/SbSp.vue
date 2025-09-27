@@ -79,8 +79,8 @@ export default {
 
       if (this.SB.order_enable_p || this.SB.cc_play_p) {
         // 反則時の挙動
-        hv.sp_illegal_validate = this.SB.illegal_behavior_info.sp_illegal_validate
-        hv.sp_illegal_cancel   = this.SB.illegal_behavior_info.sp_illegal_cancel
+        hv.sp_illegal_validate = this.SB.foul_mode_info.sp_illegal_validate
+        hv.sp_illegal_cancel   = this.SB.foul_mode_info.sp_illegal_cancel
       } else {
         // 検討中
         hv.sp_illegal_validate = true // 反則を検知する

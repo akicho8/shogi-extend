@@ -52,17 +52,17 @@ RSpec.describe type: :system, share_board_spec: true do
 
   describe "反則設定が「したら負け」のときだけ発動する" do
     it "「したら負け」なので発動する" do
-      visit_app(illegal_behavior_key: "is_illegal_behavior_auto")
+      visit_app(foul_mode_key: "lose")
       perpetual_trigger
       assert_selector(".IllegalModal")
     end
     it "発動しない" do
-      visit_app(illegal_behavior_key: "is_illegal_behavior_newbie")
+      visit_app(foul_mode_key: "block")
       perpetual_trigger
       assert_no_selector(".IllegalModal")
     end
     it "発動しない" do
-      visit_app(illegal_behavior_key: "is_illegal_behavior_throw")
+      visit_app(foul_mode_key: "ignore")
       perpetual_trigger
       assert_no_selector(".IllegalModal")
     end

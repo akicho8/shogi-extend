@@ -26,7 +26,7 @@ export const mod_sfen_share = {
 
       const illegal_names = lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
 
-      if (this.illegal_behavior_info.perpetual_check_p) {
+      if (this.foul_mode_info.perpetual_check_p) {
         this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
         // 反則名を配列を作る
         // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する

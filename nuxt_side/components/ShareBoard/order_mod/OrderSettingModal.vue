@@ -57,7 +57,7 @@
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
-          SimpleRadioButton.illegal_behavior(:base="SB" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="SB.new_v.illegal_behavior_key")
+          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_v.foul_mode_key")
         .column.is-12(v-if="SB.debug_mode_p || true")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12

@@ -11,7 +11,7 @@
     .panel-block perpetual_cop.keys_count:{{SB.perpetual_cop.keys_count}}
     .panel-block perpetual_cop.count:{{SB.perpetual_cop.count}}
     .panel-block perpetual_cop.available_p:{{SB.perpetual_cop.available_p('x')}}
-    .panel-block perpetual_check_p:{{SB.illegal_behavior_info.perpetual_check_p}}
+    .panel-block perpetual_check_p:{{SB.foul_mode_info.perpetual_check_p}}
 </template>
 
 <script>

@@ -12,23 +12,23 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   context "検討中" do
-    def illegal_behavior_key(illegal_behavior_key)
-      visit_app(:body => sfen, :illegal_behavior_key => illegal_behavior_key)
+    def foul_mode_key(foul_mode_key)
+      visit_app(:body => sfen, :foul_mode_key => foul_mode_key)
       find(".Membership.is_black .piece_P").click # 持駒の歩を持つ
       find(".place_2_2").click                    # 22打
     end
 
-    it "本来モーダルが出るはずだが順番が有効になっていないためモーダルはでない(is_illegal_behavior_newbie相当になっている)" do
-      illegal_behavior_key("is_illegal_behavior_auto")
+    it "本来モーダルが出るはずだが順番が有効になっていないためモーダルはでない(block相当になっている)" do
+      foul_mode_key("lose")
       double_pawn_warning
     end
   end
 
   context "対局中" do
-    def illegal_behavior_key(illegal_behavior_key)
+    def foul_mode_key(foul_mode_key)
       visit_app({
           :body                 => sfen,
-          :illegal_behavior_key => illegal_behavior_key,
+          :foul_mode_key => foul_mode_key,
           :room_key            => :test_room,
           :user_name            => "1",
           :fixed_member_names   => "1,2",
@@ -41,19 +41,19 @@ RSpec.describe type: :system, share_board_spec: true do
     end
 
     it "一般用「できる・注意あり(全体へ)」" do
-      illegal_behavior_key("is_illegal_behavior_auto")
+      foul_mode_key("lose")
       assert_selector(".place_2_2.current")
       assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
       assert_selector(".IllegalModal", text: "二歩で☖の勝ち")
     end
 
     it "初心者用「できない・注意あり(本人へ)」" do
-      illegal_behavior_key("is_illegal_behavior_newbie")
+      foul_mode_key("block")
       double_pawn_warning
     end
 
     it "玄人用「できる・注意なし」" do
-      illegal_behavior_key("is_illegal_behavior_throw")
+      foul_mode_key("ignore")
       assert_selector(".place_2_2.current")
       assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
     end
