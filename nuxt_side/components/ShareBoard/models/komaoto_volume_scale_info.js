@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs } from "@/components/models/gs.js"
 
-export class KomaotoVolumeInfo extends ApplicationMemoryRecord {
+export class KomaotoVolumeScaleInfo extends ApplicationMemoryRecord {
   static field_label   = "駒音"
   // static field_message = "音を立てるのは失礼である派は小さくすべし (初期値: 5)" // ::SE_PIECE_PUT_VOLUME::
   static field_message = "" // ::SE_PIECE_PUT_VOLUME::

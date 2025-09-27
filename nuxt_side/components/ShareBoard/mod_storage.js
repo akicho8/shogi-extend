@@ -12,7 +12,7 @@ export const mod_storage = {
     ParamInfo() { return ParamInfo },
 
     ls_storage_key() {
-      return `share_board/V${this.AppConfig.STORAGE_VERSION}`
+      return `share_board${this.AppConfig.STORAGE_KEY_SUFFIX}`
     },
   },
 }

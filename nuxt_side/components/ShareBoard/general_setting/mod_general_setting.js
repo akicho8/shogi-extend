@@ -3,7 +3,7 @@ import { general_setting_modal } from "./general_setting_modal.js"
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
 import { ClockVolumeScaleInfo        } from "../models/ClockVolumeScaleInfo.js"
-import { KomaotoVolumeInfo      } from "../models/komaoto_volume_info.js"
+import { KomaotoVolumeScaleInfo      } from "../models/komaoto_volume_scale_info.js"
 import { TalkVolumeScaleInfo   } from "../models/talk_volume_scale_info.js"
 import { CommonVolumeScaleInfo } from "../models/common_volume_scale_info.js"
 
@@ -21,7 +21,7 @@ import { SettingCategoryInfo  } from "./setting_category_info.js"
 export const mod_general_setting = {
   mixins: [general_setting_modal],
   beforeDestroy() {
-    this.$sound.g_common_volume_scale_reset()
+    this.g_common_volume_scale_reset()
     this.g_talk_volume_scale_reset()
   },
   watch: {
@@ -49,8 +49,8 @@ export const mod_general_setting = {
   computed: {
     CommonVolumeScaleInfo() { return CommonVolumeScaleInfo },
     TalkVolumeScaleInfo()   { return TalkVolumeScaleInfo   },
-    ClockVolumeScaleInfo()        { return ClockVolumeScaleInfo        },
-    KomaotoVolumeInfo()      { return KomaotoVolumeInfo      },
+    ClockVolumeScaleInfo()  { return ClockVolumeScaleInfo  },
+    KomaotoVolumeScaleInfo()     { return KomaotoVolumeScaleInfo     },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
     setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },

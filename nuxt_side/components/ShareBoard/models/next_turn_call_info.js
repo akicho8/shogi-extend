@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class NextTurnCallInfo extends ApplicationMemoryRecord {
-  static field_label = "手番のお知らせ"
+  static field_label = "手番の通知"
   static field_message = ""
 
   static get define() {

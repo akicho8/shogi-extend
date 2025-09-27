@@ -6,8 +6,8 @@ export class VibrationModeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "vibration_mode_on",  name: "する",   type: "is-primary", message: "手番が来たら振動する (Android のみ)",  },
-      { key: "vibration_mode_off", name: "しない", type: "is-primary", message: "手番が来ても振動しない",               },
+      { key: "vibration_mode_on",  name: "する",   type: "is-primary", message: "自分の手番が来たら振動する (Android のみ)",  },
+      { key: "vibration_mode_off", name: "しない", type: "is-primary", message: "自分の手番が来ても振動しない",               },
     ]
   }
 }

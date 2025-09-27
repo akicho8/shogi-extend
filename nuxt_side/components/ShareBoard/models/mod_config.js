@@ -15,7 +15,7 @@ export const AppConfig = {
 
   GPT_FUNCTION: true,                         // ChatGPT を有効にするか？
 
-  STORAGE_VERSION: "1",                       // localStorage のキーのサフィックス
+  STORAGE_KEY_SUFFIX: "",                     // localStorage のキーのサフィックス 例: "/V1"
 }
 
 if (process.env.NODE_ENV === "development") {
