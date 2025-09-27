@@ -5,8 +5,8 @@
       | お題メーカー
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.debug_mode_p")
         | (ID:{{SB.master_odai.unique_code}})
-    a.odai_src_random_handle(@click="odai_src_random_handle")
-      b-icon(:icon="dice.to_icon")
+    a.odai_src_random_handle.is-unselectable(@click="odai_src_random_handle")
+      | 🎲
   .modal-card-body
     b-field(label-position="on-border")
       template(#label)
@@ -29,7 +29,6 @@
 <script>
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
-import { Dice } from "@/components/models/dice.js"
 
 const VALIDATION_ON = false
 import { support_child } from "../support_child.js"
@@ -39,7 +38,6 @@ export default {
   mixins: [support_child],
   data() {
     return {
-      dice: new Dice(),
     }
   },
   mounted() {
@@ -68,7 +66,6 @@ export default {
       }
     },
     odai_src_random_handle() {
-      this.dice.roll()
       this.SB.odai_src_random_handle()
     },
   },
