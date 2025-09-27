@@ -50,8 +50,7 @@ Vue.mixin({
     ...mapGetters(["g_loading_p"]),
     // ...mapState("swars", [
     // ]),
-    development_p() {
-      return process.env.NODE_ENV === "development"
-    },
+    development_p() { return process.env.NODE_ENV === "development" },
+    production_p()  { return !this.development_p },
   },
 })

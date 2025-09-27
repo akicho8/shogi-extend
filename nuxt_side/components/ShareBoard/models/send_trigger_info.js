@@ -8,7 +8,7 @@ export class SendTriggerInfo extends ApplicationMemoryRecord {
     return [
       { key: "send_trigger_enter",      name: "ENTER",            type: "is-primary", message: "ENTERキーで送信する",                      talk_message: null,                  },
       { key: "send_trigger_meta_enter", name: "装飾キー + ENTER", type: "is-primary", message: "SHIFTキーなどを押しながらENTERで送信する", talk_message: "装飾キープラスENTER", },
-      { key: "send_trigger_none",       name: "なし",             type: "is-primary", message: "送信ボタンのみで送信する",                 talk_message: null,                  },
+      { key: "send_trigger_none",       name: "ボタン",           type: "is-primary", message: "送信ボタンのみで送信する",                 talk_message: null,                  },
     ]
   }
 }

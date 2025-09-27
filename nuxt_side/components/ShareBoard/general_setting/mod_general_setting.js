@@ -34,7 +34,7 @@ export const mod_general_setting = {
       this.sfx_click()
       let count = 0
       this.SettingCategoryInfo.values.forEach(info => {
-        info.list.values.forEach(e => {
+        info.items_model.values.forEach(e => {
           const param_info = this.ParamInfo.fetch(e.key)
           const value = param_info.default_for(this)
           if (this.$data[e.key] != value) {

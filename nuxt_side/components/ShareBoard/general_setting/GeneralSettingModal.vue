@@ -7,11 +7,11 @@
   .modal-card-body
     //- https://buefy.org/documentation/tabs
     b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle" expanded)
-      template(v-for="e in SB.SettingCategoryInfo.values")
+      template(v-for="e in active_categories")
         b-tab-item(:label="e.name")
     .tab_content
       .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_category_info.key")
-        template(v-for="item in SB.setting_category_info.list.values")
+        template(v-for="item in SB.setting_category_info.items_model.values")
           .column(:class="item.column_class || 'is-12-tablet'")
             SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
@@ -36,7 +36,7 @@ export default {
     }
   },
   watch: {
-    tab_index(v) { this.SB.setting_category_key = this.SB.SettingCategoryInfo.fetch(v).key },
+    tab_index(v) { this.SB.setting_category_key = this.active_categories[v].key },
   },
   methods: {
     close_handle() {
@@ -45,6 +45,11 @@ export default {
     input_handle(index) {
       this.sfx_click()
       this.SB.sb_talk(this.SB.SettingCategoryInfo.fetch(index).name)
+    },
+  },
+  computed: {
+    active_categories() {
+      return this.SB.SettingCategoryInfo.values.filter(e => e.showable_p(this.SB))
     },
   },
 }
