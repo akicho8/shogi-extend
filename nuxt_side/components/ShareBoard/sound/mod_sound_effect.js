@@ -26,7 +26,7 @@ export const mod_sound_effect = {
     // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす→やめ)
     se_piece_move() {
       // this.$nextTick(() => {
-      this.$sound.play("se_piece_put", {volume: this.move_volume})
+      this.$sound.play("se_piece_put", {volume_scale: this.komaoto_volume})
       this.beat_call("short")
       // })
     },

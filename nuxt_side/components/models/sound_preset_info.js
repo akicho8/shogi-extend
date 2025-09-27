@@ -98,4 +98,9 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_pong",                   name: "PONG",                     volume: 0.50, source: require("@/assets/USF/SPORTS/Table_Tennis/TABLE_TENNIS_Racket_Ball_Hit_02_mono.wav"),                 },
     ]
   }
+
+  // // マスターボリュームの初期値を 0.5 にしている影響でもともと 1.0 を想定で設定していた効果音ボリュームを2倍しておく
+  // get volume_x2() {
+  //   return this.volume * 2.0
+  // }
 }

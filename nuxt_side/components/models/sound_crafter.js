@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === "development") {
   console.log(`[${process.client ? 'CSR' : 'SSR'}][load] Howler `)
 }
 
+import { Gs } from "@/components/models/gs.js"
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
 import QueryString from "query-string"
@@ -26,9 +27,9 @@ export const SoundCrafter = {
       options = {
         src: e.source,
         volume: e.volume,
-        ...options,
+        __key__: key,
+          ...options,
       }
-      // https://github.com/goldfire/howler.js#documentation
       return this.play_now(options)
     }
   },
@@ -71,9 +72,58 @@ export const SoundCrafter = {
       autoplay: true,
       ...options,
     }
-    if (QueryString.parse(location.search)["__system_test_now__"]) {
-      options.src = require("@/assets/silent.mp3")
+
+    // if (QueryString.parse(location.search)["__system_test_now__"]) {
+    //   options.src = require("@/assets/silent.mp3")
+    // }
+
+    options.src ??= require("@/assets/silent.mp3")
+
+    // volume_scale によって元のボリュームを調整する
+    // volume_scale が 0.5 であれば元のボリュームは変化しない
+    // volume_scale が 1.0 で2倍になる
+    const old_volume = options.volume
+    let scale = null
+    const volume_scale = options.volume_scale
+    if (volume_scale != null) {
+      Gs.assert("number", typeof volume_scale)
+      scale = Gs.map_range(volume_scale, 0, 10, 0.0, 2.0)
+      options.volume *= scale
     }
+
+    // https://github.com/goldfire/howler.js#documentation
+    if (process.env.NODE_ENV === "development") {
+      let arg = null
+      if (options.__key__) {
+        arg = `'${options.__key__}'`
+      } else {
+        arg = "mp3"
+      }
+      console.log(`play_now(${arg}) (volume: ${old_volume} -> ${options.volume}, volume_scale: ${options.volume_scale ?? ""}, scale: ${scale ?? ""})`)
+    }
+
     return new Howl(options)
   },
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // common_volume_scale: 5,
+
+  common_volume_scale_set(volume) {
+    Gs.assert("number", typeof volume)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`common_volume_scale_set(${volume})`)
+    }
+    const howler_volume = Gs.map_range(volume, 0, 10, 0.0, 1.0)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Howler.volume(${howler_volume})`)
+    }
+    Howler.volume(howler_volume)
+  },
+
+  common_volume_scale_reset() {
+    this.common_volume_scale_set(10)
+  },
 }
+
+SoundCrafter.common_volume_scale_reset()

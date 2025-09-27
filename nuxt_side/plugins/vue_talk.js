@@ -1,24 +1,24 @@
 // HOWLER.js
 // https://github.com/goldfire/howler.js#documentation
 
-const MESSAGE_LENGTH_MAX = 140
-
-const HOWL_TALK_OPTIONS_DEFAULT = {
-  volume: 0.5,   // ~/src/shogi-extend/nuxt_side/components/ShareBoard/models/talk_volume_info.js の音量と合わせる
-  rate: 1.5,
-}
-
+import { VueTalkConfig } from "@/plugins/vue_talk_config.js"
 import { SoundCrafter } from "@/components/models/sound_crafter.js"
 import { Gs } from "@/components/models/gs.js"
 
 export const vue_talk = {
-  data() {
-    return {
-      g_talk_volume: HOWL_TALK_OPTIONS_DEFAULT.volume,
-    }
-  },
+  // ここで定義してしまうと各コンポーネント毎の g_talk_volume_scale が存在してしまいグローバルでなくなる
+  // data() {
+  //   return {
+  //     g_talk_volume_scale: VOLUME_SCALE,
+  //   }
+  // },
 
   methods: {
+    // 音量スケールを元に戻す
+    g_talk_volume_scale_reset() {
+      this.g_talk_volume_scale = VueTalkConfig.VOLUME_SCALE
+    },
+
     // しゃべる
     // ・タブが見えているときだけの条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
@@ -28,12 +28,18 @@ export const vue_talk = {
         return
       }
       if (options.validate_length !== false) {
-        if (message.length > MESSAGE_LENGTH_MAX) {
+        if (message.length > VueTalkConfig.MESSAGE_LENGTH_MAX) {
           return
         }
       }
       if (this.$route.query.__system_test_now__) {
-        SoundCrafter.play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
+        options = {
+          rate: VueTalkConfig.RATE,
+          volume: VueTalkConfig.VOLUME_BASE,
+          volume_scale: this.g_talk_volume_scale,
+          ...options,
+        }
+        SoundCrafter.play_now(options)
         return
       }
       const params = {
@@ -49,21 +55,19 @@ export const vue_talk = {
       })
     },
 
-    // 音量を元に戻す
-    talk_volume_reset() {
-      this.g_talk_volume = HOWL_TALK_OPTIONS_DEFAULT.volume
-    },
-
     // private
 
     talk_play(e, options = {}) {
       // https://github.com/goldfire/howler.js#documentation
       options = {
         src: e.browser_path,
-        ...HOWL_TALK_OPTIONS_DEFAULT,
-        volume: this.g_talk_volume,
+        rate: VueTalkConfig.RATE,
+        volume: VueTalkConfig.VOLUME_BASE,
+        volume_scale: this.g_talk_volume_scale,
         ...options,
       }
+      console.log("talk_play")
+      console.log(options)
       Gs.assert(options.volume != null, "options.volume != null")
       SoundCrafter.play_now(options) // 戻値不要
     },

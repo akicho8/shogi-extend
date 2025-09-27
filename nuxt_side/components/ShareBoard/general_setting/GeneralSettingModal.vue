@@ -3,8 +3,10 @@
   .modal-card-head
     .modal-card-title
       | 設定
+    b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") リセット
   .modal-card-body
-    b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle")
+    //- https://buefy.org/documentation/tabs
+    b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle" expanded)
       template(v-for="e in SB.SettingCategoryInfo.values")
         b-tab-item(:label="e.name")
     .tab_content

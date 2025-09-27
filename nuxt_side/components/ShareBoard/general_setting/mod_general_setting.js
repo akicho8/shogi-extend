@@ -2,16 +2,18 @@ import { general_setting_modal } from "./general_setting_modal.js"
 
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { ClockVolumeInfo       } from "../models/clock_volume_info.js"
-import { MoveVolumeInfo       } from "../models/move_volume_info.js"
-import { TalkVolumeInfo       } from "../models/talk_volume_info.js"
+import { ClockVolumeScaleInfo        } from "../models/ClockVolumeScaleInfo.js"
+import { KomaotoVolumeInfo      } from "../models/komaoto_volume_info.js"
+import { TalkVolumeScaleInfo   } from "../models/talk_volume_scale_info.js"
+import { CommonVolumeScaleInfo } from "../models/common_volume_scale_info.js"
+
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
-import { AiModeInfo          } from "../models/ai_mode_info.js"
+import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
-import { VibrationModeInfo      } from "../models/vibration_mode_info.js"
-import { NextTurnCallInfo      } from "../models/next_turn_call_info.js"
+import { VibrationModeInfo    } from "../models/vibration_mode_info.js"
+import { NextTurnCallInfo     } from "../models/next_turn_call_info.js"
 import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
 import { LegalInfo            } from "../models/legal_info.js"
 import { SettingCategoryInfo  } from "./setting_category_info.js"
@@ -19,17 +21,38 @@ import { SettingCategoryInfo  } from "./setting_category_info.js"
 export const mod_general_setting = {
   mixins: [general_setting_modal],
   beforeDestroy() {
-    this.talk_volume_reset()
+    this.$sound.common_volume_scale_reset()
+    this.g_talk_volume_scale_reset()
   },
   watch: {
-    talk_volume(v) { this.g_talk_volume = v },
+    common_volume_scale(v) { this.common_volume_scale_init() },
+    talk_volume_scale(v)    { this.g_talk_volume_scale = v },
+  },
+  methods: {
+    common_volume_scale_init() { this.$sound.common_volume_scale_set(this.common_volume_scale) },
+
+    // 初期値に戻すボタン
+    general_setting_reset_handle() {
+      this.$sound.play_click()
+      let count = 0
+      this.SettingCategoryInfo.values.forEach(info => {
+        info.list.values.forEach(e => {
+          const param_info = this.ParamInfo.fetch(e.key)
+          const value = param_info.default_for(this)
+          if (this.$data[e.key] != value) {
+            this.$data[e.key] = value
+            count += 1
+          }
+        })
+      })
+      this.toast_ok(`${count}件の設定を初期値に戻しました`)
+    },
   },
   computed: {
-    ClockVolumeInfo()         { return ClockVolumeInfo                                           },
-
-    MoveVolumeInfo()        { return MoveVolumeInfo                                          },
-
-    TalkVolumeInfo()          { return TalkVolumeInfo                                            },
+    CommonVolumeScaleInfo() { return CommonVolumeScaleInfo },
+    TalkVolumeScaleInfo()   { return TalkVolumeScaleInfo   },
+    ClockVolumeScaleInfo()        { return ClockVolumeScaleInfo        },
+    KomaotoVolumeInfo()      { return KomaotoVolumeInfo      },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
     setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },

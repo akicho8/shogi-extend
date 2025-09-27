@@ -35,6 +35,7 @@ b-field.SimpleRadioButton(
       :min="real_model.min"
       :max="real_model.max"
       :step="real_model.step ?? 1"
+      :ticks="real_model.ticks"
       @change="input_handle"
       )
   template(v-else)

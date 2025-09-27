@@ -108,11 +108,7 @@ export const mod_chat = {
     // ログ用の追加データとして data に名前を入れておく
     // 直接 talk を使うべからず
     sb_talk(content, options = {}) {
-      return this.talk(content, {
-        data: this.user_name,
-        // volume: this.talk_volume,
-        ...options,
-      })
+      return this.talk(content, {data: this.user_name, ...options})
     },
 
     send_trigger_p(e) {

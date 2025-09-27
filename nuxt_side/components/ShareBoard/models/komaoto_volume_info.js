@@ -1,13 +1,15 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs } from "@/components/models/gs.js"
 
-export class MoveVolumeInfo extends ApplicationMemoryRecord {
+export class KomaotoVolumeInfo extends ApplicationMemoryRecord {
   static field_label   = "駒音"
-  static field_message = "音を立てるのは失礼である派は小さくすべし (初期値: 0.3)" // ::SE_PIECE_PUT_VOLUME::
+  // static field_message = "音を立てるのは失礼である派は小さくすべし (初期値: 5)" // ::SE_PIECE_PUT_VOLUME::
+  static field_message = "" // ::SE_PIECE_PUT_VOLUME::
   static input_type    = "slider"
-  static min           = 0.0
-  static step          = 0.1
-  static max           = 1.0
+  static min           = 0
+  static step          = 1
+  static max           = 10
+  static ticks         = true
 
   static input_handle_callback(context, value) {
     const app = context.base

@@ -70,6 +70,17 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
+        desc: "localStorage 関連全リセット",
+        key: "reset",
+        example: "/reset",
+        command_fn: (context, args) => {
+          if (!context.debug_mode_p) {
+            return
+          }
+          context.pc_data_reset()
+        },
+      },
+      {
         desc: "デバッグモード(引数なしでトグル)",
         key: "debug",
         example: "/debug on",

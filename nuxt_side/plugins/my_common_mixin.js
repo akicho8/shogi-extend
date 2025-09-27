@@ -21,17 +21,56 @@ Vue.mixin({
     vue_shared_string,
   ],
   methods: {
-    // 正直なぜこんな面倒なことを繰り返さないといけないのかわかっていない
+    // なぜこんな苦行を強いられるのか謎
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ...mapMutations("global_var", [
+      "g_var1_set", // this.$store.commit("global_var/g_var1_set", value) を this.g_var1_set(value) と書けるようにするため
+    ]),
+
+    ...mapMutations("global_var", [
+      "__g_talk_volume_scale_set", // this.$store.commit("global_var/__g_talk_volume_scale_set", value) を this.__g_talk_volume_scale_set(value) と書けるようにするため
+    ]),
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     ...mapMutations("user", [
       "m_auth_user_logout",
     ]),
-    ...mapActions('user', [
+    ...mapActions("user", [
       "a_auth_user_fetch",
       "a_auth_user_logout",
       "a_auth_user_destroy",
     ]),
   },
   computed: {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // // state を直接公開する
+    // ...mapState("global_var", [
+    //   "g_var1",
+    // ]),
+    //
+    // // getters を公開する
+    // ...mapGetters("global_var", [
+    //   "g_var1_get",
+    // ]),
+    //
+    // // attr_accessor :g_var1 相当
+    // g_var1: {
+    //   get()      { return this.$store.state.global_var.g_var1         },
+    //   set(value) { this.$store.commit("global_var/g_var1_set", value) },
+    // },
+
+    // attr_accessor :g_talk_volume_scale
+    g_talk_volume_scale: {
+      get()      { return this.$store.state.global_var.g_talk_volume_scale },
+      set(value) { this.__g_talk_volume_scale_set(value)                   },
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     ...mapState("user", [
       "g_current_user",
     ]),
@@ -42,7 +81,6 @@ Vue.mixin({
     ]),
     ...mapGetters(["g_loading_p"]),
     // ...mapState("swars", [
-    //   "g_var1",
     // ]),
     development_p() {
       return process.env.NODE_ENV === "development"

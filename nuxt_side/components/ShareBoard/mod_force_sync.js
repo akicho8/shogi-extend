@@ -1,3 +1,4 @@
+import { Gs } from "@/components/models/gs.js"
 import ForceSyncModal from "./ForceSyncModal.vue"
 import _ from "lodash"
 
@@ -57,13 +58,15 @@ export const mod_force_sync = {
       this.current_sfen = e.sfen
       this.current_turn = e.turn
 
-      let message = null
-      if (diff < 0) {
-        message = `${this.user_call_name(this.user_name)}が${-diff}手戻しました`
-      } else {
-        message = `${this.user_call_name(this.user_name)}が${diff}手進めました`
+      if (this.ac_room) {
+        let message = null
+        if (diff < 0) {
+          message = `"${this.user_call_name(this.user_name)}が${-diff}手戻しました`
+        } else {
+          message = `"${this.user_call_name(this.user_name)}が${diff}手進めました`
+        }
+        this.force_sync(message)
       }
-      this.force_sync(message)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

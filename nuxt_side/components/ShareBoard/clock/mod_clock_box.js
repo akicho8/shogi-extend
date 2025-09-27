@@ -189,12 +189,17 @@ export const mod_clock_box = {
     },
 
     cc_talk(s, options = {}) {
+      this.cc_notice(s, {toast: false, ...options})
+    },
+
+    cc_notice(s, options = {}) {
       options = {
+        type: "is-primary",
         rate: BYOYOMI_TALK_PITCH,
-        volume: this.clock_volume,
+        volume_scale: this.clock_volume_scale,
         ...options,
       }
-      this.sb_talk(s, options)
+      this.toast_primitive(s, options)
     },
 
     cc_destroy() {
