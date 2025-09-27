@@ -34,7 +34,7 @@ module BackendScript
           :default     => current_limit,
         },
         {
-          :label       => "垢BAN確認回数N回以下を対象とする (初回なら0)",
+          :label       => "垢BAN確認回数X回以下を対象とする (初回なら0)",
           :key         => :ban_crawled_count_lteq,
           :type        => :string,
           :default     => current_ban_crawled_count_lteq,

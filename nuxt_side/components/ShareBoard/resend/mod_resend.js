@@ -3,7 +3,7 @@ import { Gs } from "@/components/models/gs.js"
 import SbResendModal from "./SbResendModal.vue"
 
 const RS_ENABLE           = true // この機能を有効にするか？
-const RS_SEQ_IDS_SIZE     = 5    // rs_seq_id は直近N件保持しておく
+const RS_SEQ_IDS_SIZE     = 5    // rs_seq_id は直近X件保持しておく
 const RS_RESEND_DELAY     = 3    // 再送モーダル発動までN秒待つ
 const RS_RESEND_DELAY_MAX = 8    // 再送モーダル発動まで最大N秒待つ
 const RS_RESEND_TOAST_SEC = 6    // 再送のtoastを何秒表示するか？

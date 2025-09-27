@@ -13,6 +13,6 @@ RSpec.describe type: :system, share_board_spec: true do
     os_modal_open_handle    # 「順番設定」モーダルを開く
     os_switch_toggle   # 右上の有効スイッチをクリック
     case1("反則", "反則は「二歩」「王手放置」「駒ワープ」「死に駒」のみが対象です")
-    case1("N回指したら交代する", "1回にしておくのが無難")
+    case1("X回指したら交代する", "1回にしておくのが無難")
   end
 end

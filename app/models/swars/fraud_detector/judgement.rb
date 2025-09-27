@@ -5,8 +5,8 @@ module Swars
       extend self
 
       # 判定には複数の方法がある
-      mattr_accessor(:wave_count_threshold) { 3    } # 1. N回以上使用開始の模様があれば確定
-      mattr_accessor(:drop_total_threshold) { 15   } # 2. N回以上代指しすれば確定
+      mattr_accessor(:wave_count_threshold) { 3    } # 1. X回以上使用開始の模様があれば確定
+      mattr_accessor(:drop_total_threshold) { 15   } # 2. X回以上代指しすれば確定
       mattr_accessor(:turn_max_threshold)   { 50   } # 3. (先後合わせて)N手以上の対局 かつ↓
       mattr_accessor(:two_freq_threshold)   { 0.6  } #    M以上の割合で 2 があると確定 (最大1.0)
       mattr_accessor(:gear_freq_threshold)  { 0.22 } # 4. 121の角が0.22以上(自分の指し手の60%が121ならと同じ)

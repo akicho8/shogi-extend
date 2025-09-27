@@ -29,7 +29,7 @@ module Swars
       def momentum_user_ids(period: 3.days, at_least: 5)
         s = all
         s = s.new_only(period)                      # 直近期間
-        s = s.having(["count_all >= ?", at_least])  # N回以上の検索
+        s = s.having(["count_all >= ?", at_least])  # X回以上の検索
         s = s.order("count_all DESC")
         s.group(:user_id).count.keys
       end

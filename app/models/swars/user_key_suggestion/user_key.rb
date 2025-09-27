@@ -1,7 +1,7 @@
 module Swars
   module UserKeySuggestion
     class UserKey < SimpleDelegator
-      MANY_FOUND = 10           # N件以上で多いと見なす
+      MANY_FOUND = 10           # X件以上で多いと見なす
       LIKE_SQL   = "LOWER(user_key) LIKE ?"
 
       def initialize(user_key)
@@ -40,7 +40,7 @@ module Swars
         @suggestion_count ||= current_scope.count
       end
 
-      # N件「も」
+      # X件「も」
       def suggestion_count_suffix
         if suggestion_count >= MANY_FOUND
           "も"

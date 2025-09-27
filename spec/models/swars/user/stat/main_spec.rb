@@ -20,7 +20,7 @@ RSpec.describe Swars::User::Stat::Main, type: :model, swars_spec: true do
       it "勝敗数" do
         assert { @as_json["judge_counts"] == { "win" => 1 } }
       end
-      it "直近N件の勝敗履歴" do
+      it "直近X件の勝敗履歴" do
         assert { @as_json["judge_keys"]  == ["win"] }
       end
       it "バッジ" do
@@ -62,7 +62,7 @@ end
 # >>       名前
 # >>       ルール別の段級位
 # >>       勝敗数
-# >>       直近N件の勝敗履歴
+# >>       直近X件の勝敗履歴
 # >>       バッジ
 # >>
 # >> Swars::Top 5 slowest examples (1.67 seconds, 39.6% of total time):

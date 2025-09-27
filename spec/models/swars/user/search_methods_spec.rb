@@ -8,7 +8,7 @@ RSpec.describe Swars::User::SearchMethods, type: :model, swars_spec: true do
     assert { [Swars::User.ban_except.count, Swars::User.ban_only.count] == [0, 1] }
   end
 
-  it "ban_crawled_count_lteq: 確認回数N回以下を対象とする" do
+  it "ban_crawled_count_lteq: 確認回数X回以下を対象とする" do
     user = Swars::User.create!
     Swars::User.ban_crawled_count_lteq(0) == [user]
     Swars::User.ban_crawled_count_lteq(-1) == []

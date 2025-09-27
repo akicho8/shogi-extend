@@ -3,7 +3,7 @@ import Vue from "vue"
 import _ from "lodash"
 
 export class PerpetualCop {
-  static trigger_on_n_times = 4 // N回目の繰り返しで千日手となる
+  static trigger_on_n_times = 4 // X回目の繰り返しで千日手となる
 
   static create(...args) {
     return new this(...args)

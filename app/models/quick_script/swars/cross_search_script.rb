@@ -282,7 +282,7 @@ module QuickScript
           ################################################################################
 
           {
-            :label        => "検索対象件数 直近N件",
+            :label        => "検索対象件数 直近X件",
             :key          => :range_size,
             :type         => :numeric,
             :session_sync => true,

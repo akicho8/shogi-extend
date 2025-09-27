@@ -1,7 +1,7 @@
 module Swars
   module Importer
     class BattleImporter < Base
-      CREATE_TRY_COUNT = 3      # デッドロック対策でN回試みる (リトライ回数ではなく実行回数)
+      CREATE_TRY_COUNT = 3      # デッドロック対策でX回試みる (リトライ回数ではなく実行回数)
       private_constant :CREATE_TRY_COUNT
 
       attr_reader :battle
