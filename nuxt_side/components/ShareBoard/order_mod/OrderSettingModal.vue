@@ -29,20 +29,21 @@
           OrderTeamOne.dnd_white(:items.sync="SB.new_v.order_unit.order_state.teams[1]" label="☖")
         OrderTeamOne.dnd_watch_users(:items.sync="SB.new_v.order_unit.watch_users" label="観戦")
 
-      .shuffle_and_furigoma_buttons_container.mt-5
-        b-field.is-marginless
-          .control
-            b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
-          .control
-            b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
-        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" :icon-left="dice.to_icon") 振り駒
+      .shuffle_buttons.mt-4
+        b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
+        b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
         b-button.swap_handle(size="is-small" @click="swap_handle")
           .is-inline-flex.is-align-items-center
             | ☗
             b-icon(icon="swap-horizontal")
             | ☖
 
-      hr
+      .buttons.is-centered.mb-0.mt-4
+        b-button.furigoma_handle.mb-0(@click="furigoma_handle")
+          | 🎲
+          span.ml-2 振り駒
+
+      hr.my-4
 
       .has-text-centered.is-size-7
         | 投票でﾁｰﾑ分けするなら
@@ -54,8 +55,12 @@
         b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="SB.odai_received_p && SB.debug_mode_p")
           | 削除
 
-      hr
-      .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
+      hr.my-4
+
+      .buttons.is-centered.mb-0.mt-2(v-if="!option_block_show_p")
+        b-button.mb-0(size="is-small" @click="option_block_show_handle" icon-left="cog") オプション
+
+      .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
         .column.is-12(v-if="SB.debug_mode_p")
           SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_v.foul_mode_key")
         .column.is-12(v-if="SB.debug_mode_p")
@@ -78,7 +83,6 @@ const SHUFFLE_MAX = 8
 import { Gs           } from "@/components/models/gs.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
-import { Dice          } from "@/components/models/dice.js"
 import _ from "lodash"
 import { support_child } from "../support_child.js"
 
@@ -92,7 +96,7 @@ export default {
   },
   data() {
     return {
-      dice: new Dice(),
+      option_block_show_p: this.SB.debug_mode_p,
     }
   },
   methods: {
@@ -158,7 +162,6 @@ export default {
       Gs.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.SB.al_share({label: furigoma_pack.piece_names, message: message})
-      this.dice.roll()
     },
 
     // 先後入替
@@ -203,6 +206,11 @@ export default {
     // バリデーションなしで反映する
     os_modal_force_submit_handle() {
       this.SB.new_order_share("バリデーションなしで順番設定を反映しました")
+    },
+
+    option_block_show_handle() {
+      this.sfx_click()
+      this.option_block_show_p = true
     },
 
     hint_handle(model) {
@@ -265,7 +273,7 @@ export default {
     justify-content: center
     gap: 6px
 
-  .shuffle_and_furigoma_buttons_container
+  .shuffle_buttons
     display: flex
     align-items: center
     justify-content: center
@@ -290,6 +298,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .TeamsContainer
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .shuffle_and_furigoma_buttons_container
+    .shuffle_buttons
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

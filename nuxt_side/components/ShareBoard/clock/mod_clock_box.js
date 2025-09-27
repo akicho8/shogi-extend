@@ -337,7 +337,7 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.key === "cc_behavior_on") {
         this.toast_ok(this.__cc_receive_message(params), {onend: () => {
           if (this.received_from_self(params)) {
-            this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 3})
+            this.toast_ok("時間を設定したら対局を開始してください", {duration: 1000 * 3})
           }
         }})
       } else if (cc_behavior_info.toast_p) {
