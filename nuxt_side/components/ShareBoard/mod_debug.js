@@ -4,12 +4,9 @@ import { Gs } from "@/components/models/gs.js"
 export const mod_debug = {
   methods: {
     // for autoexec
-    is_debug_mode_on() { this.debug_mode_key = "is_debug_mode_on" },
+    debug_mode_on() { this.debug_mode_key = "on" },
 
-    debug_mode_toggle() {
-      this.debug_mode_p = !this.debug_mode_p
-    },
-
+    // for console
     debug_mode_set_any(value = null) {
       if (Gs.present_p(value)) {
         this.debug_mode_p = value
@@ -18,13 +15,16 @@ export const mod_debug = {
       }
     },
 
+    debug_mode_toggle() {
+      this.debug_mode_p = !this.debug_mode_p
+    },
   },
   computed: {
     DebugModeInfo() { return DebugModeInfo },
     debug_mode_info() { return this.DebugModeInfo.fetch(this.debug_mode_key) },
     debug_mode_p: {
-      get()  { return this.debug_mode_info.key === "is_debug_mode_on"                                  },
-      set(v) { this.debug_mode_key = Gs.str_to_boolean(v) ? "is_debug_mode_on" : "is_debug_mode_off" },
+      get()  { return this.debug_mode_info.key === "on"                  },
+      set(v) { this.debug_mode_key = Gs.str_to_boolean(v) ? "on" : "off" },
     },
   },
 }

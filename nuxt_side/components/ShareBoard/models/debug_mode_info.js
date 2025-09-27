@@ -6,8 +6,8 @@ export class DebugModeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_debug_mode_off", name: "OFF", type: "is-primary", message: null, },
-      { key: "is_debug_mode_on",  name: "ON",  type: "is-danger",  message: null, },
+      { key: "off", name: "OFF", type: "is-primary", message: null, },
+      { key: "on",  name: "ON",  type: "is-danger",  message: null, },
     ]
   }
 }
