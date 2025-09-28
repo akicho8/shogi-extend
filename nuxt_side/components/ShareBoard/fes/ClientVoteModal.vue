@@ -103,6 +103,8 @@ export default {
         font-size: 1.5rem
       &.is_inactive
         border: 3px solid transparent
+        &:hover
+          border: 3px dashed $primary
       &.is_active
         border: 3px solid $primary
 
