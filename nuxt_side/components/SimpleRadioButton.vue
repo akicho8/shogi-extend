@@ -41,6 +41,7 @@ b-field.SimpleRadioButton(
       )
   template(v-else)
     template(v-for="e in real_model.values")
+      // https://buefy.org/documentation/radio
       b-radio-button(
         v-if="e.environment == null || e.environment.includes($config.STAGE)"
         :class="e.key"
@@ -50,6 +51,7 @@ b-field.SimpleRadioButton(
         :type="e.type"
         v-on="$listeners"
         :size="element_size"
+        :expanded="false"
         )
         | {{e.name}}
 </template>
