@@ -17,7 +17,7 @@ export const AppConfig = {
 
   STORAGE_KEY_SUFFIX: "",                     // localStorage のキーのサフィックス 例: "/V1"
 
-  CLOCK_START_CONFIRM: true,                  // 途中の局面から対局開始した際に確認するか？
+  CLOCK_START_CONFIRM: false,                 // 途中の局面から対局開始した際に確認するか？
 }
 
 if (process.env.NODE_ENV === "development") {
