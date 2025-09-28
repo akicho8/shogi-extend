@@ -3,7 +3,7 @@
 export const vue_mounted_next = {
   data() {
     return {
-      mounted_next: 0,
+      mounted_next: 0,          // コンポーネント毎に存在する点に注意すること
     }
   },
   mounted() {
