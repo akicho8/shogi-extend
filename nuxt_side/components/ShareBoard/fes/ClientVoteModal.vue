@@ -90,7 +90,7 @@ export default {
 
   .items
     display: flex
-    align-items: center
+    align-items: stretch        // hover 時の枠の高さを揃えるため、高さを大きい方に統一する
     justify-content: center
     .item
       display: flex
