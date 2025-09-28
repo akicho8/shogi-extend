@@ -22,6 +22,7 @@ b-field.SimpleRadioButton(
       :max="real_model.max"
       :step="real_model.step ?? 1"
       :exponential="true"
+      :editable="false"
       @input="input_handle"
       )
   template(v-else-if="real_model.input_type === 'slider'")
