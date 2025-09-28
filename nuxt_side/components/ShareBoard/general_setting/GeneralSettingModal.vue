@@ -8,10 +8,10 @@
     //- https://buefy.org/documentation/tabs
     b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle" expanded)
       template(v-for="e in active_categories")
-        b-tab-item(:label="e.name")
+        b-tab-item(:label="e.name" :header-class="e.key")
     .tab_content
-      .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_category_info.key")
-        template(v-for="item in SB.setting_category_info.items_model.values")
+      .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_root_info.key")
+        template(v-for="item in SB.setting_root_info.tab_model.values")
           .column(:class="item.column_class || 'is-12-tablet'")
             SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
@@ -32,7 +32,7 @@ export default {
   mixins: [support_child],
   data() {
     return {
-      tab_index: this.SB.setting_category_info.code,
+      tab_index: this.SB.setting_root_info.code,
     }
   },
   watch: {
@@ -44,12 +44,12 @@ export default {
     },
     input_handle(index) {
       this.sfx_click()
-      this.SB.sb_talk(this.SB.SettingCategoryInfo.fetch(index).name)
+      this.SB.sb_talk(this.SB.SettingRootInfo.fetch(index).name)
     },
   },
   computed: {
     active_categories() {
-      return this.SB.SettingCategoryInfo.values.filter(e => e.showable_p(this.SB))
+      return this.SB.SettingRootInfo.values.filter(e => e.showable_p(this.SB))
     },
   },
 }

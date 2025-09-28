@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
     global_menu_open
     menu_item_click("設定")               # モーダルを開く
-    find("a", text: "その他", exact_text: true).click      # 「その他」タブ
+    find(".setting_tab_ui").click         # 「その他」タブ
     find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
 
@@ -20,7 +20,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "他のセルをクリック" do
-    case1("移動先以外")         # 「他のセルをクリック」選択
+    case1("移動先以外")                    # 「他のセルをクリック」選択
     piece_move_o("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
   end
 end

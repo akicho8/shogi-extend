@@ -16,7 +16,7 @@ import { VibrationModeInfo    } from "../models/vibration_mode_info.js"
 import { NextTurnCallInfo     } from "../models/next_turn_call_info.js"
 import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
 import { LegalInfo            } from "../models/legal_info.js"
-import { SettingCategoryInfo  } from "./setting_category_info.js"
+import { SettingRootInfo  } from "./setting_root_info.js"
 
 export const mod_general_setting = {
   mixins: [general_setting_modal],
@@ -33,8 +33,8 @@ export const mod_general_setting = {
     general_setting_reset_handle() {
       this.sfx_click()
       let count = 0
-      this.SettingCategoryInfo.values.forEach(info => {
-        info.items_model.values.forEach(e => {
+      this.SettingRootInfo.values.forEach(info => {
+        info.tab_model.values.forEach(e => {
           const param_info = this.ParamInfo.fetch(e.key)
           const value = param_info.default_for(this)
           if (this.$data[e.key] != value) {
@@ -52,8 +52,8 @@ export const mod_general_setting = {
     ClockVolumeScaleInfo()  { return ClockVolumeScaleInfo  },
     KomaotoVolumeScaleInfo()     { return KomaotoVolumeScaleInfo     },
 
-    SettingCategoryInfo()     { return SettingCategoryInfo                                       },
-    setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },
+    SettingRootInfo()     { return SettingRootInfo                                       },
+    setting_root_info()   { return this.SettingRootInfo.fetch(this.setting_category_key) },
 
     CtrlModeInfo()            { return CtrlModeInfo                                              },
     ctrl_mode_info()          { return this.CtrlModeInfo.fetch(this.ctrl_mode_key)               },

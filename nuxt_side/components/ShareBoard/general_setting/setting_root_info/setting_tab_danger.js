@@ -1,6 +1,6 @@
-import { SettingCategoryBase } from "./setting_category_base.js"
+import { SettingTabBase } from "./setting_tab_base.js"
 
-export class SettingCategoryLevel4 extends SettingCategoryBase {
+export class SettingTabDanger extends SettingTabBase {
   static get define() {
     return [
       { key: "quick_sync_key", },
