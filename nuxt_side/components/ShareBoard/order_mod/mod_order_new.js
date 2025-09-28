@@ -65,18 +65,21 @@ export const mod_order_new = {
       this.new_v.order_unit = this.order_unit.deep_clone()
 
       // オプション的なものもコピーする
-      {
-        this.new_v.foul_mode_key                = this.foul_mode_key
-        this.new_v.auto_resign_key              = this.auto_resign_key
-        this.new_v.think_mark_receive_scope_key = this.think_mark_receive_scope_key
-        this.new_v.change_per                   = this.change_per
-      }
+      this.os_options_copy_a_to_b(this, this.new_v)
 
       // 変更記録用
       this.new_v.os_change = new OsChange(this.new_v)
 
       // 残りの観戦者をセットする(対局者は自動的に除く・始めての場合は全員入れてシャッフルする)
       this.new_v.order_unit.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
+    },
+    os_options_copy_a_to_b(a, b) {
+      Gs.assert_kind_of_integer(a.change_per)
+
+      b.foul_mode_key                = a.foul_mode_key
+      b.auto_resign_key              = a.auto_resign_key
+      b.think_mark_receive_scope_key = a.think_mark_receive_scope_key
+      b.change_per                   = a.change_per
     },
 
     // 順番設定モーダルを閉じる
@@ -111,15 +114,10 @@ export const mod_order_new = {
     new_order_share(message) {
       Gs.assert(this.new_v.order_unit, "this.new_v.order_unit")
       const params = {
-        order_unit:        this.new_v.order_unit.attributes,
-        //
-        foul_mode_key:                this.new_v.foul_mode_key,
-        auto_resign_key:              this.new_v.auto_resign_key,
-        think_mark_receive_scope_key: this.new_v.think_mark_receive_scope_key,
-        change_per:                   this.new_v.change_per,
-        //
-        message:           message,
+        order_unit: this.new_v.order_unit.attributes,
+        message: message,
       }
+      this.os_options_copy_a_to_b(this.new_v, params)
       this.ac_room_perform("new_order_share", params) // --> app/channels/share_board/room_channel.rb
     },
     new_order_share_broadcasted(params) {

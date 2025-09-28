@@ -149,8 +149,8 @@ export default {
 
     // 振り駒
     furigoma_handle() {
-      if (this.invalid_case1()) { return }
-      if (this.invalid_case2("振り駒")) { return }
+      if (this.order_unit_invalid()) { return }
+      if (this.swap_invalid("振り駒")) { return }
       const furigoma_pack = FurigomaPack.call({
         furigoma_random_key: this.$route.query.furigoma_random_key,
         shakashaka_count: this.$route.query.shakashaka_count,
@@ -166,14 +166,23 @@ export default {
 
     // 先後入替
     swap_handle() {
-      if (this.invalid_case2("先後入替")) { return }
+      if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
       this.SB.new_v.order_unit.swap_run()
       this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
     },
 
+    // 偶数人数であること
+    swap_invalid(name) {
+      if (!this.SB.new_v.order_unit.swap_enable_p) {
+        this.sfx_play("x")
+        this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
+        return true
+      }
+    },
+
     // 反映時のエラーの内容は new_v.order_unit に任せる
-    invalid_case1() {
+    order_unit_invalid() {
       const messages = this.SB.new_v.order_unit.error_messages
       if (Gs.present_p(messages)) {
         this.sfx_play("x")
@@ -182,18 +191,18 @@ export default {
       }
     },
 
-    // 偶数人数であること
-    invalid_case2(name) {
-      if (!this.SB.new_v.order_unit.swap_enable_p) {
-        this.sfx_play("x")
-        this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
-        return true
-      }
+    options_invalid() {
+      // if (Gs.blank_p(this.SB.new_v.change_per)) {
+      //   this.sfx_play("x")
+      //   this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
+      //   return true
+      // }
     },
 
     // 反映
     apply_handle() {
-      if (this.invalid_case1()) { return }
+      if (this.order_unit_invalid()) { return }
+      if (this.options_invalid()) { return }
       this.sfx_click()
       if (!this.SB.new_v.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
@@ -205,6 +214,7 @@ export default {
 
     // バリデーションなしで反映する
     os_modal_force_submit_handle() {
+      if (this.options_invalid()) { return }
       this.SB.new_order_share("バリデーションなしで順番設定を反映しました")
     },
 
