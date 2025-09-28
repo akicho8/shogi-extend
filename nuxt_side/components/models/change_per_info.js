@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export class ChangePerInfo extends ApplicationMemoryRecord {
   static field_label = "X回指したら交代する"
-  static field_message = "オンラインでは移動する手間がかからないため1手毎でよい"
+  static field_message = ""
   static input_type = "numberinput"
   static min = 1
   static max = 999
