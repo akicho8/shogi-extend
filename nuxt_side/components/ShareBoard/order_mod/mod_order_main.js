@@ -99,7 +99,7 @@ export const mod_order_main = {
       this.sp_viewpoint_set_by_self_location() // 自分の場所を調べて正面をその視点にする
       // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
-      this.foul_mode_key         = params.foul_mode_key
+      this.foul_mode_key                = params.foul_mode_key
       this.auto_resign_key              = params.auto_resign_key
       this.think_mark_receive_scope_key = params.think_mark_receive_scope_key
       this.change_per                   = params.change_per

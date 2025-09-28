@@ -12,13 +12,15 @@ export const mod_order_new = {
       // 「適用」してはじめて実変数に反映する
       // new_v は順番設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
       new_v: {
-        order_unit:        null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
-        foul_mode_key: null, // 反則をどうするか
-        auto_resign_key:  null, // 投了のタイミング
-        think_mark_receive_scope_key:  null, // 投了のタイミング
-        change_per:            null, // N手毎交代
-        os_change:         null, // OsChange のインスタンス
-        os_dnd_count:         0, // ドラッグ中なら 1 以上
+        order_unit:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+
+        foul_mode_key:                null, // 反則をどうするか
+        auto_resign_key:              null, // 投了のタイミング
+        think_mark_receive_scope_key: null, // 思考印のスコープ
+        change_per:                   null, // N手毎交代
+
+        os_change:                    null, // OsChange のインスタンス
+        os_dnd_count: 0, // ドラッグ中なら 1 以上
       },
     }
   },
@@ -64,10 +66,10 @@ export const mod_order_new = {
 
       // オプション的なものもコピーする
       {
-        this.new_v.foul_mode_key = this.foul_mode_key
-        this.new_v.auto_resign_key = this.auto_resign_key
+        this.new_v.foul_mode_key                = this.foul_mode_key
+        this.new_v.auto_resign_key              = this.auto_resign_key
         this.new_v.think_mark_receive_scope_key = this.think_mark_receive_scope_key
-        this.new_v.change_per            = this.change_per
+        this.new_v.change_per                   = this.change_per
       }
 
       // 変更記録用
@@ -111,7 +113,7 @@ export const mod_order_new = {
       const params = {
         order_unit:        this.new_v.order_unit.attributes,
         //
-        foul_mode_key:         this.new_v.foul_mode_key,
+        foul_mode_key:                this.new_v.foul_mode_key,
         auto_resign_key:              this.new_v.auto_resign_key,
         think_mark_receive_scope_key: this.new_v.think_mark_receive_scope_key,
         change_per:                   this.new_v.change_per,
