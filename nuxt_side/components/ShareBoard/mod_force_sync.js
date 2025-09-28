@@ -24,12 +24,22 @@ export const mod_force_sync = {
       this.force_sync(`${this.user_call_name(this.user_name)}が局面を共有しました`)
     },
 
+    // turn = 0
+    force_sync_turn_zero_handle() {
+      this.sfx_click()
+      this.force_sync_turn_zero()
+    },
     force_sync_turn_zero() {
       this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
       this.current_turn = 0
       this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
     },
 
+    // turn -= 1
+    force_sync_turn_previous_handle() {
+      this.sfx_click()
+      this.force_sync_turn_previous()
+    },
     force_sync_turn_previous() {
       this.ac_log({subject: "局面操作", body: "1手戻す"})
       if (this.current_turn >= 1) {
@@ -45,6 +55,7 @@ export const mod_force_sync = {
       this.force_sync(`${this.user_call_name(this.user_name)}が${this.board_preset_info.name}に変更しました`)
     },
 
+    // TurnChangeModal 用
     new_turn_set_and_sync(e) {
       if (false) {
         if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
