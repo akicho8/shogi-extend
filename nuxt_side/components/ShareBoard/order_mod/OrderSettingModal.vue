@@ -192,11 +192,11 @@ export default {
     },
 
     options_invalid() {
-      // if (Gs.blank_p(this.SB.new_v.change_per)) {
-      //   this.sfx_play("x")
-      //   this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
-      //   return true
-      // }
+      if (Gs.blank_p(this.SB.new_v.change_per)) {
+        this.sfx_play("x")
+        this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
+        return true
+      }
     },
 
     // 反映
