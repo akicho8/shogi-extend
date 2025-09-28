@@ -102,7 +102,7 @@ export default {
   display: flex          // ラベルとドラッグエリアをまとめて flex にすることで複数のドラッグエリアの縦幅100%が親をはみ出さなくなる
   flex-direction: column // 縦並び
 
-  width: 7rem            // サイズを固定する(重要) 指定しないとハンドルネームの長さによって崩れる
+  width: 8rem            // サイズを固定する(重要) 指定しないとハンドルネームの長さによって崩れる
 
   white-space: nowrap
   font-size: $size-7
