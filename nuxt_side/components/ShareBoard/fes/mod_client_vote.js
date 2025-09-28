@@ -109,4 +109,11 @@ export const mod_client_vote = {
       })
     },
   },
+  computed: {
+    // まだ投票していない人たち
+    vote_yet_user_names() {
+      // return ["あああ", "いいいいいいいいい", "12345678901234567890123456789012345678901234567890123456789012345678901234567890", "１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０"]
+      return Gs.ary_minus(this.room_user_names, this.voted_result.user_names)
+    },
+  },
 }

@@ -55,6 +55,9 @@
         b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="SB.odai_received_p && SB.debug_mode_p")
           | 削除
 
+      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.odai_received_p && $gs.present_p(SB.vote_yet_user_names)")
+        | まだ投票してない人({{SB.vote_yet_user_names.length}}): {{SB.vote_yet_user_names.join(", ")}}
+
       hr.my-4
 
       .buttons.is-centered.mb-0.mt-2(v-if="!option_block_show_p")

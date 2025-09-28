@@ -35,6 +35,7 @@
       .panel-block received_odai.subject:{{SB.received_odai.subject}}
       .panel-block received_odai.unique_code:{{SB.received_odai.unique_code}}
       .panel-block voted_result:{{SB.voted_result}}
+      .panel-block 未投票者:{{SB.vote_yet_user_names}}
       .panel-block 全体人数:{{SB.room_user_names.length}}
       .panel-block 投票者数:{{SB.voted_result.count}}
 </template>
