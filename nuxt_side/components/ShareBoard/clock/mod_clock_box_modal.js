@@ -91,7 +91,7 @@ export const mod_clock_box_modal = {
       }
 
       // いったん初期配置に戻すか聞く
-      if (this.current_turn >= 1) {
+      if (this.current_turn >= 1 && this.AppConfig.CLOCK_START_CONFIRM) {
         this.cc_play_confirim({
           onCancel: () => {
             this.toast_ok(`途中の局面から対局を開始しました`)
