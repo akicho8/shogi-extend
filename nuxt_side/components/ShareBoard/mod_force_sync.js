@@ -30,8 +30,8 @@ export const mod_force_sync = {
       this.force_sync_turn_zero()
     },
     force_sync_turn_zero() {
-      this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
       this.current_turn = 0
+      this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
       this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
     },
 
@@ -41,10 +41,10 @@ export const mod_force_sync = {
       this.force_sync_turn_previous()
     },
     force_sync_turn_previous() {
-      this.ac_log({subject: "局面操作", body: "1手戻す"})
       if (this.current_turn >= 1) {
         this.current_turn -= 1
       }
+      this.ac_log({subject: "局面操作", body: "1手戻す"})
       this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 

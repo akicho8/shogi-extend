@@ -33,8 +33,8 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 
         b-menu-list(label="局面操作")
           //- 即実行
-          b-menu-item.is_active_unset.force_sync_turn_zero_handle(icon="page-first" label="初期配置に戻す"   @click="SB.force_sync_turn_zero_handle" :class="SB.bold_if(SB.current_turn >= 1)")
-          b-menu-item.is_active_unset.force_sync_turn_previous_handle(icon="undo"   label="1手戻す (待った)" @click="SB.force_sync_turn_previous_handle")
+          b-menu-item.is_active_unset.force_sync_turn_zero_handle(icon="page-first" label="初期配置に戻す"   @click="SB.force_sync_turn_zero_handle" :class="SB.bold_if(SB.current_turn >= 1)" :disabled="SB.current_turn === 0")
+          b-menu-item.is_active_unset.force_sync_turn_previous_handle(icon="undo"   label="1手戻す (待った)" @click="SB.force_sync_turn_previous_handle" :disabled="SB.current_turn === 0")
           //- モーダル版
           b-menu-item.is_active_unset.turn_change_to_zero_modal_open_handle(icon="page-first"  label="初期配置に戻す"   @click="SB.turn_change_to_zero_modal_open_handle" :class="SB.bold_if(SB.current_turn >= 1)" v-if="SB.debug_mode_p")
           b-menu-item.is_active_unset.turn_change_to_previous_modal_open_handle(icon="undo"    label="1手戻す (待った)" @click="SB.turn_change_to_previous_modal_open_handle" v-if="SB.debug_mode_p")
