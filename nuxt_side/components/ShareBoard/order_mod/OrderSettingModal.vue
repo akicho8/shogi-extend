@@ -273,7 +273,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .OrderSettingModal
-  +modal_max_width(480px)
+  +modal_width(480px)
   // +modal_width_auto
 
   .TeamsContainer
