@@ -54,7 +54,7 @@ export default {
       return s
     },
     sub_message() {
-      return "自分本位の投了は仲間から反感を買う場合があります"
+      return "自分本位の投了は仲間から反感を買う恐れがあります"
     },
   },
 }
