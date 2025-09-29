@@ -68,6 +68,8 @@ export default {
   mixins: [support_child],
   computed: {
     Location() { return Location },
+
+    // https://buefy.org/documentation/numberinput
     input_default_attrs() {
       return {
         "min": 0,

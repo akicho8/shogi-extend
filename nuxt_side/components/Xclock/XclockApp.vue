@@ -276,8 +276,10 @@ export default {
       }
     },
     rule_set(params) {
-      params = {...params}
       Gs.assert("initial_main_min" in params, '"initial_main_min" in params')
+      Gs.assert("initial_extra_sec" in params, '"initial_extra_sec" in params')
+
+      params = {...params}
       params.initial_main_sec  = params.initial_main_min * 60
       params.initial_extra_sec = params.initial_extra_min * 60
       this.clock_box.rule_set_all(params)

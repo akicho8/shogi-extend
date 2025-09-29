@@ -252,6 +252,7 @@ export const mod_clock_box = {
     cc_params_apply_without_save() {
       Gs.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
       Gs.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
+
       const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
       this.clock_box.rule_set_all_by_ary(ary)
     },
