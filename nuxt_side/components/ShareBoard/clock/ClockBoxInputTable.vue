@@ -77,6 +77,7 @@ export default {
         "size": "is-small",
         "controls-position": "compact",
         "exponential": true,
+        "editable": false,
       }
     },
   },
