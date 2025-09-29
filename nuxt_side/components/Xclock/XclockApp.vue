@@ -277,7 +277,7 @@ export default {
     },
     rule_set(params) {
       Gs.assert("initial_main_min" in params, '"initial_main_min" in params')
-      Gs.assert("initial_extra_sec" in params, '"initial_extra_sec" in params')
+      Gs.assert("initial_extra_min" in params, '"initial_extra_min" in params')
 
       params = {...params}
       params.initial_main_sec  = params.initial_main_min * 60
