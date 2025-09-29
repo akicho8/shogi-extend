@@ -14,12 +14,11 @@
       template(v-if="timeout_info.key === 'audo_judge'")
         p {{user_call_name(SB.current_turn_user_name)}}は接続切れのまま時間切れになりました
       template(v-else)
-        p ルールを守って時間内に指しましょう
-        p 対戦相手がお情けで許可してくれた場合は次の手を指して対局を続行できます
+        p ですが時計はまだ動いているので<b>手番の人はこのまま次の手を指せ</b>ば対局を続行できます
         template(v-if="!snapshot_clock.current.time_recovery_mode_p")
           p しかし現在の時計の設定では<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため回復しません
           p もし続行する場合は時計を再設定してください
-        p 続行しない場合は左上から投了しましょう
+        //- p 続行しない場合は左上から投了しましょう
   .modal-card-foot
     b-button.close_handle(@click="close_handle" type="is-primary") 閉じる
 </template>
