@@ -19,7 +19,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p 秒読みに入る前の持ち時間です
           | 持ち時間(分)
       td(v-for="e in SB.cc_params")
-        b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60*6" @input="SB.cc_input_handle")
+        b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60" @input="SB.cc_input_handle")
     tr
       th
         //- https://buefy.org/documentation/tooltip
@@ -29,7 +29,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p 毎回、回復する持ち時間です
           | 秒読み
       td(v-for="e in SB.cc_params")
-        b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60" @input="SB.cc_input_handle")
+        b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*5" @input="SB.cc_input_handle")
     tr
       th
         //- https://buefy.org/documentation/tooltip
