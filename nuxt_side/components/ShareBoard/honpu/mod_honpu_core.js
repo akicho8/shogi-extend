@@ -94,10 +94,9 @@ export const mod_honpu_core = {
 
     // 本譜系ボタンの共通表示条件
     // ・操作モード
-    // ・順番設定 OFF
     // ・時計の秒針が動いていない
     honpu_button_show_share_condition() {
-      return this.play_mode_p && !this.order_enable_p && !this.cc_play_p
+      return this.play_mode_p && !this.cc_play_p
     },
 
     // ブランチは本譜と同じ指し手をたどっているか？ (未使用)
