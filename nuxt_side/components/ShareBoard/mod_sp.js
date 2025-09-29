@@ -198,9 +198,7 @@ export const mod_sp = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 盤の下のコントローラーを表示しない条件
-    // ・順番設定をしたとき
-    // ・時計を動かしているときとする
-    controller_hide_p() { return this.order_enable_p || this.cc_play_p },
-    controller_show_p() { return !this.controller_hide_p               },
+    controller_hide_p() { return this.cc_play_p          },
+    controller_show_p() { return !this.controller_hide_p },
   },
 }
