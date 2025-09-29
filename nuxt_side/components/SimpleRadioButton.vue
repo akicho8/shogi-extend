@@ -44,7 +44,7 @@ b-field.SimpleRadioButton(
       // https://buefy.org/documentation/radio
       b-radio-button(
         v-if="e.environment == null || e.environment.includes($config.STAGE)"
-        :class="e.key"
+        :class="e.to_radio_button_css_class ?? e.key"
         @input="input_handle"
         v-model="real_value"
         :native-value="e.key"

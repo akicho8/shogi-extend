@@ -47,4 +47,8 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       },
     ]
   }
+
+  get to_radio_button_css_class() {
+    return `is_foul_mode_${this.key}`
+  }
 }
