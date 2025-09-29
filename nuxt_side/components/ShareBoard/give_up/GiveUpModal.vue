@@ -68,7 +68,7 @@ export default {
     __css_keep__: 0
 
 .GiveUpModal
-  +modal_width(30rem)
+  +modal_width(24rem)
 
   .modal-card-body
     padding: 1.5rem
