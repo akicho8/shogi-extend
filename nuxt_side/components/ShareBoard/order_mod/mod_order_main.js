@@ -61,12 +61,6 @@ export const mod_order_main = {
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
       // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
-      // 順番設定ONのタイミングで本譜を消す
-      // これは投了せずに対局を終了した人が前の対局の本譜を参照して混乱しているのを見かけたために入れてある
-      if (this.order_enable_p) {
-        this.honpu_all_clear()
-      }
-
       if (params.message) {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
         this.toast_ok(message, {toast: true, talk: true, ...params})
