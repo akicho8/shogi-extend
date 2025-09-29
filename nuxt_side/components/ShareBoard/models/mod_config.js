@@ -15,7 +15,8 @@ export const AppConfig = {
 
   GPT_FUNCTION: true,                         // ChatGPT を有効にするか？
 
-  STORAGE_KEY_SUFFIX: "",                     // localStorage のキーのサフィックス 例: "/V1"
+  STORAGE_KEY_SUFFIX_NEW: "/V1",              // localStorage のキーの新しいサフィックス 例: "/V1"
+  STORAGE_KEY_SUFFIX_OLD: "",                 // localStorage のキーの古いサフィックス 例: "/V1"
 
   CLOCK_START_CONFIRM: false,                 // 途中の局面から対局開始した際に確認するか？
 }
