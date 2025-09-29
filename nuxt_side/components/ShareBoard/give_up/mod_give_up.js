@@ -16,8 +16,13 @@ export const mod_give_up = {
 
   methods: {
     // 投了確認モーダルを開く
-    give_up_modal_open() {
+    give_up_modal_open_handle() {
       this.sfx_click()
+      this.give_up_modal_open()
+    },
+
+    // 投了確認モーダルを開く
+    give_up_modal_open() {
       this.give_up_modal_close()
       this.give_up_modal_instance = this.modal_card_open({
         component: GiveUpModal,
@@ -125,11 +130,10 @@ export const mod_give_up = {
 
   computed: {
     // 投了ボタン表示条件
-    // ・対局メンバーに含まれる
-    // ・時計が PLAY 状態 ← やめ
+    // ・対局メンバーに含まれる ← やめ
+    // ・対局メンバーに含まれる かつ 時計が PLAY 状態 ← こっちにした
     give_up_button_show_p() {
-      // return this.i_am_member_p && this.cc_play_p
-      return this.i_am_member_p
+      return this.i_am_member_p && this.cc_play_p
     },
 
     // 投了ボタンを押した瞬間の勝った側を返す

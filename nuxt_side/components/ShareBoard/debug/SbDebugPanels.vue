@@ -24,7 +24,7 @@
     .panel
       .panel-heading
         | 投了
-      a.panel-block(@click="SB.give_up_modal_open") 投了確認ボタン
+      a.panel-block(@click="SB.give_up_modal_open_handle") 投了確認ボタン
       a.panel-block(@click="SB.give_up_direct_run_with_valid") 投了ボタン(バリデーションあり)
       a.panel-block(@click="SB.give_up_direct_run") 投了実処理
   .column.is-2

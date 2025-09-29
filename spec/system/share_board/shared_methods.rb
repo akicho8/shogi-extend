@@ -127,13 +127,13 @@ module SharedMethods
   end
 
   # 「投了」を押してモーダルを表示する
-  def give_up_modal_open
+  def give_up_modal_open_handle
     find("a", text: "投了", exact_text: true, wait: 10).click
     assert_give_up_modal
   end
 
   def give_up_run
-    give_up_modal_open
+    give_up_modal_open_handle
     find(:button, "投了する").click # モーダルが表示されるので本当に投了する
   end
 

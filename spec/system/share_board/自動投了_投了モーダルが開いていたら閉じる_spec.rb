@@ -17,11 +17,11 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
       case1("alice")
-      give_up_modal_open                                # 投了モーダルを表示した状態にする
+      give_up_modal_open_handle                                # 投了モーダルを表示した状態にする
     end
     b_block do
       case1("bob")
-      give_up_modal_open                                # 投了モーダルを表示した状態にする
+      give_up_modal_open_handle                                # 投了モーダルを表示した状態にする
     end
     a_block do
       find(".GiveUpModal .cc_timeout_trigger").click # alice が時間切れになる

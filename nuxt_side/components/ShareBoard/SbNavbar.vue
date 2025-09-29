@@ -17,7 +17,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     template(v-if="SB.give_up_button_show_p")
       b-navbar-item.has-text-weight-bold(tag="div")
         .buttons
-          a.button.give_up_modal_open(@click="SB.give_up_modal_open" :class="SB.appearance_theme_info.toryo_button_color")
+          a.button.give_up_modal_open_handle(@click="SB.give_up_modal_open_handle" :class="SB.appearance_theme_info.toryo_button_color")
             | 投了
 
   template(slot="start")
