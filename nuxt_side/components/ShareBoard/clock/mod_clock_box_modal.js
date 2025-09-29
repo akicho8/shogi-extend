@@ -91,6 +91,7 @@ export const mod_clock_box_modal = {
       }
 
       // いったん初期配置に戻すか聞く
+      // 二歩で対局が終わって、再度順番設定と時計を指定して再開するケースもあるため、これはない方がよい
       if (this.current_turn >= 1 && this.AppConfig.CLOCK_START_CONFIRM) {
         this.cc_play_confirim({
           onCancel: () => {
