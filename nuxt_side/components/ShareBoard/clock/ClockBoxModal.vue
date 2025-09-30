@@ -44,6 +44,7 @@
 
       .forms_block(v-if="!SB.clock_box.pause_or_play_p")
         ClockBoxInputTable
+        pre.is-size-7(v-if="SB.debug_mode_p") {{SB.cc_params}}
 
   .modal-card-foot
     b-button.cc_modal_close_handle.has-text-weight-normal(@click="SB.cc_modal_close_handle" icon-left="chevron-left")

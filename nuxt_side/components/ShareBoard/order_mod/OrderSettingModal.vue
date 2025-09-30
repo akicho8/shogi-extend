@@ -69,7 +69,15 @@
         .column.is-12(v-if="SB.debug_mode_p")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12
-          SimpleRadioButton.change_per(:base="SB" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="SB.new_v.change_per")
+          SimpleRadioButton.change_per(
+            :base="SB"
+            custom-class="is-small"
+            element_size="is-small"
+            model_name="ChangePerInfo"
+            :sync_value="SB.new_v.change_per"
+            @update:sync_value="v => SB.new_v.change_per = _.max([1, $gs.to_i(v)])"
+            )
+          //- | {{SB.new_v.change_per}}
         .column.is-12
           SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_v.think_mark_receive_scope_key")
 
@@ -184,6 +192,15 @@ export default {
       }
     },
 
+    os_before_apply() {
+      // let v = this.SB.new_v.change_per
+      // v = Gs.to_i(v)
+      // if (v <= 0) {
+      //   v = 1
+      // }
+      // this.SB.new_v.change_per = v
+    },
+
     // 反映時のエラーの内容は new_v.order_unit に任せる
     order_unit_invalid() {
       const messages = this.SB.new_v.order_unit.error_messages
@@ -204,6 +221,7 @@ export default {
 
     // 反映
     apply_handle() {
+      this.os_before_apply()
       if (this.order_unit_invalid()) { return }
       if (this.options_invalid()) { return }
       this.sfx_click()
@@ -217,6 +235,7 @@ export default {
 
     // バリデーションなしで反映する
     os_modal_force_submit_handle() {
+      this.os_before_apply()
       if (this.options_invalid()) { return }
       this.SB.new_order_share("バリデーションなしで順番設定を反映しました")
     },

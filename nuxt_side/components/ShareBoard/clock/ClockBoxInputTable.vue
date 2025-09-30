@@ -19,7 +19,12 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p 秒読みに入る前の持ち時間です
           | 持ち時間(分)
       td(v-for="e in SB.cc_params")
-        b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60" @input="SB.cc_input_handle")
+        b-numberinput.initial_main_min(
+          v-bind="input_default_attrs"
+          v-model="e.initial_main_min"
+          :max="60"
+          @input="v => { e.initial_main_min = $gs.to_i(v); SB.cc_input_handle() }"
+          )
     tr
       th
         //- https://buefy.org/documentation/tooltip
@@ -29,7 +34,12 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p 毎回、回復する持ち時間です
           | 秒読み
       td(v-for="e in SB.cc_params")
-        b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*5" @input="SB.cc_input_handle")
+        b-numberinput.initial_read_sec(
+          v-bind="input_default_attrs"
+          v-model="e.initial_read_sec"
+          :max="60*5"
+          @input="v => { e.initial_read_sec = $gs.to_i(v); SB.cc_input_handle() }"
+          )
     tr
       th
         //- https://buefy.org/documentation/tooltip
@@ -42,7 +52,12 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
                 | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
           | 考慮時間(分)
       td(v-for="e in SB.cc_params")
-        b-numberinput.initial_extra_min(v-bind="input_default_attrs" v-model="e.initial_extra_min" :max="60" @input="SB.cc_input_handle")
+        b-numberinput.initial_extra_min(
+          v-bind="input_default_attrs"
+          v-model="e.initial_extra_min"
+          :max="60"
+          @input="v => { e.initial_extra_min = $gs.to_i(v); SB.cc_input_handle() }"
+          )
     tr.is_separator
       th
       td(v-for="e in SB.cc_params")
@@ -55,7 +70,12 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p これを設定するときは<b>秒読み</b>と<b>考慮時間</b>を 0 にするのをおすすめします
           | 1手毎加算(秒)
       td(v-for="e in SB.cc_params")
-        b-numberinput.every_plus(v-bind="input_default_attrs" v-model="e.every_plus" :max="60*60" @input="SB.cc_input_handle")
+        b-numberinput.every_plus(
+          v-bind="input_default_attrs"
+          v-model="e.every_plus"
+          :max="60*60"
+          @input="v => { e.every_plus = $gs.to_i(v); SB.cc_input_handle() }"
+          )
 </template>
 
 <script>
@@ -77,7 +97,7 @@ export default {
         "size": "is-small",
         "controls-position": "compact",
         "exponential": true,
-        "editable": false,
+        "editable": true,
       }
     },
   },
