@@ -1,0 +1,17 @@
+require "#{__dir__}/helper"
+
+RSpec.describe type: :system, share_board_spec: true do
+  it "works" do
+    visit_app({
+        :room_key             => :test_room,
+        :user_name            => "alice",
+        :fixed_member_names   => "alice,bob",
+        :fixed_order_names    => "alice,bob",
+        :fixed_order_state    => "to_o2_state",
+        :autoexec             => "honpu_main_setup",
+      })
+    assert_honpu_open_on        # 本譜がある
+    clock_start                 # 対局開始
+    assert_honpu_open_off       # 本譜が消えた
+  end
+end

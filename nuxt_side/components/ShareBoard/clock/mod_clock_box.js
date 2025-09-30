@@ -30,9 +30,7 @@ export const mod_clock_box = {
     }
 
     if (this.$route.query.clock_auto_start === "true") {
-      this.cc_create()
-      this.cc_params_apply()
-      this.clock_box.play_handle()
+      this.cc_auto_start()
     }
   },
 
@@ -41,6 +39,13 @@ export const mod_clock_box = {
   },
 
   methods: {
+    // for autoexec
+    cc_auto_start() {
+      this.cc_create()
+      this.cc_params_apply()
+      this.clock_box.play_handle()
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_min = 0, every_plus = 0) {
