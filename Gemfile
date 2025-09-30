@@ -147,13 +147,13 @@ gem "html_format"
 gem "acts_as_list"
 
 group :development do
-  gem "aam" # , github: "akicho8/aam", branch: "main"
+  gem "aam" # , github: "akicho8/aam", branch: "master"
 end
 
 # gem "bioshogi", ">= 0.0.3"
 # gem "bioshogi", path: "~/src/bioshogi"
 # gem "bioshogi", github: "akicho8/bioshogi", branch: "develop"
-gem "bioshogi", github: "akicho8/bioshogi", branch: "main"
+gem "bioshogi", github: "akicho8/bioshogi", branch: "master"
 
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
