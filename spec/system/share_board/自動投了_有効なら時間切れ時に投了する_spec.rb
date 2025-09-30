@@ -10,7 +10,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b",
         :handle_name_validate => "false",
         :fixed_order_state    => "to_o1_state",
-        :clock_auto_start     => "true",
+        :autoexec => "cc_auto_start",
         :auto_resign_key      => auto_resign_key,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })

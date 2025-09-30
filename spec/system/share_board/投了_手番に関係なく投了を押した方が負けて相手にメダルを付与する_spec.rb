@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names          => "alice,bob",
         :fixed_order_names           => "alice,bob",
         "clock_box.initial_main_min" => 60,
-        :clock_auto_start       => true,
+        :autoexec => "cc_auto_start",
       })
   end
 

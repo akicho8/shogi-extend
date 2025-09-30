@@ -80,7 +80,6 @@
   | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                  |
   | clock_box.initial_extra_min | 考慮時間(分)                                            |                                                                                  |
   | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                  |
-  | clock_auto_start            | true なら即開始                                         |                                                                                  |
   | xmatch_auth_key             |                                                         |                                                                                  |
   | xmatch_wait_max             |                                                         |                                                                                  |
   | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                  |
@@ -127,7 +126,7 @@
 
 ** 時計設定済みで入退室には？
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_min=60&clock_box.every_plus=0&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_min=60&clock_box.every_plus=0&autoexec=cc_auto_start
 
 ** プリセット指定
 
@@ -139,8 +138,8 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&clock_auto_start=true
-   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
@@ -170,7 +169,7 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&clock_box.initial_main_min=60&clock_auto_start=true
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&clock_box.initial_main_min=60&autoexec=cc_auto_start
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
@@ -190,7 +189,7 @@
 
 ** 順番設定と対局時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 
-    http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice&clock_auto_start=true
+    http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice&autoexec=cc_auto_start
 
 ** 対局開始時に ChatGPT の発言を確認する
 

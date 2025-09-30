@@ -28,10 +28,6 @@ export const mod_clock_box = {
       this.cc_params_apply()
       this.clock_box.play_handle()
     }
-
-    if (this.$route.query.clock_auto_start === "true") {
-      this.cc_auto_start()
-    }
   },
 
   beforeDestroy() {
