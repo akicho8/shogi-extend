@@ -43,8 +43,11 @@ RSpec.describe type: :system, share_board_spec: true do
     it "一般用「できる・注意あり(全体へ)」" do
       foul_mode_key("lose")
       assert_selector(".place_2_2.current")
-      assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
+
       assert_selector(".IllegalModal", text: "二歩で☖の勝ち")
+      find(".close_handle").click
+
+      assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
     end
 
     it "初心者用「できない・注意あり(本人へ)」" do
