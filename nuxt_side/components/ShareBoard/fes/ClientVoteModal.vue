@@ -104,7 +104,7 @@ export default {
       &.is_inactive
         border: 3px solid transparent
         &:hover
-          border: 3px dashed $primary
+          border: 3px solid $grey-lighter
       &.is_active
         border: 3px solid $primary
 
