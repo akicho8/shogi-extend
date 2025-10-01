@@ -1,6 +1,6 @@
 import OdaiMakerModal from "./OdaiMakerModal.vue"
 import { Odai } from "./odai.js"
-import { OdaiSampleInfo } from "./odai_sample_info.js"
+import { OdaiTemplateInfo } from "./odai_template_info.js"
 
 export const mod_odai_maker = {
   data() {
@@ -17,7 +17,7 @@ export const mod_odai_maker = {
     },
     odai_src_random_handle() {
       this.sfx_click()
-      const odai = OdaiSampleInfo.sample
+      const odai = OdaiTemplateInfo.sample
       if (odai) {
         this.master_odai = odai
         this.talk(this.master_odai.subject)

@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { Gs } from "@/components/models/gs.js"
 import { Odai } from "./odai.js"
 
-export class OdaiSampleInfo extends ApplicationMemoryRecord {
+export class OdaiTemplateInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // 笑える系
