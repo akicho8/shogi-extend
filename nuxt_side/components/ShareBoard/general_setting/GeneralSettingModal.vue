@@ -3,7 +3,7 @@
   .modal-card-head
     .modal-card-title
       | 設定
-    b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") リセット
+    b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") デフォルトに戻す
   .modal-card-body
     //- https://buefy.org/documentation/tabs
     b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle" expanded)
