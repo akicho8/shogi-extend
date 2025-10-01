@@ -7,7 +7,7 @@
         | タップで戻れる
     .SbAvatarLines
       template(v-for="(e, i) in SB.action_logs")
-        SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="SB.al_click_handle(e)" :badge_show_p="false")
+        SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="SB.al_click_handle(e)" :xbadge_show_p="false")
           template(v-if="e.label")
             template(v-if="e.label && e.label_type")
               b-tag.flex_item(:type="e.label_type" size="is-small") {{e.label}}

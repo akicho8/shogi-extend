@@ -154,20 +154,20 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
-    def acquire_badge_count_share(data)
-      # track(data, subject: "バッジ", "#{data["badge_user_name"]} = #{data["acquire_badge_count"]"}")
-      badge_user_name = data["badge_user_name"]
-      acquire_badge_count = data["acquire_badge_count"]
-      track(data, subject: "バッジ＝", body: "#{badge_user_name} = #{acquire_badge_count}")
-      broadcast(:acquire_badge_count_share_broadcasted, data)
+    def xbadge_count_share(data)
+      # track(data, subject: "バッジ", "#{data["xbadge_user_name"]} = #{data["xbadge_count"]"}")
+      xbadge_user_name = data["xbadge_user_name"]
+      xbadge_count = data["xbadge_count"]
+      track(data, subject: "バッジ＝", body: "#{xbadge_user_name} = #{xbadge_count}")
+      broadcast(:xbadge_count_share_broadcasted, data)
     end
 
-    def badge_add_to_user_share(data)
-      # track(data, subject: "バッジ", "#{data["badge_user_name"]} = #{data["acquire_badge_count"]"}")
-      badge_user_name = data["badge_user_name"]
-      acquire_badge_plus = data["acquire_badge_plus"]
-      track(data, subject: "バッジ＋", body: "#{badge_user_name} + #{acquire_badge_plus}")
-      broadcast(:badge_add_to_user_share_broadcasted, data)
+    def xbadge_add_to_user_share(data)
+      # track(data, subject: "バッジ", "#{data["xbadge_user_name"]} = #{data["xbadge_count"]"}")
+      xbadge_user_name = data["xbadge_user_name"]
+      xbadge_plus = data["xbadge_plus"]
+      track(data, subject: "バッジ＋", body: "#{xbadge_user_name} + #{xbadge_plus}")
+      broadcast(:xbadge_add_to_user_share_broadcasted, data)
     end
 
     def user_kick(data)

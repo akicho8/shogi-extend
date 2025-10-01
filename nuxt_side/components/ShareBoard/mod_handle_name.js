@@ -52,7 +52,7 @@ export const mod_handle_name = {
     },
 
     handle_name_updated() {
-      this.badge_write()       // バッジと名前を結び付ける
+      this.xbadge_share_when_user_name_update()       // バッジと名前を結び付ける
       this.member_bc_restart() // 新しい名前をBCする
     },
 

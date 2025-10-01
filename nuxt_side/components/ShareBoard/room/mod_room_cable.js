@@ -109,7 +109,7 @@ export const mod_room_cable = {
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
           this.member_bc_restart()
-          this.acquire_badge_count_share() // 自分のバッジ数を伝える(これをしないと元からいる人は新人のバッジ数がわからない)
+          this.xbadge_count_share() // 自分のバッジ数を伝える(これをしないと元からいる人は新人のバッジ数がわからない)
         },
         disconnected: e => {
           this.ac_events_hash_inc("disconnected")

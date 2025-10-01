@@ -7,8 +7,8 @@
 // | /var                |
 // | /debug              |
 // | /gpt content        |
-// | /badge-team black 1 |
-// | /badge-user alice 1 |
+// | /xbadge-team black 1 |
+// | /xbadge-user alice 1 |
 // | /header             |
 // |---------------------|
 
@@ -98,34 +98,34 @@ export class CommandInfo extends ApplicationMemoryRecord {
       },
       {
         desc: "バッジ情報の確認",
-        key: "badge",
-        example: "/badge",
+        key: "xbadge",
+        example: "/xbadge",
         command_fn: (context, args) => {
-          return JSON.stringify(context.badge_counts_hash)
+          return JSON.stringify(context.xbadge_counts_hash)
         },
       },
       {
         desc: "指定チームのバッジの増減(部屋でのみ使用可)",
-        key: "badge-team",
-        example: "/badge-team black 1",
+        key: "xbadge-team",
+        example: "/xbadge-team black 1",
         command_fn: (context, args) => {
-          context.badge_add_to_team(args[0], parseInt(args[1] ?? "1"))
+          context.xbadge_add_to_team(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
         desc: "指定の人のバッジの増減(部屋でのみ使用可)",
-        key: "badge-user",
-        example: "/badge-user alice 1",
+        key: "xbadge-user",
+        example: "/xbadge-user alice 1",
         command_fn: (context, args) => {
-          context.badge_add_to_user(args[0], parseInt(args[1] ?? "1"))
+          context.xbadge_add_to_user(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
         desc: "自分のバッジ増減",
-        key: "badge-self",
-        example: "/badge-self 1",
+        key: "xbadge-self",
+        example: "/xbadge-self 1",
         command_fn: (context, args) => {
-          context.badge_add_to_self(parseInt(args[0] ?? "1"))
+          context.xbadge_add_to_self(parseInt(args[0] ?? "1"))
         },
       },
       {

@@ -1,4 +1,4 @@
-export class BadgeDecorator {
+export class XbadgeDecorator {
   constructor(counts_hash, user_name) {
     this.counts_hash = counts_hash
     this.user_name = user_name

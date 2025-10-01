@@ -1,28 +1,28 @@
 <template lang="pug">
-span.UserBadge(v-if="badge_decorator.exist_p")
-  | {{badge_decorator.visible_badge_text}}
-  template(v-if="!badge_decorator.count_lteq_max")
+span.XbadgeShow(v-if="xbadge_decorator.exist_p")
+  | {{xbadge_decorator.visible_badge_text}}
+  template(v-if="!xbadge_decorator.count_lteq_max")
     span.count.has-text-gold
-      | {{badge_decorator.count}}
+      | {{xbadge_decorator.count}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "UserBadge",
+  name: "XbadgeShow",
   mixins: [support_child],
   props: {
     name: { type: String, required: true, },
   },
   computed: {
-    badge_decorator() { return this.SB.badge_decorator_by_name(this.name) },
+    xbadge_decorator() { return this.SB.xbadge_decorator_by_name(this.name) },
   },
 }
 </script>
 
 <style lang="sass">
-.UserBadge
+.XbadgeShow
   display: flex
   align-items: center
   justify-content: center

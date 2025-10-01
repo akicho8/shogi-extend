@@ -90,10 +90,10 @@ export const mod_give_up = {
       }
 
       // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする、としていたが
-      // 問題が出てきたため各自がポイント+1することにした (これは badge_add_to_self_if_win のなかでの話だけどみんな呼ばないといけない)
+      // 問題が出てきたため各自がポイント+1することにした (これは xbadge_add_to_self_if_win のなかでの話だけどみんな呼ばないといけない)
       // if (this.received_from_self(params)) {
       if (params.win_location_key) {
-        this.badge_add_to_self_if_win(params.win_location_key, 1)
+        this.xbadge_add_to_self_if_win(params.win_location_key, 1)
       }
       // }
 

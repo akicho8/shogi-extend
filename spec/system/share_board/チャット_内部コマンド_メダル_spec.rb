@@ -16,12 +16,12 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { case1("b") }
   end
 
-  it "/badge-user" do
+  it "/xbadge-user" do
     a_block do
-      chat_message_send2("/badge-user b +2")
+      chat_message_send2("/xbadge-user b +2")
       assert_member_has_text("b", "⭐⭐")
 
-      chat_message_send2("/badge-user b -1")
+      chat_message_send2("/xbadge-user b -1")
       assert_member_has_text("b", "⭐")
     end
 
@@ -30,9 +30,9 @@ RSpec.describe type: :system, share_board_spec: true do
     end
   end
 
-  it "/badge-team" do
+  it "/xbadge-team" do
     a_block do
-      chat_message_send2("/badge-team white +1")
+      chat_message_send2("/xbadge-team white +1")
       assert_member_has_text("b", "⭐")
     end
     b_block do
@@ -40,9 +40,9 @@ RSpec.describe type: :system, share_board_spec: true do
     end
   end
 
-  it "/badge-self" do
+  it "/xbadge-self" do
     a_block do
-      chat_message_send2("/badge-self 1")
+      chat_message_send2("/xbadge-self 1")
       assert_member_has_text("a", "⭐")
     end
     b_block do
@@ -50,10 +50,10 @@ RSpec.describe type: :system, share_board_spec: true do
     end
   end
 
-  it "/badge" do
+  it "/xbadge" do
     a_block do
       chat_modal_open
-      chat_message_send("/badge")
+      chat_message_send("/xbadge")
       assert_message_received_o('{"a":0,"b":0}') # a は b の個数を受信しているの重要
     end
   end

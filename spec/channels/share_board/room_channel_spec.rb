@@ -328,16 +328,16 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "個数共有" do
-      data = data_factory("badge_counts_hash" => { "alice" => 1 })
+      data = data_factory("xbadge_counts_hash" => { "alice" => 1 })
       expect {
-        subscription.acquire_badge_count_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "acquire_badge_count_share_broadcasted", bc_params: data)
+        subscription.xbadge_count_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_count_share_broadcasted", bc_params: data)
     end
     it "個数加算" do
-      data = data_factory("badge_user_name" => "alice", "acquire_badge_plus" => 1)
+      data = data_factory("xbadge_user_name" => "alice", "xbadge_plus" => 1)
       expect {
-        subscription.badge_add_to_user_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "badge_add_to_user_share_broadcasted", bc_params: data)
+        subscription.xbadge_add_to_user_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_add_to_user_share_broadcasted", bc_params: data)
     end
   end
 

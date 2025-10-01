@@ -85,13 +85,13 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-button(@click="SB.sound_resume_all_with_rooster") 音復活
 
       .box.mt-5(v-if="SB.debug_mode_p")
-        b-field(:label="`バッジ数調整 (${SB.acquire_badge_count})`")
+        b-field(:label="`バッジ数調整 (${SB.xbadge_count})`")
           .control
-            b-button(@click="SB.badge_add_to_self_handle(-1)") -1
+            b-button(@click="SB.xbadge_add_to_self_handle(-1)") -1
           .control
-            b-button(@click="SB.badge_add_to_self_handle(1)") +1
+            b-button(@click="SB.xbadge_add_to_self_handle(1)") +1
         pre(v-if="SB.debug_mode_p")
-          | {{SB.badge_counts_hash}}
+          | {{SB.xbadge_counts_hash}}
 </template>
 
 <script>

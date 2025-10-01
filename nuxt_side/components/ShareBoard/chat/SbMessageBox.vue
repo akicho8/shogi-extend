@@ -34,7 +34,7 @@ export default {
         border-radius: 4px
     .user_name
       color: $grey
-    .UserBadge
+    .XbadgeShow
       color: $grey
 
 .SbApp.debug_mode_p
