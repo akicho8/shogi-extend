@@ -96,7 +96,7 @@ export const vue_clipboard = {
         component: {
           mounted() {
             const el = this.$refs.text_copy_textarea.$refs.textarea
-            el.focus()
+            el.focus({preventScroll: true})
             el.select()
             el.scrollTop = 0
           },

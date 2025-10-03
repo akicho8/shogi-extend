@@ -80,7 +80,7 @@ export const vue_browser_and_form = {
     // が、1 でも効いた。
     focus_to(elem) {
       if (elem) {
-        setTimeout(() => elem.focus(), 1)
+        setTimeout(() => elem.focus({preventScroll: true}), 1)
       }
     },
     blur_to(elem) {

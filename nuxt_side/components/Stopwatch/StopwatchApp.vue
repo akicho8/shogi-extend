@@ -285,7 +285,7 @@ export default {
     },
 
     button_focus(o_or_x) {
-      this.$nextTick(() => this.$refs[`${o_or_x}_button_ref`].focus())
+      this.$nextTick(() => this.$refs[`${o_or_x}_button_ref`].focus({preventScroll: true}))
     },
 
     stop_handle() {

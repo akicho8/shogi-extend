@@ -157,7 +157,7 @@ export default {
 
   methods: {
     search_input_focus() {
-      this.$refs.main_search_form.focus()
+      this.$refs.main_search_form.focus({preventScroll: true})
       return true
     },
 
