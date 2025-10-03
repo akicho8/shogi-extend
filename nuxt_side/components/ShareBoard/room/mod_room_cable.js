@@ -54,22 +54,21 @@ export const mod_room_cable = {
     ////////////////////////////////////////////////////////////////////////////////
 
     room_create_by(new_room_key, new_user_name) {
+      Gs.assert(this.ac_room == null)
       Gs.assert(new_user_name, "new_user_name")
       Gs.assert(new_room_key, "new_room_key")
 
       new_room_key = _.trim(new_room_key)
       new_user_name = HandleNameNormalizer.normalize(new_user_name)
 
-      if (this.user_name !== new_user_name) {
-        this.handle_name_set(new_user_name)
-      }
-
-      if (this.ac_room) {
-        this.toast_warn("すでに入室しています")
-        return
-      }
-
       this.room_key = new_room_key
+      this.user_name = new_user_name
+
+      // if (this.ac_room) {
+      //   this.toast_warn("すでに入室しています")
+      //   return
+      // }
+
       this.room_create()
       // this.toast_ok("入室しました")
     },
@@ -87,6 +86,7 @@ export const mod_room_cable = {
       this.active_level_init()
       this.perpetual_cop.reset()
       this.mh_room_entry()
+      this.xbadge_init()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_key}`)
@@ -105,11 +105,11 @@ export const mod_room_cable = {
             this.ac_events_hash_inc("reconnected")
             this.tl_add("HOOK", "reconnected", e)
           }
+          this.xbadge_load()
           this.ua_notify_once()                       // USER_AGENT を記録
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
           this.member_bc_restart()
-          this.xbadge_count_share() // 自分のバッジ数を伝える(これをしないと元からいる人は新人のバッジ数がわからない)
         },
         disconnected: e => {
           this.ac_events_hash_inc("disconnected")
@@ -143,6 +143,7 @@ export const mod_room_cable = {
         this.member_infos_init()
         this.active_level_init()
         this.active_level_increment_timer.stop()
+        this.xbadge_destroy()
       }
     },
 

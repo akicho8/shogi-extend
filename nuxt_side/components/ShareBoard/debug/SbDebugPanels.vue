@@ -1,5 +1,6 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  SbDebugPanelsXbadge
   SbDebugPanelsHonpu
   SbDebugPanelsThinkMark
   SbDebugPanelsChat
@@ -38,7 +39,6 @@
     SbFesPanel
   .column.is-12
     SbDebugPanelsOrder
-  SbDebugPanelsBadge
   SbDebugPanelsRoomUrlCopyModal
   .column.is-6(v-if="SB.clock_box")
     ClockBoxInspector(:clock_box="SB.clock_box")

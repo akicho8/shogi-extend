@@ -44,7 +44,7 @@ module ShareBoard
     after_create :zadd_call
 
     def user_name=(name)
-      self.user = User[name]
+      self.user = User.find_or_initialize_by(name: name)
     end
 
     def zadd_call

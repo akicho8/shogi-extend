@@ -25,6 +25,9 @@ module ShareBoard
             e.memberships.build(memberships)
           end
         end
+
+        func1
+
       rescue ActiveRecord::ActiveRecordError => error
         @error = error
         AppLog.critical(@error)
@@ -55,7 +58,6 @@ module ShareBoard
     end
 
     def battle_params
-      @params.fetch_values(*battle_columns)
       @params.slice(*battle_columns) # MEMO: fetch_values でハッシュを返すものがほしい
     end
 
@@ -70,6 +72,19 @@ module ShareBoard
 
     def memberships
       @params.fetch(:memberships)
+    end
+
+    def func1
+      room = battle.room
+      battle.memberships.each do |membership|
+        membership.user.name
+        roomship = room.roomships.find_by!(user: membership.user)
+        data = {
+          "xbadge_user_name" => membership.user.name,
+          "xbadge_count"     => roomship.win_count,
+        }
+        ShareBoard::Broadcaster.new(room.key).call("xbadge_dist_broadcasted", data)
+      end
     end
   end
 end

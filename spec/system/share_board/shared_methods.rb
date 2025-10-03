@@ -87,9 +87,9 @@ module SharedMethods
     find(".TimeoutModal .close_handle").click
   end
 
-  def assert_var(key, value)
-    assert_text "#{key}:#{value}"
-  end
+  # def assert_var(key, value)
+  #   assert_text "#{key}:#{value}"
+  # end
 
   def rsm_open_handle
     find(".rsm_open_handle").click
@@ -99,8 +99,8 @@ module SharedMethods
     assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
-  def assert_no_system_variable(key, value)
-    assert_no_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
+  def assert_no_system_variable(key, value, **options)
+    assert_no_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
   def kifu_yomikomi

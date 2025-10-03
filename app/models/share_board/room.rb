@@ -18,6 +18,10 @@
 module ShareBoard
   class Room < ApplicationRecord
     class << self
+      def [](key)
+        find_by(key: key)
+      end
+
       def fetch(key)
         find_or_create_by!(key: key)
       end

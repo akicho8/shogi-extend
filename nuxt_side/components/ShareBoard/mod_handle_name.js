@@ -52,8 +52,8 @@ export const mod_handle_name = {
     },
 
     handle_name_updated() {
-      this.xbadge_share_when_user_name_update()       // バッジと名前を結び付ける
-      this.member_bc_restart() // 新しい名前をBCする
+      this.xbadge_reload()            // バッジと名前を結び付ける
+      this.member_bc_restart()      // 新しい名前をBCする
     },
 
     handle_name_clear_handle() {

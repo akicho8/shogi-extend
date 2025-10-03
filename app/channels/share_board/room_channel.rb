@@ -154,21 +154,31 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
-    def xbadge_count_share(data)
+    ################################################################################
+
+    def xbadge_load(data)
+      xbadge_user_name = data["xbadge_user_name"]
+      xbadge_count = 0
+      if room = Room[room_key]
+        if user = User[xbadge_user_name]
+          if roomship = room.roomships.find_by(user: user)
+            xbadge_count = roomship.win_count
+          end
+        end
+      end
+      data["xbadge_count"] = xbadge_count
+      broadcast(:xbadge_load_broadcasted, data)
+    end
+
+    def xbadge_dist(data)
       # track(data, subject: "バッジ", "#{data["xbadge_user_name"]} = #{data["xbadge_count"]"}")
       xbadge_user_name = data["xbadge_user_name"]
       xbadge_count = data["xbadge_count"]
       track(data, subject: "バッジ＝", body: "#{xbadge_user_name} = #{xbadge_count}")
-      broadcast(:xbadge_count_share_broadcasted, data)
+      broadcast(:xbadge_dist_broadcasted, data)
     end
 
-    def xbadge_add_to_user_share(data)
-      # track(data, subject: "バッジ", "#{data["xbadge_user_name"]} = #{data["xbadge_count"]"}")
-      xbadge_user_name = data["xbadge_user_name"]
-      xbadge_plus = data["xbadge_plus"]
-      track(data, subject: "バッジ＋", body: "#{xbadge_user_name} + #{xbadge_plus}")
-      broadcast(:xbadge_add_to_user_share_broadcasted, data)
-    end
+    ################################################################################
 
     def user_kick(data)
       track(data, subject: "強制退出", body: "KILL #{data["kicked_user_name"]}")

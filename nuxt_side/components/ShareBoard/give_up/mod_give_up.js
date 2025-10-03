@@ -89,14 +89,6 @@ export const mod_give_up = {
         this.odai_delete()            // 配送したお題の削除
       }
 
-      // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする、としていたが
-      // 問題が出てきたため各自がポイント+1することにした (これは xbadge_add_to_self_if_win のなかでの話だけどみんな呼ばないといけない)
-      // if (this.received_from_self(params)) {
-      if (params.win_location_key) {
-        this.xbadge_add_to_self_if_win(params.win_location_key, 1)
-      }
-      // }
-
       // 励ます
       this.ai_say_case_give_up(params)
 

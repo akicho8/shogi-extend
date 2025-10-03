@@ -41,7 +41,7 @@ module ShareBoard
       end
 
       def lookup(name)
-        find_or_initialize_by(name: name)
+        find_by(name: name)
       end
 
       def fetch(name)
