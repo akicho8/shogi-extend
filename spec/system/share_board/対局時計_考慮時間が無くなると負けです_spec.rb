@@ -6,11 +6,11 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def assert_extra_koreyori_true
-    Capybara.within(".SingleClock0") { assert_system_variable(:extra_koreyori_count, 1) }
+    Capybara.within(".SingleClock0") { assert_var(:extra_koreyori_count, 1) }
   end
 
   def assert_extra_koreyori_false
-    Capybara.within(".SingleClock0") { assert_system_variable(:extra_koreyori_count, 0) }
+    Capybara.within(".SingleClock0") { assert_var(:extra_koreyori_count, 0) }
   end
 
   it "持ち時間があって秒読みがない場合も考慮時間に入ったとき発動する" do

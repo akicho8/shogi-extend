@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   def double_pawn_warning
     assert_no_selector(".place_2_2.current")
-    assert_system_variable(:latest_illegal_name, "二歩")
+    assert_var(:latest_illegal_name, "二歩")
     assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
   end
 

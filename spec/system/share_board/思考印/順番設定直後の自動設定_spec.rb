@@ -26,8 +26,8 @@ RSpec.describe "順番設定直後の自動設定", type: :system, share_board_s
       os_modal_close
     end
 
-    a_block { assert_system_variable :think_mark_mode_p, false }
-    b_block { assert_system_variable :think_mark_mode_p, false }
-    c_block { assert_system_variable :think_mark_mode_p, true  } # 観戦者だけ印ONになる
+    a_block { assert_var :think_mark_mode_p, false }
+    b_block { assert_var :think_mark_mode_p, false }
+    c_block { assert_var :think_mark_mode_p, true  } # 観戦者だけ印ONになる
   end
 end

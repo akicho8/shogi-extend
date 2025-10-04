@@ -30,10 +30,10 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
       assert_member_status("alice", :is_turn_active)     # 1人目(alice)に丸がついている
       assert_member_status("bob", :is_turn_standby)      # 2人目(bob)は待機中
       piece_move_o("77", "76", "☗7六歩")               # aliceが1番目なので指せる
-      assert_system_variable(:next_turn_message, "次は、bobさんの手番です")
+      assert_var(:next_turn_message, "次は、bobさんの手番です")
     end
     b_block do
-      assert_system_variable(:tn_counter, 1)           # bobさんだけに牛が知らせている
+      assert_var(:tn_counter, 1)           # bobさんだけに牛が知らせている
     end
     a_block do
       piece_move_x("33", "34", "☖3四歩")              # aliceもう指したので指せない
@@ -42,8 +42,8 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
     end
     b_block do
       piece_move_o("33", "34", "☖3四歩")               # 2番目のbobは指せる
-      assert_system_variable(:next_turn_message, "次は、aliceさんの手番です")
-      assert_system_variable(:tn_counter, 1)           # aliceさんの手番なので出ない(変化せず)
+      assert_var(:next_turn_message, "次は、aliceさんの手番です")
+      assert_var(:tn_counter, 1)           # aliceさんの手番なので出ない(変化せず)
     end
   end
 end

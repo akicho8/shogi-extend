@@ -23,19 +23,19 @@ RSpec.describe "次も", type: :system, share_board_spec: true do
     end
     a_block do
       piece_move_o("59", "58", "☗5八玉")
-      assert_system_variable(:next_turn_message, "次は、bさんの手番です")
+      assert_var(:next_turn_message, "次は、bさんの手番です")
     end
     b_block do
       piece_move_o("51", "52", "☖5二玉")
-      assert_system_variable(:next_turn_message, "次も、aさんの手番です")
+      assert_var(:next_turn_message, "次も、aさんの手番です")
     end
     a_block do
       piece_move_o("58", "59", "☗5九玉")
-      assert_system_variable(:next_turn_message, "次は、bさんの手番です")
+      assert_var(:next_turn_message, "次は、bさんの手番です")
     end
     b_block do
       piece_move_o("52", "51", "☖5一玉")
-      assert_system_variable(:next_turn_message, "次は、cさんの手番です")
+      assert_var(:next_turn_message, "次は、cさんの手番です")
     end
   end
 end

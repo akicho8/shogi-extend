@@ -5,9 +5,9 @@
       | 対局履歴
     a.panel-block(@click="SB.general_dashboard_modal_handle") モーダル版
     a.panel-block(:href="SB.dashboard_url") LINK
-  .panel.assert_system_variable
+  .panel.assert_var
     .panel-heading
-      | [assert_system_variable]
+      | [assert_var]
     .panel-block dashboard_url:{{SB.dashboard_url}}
 </template>
 

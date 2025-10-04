@@ -4,9 +4,9 @@
     .panel-heading
       | チャット履歴
     a.panel-block(@click="SB.mh_reset_all") 初期化
-  .panel.assert_system_variable
+  .panel.assert_var
     .panel-heading
-      | [assert_system_variable]
+      | [assert_var]
     .panel-block ml_count:{{SB.ml_count}}
     .panel-block mh_page_index:{{SB.mh_page_index}}
 </template>

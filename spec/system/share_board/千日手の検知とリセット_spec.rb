@@ -13,18 +13,18 @@ RSpec.describe type: :system, share_board_spec: true do
   it "スライダーで2手目から1手目に戻しただけで千日手情報をリセットする" do
     visit_app
     king_move_up_down
-    assert_system_variable("perpetual_cop.count", 4)
+    assert_var("perpetual_cop.count", 4)
     sp_controller_click("previous")
-    assert_system_variable("perpetual_cop.count", 0)
+    assert_var("perpetual_cop.count", 0)
   end
 
   it "入室時にリセットする" do
     a_block do
       visit_app
       king_move_up_down
-      assert_system_variable("perpetual_cop.count", 4)
+      assert_var("perpetual_cop.count", 4)
       room_menu_open_and_input("test_room", "alice") # 入室
-      assert_system_variable("perpetual_cop.count", 0)
+      assert_var("perpetual_cop.count", 0)
     end
   end
 
@@ -32,9 +32,9 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       room_setup("test_room", "alice")
       king_move_up_down
-      assert_system_variable("perpetual_cop.count", 4)
+      assert_var("perpetual_cop.count", 4)
       room_leave
-      assert_system_variable("perpetual_cop.count", 0)
+      assert_var("perpetual_cop.count", 0)
     end
   end
 
@@ -44,9 +44,9 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       room_setup("test_room", "alice")
       king_move_up_down
-      assert_system_variable("perpetual_cop.count", 4)
+      assert_var("perpetual_cop.count", 4)
       room_leave
-      assert_system_variable("perpetual_cop.count", 0)
+      assert_var("perpetual_cop.count", 0)
     end
   end
 

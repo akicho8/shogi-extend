@@ -34,9 +34,9 @@
             | 名前→情報
             | {{SB.order_unit.name_to_object_hash}}
   .column.is-4
-    .panel.assert_system_variable
+    .panel.assert_var
       .panel-heading
-        | [assert_system_variable]
+        | [assert_var]
       .panel-block order_enable_p:{{SB.order_enable_p}}
       .panel-block
         | 本順序:{{SB.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}

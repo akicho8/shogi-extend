@@ -18,7 +18,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "無効" do
     case1(false)
-    assert_system_variable("仮順序", "12345678")
+    assert_var("仮順序", "12345678")
   end
 
   it "有効(初期値)" do

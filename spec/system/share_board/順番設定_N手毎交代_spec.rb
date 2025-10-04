@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :handle_name_validate => "false",
         :body                 => SfenGenerator.start_from(:white),
       })
-    assert_system_variable("本順序", order)
+    assert_var("本順序", order)
   end
 
   it { case1("to_o1_state", 1, "abc")      } # 白からでも順番通り

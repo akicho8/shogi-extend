@@ -6,15 +6,15 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
   it "完全に抜けた状態から再度入室すると発言履歴がある" do
     chat_message_setup(1)                                                 # 1件用意する
     visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 1)   # 入室する
-    assert_system_variable("ml_count", 0)                                 # 件数は 0
+    assert_var("ml_count", 0)                                 # 件数は 0
     chat_modal_open { assert_message_received_o("(content:0)") }          # チャットを開いたタイミングで読み込む
-    assert_system_variable("ml_count", 1)                                 # 件数は 1
+    assert_var("ml_count", 1)                                 # 件数は 1
   end
 
   it "初回のスクロール位置はいちばん下になっている" do
     chat_message_setup(100)                                               # 100件用意する
     visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 50)  # 1回で50件読む
-    assert_system_variable("ml_count", 0)                                 # 件数は 0
+    assert_var("ml_count", 0)                                 # 件数は 0
     chat_modal_open do
       assert_message_received_o("(content:99)")                           # 50..99 は有り
       assert_message_received_x("(content:49)")                           #  0..49 は無し
@@ -60,17 +60,17 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
     chat_message_setup(2)                                                 # 2件用意する
 
     visit_app(mh_per_page: 10)                                            # 来る
-    assert_system_variable("ml_count", 0)                                 # 発言履歴は空
+    assert_var("ml_count", 0)                                 # 発言履歴は空
     chat_modal_open { chat_message_send(content1) }                       # チャットを開いて(DBに入らない)発言をする
-    assert_system_variable("ml_count", 1)                                 # 発言履歴数は 1 になっている
+    assert_var("ml_count", 1)                                 # 発言履歴数は 1 になっている
 
     room_menu_open_and_input("test_room", "alice")                        # 入室すると
-    assert_system_variable("ml_count", 0)                                 # 発言履歴は初期化されて 0 になっている
+    assert_var("ml_count", 0)                                 # 発言履歴は初期化されて 0 になっている
 
     chat_modal_open { assert_message_received_o("(content:0)") }          # そこでチャットを開くとそのタイミングで読み込まれる
-    assert_system_variable("ml_count", 2)                                 # 念のため個数を確認する (2件用意していて1ページあたり10件のため2件ある)
+    assert_var("ml_count", 2)                                 # 念のため個数を確認する (2件用意していて1ページあたり10件のため2件ある)
 
     room_leave                                                            # 退室する
-    assert_system_variable("ml_count", 0)                                 # このタイミングでも履歴消去しているので 0 になっている
+    assert_var("ml_count", 0)                                 # このタイミングでも履歴消去しているので 0 になっている
   end
 end

@@ -24,9 +24,9 @@
         a.panel-block(@click="SB.battle_save_by_win_location('white')") 投了 - ☖勝を勝ちとする (DB → 全員)
         .panel-block xbadge_counts_hash = {{SB.xbadge_counts_hash}}
     .column.is-6
-      .panel.assert_system_variable
+      .panel.assert_var
         .panel-heading
-          | [assert_system_variable]
+          | [assert_var]
         template(v-for="user_name in SB.room_user_names")
           .panel-block {{user_name}}.win_count:{{SB.xbadge_decorator_by_name(user_name).count}}
 </template>

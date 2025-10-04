@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :autoexec             => "os_modal_open_handle",
       })
     os_modal_close
-    assert_system_variable("仮順序", "12345678")
+    assert_var("仮順序", "12345678")
     os_modal_open
     find(:button, text: button_name, exact_text: true).click
     assert_text("1さんが#{button_name}しました", wait: 5)

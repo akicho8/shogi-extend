@@ -4,6 +4,6 @@ RSpec.describe "受信スコープの初期値", type: :system, share_board_spec
   it "works" do
     visit_app(think_mark_receive_scope_key: :tmrs_everyone) # ここでの設定は
     visit_app                                               # ここで引き継がれない
-    assert_system_variable :think_mark_receive_scope_key, :tmrs_watcher_only
+    assert_var :think_mark_receive_scope_key, :tmrs_watcher_only
   end
 end

@@ -172,9 +172,9 @@
       .panel-block
         a(:href=`$config.MY_SITE_URL + SB.config.twitter_card_options.image` target="_blank") 確認
   .column.is-4
-    .panel.assert_system_variable
+    .panel.assert_var
       .panel-heading
-        | [assert_system_variable]
+        | [assert_var]
       .panel-block tn_counter:{{SB.tn_counter}}
       .panel-block current_turn:{{SB.current_turn}}
       .panel-block clock_box:{{!!SB.clock_box}}

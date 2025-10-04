@@ -3,9 +3,9 @@ require "#{__dir__}/helper"
 RSpec.describe "基本的な挙動", type: :system, share_board_spec: true do
   it "印モードの初期値は無効だが右上のペン印をクリックすると有効になる" do
     visit_app
-    assert_system_variable :think_mark_mode_p, "false"
+    assert_var :think_mark_mode_p, "false"
     think_mark_toggle_button_click
-    assert_system_variable :think_mark_mode_p, "true"
+    assert_var :think_mark_mode_p, "true"
   end
 
   it "クリックした升目に円と名前が出る" do

@@ -27,9 +27,9 @@
       pre.panel-block [お題受信] received_odai: {{SB.received_odai}}
       pre.panel-block [投票結果] voted_result: {{SB.voted_result}}
   .column.is-3
-    .panel.assert_system_variable
+    .panel.assert_var
       .panel-heading
-        | [assert_system_variable]
+        | [assert_var]
       .panel-block odai_received_p:{{SB.odai_received_p}}
       .panel-block received_odai.items:{{SB.received_odai.items}}
       .panel-block received_odai.subject:{{SB.received_odai.subject}}

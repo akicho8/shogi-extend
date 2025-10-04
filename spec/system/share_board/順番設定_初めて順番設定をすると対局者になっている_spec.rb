@@ -10,8 +10,8 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     a_block do
       order_set_on              # 順番設定ON
-      assert_system_variable("仮順序", "ab")
-      assert_system_variable("本順序", "ab")
+      assert_var("仮順序", "ab")
+      assert_var("本順序", "ab")
     end
   end
 end

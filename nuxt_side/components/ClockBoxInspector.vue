@@ -15,7 +15,7 @@
                 span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec_mmss}}
                 span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec_mmss}}
               p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}} / {{e.minus_sec}}
-              .panel.assert_system_variable
+              .panel.assert_var
                 .panel-block active_p:{{e.active_p}}
                 .panel-block rest:{{e.rest}}
                 .panel-block elapsed_sec:{{e.elapsed_sec}}

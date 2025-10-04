@@ -17,6 +17,6 @@ RSpec.describe type: :system, share_board_spec: true do
   it "荒らし対策" do
     chat_message_send("a" * 20)
     chat_modal_close
-    assert_system_variable(:arashi_count, 1)
+    assert_var(:arashi_count, 1)
   end
 end
