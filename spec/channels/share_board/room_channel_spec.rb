@@ -323,12 +323,25 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "バッジ" do
+  describe "xbadge_load" do
+    before do
+      ShareBoard::Room.mock(room_key: room_key)
+      subscribe(room_key: room_key)
+    end
+    it "works" do
+      data = data_factory("xbadge_reqeust" => "alice")
+      expect {
+        subscription.xbadge_load(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_load_broadcasted", bc_params: data.merge("users_match_record" => {"alice" => {win_count: 1, lose_count: 0}}))
+    end
+  end
+
+  describe "xbadge_dist" do
     before do
       subscribe(room_key: room_key)
     end
-    it "個数共有" do
-      data = data_factory("xbadge_counts_hash" => { "alice" => 1 })
+    it "works" do
+      data = data_factory("users_match_record" => { "alice" => { win_count: 0, lose_count: 0 } })
       expect {
         subscription.xbadge_dist(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_dist_broadcasted", bc_params: data)

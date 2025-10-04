@@ -25,9 +25,7 @@ module ShareBoard
             e.memberships.build(memberships)
           end
         end
-
-        func1
-
+        @battle.member_match_record_broadcast # 更新された勝敗数を配る
       rescue ActiveRecord::ActiveRecordError => error
         @error = error
         AppLog.critical(@error)
@@ -72,19 +70,6 @@ module ShareBoard
 
     def memberships
       @params.fetch(:memberships)
-    end
-
-    def func1
-      room = battle.room
-      battle.memberships.each do |membership|
-        membership.user.name
-        roomship = room.roomships.find_by!(user: membership.user)
-        data = {
-          "xbadge_user_name" => membership.user.name,
-          "xbadge_count"     => roomship.win_count,
-        }
-        ShareBoard::Broadcaster.new(room.key).call("xbadge_dist_broadcasted", data)
-      end
     end
   end
 end

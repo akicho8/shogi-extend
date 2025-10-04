@@ -58,6 +58,8 @@ module ShareBoard
       end
     end
 
+    ################################################################################
+
     def score_post_to_redis
       redis.call("ZADD", room.redis_key, score, user.id)
     end
@@ -69,5 +71,20 @@ module ShareBoard
     def redis
       @redis ||= RedisClient.new(db: AppConfig[:redis_db_for_share_board_room])
     end
+
+    ################################################################################
+
+    def match_record
+      {
+        win_count: win_count,
+        lose_count: lose_count,
+      }
+    end
+
+    def users_match_record
+      { user.name => match_record }
+    end
+
+    ################################################################################
   end
 end

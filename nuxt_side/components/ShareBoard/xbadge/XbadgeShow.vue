@@ -1,9 +1,9 @@
 <template lang="pug">
 span.XbadgeShow(v-if="xbadge_decorator.exist_p")
   | {{xbadge_decorator.visible_badge_text}}
-  template(v-if="!xbadge_decorator.count_lteq_max")
+  template(v-if="!xbadge_decorator.win_count_lteq_max")
     span.count.has-text-gold
-      | {{xbadge_decorator.count}}
+      | {{xbadge_decorator.win_count}}
 </template>
 
 <script>

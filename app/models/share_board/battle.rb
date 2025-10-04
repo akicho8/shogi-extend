@@ -87,5 +87,14 @@ module ShareBoard
           }.compact,
         })
     end
+
+    # この対局の対局者に絞って勝ち負けの情報を全員に配る
+    def member_match_record_broadcast
+      users_match_record = memberships.each_with_object({}) do |membership, m|
+        roomship = room.roomships.find_by!(user: membership.user)
+        m.update(roomship.users_match_record)
+      end
+      ShareBoard::Broadcaster.new(room.key).call("xbadge_dist_broadcasted", { users_match_record: users_match_record })
+    end
   end
 end

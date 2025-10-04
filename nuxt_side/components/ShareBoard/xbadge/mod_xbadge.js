@@ -1,3 +1,8 @@
+// データ構造
+//   match_record              : { win_count: 0, lose_count: 0, }
+//   users_match_record        : { alice: { win_count: 0, lose_count: 0, } }
+//   users_match_record_master : { alice: { win_count: 0, lose_count: 0, } }
+
 import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { XbadgeDecorator } from "./xbadge_decorator.js"
@@ -5,17 +10,17 @@ import { XbadgeDecorator } from "./xbadge_decorator.js"
 export const mod_xbadge = {
   data() {
     return {
-      xbadge_loaded: false,   // DB から復元したら true にする
-      xbadge_counts_hash: {}, // 名前がキーで値が個数。みんなの個数が入っている。
+      xbadge_loaded: false,          // DB から復元したら true にする
+      users_match_record_master: {}, // 名前がキーで値が個数。みんなの個数が入っている。{ alice: {win_count: 0, lose_count: 0} }
     }
   },
   methods: {
-    xbadge_init() {
+    xbadge_entry() {
       this.xbadge_loaded = false
-      this.xbadge_counts_hash = {}
+      this.users_match_record_master = {}
     },
-    xbadge_destroy() {
-      this.xbadge_init()
+    xbadge_leave() {
+      this.xbadge_entry()
     },
 
     //////////////////////////////////////////////////////////////////////////////// 初回は DB から配布する
@@ -28,51 +33,46 @@ export const mod_xbadge = {
       Gs.assert_present(this.user_name)
 
       if (!this.xbadge_loaded) {
-        this.ac_room_perform("xbadge_load", {xbadge_user_name: this.user_name})
+        this.ac_room_perform("xbadge_load", {xbadge_reqeust: this.user_name})
       }
     },
     xbadge_load_broadcasted(params) {
       if (this.received_from_self(params)) {
         this.xbadge_loaded = true
       }
-      this.xbadge_dist_hash_receive(params)
+      this.xbadge_dist_data_receive(params)
     },
 
-    //////////////////////////////////////////////////////////////////////////////// 持っている情報を配布する
+    //////////////////////////////////////////////////////////////////////////////// 持っている情報を配布する。クライアント → 全員
 
-    // 自分のバッジ数を全員に伝える
     xbadge_dist() {
       Gs.assert_present(this.user_name)
-      if (this.xbadge_dist_hash) {
-        this.ac_room_perform("xbadge_dist", this.xbadge_dist_hash)
+      if (this.xbadge_dist_data) {
+        this.ac_room_perform("xbadge_dist", this.xbadge_dist_data)
       }
     },
     xbadge_dist_broadcasted(params) {
-      this.xbadge_dist_hash_receive(params)
+      this.xbadge_dist_data_receive(params)
     },
-    xbadge_dist_hash_receive(attrs) {
-      if (attrs) {
-        this.$set(this.xbadge_counts_hash, attrs.xbadge_user_name, attrs.xbadge_count) // これで画面に星の数が反映される
-      }
+    xbadge_dist_data_receive(params) {
+      Gs.assert_kind_of_hash(params.users_match_record)
+      this.users_match_record_master = { ...this.users_match_record_master, ...params.users_match_record }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
     // Helper
     xbadge_decorator_by_name(user_name) {
-      return new XbadgeDecorator(this.xbadge_counts_hash, user_name)
+      return new XbadgeDecorator(user_name, this.users_match_record_master[user_name])
     },
   },
   computed: {
-    xbadge_my_count() {
-      return this.xbadge_counts_hash[this.user_name]
+    match_record() {
+      return this.users_match_record_master[this.user_name]
     },
-    xbadge_dist_hash() {
-      if (this.xbadge_my_count != null) {
-        return {
-          xbadge_user_name: this.user_name,
-          xbadge_count: this.xbadge_my_count,
-        }
+    xbadge_dist_data() {
+      if (this.match_record) {
+        return { users_match_record: { [this.user_name]: this.match_record } }
       }
     },
   },

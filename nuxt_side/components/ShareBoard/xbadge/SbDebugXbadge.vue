@@ -16,19 +16,21 @@
       .panel
         .panel-heading
           | バッジ
-        a.panel-block(href="/share-board?room_key=dev_room1&user_name=alice&fixed_member_names=alice,bob&fixed_order_names=alice,bob&fixed_order_state=to_o2_state&autoexec=cc_auto_start") 確認用の環境に変更する
-        a.panel-block(@click="SB.xbadge_init") xbadge_init: 自分の情報をDBから受け取っていない状態にする (xbadge_loaded: {{SB.xbadge_loaded}})
-        a.panel-block(@click="SB.xbadge_load") xbadge_load: 自分の情報を取得する (DB → 全員)
-        a.panel-block(@click="SB.xbadge_dist") xbadge_dist: 自分の情報を配布する (クライアント → 全員)
-        a.panel-block(@click="SB.battle_save_by_win_location('black')") 投了 - ☗側を勝ちとする (DB → 全員)
-        a.panel-block(@click="SB.battle_save_by_win_location('white')") 投了 - ☖勝を勝ちとする (DB → 全員)
-        .panel-block xbadge_counts_hash = {{SB.xbadge_counts_hash}}
+        a.panel-block(href="/share-board?room_key=dev_room1&user_name=alice&fixed_member_names=alice,bob&fixed_order_names=alice,bob&fixed_order_state=to_o2_state&autoexec=cc_auto_start") URL: 確認用の環境に変更する
+        a.panel-block(@click="SB.xbadge_entry") xbadge_entry: [入室直前] 自分の情報をDBから受け取っていない状態にする (xbadge_loaded: {{SB.xbadge_loaded}})
+        a.panel-block(@click="SB.xbadge_leave") xbadge_leave: [退室]
+        a.panel-block(@click="SB.xbadge_load") xbadge_load: [接続] 自分の情報を取得する (DB → 全員)
+        a.panel-block(@click="SB.xbadge_dist") xbadge_dist: [他者接続] 自分の情報を配布する (クライアント → 全員)
+        a.panel-block(@click="SB.battle_save_by_win_location('black')") [投了] ☗側を勝ちとする (DB → 全員)
+        a.panel-block(@click="SB.battle_save_by_win_location('white')") [投了] ☖勝を勝ちとする (DB → 全員)
+        .panel-block users_match_record_master = {{SB.users_match_record_master}}
     .column.is-6
       .panel.assert_var
         .panel-heading
           | [assert_var]
         template(v-for="user_name in SB.room_user_names")
-          .panel-block {{user_name}}.win_count:{{SB.xbadge_decorator_by_name(user_name).count}}
+          .panel-block {{user_name}}.win_count:{{SB.xbadge_decorator_by_name(user_name).win_count}}
+          .panel-block {{user_name}}.lose_count:{{SB.xbadge_decorator_by_name(user_name).lose_count}}
 </template>
 
 <script>

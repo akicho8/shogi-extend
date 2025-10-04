@@ -86,7 +86,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 
       .box.mt-5(v-if="SB.debug_mode_p")
         pre
-          | {{SB.xbadge_counts_hash}}
+          | {{SB.users_match_record_master}}
 </template>
 
 <script>

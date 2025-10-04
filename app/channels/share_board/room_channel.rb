@@ -157,24 +157,23 @@ module ShareBoard
     ################################################################################
 
     def xbadge_load(data)
-      xbadge_user_name = data["xbadge_user_name"]
-      xbadge_count = 0
+      user_name = data["xbadge_reqeust"]
+      users_match_record = nil
       if room = Room[room_key]
-        if user = User[xbadge_user_name]
+        if user = User[user_name]
           if roomship = room.roomships.find_by(user: user)
-            xbadge_count = roomship.win_count
+            users_match_record = roomship.users_match_record
           end
         end
       end
-      data["xbadge_count"] = xbadge_count
-      broadcast(:xbadge_load_broadcasted, data)
+      if users_match_record
+        data["users_match_record"] = users_match_record
+        broadcast(:xbadge_load_broadcasted, data)
+      end
     end
 
     def xbadge_dist(data)
-      # track(data, subject: "バッジ", "#{data["xbadge_user_name"]} = #{data["xbadge_count"]"}")
-      xbadge_user_name = data["xbadge_user_name"]
-      xbadge_count = data["xbadge_count"]
-      track(data, subject: "バッジ＝", body: "#{xbadge_user_name} = #{xbadge_count}")
+      track(data, subject: "バッジ＝", body: data["users_match_record"])
       broadcast(:xbadge_dist_broadcasted, data)
     end
 

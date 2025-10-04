@@ -86,7 +86,7 @@ export const mod_room_cable = {
       this.active_level_init()
       this.perpetual_cop.reset()
       this.mh_room_entry()
-      this.xbadge_init()
+      this.xbadge_entry()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_key}`)
@@ -143,7 +143,7 @@ export const mod_room_cable = {
         this.member_infos_init()
         this.active_level_init()
         this.active_level_increment_timer.stop()
-        this.xbadge_destroy()
+        this.xbadge_leave()
       }
     },
 

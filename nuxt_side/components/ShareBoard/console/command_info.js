@@ -99,7 +99,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         key: "xbadge",
         example: "/xbadge",
         command_fn: (context, args) => {
-          return JSON.stringify(context.xbadge_counts_hash)
+          return JSON.stringify(context.users_match_record_master)
         },
       },
       {

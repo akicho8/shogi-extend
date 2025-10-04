@@ -21,6 +21,7 @@
                 span.mx-1(v-if="row.desc" v-text="row.desc" :class="row.desc_class")
     pre(v-if="SB.debug_mode_p")
       | {{$gs.pretty_inspect(member_info)}}
+      | {{SB.users_match_record_master[member_info.from_user_name]}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     template(v-if="SB.debug_mode_p")
@@ -64,8 +65,14 @@ export default {
     },
   },
   computed: {
+    xbadge_decorator() { return this.SB.xbadge_decorator_by_name(this.member_info.from_user_name) },
     table_rows() {
       return [
+        {
+          enabled: true,
+          label: "勝率",
+          value: this.xbadge_decorator.win_rate_inspect,
+        },
         {
           enabled: true,
           label: "通信状況",
