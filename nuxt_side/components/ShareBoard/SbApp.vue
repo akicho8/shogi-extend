@@ -52,7 +52,7 @@ client-only
           SbSp(ref="SbSp")
           SbMemberList
           SbActionLog(ref="SbActionLog")
-        SbDebugPanels(v-if="debug_mode_p")
+        SbDebug(v-if="debug_mode_p")
 </template>
 
 <script>

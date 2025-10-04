@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsXbadge.column.is-12
+.SbDebugXbadge.column.is-12
   .columns.is-multiline
     .column.is-6
       //- .panel
@@ -35,13 +35,13 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsXbadge",
+  name: "SbDebugXbadge",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsXbadge
+.SbDebugXbadge
   __css_keep__: 0
 </style>

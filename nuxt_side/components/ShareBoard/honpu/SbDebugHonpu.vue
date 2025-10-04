@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsHonpu.column.is-12
+.SbDebugHonpu.column.is-12
   .panel
     .panel-heading
       | 本譜
@@ -17,13 +17,13 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsHonpu",
+  name: "SbDebugHonpu",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsHonpu
+.SbDebugHonpu
   __css_keep__: 0
 </style>

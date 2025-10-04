@@ -1,28 +1,27 @@
 <template lang="pug">
-.SbDebugPanelsChat.column.is-3
+.SbDebugDashboard.column.is-3
   .panel
     .panel-heading
-      | チャット履歴
-    a.panel-block(@click="SB.mh_reset_all") 初期化
+      | 対局履歴
+    a.panel-block(@click="SB.general_dashboard_modal_handle") モーダル版
+    a.panel-block(:href="SB.dashboard_url") LINK
   .panel.assert_system_variable
     .panel-heading
       | [assert_system_variable]
-    .panel-block ml_count:{{SB.ml_count}}
-    .panel-block mh_page_index:{{SB.mh_page_index}}
+    .panel-block dashboard_url:{{SB.dashboard_url}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
-import _ from "lodash"
 
 export default {
-  name: "SbDebugPanelsChat",
+  name: "SbDebugDashboard",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsChat
+.SbDebugDashboard
   __css_keep__: 0
 </style>

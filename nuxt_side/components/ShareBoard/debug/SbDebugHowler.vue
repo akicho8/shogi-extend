@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsHowler.column.is-4
+.SbDebugHowler.column.is-4
   .panel
     .panel-heading
       | 無音化不具合検証用
@@ -32,7 +32,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsHowler",
+  name: "SbDebugHowler",
   mixins: [support_child],
   computed: {
     Howler() { return window.Howler },
@@ -42,6 +42,6 @@ export default {
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsHowler
+.SbDebugHowler
   __css_keep__: 0
 </style>

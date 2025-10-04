@@ -1,9 +1,9 @@
 <template lang="pug">
-.SbDebugPanels.columns.is-multiline
-  SbDebugPanelsXbadge
-  SbDebugPanelsHonpu
-  SbDebugPanelsThinkMark
-  SbDebugPanelsChat
+.SbDebug.columns.is-multiline
+  SbDebugXbadge
+  SbDebugHonpu
+  SbDebugThinkMark
+  SbDebugChat
 
   .column.is-2
     .panel
@@ -18,8 +18,8 @@
       a.panel-block(@click="SB.cc_timeout_modal_open('audo_judge')") モーダル(判定)
       a.panel-block(@click="SB.cc_timeout_modal_close") 閉じる
 
-  SbDebugPanelsClock
-  SbDebugPanelsDashboard
+  SbDebugClock
+  SbDebugDashboard
 
   .column.is-2
     .panel
@@ -33,13 +33,13 @@
       .panel-heading
         | 保存
       a.panel-block(@click="SB.battle_save_run") 対局保存
-  SbDebugPanelsPerpetual
-  SbDebugPanelsBasic
+  SbDebugPerpetual
+  SbDebugBasic
   .column.is-12
     SbFesPanel
   .column.is-12
-    SbDebugPanelsOrder
-  SbDebugPanelsRoomUrlCopyModal
+    SbDebugOrder
+  SbDebugRoomUrlCopyModal
   .column.is-6(v-if="SB.clock_box")
     ClockBoxInspector(:clock_box="SB.clock_box")
   .column.is-2
@@ -57,7 +57,7 @@
         | メンバーリスト({{SB.member_infos.length}})
       template(v-for="e in SB.member_infos")
         .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.from_session_id}} {{e.from_session_counter}} {{e.from_connection_id}})
-  SbDebugPanelsHowler
+  SbDebugHowler
   .column.is-2
     .panel
       .panel-heading
@@ -206,14 +206,14 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanels",
+  name: "SbDebug",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanels
+.SbDebug
   .xemoji
     height: 4rem
     width: unset

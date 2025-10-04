@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsBasic.column.is-2
+.SbDebugBasic.column.is-2
   .panel
     .panel-heading
       | 基本
@@ -12,7 +12,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsBasic",
+  name: "SbDebugBasic",
   mixins: [support_child],
   computed: {
     Howler() { return window.Howler },
@@ -22,6 +22,6 @@ export default {
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsBasic
+.SbDebugBasic
   __css_keep__: 0
 </style>

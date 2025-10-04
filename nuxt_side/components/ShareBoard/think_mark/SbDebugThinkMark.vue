@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsThinkMark.column.is-3
+.SbDebugThinkMark.column.is-3
   .panel
     .panel-heading
       | 思考印
@@ -20,13 +20,13 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsThinkMark",
+  name: "SbDebugThinkMark",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsThinkMark
+.SbDebugThinkMark
   __css_keep__: 0
 </style>

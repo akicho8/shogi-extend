@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsRoomUrlCopyModal.column.is-2
+.SbDebugRoomUrlCopyModal.column.is-2
   .panel
     .panel-heading
       | 部屋のリンクをコピーする
@@ -11,7 +11,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsRoomUrlCopyModal",
+  name: "SbDebugRoomUrlCopyModal",
   mixins: [support_child],
 }
 </script>

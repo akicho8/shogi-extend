@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsPerpetual.column.is-3
+.SbDebugPerpetual.column.is-3
   .panel
     .panel-heading
       | 千日手指摘
@@ -18,13 +18,13 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsPerpetual",
+  name: "SbDebugPerpetual",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsPerpetual
+.SbDebugPerpetual
   __css_keep__: 0
 </style>

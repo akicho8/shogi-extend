@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsOrder.columns.is-multiline
+.SbDebugOrder.columns.is-multiline
   .column.is-4
     .panel
       .panel-heading
@@ -86,13 +86,13 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsOrder",
+  name: "SbDebugOrder",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsOrder
+.SbDebugOrder
   __css_keep__: 0
 </style>

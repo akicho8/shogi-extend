@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDebugPanelsClock.column.is-2
+.SbDebugClock.column.is-2
   .panel
     .panel-heading
       | 対局時計
@@ -14,13 +14,13 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugPanelsClock",
+  name: "SbDebugClock",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugPanelsClock
+.SbDebugClock
   __css_keep__: 0
 </style>
