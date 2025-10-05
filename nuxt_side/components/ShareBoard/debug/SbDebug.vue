@@ -1,5 +1,6 @@
 <template lang="pug">
 .SbDebug.columns.is-multiline
+  SbDebugSfenLoader
   SbDebugXprofile
   SbDebugHonpu
   SbDebugThinkMark

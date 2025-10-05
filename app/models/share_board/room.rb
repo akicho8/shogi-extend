@@ -74,6 +74,12 @@ module ShareBoard
       validates :key
     end
 
+    # 直近の対局の情報
+    def as_json_for_sfen_loader(params = {})
+      # sleep(3)
+      battles.first&.sfen_and_turn
+    end
+
     concerning :RankingMethods do
       def score_by_user(user)
         memberships.where(user: user, judge: Judge.fetch(:win)).count

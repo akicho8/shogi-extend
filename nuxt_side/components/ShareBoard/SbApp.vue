@@ -156,6 +156,8 @@ import { mod_client_vote                   } from "./fes/mod_client_vote.js"
 import { mod_xprofile                         } from "./xprofile/mod_xprofile.js"
 import { mod_xprofile_console                    } from "./xprofile/mod_xprofile_console.js"
 
+import { mod_sfen_loader                         } from "./sfen_loader/mod_sfen_loader.js"
+
 import { mod_appearance_theme              } from "./appearance_theme/mod_appearance_theme.js"
 
 import { mod_tweet                         } from "./tweet/mod_tweet.js"
@@ -234,6 +236,7 @@ export default {
     mod_honpu_share,
     mod_xprofile,
     mod_xprofile_console,
+    mod_sfen_loader,
 
     mod_room_recreate,
     mod_room_url_copy,

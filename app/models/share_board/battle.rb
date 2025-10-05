@@ -96,5 +96,9 @@ module ShareBoard
       end
       ShareBoard::Broadcaster.new(room.key).call("xprofile_dist_broadcasted", { users_match_record: })
     end
+
+    def sfen_and_turn
+      { sfen: sfen, turn: turn }
+    end
   end
 end

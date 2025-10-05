@@ -329,7 +329,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("xprofile_reqeust" => "alice")
+      data = data_factory("reqeust_user_name" => "alice")
       expect {
         subscription.xprofile_load(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_load_broadcasted", bc_params: data.merge("users_match_record" => {"alice" => {win_count: 1, lose_count: 0}}))

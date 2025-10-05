@@ -1,12 +1,12 @@
-// |---------------------------------------------+---------------------------------------------|
-// | Method                                      | 意味                                        |
-// |---------------------------------------------+---------------------------------------------|
-// | room_create_if_exist_room_key_in_url()      | URLに合言葉の指定があればそのまま入退室 |
-// | rsm_open_handle()                           | モーダル起動                                |
-// | room_create_by(new_room_key, new_user_name) | モーダル内で入力したものを渡す              |
-// | room_create()                               | 入室                                        |
-// | room_destroy()                              | 退室                                        |
-// |---------------------------------------------+---------------------------------------------|
+// |-----------------------------------------------------+-----------------------------------------|
+// | Method                                              | 意味                                    |
+// |-----------------------------------------------------+-----------------------------------------|
+// | room_create_if_exist_room_key_in_url()              | URLに合言葉の指定があればそのまま入退室 |
+// | rsm_open_handle()                                   | モーダル起動                            |
+// | room_create_from_modal(new_room_key, new_user_name) | モーダル内で入力したものを渡す          |
+// | room_create()                                       | 入室                                    |
+// | room_destroy()                                      | 退室                                    |
+// |-----------------------------------------------------+-----------------------------------------|
 
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
@@ -28,7 +28,7 @@ export const mod_room_cable = {
   },
   methods: {
     // URLに合言葉の指定があればそのまま入退室
-    room_create_if_exist_room_key_in_url() {
+    async room_create_if_exist_room_key_in_url() {
       if (true) {
         // URLに合言葉がない場合は何もしない
         if (this.url_room_key_blank_p) {
@@ -48,12 +48,13 @@ export const mod_room_cable = {
       }
 
       // 合言葉と名前は問題ないので入退室
+      await this.sfen_loader_load()
       this.room_create()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    room_create_by(new_room_key, new_user_name) {
+    async room_create_from_modal(new_room_key, new_user_name) {
       Gs.assert(this.ac_room == null)
       Gs.assert(new_user_name, "new_user_name")
       Gs.assert(new_room_key, "new_room_key")
@@ -69,6 +70,7 @@ export const mod_room_cable = {
       //   return
       // }
 
+      await this.sfen_loader_load()
       this.room_create()
       // this.toast_ok("入室しました")
     },
@@ -80,6 +82,8 @@ export const mod_room_cable = {
       Gs.assert(this.ac_room == null, "this.ac_room == null")
 
       this.room_keys_update_and_save_to_storage()
+
+      // this.sfen_loader_load()
 
       this.member_infos_init()
       this.member_info_init()

@@ -2,7 +2,13 @@
 //   match_record              : { win_count: 0, lose_count: 0, }
 //   users_match_record        : { alice: { win_count: 0, lose_count: 0, } }
 //   users_match_record_master : { alice: { win_count: 0, lose_count: 0, } }
-
+//
+// 実行の流れ
+//   xprofile_entry  : 入室
+//     xprofile_load : DBから取得(入室直後のみ)
+//     xprofile_dist : 他者が入室するたびに配布
+//   xprofile_leave  : 退室
+//
 import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { XprofileDecorator } from "./xprofile_decorator.js"
@@ -15,25 +21,30 @@ export const mod_xprofile = {
     }
   },
   methods: {
+    // 入室直前の処理
     xprofile_entry() {
       this.xprofile_loaded = false
       this.users_match_record_master = {}
     },
+    // 退出直前の処理
     xprofile_leave() {
       this.xprofile_entry()
     },
 
     //////////////////////////////////////////////////////////////////////////////// 初回は DB から配布する
 
+    // 強制的にDBから読み出す
     xprofile_reload() {
       this.xprofile_loaded = false
       this.xprofile_load()
     },
+
+    // 入室直後の処理
     xprofile_load() {
       Gs.assert_present(this.user_name)
 
       if (!this.xprofile_loaded) {
-        this.ac_room_perform("xprofile_load", {xprofile_reqeust: this.user_name})
+        this.ac_room_perform("xprofile_load", {reqeust_user_name: this.user_name})
       }
     },
     xprofile_load_broadcasted(params) {
@@ -45,6 +56,7 @@ export const mod_xprofile = {
 
     //////////////////////////////////////////////////////////////////////////////// 持っている情報を配布する。クライアント → 全員
 
+    // 他の人が入室すると自分の情報を配る
     xprofile_dist() {
       Gs.assert_present(this.user_name)
       if (this.xprofile_dist_data) {
@@ -67,9 +79,12 @@ export const mod_xprofile = {
     },
   },
   computed: {
+    // { win_count: 0, lose_count: 0 } または null
     match_record() {
       return this.users_match_record_master[this.user_name]
     },
+
+    // 他の人に送る内容
     xprofile_dist_data() {
       if (this.match_record) {
         return { users_match_record: { [this.user_name]: this.match_record } }

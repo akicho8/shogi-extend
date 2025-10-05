@@ -214,6 +214,7 @@ Rails.application.routes.draw do
       get :battle_create if Rails.env.development?
       get :dashboard
       get :chat_message_loader
+      get :sfen_loader
     end
   end
 

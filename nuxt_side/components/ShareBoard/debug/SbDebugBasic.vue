@@ -3,7 +3,7 @@
   .panel
     .panel-heading
       | 基本
-    a.panel-block(@click="SB.room_create_by('dev_room', 'alice')") 入室
+    a.panel-block(@click="SB.room_create_from_modal('dev_room', 'alice')") 入室
     a.panel-block(@click="SB.os_setup_by_names(['alice', 'bob', 'carol', 'dave', 'ellen'])") 順番設定
     a.panel-block(@click="SB.cc_play_by()") 時計開始
 </template>

@@ -157,7 +157,7 @@ module ShareBoard
     ################################################################################
 
     def xprofile_load(data)
-      user_name = data["xprofile_reqeust"]
+      user_name = data["reqeust_user_name"]
       users_match_record = nil
       if room = Room[room_key]
         if user = User[user_name]
@@ -176,6 +176,18 @@ module ShareBoard
       track(data, subject: "バッジ＝", body: data["users_match_record"])
       broadcast(:xprofile_dist_broadcasted, data)
     end
+
+    # ################################################################################
+    # 
+    # def xprofile_load(data)
+    #   if room = Room[room_key]
+    #     room.
+    #   end
+    #   if users_match_record
+    #     data["users_match_record"] = users_match_record
+    #     broadcast(:xprofile_load_broadcasted, data)
+    #   end
+    # end
 
     ################################################################################
 
