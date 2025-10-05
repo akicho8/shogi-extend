@@ -6,7 +6,7 @@
 // 実行の流れ
 //   xprofile_entry  : 入室
 //     xprofile_load : DBから取得(入室直後のみ)
-//     xprofile_dist : 他者が入室するたびに配布
+//     xprofile_share : 他者が入室するたびに配布
 //   xprofile_leave  : 退室
 //
 import { Gs } from "@/components/models/gs.js"
@@ -51,24 +51,26 @@ export const mod_xprofile = {
       if (this.received_from_self(params)) {
         this.xprofile_loaded = true
       }
-      this.xprofile_dist_data_receive(params)
+      this.xprofile_share_data_receive(params)
     },
 
     //////////////////////////////////////////////////////////////////////////////// 持っている情報を配布する。クライアント → 全員
 
     // 他の人が入室すると自分の情報を配る
-    xprofile_dist() {
+    xprofile_share() {
       Gs.assert_present(this.user_name)
-      if (this.xprofile_dist_data) {
-        this.ac_room_perform("xprofile_dist", this.xprofile_dist_data)
+      if (this.xprofile_share_data) {
+        this.ac_room_perform("xprofile_share", this.xprofile_share_data)
       }
     },
-    xprofile_dist_broadcasted(params) {
-      this.xprofile_dist_data_receive(params)
+    xprofile_share_broadcasted(params) {
+      this.xprofile_share_data_receive(params)
     },
-    xprofile_dist_data_receive(params) {
-      Gs.assert_kind_of_hash(params.users_match_record)
-      this.users_match_record_master = { ...this.users_match_record_master, ...params.users_match_record }
+    xprofile_share_data_receive(params) {
+      if (params) {
+        Gs.assert_kind_of_hash(params.users_match_record)
+        this.users_match_record_master = { ...this.users_match_record_master, ...params.users_match_record }
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +87,7 @@ export const mod_xprofile = {
     },
 
     // 他の人に送る内容
-    xprofile_dist_data() {
+    xprofile_share_data() {
       if (this.match_record) {
         return { users_match_record: { [this.user_name]: this.match_record } }
       }

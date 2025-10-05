@@ -94,7 +94,7 @@ module ShareBoard
         roomship = room.roomships.find_by!(user: membership.user)
         m.update(roomship.users_match_record)
       end
-      ShareBoard::Broadcaster.new(room.key).call("xprofile_dist_broadcasted", { users_match_record: })
+      ShareBoard::Broadcaster.new(room.key).call("xprofile_share_broadcasted", { users_match_record: })
     end
 
     def sfen_and_turn

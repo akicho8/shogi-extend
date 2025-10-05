@@ -172,9 +172,9 @@ module ShareBoard
       end
     end
 
-    def xprofile_dist(data)
+    def xprofile_share(data)
       track(data, subject: "バッジ＝", body: data["users_match_record"])
-      broadcast(:xprofile_dist_broadcasted, data)
+      broadcast(:xprofile_share_broadcasted, data)
     end
 
     # ################################################################################

@@ -20,7 +20,7 @@
         a.panel-block(@click="SB.xprofile_entry") xprofile_entry: [入室直前] 自分の情報をDBから受け取っていない状態にする (xprofile_loaded: {{SB.xprofile_loaded}})
         a.panel-block(@click="SB.xprofile_leave") xprofile_leave: [退室]
         a.panel-block(@click="SB.xprofile_load") xprofile_load: [接続] 自分の情報を取得する (DB → 全員)
-        a.panel-block(@click="SB.xprofile_dist") xprofile_dist: [他者接続] 自分の情報を配布する (クライアント → 全員)
+        a.panel-block(@click="SB.xprofile_share") xprofile_share: [他者接続] 自分の情報を配布する (クライアント → 全員)
         a.panel-block(@click="SB.battle_save_by_win_location('black')") [投了] ☗側を勝ちとする (DB → 全員)
         a.panel-block(@click="SB.battle_save_by_win_location('white')") [投了] ☖勝を勝ちとする (DB → 全員)
         .panel-block users_match_record_master = {{SB.users_match_record_master}}

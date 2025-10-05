@@ -336,15 +336,15 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "xprofile_dist" do
+  describe "xprofile_share" do
     before do
       subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("users_match_record" => { "alice" => { win_count: 0, lose_count: 0 } })
       expect {
-        subscription.xprofile_dist(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_dist_broadcasted", bc_params: data)
+        subscription.xprofile_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_share_broadcasted", bc_params: data)
     end
   end
 

@@ -20,7 +20,7 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { case1("bob") }
     b_block do
       give_up_run                        # bob は手番ではないがヘッダーの「投了」ボタンを押す
-      assert_var("alice.win_count", 1) # bob が負けたので alice にバッジ付与している (member_match_record_broadcast, xprofile_dist_broadcasted)
+      assert_var("alice.win_count", 1) # bob が負けたので alice にバッジ付与している (member_match_record_broadcast, xprofile_share_broadcasted)
       assert_var("bob.win_count", 0)
     end
     a_block do
@@ -37,7 +37,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_var("bob.win_count", 0)
     end
     b_block do
-      assert_var("alice.win_count", 1) # alice からバッジ数が配布される (xprofile_dist)
+      assert_var("alice.win_count", 1) # alice からバッジ数が配布される (xprofile_share)
       assert_var("bob.win_count", 0)
     end
   end
