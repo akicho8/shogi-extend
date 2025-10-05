@@ -156,8 +156,8 @@ module ShareBoard
 
     ################################################################################
 
-    def xbadge_load(data)
-      user_name = data["xbadge_reqeust"]
+    def xprofile_load(data)
+      user_name = data["xprofile_reqeust"]
       users_match_record = nil
       if room = Room[room_key]
         if user = User[user_name]
@@ -168,13 +168,13 @@ module ShareBoard
       end
       if users_match_record
         data["users_match_record"] = users_match_record
-        broadcast(:xbadge_load_broadcasted, data)
+        broadcast(:xprofile_load_broadcasted, data)
       end
     end
 
-    def xbadge_dist(data)
+    def xprofile_dist(data)
       track(data, subject: "バッジ＝", body: data["users_match_record"])
-      broadcast(:xbadge_dist_broadcasted, data)
+      broadcast(:xprofile_dist_broadcasted, data)
     end
 
     ################################################################################

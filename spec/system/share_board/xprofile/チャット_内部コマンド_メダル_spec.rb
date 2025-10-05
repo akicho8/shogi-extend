@@ -16,12 +16,12 @@ RSpec.describe type: :system, share_board_spec: true do
   #   b_block { case1("b") }
   # end
 
-  # it "/xbadge-user" do
+  # it "/xprofile-user" do
   #   a_block do
-  #     chat_message_send2("/xbadge-user b +2")
+  #     chat_message_send2("/xprofile-user b +2")
   #     assert_member_has_text("b", "⭐⭐")
   #
-  #     chat_message_send2("/xbadge-user b -1")
+  #     chat_message_send2("/xprofile-user b -1")
   #     assert_member_has_text("b", "⭐")
   #   end
   #
@@ -30,9 +30,9 @@ RSpec.describe type: :system, share_board_spec: true do
   #   end
   # end
   #
-  # it "/xbadge-team" do
+  # it "/xprofile-team" do
   #   a_block do
-  #     chat_message_send2("/xbadge-team white +1")
+  #     chat_message_send2("/xprofile-team white +1")
   #     assert_member_has_text("b", "⭐")
   #   end
   #   b_block do
@@ -40,9 +40,9 @@ RSpec.describe type: :system, share_board_spec: true do
   #   end
   # end
   #
-  # it "/xbadge-self" do
+  # it "/xprofile-self" do
   #   a_block do
-  #     chat_message_send2("/xbadge-self 1")
+  #     chat_message_send2("/xprofile-self 1")
   #     assert_member_has_text("a", "⭐")
   #   end
   #   b_block do
@@ -50,10 +50,10 @@ RSpec.describe type: :system, share_board_spec: true do
   #   end
   # end
 
-  # it "/xbadge" do
+  # it "/xprofile" do
   #   a_block do
   #     chat_modal_open
-  #     chat_message_send("/xbadge")
+  #     chat_message_send("/xprofile")
   #     assert_message_received_o('{"a":0,"b":0}') # a は b の個数を受信しているの重要
   #   end
   # end

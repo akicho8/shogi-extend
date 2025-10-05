@@ -1,8 +1,8 @@
-import { XbadgeDecorator } from "@/components/ShareBoard/badge/xbadge_decorator.js"
+import { XprofileDecorator } from "@/components/ShareBoard/badge/xprofile_decorator.js"
 
-describe("XbadgeDecorator", () => {
+describe("XprofileDecorator", () => {
   it("works", () => {
-    const object = new XbadgeDecorator({alice: 6}, "alice")
+    const object = new XprofileDecorator({alice: 6}, "alice")
     expect(object.count).toEqual(6)
     expect(object.exist_p).toEqual(true)
     expect(object.count_lteq_max).toEqual(false)

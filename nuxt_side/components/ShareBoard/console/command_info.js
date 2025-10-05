@@ -96,8 +96,8 @@ export class CommandInfo extends ApplicationMemoryRecord {
       },
       {
         desc: "バッジ情報の確認",
-        key: "xbadge",
-        example: "/xbadge",
+        key: "xprofile",
+        example: "/xprofile",
         command_fn: (context, args) => {
           return JSON.stringify(context.users_match_record_master)
         },

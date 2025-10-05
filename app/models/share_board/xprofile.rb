@@ -1,5 +1,5 @@
 module ShareBoard
-  module Xbadge
+  module Xprofile
     extend self
 
     def match_record_default

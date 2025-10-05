@@ -153,8 +153,8 @@ import { mod_honpu_share                   } from "./honpu/mod_honpu_share.js"
 import { mod_odai_maker                    } from "./fes/mod_odai_maker.js"
 import { mod_client_vote                   } from "./fes/mod_client_vote.js"
 
-import { mod_xbadge                         } from "./xbadge/mod_xbadge.js"
-import { mod_xbadge_console                    } from "./xbadge/mod_xbadge_console.js"
+import { mod_xprofile                         } from "./xprofile/mod_xprofile.js"
+import { mod_xprofile_console                    } from "./xprofile/mod_xprofile_console.js"
 
 import { mod_appearance_theme              } from "./appearance_theme/mod_appearance_theme.js"
 
@@ -232,8 +232,8 @@ export default {
     mod_give_up,
     mod_honpu_core,
     mod_honpu_share,
-    mod_xbadge,
-    mod_xbadge_console,
+    mod_xprofile,
+    mod_xprofile_console,
 
     mod_room_recreate,
     mod_room_url_copy,

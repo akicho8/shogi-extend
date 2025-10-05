@@ -22,7 +22,7 @@
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
 
     // バッジ
-    XbadgeShow.flex_item.is-size-7(v-if="xbadge_show_p" :name="info.from_user_name")
+    XprofileShow.flex_item.is-size-7(v-if="xprofile_show_p" :name="info.from_user_name")
   slot
 </template>
 
@@ -36,11 +36,11 @@ export default {
   props: {
     info:         { type: Object, required: true  },
     replace_icon: { type: String, required: false },
-    xbadge_show_p: { type: Boolean, default: true  },
+    xprofile_show_p: { type: Boolean, default: true  },
   },
   computed: {
     default_guardian() { return this.SB.guardian_from_str(this.info.from_user_name)       },
-    xbadge_decorator()  { return this.SB.xbadge_decorator_by_name(this.info.from_user_name) },
+    xprofile_decorator()  { return this.SB.xprofile_decorator_by_name(this.info.from_user_name) },
   },
 }
 </script>

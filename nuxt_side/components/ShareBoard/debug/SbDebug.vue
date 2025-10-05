@@ -1,6 +1,6 @@
 <template lang="pug">
 .SbDebug.columns.is-multiline
-  SbDebugXbadge
+  SbDebugXprofile
   SbDebugHonpu
   SbDebugThinkMark
   SbDebugChat

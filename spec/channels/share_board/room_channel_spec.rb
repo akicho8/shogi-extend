@@ -323,28 +323,28 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "xbadge_load" do
+  describe "xprofile_load" do
     before do
       ShareBoard::Room.mock(room_key: room_key)
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("xbadge_reqeust" => "alice")
+      data = data_factory("xprofile_reqeust" => "alice")
       expect {
-        subscription.xbadge_load(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_load_broadcasted", bc_params: data.merge("users_match_record" => {"alice" => {win_count: 1, lose_count: 0}}))
+        subscription.xprofile_load(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_load_broadcasted", bc_params: data.merge("users_match_record" => {"alice" => {win_count: 1, lose_count: 0}}))
     end
   end
 
-  describe "xbadge_dist" do
+  describe "xprofile_dist" do
     before do
       subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("users_match_record" => { "alice" => { win_count: 0, lose_count: 0 } })
       expect {
-        subscription.xbadge_dist(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "xbadge_dist_broadcasted", bc_params: data)
+        subscription.xprofile_dist(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_dist_broadcasted", bc_params: data)
     end
   end
 

@@ -1,4 +1,4 @@
-export class XbadgeDecorator {
+export class XprofileDecorator {
   constructor(user_name, match_record) {
     this.user_name = user_name
     this.match_record = match_record ?? { win_count: 0, lose_count: 0 }

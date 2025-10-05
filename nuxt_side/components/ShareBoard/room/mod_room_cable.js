@@ -86,7 +86,7 @@ export const mod_room_cable = {
       this.active_level_init()
       this.perpetual_cop.reset()
       this.mh_room_entry()
-      this.xbadge_entry()
+      this.xprofile_entry()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_key}`)
@@ -105,7 +105,7 @@ export const mod_room_cable = {
             this.ac_events_hash_inc("reconnected")
             this.tl_add("HOOK", "reconnected", e)
           }
-          this.xbadge_load()
+          this.xprofile_load()
           this.ua_notify_once()                       // USER_AGENT を記録
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
@@ -143,7 +143,7 @@ export const mod_room_cable = {
         this.member_infos_init()
         this.active_level_init()
         this.active_level_increment_timer.stop()
-        this.xbadge_leave()
+        this.xprofile_leave()
       }
     },
 

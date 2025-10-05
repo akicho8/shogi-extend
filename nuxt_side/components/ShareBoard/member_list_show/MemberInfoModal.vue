@@ -65,13 +65,13 @@ export default {
     },
   },
   computed: {
-    xbadge_decorator() { return this.SB.xbadge_decorator_by_name(this.member_info.from_user_name) },
+    xprofile_decorator() { return this.SB.xprofile_decorator_by_name(this.member_info.from_user_name) },
     table_rows() {
       return [
         {
           enabled: true,
           label: "勝率",
-          value: this.xbadge_decorator.win_rate_inspect,
+          value: this.xprofile_decorator.win_rate_inspect,
         },
         {
           enabled: true,
