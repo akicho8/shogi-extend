@@ -23,7 +23,9 @@ export const PiyoShogiTypeCurrent = {
     if (v) {
       key = v.piyo_shogi_type_key
     }
-    console.log(`[PiyoShogiTypeCurrent] localStorage 参照 → ${key}`)
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[PiyoShogiTypeCurrent] localStorage 参照 → ${key}`)
+    }
     return PiyoShogiTypeInfo.fetch(key)
   }
 }
