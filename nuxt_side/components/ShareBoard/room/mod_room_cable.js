@@ -51,7 +51,7 @@ export const mod_room_cable = {
       }
 
       // 合言葉と名前は問題ないので入退室
-      this.sfen_loader_load(() => {
+      this.room_latest_state_loader_load(() => {
         this.room_create()
       })
       this.tl_puts("<-- room_create_if_exist_room_key_in_url")
@@ -75,7 +75,7 @@ export const mod_room_cable = {
       //   return
       // }
 
-      this.sfen_loader_load(() => {
+      this.room_latest_state_loader_load(() => {
         this.room_create()
       })
       // this.toast_ok("入室しました")
@@ -89,7 +89,7 @@ export const mod_room_cable = {
 
       this.room_keys_update_and_save_to_storage()
 
-      // this.sfen_loader_load()
+      // this.room_latest_state_loader_load()
 
       this.member_infos_init()
       this.member_info_init()
