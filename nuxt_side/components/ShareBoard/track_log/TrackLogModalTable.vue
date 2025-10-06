@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table.SbTrackLog(
+b-table.TrackLogModalTable(
   :data="SB.track_logs"
   :mobile-cards="false"
   :show-header="false"
@@ -20,7 +20,7 @@ import dayjs from "dayjs"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbTrackLog",
+  name: "TrackLogModalTable",
   mixins: [support_child],
   methods: {
     time_format(t) {
@@ -33,7 +33,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 
-.SbTrackLog
+.TrackLogModalTable
   .detail-container
     padding: 0
 

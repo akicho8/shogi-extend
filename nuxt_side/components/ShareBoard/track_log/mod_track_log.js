@@ -24,8 +24,10 @@ export const mod_track_log = {
     tl_modal_handle() {
       this.sidebar_p = false
       this.sfx_click()
+      // https://buefy.org/documentation/modal
       this.modal_card_open({
         component: TrackLogModal,
+        fullScreen: true,
       })
     },
     tl_clear() {
@@ -59,7 +61,9 @@ export const mod_track_log = {
       } else {
         this.track_logs.push(params)
         this.track_logs = _.takeRight(this.track_logs, TRACK_LOG_MAX)
-        this.$nextTick(() => this.tl_scroll_to_bottom())
+        if (false) {
+          this.$nextTick(() => this.tl_scroll_to_bottom())
+        }
       }
     },
     tl_puts(message, detail_info = null) {

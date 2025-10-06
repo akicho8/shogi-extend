@@ -109,6 +109,10 @@
           .sc_label これを開く
           .sc_buttons
             b-tag(type="is-primary") ?
+        .sc_item(v-if="SB.debug_mode_p")
+          .sc_label ログ
+          .sc_buttons
+            b-tag(type="is-primary") \
 </template>
 
 <script>

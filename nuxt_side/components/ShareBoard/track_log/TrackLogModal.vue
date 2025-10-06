@@ -5,7 +5,7 @@
       | ログ ({{SB.track_logs.length}})
 
   .modal-card-body
-    SbTrackLog(ref="SbTrackLog")
+    TrackLogModalTable(ref="TrackLogModalTable")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -42,7 +42,8 @@ export default {
 
 <style lang="sass">
 .TrackLogModal
-  +modal_width(50rem)
+  // +modal_width(50rem)
+  // +modal_width(95vw)
   .modal-card-body
     padding: 0rem
 </style>

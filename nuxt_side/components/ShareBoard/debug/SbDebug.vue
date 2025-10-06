@@ -192,7 +192,7 @@
       .panel-heading
         | TrackLog
       .panel-block
-        SbTrackLog
+        TrackLogModalTable
   .column.is-12
     .panel
       .panel-heading

@@ -37,7 +37,7 @@ export const mod_room_latest_state_loader = {
 
     // ../../../../app/models/share_board/room.rb: as_json_for_room_latest_state_loader
     room_latest_state_loader_load(next_func = null) {
-      // this.tl_puts("--> room_latest_state_loader_load")
+      this.tl_alert("--> room_latest_state_loader_load")
       const params = {
         room_key: this.room_key,
       }
@@ -49,12 +49,11 @@ export const mod_room_latest_state_loader = {
             this.current_turn = e.turn
           }
         }
-        this.tl_alert("room_latest_state_loader_load next_func call", next_func)
         if (next_func) {
           next_func()
         }
       })
-      this.tl_puts("<-- room_latest_state_loader_load")
+      this.tl_alert("<-- room_latest_state_loader_load")
     },
   },
 }
