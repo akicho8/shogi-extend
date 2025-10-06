@@ -4,14 +4,14 @@ RSpec.describe "対局時計_設定の操作中に値を同期する", type: :sy
   CC_INPUT_DEBOUNCE_DELAY = 0.5
 
   def case1(user_name)
-    visit_app({
-                :room_key            => :test_room,
-                :user_name            => user_name,
-                :fixed_member_names   => "a,b",
-                :fixed_order_names    => "a,b",
-                :fixed_order_state    => "to_o2_state",
-                :handle_name_validate => "false",
-              })
+    visit_app2({
+        :room_key            => :test_room,
+        :user_name            => user_name,
+        :fixed_member_names   => "a,b",
+        :fixed_order_names    => "a,b",
+        :fixed_order_state    => "to_o2_state",
+        :handle_name_validate => "false",
+      })
   end
 
   it "works" do

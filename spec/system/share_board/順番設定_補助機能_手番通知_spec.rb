@@ -7,12 +7,10 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
     end
     b_block do
       room_setup("test_room", "bob")                      # bobも同じ入退室
-      global_menu_open
-      os_modal_open_handle                                   # 「順番設定」モーダルを開く (まだ無効の状態)
+      os_modal_open                                       # 「順番設定」モーダルを開く (まだ無効の状態)
     end
     a_block do
-      global_menu_open
-      os_modal_open_handle                                   # 「順番設定」モーダルを開く
+      os_modal_open                                   # 「順番設定」モーダルを開く
       os_switch_toggle                                  # 有効スイッチをクリック
       os_submit_button_click                                      # 確定
       os_modal_close                                   # 閉じる (ヘッダーに置いている)

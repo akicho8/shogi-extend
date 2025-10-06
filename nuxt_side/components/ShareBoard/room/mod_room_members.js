@@ -5,19 +5,9 @@ import { Gs } from "@/components/models/gs.js"
 export const mod_room_members = {
   data() {
     return {
-      member_infos:       null, // 参加者たち
+      member_infos: [],         // 参加者たち
       room_joined_at:     null, // 部屋に接続した時間(ms)
       alive_notice_count: null, // 生存通知を送信した回数
-    }
-  },
-  created() {
-    this.member_infos_init()
-  },
-  mounted() {
-    if (this.fixed_member_names_p) {
-      this.member_add_by_url_params()
-    } else {
-      this.member_bc_create()
     }
   },
   methods: {
@@ -58,12 +48,24 @@ export const mod_room_members = {
 
     // created, room_create, room_destroy で呼ばれる
     member_infos_init() {
+      this.tl_puts("<--> member_infos_init")
+      this.member_infos = []
+
+      if (this.fixed_member_names_p) {
+        this.member_add_by_url_params()
+      } else {
+        this.member_bc_create()
+      }
+    },
+
+    member_infos_leave() {
       this.member_infos = []
     },
 
     // 接続するタイミングで初期化
     // room_joined_at は古参度でソートするため
     member_info_init() {
+      this.tl_puts("<--> member_info_init")
       this.alive_notice_count = 0
       this.room_joined_at = this.$time.current_ms()
     },
@@ -108,6 +110,7 @@ export const mod_room_members = {
     },
 
     member_add(params) {
+      this.tl_puts("--> member_add", params)
       const size = this.member_infos.length
 
       this.member_infos.push(params)
@@ -121,6 +124,7 @@ export const mod_room_members = {
           this.ac_log({subject: "仲間一覧", body: this.member_infos.map(e => e.from_user_name)})
         }
       }
+      this.tl_puts("<-- member_add", params)
     },
 
     // 処理順序重要

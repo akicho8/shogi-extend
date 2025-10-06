@@ -1,16 +1,33 @@
+import { Gs } from "@/components/models/gs.js"
+
 export const autoexec_methods = {
   methods: {
-    autoexec() {
-      this.$nextTick(() => {
-        const s = this.$route.query.autoexec
-        if (s) {
-          s.split(/[,\s]+/).forEach(e => {
+    autoexec(options = {}) {
+      options = {
+        key: "autoexec",
+        next_tick: true,
+        sleep: null,
+        ...options,
+      }
+
+      const callback = () => {
+        const str = this.$route.query[options.key]
+        if (str) {
+          str.split(/[,\s]+/).forEach(e => {
             const func = this[e]
-            this.$gs.assert(this.$gs.present_p(func), `存在しないメソッドです : ${e}`)
+            Gs.assert(func, `存在しないメソッドです : ${e}`)
             func()
           })
         }
-      })
+      }
+
+      if (options.next_tick) {
+        this.$nextTick(callback)
+      } else if (options.sleep) {
+        setTimeout(callback, options.sleep * 1000)
+      } else {
+        callback()
+      }
     },
   },
 }

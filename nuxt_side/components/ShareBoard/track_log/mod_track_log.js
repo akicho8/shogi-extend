@@ -34,19 +34,17 @@ export const mod_track_log = {
     tl_test() {
       this.tl_add("(test)", `message${this.track_logs.length}`)
     },
-    tl_alert(message) {
-      if (this.debug_mode_p && Gs.present_p(message)) {
-        if (this.$route.query.__system_test_now__) {
-        } else {
-          this.debug_alert_core(message)
-        }
-        this.tl_add("ALERT", message)
+    tl_alert(message, detail_info = null) {
+      if (this.production_p) { return }
+      if (Gs.blank_p(message)) { return }
+      if (this.$route.query.__system_test_now__) {
+      } else {
+        this.debug_alert_core(message)
       }
+      this.tl_add("ALERT", message, detail_info)
     },
     tl_add(section, message, detail_info = null) {
-      if (!this.debug_mode_p) {
-        return
-      }
+      if (this.production_p) { return }
       const params = {
         id: this.track_logs_id,
         created_at: this.$time.current_ms(),
@@ -63,6 +61,9 @@ export const mod_track_log = {
         this.track_logs = _.takeRight(this.track_logs, TRACK_LOG_MAX)
         this.$nextTick(() => this.tl_scroll_to_bottom())
       }
+    },
+    tl_puts(message, detail_info = null) {
+      this.tl_add("", message, detail_info)
     },
     tl_scroll_to_bottom() {
       this.scroll_to_bottom(document.querySelector(".TrackLogModal .modal-card-body"))

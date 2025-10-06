@@ -75,8 +75,11 @@ module ShareBoard
     end
 
     # 直近の対局の情報
+    # ../../../nuxt_side/components/ShareBoard/sfen_loader/mod_sfen_loader.js: sfen_loader_load
     def as_json_for_sfen_loader(params = {})
-      # sleep(3)
+      if Rails.env.development?
+        sleep(1)
+      end
       battles.first&.sfen_and_turn
     end
 

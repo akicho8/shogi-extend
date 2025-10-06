@@ -5,7 +5,7 @@
       | ログ ({{SB.track_logs.length}})
 
   .modal-card-body
-    SbTrackLog(:SB="SB" ref="SbTrackLog")
+    SbTrackLog(ref="SbTrackLog")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")

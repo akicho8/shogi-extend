@@ -8,8 +8,18 @@ module SharedMethods
     include AliceBobCarol
   end
 
-  def visit_app(*args)
+  def visit_app(options = {})
+    visit2("/share-board", options)
+    options = options.to_options
+    if options[:room_key]
+      warn "visit_app2 を使ってください"
+      puts caller
+    end
+  end
+
+  def visit_app2(*args)
     visit2("/share-board", *args)
+    assert_room_created
   end
 
   def room_setup(room_key, user_name, params = {})
@@ -30,6 +40,11 @@ module SharedMethods
       find(".close_handle").click                 # 閉じる
     end
     assert_text(user_name) # 入力したハンドルネームの人が参加している
+    assert_room_created
+  end
+
+  def assert_room_created
+    assert_var("ac_room", "true", wait: 2)
   end
 
   def room_setup_by_fillin_params

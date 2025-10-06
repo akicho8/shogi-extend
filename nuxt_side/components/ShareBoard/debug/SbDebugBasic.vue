@@ -1,11 +1,17 @@
 <template lang="pug">
-.SbDebugBasic.column.is-2
-  .panel
-    .panel-heading
-      | 基本
-    a.panel-block(@click="SB.room_create_from_modal('dev_room', 'alice')") 入室
-    a.panel-block(@click="SB.os_setup_by_names(['alice', 'bob', 'carol', 'dave', 'ellen'])") 順番設定
-    a.panel-block(@click="SB.cc_play_by()") 時計開始
+.SbDebugBasic.column.is-12
+  .columns
+    .column
+      .panel
+        .panel-heading
+          | 基本
+        a.panel-block(@click="SB.room_create_from_modal('dev_room', 'alice')") 入室
+        a.panel-block(@click="SB.os_setup_by_names(['alice', 'bob', 'carol', 'dave', 'ellen'])") 順番設定
+        a.panel-block(@click="SB.cc_play_by()") 時計開始
+    .column
+      .panel.assert_var
+        .panel-heading [assert_var]
+        .panel-block ac_room:{{!!SB.ac_room}}
 </template>
 
 <script>

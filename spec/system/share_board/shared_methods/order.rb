@@ -10,6 +10,7 @@ module SharedMethods
   end
 
   def os_modal_open
+    # assert_room_created
     global_menu_open
     os_modal_open_handle
   end

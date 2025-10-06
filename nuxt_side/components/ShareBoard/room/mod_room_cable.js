@@ -21,14 +21,17 @@ export const mod_room_cable = {
     }
   },
   mounted() {
+    this.tl_puts("--> mod_room_cable.mounted")
     this.room_create_if_exist_room_key_in_url()
+    this.tl_puts("<-- mod_room_cable.mounted")
   },
   beforeDestroy() {
     this.room_destroy()
   },
   methods: {
     // URLに合言葉の指定があればそのまま入退室
-    async room_create_if_exist_room_key_in_url() {
+    room_create_if_exist_room_key_in_url() {
+      this.tl_puts("--> room_create_if_exist_room_key_in_url")
       if (true) {
         // URLに合言葉がない場合は何もしない
         if (this.url_room_key_blank_p) {
@@ -48,8 +51,10 @@ export const mod_room_cable = {
       }
 
       // 合言葉と名前は問題ないので入退室
-      await this.sfen_loader_load()
-      this.room_create()
+      this.sfen_loader_load(() => {
+        this.room_create()
+      })
+      this.tl_puts("<-- room_create_if_exist_room_key_in_url")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -70,13 +75,14 @@ export const mod_room_cable = {
       //   return
       // }
 
-      await this.sfen_loader_load()
-      this.room_create()
+      this.sfen_loader_load(() => {
+        this.room_create()
+      })
       // this.toast_ok("入室しました")
     },
 
     room_create() {
-      this.tl_alert("room_create")
+      this.tl_puts("--> room_create")
       Gs.assert(this.user_name, "this.user_name")
       Gs.assert(this.room_key, "this.room_key")
       Gs.assert(this.ac_room == null, "this.ac_room == null")
@@ -130,12 +136,14 @@ export const mod_room_cable = {
           this.api_version_valid(e.bc_params.API_VERSION)
         },
       })
+      this.autoexec({key: "autoexec_room_create_after"})
+      this.tl_puts("<-- room_create")
     },
 
     // 退室
     room_destroy() {
       if (this.ac_room) {
-        this.tl_alert("room_destroy")
+        this.tl_puts("room_destroy")
 
         this.mh_room_leave()
 
@@ -144,7 +152,7 @@ export const mod_room_cable = {
         this.tl_add("USER", "unsubscribe")
 
         this.perpetual_cop.reset()
-        this.member_infos_init()
+        this.member_infos_leave()
         this.active_level_init()
         this.active_level_increment_timer.stop()
         this.xprofile_leave()

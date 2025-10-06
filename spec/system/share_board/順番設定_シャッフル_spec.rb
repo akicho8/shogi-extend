@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "1,2,3,4,5,6,7,8",
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
-        :autoexec             => "os_modal_open_handle",
+        :autoexec_room_create_after => "os_modal_open_handle",
       })
     os_modal_close
     assert_var("仮順序", "12345678")
