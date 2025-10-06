@@ -4,8 +4,8 @@ RSpec.describe type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it do
-    visit2 "/swars/search/custom", user_key: "DevUser1" # カスタム検索で DevUser1 が localStorage に入る
-    visit2 "/swars/users/DevUser2"                      # プレイヤー情報は DevUser2 を見ている
+    visit_to "/swars/search/custom", user_key: "DevUser1" # カスタム検索で DevUser1 が localStorage に入る
+    visit_to "/swars/users/DevUser2"                      # プレイヤー情報は DevUser2 を見ている
     find(".SwarsUserShowDropdownMenu").click            # 右上「…」クリック
     find("span", text: "絞り込み").click
     # プレイヤー情報でカスタム検索を起動する

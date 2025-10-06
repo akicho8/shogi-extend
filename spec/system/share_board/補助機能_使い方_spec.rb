@@ -2,14 +2,14 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "モーダルで開く" do
-    visit2("/share-board")
+    visit_to("/share-board")
     global_menu_open
     menu_item_click("使い方")
     find(".close_handle").click
   end
 
   it "モーダルからパーマリンクで飛ぶ" do
-    visit2("/share-board")
+    visit_to("/share-board")
     global_menu_open
     menu_item_click("使い方")
     switch_to_window_by do
@@ -19,7 +19,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "ほぼ静的ページ" do
-    visit2("/share-board/help")
+    visit_to("/share-board/help")
     assert_text("順番設定")
   end
 end

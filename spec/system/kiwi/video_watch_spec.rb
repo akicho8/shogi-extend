@@ -9,10 +9,10 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
 
   it "コメント送受信" do
     a_block do
-      visit2("/video/watch/1")                            # 動画詳細へ
+      visit_to("/video/watch/1")                            # 動画詳細へ
     end
     b_block do
-      visit2("/video/watch/1")                            # 動画詳細へ
+      visit_to("/video/watch/1")                            # 動画詳細へ
     end
     a_block do
       find(".MessageInput textarea").set("(new_message)") # コメント入力
@@ -25,7 +25,7 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
   end
 
   it "将棋盤に切り替え" do
-    visit2("/video/watch/1")                            # 動画詳細へ
+    visit_to("/video/watch/1")                            # 動画詳細へ
     assert_selector(".KiwiBananaShowMain", wait: 5)     # 遅いPCでは待たないといけない
 
     find(".KiwiBananaShowMain .switch_handle").click      # 切り替え

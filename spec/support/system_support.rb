@@ -219,7 +219,7 @@ if true
     end
 
     def login_by(key)
-      visit2("http://localhost:3000/", _login_by_key: key)
+      visit_to("http://localhost:3000/", _login_by_key: key)
     end
 
     def login
@@ -227,7 +227,7 @@ if true
     end
 
     def logout
-      visit2("http://localhost:3000/", _user_id: 0)
+      visit_to("http://localhost:3000/", _user_id: 0)
     end
 
     def eval_code(*code)
@@ -235,7 +235,7 @@ if true
       visit "http://localhost:3000/eval?#{code.to_query(:code)}"
     end
 
-    def visit2(url, params = {})
+    def visit_to(url, params = {})
       params = {
         :__system_test_now__ => "true",
       }.merge(params).stringify_keys

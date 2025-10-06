@@ -8,17 +8,17 @@ module SharedMethods
     include AliceBobCarol
   end
 
-  def visit_app(options = {})
-    visit2("/share-board", options)
-    options = options.to_options
-    if options[:room_key]
-      warn "visit_app2 を使ってください"
+  def visit_app(params = {})
+    visit_to("/share-board", params)
+    params = params.to_params
+    if params[:room_key]
+      warn "visit_room を使ってください"
       puts caller
     end
   end
 
-  def visit_app2(*args)
-    visit2("/share-board", *args)
+  def visit_room(params = {})
+    visit_to("/share-board", params)
     assert_room_created
   end
 

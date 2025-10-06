@@ -11,7 +11,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
   end
 
   it "動画ライブラリ" do
-    visit2 "/video"
+    visit_to "/video"
     assert_text "動画"
   end
 
@@ -51,7 +51,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
   end
 
   def visit_app(params = {})
-    visit2("/video/new", params.merge({
+    visit_to("/video/new", params.merge({
           :__color_theme_key_dropdown_skip__ => "true", # 色テーマ画像を作り直してしまうためスキップする
         }))
   end

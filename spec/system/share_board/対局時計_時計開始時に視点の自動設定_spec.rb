@@ -3,7 +3,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def visit_app2(fixed_order_state, b_or_w, user_name)
+  def visit_room(fixed_order_state, b_or_w, user_name)
     visit_app({
         :room_key            => :test_room,
         :user_name      => user_name,
@@ -16,8 +16,8 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def case1(fixed_order_state, b_or_w, a_side_location_key, b_side_location_key)
-    a_block { visit_app2(fixed_order_state, b_or_w, "a") }
-    b_block { visit_app2(fixed_order_state, b_or_w, "b") }
+    a_block { visit_room(fixed_order_state, b_or_w, "a") }
+    b_block { visit_room(fixed_order_state, b_or_w, "b") }
     a_block do
       clock_start # 対局時計PLAY
     end

@@ -9,7 +9,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
 
   describe "HTML" do
     def case1(params = {})
-      visit2 "/swars/battles/#{@key}", params
+      visit_to "/swars/battles/#{@key}", params
       assert_text "YamadaTaro", wait: 5
       assert_text "最後は時間切れ"
       assert_text "入玉宣言"
@@ -25,7 +25,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   # というかこれがあれば他の形式のテストは不要
   describe "表示・コピー・ダウンロード" do
     before do
-      visit2 "/swars/battles/#{@key}"
+      visit_to "/swars/battles/#{@key}"
       find(".ShogiPlayer .button.first").click # 0手目
       find(".ShogiPlayer .button.next").click  # 1手目
       global_menu_open
@@ -54,18 +54,18 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
 
   describe "画像(共有将棋盤に飛ばすようにしたので普通の遷移では見れない)" do
     it "画像でも表示する" do
-      visit2 "/swars/battles/#{@key}.png"
+      visit_to "/swars/battles/#{@key}.png"
       assert_current_path "/swars/battles/#{@key}.png", ignore_query: true
     end
 
     it "画像を反転して最後の局面を表示する" do
-      visit2 "/swars/battles/#{@key}.png", turn: -1, viewpoint: "white"
+      visit_to "/swars/battles/#{@key}.png", turn: -1, viewpoint: "white"
       assert_current_path "/swars/battles/#{@key}.png", ignore_query: true
     end
   end
 
   it "本家" do
-    visit2 "/swars/battles/#{@key}"
+    visit_to "/swars/battles/#{@key}"
     global_menu_open
     switch_to_window(window_opened_by { menu_item_click("本家") })
     assert { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
@@ -73,7 +73,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
 
   describe "タイムチャート" do
     it "すべてのボタンが押せる" do
-      visit2 "/swars/battles/#{@key}"
+      visit_to "/swars/battles/#{@key}"
       Capybara.find("label", text: "明細", exact_text: true).click
       Capybara.find("label", text: "累積", exact_text: true).click
       Capybara.find("label", text: "-", exact_text: true).click
@@ -81,18 +81,18 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
     end
     it "状態はブラウザに保存する" do
       # 両方をデフォルトでない方にする
-      visit2 "/swars/battles/#{@key}"
+      visit_to "/swars/battles/#{@key}"
       Capybara.find("label", text: "累積", exact_text: true).click
       Capybara.find("label", text: "+", exact_text: true).click
       # リロードして状態が同じになっているか確認する
-      visit2 "/swars/battles/#{@key}"
+      visit_to "/swars/battles/#{@key}"
       Capybara.assert_selector("label.is-selected", text: "累積", exact_text: true)
       Capybara.assert_selector("label.is-selected", text: "+", exact_text: true)
     end
   end
 
   it "開いたときスライダーにフォーカスしている" do
-    visit2 "/swars/battles/#{@key}"
+    visit_to "/swars/battles/#{@key}"
     assert_selector(".ShogiPlayer .b-slider-thumb", focused: true)
   end
 end

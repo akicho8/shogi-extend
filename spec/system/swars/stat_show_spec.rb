@@ -4,17 +4,17 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "最初に開いたときのタブは日付になっている" do
-    visit2 "/swars/users/YamadaTaro"
+    visit_to "/swars/users/YamadaTaro"
     assert_current_tab_at 0
   end
 
   it "引数でデフォルトのタブを変更する" do
-    visit2 "/swars/users/YamadaTaro", tab_index: 1
+    visit_to "/swars/users/YamadaTaro", tab_index: 1
     assert_current_tab_at 1
   end
 
   it "タブを変更する" do
-    visit2 "/swars/users/YamadaTaro"
+    visit_to "/swars/users/YamadaTaro"
 
     tab_click_by_name("日")
     within(".boxes") { assert_text "2020-01-01" }
@@ -56,7 +56,7 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
   end
 
   it "commandを押しながらタブをクリックすると別タブで開く" do
-    visit2 "/swars/users/YamadaTaro"
+    visit_to "/swars/users/YamadaTaro"
     window = window_opened_by(wait: 10) { tab_element("他").click(:meta) }
     switch_to_window(window)
     within(".boxes", wait: 10) { assert_text "将棋ウォーズの運営を支える力" }

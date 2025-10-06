@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "その他", type: :system do
   it "符号の鬼" do
-    visit2 "/xy"
+    visit_to "/xy"
     assert_text "符号の鬼"
   end
 
@@ -11,19 +11,19 @@ RSpec.describe "その他", type: :system do
       login_by("admin")
     end
     it "login" do
-      visit2 "/video/new", __nuxt_login_required_force: "login"
+      visit_to "/video/new", __nuxt_login_required_force: "login"
       assert_text "Google"
     end
     it "email" do
-      visit2 "/video/new", __nuxt_login_required_force: "email"
+      visit_to "/video/new", __nuxt_login_required_force: "email"
       assert_text "メールアドレス"
     end
     it "name" do
-      visit2 "/video/new", __nuxt_login_required_force: "name"
+      visit_to "/video/new", __nuxt_login_required_force: "name"
       assert_text "名前"
     end
     xit "ban" do
-      visit2 "/video/new", __nuxt_login_required_force: "ban"
+      visit_to "/video/new", __nuxt_login_required_force: "ban"
       assert_text "shogi-mode.el"
     end
   end

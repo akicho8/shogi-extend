@@ -5,7 +5,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "始めて来た" do
     it "引数なしで来たときの画面" do
-      visit2 "/swars/search"
+      visit_to "/swars/search"
       assert_text "将棋ウォーズ棋譜検索"
       assert_query ""
       assert_list_blank
@@ -14,7 +14,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "クエリ検索" do
     it "検索フォームに入力して検索する" do
-      visit2 "/swars/search"
+      visit_to "/swars/search"
       fill_in "query", with: "YamadaTaro"
       assert_query "YamadaTaro"
       find(".search_click_handle").click
@@ -22,7 +22,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     it "謎の空白が混入するBiDi問題" do
-      visit2 "/swars/search"
+      visit_to "/swars/search"
       fill_in "query", with: "\u{202A}YamadaTaro\u{202C}"
       find(".search_click_handle").click
       assert_list_present
@@ -30,21 +30,21 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "検索クエリ内各パラメータ" do
       it "ウォーズIDだけを指定する" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         assert_query "YamadaTaro"
         assert_list_present
       end
 
       it "相手で絞る" do
-        visit2 "/swars/search", query: "YamadaTaro vs:DevUser2"
+        visit_to "/swars/search", query: "YamadaTaro vs:DevUser2"
         assert_var_eq(:records_length, 1)
       end
 
       it "囲い名で絞る" do
-        visit2 "/swars/search", query: "YamadaTaro tag:舟囲い"
+        visit_to "/swars/search", query: "YamadaTaro tag:舟囲い"
         assert_var_eq(:records_length, 3)
 
-        visit2 "/swars/search", query: "YamadaTaro tag:高美濃囲い"
+        visit_to "/swars/search", query: "YamadaTaro tag:高美濃囲い"
         assert_var_eq(:records_length, 0)
       end
     end
@@ -52,12 +52,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "入力補完" do
       def case1(query, complement_user_keys)
         search_by(query)
-        visit2 "/swars/search" # 一度リロードする
+        visit_to "/swars/search" # 一度リロードする
         assert_var_eq(:complement_user_keys, complement_user_keys, wait: 5)
       end
 
       it "順番が正しい" do
-        visit2 "/swars/search", complement_user_keys: "c b a" # 初期値を設定しておくと
+        visit_to "/swars/search", complement_user_keys: "c b a" # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "c|b|a")         # Rails側からのコピーをかわせる
 
         case1 :DevUser1, "DevUser1|c|b"                       # DevUser1が直近に登場
@@ -66,7 +66,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "クエリ全体を取り込む" do
-        visit2 "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
+        visit_to "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "xxx")                           # Rails側からのコピーをかわせる
         search_by "　DevUser1　tag:a,b　手数:>=1　"                           # 入力が汚なくても
         # complement_user_keys_prepend_key に影響して切り替わる
@@ -80,7 +80,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "検索クエリを自力入力しすぎ警告" do
       it "works" do
-        visit "/swars/search" # visit2 では __system_test_now__ がつくのでダメ
+        visit "/swars/search" # visit_to では __system_test_now__ がつくのでダメ
 
         # DevUser1 で9回
         fill_in "query", with: "DevUser1"
@@ -106,7 +106,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "一覧要素の一番上の対局の各操作ボタンをクリックする" do
     before do
-      visit2 "/swars/search", query: "YamadaTaro"
+      visit_to "/swars/search", query: "YamadaTaro"
     end
 
     it "ぴよ将棋" do
@@ -133,7 +133,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "ACTION" do
     it "プレイヤー情報" do
-      visit2 "/swars/search", query: "YamadaTaro 持ち時間:10分"
+      visit_to "/swars/search", query: "YamadaTaro 持ち時間:10分"
       global_menu_open
       find(".swars_users_key_handle").click
       if false
@@ -147,12 +147,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "表示形式" do
     describe "テーブルカラムのトグル" do
       it "最初に検索したとき日付のカラムがある" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         table_in { assert_text("2020-01-01") }
       end
 
       it "日時のカラムを非表示にする" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
 
         column_toggle_menu_open
@@ -162,12 +162,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "保存している" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         column_toggle_menu_open
         menu_item_sub_menu_click("日時")
 
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         assert_list_present
         table_in { assert_no_text("2020-01-01") }
       end
@@ -175,12 +175,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "切り替え" do
       it "初期値は一覧になっている" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         assert_selector(".SwarsBattleIndexTable")
       end
 
       it "一覧から盤面に切り替える" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".is_layout_board").click
         assert_selector(".SwarsBattleIndexBoard")
@@ -188,7 +188,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "盤面を開戦から終局に変更する" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".is_layout_board").click
         find(".is_scene_turn_max").click
@@ -197,7 +197,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       describe "別タブで開く系" do
         it "commandを押しながら盤面をクリックすると別タブで開く" do
-          visit2 "/swars/search", query: "YamadaTaro"
+          visit_to "/swars/search", query: "YamadaTaro"
           global_menu_open
           window = window_opened_by(wait: 10) { find(".is_layout_board").click(:meta) }
           switch_to_window(window)
@@ -205,7 +205,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         end
 
         it "commandを押しながら終局をクリックすると別タブで開く" do
-          visit2 "/swars/search", query: "YamadaTaro"
+          visit_to "/swars/search", query: "YamadaTaro"
           global_menu_open
           window = window_opened_by(wait: 10) { find(".is_scene_turn_max").click(:meta) }
           switch_to_window(window)
@@ -218,13 +218,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "表示オプション" do
     describe "表示件数" do
       it "初期値は10になっている" do
-        visit2 "/swars/search"
+        visit_to "/swars/search"
         assert_var_eq(:per, 10)
         assert_var_eq(:records_length, 0)
       end
 
       it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".per_change_menu_item").click
         find(".is_per1").click
@@ -233,12 +233,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "保存している" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".per_change_menu_item").click
         find(".is_per1").click
 
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         assert_var_eq(:per, 1)
         assert_var_eq(:records_length, 1)
       end
@@ -248,14 +248,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "まとめて取得" do
     xdescribe "ダウンロード" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
-        visit2 "/swars/direct-download"
+        visit_to "/swars/direct-download"
         assert_selector(".NuxtLoginContainer")
       end
 
       it "正しくダウンロードする" do
         login_by :admin
 
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
         assert_current_path "/swars/direct-download", ignore_query: true
@@ -273,14 +273,14 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     xdescribe "古い棋譜の補完" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
-        visit2 "/swars/users/YamadaTaro/download-all"
+        visit_to "/swars/users/YamadaTaro/download-all"
         assert_selector(".NuxtLoginContainer", wait: 30)
       end
 
       it "正しく予約する" do
         login_by :admin
 
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".swars_users_key_download_all_handle").click # 「古い棋譜の補完」をクリック
         assert_current_path "/swars/users/YamadaTaro/download-all", ignore_query: true
@@ -303,24 +303,24 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "一歩進んだ使い方" do
     describe "ウォーズIDを記憶する" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         default_swars_id_set
 
-        visit2 "/swars/search"
+        visit_to "/swars/search"
         assert_list_present
       end
 
       it "検索初期値を解除したので引数なしで来たときは検索できない" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         assert_query "YamadaTaro"
         default_swars_id_set   # 検索初期値に YamadaTaro を設定
 
-        visit2 "/swars/search" # 再度検索ページに飛ぶと YamadaTaro で検索している
+        visit_to "/swars/search" # 再度検索ページに飛ぶと YamadaTaro で検索している
         assert_query "YamadaTaro"
         assert_list_present
 
         default_swars_id_unset # 検索初期値の YamadaTaro を解除
-        visit2 "/swars/search"
+        visit_to "/swars/search"
         assert_query ""
         assert_list_blank    # 何も検索されていない
       end
@@ -328,7 +328,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "ホーム画面に追加" do
       it "works" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".home_bookmark_handle").click
         assert_selector(".dialog.modal.is-active")
@@ -338,7 +338,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "外部APPショートカット" do
       before do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".external_app_menu_item").click
       end
@@ -356,7 +356,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "KENTO_API" do
       it "works" do
-        visit2 "/swars/search", query: "YamadaTaro"
+        visit_to "/swars/search", query: "YamadaTaro"
         global_menu_open
         find(".swars_users_key_kento_api_menu_item").click
 
@@ -374,7 +374,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "棋譜のファイル保存" do
     it "works" do
-      visit2 "/swars/search", query: "YamadaTaro"
+      visit_to "/swars/search", query: "YamadaTaro"
       global_menu_open
       column_toggle_menu_open
       menu_item_sub_menu_click("保存 (UTF-8)")
@@ -386,7 +386,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "KI2形式の棋譜コピー" do
     it "works" do
-      visit2 "/swars/search", query: "YamadaTaro"
+      visit_to "/swars/search", query: "YamadaTaro"
       global_menu_open
       column_toggle_menu_open
       menu_item_sub_menu_click("コピー (KI2)")

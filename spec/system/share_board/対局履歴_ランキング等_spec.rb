@@ -5,7 +5,7 @@ RSpec.describe "対局履歴_ランキング等", type: :system, share_board_spe
     eval_code %(ShareBoard.setup(force: true))
     eval_code %(ShareBoard::Room.mock)
 
-    visit2 "/share-board/dashboard", room_key: "dev_room1"
+    visit_to "/share-board/dashboard", room_key: "dev_room1"
     assert_text("順位")
     assert_text("alice")
     assert_text("bob")
