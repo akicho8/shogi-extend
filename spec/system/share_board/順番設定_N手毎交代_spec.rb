@@ -2,9 +2,9 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(fixed_order_state, change_per, order)
-    visit_app({
-        :change_per               => change_per,
+    visit_room({
         :room_key            => :test_room,
+        :change_per               => change_per,
         :user_name            => "a",
         :fixed_member_names   => "a,b,c",
         :fixed_order_names    => "a,b,c",

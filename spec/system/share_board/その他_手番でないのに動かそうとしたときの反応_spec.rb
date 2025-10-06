@@ -3,13 +3,13 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1
     a_block do
-      visit_app(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob")
+      visit_room(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob")
     end
     b_block do
-      visit_app(room_key: :test_room, user_name: "bob", fixed_order_names: "alice,bob")
+      visit_room(room_key: :test_room, user_name: "bob", fixed_order_names: "alice,bob")
     end
     c_block do
-      visit_app(room_key: :test_room, user_name: "carol", fixed_order_names: "alice,bob")
+      visit_room(room_key: :test_room, user_name: "carol", fixed_order_names: "alice,bob")
     end
   end
   it "時計OFF順番設定ONでは検討をしていると思われる" do

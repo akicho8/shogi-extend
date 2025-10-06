@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(names)
-    visit_app({
+    visit_room({
         :room_key             => :test_room,
         :user_name            => "alice",
         :fixed_member_names   => names,

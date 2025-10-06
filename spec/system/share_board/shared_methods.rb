@@ -13,7 +13,7 @@ module SharedMethods
     params = params.to_options
     if params[:room_key]
       warn "visit_room を使ってください"
-      puts caller
+      puts caller.first
     end
   end
 

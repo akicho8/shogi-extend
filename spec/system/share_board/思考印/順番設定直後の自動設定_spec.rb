@@ -2,7 +2,7 @@ require "#{__dir__}/helper"
 
 RSpec.describe "順番設定直後の自動設定", type: :system, share_board_spec: true do
   def case1(user_name, think_mark_mode_p)
-    visit_app({
+    visit_room({
         :room_key             => :test_room,
         :user_name            => user_name,
         :fixed_member_names   => "a,b,c",

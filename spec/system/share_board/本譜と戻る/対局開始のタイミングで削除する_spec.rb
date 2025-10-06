@@ -2,7 +2,7 @@ require "#{__dir__}/helper"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    visit_app({
+    visit_room({
         :room_key             => :test_room,
         :user_name            => "alice",
         :fixed_member_names   => "alice,bob",

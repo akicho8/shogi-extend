@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1
     a_block do
-      visit_app(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY)
+      visit_room(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY)
     end
     b_block do
-      visit_app(room_key: :test_room, user_name: "bob", fixed_order_names: "alice,bob")
+      visit_room(room_key: :test_room, user_name: "bob", fixed_order_names: "alice,bob")
     end
     a_block do
       piece_move_o("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる

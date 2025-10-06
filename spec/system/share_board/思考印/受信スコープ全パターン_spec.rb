@@ -2,7 +2,7 @@ require "#{__dir__}/helper"
 
 RSpec.describe "受信スコープ全パターン", type: :system, share_board_spec: true do
   def case1(user_name, think_mark_receive_scope_key)
-    visit_app({
+    visit_room({
         :room_key                     => :test_room,
         :user_name                    => user_name,
         :fixed_member_names           => "a,b,c",

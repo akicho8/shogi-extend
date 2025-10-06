@@ -2,7 +2,7 @@ require "#{__dir__}/helper"
 
 RSpec.describe "同じセルに複数人が印をつける", type: :system, share_board_spec: true do
   def case1(user_name)
-    visit_app({
+    visit_room({
         :room_key                     => :test_room,
         :user_name                    => user_name,
         :handle_name_validate         => "false",

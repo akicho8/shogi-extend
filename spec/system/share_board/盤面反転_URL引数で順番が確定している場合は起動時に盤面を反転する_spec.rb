@@ -4,7 +4,7 @@ require "#{__dir__}/shared_methods"
 # order_copy_from_bc 内のテストにはなっていない
 RSpec.describe type: :system, share_board_spec: true do
   def visit_room(fixed_order_state, b_or_w, user_name)
-    visit_app({
+    visit_room({
         :room_key            => :test_room,
         :user_name            => user_name,
         :fixed_member_names   => "a,b",

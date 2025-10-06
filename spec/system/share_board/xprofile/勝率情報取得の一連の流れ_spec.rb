@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def case1(user_name)
-    visit_app({
+    visit_room({
         :room_key           => @room_key,
         :user_name          => user_name,
         :fixed_member_names => "alice,bob",

@@ -5,7 +5,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
 
   it "完全に抜けた状態から再度入室すると発言履歴がある" do
     chat_message_setup(1)                                                 # 1件用意する
-    visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 1)   # 入室する
+    visit_room(room_key: :test_room, user_name: "alice", mh_per_page: 1)   # 入室する
     assert_var("ml_count", 0)                                 # 件数は 0
     chat_modal_open { assert_message_received_o("(content:0)") }          # チャットを開いたタイミングで読み込む
     assert_var("ml_count", 1)                                 # 件数は 1
@@ -13,7 +13,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
 
   it "初回のスクロール位置はいちばん下になっている" do
     chat_message_setup(100)                                               # 100件用意する
-    visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 50)  # 1回で50件読む
+    visit_room(room_key: :test_room, user_name: "alice", mh_per_page: 50)  # 1回で50件読む
     assert_var("ml_count", 0)                                 # 件数は 0
     chat_modal_open do
       assert_message_received_o("(content:99)")                           # 50..99 は有り
@@ -27,7 +27,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
   it "よそ見から復帰したとき(タブを切り替えて戻ったとき)に最新にするためリロードする" do
     chat_message_setup(1)                                                 # 1件用意する
     a_block do
-      visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 1) # 入室する
+      visit_room(room_key: :test_room, user_name: "alice", mh_per_page: 1) # 入室する
       chat_modal_open                                                     # チャットを開いたら
       assert_ml_count_in_modal(1)                                         # 1件読み込まれる
       find(".ChatModal .mh_reset_all").click                              # デバッグ用の「初期化」をクリックすると
@@ -45,7 +45,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
 
   it "遡って昔の発言を参照する" do
     chat_message_setup(100)                                               # 100件用意する
-    visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 40)  # 1回で40件読む (つまり3回のアクセスが必要)
+    visit_room(room_key: :test_room, user_name: "alice", mh_per_page: 40)  # 1回で40件読む (つまり3回のアクセスが必要)
     chat_modal_open do                                                    # チャットを開いたタイミングで40件読む
       assert_mh_page_index_in_modal(1)                                    # APIアクセス1回目
       chat_scroll_to_top_with_wait                                        # 最上位までスクロールしたので残りのうち40件を読んで80件になる
