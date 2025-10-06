@@ -65,7 +65,7 @@ export const mod_room_setup_modal = {
       }
     },
 
-    async rsm_entry_handle() {
+    rsm_entry_handle() {
       this.sfx_click()
 
       this.new_room_key = _.trim(this.new_room_key)
@@ -84,14 +84,12 @@ export const mod_room_setup_modal = {
         return
       }
 
-      await this.room_create_from_modal(this.new_room_key, this.new_user_name)
-
       if (this.auto_close_p) {
         this.sidebar_p = false
         this.rsm_close()
       }
+
+      this.room_create_from_modal(this.new_room_key, this.new_user_name)
     },
-  },
-  computed: {
   },
 }

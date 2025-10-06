@@ -59,7 +59,7 @@ export const mod_room_cable = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    async room_create_from_modal(new_room_key, new_user_name) {
+    room_create_from_modal(new_room_key, new_user_name) {
       Gs.assert(this.ac_room == null)
       Gs.assert(new_user_name, "new_user_name")
       Gs.assert(new_room_key, "new_room_key")
