@@ -45,21 +45,6 @@ export const mod_chore = {
       }
     },
 
-    // タイトル編集
-    title_edit_handle() {
-      this.sidebar_p = false
-      this.sfx_click()
-      this.dialog_prompt({
-        title: "タイトル",
-        confirmText: "更新",
-        inputAttrs: { type: "text", value: this.current_title, required: false },
-        onConfirm: value => {
-          this.sfx_click()
-          this.current_title_set(value)
-        },
-      })
-    },
-
     // 動画作成
     video_new_handle() {
       this.run_or_room_out_confirm(() => {

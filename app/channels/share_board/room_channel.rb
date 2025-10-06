@@ -49,10 +49,15 @@ module ShareBoard
       # raise SfenNotReachError, "指手不達(#{rs_failed_count}回目) : #{data}"
     end
 
-    def title_share(data)
-      track(data, subject: "タイトル", body: "#{data["title"].inspect} に変更")
-      broadcast(:title_share_broadcasted, data)
+    ################################################################################
+
+    def room_name_share(data)
+      Room.fetch(room_key).update!(name: data["room_name"])
+      track(data, subject: "部屋名", body: "#{data["room_name"].inspect} に変更")
+      broadcast(:room_name_share_broadcasted, data)
     end
+
+    ################################################################################
 
     def setup_info_request(data)
       track(data, subject: "情報要求", body: "ください > ALL")
@@ -178,7 +183,7 @@ module ShareBoard
     end
 
     # ################################################################################
-    # 
+    #
     # def xprofile_load(data)
     #   if room = Room[room_key]
     #     room.

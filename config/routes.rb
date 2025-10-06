@@ -212,6 +212,7 @@ Rails.application.routes.draw do
       get :kifu_mail if Rails.env.development?
       post :battle_create
       get :battle_create if Rails.env.development?
+      # post :title_update
       get :dashboard
       get :chat_message_loader
       get :room_latest_state_loader

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_000008) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_06_000000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -470,6 +470,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_000008) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "chat_messages_count", default: 0
+    t.string "name", null: false, comment: "部屋名"
     t.index ["key"], name: "index_share_board_rooms_on_key", unique: true
   end
 

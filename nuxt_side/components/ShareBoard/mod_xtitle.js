@@ -7,27 +7,69 @@ export const mod_xtitle = {
     }
   },
   methods: {
-    title_share() {
-      this.ac_room_perform("title_share", this.title_share_data)
+    // タイトル編集
+    title_edit_handle() {
+      this.sidebar_p = false
+      this.sfx_click()
+      this.dialog_prompt({
+        title: "タイトル",
+        confirmText: "更新",
+        inputAttrs: { type: "text", value: this.current_title, required: false },
+        onConfirm: value => {
+          this.sfx_click()
+          this.current_title_set(value)
+        },
+      })
     },
-    title_share_broadcasted(params) {
-      if (this.received_from_self(params)) {
-        // 自分から自分へ
-      } else {
+
+    current_title_set(title) {
+      title = _.trim(title)
+      if (this.current_title != title) {
+        this.current_title = title
+        this.room_name_share()
       }
-      this.title_share_data_receive(params)
-      this.al_add({...params, label: "タイトル変更"})
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
-    title_share_data_receive(params) {
-      Gs.assert(Gs.present_p(params), "Gs.present_p(params)")
-      Gs.assert("title" in params, '"title" in params')
-      this.current_title = params.title
-      this.ac_log({subject: "タイ変更", body: `タイトル "${this.current_title}" を受信`})
+
+    // title_update() {
+    // //   if (this.ac_room) {
+    // //     const params = {
+    // //       room_key: this.room_key,
+    // //       ...this.room_name_share_data,
+    // //     }
+    // //     this.$axios.$post("/api/share_board/title_update.json", params, {progress: false}).then(e => {
+    // //       alert(e.message)
+    // //       // if (e.error) {
+    // //       //   this.toast_ng(e.error.message, {talk: false})
+    // //       // }
+    // //       // alert("OK")
+    // //     })
+    // //   }
+    // // },
+    room_name_share() {
+      this.ac_room_perform("room_name_share", this.room_name_share_data)
+    },
+    room_name_share_broadcasted(params) {
+      // if (this.received_from_self(params)) {
+      //   // 自分から自分へ
+      // } else {
+      // }
+      this.room_name_share_data_receive(params)
+      this.al_add({...params, label: "部屋名変更"})
+      this.toast_ok(`${this.user_call_name(params.from_user_name)}が部屋名を${params.room_name}に変更しました`)
+    },
+    room_name_share_data_receive(params) {
+      Gs.assert(params)
+      Gs.assert("room_name" in params)
+      this.current_title = params.room_name
+      this.ac_log({subject: "部屋名変更", body: `部屋名 "${this.current_title}" を受信`})
     },
   },
   computed: {
-    title_share_data() { return { title: this.current_title } },
+    room_name_share_data() {
+      return {
+        room_name: this.current_title,
+      }
+    },
     page_title() {
       if (this.current_turn === 0) {
         return this.current_title

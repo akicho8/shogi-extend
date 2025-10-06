@@ -323,14 +323,6 @@ export default {
   // http://localhost:4000/share-board?autoexec=general_setting_modal_open_handle
   // http://localhost:4000/share-board?autoexec=debug_mode_on,general_setting_modal_open_handle
   methods: {
-    current_title_set(title) {
-      title = _.trim(title)
-      if (this.current_title != title) {
-        this.current_title = title
-        this.title_share()
-      }
-    },
-
     // 盤面のみ最初の状態に戻す
     reset_handle() {
       this.sidebar_p = false

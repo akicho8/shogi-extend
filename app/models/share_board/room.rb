@@ -32,7 +32,7 @@ module ShareBoard
           { user_name: "bob",   location_key: "white", judge_key: "lose", },
           { user_name: "carol", location_key: "black", judge_key: "win",  },
         ]
-        room = Room.create!(key: room_key)
+        room = Room.create!(key: room_key, name: "(room.name)")
         room.redis_clear
         room.battles.create! do |e|
           e.memberships.build(records)
@@ -68,11 +68,16 @@ module ShareBoard
       if Rails.env.local?
         self.key ||= ["dev_room", self.class.count.next].join
       end
+
+      self.name ||= "共有将棋盤"
+      self.name ||= name.to_s.strip
     end
 
     with_options presence: true do
       validates :key
     end
+
+    ################################################################################ for API
 
     # 直近の対局の情報
     # ../../../nuxt_side/components/ShareBoard/room_latest_state_loader/mod_room_latest_state_loader.js: room_latest_state_loader_load
@@ -80,8 +85,26 @@ module ShareBoard
       if Rails.env.development?
         sleep(1)
       end
-      battles.first&.sfen_and_turn
+      hv = {
+        room_name: name,
+      }
+      if battle = battles.first
+        hv[:latest_battle] = battle.sfen_and_turn
+      end
+      hv
     end
+
+    # def latest_battle_sfen_and_turn
+    #   battles.first&.sfen_and_turn
+    # end
+
+    # def name_update(params)
+    #   update!(name: params[:name])
+    #   ShareBoard::Broadcaster.new(key).call("room_name_share_broadcasted", { name: name })
+    #   { message: "OK" }
+    # end
+
+    ################################################################################
 
     concerning :RankingMethods do
       def score_by_user(user)

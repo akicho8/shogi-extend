@@ -45,10 +45,13 @@ export const mod_room_latest_state_loader = {
         this.tl_alert("room_latest_state_loader_load then", e)
         if (e) {
           if (this.room_latest_state_loader_p) {
-            this.current_sfen = e.sfen
-            this.current_turn = e.turn
-            this.honpu_main_setup()
+            if (e.latest_battle) {
+              this.current_sfen = e.latest_battle.sfen
+              this.current_turn = e.latest_battle.turn
+              this.honpu_main_setup()
+            }
           }
+          this.current_title = e.room_name
         }
         if (next_func) {
           next_func()

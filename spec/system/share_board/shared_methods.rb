@@ -10,7 +10,7 @@ module SharedMethods
 
   def visit_app(params = {})
     visit_to("/share-board", params)
-    params = params.to_params
+    params = params.to_options
     if params[:room_key]
       warn "visit_room を使ってください"
       puts caller
