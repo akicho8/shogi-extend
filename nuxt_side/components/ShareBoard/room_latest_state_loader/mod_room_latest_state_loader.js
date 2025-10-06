@@ -47,6 +47,7 @@ export const mod_room_latest_state_loader = {
           if (this.room_latest_state_loader_p) {
             this.current_sfen = e.sfen
             this.current_turn = e.turn
+            this.honpu_main_setup()
           }
         }
         if (next_func) {

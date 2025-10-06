@@ -400,7 +400,7 @@ export const mod_clock_box = {
           // this.tn_notify()                 // 牛
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
-        this.honpu_all_clear()  // 本譜を消す
+        this.honpu_all_clear()  // 本譜を消す (消さなくても cc_play_p のときは非表示になるのでいらないかも)
         this.sfx_play("se_niwatori")
       }
     },
