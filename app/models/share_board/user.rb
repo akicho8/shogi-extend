@@ -45,7 +45,7 @@ module ShareBoard
       end
 
       def fetch(name)
-        find_or_create_by!(name: name)
+        find_by!(name: name)
       end
     end
 

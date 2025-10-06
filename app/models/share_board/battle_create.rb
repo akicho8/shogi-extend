@@ -16,7 +16,7 @@ module ShareBoard
         end
         if BUG_WORKAROUND
           # 回避できるのかはわからないが TRANSACTION 内に入れなくてもいいものはなるべく別にしてみる
-          memberships.each { |e| User.fetch(e[:user_name]) }
+          memberships.each { |e| User.find_or_create_by!(name: e[:user_name]) }
           @battle = room.battles.create!(battle_params)
           @battle.memberships.create!(memberships)
         else

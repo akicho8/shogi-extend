@@ -50,7 +50,7 @@ module ShareBoard
     has_many :chat_messages, dependent: :destroy do                # この部屋の発言
       def create_from_data!(data)
         data = data.symbolize_keys
-        user = User.fetch(data[:from_user_name])
+        user = User.find_or_create_by!(name: data[:from_user_name])
         create!({
             :user               => user,
             :content            => data[:content],

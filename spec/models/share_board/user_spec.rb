@@ -69,18 +69,13 @@
 require "rails_helper"
 
 RSpec.describe ShareBoard::User do
-  before do
-    ShareBoard.setup
-  end
-
   it "lookup" do
-    assert { ShareBoard::User.lookup("alice") }
-    assert { ShareBoard::User["alice"] }
-    assert { ShareBoard::User.count == 0 }
+    assert { !ShareBoard::User.lookup("alice") }
+    assert { !ShareBoard::User["alice"] }
   end
 
   it "fetch" do
+    ShareBoard::Room.mock
     assert { ShareBoard::User.fetch("alice") }
-    assert { ShareBoard::User.count == 1 }
   end
 end
