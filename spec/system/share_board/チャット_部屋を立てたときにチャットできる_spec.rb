@@ -24,9 +24,9 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "観戦者宛送信" do
-    a_block { visit_app(room_key: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
-    b_block { visit_app(room_key: :test_room, user_name: "bob",   fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
-    c_block { visit_app(room_key: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
+    a_block { visit_room(room_key: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
+    b_block { visit_room(room_key: :test_room, user_name: "bob",   fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
+    c_block { visit_room(room_key: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
 
     b_block { scoped_message_send(:ms_private, message1) } # 観戦者の bob が観戦者送信した
     b_block { assert_message_received_o(message1)        } # 自分には (観戦者かに関係なく本人だから) 届いている
@@ -51,12 +51,12 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "順番設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
-    visit_app(room_key: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle")
+    visit_room(room_key: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle")
     assert_selector(".ChatModal .message_scope_dropdown")
   end
 
   it "Enterで送信できる" do
-    visit_app(room_key: :test_room, user_name: "alice", autoexec: "chat_modal_open_handle")
+    visit_room(room_key: :test_room, user_name: "alice", autoexec: "chat_modal_open_handle")
     within(".ChatModal") do
       find(:fillable_field).set(message1)
       find(:fillable_field).send_keys("\n")

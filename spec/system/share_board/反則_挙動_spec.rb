@@ -26,10 +26,10 @@ RSpec.describe type: :system, share_board_spec: true do
 
   context "対局中" do
     def foul_mode_key(foul_mode_key)
-      visit_app({
+      visit_room({
+          :room_key             => :test_room,
           :body                 => sfen,
-          :foul_mode_key => foul_mode_key,
-          :room_key            => :test_room,
+          :foul_mode_key        => foul_mode_key,
           :user_name            => "1",
           :fixed_member_names   => "1,2",
           :fixed_order_names    => "1,2",

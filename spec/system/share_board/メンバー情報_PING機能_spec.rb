@@ -19,10 +19,10 @@ RSpec.describe type: :system, share_board_spec: true do
     @PING_OK_SEC = 3 # N秒以内ならPINGを成功とみなす
     @PONG_DELAY  = 5 # PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
     a_block do
-      visit_app(room_key: :test_room, user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
+      visit_room(room_key: :test_room, user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
     end
     b_block do
-      visit_app(room_key: :test_room, user_name: "bob", PONG_DELAY: @PONG_DELAY)
+      visit_room(room_key: :test_room, user_name: "bob", PONG_DELAY: @PONG_DELAY)
     end
     a_block do
       member_list_name_click("bob")

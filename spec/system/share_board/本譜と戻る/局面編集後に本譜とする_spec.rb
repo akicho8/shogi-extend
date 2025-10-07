@@ -2,8 +2,8 @@ require "#{__dir__}/helper"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    a_block { visit_app(room_key: :test_room, user_name: "alice") }
-    b_block { visit_app(room_key: :test_room, user_name: "bob")   }
+    a_block { visit_room(room_key: :test_room, user_name: "alice") }
+    b_block { visit_room(room_key: :test_room, user_name: "bob")   }
     a_block do
       global_menu_open
       menu_item_click("局面編集")
