@@ -8,6 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "a,b,c,d",
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => "false",
+        :fixed_room_name      => "(title)",
       })
     chat_modal_open
   end
@@ -56,7 +57,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/header" do
     chat_message_send("/header")
-    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a,c\n☖側: b,d")
+    assert_message_received_o("棋戦: (title)\n☗側: a,c\n☖側: b,d")
   end
 
   it "/対局中" do
