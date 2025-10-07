@@ -44,7 +44,7 @@ RSpec.describe type: :system, share_board_spec: true do
   describe "タイトル" do
     it "works" do
       a_block do
-        visit_room(room_key: :test_room, user_name: "alice", title: "(new_title)")
+        visit_room(room_key: :test_room, user_name: "alice", fixed_room_name: "(new_title)")
       end
       b_block do
         visit_room(room_key: :test_room, user_name: "bob")

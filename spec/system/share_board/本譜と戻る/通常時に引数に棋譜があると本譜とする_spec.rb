@@ -6,13 +6,13 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_honpu_open_on
   end
 
-  it "ただし合言葉がある場合は登録しない" do
-    visit_room(room_key: "test_room", body: "position startpos")
-    assert_no_selector("a", text: "本譜", exact_text: true)
-  end
-
   it "xbody" do
     visit_app(xbody: SafeSfen.encode("position startpos"))
     assert_honpu_open_on
+  end
+
+  it "ただし合言葉がある場合は登録しない" do
+    visit_room(room_key: "test_room", user_name: "alice", body: "position startpos")
+    assert_no_selector("a", text: "本譜", exact_text: true)
   end
 end

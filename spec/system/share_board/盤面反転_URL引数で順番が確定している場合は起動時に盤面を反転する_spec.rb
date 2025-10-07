@@ -3,9 +3,9 @@ require "#{__dir__}/shared_methods"
 # 順番設定を適用する引数で起動したため os_setup 内の sp_viewpoint_set_by_self_location だけで視点が反映される
 # order_copy_from_bc 内のテストにはなっていない
 RSpec.describe type: :system, share_board_spec: true do
-  def visit_room(fixed_order_state, b_or_w, user_name)
+  def case1(fixed_order_state, b_or_w, user_name)
     visit_room({
-        :room_key            => :test_room,
+        :room_key             => :test_room,
         :user_name            => user_name,
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
@@ -15,9 +15,9 @@ RSpec.describe type: :system, share_board_spec: true do
       })
   end
 
-  def case1(fixed_order_state, b_or_w, a_side_location_key, b_side_location_key)
-    a_block { visit_room(fixed_order_state, b_or_w, "a") }
-    b_block { visit_room(fixed_order_state, b_or_w, "b") }
+  def case2(fixed_order_state, b_or_w, a_side_location_key, b_side_location_key)
+    a_block { case1(fixed_order_state, b_or_w, "a") }
+    b_block { case1(fixed_order_state, b_or_w, "b") }
     a_block { assert_viewpoint(a_side_location_key) }
     b_block { assert_viewpoint(b_side_location_key) }
   end
@@ -31,8 +31,8 @@ RSpec.describe type: :system, share_board_spec: true do
   # | 2列  | 平手 | ▲ | △ |
   # |      | 落ち | ▲ | △ |
   # |------+------+----+----|
-  it { case1(:to_o1_state, :black, :black, :white) }
-  it { case1(:to_o1_state, :white, :white, :black) }
-  it { case1(:to_o2_state, :black, :black, :white) }
-  it { case1(:to_o2_state, :white, :black, :white) }
+  it { case2(:to_o1_state, :black, :black, :white) }
+  it { case2(:to_o1_state, :white, :white, :black) }
+  it { case2(:to_o2_state, :black, :black, :white) }
+  it { case2(:to_o2_state, :white, :black, :white) }
 end
