@@ -17,18 +17,18 @@ export const mod_export = {
     //////////////////////////////////////////////////////////////////////////////// clipboard
 
     // 指定の棋譜をコピー
-    kifu_copy_handle(e) {
-      e = this.FormatTypeInfo.fetch(e)
-      this.sidebar_p = false
+    async kifu_copy_handle(e) {
       this.sfx_click()
-      this.general_kifu_copy(this.current_sfen, {
+      e = this.FormatTypeInfo.fetch(e)
+      const success = await this.general_kifu_copy(this.current_sfen, {
         to_format: e.format_key,
         turn: this.current_turn,
         title: this.current_title,
         ...this.player_names,
       })
-      this.al_share_puts("棋譜コピー")
-      return true
+      if (success) {
+        this.sidebar_p = false
+      }
     },
 
     //////////////////////////////////////////////////////////////////////////////// show
