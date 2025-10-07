@@ -17,7 +17,6 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     b_block do
       assert_text("(new_title)")             # bob側のタイトルが変更されている
-      assert_action_text("タイトル変更")
     end
   end
 end

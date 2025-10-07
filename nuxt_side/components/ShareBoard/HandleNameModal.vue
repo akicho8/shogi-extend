@@ -41,7 +41,7 @@ export default {
         return
       }
 
-      this.handle_name_set(this.new_name)
+      this.SB.handle_name_set(this.new_name)
 
       // ハンドルネームを正しく入力した場合にのみ success_callback を実行する
       if (this.params) {

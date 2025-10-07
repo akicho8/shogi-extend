@@ -1,6 +1,15 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
+  def case1(user_name)
+    visit_room({
+        room_key: :test_room,
+        user_name: user_name,
+        fixed_order_names: "alice,bob",
+        fixed_room_name: "(title)",
+      })
+  end
+
   it "部屋を立てていないときはURLから取得する" do
     visit_app(title: "(title)", black: "(alice)")
     global_menu_open
@@ -13,15 +22,9 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "部屋を立てた後はメンバーリストから取得する" do
-    a_block do
-      visit_room(room_key: :test_room, user_name: "alice", fixed_order_names: "alice,bob", title: "(title)")
-    end
-    b_block do
-      visit_room(room_key: :test_room, user_name: "bob")
-    end
-    c_block do
-      visit_room(room_key: :test_room, user_name: "carol")
-    end
+    a_block { case1("alice") }
+    b_block { case1("bob")   }
+    c_block { case1("carol") }
     a_block do
       global_menu_open
       menu_item_sub_menu_click("棋譜表示")

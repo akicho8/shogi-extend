@@ -110,7 +110,7 @@ export const mod_room_members = {
     },
 
     member_add(params) {
-      this.tl_puts("--> member_add", params)
+      this.tl_puts(`--> member_add: ${params.from_user_name}`, params)
       const size = this.member_infos.length
 
       this.member_infos.push(params)
@@ -124,7 +124,7 @@ export const mod_room_members = {
           this.ac_log({subject: "仲間一覧", body: this.member_infos.map(e => e.from_user_name)})
         }
       }
-      this.tl_puts("<-- member_add", params)
+      this.tl_puts(`<-- member_add: ${params.from_user_name}`, params)
     },
 
     // 処理順序重要

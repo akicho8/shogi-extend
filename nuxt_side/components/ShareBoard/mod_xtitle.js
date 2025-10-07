@@ -7,6 +7,23 @@ export const mod_xtitle = {
     }
   },
   methods: {
+    // 部屋に入った瞬間にタイトルを自動更新する (デバッグ用)
+    title_update_by_fixed_room_name() {
+      this.tl_puts("--> title_update_by_fixed_room_name")
+      if (this.fixed_room_name) {
+        this.current_title_set(this.fixed_room_name)
+      }
+      this.tl_puts("<-- title_update_by_fixed_room_name")
+    },
+    current_title_set(title) {
+      this.tl_puts(`--> current_title_set("${title}")`)
+      title = _.trim(title)
+      if (this.current_title != title) {
+        this.tl_puts(`current_title = "${title}"`)
+        this.current_title = title
+        this.room_name_share()
+      }
+    },
     title_edit_handle() {
       this.sidebar_p = false
       this.sfx_click()
@@ -20,13 +37,9 @@ export const mod_xtitle = {
         },
       })
     },
-    current_title_set(title) {
-      title = _.trim(title)
-      if (this.current_title != title) {
-        this.current_title = title
-        this.room_name_share()
-      }
-    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     room_name_share() {
       this.ac_room_perform("room_name_share", this.room_name_share_data)
     },
@@ -38,9 +51,12 @@ export const mod_xtitle = {
     room_name_share_data_receive(params) {
       Gs.assert(params)
       Gs.assert("room_name" in params)
+      this.tl_puts(`room_name_share_data_receive: current_title = "${params.room_name}" from ${params.from_user_name}`)
       this.current_title = params.room_name
       this.ac_log({subject: "部屋名変更", body: `部屋名 "${this.current_title}" を受信`})
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
     room_name_share_data() {

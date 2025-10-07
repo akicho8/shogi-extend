@@ -94,16 +94,6 @@ module ShareBoard
       hv
     end
 
-    # def latest_battle_sfen_and_turn
-    #   battles.first&.sfen_and_turn
-    # end
-
-    # def name_update(params)
-    #   update!(name: params[:name])
-    #   ShareBoard::Broadcaster.new(key).call("room_name_share_broadcasted", { name: name })
-    #   { message: "OK" }
-    # end
-
     ################################################################################
 
     concerning :RankingMethods do

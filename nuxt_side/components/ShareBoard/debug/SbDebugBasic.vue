@@ -12,6 +12,7 @@
       .panel.assert_var
         .panel-heading [assert_var]
         .panel-block ac_room:{{!!SB.ac_room}}
+        .panel-block current_title:{{SB.current_title}}
 </template>
 
 <script>

@@ -10,15 +10,27 @@ module SharedMethods
 
   def visit_app(params = {})
     visit_to("/share-board", params)
-    params = params.to_options
-    if params[:room_key]
-      warn "visit_room を使ってください"
-      puts caller.first
+
+    if true
+      params = params.to_options
+      if params[:room_key]
+        warn "room_key がある場合は visit_room を使うこと"
+        puts caller.first
+      end
     end
   end
 
   def visit_room(params = {})
     visit_to("/share-board", params)
+
+    if true
+      params = params.to_options
+      if params[:autoexec_room_create_after] == "os_modal_open_handle"
+        warn "assert_room_created が必ず失敗するので autoexec_room_create_after=os_modal_open_handle は使えない"
+        puts caller.first
+      end
+    end
+
     assert_room_created
   end
 
@@ -43,6 +55,9 @@ module SharedMethods
     assert_room_created
   end
 
+  # 【注意】
+  # このチェック対象は地上にあるため os_modal_open_handle などを呼んでモーダルが出ていると読み取れない
+  # つまり visit_room で autoexec_room_create_after=os_modal_open_handle などとすると絶対にエラーになってしまう
   def assert_room_created
     assert_var("ac_room", "true", wait: 2)
   end
@@ -114,7 +129,7 @@ module SharedMethods
     assert_selector(".assert_var .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
-  def assert_no_system_variable(key, value, **options)
+  def assert_no_var(key, value, **options)
     assert_no_selector(".assert_var .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
@@ -123,48 +138,6 @@ module SharedMethods
     menu_item_click("棋譜の入力")
     find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
     find(".AnySourceReadModal .submit_handle").click
-  end
-
-  def assert_honpu_open_on
-    assert_selector(".SbNavbar .honpu_open_button", wait: 10)
-  end
-
-  def assert_honpu_open_off
-    assert_no_selector(".SbNavbar .honpu_open_button")
-  end
-
-  def assert_honpu_return_on
-    assert_selector(".SbNavbar .honpu_return_button", wait: 10)
-  end
-
-  def assert_honpu_return_off
-    assert_no_selector(".SbNavbar .honpu_return_button")
-  end
-
-  # 「投了」を押してモーダルを表示する
-  def give_up_modal_open_handle
-    find("a", text: "投了", exact_text: true, wait: 10).click
-    assert_give_up_modal
-  end
-
-  def give_up_run
-    give_up_modal_open_handle
-    find(:button, "投了する").click # モーダルが表示されるので本当に投了する
-  end
-
-  # 投了ボタンがある
-  def assert_give_up_button
-    assert_selector("a", text: "投了", exact_text: true)
-  end
-
-  # 投了モーダルがある
-  def assert_give_up_modal
-    assert_selector(".GiveUpModal")
-  end
-
-  # 投了モーダルがない
-  def assert_no_give_up_modal
-    assert_no_selector(".GiveUpModal")
   end
 end
 

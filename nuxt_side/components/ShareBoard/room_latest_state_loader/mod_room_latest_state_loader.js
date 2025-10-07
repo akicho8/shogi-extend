@@ -52,6 +52,7 @@ export const mod_room_latest_state_loader = {
             }
           }
           this.current_title = e.room_name
+          this.tl_puts(`this.current_title = "${e.room_name}"`)
         }
         if (next_func) {
           next_func()
