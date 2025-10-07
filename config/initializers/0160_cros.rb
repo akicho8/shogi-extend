@@ -35,12 +35,13 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   if Rails.env.development?
     allow do
+      # origins "*"
       origins *[
-        # (ENV["DOMAIN"] || "localhost") + ":4000",
+        (ENV["DOMAIN"] || "localhost") + ":4000",
         "localhost:4000",
         "0.0.0.0:4000",
         "10.0.1.2:4000",        # スマホを 10.0.1.2:4000 で見ているとき、これを設定するとしゃべるようになる
-        "10.0.1.9:4000",       # ikemac2023
+        "10.0.1.9:4000",        # ikemac2023
       ]
       resource "*", {
         headers: :any,

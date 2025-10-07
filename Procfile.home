@@ -1,5 +1,6 @@
 # IP は ifconfig | grep inet で調べる
-web: DOMAIN=10.0.1.9 bundle exec bin/rails server -p $PORT -b 10.0.1.9
+# nuxt_side/.env.home の IP も変更する
+web: DOMAIN=10.0.1.58 bundle exec bin/rails server -p $PORT -b 10.0.1.58
 webpack-watcher: bundle exec bin/webpack-dev-server
-sidekiq: DOMAIN=10.0.1.9 sidekiq
-nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -H 10.0.1.9 -o --dotenv .env.home)
+sidekiq: DOMAIN=10.0.1.58 sidekiq
+nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -H 10.0.1.58 -o --dotenv .env.home)
