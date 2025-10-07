@@ -52,4 +52,15 @@ module StringToolkit
     s = s.gsub(/\P{Graph}/, "_")
     s = s.gsub(/\p{Punct}/, "_")
   end
+
+  # StringToolkit.control_chars_remove("a\u0007b\u200Ec") # => "abc"
+  def control_chars_remove(s)
+    s.gsub(/[\p{Cc}\p{Cf}]/, "")
+  end
+
+  def user_message_normalize(s)
+    s = strip_tags(s)
+    s = control_chars_remove(s)
+    s = s.strip
+  end
 end

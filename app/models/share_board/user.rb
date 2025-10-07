@@ -58,6 +58,7 @@ module ShareBoard
 
     before_validation do
       self.name ||= "(name#{self.class.count.next})"
+      self.name = StringToolkit.user_message_normalize(name)
     end
 
     with_options presence: true do

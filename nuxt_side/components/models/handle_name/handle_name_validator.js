@@ -66,11 +66,6 @@ export class HandleNameValidator {
 
     {
       if (message == null) {
-        if (Gs.blank_p(this.source)) {
-          message = `${this.options.name}を入力してください`
-        }
-      }
-      if (message == null) {
         if (this.options.max_length) {
           if (this.source.length > this.options.max_length) {
             message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
@@ -81,6 +76,11 @@ export class HandleNameValidator {
 
     {
       let s = this.normalized_source
+      if (message == null) {
+        if (Gs.blank_p(s)) {
+          message = `${this.options.name}を入力してください`
+        }
+      }
       if (message == null) {
         if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
           message = this.message_sample
@@ -115,8 +115,9 @@ export class HandleNameValidator {
 
   get normalized_source() {
     let s = this.source
+    s = Gs.str_control_chars_remove(s)
     s = Gs.str_space_remove(s)
-    s = Gs.hankaku_format(s)
+    s = Gs.hankaku_format(s)    // バリデーションしやすくするため
     return s
   }
 

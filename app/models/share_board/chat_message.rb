@@ -61,7 +61,9 @@ module ShareBoard
 
     before_validation do
       self.performed_at ||= (Time.current.to_f * 1000).to_i
+
       self.content ||= ""
+      self.content = StringToolkit.user_message_normalize(content)
     end
 
     with_options presence: true do

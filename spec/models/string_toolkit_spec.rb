@@ -32,4 +32,12 @@ RSpec.describe StringToolkit do
   it "path_normalize" do
     assert { StringToolkit.path_normalize("あ い A:1") == "あ_い_A_1" }
   end
+
+  it "control_chars_remove" do
+    assert { StringToolkit.control_chars_remove("a\u0007b\u200Ec") == "abc" }
+  end
+
+  it "user_message_normalize" do
+    assert { StringToolkit.user_message_normalize(" a\u0007b\u200Ec <hr> ") == "abc" }
+  end
 end
