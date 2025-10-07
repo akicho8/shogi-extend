@@ -63,7 +63,7 @@ module ShareBoard
       self.performed_at ||= (Time.current.to_f * 1000).to_i
 
       self.content ||= ""
-      self.content = StringToolkit.user_message_normalize(content)
+      self.content = StringSupport.user_message_normalize(content)
     end
 
     with_options presence: true do
@@ -88,7 +88,7 @@ module ShareBoard
     end
 
     def strip_tagged_content
-      StringToolkit.strip_tags(content)
+      StringSupport.strip_tags(content)
     end
 
     def responder_res_job_run

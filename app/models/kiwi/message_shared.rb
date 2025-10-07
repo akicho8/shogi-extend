@@ -35,9 +35,9 @@ module Kiwi
         end
 
         if will_save_change_to_attribute?(:body) && body.present?
-          self.body = StringToolkit.double_blank_lines_to_one_line(body)
+          self.body = StringSupport.double_blank_lines_to_one_line(body)
           self.body = body.strip
-          self.body = StringToolkit.script_tag_escape(body)
+          self.body = StringSupport.script_tag_escape(body)
 
           # 先頭が "*" で始まるデバッグ用のメッセージはエラーになると困るのでちょんぎる
           # としようと思ったけどいろいろ面倒なので常にちょんぎることにする

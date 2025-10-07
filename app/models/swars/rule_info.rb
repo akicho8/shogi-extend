@@ -13,7 +13,7 @@ module Swars
     class << self
       def key_cast(v)
         if v.kind_of?(String)
-          v = StringToolkit.hankaku_format(v)
+          v = StringSupport.hankaku_format(v)
         end
         v
       end

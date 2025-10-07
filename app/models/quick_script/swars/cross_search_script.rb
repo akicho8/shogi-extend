@@ -623,7 +623,7 @@ module QuickScript
 
       def tag_string_split(str)
         unless str.kind_of?(Array)
-          str = StringToolkit.split(str.to_s)
+          str = StringSupport.split(str.to_s)
         end
         str.uniq
       end

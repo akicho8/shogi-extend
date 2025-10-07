@@ -9,7 +9,7 @@ module SimpleQueryParser
   # assert { SimpleQueryParser.parse("-a -b -c -d") == {false => ["a", "b", "c", "d"]} }
   # assert { SimpleQueryParser.parse(" a -b, c !d") == {true => ["a", "c"], false => ["b", "d"]} }
   def parse(str)
-    parse_array(StringToolkit.split(str))
+    parse_array(StringSupport.split(str))
   end
 
   def parse_array(str)

@@ -63,15 +63,15 @@ module Ppl
 
     # to_a は副SQLにしないためわざとしている
     def target_users
-      @target_users ||= User.where(name: StringToolkit.split(params[:user_name].to_s)).to_a
+      @target_users ||= User.where(name: StringSupport.split(params[:user_name].to_s)).to_a
     end
 
     def target_mentors
-      @target_mentors ||= Mentor.where(name: StringToolkit.split(params[:mentor_name].to_s)).to_a
+      @target_mentors ||= Mentor.where(name: StringSupport.split(params[:mentor_name].to_s)).to_a
     end
 
     def target_seasons
-      @target_seasons ||= Season.where(key: StringToolkit.split(params[:season_key].to_s)).to_a
+      @target_seasons ||= Season.where(key: StringSupport.split(params[:season_key].to_s)).to_a
     end
   end
 end

@@ -1,4 +1,4 @@
-module StringToolkit
+module StringSupport
   extend self
 
   # 半角化
@@ -34,7 +34,7 @@ module StringToolkit
   # 実際はおおよそ4/3倍なので指定の文字数に足りない場合がある
   # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
   # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
-  # rails r 'tp 10.times.collect { StringToolkit.secure_random_urlsafe_base64_token }'
+  # rails r 'tp 10.times.collect { StringSupport.secure_random_urlsafe_base64_token }'
   def secure_random_urlsafe_base64_token(length = 11)
     s = SecureRandom.urlsafe_base64(length * 2)
     s = s.gsub(/[-_]/, "")              # 扱いにくい文字は削除する
@@ -53,7 +53,7 @@ module StringToolkit
     s = s.gsub(/\p{Punct}/, "_")
   end
 
-  # StringToolkit.control_chars_remove("a\u0007b\u200Ec") # => "abc"
+  # StringSupport.control_chars_remove("a\u0007b\u200Ec") # => "abc"
   def control_chars_remove(s)
     s.gsub(/[\p{Cc}\p{Cf}]/, "")
   end

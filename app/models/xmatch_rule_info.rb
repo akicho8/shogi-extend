@@ -73,7 +73,7 @@ class XmatchRuleInfo
 
     h = {}
     if members_count >= members_count_max
-      h[:room_key] = StringToolkit.secure_random_urlsafe_base64_token
+      h[:room_key] = StringSupport.secure_random_urlsafe_base64_token
       h[:members] = matched_members
     end
     h

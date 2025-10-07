@@ -175,7 +175,7 @@ class ApplicationRecord < ActiveRecord::Base
     keys.each do |key|
       if will_save_change_to_attribute?(key)
         if v = public_send(key)
-          public_send("#{key}=", StringToolkit.hankaku_format(v))
+          public_send("#{key}=", StringSupport.hankaku_format(v))
         end
       end
     end

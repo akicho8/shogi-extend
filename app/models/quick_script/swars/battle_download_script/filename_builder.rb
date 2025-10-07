@@ -10,7 +10,7 @@ class QuickScript::Swars::BattleDownloadScript
       parts = []
       parts << "shogiwars"
       if query = base.query.presence
-        parts << StringToolkit.path_normalize(query)
+        parts << StringSupport.path_normalize(query)
       end
       parts << base.main_scope.count
       parts << latest_battled_at.strftime("%Y%m%d%H%M%S")

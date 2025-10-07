@@ -69,7 +69,7 @@ module Kiwi
 
         before_validation do
           self.folder_key ||= :public
-          self.key ||= StringToolkit.secure_random_urlsafe_base64_token
+          self.key ||= StringSupport.secure_random_urlsafe_base64_token
           self.thumbnail_pos ||= 0
 
           if user

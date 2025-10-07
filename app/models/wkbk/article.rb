@@ -77,7 +77,7 @@ module Wkbk
       end
 
       self.viewpoint ||= "black"
-      self.key ||= StringToolkit.secure_random_urlsafe_base64_token
+      self.key ||= StringSupport.secure_random_urlsafe_base64_token
       self.difficulty ||= 1
       self.turn_max ||= 0
       self.folder_key ||= :public

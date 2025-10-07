@@ -217,7 +217,7 @@ module QuickScript
       ################################################################################
 
       def highlight_plus
-        @highlight_plus ||= StringToolkit.split(params[:highlight_plus].to_s).uniq.collect(&:to_sym) # .find_all { |e| scope_info.items_set.include?(e) }
+        @highlight_plus ||= StringSupport.split(params[:highlight_plus].to_s).uniq.collect(&:to_sym) # .find_all { |e| scope_info.items_set.include?(e) }
       end
 
       def highlight_plus_set
@@ -232,7 +232,7 @@ module QuickScript
       ################################################################################
 
       def highlight_minus
-        @highlight_minus ||= StringToolkit.split(params[:highlight_minus].to_s).uniq.collect(&:to_sym) # .find_all { |e| scope_info.items_set.include?(e) }
+        @highlight_minus ||= StringSupport.split(params[:highlight_minus].to_s).uniq.collect(&:to_sym) # .find_all { |e| scope_info.items_set.include?(e) }
       end
 
       def highlight_minus_set

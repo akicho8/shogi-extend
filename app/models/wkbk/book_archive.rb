@@ -67,7 +67,7 @@ module Wkbk
     end
 
     def path_normalize(str)
-      StringToolkit.path_normalize(str)
+      StringSupport.path_normalize(str)
     end
 
     def body_encodes

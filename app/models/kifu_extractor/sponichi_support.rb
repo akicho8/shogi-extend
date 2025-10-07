@@ -3,7 +3,7 @@ module KifuExtractor
     # 入力されたテキストにそのまま適用するとKIFのコメント内の符号を拾ってしまうので注意
     def sponichi_scan(item)
       s = item.source.toutf8
-      s = StringToolkit.strip_tags(s)
+      s = StringSupport.strip_tags(s)
       s = s.remove(/\p{blank}/)
       s = s.remove(/.*◆指し手/m)   # 上側を削除
       s = s.remove(/※持ち時間.*/m) # 下側を削除
