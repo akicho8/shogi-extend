@@ -27,7 +27,7 @@ export const mod_urls = {
 
       this.sidebar_p = false
       this.sfx_click()
-      return this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
+      this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
@@ -62,7 +62,8 @@ export const mod_urls = {
       }
 
       // 1, 2回目
-      if (this.clipboard_copy(simple_cache.read(key), {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+      const success = await this.clipboard_copy(simple_cache.read(key), {success_message: "棋譜再生用の短縮URLをコピーしました"})
+      if (success) {
         this.sidebar_p = false
       }
     },

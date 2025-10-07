@@ -29,9 +29,8 @@ export default {
       this.$emit("close")
     },
     apply_handle() {
-      if (this.SB.room_url_copy_handle()) {
-        this.$emit("close")
-      }
+      this.SB.room_url_copy_handle()
+      this.$emit("close")
     },
   },
 }

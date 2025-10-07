@@ -1,5 +1,6 @@
 export const vue_clipboard = {
   methods: {
+    // const success = await clipboard_copy("text")
     clipboard_copy(text, options = {}) {
       options = {
         success_message: "コピーしました",
@@ -9,12 +10,14 @@ export const vue_clipboard = {
       }
       if (!navigator.clipboard) {
         this.toast_ng(options.no_method_message)
-        return
+        return Promise.resolve(false)
       }
-      navigator.clipboard.writeText(text).then(() => {
+      return navigator.clipboard.writeText(text).then(() => {
         this.toast_ok(options.success_message)
+        return true
       }).catch(error => {
         this.toast_warn(options.failure_message)
+        return false
       })
     },
   },
