@@ -7,11 +7,6 @@ module Api
       render json: ShareBoard::BattleCreate.new(params_with_user).call
     end
 
-    # # POST http://localhost:3000/api/share_board/title_update.json
-    # def title_update
-    #   render json: ShareBoard::Room.fetch(params[:room_key]).title_update(params_with_user)
-    # end
-
     # GET http://localhost:3000/api/share_board/dashboard.json?room_key=dev_room
     def dashboard
       render json: ShareBoard::Dashboard.new(params_with_user).call

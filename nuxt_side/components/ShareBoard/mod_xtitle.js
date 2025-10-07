@@ -7,7 +7,6 @@ export const mod_xtitle = {
     }
   },
   methods: {
-    // タイトル編集
     title_edit_handle() {
       this.sidebar_p = false
       this.sfx_click()
@@ -21,7 +20,6 @@ export const mod_xtitle = {
         },
       })
     },
-
     current_title_set(title) {
       title = _.trim(title)
       if (this.current_title != title) {
@@ -29,30 +27,10 @@ export const mod_xtitle = {
         this.room_name_share()
       }
     },
-
-    // title_update() {
-    // //   if (this.ac_room) {
-    // //     const params = {
-    // //       room_key: this.room_key,
-    // //       ...this.room_name_share_data,
-    // //     }
-    // //     this.$axios.$post("/api/share_board/title_update.json", params, {progress: false}).then(e => {
-    // //       alert(e.message)
-    // //       // if (e.error) {
-    // //       //   this.toast_ng(e.error.message, {talk: false})
-    // //       // }
-    // //       // alert("OK")
-    // //     })
-    // //   }
-    // // },
     room_name_share() {
       this.ac_room_perform("room_name_share", this.room_name_share_data)
     },
     room_name_share_broadcasted(params) {
-      // if (this.received_from_self(params)) {
-      //   // 自分から自分へ
-      // } else {
-      // }
       this.room_name_share_data_receive(params)
       this.al_add({...params, label: "部屋名変更"})
       this.toast_ok(`${this.user_call_name(params.from_user_name)}が部屋名を${params.room_name}に変更しました`)
