@@ -67,7 +67,7 @@ export const mod_urls = {
       }
     },
     __short_url_fetch() {
-      this.debug_alert("APIアクセス発生")
+      // this.debug_alert("APIアクセス発生")
       if (OWN_SHORTENED_URL_FUNCTION) {
         const body = {room_key: this.room_key, user_name: this.user_name, current_url: this.current_url}
         this.app_log({emoji: ":短縮URL:", subject: `[短縮URL][作成希望](${this.user_name})`, body: body, mail_notify: false, table_format: false})

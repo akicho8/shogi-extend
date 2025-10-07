@@ -28,8 +28,9 @@ export const vue_general_kifu_copy = {
       return this.clipboard_copy(simple_cache.read(key))
     },
     __general_kifu_copy_axios(options = {}) {
-      this.debug_alert("APIアクセス発生")
+      // this.clog("APIアクセス発生")
       return this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
+        // this.clog("APIアクセス結果")
         this.bs_error_message_dialog(e)
         if (e.body) {
           return e.body
@@ -62,7 +63,7 @@ export const vue_general_kifu_copy = {
 
       // 1回目
       if (simple_cache.empty_p(key)) {
-        this.debug_alert("APIアクセス発生")
+        // this.clog("APIアクセス発生")
         simple_cache.write(key, await this.$axios.$get(url))
       }
 
