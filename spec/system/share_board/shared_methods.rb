@@ -13,8 +13,8 @@ module SharedMethods
 
     if true
       params = params.to_options
-      if params[:room_key]
-        warn "room_key がある場合は visit_room を使うこと"
+      if params[:room_key] && params[:user_name]
+        warn "room_key と user_name がある場合は visit_room を使うこと"
         puts caller.first
       end
     end

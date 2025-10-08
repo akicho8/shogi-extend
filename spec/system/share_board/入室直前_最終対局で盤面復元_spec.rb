@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_text("共有将棋盤")
 
     # 復元している
-    visit_app({:room_restore_key => :run, room_key: room_key, user_name: "alice"})
+    visit_room({:room_restore_key => :run, room_key: room_key, user_name: "alice"})
     assert_turn(4)
     assert_text("(room.name)")
   end
