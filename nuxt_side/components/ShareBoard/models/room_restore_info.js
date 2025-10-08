@@ -3,7 +3,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class RoomRestoreInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "enable", name: "復元する",   },
+      { key: "run", name: "復元する",   },
       { key: "skip",   name: "復元しない", },
     ]
   }
