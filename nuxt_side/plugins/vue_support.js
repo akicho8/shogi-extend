@@ -299,6 +299,15 @@ export const vue_support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 本来は pointerType === "mouse" だけでいいはずだが、iPad の Google Chrome と iPad の Safari でも pointerType === "mouse" になってしまう
+    // したがって maxTouchPoints でタッチ可能なデバイスならマウスではないとする
+    mouse_event_p(e) {
+      const is_touch_capable = navigator.maxTouchPoints > 0
+      return e.pointerType === "mouse" && !is_touch_capable
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
     // this.app_log("(body)")
     app_log(params = {}) {

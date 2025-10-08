@@ -34,7 +34,7 @@ export const mod_chat = {
     },
 
     chat_modal_open_handle(e = null) {
-      if (e && e.pointerType === "mouse") {
+      if (this.mouse_event_p(e)) {
         this.toast_ok("ENTER キーで開けれるよ")
       }
       this.sidebar_p = false
@@ -43,7 +43,7 @@ export const mod_chat = {
     },
 
     chat_modal_close_handle(e = null) {
-      if (e && e.pointerType === "mouse") {
+      if (this.mouse_event_p(e)) {
         this.toast_ok("ENTER キーで閉じれるよ")
       }
       this.sidebar_p = false
