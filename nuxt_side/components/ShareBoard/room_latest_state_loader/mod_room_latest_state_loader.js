@@ -45,7 +45,7 @@ export const mod_room_latest_state_loader = {
       this.$axios.$get("/api/share_board/room_latest_state_loader", {params: params, progress: false}).then(e => {
         this.tl_alert("room_latest_state_loader_load then", e)
         if (e) {
-          if (this.room_restore_info.key === "enable") {
+          if (this.room_restore_info.key === "run") {
             if (e.latest_battle) {
               this.current_sfen = e.latest_battle.sfen
               this.current_turn = e.latest_battle.turn
