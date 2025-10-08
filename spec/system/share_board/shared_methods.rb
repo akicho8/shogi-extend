@@ -11,8 +11,8 @@ module SharedMethods
   def visit_app(params = {})
     visit_to("/share-board", params)
 
-    if true
-      params = params.to_options
+    params = params.to_options
+    if !params[:__visit_app_warning_skip__]
       if params[:room_key] && params[:user_name]
         warn "room_key と user_name がある場合は visit_room を使うこと"
         puts caller.first

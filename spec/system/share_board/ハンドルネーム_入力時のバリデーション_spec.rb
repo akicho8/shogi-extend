@@ -20,8 +20,8 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "URLから来ても不正なハンドルネームは通さない" do
     a_block do
-      visit_app(room_key: :test_room, user_name: "nanashi", fixed_order_names: "nanashi")
-      assert_text("入退室")                         # ハンドルネームが不正なのでダイアログが出ている
+      visit_app(room_key: :test_room, user_name: "nanashi", fixed_order_names: "nanashi", __visit_app_warning_skip__: true)
+      assert_text("入退室")     # ハンドルネームが不正なのでダイアログが出ている
     end
   end
 end

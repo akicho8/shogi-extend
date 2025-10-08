@@ -35,7 +35,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
   end
   it "順番設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
-    visit_app({
+    visit_room({
         :room_key             => :test_room,
         :user_name            => "a",
         :fixed_member_names   => "a",
@@ -43,6 +43,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
         :body                 => SfenGenerator.start_from(:white), # 後手から始まる
+        :room_restore_key => :skip,
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する
     piece_move_o("77", "76", "☗7六歩") # a が自分の手を指す
