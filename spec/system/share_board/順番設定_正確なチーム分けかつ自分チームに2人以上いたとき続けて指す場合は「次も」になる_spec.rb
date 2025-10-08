@@ -11,6 +11,7 @@ RSpec.describe "次も", type: :system, share_board_spec: true do
         :handle_name_validate => "false",
         :change_per           => 2,
         :yomiage_mode_key     => "is_yomiage_mode_off", # 音声再生の終了に影響するため読み上げをOFFにしておく
+        :room_restore_key => :skip,
       })
   end
 

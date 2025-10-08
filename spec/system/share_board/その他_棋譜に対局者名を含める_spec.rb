@@ -6,7 +6,8 @@ RSpec.describe type: :system, share_board_spec: true do
         room_key: :test_room,
         user_name: user_name,
         fixed_order_names: "alice,bob",
-        fixed_room_name: "(title)",
+        title: "(title)",
+        :room_restore_key => :skip,
       })
   end
 
@@ -56,7 +57,15 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "部屋に abcdef がいる順番が bdac のとき順番通り先手 ba 後手 dc の順の表記になり観戦は部屋にいる順になる" do
-    visit_room(room_key: :test_room, user_name: "a", fixed_member_names: "a,b,c,d,e,f", fixed_order_names: "b,d,a,c", handle_name_validate: "false", fixed_room_name: "(title)")
+    visit_room({
+        room_key: :test_room,
+        user_name: "a",
+        fixed_member_names: "a,b,c,d,e,f",
+        fixed_order_names: "b,d,a,c",
+        handle_name_validate: "false",
+        title: "(title)",
+        :room_restore_key => :skip,
+      })
     global_menu_open
     menu_item_sub_menu_click("棋譜表示")
     switch_to_window_by do

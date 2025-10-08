@@ -2,20 +2,20 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   before do
-    @initial_read_sec         = 5 # 5秒切れ負け
-    @CC_TIMEOUT_BC_DELAY   = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミュレート)
+    @initial_read_sec       = 5 # 5秒切れ負け
+    @CC_TIMEOUT_BC_DELAY    = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミュレート)
     @CC_TIMEOUT_JUDGE_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
   end
 
   def case1(user_name)
     visit_room({
-        "room_key"                => "test_room",
-        "user_name"                => user_name,
-        "fixed_member_names"       => "alice,bob",
-        "fixed_order_names"        => "alice,bob",
-        "RS_RESEND_DELAY"              => -1,
+        "room_key"               => "test_room",
+        "user_name"              => user_name,
+        "fixed_member_names"     => "alice,bob",
+        "fixed_order_names"      => "alice,bob",
+        "RS_RESEND_DELAY"        => -1,
         "CC_TIMEOUT_JUDGE_DELAY" => @CC_TIMEOUT_JUDGE_DELAY,
-        "CC_TIMEOUT_BC_DELAY"   => @CC_TIMEOUT_BC_DELAY,
+        "CC_TIMEOUT_BC_DELAY"    => @CC_TIMEOUT_BC_DELAY,
         **clock_box_params([0, @initial_read_sec, 0, 0]),
       })
   end

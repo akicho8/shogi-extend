@@ -5,19 +5,23 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
       room_setup("test_room", "alice")
+
+      # 再来
       begin
-        visit "/share-board"                         # 再来
+        visit_app(:room_restore_key => :skip)
         global_menu_open
-        rsm_open_handle                      # 「入退室」を自分でクリックする
+        rsm_open_handle                               # 「入退室」を自分でクリックする
         find(".new_room_key input").set("test_room")  # 合言葉を入力する
         find(".new_user_name").find(:fillable_field, with: "alice") # 以前入力したニックネームが復元されている
-        find(".entry_button").click                  # 共有ボタンをクリックする
-        find(".close_handle").click                  # 共有ボタンをクリックする
+        find(".room_entry_button").click                   # 入室
+        find(".close_handle").click                   # 閉じる
+        assert_room_created
       end
+
       piece_move_o("17", "16", "☗1六歩")              # aliceは一人で初手を指した
     end
     b_block do
-      room_setup("test_room", "bob")                   # bob が別の画面でログインし、alice と同じ部屋の合言葉を設定する
+      room_setup("test_room", "bob", :room_restore_key => :skip)  # bob が別の画面でログインし、alice と同じ部屋の合言葉を設定する
       assert_text("alice")                           # すでにaliceがいるのがわかる
     end
     a_block do

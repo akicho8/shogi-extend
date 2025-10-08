@@ -36,10 +36,10 @@
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="SB.rsm_close_handle" icon-left="chevron-left")
-    template(v-if="SB.ac_room")
-      b-button.leave_button(@click="SB.rsm_leave_handle" type="is-danger") 退室
+    template(v-if="!SB.ac_room")
+      b-button.room_entry_button(@click="SB.rsm_entry_handle" type="is-primary") 入室
     template(v-else)
-      b-button.entry_button(@click="SB.rsm_entry_handle" type="is-primary") 入室
+      b-button.room_leave_button(@click="SB.rsm_leave_handle" type="is-danger") 退室
 </template>
 
 <script>

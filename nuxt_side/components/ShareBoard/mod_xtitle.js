@@ -9,11 +9,11 @@ export const mod_xtitle = {
   methods: {
     // 部屋に入った瞬間にタイトルを自動更新する (デバッグ用)
     title_update_by_fixed_room_name() {
-      this.tl_puts("--> title_update_by_fixed_room_name")
-      if (this.fixed_room_name) {
-        this.current_title_set(this.fixed_room_name)
-      }
-      this.tl_puts("<-- title_update_by_fixed_room_name")
+      // this.tl_puts("--> title_update_by_fixed_room_name")
+      // if (this.fixed_room_name) {
+      //   this.current_title_set(this.fixed_room_name)
+      // }
+      // this.tl_puts("<-- title_update_by_fixed_room_name")
     },
     current_title_set(title) {
       this.tl_puts(`--> current_title_set("${title}")`)

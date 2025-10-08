@@ -1,4 +1,5 @@
 import { Gs } from "@/components/models/gs.js"
+import { RoomRestoreInfo } from "../models/room_restore_info.js"
 
 export const mod_room_latest_state_loader = {
   methods: {
@@ -27,7 +28,7 @@ export const mod_room_latest_state_loader = {
     //   const e = await this.$axios.$get("/api/share_board/room_latest_state_loader", {params: params, progress: false})
     //   this.tl_alert("room_latest_state_loader_load response", e)
     //   if (e) {
-    //     if (this.room_latest_state_loader_p) {
+    //     if (this.room_restore_key) {
     //       this.current_sfen = e.sfen
     //       this.current_turn = e.turn
     //     }
@@ -44,15 +45,15 @@ export const mod_room_latest_state_loader = {
       this.$axios.$get("/api/share_board/room_latest_state_loader", {params: params, progress: false}).then(e => {
         this.tl_alert("room_latest_state_loader_load then", e)
         if (e) {
-          if (this.room_latest_state_loader_p) {
+          if (this.room_restore_info.key === "enable") {
             if (e.latest_battle) {
               this.current_sfen = e.latest_battle.sfen
               this.current_turn = e.latest_battle.turn
               this.honpu_main_setup()
             }
+            this.current_title = e.room_name
+            this.tl_puts(`this.current_title = "${e.room_name}"`)
           }
-          this.current_title = e.room_name
-          this.tl_puts(`this.current_title = "${e.room_name}"`)
         }
         if (next_func) {
           next_func()
@@ -60,5 +61,10 @@ export const mod_room_latest_state_loader = {
       })
       this.tl_alert("<-- room_latest_state_loader_load")
     },
+  },
+
+  computed: {
+    RoomRestoreInfo()   { return RoomRestoreInfo                                   },
+    room_restore_info() { return this.RoomRestoreInfo.fetch(this.room_restore_key) },
   },
 }
