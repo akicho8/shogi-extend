@@ -42,22 +42,24 @@ export const mod_room_latest_state_loader = {
       const params = {
         room_key: this.room_key,
       }
-      this.$axios.$get("/api/share_board/room_latest_state_loader", {params: params, progress: false}).then(e => {
+      this.$axios.$get("/api/share_board/room_latest_state_loader", {params: params, progress: true}).then(e => {
         this.tl_alert("room_latest_state_loader_load then", e)
-        if (e) {
-          if (this.room_restore_info.key === "run") {
-            if (e.latest_battle) {
-              this.current_sfen = e.latest_battle.sfen
-              this.current_turn = e.latest_battle.turn
-              this.honpu_main_setup()
+        Gs.delay_block(this.room_restore_delay, () => {
+          if (e) {
+            if (this.room_restore_info.key === "run") {
+              if (e.latest_battle) {
+                this.current_sfen = e.latest_battle.sfen
+                this.current_turn = e.latest_battle.turn
+                this.honpu_main_setup()
+              }
+              this.current_title = e.room_name
+              this.tl_puts(`this.current_title = "${e.room_name}"`)
             }
-            this.current_title = e.room_name
-            this.tl_puts(`this.current_title = "${e.room_name}"`)
           }
-        }
-        if (next_func) {
-          next_func()
-        }
+          if (next_func) {
+            next_func()
+          }
+        })
       })
       this.tl_alert("<-- room_latest_state_loader_load")
     },

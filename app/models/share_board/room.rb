@@ -82,9 +82,6 @@ module ShareBoard
     # 直近の対局の情報
     # ../../../nuxt_side/components/ShareBoard/room_latest_state_loader/mod_room_latest_state_loader.js: room_latest_state_loader_load
     def as_json_for_room_latest_state_loader(params = {})
-      if Rails.env.development?
-        sleep(1)
-      end
       hv = {
         room_name: name,
       }
