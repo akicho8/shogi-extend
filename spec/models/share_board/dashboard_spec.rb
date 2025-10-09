@@ -10,7 +10,7 @@ RSpec.describe ShareBoard::Dashboard do
           { user_name: "bob",   location_key: "white", judge_key: "lose", },
         ])
     end
-    json = ShareBoard::Dashboard.new(room_key: "dev_room").call
+    json = ShareBoard::Dashboard.new(room_key: "test_room").call
     assert { json }
     tp json if $0 == __FILE__
   end
@@ -19,7 +19,7 @@ end
 # >>
 # >> ShareBoard::Dashboard
 # >> |-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |       key | dev_room                                                                                                                                                                                                                                                            |
+# >> |       key | test_room                                                                                                                                                                                                                                                            |
 # >> | roomships | [{"win_count"=>1, "lose_count"=>0, "battles_count"=>1, "win_rate"=>1.0, "score"=>1, "rank"=>1, "user"=>{"name"=>"alice"}}, {"win_count"=>0, "lose_count"=>1, "battles_count"=>1, "win_rate"=>0.0, "score"=>0, "rank"=>2, "user"=>{"name"=>"bob"}}]                  |
 # >> |   battles | [{"sfen"=>"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d 8h2b+ 3a2b", "position"=>0, "created_at"=>"2023-12-17T18:12:05.000+09:00", "win_location"=>{"key"=>"black"}, "black"=>[{"id"=>43, "battle_id"=>15, "use... |
 # >> |-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
