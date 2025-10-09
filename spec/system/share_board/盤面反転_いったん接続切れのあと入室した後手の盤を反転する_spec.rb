@@ -14,7 +14,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
 
     window_b do
-      room_setup2(:bob) # bob はいったん接続切れのあと再度入退室
+      room_setup_by_user(:bob) # bob はいったん接続切れのあと再度入退室
       assert_viewpoint(:white)       # そのとき order_copy_from_bc で後手なので盤を反転している
     end
   end

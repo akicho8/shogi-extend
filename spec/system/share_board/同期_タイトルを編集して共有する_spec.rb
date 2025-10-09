@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     window_a do
-      room_setup2(:alice)         # alceが部屋を作る
+      room_setup_by_user(:alice)         # alceが部屋を作る
     end
     window_b do
-      room_setup2(:bob)           # bobもaliceと同じ合言葉で部屋を作る
+      room_setup_by_user(:bob)           # bobもaliceと同じ合言葉で部屋を作る
     end
     window_a do
       find(".title_navbar_item").click       # タイトル変更モーダルを開く

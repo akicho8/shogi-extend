@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "成功" do
     window_a do
-      room_setup2(:alice) # alice先輩が部屋を作る
+      room_setup_by_user(:alice) # alice先輩が部屋を作る
     end
     window_b do
-      room_setup2(:bob) # bob後輩が同じ入退室
+      room_setup_by_user(:bob) # bob後輩が同じ入退室
     end
     window_a do
       member_list_name_click(:bob)

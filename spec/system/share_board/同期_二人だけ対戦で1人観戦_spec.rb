@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
-    room_setup2(user_name, :room_restore_key => :skip)
+    room_setup_by_user(user_name, :room_restore_key => :skip)
   end
 
   it "works" do

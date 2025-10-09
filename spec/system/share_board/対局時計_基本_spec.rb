@@ -7,10 +7,10 @@ RSpec.describe "対局時計_基本", type: :system, share_board_spec: true do
 
   it "works" do
     window_a do
-      room_setup2(:alice)                  # aliceが部屋を作る
+      room_setup_by_user(:alice)                  # aliceが部屋を作る
     end
     window_b do
-      room_setup2(:bob)                    # bobも同じ入退室
+      room_setup_by_user(:bob)                    # bobも同じ入退室
     end
     window_a do
       clock_open

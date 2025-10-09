@@ -30,22 +30,22 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "退室時にリセットする" do
     window_a do
-      room_setup2(:alice)
+      room_setup_by_user(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_leave_share
+      gate_leave_handle
       assert_var("perpetual_cop.count", 0)
     end
   end
 
   it "同期したとき相手もリセットする" do
-    window_a { room_setup2(:alice) }
-    window_b { room_setup2(:bob) }
+    window_a { room_setup_by_user(:alice) }
+    window_b { room_setup_by_user(:bob) }
     window_a do
-      room_setup2(:alice)
+      room_setup_by_user(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_leave_share
+      gate_leave_handle
       assert_var("perpetual_cop.count", 0)
     end
   end

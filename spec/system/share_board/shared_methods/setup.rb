@@ -38,7 +38,7 @@ module SharedMethods
     room_menu_open_and_input(room_key, user_name)
   end
 
-  def room_setup2(user_name, params = {})
+  def room_setup_by_user(user_name, params = {})
     params = {
       :room_key => :test_room,
     }.merge(params.to_options)
@@ -82,7 +82,7 @@ module SharedMethods
   end
 
   # 退室
-  def room_leave_share
+  def gate_leave_handle
     global_menu_open
     gate_modal_open_handle        # 「入退室」を自分でクリックする
     first(".gate_leave_handle").click   # 退室ボタンをクリックする
@@ -92,10 +92,10 @@ module SharedMethods
   # alice と bob が同じ部屋で2手目まで進めた状態
   def setup_alice_bob_turn2
     window_a do
-      room_setup2(:alice, :room_restore_key => "skip")    # alice先輩が部屋を作る
+      room_setup_by_user(:alice, :room_restore_key => "skip")    # alice先輩が部屋を作る
     end
     window_b do
-      room_setup2(:bob, :room_restore_key => "skip")      # bob後輩が同じ入退室
+      room_setup_by_user(:bob, :room_restore_key => "skip")      # bob後輩が同じ入退室
     end
     window_a do
       piece_move_o("77", "76", "☗7六歩")  # aliceが指す
