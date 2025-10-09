@@ -172,21 +172,6 @@
         p {{$config.MY_SITE_URL + SB.config.twitter_card_options.image}}
       .panel-block
         a(:href=`$config.MY_SITE_URL + SB.config.twitter_card_options.image` target="_blank") 確認
-  .column.is-4
-    .panel.assert_var
-      .panel-heading
-        | [assert_var]
-      .panel-block tn_counter:{{SB.tn_counter}}
-      .panel-block current_turn:{{SB.current_turn}}
-      .panel-block clock_box:{{!!SB.clock_box}}
-      .panel-block clock_box.current_status:{{SB.clock_box ? SB.clock_box.current_status : ''}}
-      .panel-block current_title:{{SB.current_title}}
-      .panel-block cc_params:{{SB.cc_params_inspect(SB.cc_params)}}
-      .panel-block next_turn_message:{{SB.next_turn_message}}
-      .panel-block latest_illegal_name:{{SB.latest_illegal_name}}
-      .panel-block viewpoint:{{SB.viewpoint}}
-      .panel-block arashi_count:{{SB.arashi_count}}
-
   .column.is-6.is-clipped
     .panel
       .panel-heading
