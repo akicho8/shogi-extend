@@ -12,7 +12,7 @@ export const mod_room_entry_leave = {
       Gs.delay_block(2.5, () => {
         if (this.received_from_self(params)) {
           this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
-          if (this.url_room_key_blank_p) { // 「入退室」から入室 (部屋のリンクから来ていない場合)
+          if (!this.url_room_key_exist_p) { // 「入退室」から入室 (部屋のリンクから来ていない場合)
             if (this.member_infos.length <= 1) {           // 自分だけなら
               if (this.auto_room_url_copy_modal_p) {
                 this.room_url_copy_modal_handle()

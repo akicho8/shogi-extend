@@ -34,7 +34,7 @@ export const mod_room_cable = {
       this.tl_puts("--> room_create_if_exist_room_key_in_url")
       if (true) {
         // URLに合言葉がない場合は何もしない
-        if (this.url_room_key_blank_p) {
+        if (!this.url_room_key_exist_p) {
           return
         }
 
@@ -248,10 +248,10 @@ export const mod_room_cable = {
     session_id()      { return this.config.record.session_id      }, // 同じタブから再度入ったとき同じになる
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
-    // 合言葉と名前が入力済みなので共有可能か？
+    // 合言葉と名前が入力済みなので共有可能か？ (未使用)
     connectable_p() { return Gs.present_p(this.room_key) && Gs.present_p(this.user_name) },
 
-    url_room_key()            { return this.$route.query["room_key"] ?? this.$route.query["room_code"] }, // 合言葉の値 (URL限定)
-    url_room_key_blank_p() { return Gs.blank_p(this.url_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
+    url_room_key()         { return this.$route.query["room_key"] },   // URL 上の合言葉
+    url_room_key_exist_p() { return Gs.present_p(this.url_room_key) }, // URL 上の合言葉があるか？
   },
 }
