@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
     Capybara.within(".RoomSetupModal") do
       assert_text("入退室")                 # 「入退室」のモーダルのタイトルも正しい
       find(".new_user_name input").set("alice") # ハンドルネームを入力する
-      find(".room_entry_button").click               # 共有ボタンをクリックする
+      find(".room_entry_button").click               # 入室ボタンをクリックする
       find(".close_handle").click               # 閉じる
     end
     assert_text("alice")                        # 入力したハンドルネームの人がメンバーリストに表示されている

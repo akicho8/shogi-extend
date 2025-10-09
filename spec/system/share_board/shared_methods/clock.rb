@@ -100,4 +100,13 @@ module SharedMethods
   def cc_timeout_trigger
     find(".cc_timeout_trigger").click
   end
+
+  def cc_timeout_modal_close
+    find(".TimeoutModal .close_handle").click
+  end
+
+  # 時間切れモーダルが存在する
+  def assert_timeout_modal_exist
+    assert_selector(".TimeoutModal")
+  end
 end

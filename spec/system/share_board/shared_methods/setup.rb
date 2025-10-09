@@ -1,4 +1,80 @@
 module SharedMethods
+  def visit_app(params = {})
+    visit_to("/share-board", params)
+
+    params = params.to_options
+    if !params[:__visit_app_warning_skip__]
+      if params[:room_key] && params[:user_name]
+        warn "room_key と user_name がある場合は visit_room を使うこと"
+        puts caller.first
+      end
+    end
+  end
+
+  def visit_room(params = {})
+    visit_to("/share-board", params)
+
+    if true
+      params = params.to_options
+      if params[:autoexec_room_create_after] == "os_modal_open_handle"
+        warn "assert_room_created が必ず失敗するので autoexec_room_create_after=os_modal_open_handle は使えない"
+        puts caller.first
+      end
+    end
+
+    assert_room_created
+  end
+
+  def room_setup(room_key, user_name, params = {})
+    params = {
+      shuffle_first: false,     # テストにランダム要素が含まれると混乱するため初期値では入室順に順序が決まるようにする
+    }.merge(params)
+    visit_app(params)
+    room_menu_open_and_input(room_key, user_name)
+  end
+
+  def room_menu_open_and_input(room_key, user_name)
+    global_menu_open
+    rsm_open_handle                               # 「入退室」を自分でクリックする
+    Capybara.within(".RoomSetupModal") do
+      find(".new_room_key input").set(room_key)   # 合言葉を入力する
+      find(".new_user_name input").set(user_name) # ハンドルネームを入力する
+      find(".room_entry_button").click            # 入室ボタンをクリックする
+      find(".close_handle").click                 # 閉じる
+    end
+    assert_text(user_name)                        # 入力したハンドルネームの人が参加している
+    assert_room_created
+  end
+
+  def room_setup_by_fillin_params
+    global_menu_open
+    rsm_open_handle                  # 「入退室」を自分でクリックする
+    Capybara.within(".RoomSetupModal") do
+      find(".room_entry_button").click            # 入室ボタンをクリックする
+      find(".close_handle").click                 # 閉じる
+    end
+    assert_room_created
+  end
+
+  # 【注意】
+  # このチェック対象は地上にあるため os_modal_open_handle などを呼んでモーダルが出ていると読み取れない
+  # つまり visit_room で autoexec_room_create_after=os_modal_open_handle などとすると絶対にエラーになってしまう
+  def assert_room_created
+    assert_var("ac_room", "true", wait: 2)
+  end
+
+  def rsm_open_handle
+    find(".rsm_open_handle").click
+  end
+
+  # 退室
+  def room_leave
+    global_menu_open
+    rsm_open_handle        # 「入退室」を自分でクリックする
+    first(".room_leave_button").click   # 退室ボタンをクリックする
+    first(".close_handle").click   # 閉じる
+  end
+
   # alice と bob が同じ部屋で2手目まで進めた状態
   def setup_alice_bob_turn2
     a_block do
