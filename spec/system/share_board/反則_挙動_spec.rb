@@ -27,14 +27,13 @@ RSpec.describe type: :system, share_board_spec: true do
   context "対局中" do
     def foul_mode_key(foul_mode_key)
       visit_room({
-          :room_key             => :test_room,
           :body                 => sfen,
           :foul_mode_key        => foul_mode_key,
           :user_name            => "1",
           :fixed_member_names   => "1,2",
           :fixed_order_names    => "1,2",
           :fixed_order_state    => "to_o2_state",
-          :handle_name_validate => "false",
+          :handle_name_validate => false,
           :room_restore_key => :skip,
         })
       find(".Membership.is_black .piece_P").click # 持駒の歩を持つ

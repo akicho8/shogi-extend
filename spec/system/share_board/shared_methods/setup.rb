@@ -12,6 +12,10 @@ module SharedMethods
   end
 
   def visit_room(params = {})
+    params = {
+      :room_key => :test_room,
+    }.merge(params)
+
     visit_to("/share-board", params)
 
     if true
@@ -27,10 +31,20 @@ module SharedMethods
 
   def room_setup(room_key, user_name, params = {})
     params = {
-      shuffle_first: false,     # テストにランダム要素が含まれると混乱するため初期値では入室順に順序が決まるようにする
+      :shuffle_first => false,     # テストにランダム要素が含まれると混乱するため初期値では入室順に順序が決まるようにする
     }.merge(params)
+
     visit_app(params)
     room_menu_open_and_input(room_key, user_name)
+  end
+
+  def room_setup2(user_name, params = {})
+    params = {
+      :room_key => :test_room,
+    }.merge(params.to_options)
+
+    room_key = params.delete(:room_key)
+    room_setup(room_key, user_name, params)
   end
 
   def room_menu_open_and_input(room_key, user_name)
@@ -77,22 +91,22 @@ module SharedMethods
 
   # alice と bob が同じ部屋で2手目まで進めた状態
   def setup_alice_bob_turn2
-    a_block do
-      room_setup("test_room", "alice", :room_restore_key => "skip")    # alice先輩が部屋を作る
+    window_a do
+      room_setup2(:alice, :room_restore_key => "skip")    # alice先輩が部屋を作る
     end
-    b_block do
-      room_setup("test_room", "bob", :room_restore_key => "skip")      # bob後輩が同じ入退室
+    window_b do
+      room_setup2(:bob, :room_restore_key => "skip")      # bob後輩が同じ入退室
     end
-    a_block do
+    window_a do
       piece_move_o("77", "76", "☗7六歩")  # aliceが指す
     end
-    b_block do
+    window_b do
       piece_move_o("33", "34", "☖3四歩")  # bobが指す
     end
-    a_block do
+    window_a do
       assert_turn(2)
     end
-    b_block do
+    window_b do
       assert_turn(2)
     end
   end

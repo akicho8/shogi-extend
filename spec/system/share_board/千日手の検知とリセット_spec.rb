@@ -19,18 +19,18 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "入室時にリセットする" do
-    a_block do
+    window_a do
       visit_app
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_menu_open_and_input("test_room", "alice") # 入室
+      room_menu_open_and_input(:test_room, :alice) # 入室
       assert_var("perpetual_cop.count", 0)
     end
   end
 
   it "退室時にリセットする" do
-    a_block do
-      room_setup("test_room", "alice")
+    window_a do
+      room_setup2(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
       room_leave
@@ -39,10 +39,10 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "同期したとき相手もリセットする" do
-    a_block { room_setup("test_room", "alice") }
-    b_block { room_setup("test_room", "bob") }
-    a_block do
-      room_setup("test_room", "alice")
+    window_a { room_setup2(:alice) }
+    window_b { room_setup2(:bob) }
+    window_a do
+      room_setup2(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
       room_leave
@@ -70,15 +70,14 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "千日手は判定が特殊だけど最後は二歩と同じ扱いになるので千日手のときも自動投了になる" do
     visit_room({
-        :room_key            => :test_room,
         :user_name            => "a",
         :fixed_member_names   => "a",
         :fixed_order_names    => "a",
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :fixed_order_state    => "to_o1_state",
         :autoexec => "cc_auto_start",
         :auto_resign_key      => "is_auto_resign_on",
-        :RS_ENABLE       => "false",
+        :RS_ENABLE       => false,
       })
     perpetual_trigger
     assert_selector(".IllegalModal", text: "千日手で☖の勝ち")

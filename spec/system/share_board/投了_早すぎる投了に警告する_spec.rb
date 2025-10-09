@@ -3,12 +3,11 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1(names)
     visit_room({
-        :room_key             => :test_room,
-        :user_name            => "alice",
+        :user_name            => :alice,
         :fixed_member_names   => names,
         :fixed_order_names    => names,
         :fixed_order_state    => "to_o2_state",
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :autoexec             => "cc_auto_start",
       })
   end

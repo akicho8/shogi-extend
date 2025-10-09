@@ -7,8 +7,8 @@ RSpec.describe "対局履歴_ランキング等", type: :system, share_board_spe
 
     visit_to("/share-board/dashboard", room_key: room_key)
     assert_text("順位")
-    assert_text("alice")
-    assert_text("bob")
-    assert_text("carol")
+    assert_text(:alice)
+    assert_text(:bob)
+    assert_text(:carol)
   end
 end

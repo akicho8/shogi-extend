@@ -18,7 +18,7 @@ RSpec.describe "認証", type: :system, login_spec: true do
 
   describe "メールアドレス重複" do
     it "works" do
-      eval_code(%(User.create!(name: "alice", email: "#{system_test_twitter_account[:email]}", confirmed_at: Time.current)))
+      eval_code(%(User.create!(name: :alice, email: "#{system_test_twitter_account[:email]}", confirmed_at: Time.current)))
       twitter_login
       assert_text("メールアドレスとパスワードでログインしてください")
     end

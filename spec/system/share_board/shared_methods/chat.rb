@@ -94,7 +94,7 @@ module SharedMethods
 
   # 発言を count 件用意する
   def chat_message_setup(count)
-    eval_code %(ShareBoard::Room.fetch("test_room").setup_for_test(count: #{count}, force: true))
+    eval_code %(ShareBoard::Room.fetch(:test_room).setup_for_test(count: #{count}, force: true))
   end
 
   # 発言読み込み数

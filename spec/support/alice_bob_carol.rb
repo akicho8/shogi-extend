@@ -2,32 +2,32 @@ module AliceBobCarol
   extend ActiveSupport::Concern
 
   included do
-    let(:alice_window) { Capybara.open_new_window }
-    let(:bob_window)   { Capybara.open_new_window }
-    let(:carol_window) { Capybara.open_new_window }
+    let(:__window_instance_a) { Capybara.open_new_window }
+    let(:__window_instance_b) { Capybara.open_new_window }
+    let(:__window_instance_c) { Capybara.open_new_window }
   end
 
-  def a_block(&block)
+  def window_a(&block)
     if block
-      Capybara.within_window(alice_window, &block)
+      Capybara.within_window(__window_instance_a, &block)
     else
-      Capybara.switch_to_window(alice_window)
+      Capybara.switch_to_window(__window_instance_a)
     end
   end
 
-  def b_block(&block)
+  def window_b(&block)
     if block
-      Capybara.within_window(bob_window, &block)
+      Capybara.within_window(__window_instance_b, &block)
     else
-      Capybara.switch_to_window(bob_window)
+      Capybara.switch_to_window(__window_instance_b)
     end
   end
 
-  def c_block(&block)
+  def window_c(&block)
     if block
-      Capybara.within_window(carol_window, &block)
+      Capybara.within_window(__window_instance_c, &block)
     else
-      Capybara.switch_to_window(carol_window)
+      Capybara.switch_to_window(__window_instance_c)
     end
   end
 end

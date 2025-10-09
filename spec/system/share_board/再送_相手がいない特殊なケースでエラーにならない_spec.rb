@@ -2,11 +2,10 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    a_block do
+    window_a do
       visit_room({
-          :room_key          => :test_room,
-          :user_name         => "alice",
-          :fixed_order_names => "alice", # 白側に誰もいないため初手を指したあとで失敗する
+          :user_name         => :alice,
+          :fixed_order_names => :alice, # 白側に誰もいないため初手を指したあとで失敗する
           :fixed_order_state => "to_o2_state",
           :RS_SUCCESS_DELAY  => -1,      # 相手が応答しない
           :RS_RESEND_DELAY   => 0,       # しかも0秒後に応答確認

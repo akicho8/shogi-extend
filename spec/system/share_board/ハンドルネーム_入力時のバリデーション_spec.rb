@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "works" do
-    a_block do
+    window_a do
       visit_app
       global_menu_open
       menu_item_click("ハンドルネーム変更")
@@ -19,7 +19,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "URLから来ても不正なハンドルネームは通さない" do
-    a_block do
+    window_a do
       visit_app(room_key: :test_room, user_name: "nanashi", fixed_order_names: "nanashi", __visit_app_warning_skip__: true)
       assert_text("入退室")     # ハンドルネームが不正なのでダイアログが出ている
     end

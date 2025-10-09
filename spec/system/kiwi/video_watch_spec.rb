@@ -8,18 +8,18 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
   end
 
   it "コメント送受信" do
-    a_block do
+    window_a do
       visit_to("/video/watch/1")                            # 動画詳細へ
     end
-    b_block do
+    window_b do
       visit_to("/video/watch/1")                            # 動画詳細へ
     end
-    a_block do
+    window_a do
       find(".MessageInput textarea").set("(new_message)") # コメント入力
       find(".MessageInput .speak_handle").click           # 送信
       assert_text "(new_message)"                         # コメント受信
     end
-    b_block do
+    window_b do
       assert_text "(new_message)"                         # コメント受信
     end
   end

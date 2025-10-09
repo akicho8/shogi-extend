@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "モーダル" do
-    a_block do
+    window_a do
       visit_app
       find(".tweet_modal_handle").click                          # モーダル起動
       assert_selector(:button, text: "モダン", exact_text: true) # 初期値を確認する

@@ -3,8 +3,7 @@ require "#{__dir__}/helper"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_room({
-        :room_key             => :test_room,
-        :user_name            => "alice",
+        :user_name            => :alice,
         :fixed_member_names   => "alice,bob",
         :fixed_order_names    => "alice,bob",
         :fixed_order_state    => "to_o2_state",

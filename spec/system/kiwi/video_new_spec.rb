@@ -52,7 +52,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
 
   def visit_app(params = {})
     visit_to("/video/new", params.merge({
-          :__color_theme_key_dropdown_skip__ => "true", # 色テーマ画像を作り直してしまうためスキップする
+          :__color_theme_key_dropdown_skip__ => true, # 色テーマ画像を作り直してしまうためスキップする
         }))
   end
 end

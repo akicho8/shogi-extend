@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "ただし合言葉がある場合は登録しない" do
-    visit_room(room_key: "test_room", user_name: "alice", body: "position startpos", :room_restore_key => :skip)
+    visit_room(user_name: :alice, body: "position startpos", :room_restore_key => :skip)
     assert_no_selector("a", text: "本譜", exact_text: true)
   end
 end

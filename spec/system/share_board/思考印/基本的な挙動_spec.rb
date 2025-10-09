@@ -9,10 +9,10 @@ RSpec.describe "基本的な挙動", type: :system, share_board_spec: true do
   end
 
   it "クリックした升目に円と名前が出る" do
-    visit_app(user_name: "alice", think_mark_mode_p: true)
+    visit_app(user_name: :alice, think_mark_mode_p: true)
     click_try_at_76
     assert_selector(".place_7_6 .ThinkMark .think_mark_circle_container")
-    assert_selector(".place_7_6 .ThinkMark", text: "alice", exact_text: true)
+    assert_selector(".place_7_6 .ThinkMark", text: :alice, exact_text: true)
   end
 
   it "印モードは無効でも副ボタンであれば印が出る" do

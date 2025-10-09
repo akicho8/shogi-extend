@@ -4,11 +4,10 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(auto_resign_key)
     initial_read_sec = 2
     visit_room({
-        :room_key             => :test_room,
         :user_name            => "a",
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :fixed_order_state    => "to_o1_state",
         :autoexec             => "cc_auto_start",
         :auto_resign_key      => auto_resign_key,

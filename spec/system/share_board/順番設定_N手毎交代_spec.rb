@@ -3,13 +3,12 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1(fixed_order_state, change_per, order)
     visit_room({
-        :room_key             => :test_room,
         :change_per           => change_per,
         :user_name            => "a",
         :fixed_member_names   => "a,b,c",
         :fixed_order_names    => "a,b,c",
         :fixed_order_state    => fixed_order_state,
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :room_restore_key => :skip,
         :body                 => SfenGenerator.start_from(:white),
       })

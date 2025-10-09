@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "works" do
-    visit_room(room_key: :test_room, user_name: "alice")
+    visit_room(user_name: :alice)
     assert_room_created
     os_modal_open      # 「順番設定」モーダルを開く
     os_switch_toggle   # 右上の有効スイッチをクリック

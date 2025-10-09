@@ -3,12 +3,11 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1(shakashaka_count)
     visit_room({
-        :room_key             => :test_room,
         :user_name            => "1",
         :fixed_member_names   => "1,2,3,4",
         :fixed_order_names    => "1,2,3,4",
         :fixed_order_state    => "to_o2_state",
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :furigoma_random_key  => "is_true",        # 毎回反転させる
         :shakashaka_count     => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
       })

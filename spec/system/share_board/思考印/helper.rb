@@ -16,9 +16,9 @@ module SharedMethods
 
   def assert_abc_marks(expected)
     actual = [
-      a_block { has_selector?(".ThinkMark") } ? "o" : "x",
-      b_block { has_selector?(".ThinkMark") } ? "o" : "x",
-      c_block { has_selector?(".ThinkMark") } ? "o" : "x",
+      window_a { has_selector?(".ThinkMark") } ? "o" : "x",
+      window_b { has_selector?(".ThinkMark") } ? "o" : "x",
+      window_c { has_selector?(".ThinkMark") } ? "o" : "x",
     ].join
 
     assert { actual == expected }

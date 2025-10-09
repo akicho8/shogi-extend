@@ -10,9 +10,9 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "部屋を立てている場合は「理解した上で編集する」の警告ダイアログが出る" do
-    a_block { visit_room(room_key: :test_room, user_name: "alice") }
-    b_block { visit_room(room_key: :test_room, user_name: "bob")   }
-    a_block do
+    window_a { visit_room(user_name: :alice) }
+    window_b { visit_room(user_name: :bob)   }
+    window_a do
       global_menu_open
       menu_item_click("局面編集")
       find(:button, "理解した上で編集する").click

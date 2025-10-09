@@ -5,7 +5,6 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def visit_room(fixed_order_state, b_or_w, user_name)
     visit_app({
-        :room_key            => :test_room,
         :user_name      => user_name,
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
@@ -16,13 +15,13 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def case1(fixed_order_state, b_or_w, a_side_location_key, b_side_location_key)
-    a_block { visit_room(fixed_order_state, b_or_w, "a") }
-    b_block { visit_room(fixed_order_state, b_or_w, "b") }
-    a_block do
+    window_a { visit_room(fixed_order_state, b_or_w, "a") }
+    window_b { visit_room(fixed_order_state, b_or_w, "b") }
+    window_a do
       clock_start # 対局時計PLAY
     end
-    a_block { assert_viewpoint(a_side_location_key) }
-    b_block { assert_viewpoint(b_side_location_key) }
+    window_a { assert_viewpoint(a_side_location_key) }
+    window_b { assert_viewpoint(b_side_location_key) }
   end
 
   # |------+------+----+----|

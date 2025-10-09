@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    visit_room(room_key: :test_room, user_name: "alice")
+    visit_room(user_name: :alice)
     clock_start_force
     sleep(2)                                   # 2秒待つ
     piece_move_o("77", "76", "☗7六歩")         # 初手を指す

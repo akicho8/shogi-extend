@@ -3,11 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   before do
     visit_room({
-        :room_key            => :test_room,
         :user_name            => "a",
         :fixed_member_names   => "a,b,c,d",
         :fixed_order_names    => "a,b,c,d",
-        :handle_name_validate => "false",
+        :handle_name_validate => false,
         :title                => "(title)",
         :room_restore_key => :skip,
       })
