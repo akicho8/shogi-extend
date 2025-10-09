@@ -1,12 +1,12 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
-export const mod_room_setup_modal_autocomplete = {
+export const mod_gate_modal_autocomplete = {
   methods: {
-    rsm_autocomplete_select_handle() {
+    room_key_autocomplete_select_handle() {
     },
 
-    rsm_autocomplete_enter_handle() {
+    room_key_autocomplete_enter_handle() {
     },
 
     // room_key を complement_room_keys (localStorage) に保存する
@@ -20,10 +20,10 @@ export const mod_room_setup_modal_autocomplete = {
     },
   },
   computed: {
-    rsm_autocomplete_use_p() { return false }, // b-autocomplete を使うか？
+    room_key_autocomplete_use_p() { return false }, // b-autocomplete を使うか？
 
     // b-autocomplete 用の補完リスト
-    rsm_complement_list_for_ac() {
+    room_key_autocomplete_complement_list() {
       if (this.complement_room_keys) {
         return this.complement_room_keys.filter(option => {
           const a = option.toString().toLowerCase()

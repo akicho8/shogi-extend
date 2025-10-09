@@ -12,7 +12,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
         .main_procedure
           b-menu-list(label="対局手順")
             .buttons.is-centered.mb-0
-              b-button.mb-0.is_active_unset.important.rsm_open_handle(rounded expanded :class="SB.bold_if(mi1_bold_p)" @click="SB.rsm_open_handle")
+              b-button.mb-0.is_active_unset.important.gate_modal_open_handle(rounded expanded :class="SB.bold_if(mi1_bold_p)" @click="SB.gate_modal_open_handle")
                 .number_with_label
                   b-icon(icon="numeric-1-circle-outline")
                   | 入退室

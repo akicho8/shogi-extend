@@ -38,15 +38,15 @@ export const mod_room_entry_leave = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    room_leave() {
+    room_leave_share() {
       this.room_leave_call(this.ac_room_perform_default_params())  // (実行後に切断するので)自分には届かないため自分側だけで実行しておく
-      this.ac_room_perform("room_leave", {
+      this.ac_room_perform("room_leave_share", {
       }) // --> app/channels/share_board/room_channel.rb
     },
-    room_leave_broadcasted(params) {
+    room_leave_share_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分へ
-        // room_leave を呼んだ直後に接続を切っているのでここには来ない
+        // room_leave_share を呼んだ直後に接続を切っているのでここには来ない
       } else {
         this.room_leave_call(params)
       }

@@ -33,7 +33,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup2(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_leave
+      room_leave_share
       assert_var("perpetual_cop.count", 0)
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup2(:alice)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_leave
+      room_leave_share
       assert_var("perpetual_cop.count", 0)
     end
   end

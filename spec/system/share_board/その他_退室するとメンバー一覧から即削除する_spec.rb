@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a do
       assert_member_exist(:alice)   # alice の部屋にも alice と
       assert_member_exist(:bob)     # bob がいる
-      room_leave                     # 退室
+      room_leave_share                     # 退室
     end
     window_b do
       assert_member_missing(:alice) # bob 側の alice が即座に消えた

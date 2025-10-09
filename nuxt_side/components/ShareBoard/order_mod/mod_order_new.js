@@ -44,7 +44,7 @@ export const mod_order_new = {
         this.os_modal_init()
 
         Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
-        // this.rsm_close()
+        // this.gate_modal_close()
         this.os_modal_instance = this.modal_card_open({
           component: OrderSettingModal,
           props: { },

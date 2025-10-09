@@ -1,71 +1,71 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
-import RoomSetupModal from "./RoomSetupModal.vue"
+import GateModal from "./GateModal.vue"
 import { RoomKeyValidator } from "../models/room_key_validator.js"
 import { HandleNameValidator } from "@/components/models/handle_name/handle_name_validator.js"
 import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
-export const mod_room_setup_modal = {
+export const mod_gate_modal = {
   data() {
     return {
       new_room_key: null,       // 入力中の合言葉
       new_user_name: null,      // 入力中のハンドルネーム
-      rsm_instance: null,
+      gate_modal_instance: null,
     }
   },
   beforeDestroy() {
-    this.rsm_close()
+    this.gate_modal_close()
   },
   methods: {
-    rsm_open_handle() {
-      if (this.rsm_instance == null) {
+    gate_modal_open_handle() {
+      if (this.gate_modal_instance == null) {
         this.sidebar_p = false
         this.sfx_click()
-        this.rsm_open()
+        this.gate_modal_open()
       }
     },
 
-    rsm_close_handle() {
-      if (this.rsm_instance) {
+    gate_modal_close_handle() {
+      if (this.gate_modal_instance) {
         this.sidebar_p = false
         this.sfx_click()
-        this.rsm_close()
+        this.gate_modal_close()
       }
     },
 
-    rsm_open() {
-      if (this.rsm_instance == null) {
+    gate_modal_open() {
+      if (this.gate_modal_instance == null) {
         this.new_room_key = this.room_key
         this.new_user_name = this.user_name
 
-        this.rsm_instance = this.modal_card_open({
-          component: RoomSetupModal,
+        this.gate_modal_instance = this.modal_card_open({
+          component: GateModal,
           onCancel: () => {
             this.sfx_click()
-            this.rsm_close()
+            this.gate_modal_close()
           },
         })
       }
     },
 
-    rsm_close() {
-      if (this.rsm_instance) {
-        this.rsm_instance.close()
-        this.rsm_instance = null
-        this.debug_alert("RoomSetupModal close")
+    gate_modal_close() {
+      if (this.gate_modal_instance) {
+        this.gate_modal_instance.close()
+        this.gate_modal_instance = null
+        this.debug_alert("GateModal close")
       }
     },
 
-    rsm_leave_handle() {
+    gate_leave_handle() {
       this.sfx_click()
-      if (this.ac_room) {
-        this.room_destroy()
-      } else {
+      if (this.ac_room == null) {
         this.toast_warn("今は部屋の外です")
+        return
       }
+      this.room_destroy()
     },
 
-    rsm_entry_handle() {
+    gate_enter_handle() {
       this.sfx_click()
 
       this.new_room_key = _.trim(this.new_room_key)
@@ -86,7 +86,7 @@ export const mod_room_setup_modal = {
 
       if (this.auto_close_p) {
         this.sidebar_p = false
-        this.rsm_close()
+        this.gate_modal_close()
       }
 
       this.room_create_from_modal(this.new_room_key, this.new_user_name)

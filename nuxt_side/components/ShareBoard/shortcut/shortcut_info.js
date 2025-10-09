@@ -26,7 +26,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "1"),
-        call: c => c.rsm_open_handle(),
+        call: c => c.gate_modal_open_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && (c.keyboard_single_key_equal(e, "2") || c.keyboard_single_key_equal(e, "o")),

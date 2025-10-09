@@ -16,9 +16,9 @@ module ShareBoard
       subscribed_track("購読停止")
     end
 
-    def room_leave(data)
+    def room_leave_share(data)
       track(data, subject: "部屋退出", body: "BYE")
-      broadcast(:room_leave_broadcasted, data)
+      broadcast(:room_leave_share_broadcasted, data)
     end
 
     def force_sync(data)

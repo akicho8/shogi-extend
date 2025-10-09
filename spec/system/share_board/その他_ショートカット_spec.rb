@@ -30,7 +30,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "入退室" do
     visit_app
     Capybara.current_session.active_element.send_keys("1")
-    assert_selector(".RoomSetupModal")
+    assert_selector(".GateModal")
   end
 
   it "対局時計" do

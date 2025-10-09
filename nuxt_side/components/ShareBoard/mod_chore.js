@@ -127,7 +127,7 @@ export const mod_chore = {
 
     // すべてのモーダルを閉じる
     all_modal_close() {
-      this.rsm_close()
+      this.gate_modal_close()
       this.cc_modal_close()
       this.os_modal_close()
     },

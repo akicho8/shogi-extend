@@ -2,7 +2,7 @@
 // | Method                                              | 意味                                    |
 // |-----------------------------------------------------+-----------------------------------------|
 // | room_create_if_exist_room_key_in_url()              | URLに合言葉の指定があればそのまま入退室 |
-// | rsm_open_handle()                                   | モーダル起動                            |
+// | gate_modal_open_handle()                                   | モーダル起動                            |
 // | room_create_from_modal(new_room_key, new_user_name) | モーダル内で入力したものを渡す          |
 // | room_create()                                       | 入室                                    |
 // | room_destroy()                                      | 退室                                    |
@@ -45,7 +45,7 @@ export const mod_room_cable = {
 
         // 名前が未入力または不正な場合はモーダルを表示する
         if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
-          this.rsm_open()
+          this.gate_modal_open()
           return
         }
       }
@@ -147,7 +147,7 @@ export const mod_room_cable = {
 
         this.mh_room_leave()
 
-        this.room_leave()
+        this.room_leave_share()
         this.ac_unsubscribe("ac_room")
         this.tl_add("USER", "unsubscribe")
 

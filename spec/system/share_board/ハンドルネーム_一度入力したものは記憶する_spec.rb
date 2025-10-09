@@ -10,10 +10,10 @@ RSpec.describe type: :system, share_board_spec: true do
       begin
         visit_app(:room_restore_key => :skip)
         global_menu_open
-        rsm_open_handle                               # 「入退室」を自分でクリックする
+        gate_modal_open_handle                               # 「入退室」を自分でクリックする
         find(".new_room_key input").set(:test_room)  # 合言葉を入力する
         find(".new_user_name").find(:fillable_field, with: :alice) # 以前入力したニックネームが復元されている
-        find(".room_entry_button").click                   # 入室
+        find(".gate_enter_handle").click                   # 入室
         find(".close_handle").click                   # 閉じる
         assert_room_created
       end

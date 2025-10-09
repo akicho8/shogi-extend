@@ -49,11 +49,11 @@ module SharedMethods
 
   def room_menu_open_and_input(room_key, user_name)
     global_menu_open
-    rsm_open_handle                               # 「入退室」を自分でクリックする
-    Capybara.within(".RoomSetupModal") do
+    gate_modal_open_handle                               # 「入退室」を自分でクリックする
+    Capybara.within(".GateModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
-      find(".room_entry_button").click            # 入室ボタンをクリックする
+      find(".gate_enter_handle").click            # 入室ボタンをクリックする
       find(".close_handle").click                 # 閉じる
     end
     assert_text(user_name)                        # 入力したハンドルネームの人が参加している
@@ -62,9 +62,9 @@ module SharedMethods
 
   def room_setup_by_fillin_params
     global_menu_open
-    rsm_open_handle                  # 「入退室」を自分でクリックする
-    Capybara.within(".RoomSetupModal") do
-      find(".room_entry_button").click            # 入室ボタンをクリックする
+    gate_modal_open_handle                  # 「入退室」を自分でクリックする
+    Capybara.within(".GateModal") do
+      find(".gate_enter_handle").click            # 入室ボタンをクリックする
       find(".close_handle").click                 # 閉じる
     end
     assert_room_created
@@ -77,15 +77,15 @@ module SharedMethods
     assert_var("ac_room", "true", wait: 2)
   end
 
-  def rsm_open_handle
-    find(".rsm_open_handle").click
+  def gate_modal_open_handle
+    find(".gate_modal_open_handle").click
   end
 
   # 退室
-  def room_leave
+  def room_leave_share
     global_menu_open
-    rsm_open_handle        # 「入退室」を自分でクリックする
-    first(".room_leave_button").click   # 退室ボタンをクリックする
+    gate_modal_open_handle        # 「入退室」を自分でクリックする
+    first(".gate_leave_handle").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
   end
 

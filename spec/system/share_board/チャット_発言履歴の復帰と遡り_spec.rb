@@ -70,7 +70,7 @@ RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, sha
     chat_modal_open { assert_message_received_o("(content:0)") }          # そこでチャットを開くとそのタイミングで読み込まれる
     assert_var("ml_count", 2)                                 # 念のため個数を確認する (2件用意していて1ページあたり10件のため2件ある)
 
-    room_leave                                                            # 退室する
+    room_leave_share                                                            # 退室する
     assert_var("ml_count", 0)                                 # このタイミングでも履歴消去しているので 0 になっている
   end
 end

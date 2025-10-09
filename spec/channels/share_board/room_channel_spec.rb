@@ -44,8 +44,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     it "works" do
       data = data_factory
       expect {
-        subscription.room_leave(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "room_leave_broadcasted", bc_params: data)
+        subscription.room_leave_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "room_leave_share_broadcasted", bc_params: data)
     end
   end
 

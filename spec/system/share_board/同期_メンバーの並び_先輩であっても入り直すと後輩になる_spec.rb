@@ -21,7 +21,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(0)
     end
     window_a do
-      room_leave                         # 軽く退室
+      room_leave_share                         # 軽く退室
       room_setup_by_fillin_params        # 再度入室(部屋と名前はすでに入力済みになっている)
       assert_turn(0)                     # bobから0手目をもらった
       assert_member_index(:bob, 1)      # 並びは後輩だったbobが先輩に

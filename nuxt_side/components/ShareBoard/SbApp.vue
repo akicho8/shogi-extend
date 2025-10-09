@@ -117,14 +117,14 @@ import { window_active_detector            } from "./window_active_detector.js"
 import { browser_slide_lock                } from "./browser_slide_lock.js"
 
 import { mod_room_cable                    } from "./room/mod_room_cable.js"
-import { mod_room_setup_modal              } from "./room/mod_room_setup_modal.js"
+import { mod_gate_modal              } from "./room/mod_gate_modal.js"
 import { mod_room_entry_leave              } from "./room/mod_room_entry_leave.js"
 import { mod_room_board_setup              } from "./room/mod_room_board_setup.js"
 import { mod_room_active_level             } from "./room/mod_room_active_level.js"
 import { mod_room_members                  } from "./room/mod_room_members.js"
 import { mod_room_recreate                 } from "./room/mod_room_recreate.js"
 import { mod_room_url_copy                 } from "./room/mod_room_url_copy.js"
-import { mod_room_setup_modal_autocomplete } from "./room/mod_room_setup_modal_autocomplete.js"
+import { mod_gate_modal_autocomplete } from "./room/mod_gate_modal_autocomplete.js"
 
 import { mod_member_list                   } from "./member_list_show/mod_member_list.js"
 import { mod_member_info_modal             } from "./member_list_show/mod_member_info_modal.js"
@@ -241,9 +241,9 @@ export default {
 
     mod_room_recreate,
     mod_room_url_copy,
-    mod_room_setup_modal_autocomplete,
+    mod_gate_modal_autocomplete,
     mod_room_cable,
-    mod_room_setup_modal,
+    mod_gate_modal,
     mod_room_entry_leave,
     mod_room_board_setup,
     mod_room_active_level,
