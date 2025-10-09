@@ -45,7 +45,6 @@ export class ParamInfo extends ParamBase {
       { key: "faul_caution_key",             type: "string",  name: "反則時の自動注意",                       defaults: { development: null,                 production: "is_caution_on",                     }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
 
       // デバッグ用
-      // { key: "fixed_room_name",              type: "string",  name: "部屋名",                                 defaults: { development: null,                 production: null,                                }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
       { key: "fixed_order_names",            type: "string",  name: "順番設定の順番",                         defaults: { development: null,                 production: "",                                  }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
       { key: "fixed_order_state",            type: "string",  name: "順番設定の方法",                         defaults: { development: null,                 production: "to_o2_state",                       }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
 

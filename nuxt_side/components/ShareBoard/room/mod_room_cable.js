@@ -115,7 +115,6 @@ export const mod_room_cable = {
             this.ac_events_hash_inc("reconnected")
             this.tl_add("HOOK", "reconnected", e)
           }
-          this.title_update_by_fixed_room_name()
           this.xprofile_load()
           this.ua_notify_once()                       // USER_AGENT を記録
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
