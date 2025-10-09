@@ -21,9 +21,6 @@ import { support_child } from "../support_child.js"
 export default {
   name: "SbDebugBasic",
   mixins: [support_child],
-  computed: {
-    Howler() { return window.Howler },
-  },
 }
 </script>
 
