@@ -8,6 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
           :fixed_member_names => "alice,bob",
           :fixed_order_names  => "alice,bob",
           :quick_sync_key     => "is_quick_sync_off", # 手動同期にしておく
+          :room_restore_key   => :skip,
         })
     end
     window_a do
@@ -36,7 +37,12 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "操作履歴モーダル内の補助機能" do
     window_a do
-      visit_room(user_name: :alice, fixed_order_names: :alice, fixed_order_state: "to_o1_state")
+      visit_room({
+          :user_name => :alice,
+          :fixed_order_names => :alice,
+          :fixed_order_state => "to_o1_state",
+          :room_restore_key   => :skip,
+        })
 
       piece_move_o("77", "76", "☗7六歩")              # 初手を指す
       assert_turn(1)

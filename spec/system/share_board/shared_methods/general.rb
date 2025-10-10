@@ -25,10 +25,10 @@ module SharedMethods
     find(".apply_button").click
   end
 
-  def kifu_yomikomi
+  def kifu_read_run
     global_menu_open
     menu_item_click("棋譜の入力")
-    find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
-    find(".AnySourceReadModal .submit_handle").click
+    find(".KifuReadModal textarea").set("68S", clear: :backspace)
+    find(".KifuReadModal .submit_handle").click
   end
 end

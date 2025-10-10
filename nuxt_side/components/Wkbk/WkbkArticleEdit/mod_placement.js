@@ -1,5 +1,5 @@
 import SfenTrimModal from "../../SfenTrimModal.vue"
-import AnySourceReadModal from "../../AnySourceReadModal.vue"
+import KifuReadModal from "../../KifuReadModal.vue"
 import { KentoUrlParser } from "@/components/models/kento_url_parser.js"
 
 export const mod_placement = {
@@ -14,7 +14,7 @@ export const mod_placement = {
     any_source_read_handle() {
       this.sfx_click()
       const modal_instance = this.modal_card_open({
-        component: AnySourceReadModal,
+        component: KifuReadModal,
         events: {
           "update:any_source": any_source => {
             this.sfx_click()

@@ -39,13 +39,11 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "操作履歴にも含んでいる" do
-    window_a do
-      visit_app(black: :alice)
-      piece_move_o("77", "76", "☗7六歩")
-      action_log_row_of(0).click
-      Capybara.within(".ActionLogModal") do
-        assert_text('"black": :alice') # デバッグ情報の表示を見ている
-      end
+    visit_app(black: :alice)
+    piece_move_o("77", "76", "☗7六歩")
+    action_log_row_of(0).click
+    Capybara.within(".ActionLogModal") do
+      assert_text(%("black": "alice")) # モーダル内のでデバッグプリントを見ている
     end
   end
 

@@ -1,60 +1,72 @@
-import AnySourceReadModal from "@/components/AnySourceReadModal.vue"
+import KifuReadModal from "@/components/KifuReadModal.vue"
 import { Gs } from "@/components/models/gs.js"
 
-export const mod_yomikomi = {
+export const mod_kifu_read = {
   data() {
     return {
-      yomikomi_modal_instance: null,
+      kifu_read_modal_instance: null,
     }
   },
   beforeDestroy() {
-    this.yomikomi_modal_close()
+    this.kifu_read_modal_close()
   },
   methods: {
     // クリップボードから読み込む
-    yomikomi_from_clipboard() {
+    kifu_read_from_clipboard() {
       if (navigator.clipboard) {
-        navigator.clipboard.readText().then(text => this.yomikomi_facade(text))
+        navigator.clipboard.readText().then(text => this.kifu_read_modal_open_or_direct_handle(text))
         return true
       }
     },
 
     // 部屋を作っている場合はモーダルに読み込む
-    yomikomi_facade(text) {
+    kifu_read_modal_open_or_direct_handle(text) {
       if (this.ac_room == null) {
-        this.yomikomi_direct(text)
+        this.kifu_read_direct_handle(text)
       } else {
-        this.yomikomi_modal_open_handle(text)
+        this.kifu_read_modal_open_handle(text)
       }
     },
 
     // 棋譜の入力タップ時の処理
-    yomikomi_modal_open_handle(source = "") {
-      this.sidebar_p = false
-      this.sfx_click()
-      this.yomikomi_modal_close()
-      this.yomikomi_modal_instance = this.modal_card_open({
-        component: AnySourceReadModal,
-        props: {
-          source: source,
-        },
-        events: {
-          "update:any_source": any_source => {
-            this.yomikomi_direct(any_source)
-          },
-        },
-      })
+    kifu_read_modal_open_handle(source = "") {
+      if (this.kifu_read_modal_instance === null) {
+        this.sidebar_p = false
+        this.sfx_click()
+        this.kifu_read_modal_open(source)
+      }
     },
 
-    yomikomi_modal_close() {
-      if (this.yomikomi_modal_instance) {
-        this.yomikomi_modal_instance.close()
-        this.yomikomi_modal_instance = null
+    kifu_read_modal_open(source = "") {
+      if (this.kifu_read_modal_instance === null) {
+        this.kifu_read_modal_instance = this.modal_card_open({
+          component: KifuReadModal,
+          props: {
+            source: source,
+          },
+          events: {
+            "update:any_source": any_source => {
+              this.kifu_read_direct_handle(any_source)
+            },
+            "close": () => this.kifu_read_modal_close(),
+          },
+          onCancel: () => {
+            this.sfx_click()
+            this.kifu_read_modal_close()
+          },
+        })
+      }
+    },
+
+    kifu_read_modal_close() {
+      if (this.kifu_read_modal_instance) {
+        this.kifu_read_modal_instance.close()
+        this.kifu_read_modal_instance = null
       }
     },
 
     // 棋譜読み込み処理
-    yomikomi_direct(any_source) {
+    kifu_read_direct_handle(any_source) {
       const params = {
         any_source: any_source,
         to_format: "sfen",
@@ -74,7 +86,7 @@ export const mod_yomikomi = {
           this.viewpoint = "black"
           this.ac_log({subject: "棋譜読込", body: e.body})
 
-          this.yomikomi_modal_close()
+          this.kifu_read_modal_close()
 
           // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
           Gs.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))

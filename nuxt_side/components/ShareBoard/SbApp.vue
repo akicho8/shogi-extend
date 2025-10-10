@@ -83,7 +83,7 @@ import { mod_handle_name                   } from "./mod_handle_name.js"
 import { mod_urls                          } from "./mod_urls.js"
 import { mod_share_data                    } from "./mod_share_data.js"
 import { mod_edit_mode                     } from "./mod_edit_mode.js"
-import { mod_yomikomi                      } from "./mod_yomikomi.js"
+import { mod_kifu_read                      } from "./mod_kifu_read.js"
 import { mod_sp                            } from "./mod_sp.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
 import { mod_think_mark                } from "./think_mark/mod_think_mark.js"
@@ -197,7 +197,7 @@ export default {
     mod_urls,
     mod_share_data,
     mod_edit_mode,
-    mod_yomikomi,
+    mod_kifu_read,
     mod_sp,
     mod_perpetual,
     mod_think_mark,

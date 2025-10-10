@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "AnySourceReadModal",
+  name: "KifuReadModal",
   props: {
     source: { type: String, required: false, default: "", },
   },
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="sass">
-.AnySourceReadModal
+.KifuReadModal
   +modal_width(640px)
   textarea
     word-break: break-all

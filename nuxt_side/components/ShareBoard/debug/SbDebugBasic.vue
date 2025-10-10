@@ -12,7 +12,7 @@
       .panel.assert_var
         .panel-heading [assert_var]
         .panel-block ac_room:{{!!SB.ac_room}}
-        .panel-block current_title:{{SB.current_title}}
+        .panel-block current_turn:{{SB.current_turn}}
         .panel-block tn_counter:{{SB.tn_counter}}
         .panel-block clock_box:{{!!SB.clock_box}}
         .panel-block clock_box.current_status:{{SB.clock_box ? SB.clock_box.current_status : ''}}

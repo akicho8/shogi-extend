@@ -1,13 +1,13 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
+  def case1(user_name)
+    room_setup_by_user(user_name, room_restore_key: :skip)
+  end
+
   it "works" do
-    window_a do
-      room_setup_by_user(:alice)                          # aliceが部屋を作る
-    end
-    window_b do
-      room_setup_by_user(:bob)                            # bobも同じ入退室
-    end
+    window_a { case1(:alice) }
+    window_b { case1(:bob)   }
     window_a do
       piece_move_o("77", "76", "☗7六歩")                      # 1手目
     end

@@ -61,7 +61,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_handle")
-          b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.yomikomi_modal_open_handle()")
+          b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.kifu_read_modal_open_handle()")
 
         SbSidebarExport(:base="SB")
           b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_dl_modal_handle")

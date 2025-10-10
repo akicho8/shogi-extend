@@ -5,13 +5,13 @@ RSpec.describe type: :system, share_board_spec: true do
     @INITIAL_SEC = 30
   end
 
+  def case1(user_name)
+    room_setup_by_user(user_name, room_restore_key: :skip)
+  end
+
   it "works" do
-    window_a do
-      room_setup_by_user(:alice)                 # aliceが部屋を作る
-    end
-    window_b do
-      room_setup_by_user(:bob)                   # bobが部屋を作る
-    end
+    window_a { case1(:alice) }
+    window_b { case1(:bob)   }
     window_a do
       clock_open
       clock_box_form_set(:black, 0, @INITIAL_SEC, 0, 0)   # 秒読みだけを設定
