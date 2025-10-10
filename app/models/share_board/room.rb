@@ -80,7 +80,7 @@ module ShareBoard
     ################################################################################ for API
 
     # 直近の対局の情報
-    # ../../../nuxt_side/components/ShareBoard/room_latest_state_loader/mod_room_latest_state_loader.js: room_latest_state_loader_load
+    # ../../../nuxt_side/components/ShareBoard/room/mod_room_restore.js: room_latest_state_loader_load
     def as_json_for_room_latest_state_loader(params = {})
       hv = {
         room_name: name,

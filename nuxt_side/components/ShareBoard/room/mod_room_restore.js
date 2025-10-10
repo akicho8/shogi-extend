@@ -1,7 +1,7 @@
 import { Gs } from "@/components/models/gs.js"
 import { RoomRestoreInfo } from "../models/room_restore_info.js"
 
-export const mod_room_latest_state_loader = {
+export const mod_room_restore = {
   methods: {
     // room_latest_state_loader_load() {
     //   const params = {

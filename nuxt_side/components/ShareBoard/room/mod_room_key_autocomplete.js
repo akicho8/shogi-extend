@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
-export const mod_gate_modal_autocomplete = {
+export const mod_room_key_autocomplete = {
   methods: {
     room_key_autocomplete_select_handle() {
     },
