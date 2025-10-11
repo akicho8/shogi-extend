@@ -2,15 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    visit_app(room_key: :test_room)             # 合言葉を含むURLから来る
-    assert_selector(".GateModal")          # 「入退室」のモーダルが自動的に表示されている
-    Capybara.within(".GateModal") do
-      assert_text("入退室")                 # 「入退室」のモーダルのタイトルも正しい
-      find(".new_user_name input").set(:alice) # ハンドルネームを入力する
-      find(".gate_enter_handle").click               # 入室ボタンをクリックする
-      find(".close_handle").click               # 閉じる
-    end
-    assert_text(:alice)                        # 入力したハンドルネームの人がメンバーリストに表示されている
+    visit_app(room_key: SecureRandom.hex) # 合言葉を含むURLから来る
+    room_auto_enter_but_confirm
     piece_move_o("77", "76", "☗7六歩")
   end
 end

@@ -1,33 +1,36 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def case1
-    window_a do
-      visit_room(user_name: :alice, fixed_order_names: "alice,bob")
-    end
-    window_b do
-      visit_room(user_name: :bob, fixed_order_names: "alice,bob")
-    end
-    window_c do
-      visit_room(user_name: :carol, fixed_order_names: "alice,bob")
-    end
+  def case1(user_name)
+    visit_room({
+        :user_name => user_name,
+        :fixed_order_names => "alice,bob",
+        :room_restore_key => :skip,
+      })
   end
+
+  def case2
+    window_a { case1(:alice) }
+    window_b { case1(:bob)   }
+    window_c { case1(:carol) }
+  end
+
   it "時計OFF順番設定ONでは検討をしていると思われる" do
-    case1
+    case2
     window_b do
       place_click("77")
       assert_text("(今はaliceさんの手番です。みんなで盤をつついて検討する場合は順番設定を解除してください)")
     end
   end
   it "時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
-    case1
+    case2
     window_c do
       place_click("77")
       assert_text("(今はaliceさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は順番設定を解除してください)")
     end
   end
   it "時計ON順番設定ONは対局中と思われる" do
-    case1
+    case2
     window_b do
       clock_start
       place_click("77")

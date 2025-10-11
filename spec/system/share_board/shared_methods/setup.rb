@@ -1,6 +1,18 @@
+
 module SharedMethods
-  def visit_app(params = {})
+  def visit_default_params
+    {
+      room_restore_delay: 3,
+    }
+  end
+
+  def visit_core(params = {})
+    params = visit_default_params.merge(params)
     visit_to("/share-board", params)
+  end
+
+  def visit_app(params = {})
+    visit_core(params)
 
     params = params.to_options
     if !params[:__visit_app_warning_skip__]
@@ -16,7 +28,7 @@ module SharedMethods
       :room_key => :test_room,
     }.merge(params)
 
-    visit_to("/share-board", params)
+    visit_core(params)
 
     if true
       params = params.to_options
@@ -66,6 +78,16 @@ module SharedMethods
     Capybara.within(".GateModal") do
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
       find(".close_handle").click                 # 閉じる
+    end
+    assert_room_created
+  end
+
+  def room_auto_enter_but_confirm
+    assert_selector(".GateModal")               # 「入退室」のモーダルが自動的に表示されている
+    Capybara.within(".GateModal") do
+      find(".new_user_name input").set(:alice)  # ハンドルネームを入力する
+      find(".gate_enter_handle").click          # 入室ボタンをクリックする
+      find(".close_handle").click               # 閉じる
     end
     assert_room_created
   end

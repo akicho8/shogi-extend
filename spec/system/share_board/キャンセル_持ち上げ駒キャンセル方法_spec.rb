@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(selector)
-    visit_room(user_name: :alice)
+    visit_app
 
     global_menu_open
     menu_item_click("設定")               # モーダルを開く
