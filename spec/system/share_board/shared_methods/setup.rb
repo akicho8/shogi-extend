@@ -6,7 +6,7 @@ module SharedMethods
     {
       :room_restore_feature_p     => false, # 盤面を復元しない
       :room_create_sleep          => 2,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
-      :handle_name_validate       => false, # ハンドルネームのチェックをしない
+      :handle_name_validate_p       => false, # ハンドルネームのチェックをしない
       :auto_room_url_copy_modal_p => false, # 部屋のリンクのコピーモーダルを出さない
       :auto_close_p               => false, # 自動的に閉じない
     }

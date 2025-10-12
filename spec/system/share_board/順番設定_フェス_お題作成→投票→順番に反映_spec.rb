@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_room({
         :user_name            => user_name,
         :fixed_member   => "a,b,c",
-        :handle_name_validate => false,
+        :handle_name_validate_p => false,
       })
   end
 

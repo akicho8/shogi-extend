@@ -61,15 +61,14 @@ export const mod_handle_name = {
     },
 
     handle_name_invalid_then_toast_warn(s) {
-      if (this.$route.query.handle_name_validate === "false") {
+      if (this.handle_name_validate_p) {
+        const message = HandleNameValidator.valid_message(s)
+        if (message) {
+          this.toast_warn(message)
+          return true
+        }
         return false
       }
-      const message = HandleNameValidator.valid_message(s)
-      if (message) {
-        this.toast_warn(message)
-        return true
-      }
-      return false
     },
   },
 }

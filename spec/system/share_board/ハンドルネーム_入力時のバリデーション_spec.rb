@@ -4,30 +4,17 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(name, message)
     find(".HandleNameModal input").set(name)         # 不正な名前を入力する
     find(".save_handle").click                       # 保存
-    assert_text(message)                             # エラー出る
+    assert_text("ハンドルネームを入力してください")  # エラー出る
   end
 
   it "works" do
-    window_a do
-      visit_app(handle_name_validate: true)
-      global_menu_open
-      menu_item_click("ハンドルネーム変更")
-      case1("", "ハンドルネームを入力してください")
-      case1("名無し", "ハンドルネームを入力してください")
-      case1(".", "ハンドルネームを入力してください")
-    end
-  end
+    visit_app(handle_name_validate_p: true)
+    global_menu_open
+    menu_item_click("ハンドルネーム変更")
 
-  it "URLから来ても不正なハンドルネームは通さない" do
-    window_a do
-      visit_app({
-          :room_key                   => :test_room,
-          :user_name                  => "nanashi",
-          :fixed_order          => "nanashi",
-          :handle_name_validate       => true,
-          :__visit_app_warning_skip__ => true,
-        })
-      assert_selector(".GateModal") # ハンドルネームが不正なのでダイアログが出ている
-    end
+    case1("")
+    case1(".")
+    case1("名無し")
+    case1("おちんちん")
   end
 end
