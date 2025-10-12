@@ -2,8 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    window_a { visit_room(user_name: :alice, room_restore_key: :skip) }
-    window_b { visit_room(user_name: :bob, room_restore_key: :skip)   }
+    window_a { visit_room(user_name: :alice) }
+    window_b { visit_room(user_name: :bob)   }
     window_a do
       kifu_read_run
       assert_turn(1)

@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def case1(user_name)
-    room_setup_by_user(user_name, room_restore_key: :skip)
+    room_setup_by_user(user_name)
   end
 
   it "works" do

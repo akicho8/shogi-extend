@@ -139,6 +139,7 @@ export const HandleNameNgWordList = [
   "エンジョコウサイ",
   "オウゴンスイ",
   "オチンチン",
+  "おちんちん",
   "オッパイ",
   "オナニー",
   "オナペット",
@@ -639,3 +640,4 @@ export const HandleNameNgWordList = [
   "黄金水",
   "鼻責め",
 ]
+

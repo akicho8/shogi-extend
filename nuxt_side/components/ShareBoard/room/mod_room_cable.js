@@ -79,11 +79,13 @@ export const mod_room_cable = {
       // this.toast_ok("入室しました")
     },
 
-    room_create() {
+    async room_create() {
       this.tl_puts("--> room_create")
       Gs.assert(this.user_name, "this.user_name")
       Gs.assert(this.room_key, "this.room_key")
       Gs.assert(this.ac_room == null, "this.ac_room == null")
+
+      await this.sleep(this.room_create_sleep)
 
       this.room_keys_update_and_save_to_storage()
 

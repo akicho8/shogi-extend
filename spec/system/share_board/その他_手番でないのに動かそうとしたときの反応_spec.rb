@@ -5,7 +5,6 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_room({
         :user_name => user_name,
         :fixed_order_names => "alice,bob",
-        :room_restore_key => :skip,
       })
   end
 
@@ -45,7 +44,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => false,
         :body                 => SfenGenerator.start_from(:white), # 後手から始まる
-        :room_restore_key => :skip,
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する
     piece_move_o("77", "76", "☗7六歩") # a が自分の手を指す

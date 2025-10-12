@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手番通知されない", type: :system, share_board_spec: true do
   def case1(user_name)
-    room_setup_by_user(user_name, :room_restore_key => :skip)
+    room_setup_by_user(user_name)
   end
 
   it "works" do

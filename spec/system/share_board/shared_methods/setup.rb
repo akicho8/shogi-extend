@@ -2,9 +2,9 @@
 module SharedMethods
   def visit_base_default_options
     {
-      :room_restore_feature => false,
-      :room_restore_key     => :skip,
-      :room_restore_delay   => 1,
+      :room_restore_feature_p => false, # 盤面を復元しない
+      :room_restore_sleep     => 0,     # 盤面を復元するとしたときにわざと遅くする秒数
+      :room_create_sleep      => 1,     # 部屋作成直前の待ち秒数
     }
   end
 
@@ -98,7 +98,7 @@ module SharedMethods
   # このチェック対象は地上にあるため os_modal_open_handle などを呼んでモーダルが出ていると読み取れない
   # つまり visit_room で autoexec_room_create_after=os_modal_open_handle などとすると絶対にエラーになってしまう
   def assert_room_created
-    assert_var("ac_room", "true", wait: 2)
+    assert_var("ac_room", "true", wait: 5)
   end
 
   def gate_modal_open_handle
@@ -115,12 +115,8 @@ module SharedMethods
 
   # alice と bob が同じ部屋で2手目まで進めた状態
   def setup_alice_bob_turn2
-    window_a do
-      room_setup_by_user(:alice, :room_restore_key => "skip")    # alice先輩が部屋を作る
-    end
-    window_b do
-      room_setup_by_user(:bob, :room_restore_key => "skip")      # bob後輩が同じ入退室
-    end
+    window_a { room_setup_by_user(:alice) }
+    window_b { room_setup_by_user(:bob) }
     window_a do
       piece_move_o("77", "76", "☗7六歩")  # aliceが指す
     end

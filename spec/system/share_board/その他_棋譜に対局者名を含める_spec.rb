@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
         user_name: user_name,
         fixed_order_names: "alice,bob",
         title: "(title)",
-        :room_restore_key => :skip,
       })
   end
 
@@ -60,7 +59,6 @@ RSpec.describe type: :system, share_board_spec: true do
         fixed_order_names: "b,d,a,c",
         handle_name_validate: false,
         title: "(title)",
-        :room_restore_key => :skip,
       })
     global_menu_open
     menu_item_sub_menu_click("棋譜表示")

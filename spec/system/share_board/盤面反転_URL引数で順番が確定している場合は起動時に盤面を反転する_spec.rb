@@ -5,7 +5,6 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1(fixed_order_state, b_or_w, user_name)
     visit_room({
-        :room_restore_key => :skip,
         :user_name            => user_name,
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",

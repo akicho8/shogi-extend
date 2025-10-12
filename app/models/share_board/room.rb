@@ -26,7 +26,7 @@ module ShareBoard
         find_or_create_by!(key: key)
       end
 
-      def mock(room_key: nil, battle_attribues: {})
+      def mock(room_key: nil, sfen: nil)
         records = [
           { user_name: "alice", location_key: "black", judge_key: "win",  },
           { user_name: "bob",   location_key: "white", judge_key: "lose", },
@@ -34,7 +34,7 @@ module ShareBoard
         ]
         room = Room.create!(key: room_key, name: "(room.name)")
         room.redis_clear
-        room.battles.create!(battle_attribues) do |e|
+        room.battles.create!(sfen: sfen) do |e|
           e.memberships.build(records)
         end
         room

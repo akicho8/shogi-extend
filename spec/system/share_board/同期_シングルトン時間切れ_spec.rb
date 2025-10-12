@@ -15,7 +15,6 @@ RSpec.describe type: :system, share_board_spec: true do
         "RS_RESEND_DELAY"        => -1,
         "CC_TIMEOUT_JUDGE_DELAY" => @CC_TIMEOUT_JUDGE_DELAY,
         "CC_TIMEOUT_BC_DELAY"    => @CC_TIMEOUT_BC_DELAY,
-        :room_restore_key => :skip,
         **clock_box_params([0, @initial_read_sec, 0, 0]),
       })
   end

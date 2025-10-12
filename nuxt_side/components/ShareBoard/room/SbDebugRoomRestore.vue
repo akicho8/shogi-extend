@@ -5,9 +5,9 @@
       .panel
         .panel-heading
           | 盤面ロード
-        a.panel-block(href="/share-board?room_restore_key=run") リストアする環境に変更する
-        a.panel-block(href="/share-board?room_restore_key=skip") リストアしない環境に変更する
-        a.panel-block(href="/share-board?room_restore_key=run&room_key=dev_room1&user_name=alice") 部屋のURLから入室する
+        a.panel-block(href="/share-board?room_restore_feature_p=true") リストアする環境に変更する
+        a.panel-block(href="/share-board?room_restore_feature_p=false") リストアしない環境に変更する
+        a.panel-block(href="/share-board?room_restore_feature_p=true&room_key=dev_room1&user_name=alice") 部屋のURLから入室する
         a.panel-block(@click="SB.room_restore_call") room_restore_call: 入室直前の盤面ロード
 </template>
 

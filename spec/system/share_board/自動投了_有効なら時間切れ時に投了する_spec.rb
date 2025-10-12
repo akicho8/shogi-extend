@@ -11,7 +11,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o1_state",
         :autoexec             => "cc_auto_start",
         :auto_resign_key      => auto_resign_key,
-        :room_restore_key => :skip,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })
     sleep(initial_read_sec)     # initial_read_sec の秒読みが切れるまで待つ

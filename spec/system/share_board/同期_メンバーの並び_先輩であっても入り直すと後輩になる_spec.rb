@@ -3,12 +3,12 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     window_a do
-      room_setup_by_user(:alice, :room_restore_key => :skip)     # alice先輩が部屋を作る
+      room_setup_by_user(:alice)     # alice先輩が部屋を作る
       assert_member_index(:alice, 1)    # 一番上にaliceがいる
       sleep(2)                           # 先輩後輩は最低1秒毎の差なので2秒待てば確実にbobは後輩になる
     end
     window_b do
-      room_setup_by_user(:bob, :room_restore_key => :skip)       # bob後輩が同じ入退室
+      room_setup_by_user(:bob)       # bob後輩が同じ入退室
       assert_member_index(:bob, 2)      # 最後に追加される
       sleep(2)                           # これでbobをレベル2ぐらいにはなる(aliceはレベル4)
     end

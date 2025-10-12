@@ -8,7 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => false,
         :title                => "(title)",
-        :room_restore_key => :skip,
       })
     chat_modal_open
   end

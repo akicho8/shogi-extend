@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name         => :alice,
         :fixed_order_names => "alice,bob,carol",
         :RS_RESEND_DELAY   => -1,
-        :room_restore_key => :skip,
       })
     assert_sp_player_names :alice, :bob # 今:alice 次:bob
     piece_move_o("77", "76", "☗7六歩")

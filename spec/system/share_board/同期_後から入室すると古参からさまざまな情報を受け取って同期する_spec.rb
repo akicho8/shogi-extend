@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   describe "盤面" do
     it "最大2手まである棋譜の1手目を指している部屋に入ったとき1手目になる" do
       window_a do
-        visit_room(user_name: :alice, body: "76歩34歩", :room_restore_key => :skip)
+        visit_room(user_name: :alice, body: "76歩34歩")
         sp_controller_click(:previous)      # 最長2手まである棋譜の1手目に戻す
         assert_turn(1)                      # 0手目に戻っている
         sleep(2)                            # 1秒後に転送するためそれが切れるまで待つ
@@ -44,7 +44,7 @@ RSpec.describe type: :system, share_board_spec: true do
   describe "タイトル" do
     it "works" do
       window_a do
-        visit_room(user_name: :alice, title: "(alice_room_title)", :room_restore_key => :skip)
+        visit_room(user_name: :alice, title: "(alice_room_title)")
       end
       window_b do
         visit_room(user_name: :bob)
