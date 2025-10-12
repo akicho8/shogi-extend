@@ -4,8 +4,8 @@ RSpec.describe "投了_ランキングに反映する", type: :system, share_boa
   def case1(user_name)
     visit_room({
         :user_name          => user_name,
-        :fixed_member_names => "alice,bob",
-        :fixed_order_names  => "alice,bob",
+        :fixed_member => "alice,bob",
+        :fixed_order  => "alice,bob",
         :autoexec           => "cc_auto_start",
       })
   end

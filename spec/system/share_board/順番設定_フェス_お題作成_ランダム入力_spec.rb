@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a do
       visit_room({
           :user_name          => "a",
-          :fixed_member_names => "a",
+          :fixed_member => "a",
         })
     end
     window_a do

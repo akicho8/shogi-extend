@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   before do
     visit_app({
         :user_name            => "a",
-        :fixed_member_names   => "a,b,c,d",
-        :fixed_order_names    => "a,b,c,d",
+        :fixed_member   => "a,b,c,d",
+        :fixed_order    => "a,b,c,d",
       })
     find(".chat_modal_open_handle").click
   end

@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   before do
     visit_room({
         :user_name            => "a",
-        :fixed_member_names   => "a,b,c,d",
-        :fixed_order_names    => "a,b,c,d",
+        :fixed_member   => "a,b,c,d",
+        :fixed_order    => "a,b,c,d",
         :title                => "(title)",
       })
     chat_modal_open

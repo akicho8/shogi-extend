@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_room({
         :user_name            => :alice,
-        :fixed_member_names   => "alice,bob",
-        :fixed_order_names    => "alice,bob",
+        :fixed_member   => "alice,bob",
+        :fixed_order    => "alice,bob",
         :fixed_order_state    => "to_o2_state",
         :autoexec             => "honpu_main_setup",
       })

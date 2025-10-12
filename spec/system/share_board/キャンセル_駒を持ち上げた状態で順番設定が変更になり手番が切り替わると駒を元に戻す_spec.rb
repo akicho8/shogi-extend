@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     window_a do
-      visit_room(user_name: :alice, fixed_order_names: "alice,bob")
+      visit_room(user_name: :alice, fixed_order: "alice,bob")
     end
     window_b do
-      visit_room(user_name: :bob, fixed_order_names: "alice,bob")
+      visit_room(user_name: :bob, fixed_order: "alice,bob")
     end
     window_a do
       place_click("77")          # alice は77の駒を持つ

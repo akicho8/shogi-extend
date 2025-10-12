@@ -4,8 +4,8 @@ RSpec.describe "受信スコープ全パターン", type: :system, share_board_s
   def case1(user_name, think_mark_receive_scope_key)
     visit_room({
         :user_name                    => user_name,
-        :fixed_member_names           => "a,b,c",
-        :fixed_order_names            => "a,b",
+        :fixed_member           => "a,b,c",
+        :fixed_order            => "a,b",
         :fixed_order_state            => :to_o2_state,
         :think_mark_mode_p            => true,
         :think_mark_receive_scope_key => think_mark_receive_scope_key,

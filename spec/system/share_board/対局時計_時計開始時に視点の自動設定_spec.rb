@@ -6,8 +6,8 @@ RSpec.describe type: :system, share_board_spec: true do
   def visit_room(fixed_order_state, b_or_w, user_name)
     visit_app({
         :user_name      => user_name,
-        :fixed_member_names   => "a,b",
-        :fixed_order_names    => "a,b",
+        :fixed_member   => "a,b",
+        :fixed_order    => "a,b",
         :fixed_order_state    => fixed_order_state,
         :body                 => SfenGenerator.start_from(b_or_w)
       })

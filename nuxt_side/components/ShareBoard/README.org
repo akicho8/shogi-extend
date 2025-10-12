@@ -68,8 +68,8 @@
   | key                         | desc                                                    | Example                                                                          |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=alice                     |
-  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                  |
-  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                  |
+  | fixed_member          | 部屋にいるメンバーの名前たち                            |                                                                                  |
+  | fixed_order           | 順番設定した名前たち                                    |                                                                                  |
   | fixed_order_state           | 順番設定方法                                            |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=bob               |
@@ -94,35 +94,35 @@
 
 ** 順番設定済みで開始するには？
 
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice
 
 ** 順番設定済みのテスト
 
    3人
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol&autoexec_room_create_after=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol&autoexec_room_create_after=os_modal_open_handle
 
    4人
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle
 
 ** 振り駒
 
    # 常に反転 x 2回 なので 歩5枚
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=2
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=2
 
    # 常に反転 x 3回 なので と金5枚
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=3
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&autoexec_room_create_after=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=3
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=3
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=3
 
 ** 再送モーダル発動確認するには？
 
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice&RS_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice&RS_SUCCESS_DELAY=-1
 
 ** 再送モーダルが出ているときに順番設定されたら再送モーダルが消されるテスト用
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d&fixed_order_state=to_o2_state&fixed_order_names=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1&handle_name_validate=false
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order_state=to_o2_state&fixed_order=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1&handle_name_validate=false
 
 ** 時計設定済みで入退室には？
 
@@ -138,12 +138,12 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
-   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order=alice,bob&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&autoexec=cc_auto_start
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
-   http://localhost:4000/share-board?room_key=a&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol&autoexec=chat_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=bob&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol&autoexec=chat_modal_open_handle
 
 ** メンバーステイタス確認
 
@@ -161,7 +161,7 @@
 
 ** 順番設定済み + 対局時計ON
 
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&autoexec=cc_create
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob&autoexec=cc_create
 
 ** 棋譜を持っている状態で飛んでくるとそれが本譜になる
 
@@ -169,28 +169,28 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&clock_box.initial_main_min=60&autoexec=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob&clock_box.initial_main_min=60&autoexec=cc_auto_start
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_state=to_o1_state&fixed_order_names=b,d,a,c&handle_name_validate=false
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e,f&fixed_order_state=to_o1_state&fixed_order=b,d,a,c&handle_name_validate=false
 
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_state=to_o1_state&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec_room_create_after=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o1_state&fixed_order=a,b,c,d&handle_name_validate=false&autoexec_room_create_after=os_modal_open_handle
 
 ** 自分は a で部屋に abcd がいて順番が abcd で a が棋譜をサーバーに記録する
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member_names=a,b,c,d&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=battle_save_run
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&handle_name_validate=false&autoexec=battle_save_run
 
 ** 順番設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&fixed_member_names=ありす,きゃろる&fixed_order_names=ありす,ぼぶ,きゃろる&autoexec_room_create_after=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&fixed_member=ありす,きゃろる&fixed_order=ありす,ぼぶ,きゃろる&autoexec_room_create_after=os_modal_open_handle
 
 ** 順番設定と対局時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 
-    http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice&autoexec=cc_auto_start
+    http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice&autoexec=cc_auto_start
 
 ** 対局開始時に ChatGPT の発言を確認する
 
-    http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_member_names=alice,bob,carol,dave&fixed_order_names=alice,bob,carol,dave&autoexec=cc_create
+    http://localhost:4000/share-board?room_key=dev_room&user_name=alice&fixed_member=alice,bob,carol,dave&fixed_order=alice,bob,carol,dave&autoexec=cc_create

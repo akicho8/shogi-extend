@@ -5,7 +5,7 @@
       .panel
         .panel-heading
           | 勝率情報
-        a.panel-block(href="/share-board?room_key=dev_room1&user_name=alice&fixed_member_names=alice,bob&fixed_order_names=alice,bob&fixed_order_state=to_o2_state&autoexec=cc_auto_start") URL: 確認用の環境に変更する
+        a.panel-block(href="/share-board?room_key=dev_room1&user_name=alice&fixed_member=alice,bob&fixed_order=alice,bob&fixed_order_state=to_o2_state&autoexec=cc_auto_start") URL: 確認用の環境に変更する
         a.panel-block(@click="SB.xprofile_entry") xprofile_entry: [入室直前] 自分の情報をDBから受け取っていない状態にする (xprofile_loaded: {{SB.xprofile_loaded}})
         a.panel-block(@click="SB.xprofile_leave") xprofile_leave: [退室]
         a.panel-block(@click="SB.xprofile_load") xprofile_load: [接続] 自分の情報を取得する (DB → 全員)

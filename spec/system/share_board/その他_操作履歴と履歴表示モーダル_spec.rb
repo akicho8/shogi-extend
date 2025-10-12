@@ -5,8 +5,8 @@ RSpec.describe type: :system, share_board_spec: true do
     def case1(user_name)
       visit_room({
           :user_name    => user_name,
-          :fixed_member_names => "alice,bob",
-          :fixed_order_names  => "alice,bob",
+          :fixed_member => "alice,bob",
+          :fixed_order  => "alice,bob",
           :quick_sync_key     => "is_quick_sync_off", # 手動同期にしておく
         })
     end
@@ -38,7 +38,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a do
       visit_room({
           :user_name => :alice,
-          :fixed_order_names => :alice,
+          :fixed_order => :alice,
           :fixed_order_state => "to_o1_state",
         })
 

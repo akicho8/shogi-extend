@@ -23,7 +23,7 @@ RSpec.describe type: :system, share_board_spec: true do
       visit_app({
           :room_key                   => :test_room,
           :user_name                  => "nanashi",
-          :fixed_order_names          => "nanashi",
+          :fixed_order          => "nanashi",
           :handle_name_validate       => true,
           :__visit_app_warning_skip__ => true,
         })

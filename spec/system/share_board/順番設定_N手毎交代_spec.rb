@@ -5,8 +5,8 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_room({
         :change_per           => change_per,
         :user_name            => "a",
-        :fixed_member_names   => "a,b,c",
-        :fixed_order_names    => "a,b,c",
+        :fixed_member   => "a,b,c",
+        :fixed_order    => "a,b,c",
         :fixed_order_state    => fixed_order_state,
         :body                 => SfenGenerator.start_from(:white),
       })

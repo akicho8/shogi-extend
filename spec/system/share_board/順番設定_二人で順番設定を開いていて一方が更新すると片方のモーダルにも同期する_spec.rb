@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name            => user_name,
-        :fixed_member_names   => "a,b",
-        :fixed_order_names    => "a,b",
+        :fixed_member   => "a,b",
+        :fixed_order    => "a,b",
         :fixed_order_state    => "to_o2_state",
       })
   end

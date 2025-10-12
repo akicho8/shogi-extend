@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name => user_name,
-        :fixed_order_names => "alice,bob",
+        :fixed_order => "alice,bob",
       })
   end
 
@@ -39,8 +39,8 @@ RSpec.describe type: :system, share_board_spec: true do
   it "順番設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
     visit_room({
         :user_name            => "a",
-        :fixed_member_names   => "a",
-        :fixed_order_names    => "a", # 順番設定で黒側に一人aがいる
+        :fixed_member   => "a",
+        :fixed_order    => "a", # 順番設定で黒側に一人aがいる
         :fixed_order_state    => "to_o2_state",
         :body                 => SfenGenerator.start_from(:white), # 後手から始まる
       })

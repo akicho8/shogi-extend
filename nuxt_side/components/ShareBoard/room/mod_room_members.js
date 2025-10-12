@@ -15,7 +15,7 @@ export const mod_room_members = {
     // member_names=alice,bob,carol,dave とする
     // member_names= なら空で設定
     member_add_by_url_params() {
-      this.member_add_by_names(this.fixed_member_names)
+      this.member_add_by_names(this.fixed_member)
     },
 
     // ダミーをうめる
@@ -178,12 +178,12 @@ export const mod_room_members = {
 
     // メンバーリストを固定させるか？
     fixed_member_names_p() {
-      return "fixed_member_names" in this.$route.query
+      return "fixed_member" in this.$route.query
     },
     // 固定されるメンバーたち
-    fixed_member_names() {
+    fixed_member() {
       if (this.fixed_member_names_p) {
-        return Gs.str_to_words(this.$route.query.fixed_member_names)
+        return Gs.str_to_words(this.$route.query.fixed_member)
       }
     },
 

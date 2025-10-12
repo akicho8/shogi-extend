@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(auto_resign_key)
     visit_room({
         :user_name            => "a",
-        :fixed_member_names   => "a,b",
-        :fixed_order_names    => "a,b",
+        :fixed_member   => "a,b",
+        :fixed_order    => "a,b",
         :fixed_order_state    => "to_o1_state",
         :autoexec             => "cc_auto_start",
         :auto_resign_key      => auto_resign_key,

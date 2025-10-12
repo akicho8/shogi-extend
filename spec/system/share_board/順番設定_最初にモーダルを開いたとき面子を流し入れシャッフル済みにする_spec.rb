@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(shuffle_first)
     visit_room({
         :user_name            => "1",
-        :fixed_member_names   => "1,2,3,4,5,6,7,8",
+        :fixed_member   => "1,2,3,4,5,6,7,8",
         :fixed_order_state    => "to_o2_state",
         :shuffle_first        => shuffle_first,
       })

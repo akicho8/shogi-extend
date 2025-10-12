@@ -18,7 +18,7 @@ RSpec.describe type: :system, share_board_spec: true do
   describe "順番設定" do
     it "works" do
       window_a do
-        visit_room(user_name: :alice, fixed_order_names: "alice,bob")
+        visit_room(user_name: :alice, fixed_order: "alice,bob")
         assert_text("order_enable_p:true")
       end
       window_b do

@@ -4,8 +4,8 @@ RSpec.describe "次も", type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name            => user_name,
-        :fixed_member_names   => "a,b,c",
-        :fixed_order_names    => "a,b,c",
+        :fixed_member   => "a,b,c",
+        :fixed_order    => "a,b,c",
         :fixed_order_state    => "to_o2_state", # [[a,c], [b]] のチーム分けになる
         :change_per           => 2,
         :yomiage_mode_key     => "is_yomiage_mode_off", # 音声再生の終了に影響するため読み上げをOFFにしておく

@@ -9,8 +9,8 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_room({
         :room_key           => @room_key,
         :user_name          => user_name,
-        :fixed_member_names => "alice,bob",
-        :fixed_order_names  => "alice,bob",
+        :fixed_member => "alice,bob",
+        :fixed_order  => "alice,bob",
         :autoexec           => "cc_auto_start",
       })
   end

@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         user_name: user_name,
-        fixed_order_names: "alice,bob",
+        fixed_order: "alice,bob",
         title: "(title)",
       })
   end
@@ -47,7 +47,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "メンバーからコピーできる" do
-    visit_room(user_name: :alice, fixed_order_names: "alice,bob")
+    visit_room(user_name: :alice, fixed_order: "alice,bob")
     find(".player_names_copy_handle").click
     assert_text "コピーしました"
   end
@@ -55,8 +55,8 @@ RSpec.describe type: :system, share_board_spec: true do
   it "部屋に abcdef がいる順番が bdac のとき順番通り先手 ba 後手 dc の順の表記になり観戦は部屋にいる順になる" do
     visit_room({
         :user_name => "a",
-        :fixed_member_names => "a,b,c,d,e,f",
-        :fixed_order_names => "b,d,a,c",
+        :fixed_member => "a,b,c,d,e,f",
+        :fixed_order => "b,d,a,c",
         :title => "(title)",
       })
     global_menu_open

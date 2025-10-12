@@ -4,8 +4,8 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(names)
     visit_room({
         :user_name            => :alice,
-        :fixed_member_names   => names,
-        :fixed_order_names    => names,
+        :fixed_member   => names,
+        :fixed_order    => names,
         :fixed_order_state    => "to_o2_state",
         :autoexec             => "cc_auto_start",
       })

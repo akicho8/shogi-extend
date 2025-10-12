@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_room({
         :user_name            => "a",
-        :fixed_member_names   => "a",
+        :fixed_member   => "a",
         :fixed_order_state    => "to_o1_state",
       })
     os_modal_open
