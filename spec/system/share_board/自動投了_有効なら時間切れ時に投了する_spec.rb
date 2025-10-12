@@ -4,14 +4,14 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(auto_resign_key)
     initial_read_sec = 2
     visit_room({
-        :user_name            => "a",
-        :fixed_member   => "a,b",
-        :fixed_order    => "a,b",
-        :fixed_order_state    => "to_o1_state",
-        :autoexec             => "cc_auto_start",
-        :auto_resign_key      => auto_resign_key,
+        :user_name         => "a",
+        :fixed_member      => "a,b",
+        :fixed_order       => "a,b",
+        :fixed_order_state => "to_o1_state",
+        :auto_resign_key   => auto_resign_key,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })
+    clock_start
     sleep(initial_read_sec)     # initial_read_sec の秒読みが切れるまで待つ
     assert_timeout_modal_exist  # 時間切れモーダルを表示する
     cc_timeout_modal_close      # 時間切れモーダルを閉じる

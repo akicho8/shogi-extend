@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def case1(name, message)
+  def case1(name)
     find(".HandleNameModal input").set(name)         # 不正な名前を入力する
     find(".save_handle").click                       # 保存
     assert_text("ハンドルネームを入力してください")  # エラー出る
