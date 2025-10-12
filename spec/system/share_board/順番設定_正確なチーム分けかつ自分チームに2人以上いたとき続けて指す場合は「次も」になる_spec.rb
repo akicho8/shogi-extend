@@ -7,7 +7,6 @@ RSpec.describe "次も", type: :system, share_board_spec: true do
         :fixed_member_names   => "a,b,c",
         :fixed_order_names    => "a,b,c",
         :fixed_order_state    => "to_o2_state", # [[a,c], [b]] のチーム分けになる
-        :handle_name_validate => false,
         :change_per           => 2,
         :yomiage_mode_key     => "is_yomiage_mode_off", # 音声再生の終了に影響するため読み上げをOFFにしておく
       })

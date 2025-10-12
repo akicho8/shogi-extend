@@ -1,13 +1,9 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手番通知されない", type: :system, share_board_spec: true do
-  def case1(user_name)
-    room_setup_by_user(user_name)
-  end
-
   it "works" do
-    window_a { case1(:alice) }
-    window_b { case1(:bob)   }
+    window_a { room_setup_by_user(:alice) }
+    window_b { room_setup_by_user(:bob)   }
     window_a do
       order_set_on                            # 順番設定ON
       piece_move_o("77", "76", "☗7六歩")      # aliceが指す

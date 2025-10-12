@@ -1,16 +1,13 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def case1(user_name)
-    visit_room({
-        :user_name            => user_name,
-        :fixed_member_names   => "a",
-        :handle_name_validate => false,
-      })
-  end
-
   it "works" do
-    window_a { case1("a") }
+    window_a do
+      visit_room({
+          :user_name          => "a",
+          :fixed_member_names => "a",
+        })
+    end
     window_a do
       os_modal_open
       os_switch_toggle                                        # 有効スイッチをクリック

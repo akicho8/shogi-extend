@@ -7,7 +7,6 @@ RSpec.xdescribe "対局時計で初期配置に戻さずに対局開始しよう
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
         :fixed_order_state    => "to_o1_state",
-        :handle_name_validate => false,
         :body                 => "68S",
         :autoexec             => "cc_create,cc_modal_open_handle",
       })

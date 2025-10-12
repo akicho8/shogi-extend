@@ -1,10 +1,14 @@
 
 module SharedMethods
+  # System テスト時の環境はなるべく何もしていない方向にもっていってセットアップをシンプルにする
+  # 元々はなるべくデフォルトを production に合わせていたが、それだと初期条件を用意するのが遠回りになる
   def visit_base_default_options
     {
-      :room_restore_feature_p => false, # 盤面を復元しない
-      :room_restore_sleep     => 0,     # 盤面を復元するとしたときにわざと遅くする秒数
-      :room_create_sleep      => 1,     # 部屋作成直前の待ち秒数
+      :room_restore_feature_p     => false, # 盤面を復元しない
+      :room_create_sleep          => 2,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
+      :handle_name_validate       => false, # ハンドルネームのチェックをしない
+      :auto_room_url_copy_modal_p => false, # 部屋のリンクのコピーモーダルを出さない
+      :auto_close_p               => false, # 自動的に閉じない
     }
   end
 

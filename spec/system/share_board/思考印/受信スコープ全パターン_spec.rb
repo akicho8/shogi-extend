@@ -6,7 +6,6 @@ RSpec.describe "受信スコープ全パターン", type: :system, share_board_s
         :user_name                    => user_name,
         :fixed_member_names           => "a,b,c",
         :fixed_order_names            => "a,b",
-        :handle_name_validate         => false,
         :fixed_order_state            => :to_o2_state,
         :think_mark_mode_p            => true,
         :think_mark_receive_scope_key => think_mark_receive_scope_key,

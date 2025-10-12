@@ -9,7 +9,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
         :fixed_order_state    => fixed_order_state,
-        :handle_name_validate => false,
         :body                 => SfenGenerator.start_from(b_or_w)
       })
   end

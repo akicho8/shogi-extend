@@ -42,7 +42,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "a",
         :fixed_order_names    => "a", # 順番設定で黒側に一人aがいる
         :fixed_order_state    => "to_o2_state",
-        :handle_name_validate => false,
         :body                 => SfenGenerator.start_from(:white), # 後手から始まる
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する

@@ -4,7 +4,6 @@ RSpec.describe "同じセルに複数人が印をつける", type: :system, shar
   def case1(user_name)
     visit_room({
         :user_name                    => user_name,
-        :handle_name_validate         => false,
         :think_mark_mode_p            => true,
         :think_mark_receive_scope_key => :tmrs_watcher_only, # 観戦者のみ(もともと初期値はこれだけどあえて指定)
       })

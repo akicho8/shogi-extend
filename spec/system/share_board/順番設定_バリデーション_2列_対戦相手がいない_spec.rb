@@ -7,7 +7,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "a",
         :fixed_order_names    => "a",
         :fixed_order_state    => "to_o2_state",
-        :handle_name_validate => false,
       })
 
     os_modal_open

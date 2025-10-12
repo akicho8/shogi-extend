@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
   #  #       :user_name            => user_name,
   #       :fixed_member_names   => "a,b",
   #       :fixed_order_names    => "a,b",
-  #       :handle_name_validate => false,
   #     })
   # end
   #

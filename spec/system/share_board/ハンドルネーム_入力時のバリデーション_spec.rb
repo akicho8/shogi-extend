@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "works" do
     window_a do
-      visit_app
+      visit_app(handle_name_validate: true)
       global_menu_open
       menu_item_click("ハンドルネーム変更")
       case1("", "ハンドルネームを入力してください")
@@ -20,8 +20,14 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "URLから来ても不正なハンドルネームは通さない" do
     window_a do
-      visit_app(room_key: :test_room, user_name: "nanashi", fixed_order_names: "nanashi", __visit_app_warning_skip__: true)
-      assert_text("入退室")     # ハンドルネームが不正なのでダイアログが出ている
+      visit_app({
+          :room_key                   => :test_room,
+          :user_name                  => "nanashi",
+          :fixed_order_names          => "nanashi",
+          :handle_name_validate       => true,
+          :__visit_app_warning_skip__ => true,
+        })
+      assert_selector(".GateModal") # ハンドルネームが不正なのでダイアログが出ている
     end
   end
 end

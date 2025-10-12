@@ -8,7 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => "a,b,c",
         :fixed_order_names    => "a,b,c",
         :fixed_order_state    => fixed_order_state,
-        :handle_name_validate => false,
         :body                 => SfenGenerator.start_from(:white),
       })
     assert_var("本順序", order)

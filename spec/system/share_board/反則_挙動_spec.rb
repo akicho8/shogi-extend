@@ -33,7 +33,6 @@ RSpec.describe type: :system, share_board_spec: true do
           :fixed_member_names   => "1,2",
           :fixed_order_names    => "1,2",
           :fixed_order_state    => "to_o2_state",
-          :handle_name_validate => false,
         })
       find(".Membership.is_black .piece_P").click # 持駒の歩を持つ
       find(".place_2_2").click                    # 22打

@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name            => user_name,
         :fixed_member_names   => "alice,bob",
         :fixed_order_names    => "alice,bob",
-        :handle_name_validate => false,
         :fixed_order_state    => "to_o2_state",
         :auto_resign_key      => "is_auto_resign_on",
         :autoexec => "cc_auto_start",

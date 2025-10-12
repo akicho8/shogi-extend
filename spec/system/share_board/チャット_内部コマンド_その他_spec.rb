@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name            => "a",
         :fixed_member_names   => "a,b,c,d",
         :fixed_order_names    => "a,b,c,d",
-        :handle_name_validate => false,
         :title                => "(title)",
       })
     chat_modal_open

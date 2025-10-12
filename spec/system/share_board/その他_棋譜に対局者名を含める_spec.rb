@@ -54,11 +54,10 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "部屋に abcdef がいる順番が bdac のとき順番通り先手 ba 後手 dc の順の表記になり観戦は部屋にいる順になる" do
     visit_room({
-        user_name: "a",
-        fixed_member_names: "a,b,c,d,e,f",
-        fixed_order_names: "b,d,a,c",
-        handle_name_validate: false,
-        title: "(title)",
+        :user_name => "a",
+        :fixed_member_names => "a,b,c,d,e,f",
+        :fixed_order_names => "b,d,a,c",
+        :title => "(title)",
       })
     global_menu_open
     menu_item_sub_menu_click("棋譜表示")

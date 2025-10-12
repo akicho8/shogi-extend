@@ -2,12 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    window_a do
-      room_setup_by_user("a", handle_name_validate: false) # aliceが部屋を作る
-    end
-    window_b do
-      room_setup_by_user("b", handle_name_validate: false)   # bobも同じ入退室
-    end
+    window_a { room_setup_by_user("a") }
+    window_b { room_setup_by_user("b") }
     window_a do
       order_set_on              # 順番設定ON
       assert_var("仮順序", "ab")

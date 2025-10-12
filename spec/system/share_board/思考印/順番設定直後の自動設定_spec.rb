@@ -6,7 +6,6 @@ RSpec.describe "順番設定直後の自動設定", type: :system, share_board_s
         :user_name            => user_name,
         :fixed_member_names   => "a,b,c",
         :fixed_order_names    => "a,b",
-        :handle_name_validate => false,
         :fixed_order_state    => :to_o2_state,
         :think_mark_mode_p    => think_mark_mode_p,
       })

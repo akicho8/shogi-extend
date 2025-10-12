@@ -6,7 +6,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name            => "a",
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
-        :handle_name_validate => false,
         :ARASHI_THRESHOLD     => 1,
         :ARASHI_RE_RATE       => 1,
       })

@@ -7,7 +7,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names   => names,
         :fixed_order_names    => names,
         :fixed_order_state    => "to_o2_state",
-        :handle_name_validate => false,
         :autoexec             => "cc_auto_start",
       })
   end
