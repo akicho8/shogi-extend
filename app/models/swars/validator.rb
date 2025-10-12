@@ -1,14 +1,6 @@
 module Swars
   class Validator
     class << self
-      def target_name
-        raise NotImplementedError, "#{__method__} is not implemented"
-      end
-
-      def regexp
-        raise NotImplementedError, "#{__method__} is not implemented"
-      end
-
       def valid?(...)
         new(...).public_send(__method__)
       end
@@ -20,19 +12,18 @@ module Swars
       def validate!(...)
         new(...).public_send(__method__)
       end
-    end
 
-    attr_reader :value
-    private :value
+      def target_name
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      def regexp
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
+    end
 
     def initialize(value)
       @value = value.to_s
-    end
-
-    def validate!
-      if invalid?
-        raise InvalidKey, "#{self.class.target_name}ではありません : #{value.inspect}"
-      end
     end
 
     def valid?
@@ -42,5 +33,15 @@ module Swars
     def invalid?
       !valid?
     end
+
+    def validate!
+      if invalid?
+        raise InvalidKey, "#{self.class.target_name}ではありません : #{value.inspect}"
+      end
+    end
+
+    private
+
+    attr_reader :value
   end
 end

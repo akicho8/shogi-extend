@@ -1,18 +1,20 @@
 
 module SharedMethods
-  def visit_default_params
+  def visit_base_default_options
     {
-      room_restore_delay: 3,
+      :room_restore_feature => false,
+      :room_restore_key     => :skip,
+      :room_restore_delay   => 1,
     }
   end
 
-  def visit_core(params = {})
-    params = visit_default_params.merge(params)
+  def visit_base(params = {})
+    params = visit_base_default_options.merge(params.to_options)
     visit_to("/share-board", params)
   end
 
   def visit_app(params = {})
-    visit_core(params)
+    visit_base(params)
 
     params = params.to_options
     if !params[:__visit_app_warning_skip__]
@@ -28,7 +30,7 @@ module SharedMethods
       :room_key => :test_room,
     }.merge(params)
 
-    visit_core(params)
+    visit_base(params)
 
     if true
       params = params.to_options

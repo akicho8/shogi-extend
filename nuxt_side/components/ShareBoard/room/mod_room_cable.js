@@ -30,7 +30,7 @@ export const mod_room_cable = {
   },
   methods: {
     // URLに合言葉の指定があればそのまま入退室
-    room_create_if_exist_room_key_in_url() {
+    async room_create_if_exist_room_key_in_url() {
       this.tl_puts("--> room_create_if_exist_room_key_in_url")
       if (true) {
         // URLに合言葉がない場合は何もしない
@@ -51,15 +51,14 @@ export const mod_room_cable = {
       }
 
       // 合言葉と名前は問題ないので入退室
-      this.room_latest_state_loader_load(() => {
-        this.room_create()
-      })
+      await this.room_restore_call()
+      this.room_create()
       this.tl_puts("<-- room_create_if_exist_room_key_in_url")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    room_create_from_modal(new_room_key, new_user_name) {
+    async room_create_from_modal(new_room_key, new_user_name) {
       Gs.assert(this.ac_room == null)
       Gs.assert(new_user_name, "new_user_name")
       Gs.assert(new_room_key, "new_room_key")
@@ -75,9 +74,8 @@ export const mod_room_cable = {
       //   return
       // }
 
-      this.room_latest_state_loader_load(() => {
-        this.room_create()
-      })
+      await this.room_restore_call()
+      this.room_create()
       // this.toast_ok("入室しました")
     },
 
@@ -88,8 +86,6 @@ export const mod_room_cable = {
       Gs.assert(this.ac_room == null, "this.ac_room == null")
 
       this.room_keys_update_and_save_to_storage()
-
-      // this.room_latest_state_loader_load()
 
       this.member_infos_init()
       this.member_info_init()

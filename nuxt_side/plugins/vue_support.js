@@ -327,6 +327,12 @@ export const vue_support = {
       return this.$axios.$post("/api/short_url/components.json", {original_url: url}, {progress: false})
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // await this.sleep(1)
+    sleep(sec) {
+      return new Promise(resolve => setTimeout(resolve, sec * 1000.0))
+    },
   },
 
   // FIXME: plugin にする
