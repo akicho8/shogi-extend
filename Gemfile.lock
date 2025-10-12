@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 8f5a19421baab5c58d2cee3583f7d081d464d506
+  revision: 6bc5be404c2066acda5746f921567679d9541dbb
   branch: master
   specs:
     bioshogi (0.0.18)
@@ -127,7 +127,7 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
-    bigdecimal (3.2.3)
+    bigdecimal (3.3.1)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -344,7 +344,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (5.25.5)
+    minitest (5.26.0)
     minitest-power_assert (0.3.1)
       minitest
       power_assert (>= 1.1)
@@ -670,7 +670,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (1.0.3)
+    uri (1.0.4)
     useragent (0.16.11)
     version_gem (1.1.7)
     warden (1.2.9)
