@@ -1,6 +1,6 @@
 <template lang="pug">
 .SbDebug.columns.is-multiline
-  SbDebugRoomRestore
+  SbDebugRoom
   SbDebugXprofile
   SbDebugHonpu
   SbDebugThinkMark
@@ -40,7 +40,6 @@
     SbFesPanel
   .column.is-12
     SbDebugOrder
-  SbDebugRoomUrlCopyModal
   .column.is-6(v-if="SB.clock_box")
     ClockBoxInspector(:clock_box="SB.clock_box")
   .column.is-2
