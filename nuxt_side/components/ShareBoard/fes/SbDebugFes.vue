@@ -18,7 +18,7 @@
         | 投票(クライアント側)
       a.panel-block(@click="SB.client_vote_reset()") 初期化
       a.panel-block(@click="SB.client_vote_sample()") 確認用データ投入
-      a.panel-block(@click="SB.client_vote_modal_handle()") 投票
+      a.panel-block(@click="SB.quiz_vote_modal_handle()") 投票
   .column.is-3
     .panel
       .panel-heading

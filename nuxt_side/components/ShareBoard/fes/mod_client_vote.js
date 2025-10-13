@@ -2,14 +2,14 @@
 // | client_vote_reset           | 新しいお題を受け取ったときに実行する                 |
 // | quiz_share(quiz)            | ホスト→クライアント お題を配送する                  |
 // | quiz_delete                 | ホスト→クライアント お題を削除させる                |
-// | client_vote_modal_handle    | クライアントが投票する                               |
+// | quiz_vote_modal_handle    | クライアントが投票する                               |
 // | vote_select_share           | クライアントが自分の投票の結果を配る                 |
 // | voted_result_to_order_apply | 順番設定画面でホスト側が投票結果を順番設定に適用する |
 // |-----------------------------+------------------------------------------------------|
 
 // このスコープで this.master_quiz に依存してはいけない
 
-import ClientVoteModal from "./ClientVoteModal.vue"
+import QuizVoteModal from "./QuizVoteModal.vue"
 import { OrderUnit } from "../order_mod/order_unit/order_unit.js"
 import { Quiz } from "./quiz.js"
 import { VotedResult } from "./voted_result.js"
@@ -46,7 +46,7 @@ export const mod_client_vote = {
       }
       this.quiz_received_p = true
       this.received_quiz = new_quiz
-      this.client_vote_modal_handle()
+      this.quiz_vote_modal_handle()
       this.ai_say_case_quiz(params, new_quiz)
     },
 
@@ -59,11 +59,11 @@ export const mod_client_vote = {
     },
 
     // お題に投票する
-    client_vote_modal_handle() {
+    quiz_vote_modal_handle() {
       this.sfx_play("se_deden")
       GX.delay_block(0.6, () => this.sb_talk(this.received_quiz.subject))
       this.modal_card_open({
-        component: ClientVoteModal,
+        component: QuizVoteModal,
         canCancel: [],
       })
     },

@@ -33,7 +33,7 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ClientVoteModal",
+  name: "QuizVoteModal",
   mixins: [support_child],
   methods: {
     // 選択
@@ -74,7 +74,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 
-.ClientVoteModal
+.QuizVoteModal
   +modal_width(30rem)
 
   .modal-card-body
@@ -109,7 +109,7 @@ export default {
         border: 3px solid $primary
 
 .STAGE-development
-  .ClientVoteModal
+  .QuizVoteModal
     .items
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
