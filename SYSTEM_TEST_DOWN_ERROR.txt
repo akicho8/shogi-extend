@@ -13,7 +13,7 @@
   },
   "twitter_card_options": {
     "title": "共有将棋盤",
-    "image": "/share-board.png?__system_test_now__=true&viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&fixed_order=alice%2Cbob&user_name=alice&room_key=test_room&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0",
+    "image": "/share-board.png?__system_test_running__=true&viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&fixed_order=alice%2Cbob&user_name=alice&room_key=test_room&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0",
     "description": ""
   }
 }

@@ -48,7 +48,7 @@ export const vue_support = {
         if (this.development_p) {
           const message = `GA: ${category}`
           const params = {message: message, position: "is-top", type: "is-dark", queue: false}
-          if (this.__system_test_now__) {
+          if (this.__system_test_running__) {
             // Capybara の assert_text が toast 要素だけにマッチしてしまうため表示しない
           } else {
             this.$buefy.toast.open(params)
@@ -340,7 +340,7 @@ export const vue_support = {
     _()          { return _          },
     util()       { return util       },
 
-    __system_test_now__() { this.$route.query.__system_test_now__ === "true" },
+    __system_test_running__() { this.$route.query.__system_test_running__ === "true" },
   },
 
   directives: {

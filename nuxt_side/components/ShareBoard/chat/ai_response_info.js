@@ -12,7 +12,7 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
         key: "参加者にあいさつする",
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
-          if (context.__system_test_now__) { return }
+          if (context.__system_test_running__) { return }
           // return `${name}に元気よくユニークな挨拶をしてください。`
         },
       },

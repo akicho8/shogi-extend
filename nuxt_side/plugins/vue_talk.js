@@ -36,7 +36,7 @@ export const vue_talk = {
           return
         }
       }
-      if (this.__system_test_now__) {
+      if (this.__system_test_running__) {
         this.sfx_play_now({...options, rate: 2.0, volume: 0, volume_scale: 0})
         return
       }
