@@ -35,15 +35,6 @@ module SharedMethods
     }.merge(params)
 
     visit_base(params)
-
-    if true
-      params = params.to_options
-      if params[:room_enter_autoexec] == "os_modal_open_handle"
-        warn "assert_room_created が必ず失敗するので room_enter_autoexec=os_modal_open_handle は使えない"
-        puts caller.first
-      end
-    end
-
     assert_room_created
   end
 
@@ -98,9 +89,6 @@ module SharedMethods
     assert_room_created
   end
 
-  # 【注意】
-  # このチェック対象は地上にあるため os_modal_open_handle などを呼んでモーダルが出ていると読み取れない
-  # つまり visit_room で room_enter_autoexec=os_modal_open_handle などとすると絶対にエラーになってしまう
   def assert_room_created
     assert_var("ac_room", "true", wait: 5)
   end
