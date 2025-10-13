@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
 
   def from_crawl_bot?
     # テスト中は常に PC 扱いする
-    if SystemTest.active?
+    if RspecState.running?
       return false
     end
 

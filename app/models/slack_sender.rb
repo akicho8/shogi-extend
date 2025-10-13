@@ -39,7 +39,7 @@ class SlackSender
       raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
-    if Rails.env.development? && SystemTest.active?
+    if Rails.env.development? && RspecState.running?
       return
     end
 

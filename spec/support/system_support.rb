@@ -294,10 +294,10 @@ end
 
 RSpec.configure do |config|
   config.before(:suite) do
-    Rails.root.join("RSPEC_ACTIVE").write("")
+    Rails.root.join("__RSPEC_STATE_RUNNING__").write("")
   end
   config.after(:suite) do
-    file = Rails.root.join("RSPEC_ACTIVE")
+    file = Rails.root.join("__RSPEC_STATE_RUNNING__")
     if file.exist?
       file.delete
     end
