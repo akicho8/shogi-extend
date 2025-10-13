@@ -41,7 +41,7 @@ export const mod_chat_ai_trigger_rule = {
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
         content = [content, "チャットでの発言なんで返答は短かく簡潔にしてな。"].join("")
-        if (this.$route.query.__system_test_now__) {
+        if (this.__system_test_now__) {
           delay = 0
         }
         Gs.delay_block(delay, () => this.ai_something_say({content: content}))
@@ -54,7 +54,7 @@ export const mod_chat_ai_trigger_rule = {
     // このとき直前に送った人のスコープを真似する
     ai_random_say(params) {
       if (!this.GPT_FUNCTION) { return }
-      if (this.$route.query.__system_test_now__) { return }
+      if (this.__system_test_now__) { return }
 
       if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
         const value = Math.random()
@@ -155,7 +155,7 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_turn_gteq(turn) {
       const retval = this.current_turn >= turn
-      if (this.$route.query.__system_test_now__) { return true }
+      if (this.__system_test_now__) { return true }
       return retval
     }
   },

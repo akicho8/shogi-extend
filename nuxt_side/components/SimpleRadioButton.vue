@@ -134,7 +134,7 @@ export default {
       return str
     },
     duration_sec() {
-      return this.$route.query.__system_test_now__ ? 2 : 7
+      return this.__system_test_now__ ? 2 : 7
     },
     real_value: {
       get() {

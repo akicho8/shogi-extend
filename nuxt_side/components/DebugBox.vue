@@ -14,7 +14,7 @@ name: "DebugBox",
   },
   data() {
     return {
-      show_p: this.$gs.blank_p(this.$route.query.__system_test_now__),
+      show_p: this.$gs.blank_p(this.__system_test_now__),
     }
   },
   methods: {

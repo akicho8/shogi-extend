@@ -230,7 +230,7 @@ export default {
         return
       }
       this.SB.new_order_share("順番設定を反映しました")
-      this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.SB.cc_next_message())
+      this.$gs.delay_block(this.__system_test_now__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
     // バリデーションなしで反映する
