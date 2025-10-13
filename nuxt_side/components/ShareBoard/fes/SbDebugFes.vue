@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.SbFesPanel
+.columns.is-multiline.SbDebugFes
   .column.is-3
     .panel
       .panel-heading
@@ -45,13 +45,13 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbFesPanel",
+  name: "SbDebugFes",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbFesPanel
+.SbDebugFes
   __css_keep__: 0
 </style>

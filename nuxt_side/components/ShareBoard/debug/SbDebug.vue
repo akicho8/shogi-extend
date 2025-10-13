@@ -37,7 +37,7 @@
   SbDebugPerpetual
   SbDebugBasic
   .column.is-12
-    SbFesPanel
+    SbDebugFes
   .column.is-12
     SbDebugOrder
   .column.is-6(v-if="SB.clock_box")

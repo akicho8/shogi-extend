@@ -29,7 +29,7 @@ export const mod_odai_maker = {
     },
   },
   computed: {
-    Odai()             { return Odai                                                }, // SbFesPanel.vue 用
+    Odai()             { return Odai                                                }, // SbDebugFes.vue 用
     // odai_new_p()       { return !this.odai_persisted_p                              }, // 新しいお題か？
     // odai_persisted_p() { return this.master_odai.same_content_p(this.received_odai) }, // 同じ内容か？(再送信か？)
   },
