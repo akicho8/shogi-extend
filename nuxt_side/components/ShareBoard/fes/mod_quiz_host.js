@@ -2,7 +2,7 @@ import QuizMakerModal from "./QuizMakerModal.vue"
 import { Quiz } from "./quiz.js"
 import { QuizTemplateInfo } from "./quiz_template_info.js"
 
-export const mod_quiz_maker = {
+export const mod_quiz_host = {
   data() {
     return {
       master_quiz: Quiz.create(),
