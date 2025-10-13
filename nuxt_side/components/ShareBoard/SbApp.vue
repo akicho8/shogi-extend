@@ -2,7 +2,7 @@
 client-only
   .SbApp(:style="component_style" :class="component_class")
     | {{$debug.trace('SbApp', 'render')}}
-    DebugBox.is-hidden-mobile(v-if="development_p")
+    DebugBox.is-hidden-mobile(v-if="development_p && false")
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p mobile_layout_key: {{mobile_layout_key}}
