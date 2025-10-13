@@ -152,7 +152,7 @@ import { mod_honpu_core                         } from "./honpu/mod_honpu_core.j
 import { mod_honpu_share                   } from "./honpu/mod_honpu_share.js"
 
 import { mod_quiz_maker                    } from "./fes/mod_quiz_maker.js"
-import { mod_client_vote                   } from "./fes/mod_client_vote.js"
+import { mod_quiz_client                   } from "./fes/mod_quiz_client.js"
 
 import { mod_xprofile                         } from "./xprofile/mod_xprofile.js"
 import { mod_xprofile_console                    } from "./xprofile/mod_xprofile_console.js"
@@ -250,7 +250,7 @@ export default {
     mod_room_members,
 
     mod_quiz_maker,
-    mod_client_vote,
+    mod_quiz_client,
 
     window_active_detector,
     browser_slide_lock,

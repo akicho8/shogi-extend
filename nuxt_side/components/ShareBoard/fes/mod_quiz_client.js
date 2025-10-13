@@ -2,7 +2,7 @@
 // | client_vote_reset           | 新しいお題を受け取ったときに実行する                 |
 // | quiz_share(quiz)            | ホスト→クライアント お題を配送する                  |
 // | quiz_delete                 | ホスト→クライアント お題を削除させる                |
-// | quiz_vote_modal_handle    | クライアントが投票する                               |
+// | quiz_vote_modal_handle      | クライアントが投票する                               |
 // | vote_select_share           | クライアントが自分の投票の結果を配る                 |
 // | voted_result_to_order_apply | 順番設定画面でホスト側が投票結果を順番設定に適用する |
 // |-----------------------------+------------------------------------------------------|
@@ -15,7 +15,7 @@ import { Quiz } from "./quiz.js"
 import { VotedResult } from "./voted_result.js"
 import { GX } from "@/components/models/gx.js"
 
-export const mod_client_vote = {
+export const mod_quiz_client = {
   data() {
     return {
       quiz_received_p: false,              // お題情報を受信したか？
