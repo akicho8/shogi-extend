@@ -51,7 +51,7 @@
           textarea.textarea(v-model.trim="base.message_body")
       .field
         .control
-          b-button.speak_handle(@click="base.speak_handle" :class="{'is-primary': $gs.present_p(base.message_body)}") 送信
+          b-button.speak_handle(@click="base.speak_handle" :class="{'is-primary': $GX.present_p(base.message_body)}") 送信
 </template>
 
 <script>

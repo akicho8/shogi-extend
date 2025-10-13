@@ -68,7 +68,7 @@ export const mod_tweet_recent = {
       if (this.re_ox_total === 0) {
         return "0%"
       } else {
-        return this.$gs.number_truncate(this.re_ox_rate * 100, 2) + "%"
+        return this.$GX.number_truncate(this.re_ox_rate * 100, 2) + "%"
       }
     },
 

@@ -25,7 +25,7 @@
             template(v-else)
               | {{row.rank}}
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
-            XemojiWrap(:str="$gs.str_truncate(row.entry_name || '？？？', {length: 12})")
+            XemojiWrap(:str="$GX.str_truncate(row.entry_name || '？？？', {length: 12})")
 
           b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{TheApp.time_format_from_msec(row.spent_sec)}}
           b-table-column(v-slot="{row}" field="x_count"    label="X" sortable numeric centered) {{row.x_count}}

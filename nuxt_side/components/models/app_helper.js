@@ -20,7 +20,7 @@ export const AppHelper = {
       blank_class: "is_content_blank",
       ...options,
     }
-    if (this.$gs.present_p(value)) {
+    if (this.$GX.present_p(value)) {
       return options.present_class
     } else {
       return options.blank_class

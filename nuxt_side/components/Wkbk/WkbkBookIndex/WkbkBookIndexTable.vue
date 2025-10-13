@@ -30,7 +30,7 @@
           img(:src="row.avatar_path" :alt="row.title")
 
         span.row_title
-          | {{$gs.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+          | {{$GX.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sfx_click()")

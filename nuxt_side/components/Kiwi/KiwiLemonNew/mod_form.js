@@ -105,7 +105,7 @@ export const mod_form = {
         return
       }
 
-      if (this.$gs.blank_p(this.body)) {
+      if (this.$GX.blank_p(this.body)) {
         this.toast_warn("棋譜を入力してください")
         return
       }
@@ -148,7 +148,7 @@ export const mod_form = {
             title: "残念なお知らせ",
             message: alert_message,
           })
-          this.$gs.delay_block(3, () => this.talk(alert_message))
+          this.$GX.delay_block(3, () => this.talk(alert_message))
         }
       }
     },
@@ -337,7 +337,7 @@ export const mod_form = {
     RecipeInfo()               { return RecipeInfo                                            },
     recipe_info()              { return this.base.RecipeInfo.fetch(this.recipe_key)           },
 
-    // end_seconds() { return this.$gs.number_floor(this.page_duration * this.end_duration, 2) },
+    // end_seconds() { return this.$GX.number_floor(this.page_duration * this.end_duration, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -410,17 +410,17 @@ export const mod_form = {
     ////////////////////////////////////////////////////////////////////////////////
 
     i_size_aspect_ratio_human() {
-      let r = this.$gs.aspect_ratio_gcd(this.rect_width, this.rect_height)
+      let r = this.$GX.aspect_ratio_gcd(this.rect_width, this.rect_height)
       if (r == null) {
         return "? : ?"
       }
-      return r.map(e => this.$gs.number_floor(e, 2)).join(" : ")
+      return r.map(e => this.$GX.number_floor(e, 2)).join(" : ")
     },
 
     i_size_danger_p() {
       return false
 
-      let r = this.$gs.aspect_ratio_normalize(this.rect_width, this.rect_height)
+      let r = this.$GX.aspect_ratio_normalize(this.rect_width, this.rect_height)
       if (r == null) {
         return true
       }
@@ -431,7 +431,7 @@ export const mod_form = {
 
     fps_value() {
       if (this.page_duration > 0) {
-        return this.$gs.number_round(1 / this.page_duration, 2)
+        return this.$GX.number_round(1 / this.page_duration, 2)
       }
     },
 

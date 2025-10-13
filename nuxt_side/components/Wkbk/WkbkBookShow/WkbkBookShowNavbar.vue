@@ -34,7 +34,7 @@ MainNavbar.WkbkBookShowNavbar(v-bind="component_attrs")
 
         //- .slice().reverse()
         template(v-if="false")
-          template(v-for="e in $gs.ary_reverse(base.AnswerKindInfo.values)")
+          template(v-for="e in $GX.ary_reverse(base.AnswerKindInfo.values)")
             b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")
               b-icon(:icon="e.icon")
 

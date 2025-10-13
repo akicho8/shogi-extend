@@ -119,17 +119,17 @@ export default {
 
     let params = {...this.$route.query}
 
-    if (this.$gs.blank_p(params.query)) {
+    if (this.$GX.blank_p(params.query)) {
       params.query = this.swars_search_default_key_get()
     }
 
-    // if (this.$gs.blank_p(params.per)) {
+    // if (this.$GX.blank_p(params.per)) {
     //   if (this.per_info.key !== this.APP.ParamInfo.fetch("per_key").default_for(this.APP)) {
     //     params.per = this.per_info.per
     //   }
     // }
 
-    if (this.$gs.blank_p(params.per)) {
+    if (this.$GX.blank_p(params.per)) {
       // if (this.per_info.key !== this.APP.ParamInfo.fetch("per_key").default_for(this.APP)) {
       params.per = this.per_info.per
       // }
@@ -251,10 +251,10 @@ export default {
         return true
       }
       return this.$fetchState.pending &&
-        this.$gs.present_p(this.$route.query.query) &&
-        this.$gs.blank_p(this.$route.query.sort_column) &&
-        this.$gs.blank_p(this.$route.query.sort_order) &&
-        this.$gs.blank_p(this.$route.query.page)
+        this.$GX.present_p(this.$route.query.query) &&
+        this.$GX.blank_p(this.$route.query.sort_column) &&
+        this.$GX.blank_p(this.$route.query.sort_order) &&
+        this.$GX.blank_p(this.$route.query.page)
     },
   },
 }

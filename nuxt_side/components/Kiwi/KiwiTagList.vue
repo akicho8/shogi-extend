@@ -1,5 +1,5 @@
 <template lang="pug">
-.buttons.KiwiTagList(v-if="$gs.present_p(tag_list)")
+.buttons.KiwiTagList(v-if="$GX.present_p(tag_list)")
   b-button(
     v-for="tag in tag_list"
     :key="tag"
@@ -10,7 +10,7 @@
     | {{tag}}
     //- type="is-primary is-light"
 
-//- b-taglist.KiwiTagList(v-if="$gs.present_p(tag_list)")
+//- b-taglist.KiwiTagList(v-if="$GX.present_p(tag_list)")
 //-   b-tag.is-clickable(
 //-     v-for="tag in tag_list"
 //-     :key="tag"

@@ -79,7 +79,7 @@ export default {
   // fetchOnServer: false,
   fetch() {
     // console.log("[fetch]")
-    // this.$gs.assert(this.scope, "this.scope")
+    // this.$GX.assert(this.scope, "this.scope")
 
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
@@ -110,7 +110,7 @@ export default {
   methods: {
     router_push(params) {
       params = {...this.url_params, ...params}
-      params = this.$gs.hash_compact(params)
+      params = this.$GX.hash_compact(params)
       this.$router.push({name: "rack-books", query: params})
     },
   },

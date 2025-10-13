@@ -23,7 +23,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           v-bind="input_default_attrs"
           v-model="e.initial_main_min"
           :max="60"
-          @input="v => { e.initial_main_min = $gs.to_i(v); SB.cc_input_handle() }"
+          @input="v => { e.initial_main_min = $GX.to_i(v); SB.cc_input_handle() }"
           )
     tr
       th
@@ -38,7 +38,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           v-bind="input_default_attrs"
           v-model="e.initial_read_sec"
           :max="60*5"
-          @input="v => { e.initial_read_sec = $gs.to_i(v); SB.cc_input_handle() }"
+          @input="v => { e.initial_read_sec = $GX.to_i(v); SB.cc_input_handle() }"
           )
     tr
       th
@@ -56,7 +56,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           v-bind="input_default_attrs"
           v-model="e.initial_extra_min"
           :max="60"
-          @input="v => { e.initial_extra_min = $gs.to_i(v); SB.cc_input_handle() }"
+          @input="v => { e.initial_extra_min = $GX.to_i(v); SB.cc_input_handle() }"
           )
     tr.is_separator
       th
@@ -74,7 +74,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
           v-bind="input_default_attrs"
           v-model="e.every_plus"
           :max="60*60"
-          @input="v => { e.every_plus = $gs.to_i(v); SB.cc_input_handle() }"
+          @input="v => { e.every_plus = $GX.to_i(v); SB.cc_input_handle() }"
           )
 </template>
 

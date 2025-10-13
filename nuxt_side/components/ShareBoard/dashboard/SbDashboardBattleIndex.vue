@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDashboardBattleIndex.box(v-if="$gs.present_p(TheDb.info.battles)")
+.SbDashboardBattleIndex.box(v-if="$GX.present_p(TheDb.info.battles)")
   .title 対局履歴
   b-table(
     :data="TheDb.info.battles"

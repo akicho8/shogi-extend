@@ -18,7 +18,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="カスタム検索"
             @click.native="sfx_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-search-custom', query: $gs.hash_compact({user_key: APP.xi.current_swars_user_key})}"
+            :to="{name: 'swars-search-custom', query: $GX.hash_compact({user_key: APP.xi.current_swars_user_key})}"
             )
 
           b-menu-item.is_active_unset(label="詳細を一気に開く" @click="APP.show_url_all_open_handle")

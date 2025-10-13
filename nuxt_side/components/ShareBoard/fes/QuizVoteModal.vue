@@ -7,16 +7,16 @@
         span.mx-1.has-text-grey.has-text-weight-normal
           | 投票済み
   .modal-card-body
-    template(v-if="$gs.present_p(SB.received_quiz.subject)")
+    template(v-if="$GX.present_p(SB.received_quiz.subject)")
       .subject.has-text-centered
         | {{SB.received_quiz.subject}}
-    template(v-if="$gs.present_p($gs.ary_compact_blank(SB.received_quiz.items))")
+    template(v-if="$GX.present_p($GX.ary_compact_blank(SB.received_quiz.items))")
       .items
         template(v-for="(e, i) in SB.received_quiz.items")
           .item.is_line_break_on.is-clickable.is-unselectable(
             @click="select_handle(e, i)"
             :class="vote_select_item_class(i)"
-            v-if="$gs.present_p(e)"
+            v-if="$GX.present_p(e)"
             )
             | {{e}}
     template(v-else)

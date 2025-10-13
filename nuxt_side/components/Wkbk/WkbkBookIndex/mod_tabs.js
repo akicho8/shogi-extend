@@ -15,7 +15,7 @@ export const mod_tabs = {
 
     // タブが変更されたときはページをリセットする
     tab_input_handle(index) {
-      this.$gs.assert(index === this.tab_index, "index === this.tab_index")
+      this.$GX.assert(index === this.tab_index, "index === this.tab_index")
       this.sfx_click()
       this.talk(this.current_scope_info.name)
       this.router_push({scope: this.current_scope_info.key, page: null})

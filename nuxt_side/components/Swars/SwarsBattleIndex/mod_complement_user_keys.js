@@ -6,14 +6,14 @@ export const mod_complement_user_keys = {
     // $fetch 直後に this.xi.current_swars_user_key が有効なら履歴に取り込む
     // this.xi.current_swars_user_key の
     user_keys_update_by_query() {
-      if (this.$gs.blank_p(this.xi.current_swars_user_key)) {
+      if (this.$GX.blank_p(this.xi.current_swars_user_key)) {
         // 指定のウォーズIDは存在しません状態なのでクエリがあったとしても履歴に取り込んではいけない
         return
       }
 
       let str = this.complement_user_keys_prepend_info.str_fetch(this)
-      str = this.$gs.str_squish(str)
-      if (this.$gs.present_p(str)) {
+      str = this.$GX.str_squish(str)
+      if (this.$GX.present_p(str)) {
         let av = [str, ...this.complement_user_keys]
         av = _.uniq(av)
         av = _.take(av, this.complement_user_keys_size_max)

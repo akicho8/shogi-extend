@@ -5,7 +5,7 @@
       .panel-heading
         | banana
       .panel-block
-        pre {{$gs.pretty_inspect(base.banana)}}
+        pre {{$GX.pretty_inspect(base.banana)}}
   .column.is-3
     .panel
       .panel-heading
@@ -17,13 +17,13 @@
       .panel-heading
         | OGP
       .panel-block
-        pre {{$gs.pretty_inspect(base.meta)}}
+        pre {{$GX.pretty_inspect(base.meta)}}
   .column.is-3(v-if="base.banana")
     .panel
       .panel-heading
         | advanced_kif_info
       .panel-block
-        pre {{$gs.pretty_inspect(base.banana.advanced_kif_info)}}
+        pre {{$GX.pretty_inspect(base.banana.advanced_kif_info)}}
 </template>
 
 <script>

@@ -57,7 +57,7 @@ export default {
     },
     // お題名が空のときかつデスクトップならフォーカスする
     input_focus() {
-      if (this.$gs.blank_p(this.SB.master_quiz.subject)) {
+      if (this.$GX.blank_p(this.SB.master_quiz.subject)) {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
     },

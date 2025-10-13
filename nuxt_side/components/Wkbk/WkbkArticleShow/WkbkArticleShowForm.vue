@@ -10,7 +10,7 @@ MainSection.WkbkArticleShowForm
 
         b-field(label="解説")
           .control
-            p(v-html="$gs.simple_format($gs.auto_link(base.article.description))")
+            p(v-html="$GX.simple_format($GX.auto_link(base.article.description))")
 
         b-field(label="問題集" v-if="base.book")
           .control

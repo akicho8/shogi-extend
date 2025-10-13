@@ -9,24 +9,24 @@
     .panel
       .panel-heading post_params
       .panel-block
-        pre {{$gs.pretty_inspect(base.post_params)}}
+        pre {{$GX.pretty_inspect(base.post_params)}}
   .column.is-4(v-if="base.response_hash")
     .panel
       .panel-heading response_hash
       .panel-block
-        pre {{$gs.pretty_inspect(base.response_hash)}}
+        pre {{$GX.pretty_inspect(base.response_hash)}}
   .column.is-4(v-if="base.done_record")
     .panel
       .panel-heading done_record
       .panel-block
-        pre {{$gs.pretty_inspect(base.done_record)}}
+        pre {{$GX.pretty_inspect(base.done_record)}}
   .column.is-4(v-if="base.xaudio_list")
     .panel
       .panel-heading xaudio_list
       .panel-block
-        pre {{$gs.pretty_inspect(base.xaudio_list)}}
+        pre {{$GX.pretty_inspect(base.xaudio_list)}}
       .panel-block
-        pre {{$gs.pretty_inspect(base.xaudio_list_for_v_model)}}
+        pre {{$GX.pretty_inspect(base.xaudio_list_for_v_model)}}
 </template>
 
 <script>

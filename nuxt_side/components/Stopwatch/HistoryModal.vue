@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.$gs.ary_reverse(this.base.memento_list)
+      return this.$GX.ary_reverse(this.base.memento_list)
     },
   },
 }

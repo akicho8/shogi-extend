@@ -6,7 +6,7 @@ b-field.field_block.ScsInputDate(custom-class="is-small")
     v-model="TheApp.battled_at_range"
     placeholder=""
     icon="calendar-today"
-    :icon-right="$gs.present_p(TheApp.battled_at_range) ? 'close-circle' : ''"
+    :icon-right="$GX.present_p(TheApp.battled_at_range) ? 'close-circle' : ''"
     icon-right-clickable
     @icon-right-click.stop="clear_handle"
     @range-start="sfx_click()"

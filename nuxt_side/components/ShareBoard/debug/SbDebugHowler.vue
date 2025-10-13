@@ -23,7 +23,7 @@
     a.panel-block Howler.autoUnlock → {{Howler.autoUnlock}}
     a.panel-block Howler.html5PoolSize → {{Howler.html5PoolSize}}
     a.panel-block Howler.autoSuspend → {{Howler.autoSuspend}}
-    a.panel-block Howler.ctx → {{$gs.pretty_inspect(Howler.ctx)}}
+    a.panel-block Howler.ctx → {{$GX.pretty_inspect(Howler.ctx)}}
     a.panel-block Howler.masterGain → {{Howler.masterGain}}
     a.panel-block Howler._howls.length → {{Howler._howls.length}}
 </template>

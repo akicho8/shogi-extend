@@ -217,7 +217,7 @@ export const vue_support = {
         return true
       }
       // http://localhost:4000/video/new?__nuxt_login_required_force=name
-      if (this.$gs.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
+      if (this.$GX.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
         // なぜか名前が空の人がいる
         this.toast_warn("名前を設定してください")
         this.$router.push("/lab/account/name-edit")

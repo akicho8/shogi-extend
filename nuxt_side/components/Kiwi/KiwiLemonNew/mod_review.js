@@ -17,7 +17,7 @@ export const mod_review = {
     banana_new_handle(record) {
       this.sfx_click()
 
-      if (this.$gs.present_p(record.banana)) {
+      if (this.$GX.present_p(record.banana)) {
         this.talk("ライブラリ登録済みです。編集ページに移動しますか？")
         this.dialog_confirm({
           title: "ライブラリ登録済みです",
@@ -57,13 +57,13 @@ export const mod_review = {
 
     banana_show_handle(record) {
       this.sfx_click()
-      this.$gs.assert(record.banana, "record.banana")
+      this.$GX.assert(record.banana, "record.banana")
       this.$router.push({name: 'video-watch-banana_key', params: {banana_key: record.banana.key}})
     },
 
     download_talk_handle() {
       this.sfx_click()
-      this.$gs.delay_block(1, () => this.talk("ダウンロードしました"))
+      this.$GX.delay_block(1, () => this.talk("ダウンロードしました"))
     },
 
     rails_attachment_show_handle(record) {
@@ -140,7 +140,7 @@ export const mod_review = {
           }
         }
       }
-      // return this.$gs.presence(list.flat())
+      // return this.$GX.presence(list.flat())
       return list
     },
 

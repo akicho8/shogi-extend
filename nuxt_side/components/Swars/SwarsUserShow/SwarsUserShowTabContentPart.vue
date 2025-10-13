@@ -14,7 +14,7 @@
           template(v-if="row.appear_ratio")
             .box_title_sub
               .use_rate_label {{right_label}}
-              .use_rate_value {{$gs.floatx100_percentage(row.appear_ratio, 1)}}
+              .use_rate_value {{$GX.floatx100_percentage(row.appear_ratio, 1)}}
               .use_rate_unit %
       .columns.is-gapless
         .column.is-paddingless

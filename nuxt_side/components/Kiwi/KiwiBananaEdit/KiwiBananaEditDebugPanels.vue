@@ -5,13 +5,13 @@
       .panel-heading
         | $data
       .panel-block
-        pre {{$gs.pretty_inspect(base.$data)}}
+        pre {{$GX.pretty_inspect(base.$data)}}
   .column.is-6(v-if="base.banana")
     .panel
       .panel-heading
         | recipe_info
       .panel-block
-        pre {{$gs.pretty_inspect(base.banana.lemon.recipe_info)}}
+        pre {{$GX.pretty_inspect(base.banana.lemon.recipe_info)}}
 </template>
 
 <script>

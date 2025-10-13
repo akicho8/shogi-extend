@@ -62,7 +62,7 @@ MainSection.WkbkBookShowSp
         template(v-if="base.current_article.description")
           .is-flex.is-justify-content-center.my-4(v-if="!base.description_open_p")
             b-button(@click="base.description_open_handle") 解説
-          .box(v-if="base.description_open_p" v-html="$gs.simple_format($gs.auto_link(base.current_article.description))")
+          .box(v-if="base.description_open_p" v-html="$GX.simple_format($GX.auto_link(base.current_article.description))")
 </template>
 
 <script>

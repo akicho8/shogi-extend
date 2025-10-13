@@ -12,7 +12,7 @@ export default {
   methods: {
     sp_object() {
       const v = this.$refs.sp_object
-      this.$gs.assert(v)
+      this.$GX.assert(v)
       return v
     },
   },

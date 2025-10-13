@@ -16,11 +16,11 @@
                 b-tag.mr-1(type="is-danger" v-if="!e.success" rounded size="is-small") 反則
                 | {{e.name}}
               pre.source_pre.box.is-shadowless.mt-1.mb-0.has-background-white-ter.is-family-monospace
-                | {{$gs.str_strip(e.body)}}
+                | {{$GX.str_strip(e.body)}}
               b-button.mt-1(
                 expanded
                 tag="nuxt-link"
-                :to="{name: 'adapter', query: {body: $gs.str_strip(e.body)}}"
+                :to="{name: 'adapter', query: {body: $GX.str_strip(e.body)}}"
                 @click="sfx_click()"
                 size="is-small") テスト
 
@@ -29,10 +29,10 @@
               //-     b-tag.mr-1(type="is-danger" v-if="!e.success" rounded) 反則
               //-     | {{e.name}}
               //-     p
-              //-       | {{$gs.str_strip(e.body)}}
+              //-       | {{$GX.str_strip(e.body)}}
               //-   .card-footer
               //-     nuxt-link.card-footer-item(
-              //-       :to="{name: 'adapter', query: {body: $gs.str_strip(e.body)}}"
+              //-       :to="{name: 'adapter', query: {body: $GX.str_strip(e.body)}}"
               //-       @click.native="sfx_click()") TEST
               //-
               //- nav.panel
@@ -40,13 +40,13 @@
               //-     b-tag.mr-1(type="is-danger" v-if="!e.success" rounded) 反則
               //-     | {{e.name}}
               //-   .panel-block
-              //-     | {{$gs.str_strip(e.body)}}
+              //-     | {{$GX.str_strip(e.body)}}
               //-   .panel-block
               //-     b-button(
               //-       expanded
               //-       outlined
               //-       tag="nuxt-link"
-              //-       :to="{name: 'adapter', query: {body: $gs.str_strip(e.body)}}"
+              //-       :to="{name: 'adapter', query: {body: $GX.str_strip(e.body)}}"
               //-       @click="sfx_click()"
               //-       size="is-small") テスト
 

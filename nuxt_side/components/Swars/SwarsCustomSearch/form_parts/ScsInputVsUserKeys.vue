@@ -45,11 +45,11 @@ export default {
   },
   methods: {
     typing_handle(text) {
-      text = this.$gs.str_normalize_for_ac(text)
+      text = this.$GX.str_normalize_for_ac(text)
       this.filtered_keys = this.TheApp.remember_vs_user_keys.filter(e => {
         // 1. vs_user_keys にまだ含まれていないものかつ (すでに入力した名前を補完に出さないようにするため)
         // 2. マッチするものに絞る
-        return !this.TheApp.vs_user_keys.includes(e) && this.$gs.str_normalize_for_ac(e).indexOf(text) >= 0
+        return !this.TheApp.vs_user_keys.includes(e) && this.$GX.str_normalize_for_ac(e).indexOf(text) >= 0
       })
     },
     add_handle(key) {
@@ -61,8 +61,8 @@ export default {
       this.sfx_play_toggle(false)
     },
     remember_update(key) {
-      let av = this.$gs.str_to_tags(key)
-      if (this.$gs.present_p(av)) {
+      let av = this.$GX.str_to_tags(key)
+      if (this.$GX.present_p(av)) {
         av = [...av, ...this.TheApp.remember_vs_user_keys]
         av = _.uniq(av)
         av = _.take(av, VS_USERS_ARRAY_SIZE_MAX)

@@ -30,7 +30,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$gs.delay_stop(this.fadeout_id)
+    this.$GX.delay_stop(this.fadeout_id)
     if (this.instance) {
       this.instance.unload()
     }
@@ -50,8 +50,8 @@ export default {
             // loop: true, // ループにすると stop フェイドアウトが効かなくなる
             onplay: () => {
               this.state = "play"
-              this.$gs.assert(this.fadeout_id == null, "this.fadeout_id == null")
-              this.fadeout_id = this.$gs.delay_block(this.play_duration, () => {
+              this.$GX.assert(this.fadeout_id == null, "this.fadeout_id == null")
+              this.fadeout_id = this.$GX.delay_block(this.play_duration, () => {
                 // 面倒なことに現状のボリュームからではなく開始時のボリュームを指定しないといけない
                 // なので 1.0 ではなく this.volume を指定する
                 this.instance.fade(this.volume, 0, 1000 * this.fadeout_duration, this.current_id)
@@ -85,7 +85,7 @@ export default {
     },
     fadeout_clear() {
       if (this.fadeout_id) {
-        this.$gs.delay_stop(this.fadeout_id)
+        this.$GX.delay_stop(this.fadeout_id)
         this.fadeout_id = null
       }
     },

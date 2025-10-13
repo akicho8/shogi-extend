@@ -6,7 +6,7 @@ export const mod_chore = {
     // 戻る
     back_click_handle() {
       this.sfx_click()
-      this.back_to_or({name: "swars-search", query: this.$gs.hash_compact_blank({query: this.user_key})})
+      this.back_to_or({name: "swars-search", query: this.$GX.hash_compact_blank({query: this.user_key})})
     },
 
     // タイトルをクリックするとオプション類を外す
@@ -40,7 +40,7 @@ export const mod_chore = {
     },
 
     scs_time_format(seconds) {
-      return this.$gs.xtime_format_human_hms(seconds)
+      return this.$GX.xtime_format_human_hms(seconds)
     },
   },
 
@@ -53,7 +53,7 @@ export const mod_chore = {
       this.ParamInfo.values.forEach(e => {
         if (e.permalink) {
           let v = this.$data[e.key]
-          if (this.$gs.present_p(v)) {
+          if (this.$GX.present_p(v)) {
             if (Array.isArray(v)) {
               v = v.map(e => {
                 if (_.isDate(e)) {

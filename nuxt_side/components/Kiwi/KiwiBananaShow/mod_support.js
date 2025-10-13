@@ -27,7 +27,7 @@ export const mod_support = {
     },
     download_handle() {
       this.sfx_click()
-      this.$gs.delay_block(1, () => this.toast_ok("ダウンロードしました"))
+      this.$GX.delay_block(1, () => this.toast_ok("ダウンロードしました"))
     },
   },
 }

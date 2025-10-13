@@ -55,7 +55,7 @@
         b-button.mb-0(size="is-small" type="is-danger" @click="quiz_delete_handle" v-if="SB.quiz_received_p && SB.debug_mode_p")
           | 削除
 
-      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.quiz_received_p && $gs.present_p(SB.vote_yet_user_names)")
+      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.quiz_received_p && $GX.present_p(SB.vote_yet_user_names)")
         | まだ投票してない人({{SB.vote_yet_user_names.length}}): {{SB.vote_yet_user_names.join(", ")}}
 
       hr.my-4
@@ -75,7 +75,7 @@
             element_size="is-small"
             model_name="ChangePerInfo"
             :sync_value="SB.new_v.change_per"
-            @update:sync_value="v => SB.new_v.change_per = _.max([1, $gs.to_i(v)])"
+            @update:sync_value="v => SB.new_v.change_per = _.max([1, $GX.to_i(v)])"
             )
           //- | {{SB.new_v.change_per}}
         .column.is-12
@@ -230,7 +230,7 @@ export default {
         return
       }
       this.SB.new_order_share("順番設定を反映しました")
-      this.$gs.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
+      this.$GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
     // バリデーションなしで反映する

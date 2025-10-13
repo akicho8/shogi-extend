@@ -26,13 +26,13 @@
       .panel-heading
         | 保持する変数値
       .panel-block
-        pre {{$gs.pretty_inspect(APP.pc_attributes)}}
+        pre {{$GX.pretty_inspect(APP.pc_attributes)}}
   .column.is-4
     .panel
       .panel-heading
         | 保持する変数の初期値
       .panel-block
-        pre {{$gs.pretty_inspect(APP.ls_default)}}
+        pre {{$GX.pretty_inspect(APP.ls_default)}}
 
   //- .column.is-6
   //-   .panel

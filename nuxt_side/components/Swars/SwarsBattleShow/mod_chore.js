@@ -2,7 +2,7 @@ export const mod_chore = {
   methods: {
     // kifu_download_handle() {
     //   this.sidebar_close()
-    //   this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+    //   this.$GX.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     // },
     official_show_handle() {
       this.sfx_click()

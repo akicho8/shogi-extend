@@ -14,7 +14,7 @@ export const mod_banana_message = {
     // },
     speak_handle() {
       if (this.nuxt_login_required()) { return } // アカウント利用制限発動
-      if (this.$gs.present_p(this.message_body)) {
+      if (this.$GX.present_p(this.message_body)) {
         // this.loading = this.$buefy.loading.open()
         this.speak(this.message_body)
         this.message_body = ""
@@ -31,8 +31,8 @@ export const mod_banana_message = {
     },
     ////////////////////////////////////////////////////////////////////////////////
     message_decorate(str) {
-      str = this.$gs.auto_link(str)
-      str = this.$gs.simple_format(str)
+      str = this.$GX.auto_link(str)
+      str = this.$GX.simple_format(str)
       // str = this.number_replace_to_banana_link(str)
       return str
     },

@@ -4,7 +4,7 @@
     .control
       b-button(@click="base.color_select_modal_handle" icon-right="view-comfy") {{base.color_theme_info.name}}
 
-  b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message" v-if="development_p && $gs.blank_p($route.query.__color_theme_key_dropdown_skip__)")
+  b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message" v-if="development_p && $GX.blank_p($route.query.__color_theme_key_dropdown_skip__)")
     .control
       b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sfx_click()")
         template(#trigger)

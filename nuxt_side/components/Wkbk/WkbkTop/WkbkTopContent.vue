@@ -33,7 +33,7 @@
                 b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
 
         .content(v-if="false")
-          .description.is_truncate2(v-html="$gs.simple_format($gs.auto_link(e.description))")
+          .description.is_truncate2(v-html="$GX.simple_format($GX.auto_link(e.description))")
 
   .column.is-12(v-if="base.xpage_info")
     //- テーブルのページネーションに合わせとく

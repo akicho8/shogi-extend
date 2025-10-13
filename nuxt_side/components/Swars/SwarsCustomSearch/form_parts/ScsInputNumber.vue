@@ -2,7 +2,7 @@
 b-field.field_block.ScsInputNumber(custom-class="is-small")
   template(#label)
     | {{label}}
-    template(v-if="$gs.present_p(message)")
+    template(v-if="$GX.present_p(message)")
       span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
         | {{message}}
   b-field(grouped)

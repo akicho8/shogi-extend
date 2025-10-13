@@ -16,12 +16,12 @@ export const mod_search = {
     tag_click_handle(tag) {
       this.sfx_click()
       this.talk(tag)
-      tag = this.$gs.tags_add(this.tag, tag).join(",")
+      tag = this.$GX.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
     tag_remove_handle(tag) {
       this.sfx_click()
-      tag = this.$gs.tags_remove(this.tag, tag).join(",")
+      tag = this.$GX.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },
     search_handle() {
@@ -30,7 +30,7 @@ export const mod_search = {
     },
   },
   computed: {
-    tags() { return this.$gs.str_to_tags(this.tag) },
+    tags() { return this.$GX.str_to_tags(this.tag) },
     SearchPresetInfo() { return SearchPresetInfo },
     search_preset_info() { return this.SearchPresetInfo.fetch(this.search_preset_key || this.SearchPresetInfo.values[0].key) },
   },

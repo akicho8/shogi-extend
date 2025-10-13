@@ -105,7 +105,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
 
       b-table-column(v-slot="{row}" custom-key="answer_stat.difficulty_rate" field="answer_stat.difficulty_rate" label="正解率" centered sortable)
         template(v-if="row.answer_stat.difficulty_rate != null")
-          | {{$gs.number_truncate(row.answer_stat.difficulty_rate * 100)}}
+          | {{$GX.number_truncate(row.answer_stat.difficulty_rate * 100)}}
           //- span.has-text-grey.is-size-7.ml-1 %
 
       b-table-column(v-slot="{row}" custom-key="answer_stat.spent_sec_total" field="answer_stat.spent_sec_total" label="総時間" centered sortable)
@@ -115,7 +115,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
         | {{row.article.difficulty}}
 
       //- nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sfx_click()")
-      //- | {{$gs.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+      //- | {{$GX.str_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
       //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
       //-   WkbkUserName(:user="row.user")
@@ -123,7 +123,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
       //- b-table-column(v-slot="{row}" custom-key="book_title" field="book.title" :label="base.ArticleIndexColumnInfo.fetch('book_title').name" sortable :visible="!!base.visible_hash.book_title")
       //-   nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.book.key}}" v-if="row.book")
       //-
-      //-     | {{$gs.str_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.bookships_count}})
+      //-     | {{$GX.str_truncate(row.book.title, {length: s_config.TRUNCATE_MAX})}}({{row.book.bookships_count}})
       //-
       //- b-table-column(v-slot="{row}" custom-key="lineage_key"         field="lineage.position"    :label="base.ArticleIndexColumnInfo.fetch('lineage_key').name" sortable :visible="!!base.visible_hash.lineage_key") {{row.lineage_key}}
       //- b-table-column(v-slot="{row}" custom-key="turn_max"            field="turn_max"            :label="base.ArticleIndexColumnInfo.fetch('turn_max').name"      sortable numeric :visible="!!base.visible_hash.turn_max")      {{row.turn_max}}
@@ -184,7 +184,7 @@ export default {
   },
   methods: {
     select_handle(row) {
-      this.$gs.assert(row.index != null, "row.index != null")
+      this.$GX.assert(row.index != null, "row.index != null")
       if (this.base.current_index != row.index) {
         this.sfx_click()
         this.base.current_index = row.index
@@ -193,7 +193,7 @@ export default {
 
     // up_down_handle(object, sign) {
     //   const index = this.base.book.xitems.findIndex(e => e.key === object.key)
-    //   this.base.book.xitems = this.$gs.ary_move(this.base.book.xitems, index, index + sign)
+    //   this.base.book.xitems = this.$GX.ary_move(this.base.book.xitems, index, index + sign)
     //   if (this.run_count === 0) {
     //     if (!MyMobile.mobile_p) {
     //       this.toast_ok("マウスでドラッグアンドドロップできますよ")
@@ -221,11 +221,11 @@ export default {
     //   const to_index = payload.index
     //   this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
     //   // this.book.xitems.splice(to_index, 0, this.book.xitems[this.from_index])
-    //   this.base.book.xitems = this.$gs.ary_move(this.base.book.xitems, this.from_index, to_index)
+    //   this.base.book.xitems = this.$GX.ary_move(this.base.book.xitems, this.from_index, to_index)
     // },
 
     // // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
-    // $gs.ary_move(list, from, to) {
+    // $GX.ary_move(list, from, to) {
     //   const n = list.length
     //   list = [...list]
     //

@@ -107,7 +107,7 @@ export default {
       this.$emit("user_input", this.real_model)
     },
     label_click_handle(e) {
-      if (this.$gs.present_p(this.hint_str)) {
+      if (this.$GX.present_p(this.hint_str)) {
         this.sfx_stop_all()
         this.sfx_click()
         this.toast_ok(this.hint_str, {duration: 1000 * this.duration_sec})

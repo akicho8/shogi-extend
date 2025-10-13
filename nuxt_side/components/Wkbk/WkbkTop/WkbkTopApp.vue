@@ -60,7 +60,7 @@ export default {
 
   // fetchOnServer: false,
   fetch() {
-    // this.$gs.assert(this.scope, "this.scope")
+    // this.$GX.assert(this.scope, "this.scope")
     this.query       = this.$route.query.query
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.search_preset_key = this.$route.query.search_preset_key
@@ -98,7 +98,7 @@ export default {
   methods: {
     router_push(params) {
       params = {...this.url_params, ...params}
-      params = this.$gs.hash_compact_blank(params)
+      params = this.$GX.hash_compact_blank(params)
       this.$router.push({name: "rack", query: params})
     },
   },

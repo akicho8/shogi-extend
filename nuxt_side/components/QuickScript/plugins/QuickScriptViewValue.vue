@@ -35,7 +35,7 @@
 
   //- { _autolink: "..." }
   template(v-else-if="value_type_guess === 'value_type_is_autolink'")
-    component(:is="value['is'] ?? 'div'" v-bind="value['_v_bind']" :class="value['class']" :style="value['style']" v-html="$gs.auto_link(value['_autolink'], {email: false})")
+    component(:is="value['is'] ?? 'div'" v-bind="value['_v_bind']" :class="value['class']" :style="value['style']" v-html="$GX.auto_link(value['_autolink'], {email: false})")
 
   // --------------------------------------------------------------------------------
 

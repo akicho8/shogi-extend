@@ -1,6 +1,6 @@
 <template lang="pug">
 .WkbkBookShowOxButtons.buttons.mb-0.has-addons.is-centered
-  template(v-for="e in $gs.ary_reverse(base.AnswerKindInfo.values)")
+  template(v-for="e in $GX.ary_reverse(base.AnswerKindInfo.values)")
     b-button.mb-0.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)" type="is-primary")
 </template>
 

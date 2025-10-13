@@ -43,7 +43,7 @@
       p inspect: {{order_unit.inspect}}
       p name_to_object_hash: {{order_unit.name_to_object_hash}}
     .column.is-12
-      b-button(@click="() => $gs.p(order_unit.name_to_object_hash)") name_to_object_hash
+      b-button(@click="() => $GX.p(order_unit.name_to_object_hash)") name_to_object_hash
     .column.is-6
       p stringify
       pre

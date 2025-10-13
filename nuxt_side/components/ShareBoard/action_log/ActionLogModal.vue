@@ -50,7 +50,7 @@
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
-    pre.mt-4(v-if="SB.debug_mode_p") {{$gs.pretty_inspect(action_log)}}
+    pre.mt-4(v-if="SB.debug_mode_p") {{$GX.pretty_inspect(action_log)}}
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")

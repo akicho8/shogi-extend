@@ -43,7 +43,7 @@ export default {
     next_handle(v) {
       this.sfx_click()
       const i = this.SB.board_preset_info.code + v
-      const new_index = this.$gs.imodulo(i, this.SB.BoardPresetInfo.values.length)
+      const new_index = this.$GX.imodulo(i, this.SB.BoardPresetInfo.values.length)
       const next = this.SB.BoardPresetInfo.fetch(new_index)
       this.SB.board_preset_key = next.key
     },

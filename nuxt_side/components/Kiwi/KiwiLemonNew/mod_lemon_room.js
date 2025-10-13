@@ -14,7 +14,7 @@ export const mod_lemon_room = {
   },
   methods: {
     lemon_room_create() {
-      this.$gs.assert(this.ac_lemon_room == null, "this.ac_lemon_room == null")
+      this.$GX.assert(this.ac_lemon_room == null, "this.ac_lemon_room == null")
       this.ac_lemon_room = this.ac_subscription_create({channel: "Kiwi::LemonRoomChannel"}, {
         connected: e => {
           if (this.ac_lemon_room_connected_count === 0) {

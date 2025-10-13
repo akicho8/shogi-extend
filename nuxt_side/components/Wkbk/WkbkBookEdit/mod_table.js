@@ -42,13 +42,13 @@ export const mod_table = {
     tag_search_handle(tag) {
       this.sfx_click()
       this.talk(tag)
-      tag = this.$gs.tags_add(this.tag, tag).join(",")
+      tag = this.$GX.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
 
     tag_remove_handle(tag) {
       this.sfx_click()
-      tag = this.$gs.tags_remove(this.tag, tag).join(",")
+      tag = this.$GX.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },
 

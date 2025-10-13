@@ -71,7 +71,7 @@ export default {
     // スマホで↓↑を押したとき
     up_down_handle(object, sign) {
       const index = this.base.book.ordered_bookships.findIndex(e => e.id === object.id)
-      this.base.book.ordered_bookships = this.$gs.ary_move(this.base.book.ordered_bookships, index, index + sign)
+      this.base.book.ordered_bookships = this.$GX.ary_move(this.base.book.ordered_bookships, index, index + sign)
       if (this.run_count === 0) {
         if (!MyMobile.mobile_p) {
           this.toast_ok("マウスでドラッグアンドドロップできますよ")
@@ -100,7 +100,7 @@ export default {
       const to_index = payload.index
       this.debug_alert(`${this.dragging_row.title}: ${this.from_index} -> ${to_index}`)
       // this.book.ordered_bookships.splice(to_index, 0, this.book.ordered_bookships[this.from_index])
-      this.base.book.ordered_bookships = this.$gs.ary_move(this.base.book.ordered_bookships, this.from_index, to_index)
+      this.base.book.ordered_bookships = this.$GX.ary_move(this.base.book.ordered_bookships, this.from_index, to_index)
     },
   },
 }

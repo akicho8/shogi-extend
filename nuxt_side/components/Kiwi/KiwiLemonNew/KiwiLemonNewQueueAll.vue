@@ -18,7 +18,7 @@
         p.heading 失敗
         p.title {{base.kiwi_info.error_only_count}}
   b-table(
-    v-if="$gs.present_p(base.kiwi_info.lemons)"
+    v-if="$GX.present_p(base.kiwi_info.lemons)"
     :data="base.kiwi_info.lemons"
     :mobile-cards="false"
     )
@@ -28,7 +28,7 @@
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
     b-table-column(v-slot="{row}" field="name" label="所有者")
-      | {{$gs.str_truncate(row.user.name, {length: 10})}}
+      | {{$GX.str_truncate(row.user.name, {length: 10})}}
 </template>
 
 <script>

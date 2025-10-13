@@ -21,7 +21,7 @@ export class HandleNameParser {
   }
 
   constructor(source, options = {}) {
-    GX.assert(GX.present_p(source), "this.$gs.present_p(source) in HandleNameParser")
+    GX.assert(GX.present_p(source), "this.$GX.present_p(source) in HandleNameParser")
     this.source = source
     this.options = options
   }

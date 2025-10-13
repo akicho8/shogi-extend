@@ -33,7 +33,7 @@ export default {
     //   this.base.ml_add_test()
     // },
     // submit_handle() {
-    //   if (this.$gs.present_p(this.base.message_body2)) {
+    //   if (this.$GX.present_p(this.base.message_body2)) {
     //     this.sfx_click()
     //     this.base.message_share({message: this.base.message_body2})
     //     this.base.message_body2 = ""

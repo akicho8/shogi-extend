@@ -18,7 +18,7 @@
                 HexagonMark(:location_key="location.key")
               .SbAvatarLines
                 SbMemberOne(v-for="info in SB.visible_member_groups[location.key]" :info="info" :key="info.from_connection_id")
-            .TeamBlock.watcher(v-if="$gs.present_p(SB.visible_member_groups['watcher'])")
+            .TeamBlock.watcher(v-if="$GX.present_p(SB.visible_member_groups['watcher'])")
               .TeamName.is-invisible
                 b-tag(rounded) 観戦
               .SbAvatarLines

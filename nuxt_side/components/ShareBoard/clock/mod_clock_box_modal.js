@@ -109,7 +109,7 @@ export const mod_clock_box_modal = {
       this.cbm_play_core_handle()
     },
     cbm_play_core_handle() {
-      // this.$gs.assert(this.clock_box == null, "this.clock_box == null") ← この assert はまちがい
+      // this.$GX.assert(this.clock_box == null, "this.clock_box == null") ← この assert はまちがい
       this.sfx_click()
       this.cc_params_apply()
       this.cc_play_handle()
@@ -123,7 +123,7 @@ export const mod_clock_box_modal = {
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
       if (this.ac_room && this.order_enable_p) {
-        this.$gs.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください"))
+        this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください"))
       }
     },
     cbm_stop_handle() {

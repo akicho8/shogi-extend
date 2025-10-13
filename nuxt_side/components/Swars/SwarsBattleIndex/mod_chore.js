@@ -87,7 +87,7 @@ export const mod_chore = {
 
     kifu_save_handle(row) {
       this.sfx_click()
-      this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+      this.$GX.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     },
 
     kifu_save_shortcut_handle(e) {

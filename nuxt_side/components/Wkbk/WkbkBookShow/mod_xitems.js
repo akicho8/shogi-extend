@@ -65,7 +65,7 @@ export const mod_xitems = {
     },
 
     goal_check() {
-      this.$gs.assert(!this.current_xitem)
+      this.$GX.assert(!this.current_xitem)
       this.mode_set("standby")
       this.sfx_play("win")
       this.re_ox_stop()
@@ -101,7 +101,7 @@ export const mod_xitems = {
 
     // 自分の手番であれば次の手を自動的に指す
     next_hand_auto_move(moves) {
-      // this.$gs.delay_block(NEXT_HAND_DELAY, () => {
+      // this.$GX.delay_block(NEXT_HAND_DELAY, () => {
       const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
       if (new_moves) {
         const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")

@@ -33,7 +33,7 @@ export default {
     banana: { type: Object, required: true, },
   },
   mounted() {
-    this.$gs.assert(this.$gs.present_p(this.banana), "this.$gs.present_p(this.banana)")
+    this.$GX.assert(this.$GX.present_p(this.banana), "this.$GX.present_p(this.banana)")
   },
 }
 </script>

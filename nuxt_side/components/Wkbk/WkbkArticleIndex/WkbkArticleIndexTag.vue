@@ -15,7 +15,7 @@ export default {
   mixins: [support_child],
   computed: {
     tags() {
-      return this.$gs.str_to_tags(this.base.tag)
+      return this.$GX.str_to_tags(this.base.tag)
     },
   },
 }

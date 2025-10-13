@@ -20,15 +20,15 @@ export const mod_ranking = {
   methods: {
     ranking_goal_process() {
       // ログインしていない場合
-      if (this.$gs.blank_p(this.g_current_user_name)) {
-        this.$gs.delay_block(1.0, () => this.toast_ok("名前を入力してください。できれば入力の手間を省くためにログインしてください"))
+      if (this.$GX.blank_p(this.g_current_user_name)) {
+        this.$GX.delay_block(1.0, () => this.toast_ok("名前を入力してください。できれば入力の手間を省くためにログインしてください"))
         this.name_input_dialog()
         return
       }
 
       // ログインしているけど名前が不正な場合
       if (HandleNameValidator.invalid_p(this.g_current_user_name)) {
-        this.$gs.delay_block(1.0, () => this.toast_ok("適切な名前を入力してください。この入力を省くにはプロフィール編集で適切な名前に変更してください", {duration: 1000 * 5}))
+        this.$GX.delay_block(1.0, () => this.toast_ok("適切な名前を入力してください。この入力を省くにはプロフィール編集で適切な名前に変更してください", {duration: 1000 * 5}))
         this.name_input_dialog()
         return
       }

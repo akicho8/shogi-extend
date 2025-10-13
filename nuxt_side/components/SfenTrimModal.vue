@@ -107,7 +107,7 @@ export default {
       this.viewpoint = this.default_sp_viewpoint
 
       this.index = this.sp_turn
-      this.$gs.assert(this.$gs.present_p(this.sp_body), "this.$gs.present_p(this.sp_body)")
+      this.$GX.assert(this.$GX.present_p(this.sp_body), "this.$GX.present_p(this.sp_body)")
       this.offset = this.sfen_parse(this.sp_body).moves.length
       this.emit_params = null
       this.mode = "begin"

@@ -2,10 +2,10 @@
 .SwarsUserShowApp
   client-only
     DebugBox(v-if="development_p")
-      p tab_index: {{$gs.pretty_inspect(tab_index)}}
-      p sample_max: {{$gs.pretty_inspect(sample_max)}}
-      p query.tab_index: {{$gs.pretty_inspect($route.query.tab_index)}}
-      p query.sample_max: {{$gs.pretty_inspect($route.query.sample_max)}}
+      p tab_index: {{$GX.pretty_inspect(tab_index)}}
+      p sample_max: {{$GX.pretty_inspect(sample_max)}}
+      p query.tab_index: {{$GX.pretty_inspect($route.query.tab_index)}}
+      p query.sample_max: {{$GX.pretty_inspect($route.query.sample_max)}}
 
     b-loading(:active="$fetchState.pending")
 

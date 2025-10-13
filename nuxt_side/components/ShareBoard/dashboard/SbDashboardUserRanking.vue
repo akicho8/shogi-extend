@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbDashboardUserRanking.box(v-if="$gs.present_p(TheDb.info.roomships)")
+.SbDashboardUserRanking.box(v-if="$GX.present_p(TheDb.info.roomships)")
   .title ランキング
   b-table.SbDashboardUserRanking(
     :data="TheDb.info.roomships"

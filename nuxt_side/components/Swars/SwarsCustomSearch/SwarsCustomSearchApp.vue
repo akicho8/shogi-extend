@@ -1,9 +1,9 @@
 <template lang="pug">
 .SwarsCustomSearchApp
   DebugBox(v-if="development_p")
-    p battled_at_range: {{$gs.short_inspect(battled_at_range)}}
-    p user_key: {{$gs.short_inspect(user_key)}}
-    p vs_user_keys: {{$gs.short_inspect(vs_user_keys)}}
+    p battled_at_range: {{$GX.short_inspect(battled_at_range)}}
+    p user_key: {{$GX.short_inspect(user_key)}}
+    p vs_user_keys: {{$GX.short_inspect(vs_user_keys)}}
 
   SwarsCustomSearchSidebar()
 

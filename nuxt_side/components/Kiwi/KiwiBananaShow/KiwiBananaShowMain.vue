@@ -64,7 +64,7 @@ export default {
   name: "KiwiBananaShowMain",
   mixins: [support_child],
   mounted() {
-    this.$gs.assert(this.$gs.present_p(this.base.banana), "this.$gs.present_p(this.base.banana)")
+    this.$GX.assert(this.$GX.present_p(this.base.banana), "this.$GX.present_p(this.base.banana)")
     // if (this.$refs.main_video) {
     //   this.$refs.main_video.play()
     // }

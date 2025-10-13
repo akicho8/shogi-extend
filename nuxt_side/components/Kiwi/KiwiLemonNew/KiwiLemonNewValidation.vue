@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewValidation.column.is-half(v-if="$gs.present_p(base.review_error_messages)")
+.KiwiLemonNewValidation.column.is-half(v-if="$GX.present_p(base.review_error_messages)")
   .panel.is-twitter(:class="base.review_error_messages_valid_p ? 'x-is-success' : 'x-is-danger'" size="is-small")
     .panel-heading
       | \#{{base.done_record.id}} Twitterアップロード条件

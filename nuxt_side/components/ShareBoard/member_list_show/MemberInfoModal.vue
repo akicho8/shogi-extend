@@ -20,7 +20,7 @@
                   | {{row.value}}
                 span.mx-1(v-if="row.desc" v-text="row.desc" :class="row.desc_class")
     pre(v-if="SB.debug_mode_p")
-      | {{$gs.pretty_inspect(member_info)}}
+      | {{$GX.pretty_inspect(member_info)}}
       | {{SB.users_match_record_master[member_info.from_user_name]}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -81,7 +81,7 @@ export default {
         {
           enabled: true,
           label: "接続切れ",
-          value: `${this.$gs.number_floor(this.SB.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
+          value: `${this.$GX.number_floor(this.SB.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
         },
         {
           enabled: true,

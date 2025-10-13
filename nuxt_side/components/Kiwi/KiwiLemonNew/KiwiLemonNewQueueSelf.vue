@@ -4,7 +4,7 @@
     b-progress(type="is-danger" :value="base.progress_info.percent" show-value format="percent")
 
   b-table(
-    v-if="$gs.present_p(base.my_records)"
+    v-if="$GX.present_p(base.my_records)"
     :data="base.my_records"
     :mobile-cards="false"
     :scrollable="true"
@@ -17,13 +17,13 @@
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
         span.ml-1(v-if="false && base.progress_info && base.progress_info.id === row.id")
-          | {{$gs.number_round_s(base.progress_info.percent, 2)}} %
+          | {{$GX.number_round_s(base.progress_info.percent, 2)}} %
 
     b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :visible="development_p")
       | {{row.elapsed_human}}
 
     b-table-column(v-slot="{row}" label="表紙" cell-class="cover_text is-size-7 is_line_break_on")
-      | {{$gs.str_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
+      | {{$GX.str_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
 
     b-table-column(v-slot="{row}")
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")

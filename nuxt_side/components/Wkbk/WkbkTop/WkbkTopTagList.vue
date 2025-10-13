@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkTopTagList.column.is-12(v-if="$gs.present_p(base.tags)")
+.WkbkTopTagList.column.is-12(v-if="$GX.present_p(base.tags)")
   b-taglist.is-clipped
     template(v-for="tag in base.tags")
       b-tag(closable @close="base.tag_remove_handle(tag)" :key="tag")

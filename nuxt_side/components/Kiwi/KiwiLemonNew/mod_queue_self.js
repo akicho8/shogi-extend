@@ -21,7 +21,7 @@ export const mod_queue_self = {
         if (this.done_record.successed_at) {
           if (false) {
             this.sfx_play("se_niwatori")
-            this.$gs.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
+            this.$GX.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
           } else {
             this.sfx_play("o")
             this.toast_ok(`${this.done_record.id}番が完了しました`)

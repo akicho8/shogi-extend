@@ -31,7 +31,7 @@
           WkbkTagList.mt-1(:tag_list="base.book.tag_list" :tag_search_handle="base.tag_search_handle")
 
           .content.mt-4(v-if="base.book.description")
-            .description(v-html="$gs.simple_format($gs.auto_link(base.book.description))")
+            .description(v-html="$GX.simple_format($GX.auto_link(base.book.description))")
     .card-footer
       //- .card-footer-item
       //-   b-button.has-text-weight-bold(type="is-primary" @click="base.play_start")

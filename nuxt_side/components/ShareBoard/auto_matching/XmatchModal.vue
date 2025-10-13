@@ -5,7 +5,7 @@
       | 自動マッチング
     p(v-if="SB.current_xmatch_rule_key && SB.xmatch_rest_seconds >= 1")
       | {{SB.xmatch_rest_seconds}}
-    a(@click="SB.handle_name_modal_handle" v-if="!SB.current_xmatch_rule_key && $gs.present_p(SB.user_name)")
+    a(@click="SB.handle_name_modal_handle" v-if="!SB.current_xmatch_rule_key && $GX.present_p(SB.user_name)")
       b-icon(icon="pencil-outline" size="is-small")
       span.ml-1 {{SB.user_name}}
   .modal-card-body
@@ -24,7 +24,7 @@
                 template(v-for="e in SB.xmatch_rules_members[e.key]")
                   b-tag(rounded type="is-primary")
                     span(:class="user_name_class(e)")
-                      | {{$gs.str_truncate(e.from_user_name, {length: 8 + 3})}}
+                      | {{$GX.str_truncate(e.from_user_name, {length: 8 + 3})}}
                 //- 空席を並べる
                 //- template(v-for="i in rest_count(e)")
                 //-   b-tag.is-hidden-mobile(rounded type="is-grey") ?
@@ -70,10 +70,10 @@ export default {
       this.sfx_click()
 
       // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
-      // if (this.$gs.blank_p(this.SB.user_name)) { とする手もある
+      // if (this.$GX.blank_p(this.SB.user_name)) { とする手もある
       // が、捨てハンと問題行動の増加で荒れる。なのできちんとログインさせる
       // ログインする気にない人にまで配慮して匿名で使ってもらおうとしてはいけない(重要)
-      if (this.$gs.present_p(this.SB.xmatch_auth_key)) {
+      if (this.$GX.present_p(this.SB.xmatch_auth_key)) {
         if (this.SB.xmatch_auth_info.key === "login_required") {
           if (this.nuxt_login_required()) { return }
         }
@@ -99,7 +99,7 @@ export default {
 
     // 指定ルールにエントリーした人数
     entry_count(e) {
-      this.$gs.assert(this.SB.xmatch_rules_members, "this.SB.xmatch_rules_members")
+      this.$GX.assert(this.SB.xmatch_rules_members, "this.SB.xmatch_rules_members")
       return this.SB.xmatch_rules_members[e.key].length
     },
 
