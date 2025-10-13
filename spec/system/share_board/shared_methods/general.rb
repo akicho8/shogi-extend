@@ -8,7 +8,7 @@ module SharedMethods
   end
 
   def room_recreate_apply
-    global_menu_open
+    sidebar_open
     menu_item_click("再起動")     # モーダルを開く
     apply_button  # 実行する
   end
@@ -19,14 +19,14 @@ module SharedMethods
 
   # 手合割選択
   def preset_select(preset_key)
-    global_menu_open
+    sidebar_open
     menu_item_click("手合割")
     find(".PresetSelectModal .board_preset_key").select(preset_key)
     find(".apply_button").click
   end
 
   def kifu_read_run
-    global_menu_open
+    sidebar_open
     menu_item_click("棋譜の入力")
     find(".KifuReadModal textarea").set("68S", clear: :backspace)
     find(".KifuReadModal .submit_handle").click

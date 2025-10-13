@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
       # 再来
       begin
         visit_app
-        global_menu_open
+        sidebar_open
         gate_modal_open_handle                               # 「入退室」を自分でクリックする
         find(".new_room_key input").set(:test_room)  # 合言葉を入力する
         find(".new_user_name").find(:fillable_field, with: :alice) # 以前入力したニックネームが復元されている

@@ -28,7 +28,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       visit_to "/swars/battles/#{@key}"
       find(".ShogiPlayer .button.first").click # 0手目
       find(".ShogiPlayer .button.next").click  # 1手目
-      global_menu_open
+      sidebar_open
     end
     it "棋譜表示" do
       menu_item_sub_menu_click("棋譜表示")
@@ -66,7 +66,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
 
   it "本家" do
     visit_to "/swars/battles/#{@key}"
-    global_menu_open
+    sidebar_open
     switch_to_window(window_opened_by { menu_item_click("本家") })
     assert { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
   end

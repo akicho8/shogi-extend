@@ -43,7 +43,7 @@ module SharedMethods
   end
 
   def clock_open
-    global_menu_open
+    sidebar_open
     cc_modal_open_handle             # 「対局時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
     clock_switch_toggle          # 設置する

@@ -134,7 +134,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "ACTION" do
     it "プレイヤー情報" do
       visit_to "/swars/search", query: "YamadaTaro 持ち時間:10分"
-      global_menu_open
+      sidebar_open
       find(".swars_users_key_handle").click
       if false
         assert_current_path "/swars/users/YamadaTaro/?query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86&tab_index=0"
@@ -153,7 +153,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "日時のカラムを非表示にする" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
 
         column_toggle_menu_open
         menu_item_sub_menu_click("日時")
@@ -163,7 +163,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "保存している" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         column_toggle_menu_open
         menu_item_sub_menu_click("日時")
 
@@ -181,7 +181,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "一覧から盤面に切り替える" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".is_layout_board").click
         assert_selector(".SwarsBattleIndexBoard")
         assert_var_eq(:scene_key, "critical_turn") # 盤面の局面の初期値
@@ -189,7 +189,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "盤面を開戦から終局に変更する" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".is_layout_board").click
         find(".is_scene_turn_max").click
         assert_var_eq(:scene_key, "turn_max")
@@ -198,7 +198,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       describe "別タブで開く系" do
         it "commandを押しながら盤面をクリックすると別タブで開く" do
           visit_to "/swars/search", query: "YamadaTaro"
-          global_menu_open
+          sidebar_open
           window = window_opened_by(wait: 10) { find(".is_layout_board").click(:meta) }
           switch_to_window(window)
           assert_selector(".SwarsBattleIndexBoard", wait: 10)
@@ -206,7 +206,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         it "commandを押しながら終局をクリックすると別タブで開く" do
           visit_to "/swars/search", query: "YamadaTaro"
-          global_menu_open
+          sidebar_open
           window = window_opened_by(wait: 10) { find(".is_scene_turn_max").click(:meta) }
           switch_to_window(window)
           assert_var_eq(:scene_key, "turn_max")
@@ -225,7 +225,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "サイドバーから変更する" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".per_change_menu_item").click
         find(".is_per1").click
         assert_var_eq(:per, 1)
@@ -234,7 +234,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "保存している" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".per_change_menu_item").click
         find(".is_per1").click
 
@@ -256,7 +256,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         login_by :admin
 
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
         assert_current_path "/swars/direct-download", ignore_query: true
 
@@ -281,7 +281,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         login_by :admin
 
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".swars_users_key_download_all_handle").click # 「古い棋譜の補完」をクリック
         assert_current_path "/swars/users/YamadaTaro/download-all", ignore_query: true
 
@@ -329,7 +329,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "ホーム画面に追加" do
       it "works" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".home_bookmark_handle").click
         assert_selector(".dialog.modal.is-active")
         text_click("わかった")
@@ -339,7 +339,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "外部APPショートカット" do
       before do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".external_app_menu_item").click
       end
 
@@ -357,7 +357,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "KENTO_API" do
       it "works" do
         visit_to "/swars/search", query: "YamadaTaro"
-        global_menu_open
+        sidebar_open
         find(".swars_users_key_kento_api_menu_item").click
 
         # 移動後
@@ -375,10 +375,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "棋譜のファイル保存" do
     it "works" do
       visit_to "/swars/search", query: "YamadaTaro"
-      global_menu_open
+      sidebar_open
       column_toggle_menu_open
       menu_item_sub_menu_click("保存 (UTF-8)")
-      global_menu_close
+      sidebar_close
       table_in { first(".kif_save_as_utf8").click }
       assert_text "たぶんダウンロードしました"
     end
@@ -387,10 +387,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "KI2形式の棋譜コピー" do
     it "works" do
       visit_to "/swars/search", query: "YamadaTaro"
-      global_menu_open
+      sidebar_open
       column_toggle_menu_open
       menu_item_sub_menu_click("コピー (KI2)")
-      global_menu_close
+      sidebar_close
       table_in { first(".ki2_copy").click }
       assert_text "コピーしました"
       assert_clipboard(/^▲/)
@@ -398,13 +398,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   def default_swars_id_set
-    global_menu_open
+    sidebar_open
     find(".swars_default_user_key_set_handle").click
     find(".post_handle").click
   end
 
   def default_swars_id_unset
-    global_menu_open
+    sidebar_open
     find(".swars_default_user_key_set_handle").click
     find("#form_part-swars_search_default_key").set("")
     find(".post_handle").click

@@ -30,7 +30,7 @@ RSpec.describe type: :system, share_board_spec: true do
       turn_minus_one
       assert_turn(0)                                 # 0手目に戻せてる
 
-      global_menu_open
+      sidebar_open
       menu_item_click("局面の転送")                 # モーダルを開く
       find(:button, text: "転送する", exact_text: true).click   # 反映する
 

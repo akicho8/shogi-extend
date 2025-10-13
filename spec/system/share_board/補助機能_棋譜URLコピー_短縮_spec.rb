@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_app
-    global_menu_open
+    sidebar_open
     Clipboard.write("")
     menu_item_click("棋譜URLコピー (短縮)")
     assert_text("棋譜再生用の短縮URLをコピーしました")

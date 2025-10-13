@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(selector)
     visit_app
 
-    global_menu_open
+    sidebar_open
     menu_item_click("設定")               # モーダルを開く
     find(".setting_tab_ui").click         # 「その他」タブ
     find(:label, text: selector, exact_text: true).click

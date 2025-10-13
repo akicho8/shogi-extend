@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "部屋を立てていない場合は普通に局面編集に入れる" do
     visit_app
-    global_menu_open
+    sidebar_open
     menu_item_click("局面編集")
     piece_move("77", "76")
     find(".button", text: "編集完了", exact_text: true)
@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a { visit_room(user_name: :alice) }
     window_b { visit_room(user_name: :bob)   }
     window_a do
-      global_menu_open
+      sidebar_open
       menu_item_click("局面編集")
       find(:button, "理解した上で編集する").click
       piece_move("77", "76")

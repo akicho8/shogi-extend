@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a { visit_room(user_name: :alice) }
     window_b { visit_room(user_name: :bob)   }
     window_a do
-      global_menu_open
+      sidebar_open
       menu_item_click("局面編集")
       find(:button, "理解した上で編集する").click
       piece_move("77", "76")

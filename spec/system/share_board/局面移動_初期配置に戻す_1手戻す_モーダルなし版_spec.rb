@@ -4,9 +4,9 @@ RSpec.describe type: :system, share_board_spec: true do
   it "初期配置に戻す" do
     setup_alice_bob_turn2
     window_a do
-      global_menu_open
+      sidebar_open
       find(".force_sync_turn_zero_handle").click     # 「初期配置に戻す」を押す
-      global_menu_close
+      sidebar_close
       assert_turn(0)                                 # 0手に戻っている
     end
     window_b do
@@ -17,9 +17,9 @@ RSpec.describe type: :system, share_board_spec: true do
   it "1手戻す" do
     setup_alice_bob_turn2
     window_a do
-      global_menu_open
+      sidebar_open
       find(".force_sync_turn_previous_handle").click # 「1手戻す」を押す
-      global_menu_close
+      sidebar_close
       assert_turn(1)                                 # 1手目に戻っている
     end
     window_b do

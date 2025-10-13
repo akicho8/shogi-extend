@@ -197,11 +197,11 @@ if true
       `open #{save_page}`
     end
 
-    def global_menu_open
+    def sidebar_open
       find(".sidebar_toggle_navbar_item").click
     end
 
-    def global_menu_close
+    def sidebar_close
       find(".sidebar_close_handle").click
     end
 

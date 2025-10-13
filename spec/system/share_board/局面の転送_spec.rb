@@ -26,7 +26,7 @@ RSpec.describe type: :system, share_board_spec: true do
       sp_controller_click("previous")
       assert_turn(1)
 
-      global_menu_open
+      sidebar_open
       menu_item_click("局面の転送")                          # モーダルを開く
       find(:button, text: "転送する", exact_text: true).click # 反映する
     end

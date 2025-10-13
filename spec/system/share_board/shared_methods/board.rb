@@ -19,7 +19,7 @@ module SharedMethods
   end
 
   def turn_minus_one
-    global_menu_open
+    sidebar_open
     find(".turn_change_to_previous_modal_open_handle").click # 「1手戻す」モーダルを開く
     find(".apply_button").click                              # 「N手目まで戻る」
   end

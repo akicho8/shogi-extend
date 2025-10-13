@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     window_b do
       visit_room(user_name: :bob)
-      global_menu_open                  # サイドメニューを開く
+      sidebar_open                  # サイドメニューを開く
       cc_modal_open_handle                  # 「対局時計」を開く
       clock_box_form_eq(:black, 1, 2, 3, 4) # alice が操作中の設定が届いている
     end

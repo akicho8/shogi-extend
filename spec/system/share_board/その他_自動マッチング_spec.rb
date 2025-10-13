@@ -9,11 +9,11 @@ RSpec.describe type: :system, share_board_spec: true do
       visit_app(user_name: :bob, xmatch_auth_key: "handle_name_required")
     end
     window_a do
-      global_menu_open
+      sidebar_open
       menu_item_click("自動マッチング")                # モーダルを開く
     end
     window_b do
-      global_menu_open
+      sidebar_open
       menu_item_click("自動マッチング")                # モーダルを開く
     end
     window_a do
@@ -43,7 +43,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a do
       visit_app(user_name: :alice, xmatch_auth_key: "handle_name_required")
 
-      global_menu_open
+      sidebar_open
       menu_item_click("自動マッチング")          # モーダルを開く
       find(".rule_self_05_00_00_5").click         # 自分vs自分
       xmatch_modal_close
@@ -58,7 +58,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_a do
       visit_app(user_name: :alice, xmatch_wait_max: @xmatch_wait_max, xmatch_auth_key: "handle_name_required")
 
-      global_menu_open
+      sidebar_open
       menu_item_click("自動マッチング")          # モーダルを開く
       find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 

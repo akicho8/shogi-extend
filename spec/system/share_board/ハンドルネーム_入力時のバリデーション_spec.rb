@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "works" do
     visit_app(ng_word_check_p: true)
-    global_menu_open
+    sidebar_open
     menu_item_click("ハンドルネーム変更")
 
     case1("")

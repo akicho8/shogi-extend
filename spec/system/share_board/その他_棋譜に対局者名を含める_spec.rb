@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "部屋を立てていないときはURLから取得する" do
     visit_app(title: "(title)", black: "(alice)")
-    global_menu_open
+    sidebar_open
     menu_item_sub_menu_click("棋譜表示")
     switch_to_window_by do
       menu_item_click("KIF")
@@ -25,7 +25,7 @@ RSpec.describe type: :system, share_board_spec: true do
     window_b { case1(:bob)   }
     window_c { case1(:carol) }
     window_a do
-      global_menu_open
+      sidebar_open
       menu_item_sub_menu_click("棋譜表示")
       switch_to_window_by do
         menu_item_click("KIF")
@@ -59,7 +59,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order => "b,d,a,c",
         :title => "(title)",
       })
-    global_menu_open
+    sidebar_open
     menu_item_sub_menu_click("棋譜表示")
     switch_to_window_by do
       menu_item_click("KIF")

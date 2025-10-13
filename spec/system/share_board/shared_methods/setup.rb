@@ -58,7 +58,7 @@ module SharedMethods
   end
 
   def room_menu_open_and_input(room_key, user_name)
-    global_menu_open
+    sidebar_open
     gate_modal_open_handle                               # 「入退室」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
@@ -71,7 +71,7 @@ module SharedMethods
   end
 
   def room_setup_by_fillin_params
-    global_menu_open
+    sidebar_open
     gate_modal_open_handle                  # 「入退室」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
@@ -100,7 +100,7 @@ module SharedMethods
 
   # 退室
   def gate_leave_handle
-    global_menu_open
+    sidebar_open
     gate_modal_open_handle        # 「入退室」を自分でクリックする
     first(".gate_leave_handle").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる

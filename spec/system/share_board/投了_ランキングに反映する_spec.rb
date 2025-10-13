@@ -19,7 +19,7 @@ RSpec.describe "投了_ランキングに反映する", type: :system, share_boa
     end
     window_a do
       give_up_run
-      global_menu_open
+      sidebar_open
       menu_item_click("対局履歴")
       within(".modal") do
         assert_text(:alice)

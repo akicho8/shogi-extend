@@ -25,9 +25,9 @@ RSpec.describe type: :system do
     visit_to "/rack"                                                       # トップページに移動して
     find(".title", text: "TEST_BOOK1", exact_text: true).click           # さっき作った問題集を選択して
     find(".play_start_handle").click                                     # START ボタンで開始する
-    global_menu_open                                                      # メニューを開く
+    sidebar_open                                                      # メニューを開く
     Capybara.within(".soldier_flop_key") { Capybara.find(:label, text: "する", exact_text: true).click } # 「盤上の駒を左右反転」する
-    global_menu_close                                                      # メニューを閉じる
+    sidebar_close                                                      # メニューを閉じる
     within(first(".ShogiPlayer")) { piece_move("37", "36") }             # 1手目 76歩 (左右反転しているため36歩) を入力すると相手が次を指し、
     within(first(".ShogiPlayer")) { piece_move("87", "86") }             # 3手目 26歩 (左右反転しているため86歩) を入力すると正解して
     assert_selector(".play_start_handle")                                # 問題集の画面に戻る

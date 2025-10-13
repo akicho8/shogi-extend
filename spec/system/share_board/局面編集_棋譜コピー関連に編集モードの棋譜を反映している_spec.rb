@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_app
-    global_menu_open
+    sidebar_open
     menu_item_click("局面編集")
     find(".ShogiPlayer .ToolBelt .dropdown:first-child").click    # 左から1つ目の dropdown をクリック
     menu_item_sub_menu_click("詰将棋")

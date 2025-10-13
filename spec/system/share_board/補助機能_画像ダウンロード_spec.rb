@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_app
-    global_menu_open
+    sidebar_open
     menu_item_click("画像ダウンロード #0")                   # 開く
     assert_selector(".ImageDlModal")                         # モーダルが開いている
 
