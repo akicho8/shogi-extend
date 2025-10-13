@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 import ClockBoxModal  from "./ClockBoxModal.vue"

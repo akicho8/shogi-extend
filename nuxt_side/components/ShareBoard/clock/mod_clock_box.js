@@ -5,7 +5,7 @@ const CC_KOREYORI_DELAY       = 1.0  // N秒の発声とかぶるためすこし
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
 import { CcBehaviorInfo     } from "./cc_behavior_info.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export const mod_clock_box = {
@@ -67,7 +67,7 @@ export const mod_clock_box = {
       ].forEach(column => {
         const key = `clock_box.${column}`
         const value = this.$route.query[key]
-        if (Gs.present_p(value)) {
+        if (GX.present_p(value)) {
           const iv = parseInt(value)
           this.$set(this.cc_params[0], column, iv)
         }
@@ -178,13 +178,13 @@ export const mod_clock_box = {
     },
 
     cc_read_koreyori(sec) {
-      Gs.delay_block(CC_KOREYORI_DELAY, () => {
+      GX.delay_block(CC_KOREYORI_DELAY, () => {
         this.cc_talk(`これより1手${sec}秒でお願い致します`)
       })
     },
 
     cc_extra_koreyori(sec) {
-      Gs.delay_block(CC_KOREYORI_DELAY, () => {
+      GX.delay_block(CC_KOREYORI_DELAY, () => {
         this.cc_talk(`考慮時間が0になったら負けなので御注意ください`)
       })
     },
@@ -251,8 +251,8 @@ export const mod_clock_box = {
       this.cc_params_save()
     },
     cc_params_apply_without_save() {
-      Gs.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
-      Gs.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
+      GX.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
+      GX.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
 
       const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
       this.clock_box.rule_set_all_by_ary(ary)
@@ -261,10 +261,10 @@ export const mod_clock_box = {
     // 共有将棋盤では扱いやすいように持ち時間は分にしている
     // 一方、時計は秒で管理しているため秒単位に変換する
     cc_params_one_to_clock_box_params(params) {
-      Gs.assert(Gs.present_p(params.initial_main_min), "Gs.present_p(params.initial_main_min)")
-      Gs.assert(Gs.present_p(params.initial_read_sec), "Gs.present_p(params.initial_read_sec)")
-      Gs.assert(Gs.present_p(params.initial_extra_min), "Gs.present_p(params.initial_extra_min)")
-      Gs.assert(Gs.present_p(params.every_plus), "Gs.present_p(params.every_plus)")
+      GX.assert(GX.present_p(params.initial_main_min), "GX.present_p(params.initial_main_min)")
+      GX.assert(GX.present_p(params.initial_read_sec), "GX.present_p(params.initial_read_sec)")
+      GX.assert(GX.present_p(params.initial_extra_min), "GX.present_p(params.initial_extra_min)")
+      GX.assert(GX.present_p(params.every_plus), "GX.present_p(params.every_plus)")
 
       return {
         initial_main_sec:  params.initial_main_min * 60,
@@ -367,7 +367,7 @@ export const mod_clock_box = {
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
     clock_share_data_receive(params) {
-      Gs.assert(Gs.present_p(params), "Gs.present_p(params)")
+      GX.assert(GX.present_p(params), "GX.present_p(params)")
       this.tl_add("時計", `${this.user_name} は時計情報を受信して反映した`, params)
       if (params.clock_box_attributes == null) {
         this.cc_destroy()                                       // 時計を捨てたことを同期
@@ -429,7 +429,7 @@ export const mod_clock_box = {
     },
 
     cc_params_inspect(params) {
-      Gs.assert(_.isArray(params), "_.isArray(params)")
+      GX.assert(_.isArray(params), "_.isArray(params)")
       const values = params.map(params => CcRuleInfo.cc_params_keys.map(e => params[e]))
       return JSON.stringify(values)
     },

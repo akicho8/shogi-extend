@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
 export class ValidationInfo extends ApplicationMemoryRecord {
@@ -16,8 +16,8 @@ export class ValidationInfo extends ApplicationMemoryRecord {
     return [
       {
         name: "長さ",
-        should_be: c => `長さが${Gs.xtime_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
-        human_value: (c, e) => `${Gs.xtime_format_human_hms(e.duration)}`,
+        should_be: c => `長さが${GX.xtime_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
+        human_value: (c, e) => `${GX.xtime_format_human_hms(e.duration)}`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
@@ -33,7 +33,7 @@ export class ValidationInfo extends ApplicationMemoryRecord {
       {
         name: "容量",
         should_be: c => `容量が ${this.MP4_SIZE_MB_MAX} MB以下`,
-        human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)} MB`,
+        human_value: (c, e) => `${GX.number_round(e.file_size / (1024 * 1024), 2)} MB`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
@@ -61,7 +61,7 @@ export class ValidationInfo extends ApplicationMemoryRecord {
       {
         name: "映像BR",
         should_be: c => `映像BRが ${this.MP4_VIDEO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
-        human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)} kbps`,
+        human_value: (c, e) => `${GX.number_round(e.video_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "blank",
         alert_icon_type: "is-danger",
@@ -75,13 +75,13 @@ export class ValidationInfo extends ApplicationMemoryRecord {
       {
         name: "音声BR",
         should_be: c => `音声BRが ${this.MP4_AUDIO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
-        human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)} kbps`,
+        human_value: (c, e) => `${GX.number_round(e.audio_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
-            if (Gs.present_p(e.audio_stream)) {
+            if (GX.present_p(e.audio_stream)) {
               return e.audio_bit_rate >= this.MP4_AUDIO_BIT_RATE_KBPS_MAX * 1024 || true
             }
           }
@@ -97,7 +97,7 @@ export class ValidationInfo extends ApplicationMemoryRecord {
         alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
-            if (Gs.present_p(e.audio_stream)) {
+            if (GX.present_p(e.audio_stream)) {
               return e.audio_stream.codec_name === "aac" && e.audio_stream.profile === "LC"
             }
           }
@@ -107,7 +107,7 @@ export class ValidationInfo extends ApplicationMemoryRecord {
       {
         name: "アスペクト比",
         should_be: c => `アスペクト比が ${c.TWITTER_ASPECT_RATIO_MAX} 以下`,
-        human_value: (c, e) => Gs.number_round(e.aspect_ratio_max, 2),
+        human_value: (c, e) => GX.number_round(e.aspect_ratio_max, 2),
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",

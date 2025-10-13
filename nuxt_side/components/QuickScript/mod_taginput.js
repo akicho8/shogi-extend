@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_taginput = {
   data() {
@@ -14,10 +14,10 @@ export const mod_taginput = {
     },
     // 入力されるたびに実行する
     taginput_typing_handle(form_part, text) {
-      text = Gs.str_normalize_for_ac(text)
+      text = GX.str_normalize_for_ac(text)
       const av = []
       _.each(form_part.elems, (value, key) => {
-        if (Gs.str_normalize_for_ac(key).indexOf(text) >= 0) {
+        if (GX.str_normalize_for_ac(key).indexOf(text) >= 0) {
           av.push(key)
         }
       })

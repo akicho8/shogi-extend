@@ -60,7 +60,7 @@
 <script>
 import { support_child } from "../support_child.js"
 import { mod_urls } from "./mod_urls.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export default {
   name: "ActionLogModal",
@@ -78,9 +78,9 @@ export default {
     }
   },
   mounted() {
-    Gs.assert(this.viewpoint === "white" || this.viewpoint === "black")
-    Gs.assert('sfen' in this.action_log, "'sfen' in this.action_log")
-    Gs.assert('turn' in this.action_log, "'turn' in this.action_log")
+    GX.assert(this.viewpoint === "white" || this.viewpoint === "black")
+    GX.assert('sfen' in this.action_log, "'sfen' in this.action_log")
+    GX.assert('turn' in this.action_log, "'turn' in this.action_log")
   },
   methods: {
     close_handle() {

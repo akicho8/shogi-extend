@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 import QueryString from "query-string"
@@ -19,12 +19,12 @@ export const mod_chore = {
     goto_custom_search(e) {
       return this.goto_other_page(e, () => ({
         name: "swars-search-custom",
-        query: Gs.hash_compact({user_key: this.xi.current_swars_user_key}),
+        query: GX.hash_compact({user_key: this.xi.current_swars_user_key}),
       }))
     },
 
     goto_other_page(e, func) {
-      if (this.xi && Gs.present_p(this.xi.current_swars_user_key)) {
+      if (this.xi && GX.present_p(this.xi.current_swars_user_key)) {
         this.sfx_click()
         const url = this.$router.resolve(func()).href
         if (this.keyboard_meta_p(e)) {
@@ -41,7 +41,7 @@ export const mod_chore = {
     show_url_all_open_handle() {
       this.sidebar_close()
       this.sfx_click()
-      if (this.xi && Gs.present_p(this.xi.records)) {
+      if (this.xi && GX.present_p(this.xi.records)) {
         this.xi.records.forEach(row => {
           this.other_window_open(this.show_url(row))
         })

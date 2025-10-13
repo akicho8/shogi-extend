@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { MessageNgWordList } from "./message_ng_word_list.js"
 
 export class MessageValidator {
@@ -38,9 +38,9 @@ export class MessageValidator {
 
   get normalized_source() {
     let s = this.source
-    s = Gs.str_space_remove(s)
+    s = GX.str_space_remove(s)
     // s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
-    s = Gs.hankaku_format(s)
+    s = GX.hankaku_format(s)
     return s
   }
 }

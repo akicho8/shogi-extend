@@ -5,7 +5,7 @@ pre.QuickScriptViewValueAsPre
 
 <script>
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export default {
   name: "QuickScriptViewValueAsPre",

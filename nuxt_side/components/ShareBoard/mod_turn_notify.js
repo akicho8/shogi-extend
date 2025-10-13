@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_turn_notify = {
   data() {
@@ -37,7 +37,7 @@ export const mod_turn_notify = {
     // this.order_unit.order_state.teams[0].length             // => 2
     // this.order_unit.order_state.teams[1].length             // => 2
     __tn_message_prefix(params) {
-      Gs.assert(this.order_unit, "this.order_unit")
+      GX.assert(this.order_unit, "this.order_unit")
 
       if (this.order_unit.order_state.state_name === "O2State") {           // 正確なチーム分けモードなら
         const turn = params.lmi.next_turn_offset

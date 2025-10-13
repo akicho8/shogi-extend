@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Quiz } from "./quiz.js"
 
 export class QuizTemplateInfo extends ApplicationMemoryRecord {
@@ -168,7 +168,7 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
   }
 
   static get sample() {
-    return Gs.ary_sample(this.values)?.to_quiz
+    return GX.ary_sample(this.values)?.to_quiz
   }
 
   get to_quiz() {
@@ -176,6 +176,6 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
   }
 
   get shuffled_items() {
-    return Gs.ary_shuffle([this.left_value, this.right_value])
+    return GX.ary_shuffle([this.left_value, this.right_value])
   }
 }

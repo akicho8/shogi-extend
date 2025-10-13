@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_sfen_share = {
   data() {
@@ -16,10 +16,10 @@ export const mod_sfen_share = {
       const lmi = e.last_move_info
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
-      Gs.assert(this.current_sfen, "this.current_sfen")
+      GX.assert(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
-        Gs.assert(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        Gs.assert(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
+        GX.assert(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
+        GX.assert(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.rs_failed_count = 0    // 着手したので再送回数を0にしておく
@@ -112,7 +112,7 @@ export const mod_sfen_share = {
         // 自分の時計は変更しない
       } else {
         // 他者の時計の内部情報を更新する
-        Gs.assert(params.clock_box_params.cc_behavior_key === "cc_behavior_silent", 'params.clock_box_params.cc_behavior_key === "cc_behavior_silent"')
+        GX.assert(params.clock_box_params.cc_behavior_key === "cc_behavior_silent", 'params.clock_box_params.cc_behavior_key === "cc_behavior_silent"')
         if (true) {
           this.clock_box_share_broadcasted(params.clock_box_params)
         } else {
@@ -179,7 +179,7 @@ export const mod_sfen_share = {
 
     sfen_shared_after_notice(params) {
       this.next_turn_message = null
-      if (Gs.blank_p(params.illegal_names)) {                // 反則がなかった場合
+      if (GX.blank_p(params.illegal_names)) {                // 反則がなかった場合
         if (this.yomiagable_p) {
           this.sb_talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
             onend: () => this.sb_talk(params.lmi.yomiage, {          // 「7 6 ふー！」
@@ -216,7 +216,7 @@ export const mod_sfen_share = {
     // 自分が反則した場合に自動投了が有効なら投了する
     illegal_then_give_up(params) {
       if (this.received_from_self(params)) {
-        if (Gs.present_p(params.illegal_names)) {
+        if (GX.present_p(params.illegal_names)) {
           this.auto_resign_then_give_up()
         }
       }
@@ -225,14 +225,14 @@ export const mod_sfen_share = {
     // 反則の状態を記録する
     illegal_logging(params) {
       if (this.received_from_self(params)) {
-        if (Gs.present_p(params.illegal_names)) {
+        if (GX.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
             const body = [
               params.from_user_name,
               params.illegal_names,
               this.current_url,
             ]
-            this.ac_log({subject: "反則発動", body: Gs.short_inspect(body)})
+            this.ac_log({subject: "反則発動", body: GX.short_inspect(body)})
           }
         }
       }

@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { FurigomaPawn } from "./furigoma_pawn.js"
 
 export class FurigomaPack {
@@ -15,16 +15,16 @@ export class FurigomaPack {
       shakashaka_count: null,      // しゃかしゃかする回数 0 なら「歩5枚」
       ...options,
     }
-    if (!(this.options.size >= 1 && Gs.odd_p(this.options.size))) {
+    if (!(this.options.size >= 1 && GX.odd_p(this.options.size))) {
       throw new Error(`歩の枚数は1以上の奇数を指定する: ${this.options.size}`)
     }
-    this.values = Gs.n_times_collect(this.options.size, () => new FurigomaPawn(this.options))
+    this.values = GX.n_times_collect(this.options.size, () => new FurigomaPawn(this.options))
     this.count = 0
   }
 
   // 指定回数だけシャッフルする
   shaka_and_shaka() {
-    Gs.n_times(this.shakashaka_count, () => this.shaka())
+    GX.n_times(this.shakashaka_count, () => this.shaka())
   }
 
   shaka() {
@@ -62,7 +62,7 @@ export class FurigomaPack {
     if (v != null) {
       return parseInt(v)
     }
-    return Gs.irand_range(10, 20)
+    return GX.irand_range(10, 20)
   }
 
   get inspect() {

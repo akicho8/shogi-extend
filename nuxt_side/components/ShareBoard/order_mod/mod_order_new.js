@@ -3,7 +3,7 @@
 import { OsChange } from "./os_change.js"
 import { OrderUnit } from "./order_unit/order_unit.js"
 import OrderSettingModal from "./OrderSettingModal.vue"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_order_new = {
   data() {
@@ -34,7 +34,7 @@ export const mod_order_new = {
       if (this.os_modal_instance == null) {
 
         // 動かしている途中で消すとエラーになる
-        // Gs.delay_block(5, () => this.os_modal_close())
+        // GX.delay_block(5, () => this.os_modal_close())
 
         if (this.room_is_empty_p()) { return }
 
@@ -43,7 +43,7 @@ export const mod_order_new = {
 
         this.os_modal_init()
 
-        Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
+        GX.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
         // this.gate_modal_close()
         this.os_modal_instance = this.modal_card_open({
           component: OrderSettingModal,
@@ -51,7 +51,7 @@ export const mod_order_new = {
           canCancel: [],
           // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
           onCancel: () => {
-            Gs.assert(false, "must not happen")
+            GX.assert(false, "must not happen")
             this.sfx_click()
             this.os_modal_close()
           },
@@ -74,7 +74,7 @@ export const mod_order_new = {
       this.new_v.order_unit.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
     },
     os_options_copy_a_to_b(a, b) {
-      Gs.assert_kind_of_integer(a.change_per)
+      GX.assert_kind_of_integer(a.change_per)
 
       b.foul_mode_key                = a.foul_mode_key
       b.auto_resign_key              = a.auto_resign_key
@@ -112,7 +112,7 @@ export const mod_order_new = {
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
     new_order_share(message) {
-      Gs.assert(this.new_v.order_unit, "this.new_v.order_unit")
+      GX.assert(this.new_v.order_unit, "this.new_v.order_unit")
       const params = {
         order_unit: this.new_v.order_unit.attributes,
         message: message,
@@ -126,7 +126,7 @@ export const mod_order_new = {
       } else {
         this.tl_alert("new_order_share 自分→他者")
       }
-      if (Gs.present_p(params.message)) {
+      if (GX.present_p(params.message)) {
         this.al_add({...params, label: "順番更新"})
       }
 

@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import SbResendModal from "./SbResendModal.vue"
 
 const RS_ENABLE           = true // この機能を有効にするか？
@@ -40,7 +40,7 @@ export const mod_resend = {
       if (this.order_enable_p && this.order_unit.valid_p) {
         if (this.RS_RESEND_DELAY >= 0) {
           this.rs_resend_delay_cancel()
-          this.rs_resend_delay_id = Gs.delay_block(this.rs_resend_delay_real_sec, () => {
+          this.rs_resend_delay_id = GX.delay_block(this.rs_resend_delay_real_sec, () => {
             if (this.rs_send_success_p) {
               // このブロックが呼ばれる前に相手から応答があった
             } else {
@@ -53,7 +53,7 @@ export const mod_resend = {
     },
     rs_resend_delay_cancel() {
       if (this.rs_resend_delay_id) {
-        Gs.delay_stop(this.rs_resend_delay_id)
+        GX.delay_stop(this.rs_resend_delay_id)
         this.rs_resend_delay_id = null
       }
     },
@@ -98,7 +98,7 @@ export const mod_resend = {
       if (!this.RS_ENABLE) { return }
       if (this.order_enable_p) {
         // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
-        Gs.assert(params.rs_failed_count != null, "params.rs_failed_count != null")
+        GX.assert(params.rs_failed_count != null, "params.rs_failed_count != null")
         if (params.rs_failed_count >= 1) {
           const message = `次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.rs_failed_count}回目)`
           this.toast_warn(message, {duration: 1000 * RS_RESEND_TOAST_SEC, talk: false})
@@ -123,7 +123,7 @@ export const mod_resend = {
       if (params.to_connection_id === this.connection_id) { // いろんな人に届くため送信元の確認
         if (this.rs_seq_ids.includes(params.rs_seq_id)) {   // 最近送ったものなら
           if (this.RS_SUCCESS_DELAY >= 0) {
-            Gs.delay_block(this.RS_SUCCESS_DELAY, () => {   // デバッグ用のウェイト
+            GX.delay_block(this.RS_SUCCESS_DELAY, () => {   // デバッグ用のウェイト
               this.rs_send_success_p = true                 // 送信成功とする
               this.rs_modal_with_timer_close()              // 4秒後の場合ダイアログがすでに出ているので消す
               this.tl_alert("送信OK")

@@ -9,7 +9,7 @@
 // |-----------------------------------------------------+-----------------------------------------|
 
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
@@ -39,7 +39,7 @@ export const mod_room_cable = {
         }
 
         // 合言葉が復元できたとしても元々空であれば何もしない
-        if (Gs.blank_p(this.room_key)) {
+        if (GX.blank_p(this.room_key)) {
           return
         }
 
@@ -59,9 +59,9 @@ export const mod_room_cable = {
     ////////////////////////////////////////////////////////////////////////////////
 
     async room_create_from_modal(new_room_key, new_user_name) {
-      Gs.assert(this.ac_room == null)
-      Gs.assert(new_user_name, "new_user_name")
-      Gs.assert(new_room_key, "new_room_key")
+      GX.assert(this.ac_room == null)
+      GX.assert(new_user_name, "new_user_name")
+      GX.assert(new_room_key, "new_room_key")
 
       new_room_key = _.trim(new_room_key)
       new_user_name = HandleNameNormalizer.normalize(new_user_name)
@@ -81,9 +81,9 @@ export const mod_room_cable = {
 
     async room_create() {
       this.tl_puts("--> room_create")
-      Gs.assert(this.user_name, "this.user_name")
-      Gs.assert(this.room_key, "this.room_key")
-      Gs.assert(this.ac_room == null, "this.ac_room == null")
+      GX.assert(this.user_name, "this.user_name")
+      GX.assert(this.room_key, "this.room_key")
+      GX.assert(this.ac_room == null, "this.ac_room == null")
 
       await this.sleep(this.room_create_sleep)
 
@@ -190,7 +190,7 @@ export const mod_room_cable = {
 
     // 自分で送信したものを受信した
     received_from_self(object) {
-      Gs.assert("from_connection_id" in object, '"from_connection_id" in object')
+      GX.assert("from_connection_id" in object, '"from_connection_id" in object')
       return object.from_connection_id === this.connection_id
     },
 
@@ -201,9 +201,9 @@ export const mod_room_cable = {
 
     ////////////////////////////////////////////////////////////////////////////////
     sfen_share_data_receive(params) {
-      Gs.assert(Gs.present_p(params), "Gs.present_p(params)")
-      Gs.assert("sfen" in params, '"sfen" in params')
-      Gs.assert("turn" in params, '"turn" in params')
+      GX.assert(GX.present_p(params), "GX.present_p(params)")
+      GX.assert("sfen" in params, '"sfen" in params')
+      GX.assert("turn" in params, '"turn" in params')
 
       this.current_sfen = params.sfen
       this.current_turn = params.turn
@@ -234,7 +234,7 @@ export const mod_room_cable = {
 
     ////////////////////////////////////////////////////////////////////////////////
     room_is_empty_p() {
-      if (Gs.blank_p(this.ac_room)) {
+      if (GX.blank_p(this.ac_room)) {
         this.sfx_click()
         this.toast_warn("まず部屋を立てよう")
         return true
@@ -247,9 +247,9 @@ export const mod_room_cable = {
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
     // 合言葉と名前が入力済みなので共有可能か？ (未使用)
-    connectable_p() { return Gs.present_p(this.room_key) && Gs.present_p(this.user_name) },
+    connectable_p() { return GX.present_p(this.room_key) && GX.present_p(this.user_name) },
 
     url_room_key()         { return this.$route.query["room_key"] },   // URL 上の合言葉
-    url_room_key_exist_p() { return Gs.present_p(this.url_room_key) }, // URL 上の合言葉があるか？
+    url_room_key_exist_p() { return GX.present_p(this.url_room_key) }, // URL 上の合言葉があるか？
   },
 }

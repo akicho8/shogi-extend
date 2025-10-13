@@ -27,7 +27,7 @@
 import { TimeoutInfo } from "./timeout_info.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { support_child } from "../support_child.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export default {
   name: "TimeoutModal",
@@ -41,7 +41,7 @@ export default {
     }
   },
   created() {
-    Gs.assert(this.SB.clock_box, "this.SB.clock_box")
+    GX.assert(this.SB.clock_box, "this.SB.clock_box")
     this.snapshot_clock = this.SB.clock_box.duplicate
   },
   // mounted() {

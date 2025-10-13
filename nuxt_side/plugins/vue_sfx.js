@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
   console.log(`[${process.client ? 'CSR' : 'SSR'}][load] Howler`)
 }
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import { VolumeConfig } from "@/components/models/volume_config.js"
 import _ from "lodash"
@@ -83,9 +83,9 @@ export const vue_sfx = {
       options.src ??= require("@/assets/silent.mp3")
 
       if (options.volume_scale != null) {
-        options.volume *= Gs.map_range(options.volume_scale, 0, 10, 0.0, 2.0)
+        options.volume *= GX.map_range(options.volume_scale, 0, 10, 0.0, 2.0)
       }
-      options.volume *= Gs.map_range(this.g_common_volume_scale, 0, 10, 0.0, 2.0)
+      options.volume *= GX.map_range(this.g_common_volume_scale, 0, 10, 0.0, 2.0)
 
       return new Howl(options)
     },

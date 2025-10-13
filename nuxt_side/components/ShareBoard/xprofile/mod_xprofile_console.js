@@ -1,6 +1,6 @@
 // チャット内コマンドでのバッジ操作(なくてもよい)
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 

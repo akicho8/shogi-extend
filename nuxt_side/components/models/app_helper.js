@@ -3,7 +3,7 @@ import { HandleNameParser } from "@/components/models/handle_name/handle_name_pa
 export const AppHelper = {
   // as_full_url(path) {
   //   if (!path.match(/^http/)) {
-  //     Gs.assert(__NUXT__, "__NUXT__")
+  //     GX.assert(__NUXT__, "__NUXT__")
   //     path = __NUXT__.config.MY_SITE_URL + path
   //   }
   //   return path

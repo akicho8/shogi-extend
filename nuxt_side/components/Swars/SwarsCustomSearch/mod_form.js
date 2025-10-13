@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_form = {
   data() {
@@ -28,7 +28,7 @@ export const mod_form = {
     },
 
     swars_id_required_message() {
-      if (Gs.blank_p(this.user_key)) {
+      if (GX.blank_p(this.user_key)) {
         return "1つだけ入力してください"
       }
     },

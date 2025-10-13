@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import ForceSyncModal from "./ForceSyncModal.vue"
 import _ from "lodash"
 

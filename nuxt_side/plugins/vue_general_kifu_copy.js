@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { SimpleCache } from "@/components/models/simple_cache.js"
 
 const simple_cache = new SimpleCache()
@@ -40,7 +40,7 @@ export const vue_general_kifu_copy = {
     __general_kifu_copy_key(any_source, options) {
       // BODをコピーするときだけ turn が入っているので一応キーに含める
       const str = [any_source, options.to_format, (options.turn ?? "")].join("/")
-      return Gs.str_to_md5(str)
+      return GX.str_to_md5(str)
     },
 
     // 指定 URL の結果をクリップボードにコピーする
@@ -51,7 +51,7 @@ export const vue_general_kifu_copy = {
     // わけがわからんことになるので冗長だが read write に分けて書くことにした
     //
     //   async kif_clipboard_copy_from_url(url) {
-    //     const key = Gs.str_to_md5(url)
+    //     const key = GX.str_to_md5(url)
     //     const body = simple_cache.fetch(key, async () => {
     //       return await this.$axios.$get(url)
     //     })
@@ -59,7 +59,7 @@ export const vue_general_kifu_copy = {
     //   },
     //
     async kif_clipboard_copy_from_url(url) {
-      const key = Gs.str_to_md5(url)
+      const key = GX.str_to_md5(url)
 
       // 1回目
       if (simple_cache.empty_p(key)) {

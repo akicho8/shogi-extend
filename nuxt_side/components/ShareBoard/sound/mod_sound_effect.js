@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 const TORYO_BGM_KEYS = [
   // "bgm_ending1",

@@ -74,7 +74,7 @@ import { mouse_cursor_hidden_mixin  } from "../models/mouse_cursor_hidden_mixin.
 import { mobile_screen_adjust_mixin } from "../models/mobile_screen_adjust_mixin.js"
 import { mod_keyboard_shortcut      } from "./mod_keyboard_shortcut.js"
 
-import { Gs                         } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export default {
   name: "XclockApp",
@@ -276,8 +276,8 @@ export default {
       }
     },
     rule_set(params) {
-      Gs.assert("initial_main_min" in params, '"initial_main_min" in params')
-      Gs.assert("initial_extra_min" in params, '"initial_extra_min" in params')
+      GX.assert("initial_main_min" in params, '"initial_main_min" in params')
+      GX.assert("initial_extra_min" in params, '"initial_extra_min" in params')
 
       params = {...params}
       params.initial_main_sec  = params.initial_main_min * 60

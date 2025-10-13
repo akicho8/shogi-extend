@@ -1,5 +1,5 @@
 import TimeoutModal from "./TimeoutModal.vue"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 const CC_TIMEOUT_BC_DELAY    = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミューレートをする用)
 const CC_TIMEOUT_JUDGE_DELAY = 10 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する
@@ -38,7 +38,7 @@ export const mod_clock_box_timeout = {
       this.auto_resign_then_give_up()           // 自動投了なら投了する
       this.cc_timeout_modal_open("self_notify") // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.CC_TIMEOUT_BC_DELAY}秒後にBC`)
-      Gs.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {
+      GX.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {
         this.clock_box_share("cc_behavior_timeout")      // その上で、時間切れをBCする
       })
     },
@@ -54,7 +54,7 @@ export const mod_clock_box_timeout = {
         this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.CC_TIMEOUT_JUDGE_DELAY}秒待ち`})
         this.tl_alert("審議中")
         this.cc_timeout_judge_delay_stop()
-        this.cc_timeout_judge_delay_id = Gs.delay_block(this.CC_TIMEOUT_JUDGE_DELAY, () => this.cc_timeout_modal_open("audo_judge"))
+        this.cc_timeout_judge_delay_id = GX.delay_block(this.CC_TIMEOUT_JUDGE_DELAY, () => this.cc_timeout_modal_open("audo_judge"))
         this.tl_add("TIME_LIMIT", `他者側 自己判断で${this.CC_TIMEOUT_JUDGE_DELAY}秒後にmodal表示予約 (ID:${this.cc_timeout_judge_delay_id})`)
       }
     },
@@ -62,7 +62,7 @@ export const mod_clock_box_timeout = {
     // 表示予約キャンセル
     cc_timeout_judge_delay_stop() {
       if (this.cc_timeout_judge_delay_id) {
-        Gs.delay_stop(this.cc_timeout_judge_delay_id)
+        GX.delay_stop(this.cc_timeout_judge_delay_id)
         this.cc_timeout_judge_delay_id = null
       }
     },
@@ -82,8 +82,8 @@ export const mod_clock_box_timeout = {
 
     // 時間切れモーダル発動
     cc_timeout_modal_open(timeout_key) {
-      Gs.assert(Gs.present_p(timeout_key), "Gs.present_p(timeout_key)")
-      Gs.assert(Gs.present_p(this.clock_box), "Gs.present_p(this.clock_box)")
+      GX.assert(GX.present_p(timeout_key), "GX.present_p(timeout_key)")
+      GX.assert(GX.present_p(this.clock_box), "GX.present_p(this.clock_box)")
 
       this.tl_alert("時間切れモーダル起動完了")
       this.sfx_stop_all()

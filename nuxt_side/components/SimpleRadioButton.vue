@@ -57,7 +57,7 @@ b-field.SimpleRadioButton(
 </template>
 
 <script>
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 // 使い方
 //  SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
@@ -122,7 +122,7 @@ export default {
     current()    { return this.real_model.fetch(this.real_value)                        },
     label()      { return this.real_model.field_label                                   },
     hint_str()   { return (this.real_model.hint_messages || []).join("")                },
-    hint_exist_p() { return Gs.present_p(this.hint_str) },
+    hint_exist_p() { return GX.present_p(this.hint_str) },
     field_message() {
       let str = null
       if (this.numeric_p) {

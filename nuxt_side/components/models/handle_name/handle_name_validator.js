@@ -10,7 +10,7 @@
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
@@ -75,7 +75,7 @@ export class HandleNameValidator {
 
     let s = this.normalized_source
     if (message == null) {
-      if (Gs.blank_p(s)) {
+      if (GX.blank_p(s)) {
         message = `${this.options.name}を入力してください`
       }
     }
@@ -115,16 +115,16 @@ export class HandleNameValidator {
 
   get normalized_source() {
     let s = this.source
-    s = Gs.str_control_chars_remove(s)
-    s = Gs.str_space_remove(s)
-    s = Gs.hankaku_format(s)    // バリデーションしやすくするため
+    s = GX.str_control_chars_remove(s)
+    s = GX.str_space_remove(s)
+    s = GX.hankaku_format(s)    // バリデーションしやすくするため
     return s
   }
 
   get message_sample() {
     const pepper = dayjs().format("YYYY-MM-DD")
-    const hash_number = Gs.str_to_hash_number([pepper, this.source].join("-"))
-    const prefix = Gs.ary_cycle_at(this.constructor.PREFIX_LIST, hash_number)
+    const hash_number = GX.str_to_hash_number([pepper, this.source].join("-"))
+    const prefix = GX.ary_cycle_at(this.constructor.PREFIX_LIST, hash_number)
     return `${prefix}${this.options.name}を入力してください`
   }
 }

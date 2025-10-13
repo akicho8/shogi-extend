@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export class AudioThemeInfo extends ApplicationMemoryRecord {
   static field_label = "BGM"
@@ -18,7 +18,7 @@ export class AudioThemeInfo extends ApplicationMemoryRecord {
 
   get duration_sec() {
     if (this.audio_part_a_duration) {
-      return Gs.number_round(this.audio_part_a_duration)
+      return GX.number_round(this.audio_part_a_duration)
     }
   }
 

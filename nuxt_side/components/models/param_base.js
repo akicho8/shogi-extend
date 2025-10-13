@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "./application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export class ParamBase extends ApplicationMemoryRecord {
@@ -18,12 +18,12 @@ export class ParamBase extends ApplicationMemoryRecord {
   // default_for(this)
   default_for(context) {
     let v = null
-    Gs.assert(this.default !== undefined || this.defaults !== undefined, `${this.key} の default と defaults が未定義`)
+    GX.assert(this.default !== undefined || this.defaults !== undefined, `${this.key} の default と defaults が未定義`)
     if (this.defaults) {
-      Gs.assert(context.$config.STAGE, "context.$config.STAGE")
+      GX.assert(context.$config.STAGE, "context.$config.STAGE")
       v = this.defaults[context.$config.STAGE] ?? this.defaults["production"] // || では development の false が無視されてしまう
     } else {
-      Gs.assert(this.default !== undefined, `${this.key} の default が未定義`)
+      GX.assert(this.default !== undefined, `${this.key} の default が未定義`)
       v = this.default
     }
 

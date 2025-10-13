@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 import Vue from "vue"
 
@@ -22,7 +22,7 @@ export class Quiz {
   // 一行の文章にする
   get to_s() {
     return [
-      Gs.presence(this.subject) ?? "どっちが好き？",
+      GX.presence(this.subject) ?? "どっちが好き？",
       "？",
       this.items.map(e => `${e}`).join("または"),
       "。",                     // 後ろに繋げる場合があるので読点を入れておく
@@ -31,7 +31,7 @@ export class Quiz {
 
   // すべて入力されているか？
   get valid_p() {
-    return [this.subject, ...this.items].every(e => Gs.present_p(e))
+    return [this.subject, ...this.items].every(e => GX.present_p(e))
   }
 
   // どれかがまだ入力されていない？
@@ -42,7 +42,7 @@ export class Quiz {
   // 内容のハッシュ
   // 入力前の状態と初期化した状態が同じハッシュになってしまうため使いづらい
   get content_hash() {
-    return Gs.str_to_md5([this.subject, ...this.items].join("/"))
+    return GX.str_to_md5([this.subject, ...this.items].join("/"))
   }
 
   // コンテンツの内容が同じか？ (再送信の表示に使いたい)
@@ -60,7 +60,7 @@ export class Quiz {
 
   // すべて空？ (つまり初期値の状態？)
   get empty_p() {
-    return Gs.blank_p(this.subject) && this.items.every(e => Gs.blank_p(e))
+    return GX.blank_p(this.subject) && this.items.every(e => GX.blank_p(e))
   }
 
   get attributes() {

@@ -1,5 +1,5 @@
 import { IntervalCounter } from '@/components/models/interval_counter.js'
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_sound_bug = {
   data() {
@@ -28,7 +28,7 @@ export const mod_sound_bug = {
       }
     },
     sound_bug_callback(counter) {
-      this.sb_talk(`${counter}.${Gs.irand(99999)}`)
+      this.sb_talk(`${counter}.${GX.irand(99999)}`)
     },
   },
 }

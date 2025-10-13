@@ -1,5 +1,5 @@
 import IllegalModal from "./IllegalModal.vue"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_illegal = {
   data() {
@@ -25,7 +25,7 @@ export const mod_illegal = {
     // 一般モードの反則チェックありで自動的に指摘するときの処理
     // 反則モーダル発動
     illegal_modal_handle(illegal_names) {
-      if (Gs.present_p(illegal_names)) {
+      if (GX.present_p(illegal_names)) {
         this.sfx_stop_all()
         this.sfx_play("lose") // おおげさに「ちーん」にしておく
         // const str = params.illegal_names.join("と")

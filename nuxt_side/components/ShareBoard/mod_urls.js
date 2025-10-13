@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { SimpleCache } from "@/components/models/simple_cache.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
@@ -17,8 +17,8 @@ export const mod_urls = {
     room_url_copy_handle() {
       if (this.room_is_empty_p()) { return }
 
-      Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
-      if (Gs.blank_p(this.room_key)) {
+      GX.assert(GX.present_p(this.room_key), "GX.present_p(this.room_key)")
+      if (GX.blank_p(this.room_key)) {
         // ここは通らないはず
         this.sfx_click()
         this.toast_warn("まだ合言葉を設定してません")
@@ -54,7 +54,7 @@ export const mod_urls = {
     async current_short_url_copy_handle() {
       this.sfx_click()
 
-      const key = Gs.str_to_md5(this.current_url)
+      const key = GX.str_to_md5(this.current_url)
 
       // 1回目
       if (simple_cache.empty_p(key)) {
@@ -99,9 +99,9 @@ export const mod_urls = {
 
     url_for(params) {
       params = {...params}
-      const format = Gs.hash_delete(params, "format")
+      const format = GX.hash_delete(params, "format")
       let extname = ""
-      if (Gs.present_p(format)) {
+      if (GX.present_p(format)) {
         extname = `.${format}`
       }
       return QueryString.stringifyUrl({

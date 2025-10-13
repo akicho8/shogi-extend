@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export const mod_battle_save = {
@@ -9,7 +9,7 @@ export const mod_battle_save = {
     },
 
     battle_save_by_win_location(win_location_key) {
-      Gs.assert(win_location_key)
+      GX.assert(win_location_key)
       const params = {
         room_key:         this.room_key,
         title:            this.current_title,

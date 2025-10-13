@@ -13,7 +13,7 @@ import ClientVoteModal from "./ClientVoteModal.vue"
 import { OrderUnit } from "../order_mod/order_unit/order_unit.js"
 import { Quiz } from "./quiz.js"
 import { VotedResult } from "./voted_result.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_client_vote = {
   data() {
@@ -61,7 +61,7 @@ export const mod_client_vote = {
     // お題に投票する
     client_vote_modal_handle() {
       this.sfx_play("se_deden")
-      Gs.delay_block(0.6, () => this.sb_talk(this.received_quiz.subject))
+      GX.delay_block(0.6, () => this.sb_talk(this.received_quiz.subject))
       this.modal_card_open({
         component: ClientVoteModal,
         canCancel: [],
@@ -84,8 +84,8 @@ export const mod_client_vote = {
 
     // 順番設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を順番設定に適用する
     voted_result_to_order_apply() {
-      Gs.assert(Gs.present_p(this.new_v), "Gs.present_p(this.new_v)")
-      Gs.assert(Gs.present_p(this.new_v.order_unit), "Gs.present_p(this.new_v.order_unit)")
+      GX.assert(GX.present_p(this.new_v), "GX.present_p(this.new_v)")
+      GX.assert(GX.present_p(this.new_v.order_unit), "GX.present_p(this.new_v.order_unit)")
       this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.voted_result.to_h) // 反映
       this.new_v.order_unit.teams_each_shuffle() // チーム内シャッフル実行
     },
@@ -113,7 +113,7 @@ export const mod_client_vote = {
     // まだ投票していない人たち
     vote_yet_user_names() {
       // return ["あああ", "いいいいいいいいい", "12345678901234567890123456789012345678901234567890123456789012345678901234567890", "１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０"]
-      return Gs.ary_minus(this.room_user_names, this.voted_result.user_names)
+      return GX.ary_minus(this.room_user_names, this.voted_result.user_names)
     },
   },
 }

@@ -1,6 +1,6 @@
 import _ from "lodash"
 import NodeEmoji from "node-emoji"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 const CLEAN_TRY_COUNT = 2
 
@@ -21,7 +21,7 @@ export class HandleNameParser {
   }
 
   constructor(source, options = {}) {
-    Gs.assert(Gs.present_p(source), "this.$gs.present_p(source) in HandleNameParser")
+    GX.assert(GX.present_p(source), "this.$gs.present_p(source) in HandleNameParser")
     this.source = source
     this.options = options
   }
@@ -36,7 +36,7 @@ export class HandleNameParser {
     s = s.replace(new RegExp(`[${this.constructor.DELETE_CHAR}]`, "g"), "")                     // "ali。ce"         → "alice"
 
     // 削除したい文字が連続する場合があるため数回洗浄する
-    Gs.n_times(CLEAN_TRY_COUNT, () => {
+    GX.n_times(CLEAN_TRY_COUNT, () => {
       s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX_CHARS}]+$`), "$1")         // "alice!"          → "alice"
       s = s.replace(new RegExp(`(.+?)(${this.constructor.DELETE_SUFFIX_WORD.join('|')})$`), "$1") // "aliceだよ"       → "alice"
       s = s.replace(/(.+)\(.*\)$/, "$1")                                                          // "alice123(xxx)"   → "alice123"

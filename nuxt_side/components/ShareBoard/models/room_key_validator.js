@@ -10,7 +10,7 @@
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class RoomKeyValidator {
@@ -53,7 +53,7 @@ export class RoomKeyValidator {
     let s = this.normalized_source
     let message = null
     if (message == null) {
-      if (Gs.blank_p(s)) {
+      if (GX.blank_p(s)) {
         message = `${this.options.name}を入力してください`
       }
     }

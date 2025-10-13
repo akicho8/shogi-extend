@@ -4,7 +4,7 @@ import { OxState } from "./ox_state.js"
 import { O1State } from "./o1_state.js"
 import { Item } from "./item.js"
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 // TODO: 最後にできれば Immutable にしたい
 export class O2State extends OxState {
@@ -20,20 +20,20 @@ export class O2State extends OxState {
   // 全体シャッフル
   // users_allocate だけだと3人の場合 2:1 になるため50%の確率で1:2にする
   shuffle_all() {
-    this.users_allocate(Gs.ary_shuffle(this.teams.flat()))
-    if (Gs.irand(this.teams.length) === 0) {
+    this.users_allocate(GX.ary_shuffle(this.teams.flat()))
+    if (GX.irand(this.teams.length) === 0) {
       this.swap_run()
     }
   }
 
   // チーム内シャッフル
   teams_each_shuffle() {
-    this.teams = this.teams.map(e => Gs.ary_shuffle(e))
+    this.teams = this.teams.map(e => GX.ary_shuffle(e))
     this.cache_clear()
   }
 
   swap_run() {
-    this.teams = Gs.ary_rotate(this.teams)
+    this.teams = GX.ary_rotate(this.teams)
     this.cache_clear()
   }
 
@@ -93,7 +93,7 @@ export class O2State extends OxState {
   // 黒から開始して約一周したと仮定したときのユーザーの配列(重複なし, null なし)
   // これは他のにコピーするときに使いやすい
   get black_start_order_uniq_users() {
-    const users = Gs.n_times_collect(this.round_size, turn => this.turn_to_item(turn, 1, 0))
+    const users = GX.n_times_collect(this.round_size, turn => this.turn_to_item(turn, 1, 0))
     return _.compact(_.uniq(users))
   }
 

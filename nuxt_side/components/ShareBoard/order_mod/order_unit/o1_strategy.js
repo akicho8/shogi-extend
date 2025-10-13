@@ -1,13 +1,13 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export class O1Strategy {
   constructor(size, turn, change_per, scolor) {
-    Gs.assert(size != null, "size != null")
-    Gs.assert(turn != null, "turn != null")
-    Gs.assert(change_per != null, "change_per != null")
-    Gs.assert(scolor != null, "scolor != null")
-    Gs.assert(change_per >= 1, "change_per >= 1")
+    GX.assert(size != null, "size != null")
+    GX.assert(turn != null, "turn != null")
+    GX.assert(change_per != null, "change_per != null")
+    GX.assert(scolor != null, "scolor != null")
+    GX.assert(change_per >= 1, "change_per >= 1")
 
     this.size = size          // ユーザーはN人いる
     this.turn = turn          // N手目
@@ -17,7 +17,7 @@ export class O1Strategy {
 
   // チームのインデックスを返す
   get team_index() {
-    return Gs.imodulo(this.turn, Location.count)
+    return GX.imodulo(this.turn, Location.count)
   }
 
   // チーム内のインデックスを返す
@@ -26,9 +26,9 @@ export class O1Strategy {
     if (this.size === 0) {
       return null
     }
-    const step = Gs.idiv(this.turn, Location.count * this.change_per) * Location.count
+    const step = GX.idiv(this.turn, Location.count * this.change_per) * Location.count
     const index = step + this.team_index
-    return Gs.imodulo(index, this.size)
+    return GX.imodulo(index, this.size)
   }
 
   // private

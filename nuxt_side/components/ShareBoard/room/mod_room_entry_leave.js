@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_room_entry_leave = {
   methods: {
@@ -7,9 +7,9 @@ export const mod_room_entry_leave = {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
       this.sfx_play("se_room_entry")
-      Gs.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
+      GX.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
 
-      Gs.delay_block(2.5, () => {
+      GX.delay_block(2.5, () => {
         if (this.received_from_self(params)) {
           this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
           if (!this.url_room_key_exist_p) { // 「入退室」から入室 (部屋のリンクから来ていない場合)
@@ -30,7 +30,7 @@ export const mod_room_entry_leave = {
       this.al_add({...params, label: "退室"})
       if (true) {
         this.sfx_play("se_room_leave")
-        Gs.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
+        GX.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
       } else {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`)
       }

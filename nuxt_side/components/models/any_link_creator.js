@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 import QueryString from "query-string"
 
@@ -27,7 +27,7 @@ export class AnyLinkCreator {
 
   get allowed_params() {
     const all_params = {...this.params, ...this.transform_params}
-    const compacted_params = Gs.hash_compact(all_params)
-    return Gs.hash_slice(compacted_params, ...this.allowed_keys)
+    const compacted_params = GX.hash_compact(all_params)
+    return GX.hash_slice(compacted_params, ...this.allowed_keys)
   }
 }

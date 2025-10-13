@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_room_key_autocomplete = {
   methods: {
@@ -11,7 +11,7 @@ export const mod_room_key_autocomplete = {
 
     // room_key を complement_room_keys (localStorage) に保存する
     room_keys_update_and_save_to_storage() {
-      if (Gs.present_p(this.room_key)) {
+      if (GX.present_p(this.room_key)) {
         let av = [this.room_key, ...this.complement_room_keys]
         av = _.uniq(av)
         av = _.take(av, this.room_keys_limit)

@@ -1,7 +1,7 @@
 // チャット発言送信
 
 import { CommandInfo } from "./command_info.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export const mod_console = {
@@ -16,7 +16,7 @@ export const mod_console = {
         let str = params.content
         str = str.replace(/^./, "")
         str = str.trim()
-        const args = Gs.str_split(str)
+        const args = GX.str_split(str)
         const command = args.shift()
         const info = CommandInfo.lookup(command)
         if (info == null) {
@@ -42,12 +42,12 @@ export const mod_console = {
 
     __console_result_valus_as_string(info, value) {
       if (!_.isString(value)) {
-        value = Gs.short_inspect(value)
+        value = GX.short_inspect(value)
       }
       if (info.preformat) {
         value = `<pre>${value}</pre>`
       } else {
-        value = Gs.str_simple_format(value)
+        value = GX.str_simple_format(value)
       }
       return value
     },

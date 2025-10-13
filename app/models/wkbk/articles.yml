@@ -878,7 +878,7 @@
   - moves_str: S*2c 2b1c 2c1b+ 1a1b G*2c
 - key: bf6b2631c27ceb02b59a1973f6bbc328
   user_id: 170
-  init_sfen: position sfen 7nl/5+B1k1/6Lp1/6p1p/7s1/9/9/9/9 b GS 1
+  init_sfen: position sfen 7nl/5+B1k1/6Lp1/6p1p/7s1/9/9/9/9 b GX 1
   time_limit_sec: 120
   difficulty: 4
   title: 大橋宗桂『将棋造物』2番 15手詰め

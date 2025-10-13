@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_form = {
   methods: {
@@ -53,7 +53,7 @@ export const mod_form = {
     //       } else {
     //         label = attrs
     //       }
-    //       Gs.assert(label != null, "label != null")
+    //       GX.assert(label != null, "label != null")
     //       return [key, label]
     //     })
     //   }

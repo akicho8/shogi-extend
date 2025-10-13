@@ -57,7 +57,7 @@
 <script>
 import _ from "lodash"
 import VueDraggable from "vuedraggable"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 import { OrderUnit } from "../order_unit/order_unit.js"
 
@@ -129,7 +129,7 @@ export default {
   },
   computed: {
     turn_test_range() {
-      return Gs.n_times_collect(50, turn => {
+      return GX.n_times_collect(50, turn => {
         const item = this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
         return item ? item.to_s : "?"
       }).join("")

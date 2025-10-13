@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export class TalkVolumeScaleInfo extends ApplicationMemoryRecord {
   static field_label = "音声"
@@ -13,9 +13,9 @@ export class TalkVolumeScaleInfo extends ApplicationMemoryRecord {
 
   static input_handle_callback(context, value) {
     const app = context.base
-    Gs.assert(app != null, "app != null")
+    GX.assert(app != null, "app != null")
     let message = null
-    if (Gs.present_p(app.user_name)) {
+    if (GX.present_p(app.user_name)) {
       message = `${app.user_call_name(app.user_name)}、こんにちは`
     } else {
       message = "こんにちは"

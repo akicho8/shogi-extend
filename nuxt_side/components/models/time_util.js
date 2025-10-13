@@ -19,7 +19,7 @@ dayjs.locale("ja")
 import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const TimeUtil = {
   create(...args) {
@@ -33,7 +33,7 @@ export const TimeUtil = {
   // テーブル内の行で表示する用
   // https://day.js.org/docs/en/parse/string-format
   format_row(t) {
-    if (Gs.blank_p(t)) {
+    if (GX.blank_p(t)) {
       return ""
     }
     const time = this.create(t)

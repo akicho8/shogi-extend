@@ -4,7 +4,7 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_urls = {
   methods: {
@@ -28,7 +28,7 @@ export const mod_urls = {
 
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
-      Gs.assert("format_key" in e, '"format_key" in e')
+      GX.assert("format_key" in e, '"format_key" in e')
       return this.url_merge({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別

@@ -1,8 +1,8 @@
 // 汎用コード
-import { Gs        } from "@/components/models/gs.js"
-import { AppHelper  } from "@/components/models/app_helper.js"
-import { SpUtil     } from "@/components/models/sp_util.js"
-import { MyMobile   } from "@/components/models/my_mobile.js"
+import { GX } from "@/components/models/gs.js"
+import { AppHelper } from "@/components/models/app_helper.js"
+import { SpUtil } from "@/components/models/sp_util.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 
 import twemoji from 'twemoji'
 import _ from "lodash"
@@ -11,7 +11,7 @@ const QueryString = require("query-string")
 
 export const vue_support = {
   methods: {
-    // ...Gs,
+    // ...GX,
     ...AppHelper,
     ...SpUtil,
 
@@ -110,7 +110,7 @@ export const vue_support = {
       this.back_to_or("/")
     },
     back_to_or(path) {
-      Gs.assert(Gs.present_p(path), "Gs.present_p(path)")
+      GX.assert(GX.present_p(path), "GX.present_p(path)")
       if (false) {
         // この方法でブラウザバックを行うとループする
         // 例えばリダイレクトで A → B ときた場合 B から戻るで再度 A → B が起きて B から上がれなくなる

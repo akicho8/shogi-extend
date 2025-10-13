@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Quiz } from "../fes/quiz.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { MessageRecord } from "./message_record.js"

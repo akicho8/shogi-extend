@@ -3,7 +3,7 @@ import { OxState } from "./ox_state.js"
 import { O2State } from "./o2_state.js"
 import { Item } from "./item.js"
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -18,7 +18,7 @@ export class O1State extends OxState {
   }
 
   shuffle_all() {
-    this.users_allocate(Gs.ary_shuffle(this.users))
+    this.users_allocate(GX.ary_shuffle(this.users))
   }
 
   teams_each_shuffle() {
@@ -26,7 +26,7 @@ export class O1State extends OxState {
   }
 
   swap_run() {
-    this.users = Gs.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs.ary_reverse(e))
+    this.users = GX.ary_each_slice_to_a(this.users, Location.count).flatMap(e => GX.ary_reverse(e))
     this.cache_clear()
   }
 
@@ -99,7 +99,7 @@ export class O1State extends OxState {
 
   // 先後入れ替えできるか？
   get swap_enable_p() {
-    return Gs.even_p(this.main_user_count)
+    return GX.even_p(this.main_user_count)
   }
 
   // 準備できたか？

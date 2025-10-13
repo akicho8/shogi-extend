@@ -1,6 +1,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_room_members = {
   data() {
@@ -183,14 +183,14 @@ export const mod_room_members = {
     // 固定されるメンバーたち
     fixed_member() {
       if (this.fixed_member_names_p) {
-        return Gs.str_to_words(this.$route.query.fixed_member)
+        return GX.str_to_words(this.$route.query.fixed_member)
       }
     },
 
     // 一番上にいる人は自分か？
     // つまり最古参メンバーか？
     current_member_is_leader_p() {
-      if (Gs.present_p(this.member_infos)) {
+      if (GX.present_p(this.member_infos)) {
         return this.member_infos[0].from_connection_id === this.connection_id
       }
     },

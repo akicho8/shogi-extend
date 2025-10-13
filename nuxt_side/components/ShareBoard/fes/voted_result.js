@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export class VotedResult {
   // Value Object
@@ -23,8 +23,8 @@ export class VotedResult {
 
   // user_name さんが index を選択する (新しいオブジェクトを返す)
   post(user_name, index) {
-    Gs.assert(Gs.present_p(user_name), "Gs.present_p(user_name)")
-    Gs.assert(Gs.present_p(index), "Gs.present_p(index)")
+    GX.assert(GX.present_p(user_name), "GX.present_p(user_name)")
+    GX.assert(GX.present_p(index), "GX.present_p(index)")
     return this.merge({[user_name]: index})
   }
 

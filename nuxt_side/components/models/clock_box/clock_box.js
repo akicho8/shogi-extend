@@ -1,6 +1,6 @@
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
 const HUMAN_STATUS_LABELS = {
@@ -30,7 +30,7 @@ const PauseTimerMethods = {
   },
 
   pause_tick_user_callback() {
-    const [mm, ss] = Gs.idivmod(this.pause_sec, 60)
+    const [mm, ss] = GX.idivmod(this.pause_sec, 60)
     this.params.pause_tick_fn(mm, ss)
   },
 
@@ -131,7 +131,7 @@ export class ClockBox {
 
   // 切り替え
   clock_switch() {
-    Gs.assert(this.turn != null, "this.turn != null")
+    GX.assert(this.turn != null, "this.turn != null")
     this.turn += 1
     this.switch_count += 1
     this.elapsed_sec = 0
@@ -240,7 +240,7 @@ export class ClockBox {
   ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
-    Gs.assert(v != null, "v != null")
+    GX.assert(v != null, "v != null")
     return v % Location.values.length
   }
 

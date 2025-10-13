@@ -3,7 +3,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { MessageRecord } from "./message_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_chat_message_list = {
   data() {
@@ -65,7 +65,7 @@ export const mod_chat_message_list = {
     // .SbMessageBox の要素を取得する (かならずある)
     ml_root_el_fetch() {
       const el = this.ml_root_el()
-      Gs.assert(el, "チャットモーダルが開いていない状態で .SbMessageBox を参照しようとしいる")
+      GX.assert(el, "チャットモーダルが開いていない状態で .SbMessageBox を参照しようとしいる")
       return el
     },
 

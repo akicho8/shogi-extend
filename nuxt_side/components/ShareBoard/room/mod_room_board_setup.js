@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_room_board_setup = {
   methods: {
@@ -55,8 +55,8 @@ export const mod_room_board_setup = {
 
     // 盤面の情報を送って欲しい人がいるので送ってあげる
     setup_info_send(params) {
-      Gs.assert(params.to_connection_id != null, "params.to_connection_id != null")
-      Gs.assert(params.to_user_name != null, "params.to_user_name != null")
+      GX.assert(params.to_connection_id != null, "params.to_connection_id != null")
+      GX.assert(params.to_user_name != null, "params.to_user_name != null")
 
       this.clog(`${params.to_user_name} に送る`)
 

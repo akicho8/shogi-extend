@@ -24,7 +24,7 @@
 // | mh_data_exist_p       | 今のデータがあるか？                                         |
 // |-----------------------+--------------------------------------------------------------|
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
 
@@ -115,9 +115,9 @@ export const mod_chat_message_history = {
 
     // APIに渡すパラメータ
     mh_api_params() {
-      Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
-      Gs.assert(Gs.present_p(this.user_name), "Gs.present_p(this.user_name)")
-      Gs.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
+      GX.assert(GX.present_p(this.room_key), "GX.present_p(this.room_key)")
+      GX.assert(GX.present_p(this.user_name), "GX.present_p(this.user_name)")
+      GX.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
 
       // link: app/models/share_board/room/chat_message_loader.rb
       return {
@@ -195,7 +195,7 @@ export const mod_chat_message_history = {
       this.tl_add("MH", "mh_start")
 
       this.ml_root_el_block(el => {
-        Gs.assert(this.mh_observer == null, "this.mh_observer == null")
+        GX.assert(this.mh_observer == null, "this.mh_observer == null")
         const options = {
           root: el,                       // なくても動作に影響なかったが指定しておいたほうが良さそう
           rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
@@ -203,7 +203,7 @@ export const mod_chat_message_history = {
         }
 
         this.mh_observer = new IntersectionObserver((entries, observer) => {
-          Gs.assert(entries.length === 1, "entries.length === 1")
+          GX.assert(entries.length === 1, "entries.length === 1")
           entries.forEach(e => this.mh_visible_changed(observer, e))
         }, options)
         this.clog(this.mh_observer)
@@ -236,7 +236,7 @@ export const mod_chat_message_history = {
 
     // 監視者を殺す
     mh_stop() {
-      Gs.assert(this.mh_observer != null, "this.mh_observer != null") // Gs.present_p(this.mh_observer) は false になるので注意
+      GX.assert(this.mh_observer != null, "this.mh_observer != null") // GX.present_p(this.mh_observer) は false になるので注意
       this.mh_observer.disconnect()
       this.mh_observer = null
       this.tl_add("MH", "this.mh_observer.disconnect()")

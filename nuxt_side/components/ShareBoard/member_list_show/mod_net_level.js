@@ -1,7 +1,7 @@
 import { NetLevelInfo } from "./net_level_info.js"
 
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
 const MS_PER_SECOND = 1000
@@ -28,7 +28,7 @@ export const mod_net_level = {
     member_net_level(e) {
       const v = this.member_disconnected_count_per_min(e)
       const found = NetLevelInfo.values.find(e => v >= e.threshold)
-      Gs.assert(found, "found")
+      GX.assert(found, "found")
       return found.name
     },
   },

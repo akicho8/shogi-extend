@@ -1,5 +1,5 @@
 import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
@@ -15,7 +15,7 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
   }
 
   get transform_params() {
-    Gs.assert(Gs.present_p(this.params.sfen), "Gs.present_p(this.params.sfen)")
+    GX.assert(GX.present_p(this.params.sfen), "GX.present_p(this.params.sfen)")
     return {
       initpos: this.sfen_info.init_sfen_strip,
       moves: this.moves_space_to_dot_replaced_string,

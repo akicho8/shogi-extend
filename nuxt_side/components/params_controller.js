@@ -24,7 +24,7 @@
 //   }
 //
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const params_controller = {
   mixins: [
@@ -37,7 +37,7 @@ export const params_controller = {
   },
   beforeMount() {
     this.clog(`[params_controller] begin`)
-    Gs.assert(this.ParamInfo, "this.ParamInfo")
+    GX.assert(this.ParamInfo, "this.ParamInfo")
     this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
     this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
@@ -71,15 +71,15 @@ export const params_controller = {
           }
         }
 
-        if (Gs.present_p(v)) {
+        if (GX.present_p(v)) {
           if (e.type === "integer") {
             v = Math.trunc(Number(v))
           } else if (e.type === "float") {
             v = Number(v)
           } else if (e.type === "array") {
-            v = Gs.str_to_words(v)
+            v = GX.str_to_words(v)
           } else if (e.type === "boolean") {
-            v = Gs.str_to_boolean(v)
+            v = GX.str_to_boolean(v)
           } else if (e.type === "json") {
             v = JSON.parse(v)
           } else if (e.type === "string") {
@@ -143,12 +143,12 @@ export const params_controller = {
         const value = this.$data[e.key]
         if (e.relation) {
           const model = this[e.relation]
-          Gs.assert(model, `${Gs.short_inspect(e.relation)} に対応するモデルが見つからない`)
+          GX.assert(model, `${GX.short_inspect(e.relation)} に対応するモデルが見つからない`)
           if (model.lookup(value)) {
-            this.clog(`[設定値][OK] this.${e.key} は ${Gs.short_inspect(value)} のままで良い`)
+            this.clog(`[設定値][OK] this.${e.key} は ${GX.short_inspect(value)} のままで良い`)
           } else {
             this.$data[e.key] = e.default_for(this)
-            this.clog(`[設定値][NG] this.${e.key} の ${Gs.short_inspect(value)} を ${Gs.short_inspect(e.default_for(this))} に変更`)
+            this.clog(`[設定値][NG] this.${e.key} の ${GX.short_inspect(value)} を ${GX.short_inspect(e.default_for(this))} に変更`)
           }
         }
       })
@@ -167,7 +167,7 @@ export const params_controller = {
       const hv = {...params}
       this.ParamInfo.values.forEach(e => {
         const v = hv[e.key]
-        if (Gs.blank_p(v) || v === e.default_for(this)) {
+        if (GX.blank_p(v) || v === e.default_for(this)) {
           delete hv[e.key]
         }
       })

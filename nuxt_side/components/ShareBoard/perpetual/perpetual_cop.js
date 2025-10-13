@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import Vue from "vue"
 import _ from "lodash"
 
@@ -21,16 +21,16 @@ export class PerpetualCop {
 
   // 同一局面になった回数をカウント
   increment(key) {
-    Gs.assert(Gs.present_p(key), "Gs.present_p(key)")
+    GX.assert(GX.present_p(key), "GX.present_p(key)")
     Vue.set(this.counts_hash, key, (this.counts_hash[key] || 0) + 1)
     this.count += 1
   }
 
   // 千日手か？
   available_p(key) {
-    Gs.assert(Gs.present_p(key), "Gs.present_p(key)")
+    GX.assert(GX.present_p(key), "GX.present_p(key)")
     const v = this.constructor.trigger_on_n_times
-    if (Gs.present_p(v)) {
+    if (GX.present_p(v)) {
       return this.counts_hash[key] >= v
     }
   }
@@ -39,7 +39,7 @@ export class PerpetualCop {
   // デバッグ用
   // increment の回数ではないので注意せよ
   get keys_count() {
-    return Gs.hash_count(this.counts_hash)
+    return GX.hash_count(this.counts_hash)
   }
 
   // 確認用

@@ -1,5 +1,5 @@
 import RoomRecreateModal from "./RoomRecreateModal.vue"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 const ROOM_DESTROY_AFTER_DELAY_SEC = 3.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
 
@@ -35,7 +35,7 @@ export const mod_room_recreate = {
         this.room_creating_busy += 1
         const loading = this.$buefy.loading.open()
         // this.toast_ok("退室しました", {duration: this.ROOM_DESTROY_AFTER_DELAY_SEC * 1000})
-        Gs.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
+        GX.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
           if (APP_RELOAD_IF_RECREATE) {
             this.force_reload()
           } else {

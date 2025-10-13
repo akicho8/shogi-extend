@@ -44,7 +44,7 @@
 
 <script>
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 import { support_child } from "../support_child.js"
 
@@ -53,7 +53,7 @@ export default {
   mixins: [support_child],
   mounted() {
     // ショートカットキーから起動すると、そのキーを入力してしまいがちなので、合言葉が未入力のときだけフォーカスする
-    if (Gs.blank_p(this.SB.new_room_key)) {
+    if (GX.blank_p(this.SB.new_room_key)) {
       this.desktop_focus_to(this.$refs.new_room_key)
     }
   },

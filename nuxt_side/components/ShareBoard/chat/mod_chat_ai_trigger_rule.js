@@ -9,7 +9,7 @@ import { AiResponseInfo } from "./ai_response_info.js"
 import { MessageRecord } from "./message_record.js"
 import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_chat_ai_trigger_rule = {
   data() {
@@ -44,7 +44,7 @@ export const mod_chat_ai_trigger_rule = {
         if (this.__SYSTEM_TEST_RUNNING__) {
           delay = 0
         }
-        Gs.delay_block(delay, () => this.ai_something_say({content: content}))
+        GX.delay_block(delay, () => this.ai_something_say({content: content}))
       }
     },
 
@@ -92,7 +92,7 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_case_illegal(params) {
       if (this.received_from_self(params)) {
-        if (Gs.present_p(params.illegal_names)) {
+        if (GX.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
             // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
             if (this.auto_resign_info.key === "is_auto_resign_off") {
@@ -143,7 +143,7 @@ export const mod_chat_ai_trigger_rule = {
         if (message_record.content_invalid_p) {
           this.arashi_count += 1
           if (this.arashi_count >= this.ARASHI_THRESHOLD) {
-            if (Gs.irand(this.ARASHI_RE_RATE) === 0) {
+            if (GX.irand(this.ARASHI_RE_RATE) === 0) {
               this.ai_say_for(0, "チャット荒らしに怒る", message_record)
             }
           }

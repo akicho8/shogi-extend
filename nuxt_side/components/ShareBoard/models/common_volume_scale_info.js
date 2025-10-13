@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export class CommonVolumeScaleInfo extends ApplicationMemoryRecord {
   static field_label = "マスター"
@@ -13,7 +13,7 @@ export class CommonVolumeScaleInfo extends ApplicationMemoryRecord {
 
   static input_handle_callback(context, value) {
     const app = context.base
-    Gs.assert(app != null, "app != null")
+    GX.assert(app != null, "app != null")
     app.$nextTick(() => app.toast_ok(`マスター音量${value}`))
   }
 

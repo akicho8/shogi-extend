@@ -2,7 +2,7 @@
 
 const HONPU_SHOW_ALWAYS = false
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_honpu_core = {
   data() {
@@ -21,7 +21,7 @@ export const mod_honpu_core = {
     honpu_init() {
       this.tl_add("HONPU", "起動時に本譜登録する")
       if (!this.url_room_key_exist_p) {
-        if (Gs.present_p(this.$route.query.body) || Gs.present_p(this.$route.query.xbody)) {
+        if (GX.present_p(this.$route.query.body) || GX.present_p(this.$route.query.xbody)) {
           this.honpu_main_setup()
         }
       }

@@ -10,7 +10,7 @@
 // ../Swars/SwarsBattleShow/mod_export.js とメソッドを合わせる
 
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_export = {
   methods: {
@@ -52,7 +52,7 @@ export const mod_export = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
-      Gs.assert("format_key" in e, '"format_key" in e')
+      GX.assert("format_key" in e, '"format_key" in e')
       return this.url_merge({
         ...e.to_h_format_and_encode,
         disposition: "attachment",

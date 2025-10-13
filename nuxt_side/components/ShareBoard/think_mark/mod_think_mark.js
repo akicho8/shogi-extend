@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 
@@ -189,8 +189,8 @@ export const mod_think_mark = {
     // 現在の利用者の名前に対応する色番号を得る
     mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
-      const hash_number = Gs.str_to_hash_number([pepper, this.user_name].join("-"))
-      return Gs.imodulo(hash_number, SS_MARK_COLOR_COUNT)
+      const hash_number = GX.str_to_hash_number([pepper, this.user_name].join("-"))
+      return GX.imodulo(hash_number, SS_MARK_COLOR_COUNT)
     },
 
     // 思考マークモード有効/無効ボタンを表示するか？
@@ -224,8 +224,8 @@ export const mod_think_mark = {
     // カンマで区切って3つずつ取り出す
     // http://localhost:4000/share-board?think_mark_list_str=7_7,alice,0,7_6,bob,1
     sp_think_mark_list() {
-      const ary = Gs.str_split(this.think_mark_list_str ?? "", /,/)
-      return Gs.ary_each_slice_to_a(ary, 3).map(([mark_pos_key, mark_user_name, mark_color_index]) => {
+      const ary = GX.str_split(this.think_mark_list_str ?? "", /,/)
+      return GX.ary_each_slice_to_a(ary, 3).map(([mark_pos_key, mark_user_name, mark_color_index]) => {
         return {
           mark_pos_key: mark_pos_key,
           mark_user_name: mark_user_name,

@@ -29,7 +29,7 @@
 
 <script>
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import Vue from 'vue'
 import QueryString from "query-string"
 import isMobile from "ismobilejs"
@@ -147,7 +147,7 @@ export default {
     params_serialize(params) {
       const hv = {}
       _.forIn(params, (val, key) => {
-        if (Gs.blank_p(val)) {
+        if (GX.blank_p(val)) {
           val = "__empty__"
           // if (_.isArray(val)) {
           //   // 配列の場合 __empty__  にしてしまうと "" になってしまう → checkbox_button の場合でも isArray にひっかからない場合がある

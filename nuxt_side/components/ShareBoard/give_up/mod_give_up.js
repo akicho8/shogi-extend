@@ -1,7 +1,7 @@
 // 投了関連
 
 import GiveUpModal from "./GiveUpModal.vue"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_give_up = {
   data() {
@@ -137,7 +137,7 @@ export const mod_give_up = {
         // これは二歩したとき手番が相手に移動しているため、そこで投了すると逆になってしまうので却下
         return this.current_location.flip.key
       } else {
-        Gs.assert(this.my_location, "観戦者が投了した (普通の遷移ではここに来ない)")
+        GX.assert(this.my_location, "観戦者が投了した (普通の遷移ではここに来ない)")
         // 方法2: 投了ボタンを押した人を負けとする
         // デメリットとしては代わりに押してあげることができない
         return this.my_location.flip.key // 自分が投了したので相手色の勝ち

@@ -91,7 +91,7 @@
 
 <script>
 const SHUFFLE_MAX = 8
-import { Gs           } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
 import _ from "lodash"
@@ -170,7 +170,7 @@ export default {
       this.sfx_click()
       this.SB.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.SB.new_v.order_unit.first_user(this.SB.start_color)
-      Gs.assert(user != null, "user != null")
+      GX.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.SB.al_share({label: furigoma_pack.piece_names, message: message})
     },
@@ -194,7 +194,7 @@ export default {
 
     os_before_apply() {
       // let v = this.SB.new_v.change_per
-      // v = Gs.to_i(v)
+      // v = GX.to_i(v)
       // if (v <= 0) {
       //   v = 1
       // }
@@ -204,7 +204,7 @@ export default {
     // 反映時のエラーの内容は new_v.order_unit に任せる
     order_unit_invalid() {
       const messages = this.SB.new_v.order_unit.error_messages
-      if (Gs.present_p(messages)) {
+      if (GX.present_p(messages)) {
         this.sfx_play("x")
         messages.forEach(e => this.toast_warn(e))
         return true
@@ -212,7 +212,7 @@ export default {
     },
 
     options_invalid() {
-      if (Gs.blank_p(this.SB.new_v.change_per)) {
+      if (GX.blank_p(this.SB.new_v.change_per)) {
         this.sfx_play("x")
         this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
         return true

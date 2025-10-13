@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_xtitle = {
   data() {
@@ -41,8 +41,8 @@ export const mod_xtitle = {
       this.toast_ok(`${this.user_call_name(params.from_user_name)}が部屋名を${params.room_name}に変更しました`)
     },
     room_name_share_data_receive(params) {
-      Gs.assert(params)
-      Gs.assert("room_name" in params)
+      GX.assert(params)
+      GX.assert("room_name" in params)
       this.tl_puts(`room_name_share_data_receive: current_title = "${params.room_name}" from ${params.from_user_name}`)
       this.current_title = params.room_name
       this.ac_log({subject: "部屋名変更", body: `部屋名 "${this.current_title}" を受信`})

@@ -1,7 +1,7 @@
 import { PiyoUrlLinkCreator } from "@/components/models/piyo_url_link_creator.js"
 import { PiyoSfenLinkCreator } from "@/components/models/piyo_sfen_link_creator.js"
 import { KentoSfenLinkCreator } from "@/components/models/kento_sfen_link_creator.js"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export class KifuVo {
   static create(params) {
@@ -9,9 +9,9 @@ export class KifuVo {
   }
 
   constructor(params) {
-    Gs.assert(params, "params")
-    Gs.assert(Gs.blank_p(params.path), "Gs.blank_p(params.path)")
-    Gs.assert(params["sfen"] || params["kif_url"], 'params["sfen"] || params["kif_url"]')
+    GX.assert(params, "params")
+    GX.assert(GX.blank_p(params.path), "GX.blank_p(params.path)")
+    GX.assert(params["sfen"] || params["kif_url"], 'params["sfen"] || params["kif_url"]')
     this.params = params
   }
 

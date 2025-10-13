@@ -9,7 +9,7 @@
 //     xprofile_share : 他者が入室するたびに配布
 //   xprofile_leave  : 退室
 //
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { XprofileDecorator } from "./xprofile_decorator.js"
 
@@ -41,7 +41,7 @@ export const mod_xprofile = {
 
     // 入室直後の処理
     xprofile_load() {
-      Gs.assert_present(this.user_name)
+      GX.assert_present(this.user_name)
 
       if (!this.xprofile_loaded) {
         this.ac_room_perform("xprofile_load", {reqeust_user_name: this.user_name})
@@ -58,7 +58,7 @@ export const mod_xprofile = {
 
     // 他の人が入室すると自分の情報を配る
     xprofile_share() {
-      Gs.assert_present(this.user_name)
+      GX.assert_present(this.user_name)
       if (this.xprofile_share_data) {
         this.ac_room_perform("xprofile_share", this.xprofile_share_data)
       }
@@ -68,7 +68,7 @@ export const mod_xprofile = {
     },
     xprofile_share_data_receive(params) {
       if (params) {
-        Gs.assert_kind_of_hash(params.users_match_record)
+        GX.assert_kind_of_hash(params.users_match_record)
         this.users_match_record_master = { ...this.users_match_record_master, ...params.users_match_record }
       }
     },

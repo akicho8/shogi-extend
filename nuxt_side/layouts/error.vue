@@ -29,7 +29,7 @@ client-only
 
 <script>
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { ResponseStatusCodeInfo } from "@/components/models/response_status_code_info.js"
 
 export default {
@@ -56,7 +56,7 @@ export default {
     // 何か操作したときにサーバーが503を返す
     // そこでメンテナンス画面に遷移するためトップをリロードする
     if (this.status_code === 503) {
-      Gs.delay_block(3, () => { location.href = "/" })
+      GX.delay_block(3, () => { location.href = "/" })
     }
 
     // 最初から詳細をクリックする

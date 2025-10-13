@@ -1,17 +1,17 @@
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_search = {
   methods: {
     // 棋譜検索
     search_path(params = {}) {
       params = {...params}
-      const sort_hv = Gs.hash_extract_self(params, "sort_column", "sort_order")
-      const sort_params = Gs.hash_compact_blank(sort_hv)
+      const sort_hv = GX.hash_extract_self(params, "sort_column", "sort_order")
+      const sort_params = GX.hash_compact_blank(sort_hv)
 
-      const query = Gs.ary_compact_blank([
+      const query = GX.ary_compact_blank([
         this.info.user.key,
-        Gs.query_str_merge(this.$route.query.query, params),
+        GX.query_str_merge(this.$route.query.query, params),
       ]).join(" ")
 
       return {name: "swars-search", query: {query: query, ...sort_params}}

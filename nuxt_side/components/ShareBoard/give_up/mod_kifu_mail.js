@@ -1,7 +1,7 @@
 // 投了時の棋譜送信
 // 確認方法: README_kifu_mail.org
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export const mod_kifu_mail = {
@@ -19,7 +19,7 @@ export const mod_kifu_mail = {
     },
     // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
-      Gs.assert(this.login_and_email_valid_p, "this.login_and_email_valid_p")
+      GX.assert(this.login_and_email_valid_p, "this.login_and_email_valid_p")
 
       options = {
         silent: false,     // true: 何も表示しない

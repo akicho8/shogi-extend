@@ -8,7 +8,7 @@
 // | message_class       |
 // |---------------------|
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
 import { MessageValidator } from "@/components/models/arashi_killer/message_validator.js"
@@ -46,7 +46,7 @@ export class MessageRecord {
 
   // 表示するときのメッセージは加工しておく
   get auto_linked_message() {
-    return Gs.auto_link(this.content, {mention: false}) // `@alice` をリンクにしないようにする
+    return GX.auto_link(this.content, {mention: false}) // `@alice` をリンクにしないようにする
   }
 
   // 表示できないときのメッセージ
@@ -67,7 +67,7 @@ export class MessageRecord {
   // private
 
   get toast_message() {
-    const name = Gs.presence(this.from_user_name) ?? "？"
+    const name = GX.presence(this.from_user_name) ?? "？"
     return `${name}: ${this.content}`
   }
 
@@ -76,7 +76,7 @@ export class MessageRecord {
   }
 
   get message() {
-    Gs.assert(false)
+    GX.assert(false)
   }
 
   unique_key_generate() {
@@ -91,7 +91,7 @@ export class MessageRecord {
         this.from_connection_id,
         this.performed_at,
       ].join("/")
-      return Gs.str_to_md5(str)
+      return GX.str_to_md5(str)
     }
   }
 

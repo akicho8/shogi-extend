@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const autoexec_methods = {
   methods: {
@@ -15,7 +15,7 @@ export const autoexec_methods = {
         if (str) {
           str.split(/[,\s]+/).forEach(e => {
             const func = this[e]
-            Gs.assert(func, `存在しないメソッドです : ${e}`)
+            GX.assert(func, `存在しないメソッドです : ${e}`)
             func()
           })
         }

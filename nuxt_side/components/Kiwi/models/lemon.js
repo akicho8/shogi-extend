@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import { Model } from "./model.js"
 import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"
@@ -39,14 +39,14 @@ export class Lemon extends Model {
   }
 
   get duration() {
-    let v = Gs.presence(this.video_stream.duration)
+    let v = GX.presence(this.video_stream.duration)
     if (v) {
       return Number(v)
     }
   }
 
   get video_bit_rate() {
-    let v = Gs.presence(this.video_stream.bit_rate)
+    let v = GX.presence(this.video_stream.bit_rate)
     if (v) {
       return Number(v)
     }
@@ -74,7 +74,7 @@ export class Lemon extends Model {
   }
 
   get aspect_ratio() {
-    return Gs.aspect_ratio_normalize(this.width, this.height)
+    return GX.aspect_ratio_normalize(this.width, this.height)
   }
 
   get aspect_ratio_max() {
@@ -86,7 +86,7 @@ export class Lemon extends Model {
     let [n, d] = this.video_stream.r_frame_rate.split("/")
     n = Number(n)
     d = Number(d)
-    return Gs.number_floor(n / d, 2)
+    return GX.number_floor(n / d, 2)
   }
 
   //////////////////////////////////////////////////////////////////////////////// audio 情報
@@ -97,7 +97,7 @@ export class Lemon extends Model {
   }
 
   get audio_bit_rate() {
-    let v = Gs.presence(this.audio_stream.bit_rate)
+    let v = GX.presence(this.audio_stream.bit_rate)
     if (v) {
       return Number(v)
     }

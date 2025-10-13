@@ -14,7 +14,7 @@
 // FIXME: ユーザー名を引数に取りメソッドが多いということはユーザー名の Value Object にするべきか？
 //
 
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 export const mod_order_turn = {
   methods: {
@@ -22,7 +22,7 @@ export const mod_order_turn = {
 
     // 手数からユーザー情報を取得する
     turn_to_item(turn) {
-      Gs.assert_kind_of_integer(turn)
+      GX.assert_kind_of_integer(turn)
       if (this.order_enable_p) {
         return this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
       }
@@ -30,7 +30,7 @@ export const mod_order_turn = {
 
     // 手数からユーザー名を取得する
     turn_to_user_name(turn) {
-      Gs.assert_kind_of_integer(turn)
+      GX.assert_kind_of_integer(turn)
       const e = this.turn_to_item(turn)
       if (e) {
         return e.user_name
@@ -40,9 +40,9 @@ export const mod_order_turn = {
     // 指定の名前の人の最初の順序
     // 優先度をつける順番であって location ではないので注意
     user_name_to_initial_turn(user_name) {
-      Gs.assert_kind_of_string(user_name)
+      GX.assert_kind_of_string(user_name)
       if (this.order_enable_p) {
-        Gs.assert(user_name, "user_name")
+        GX.assert(user_name, "user_name")
         const turns = this.name_to_turns_hash[user_name]
         if (turns) {
           return turns[0]
@@ -52,7 +52,7 @@ export const mod_order_turn = {
 
     // 名前から最初の色を求める
     user_name_to_initial_location(user_name) {
-      Gs.assert_kind_of_string(user_name)
+      GX.assert_kind_of_string(user_name)
       if (this.order_enable_p) {
         const turn = this.user_name_to_initial_turn(user_name)
         return this.turn_to_location(turn)
@@ -61,7 +61,7 @@ export const mod_order_turn = {
 
     // 名前から表示用の手番の番号を求める
     user_name_to_display_turns(user_name) {
-      Gs.assert_kind_of_string(user_name)
+      GX.assert_kind_of_string(user_name)
       const turns = this.name_to_turns_hash[user_name]
       if (turns) {
         return "(" + turns.map(e => e + 1).join(",") + ")"

@@ -7,7 +7,7 @@ const AL_SAME_SFEN_SKIP = false // 同じ局面なら何もしない？
 const AL_TURN_ONLY_REVERT = true // 過去の履歴なら手数だけ戻す？
 
 import _ from "lodash"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 import ActionLogModal from "./ActionLogModal.vue"
 import { ActionLogDto } from "./action_log_dto.js"
@@ -85,8 +85,8 @@ export const mod_action_log = {
 
     // 局面を復元する
     al_restore(action_log) {
-      Gs.assert('sfen' in action_log, "'sfen' in action_log")
-      Gs.assert('turn' in action_log, "'turn' in action_log")
+      GX.assert('sfen' in action_log, "'sfen' in action_log")
+      GX.assert('turn' in action_log, "'turn' in action_log")
 
       if (AL_SAME_SFEN_SKIP) {
         if (this.current_sfen === action_log.sfen && this.current_turn === action_log.turn) {

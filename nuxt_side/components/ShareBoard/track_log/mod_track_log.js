@@ -1,4 +1,4 @@
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 import _ from "lodash"
 import dayjs from "dayjs"
 import TrackLogModal from "./TrackLogModal.vue"
@@ -38,7 +38,7 @@ export const mod_track_log = {
     },
     tl_alert(message, detail_info = null) {
       if (this.production_p) { return }
-      if (Gs.blank_p(message)) { return }
+      if (GX.blank_p(message)) { return }
       if (this.__SYSTEM_TEST_RUNNING__) {
       } else {
         this.debug_alert_core(message)

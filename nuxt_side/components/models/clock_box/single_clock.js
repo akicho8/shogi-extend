@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
-import { Gs } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gs.js"
 
 const SEC_PER_MIN = 60
 const MIN_PER_HOUR = 60
@@ -144,7 +144,7 @@ export class SingleClock {
   }
 
   second_decriment_fn_call(key, sec) {
-    const [mm, ss] = Gs.idivmod(sec, SEC_PER_MIN)
+    const [mm, ss] = GX.idivmod(sec, SEC_PER_MIN)
     this.base.params.second_decriment_fn(this, key, sec, mm, ss)
   }
 
