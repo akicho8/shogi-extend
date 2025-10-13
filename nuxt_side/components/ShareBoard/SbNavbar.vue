@@ -58,7 +58,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           a.button.is-primary(@click="SB.play_mode_handle")
             | 編集完了
 
-    SbChatOpenButton
+    SbChatOpenButton2
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
     template(v-if="SB.play_mode_p")

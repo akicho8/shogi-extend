@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item.SbChatOpenButton.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
+b-navbar-item.SbChatOpenButton2.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
   tag="a"
   @click="SB.chat_modal_open_handle"
   v-if="SB.ac_room || true"
@@ -12,14 +12,14 @@ b-navbar-item.SbChatOpenButton.px_5_if_tablet.is-unselectable.chat_modal_open_ha
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbChatOpenButton",
+  name: "SbChatOpenButton2",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbChatOpenButton
+.SbChatOpenButton2
   // チャットアイコンは2つをずらして組み合わせる
   .icon
     position: relative
