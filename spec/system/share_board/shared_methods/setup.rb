@@ -5,7 +5,7 @@ module SharedMethods
   def visit_base_default_options
     {
       :room_restore_feature_p      => false, # 盤面を復元しない
-      :room_create_sleep           => 2,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
+      :room_create_sleep           => 3,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
       :handle_name_ng_word_check_p => false, # ハンドルネームのチェックをしない
       :auto_room_url_copy_modal_p  => false, # 部屋のリンクのコピーモーダルを出さない
       :auto_close_p                => false, # 自動的に閉じない
@@ -19,14 +19,6 @@ module SharedMethods
 
   def visit_app(params = {})
     visit_base(params)
-
-    params = params.to_options
-    if !params[:__visit_app_warning_skip__]
-      if params[:room_key] && params[:user_name]
-        warn "room_key と user_name がある場合は visit_room を使うこと"
-        puts caller.first
-      end
-    end
   end
 
   def visit_room(params = {})

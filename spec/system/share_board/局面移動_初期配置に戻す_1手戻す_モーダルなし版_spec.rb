@@ -5,11 +5,12 @@ RSpec.describe type: :system, share_board_spec: true do
     setup_alice_bob_turn2
     window_a do
       global_menu_open
-      find(".force_sync_turn_zero_handle").click # 「初期配置に戻す」モーダルを開く
-      assert_turn(0)                                # 0手に戻っている
+      find(".force_sync_turn_zero_handle").click     # 「初期配置に戻す」を押す
+      global_menu_close
+      assert_turn(0)                                 # 0手に戻っている
     end
     window_b do
-      assert_turn(0)            # bob側も0手に戻っている
+      assert_turn(0)                                 # bob側も0手に戻っている
     end
   end
 
@@ -17,11 +18,12 @@ RSpec.describe type: :system, share_board_spec: true do
     setup_alice_bob_turn2
     window_a do
       global_menu_open
-      find(".force_sync_turn_previous_handle").click # 「1手戻す」モーダルを開く
-      assert_turn(1)                                           # 1手目に戻っている
+      find(".force_sync_turn_previous_handle").click # 「1手戻す」を押す
+      global_menu_close
+      assert_turn(1)                                 # 1手目に戻っている
     end
     window_b do
-      assert_turn(1)            # bob側も1手に戻っている
+      assert_turn(1)                                 # bob側も1手に戻っている
     end
   end
 end

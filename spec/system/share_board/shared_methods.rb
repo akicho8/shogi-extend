@@ -8,6 +8,7 @@ module SharedMethods
     include AliceBobCarol
 
     before(:example) do
+      p ["#{__FILE__}:#{__LINE__}", __method__, self]
       eval_code %(ShareBoard.setup(force: true))
       sfen_info = SfenInfo["相全駒手番△"]
       eval_code %(ShareBoard::Room.mock(room_key: 'test_room', sfen: "#{sfen_info.sfen}"))
