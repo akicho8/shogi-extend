@@ -7,7 +7,7 @@ API
 http://localhost:3000/api/share_board/dashboard.json?room_key=dev_room
 
 ▼自動投了
-http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&handle_name_validate_p=false&autoexec=battle_save_run
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&handle_name_ng_word_check_p=false&autoexec=battle_save_run
 
 http://localhost:4000/share-board/dev_room/dashboard
 

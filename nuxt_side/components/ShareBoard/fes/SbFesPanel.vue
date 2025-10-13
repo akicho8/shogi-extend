@@ -4,7 +4,7 @@
     .panel
       .panel-heading
         | 投票(ホスト側)
-      a.panel-block(href="/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o2_state&handle_name_validate_p=false&autoexec=client_vote_sample") 確認用の環境に変更する
+      a.panel-block(href="/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o2_state&handle_name_ng_word_check_p=false&autoexec=client_vote_sample") 確認用の環境に変更する
       a.panel-block(@click="SB.odai_src_clear()") お題初期化
       a.panel-block(@click="SB.odai_src_sample()") お題サンプル投入
       a.panel-block(@click="SB.odai_maker_handle()") お題メーカー

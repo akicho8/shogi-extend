@@ -73,7 +73,7 @@
   | fixed_order_state           | 順番設定方法                                            |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=bob               |
-  | handle_name_validate_p        | false ならバリデーションを飛ばす                        |                                                                                  |
+  | handle_name_ng_word_check_p        | false ならバリデーションを飛ばす                        |                                                                                  |
   | RS_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=alice&RS_SUCCESS_DELAY=-1 |
   | RS_RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                  |
@@ -122,7 +122,7 @@
 
 ** 再送モーダルが出ているときに順番設定されたら再送モーダルが消されるテスト用
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order_state=to_o2_state&fixed_order=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1&handle_name_validate_p=false
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order_state=to_o2_state&fixed_order=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1&handle_name_ng_word_check_p=false
 
 ** 時計設定済みで入退室には？
 
@@ -173,15 +173,15 @@
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e,f&fixed_order_state=to_o1_state&fixed_order=b,d,a,c&handle_name_validate_p=false
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e,f&fixed_order_state=to_o1_state&fixed_order=b,d,a,c&handle_name_ng_word_check_p=false
 
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o1_state&fixed_order=a,b,c,d&handle_name_validate_p=false&room_enter_autoexec=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o1_state&fixed_order=a,b,c,d&handle_name_ng_word_check_p=false&room_enter_autoexec=os_modal_open_handle
 
 ** 自分は a で部屋に abcd がいて順番が abcd で a が棋譜をサーバーに記録する
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&handle_name_validate_p=false&autoexec=battle_save_run
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&handle_name_ng_word_check_p=false&autoexec=battle_save_run
 
 ** 順番設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
 

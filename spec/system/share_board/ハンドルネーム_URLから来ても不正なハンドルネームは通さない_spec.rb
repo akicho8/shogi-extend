@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :room_key                   => :test_room,
         :user_name                  => "nanashi",
         :fixed_order                => "nanashi",
-        :handle_name_validate_p       => true,
+        :handle_name_ng_word_check_p       => true,
         :__visit_app_warning_skip__ => true,
       })
     assert_selector(".GateModal") # ハンドルネームが不正なのでダイアログが出ている

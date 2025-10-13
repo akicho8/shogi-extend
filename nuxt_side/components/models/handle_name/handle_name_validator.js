@@ -48,6 +48,7 @@ export class HandleNameValidator {
     this.source = source
     this.options = {
       name: "ハンドルネーム",
+      ng_word_check_p: true,
       max_length: this.constructor.MAX_LENGTH,
       ...options,
     }
@@ -64,23 +65,22 @@ export class HandleNameValidator {
   get valid_message() {
     let message = null
 
-    {
-      if (message == null) {
-        if (this.options.max_length) {
-          if (this.source.length > this.options.max_length) {
-            message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
-          }
+    if (message == null) {
+      if (this.options.max_length) {
+        if (this.source.length > this.options.max_length) {
+          message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
         }
       }
     }
 
-    {
-      let s = this.normalized_source
-      if (message == null) {
-        if (Gs.blank_p(s)) {
-          message = `${this.options.name}を入力してください`
-        }
+    let s = this.normalized_source
+    if (message == null) {
+      if (Gs.blank_p(s)) {
+        message = `${this.options.name}を入力してください`
       }
+    }
+
+    if (this.options.ng_word_check_p) {
       if (message == null) {
         if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
           message = this.message_sample

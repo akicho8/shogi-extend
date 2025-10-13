@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "works" do
-    visit_app(handle_name_validate_p: true)
+    visit_app(handle_name_ng_word_check_p: true)
     global_menu_open
     menu_item_click("ハンドルネーム変更")
 
