@@ -201,14 +201,14 @@ module ShareBoard
       broadcast(:user_kick_broadcasted, data)
     end
 
-    def odai_share(data)
-      track(data, subject: "お題配送", body: data["odai"], emoji: ":お題:")
-      broadcast(:odai_share_broadcasted, data)
+    def quiz_share(data)
+      track(data, subject: "お題配送", body: data["quiz"], emoji: ":お題:")
+      broadcast(:quiz_share_broadcasted, data)
     end
 
-    def odai_delete(data)
+    def quiz_delete(data)
       track(data, subject: "お題削除")
-      broadcast(:odai_delete_broadcasted, data)
+      broadcast(:quiz_delete_broadcasted, data)
     end
 
     def vote_select_share(data)

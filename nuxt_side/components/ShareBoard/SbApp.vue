@@ -151,7 +151,7 @@ import { mod_battle_save                   } from "./give_up/mod_battle_save.js"
 import { mod_honpu_core                         } from "./honpu/mod_honpu_core.js"
 import { mod_honpu_share                   } from "./honpu/mod_honpu_share.js"
 
-import { mod_odai_maker                    } from "./fes/mod_odai_maker.js"
+import { mod_quiz_maker                    } from "./fes/mod_quiz_maker.js"
 import { mod_client_vote                   } from "./fes/mod_client_vote.js"
 
 import { mod_xprofile                         } from "./xprofile/mod_xprofile.js"
@@ -249,7 +249,7 @@ export default {
     mod_room_active_level,
     mod_room_members,
 
-    mod_odai_maker,
+    mod_quiz_maker,
     mod_client_vote,
 
     window_active_detector,

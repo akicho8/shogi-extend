@@ -48,14 +48,14 @@
       .has-text-centered.is-size-7
         | 投票でﾁｰﾑ分けするなら
       .buttons.is-centered.mb-0.mt-2
-        b-button.mb-0(size="is-small" @click="odai_maker_handle")
+        b-button.mb-0(size="is-small" @click="quiz_maker_handle")
           | お題ﾒｰｶｰ
-        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.odai_received_p")
+        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.quiz_received_p")
           | 結果を反映する({{SB.voted_result.count}}/{{SB.room_user_names.length}})
-        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="SB.odai_received_p && SB.debug_mode_p")
+        b-button.mb-0(size="is-small" type="is-danger" @click="quiz_delete_handle" v-if="SB.quiz_received_p && SB.debug_mode_p")
           | 削除
 
-      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.odai_received_p && $gs.present_p(SB.vote_yet_user_names)")
+      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.quiz_received_p && $gs.present_p(SB.vote_yet_user_names)")
         | まだ投票してない人({{SB.vote_yet_user_names.length}}): {{SB.vote_yet_user_names.join(", ")}}
 
       hr.my-4
@@ -258,10 +258,10 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    odai_maker_handle() {
+    quiz_maker_handle() {
       this.sfx_click()
       this.SB.os_modal_close()
-      this.SB.odai_maker_handle()
+      this.SB.quiz_maker_handle()
       this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
     },
 
@@ -271,9 +271,9 @@ export default {
       this.SB.al_share({label: "結果反映", message: "投票の結果でチーム分けしました"})
     },
 
-    odai_delete_handle() {
+    quiz_delete_handle() {
       this.sfx_click()
-      this.SB.odai_delete()
+      this.SB.quiz_delete()
       this.SB.al_share({label: "お題削除", message: "お題を削除しました"})
     },
 

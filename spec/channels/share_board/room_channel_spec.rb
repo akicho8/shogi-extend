@@ -365,16 +365,16 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "配送" do
-      data = data_factory("odai" => "xxx")
+      data = data_factory("quiz" => "xxx")
       expect {
-        subscription.odai_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "odai_share_broadcasted", bc_params: data)
+        subscription.quiz_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "quiz_share_broadcasted", bc_params: data)
     end
     it "削除" do
       data = data_factory
       expect {
-        subscription.odai_delete(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "odai_delete_broadcasted", bc_params: data)
+        subscription.quiz_delete(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "quiz_delete_broadcasted", bc_params: data)
     end
     it "投票" do
       data = data_factory("voted_latest_index" => 0)

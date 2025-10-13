@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs } from "@/components/models/gs.js"
-import { Odai } from "../fes/odai.js"
+import { Quiz } from "../fes/quiz.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { MessageRecord } from "./message_record.js"
 import _ from "lodash"
@@ -21,11 +21,11 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           return
 
-          const odai = Odai.create(params.odai)
-          if (odai.invalid_p) {
+          const quiz = Quiz.create(params.quiz)
+          if (quiz.invalid_p) {
             return
           }
-          return odai.to_s
+          return quiz.to_s
         },
       },
       {

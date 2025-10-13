@@ -2,7 +2,7 @@ import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import Vue from "vue"
 
-export class Odai {
+export class Quiz {
   // 開発時用
   static get sample() {
     return this.create({subject: "どっちがお好き？", items: ["マヨネーズ", "ケチャップ"]})

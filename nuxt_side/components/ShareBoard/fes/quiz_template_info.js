@@ -1,8 +1,8 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs } from "@/components/models/gs.js"
-import { Odai } from "./odai.js"
+import { Quiz } from "./quiz.js"
 
-export class OdaiTemplateInfo extends ApplicationMemoryRecord {
+export class QuizTemplateInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // 笑える系
@@ -168,11 +168,11 @@ export class OdaiTemplateInfo extends ApplicationMemoryRecord {
   }
 
   static get sample() {
-    return Gs.ary_sample(this.values)?.to_odai
+    return Gs.ary_sample(this.values)?.to_quiz
   }
 
-  get to_odai() {
-    return Odai.create({subject: this.subject, items: this.shuffled_items})
+  get to_quiz() {
+    return Quiz.create({subject: this.subject, items: this.shuffled_items})
   }
 
   get shuffled_items() {

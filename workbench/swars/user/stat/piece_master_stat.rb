@@ -111,7 +111,7 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | erikokouza      |      |      |      |      |      |      |      |    |
 # >> | Manaochannel    |      |      |      |      |      |      |      |    |
 # >> | ryomou27        |      |      |      |      |      |      |      |    |
-# >> | kodai_murasaki  |      |      |      |      |      |      |      |    |
+# >> | kquiz_murasaki  |      |      |      |      |      |      |      |    |
 # >> | mentaikoVT      |      | 1.49 |      |      |      |      | 1.46 |    |
 # >> | KOH56           |      |      |      |      |      |      |      |    |
 # >> | yukkuri22       |      |      |      |      |      |      | 1.47 |    |
@@ -126,7 +126,7 @@ tp Swars::User::Stat::PieceMasterStat.report
 # >> | YotsumiyaS      |      |      |      |      |      |      |      |    |
 # >> | eirukoyume      |      |      |      |      |      |      |      |    |
 # >> | Tsukune_Yuki    |      |      |      |      |      |      |      |    |
-# >> | kodai_murasaki  |      |      |      |      |      |      |      |    |
+# >> | kquiz_murasaki  |      |      |      |      |      |      |      |    |
 # >> | oshtaraataru    |      | 1.31 |      |      |      |      |  1.7 |    |
 # >> | flamme_o        |      |      |      |      |      |      |      |    |
 # >> | K_Yamawasabi    |      |      |      |      |      |      |      |    |

@@ -17,9 +17,9 @@ RSpec.describe type: :system, share_board_spec: true do
       os_modal_open                                           # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
-      within(".odai_subject") { find(:fillable_field).set("(odai_subject)") } # 題名を記入
-      within(".odai_left")    { find(:fillable_field).set("(team_black)")   } # 選択肢1
-      within(".odai_right")   { find(:fillable_field).set("(team_white)")   } # 選択肢2
+      within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入
+      within(".quiz_left")    { find(:fillable_field).set("(team_black)")   } # 選択肢1
+      within(".quiz_right")   { find(:fillable_field).set("(team_white)")   } # 選択肢2
       find(:button, text: "出題する", exact_text: true).click
     end
     window_a do

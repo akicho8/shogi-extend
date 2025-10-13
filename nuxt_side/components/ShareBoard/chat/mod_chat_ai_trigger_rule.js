@@ -84,7 +84,7 @@ export const mod_chat_ai_trigger_rule = {
       }
     },
 
-    ai_say_case_odai(params) {
+    ai_say_case_quiz(params) {
       if (this.received_from_self(params)) {
         this.ai_say_for(2, "お題に答える", params)
       }

@@ -14,16 +14,16 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
 
       # 未入力
-      within(".odai_subject") { assert_selector(:fillable_field, with: "") }
-      within(".odai_left")    { assert_selector(:fillable_field, with: "") }
-      within(".odai_right")   { assert_selector(:fillable_field, with: "") }
+      within(".quiz_subject") { assert_selector(:fillable_field, with: "") }
+      within(".quiz_left")    { assert_selector(:fillable_field, with: "") }
+      within(".quiz_right")   { assert_selector(:fillable_field, with: "") }
 
-      find(".odai_src_random_handle").click # ランダム入力
+      find(".quiz_src_random_handle").click # ランダム入力
 
       # 入力がある
-      within(".odai_subject") { assert_selector(:fillable_field, with: /.+/) }
-      within(".odai_left")    { assert_selector(:fillable_field, with: /.+/) }
-      within(".odai_right")   { assert_selector(:fillable_field, with: /.+/) }
+      within(".quiz_subject") { assert_selector(:fillable_field, with: /.+/) }
+      within(".quiz_left")    { assert_selector(:fillable_field, with: /.+/) }
+      within(".quiz_right")   { assert_selector(:fillable_field, with: /.+/) }
     end
   end
 end
