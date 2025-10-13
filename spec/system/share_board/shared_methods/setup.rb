@@ -121,17 +121,9 @@ module SharedMethods
   def setup_alice_bob_turn2
     window_a { room_setup_by_user(:alice) }
     window_b { room_setup_by_user(:bob) }
-    window_a do
-      piece_move_o("77", "76", "☗7六歩")  # aliceが指す
-    end
-    window_b do
-      piece_move_o("33", "34", "☖3四歩")  # bobが指す
-    end
-    window_a do
-      assert_turn(2)
-    end
-    window_b do
-      assert_turn(2)
-    end
+    window_a { piece_move_o("77", "76", "☗7六歩") }
+    window_b { piece_move_o("33", "34", "☖3四歩") }
+    window_a { assert_turn(2) }
+    window_b { assert_turn(2) }
   end
 end
