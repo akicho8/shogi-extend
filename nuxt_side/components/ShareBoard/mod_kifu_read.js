@@ -12,9 +12,10 @@ export const mod_kifu_read = {
   },
   methods: {
     // クリップボードから読み込む
-    kifu_read_from_clipboard() {
+    async kifu_read_from_clipboard() {
       if (navigator.clipboard) {
-        navigator.clipboard.readText().then(text => this.kifu_read_modal_open_or_direct_handle(text))
+        const text = await navigator.clipboard.readText()
+        this.kifu_read_modal_open_or_direct_handle(text)
         return true
       }
     },
