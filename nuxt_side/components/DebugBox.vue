@@ -14,8 +14,11 @@ name: "DebugBox",
   },
   data() {
     return {
-      show_p: !this.__SYSTEM_TEST_RUNNING__,
+      show_p: null,             // ここで computed は参照できない。this.__SYSTEM_TEST_RUNNING__ は undefined になっている。
     }
+  },
+  created() {
+    this.show_p = !this.__SYSTEM_TEST_RUNNING__
   },
   methods: {
     click_handle() {

@@ -477,6 +477,11 @@ const config = {
         // exclude: /(node_modules)/,
       })
 
+      // // どこでエラーになったかわかりやすくする
+      // // https://zenn.dev/shimiyu/scraps/80c150a0c68796
+      // if (ctx.isDev) {
+      //   config.devtool = ctx.isClient ? "source-map" : "inline-source-map"
+      // }
     },
 
     babel: {

@@ -2,7 +2,7 @@
 client-only
   .SbApp(:style="component_style" :class="component_class")
     | {{$debug.trace('SbApp', 'render')}}
-    DebugBox.is-hidden-mobile(v-if="development_p && false")
+    DebugBox.is-hidden-mobile(v-if="development_p")
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p mobile_layout_key: {{mobile_layout_key}}
@@ -360,7 +360,7 @@ export default {
       hv.current_turn_self_p = this.current_turn_self_p
       hv.edit_mode_p         = this.edit_mode_p
       hv.normal_mode_p       = !this.edit_mode_p
-      hv.__SYSTEM_TEST_RUNNING__ = this.__SYSTEM_TEST_RUNNING__
+      // hv.__SYSTEM_TEST_RUNNING__ = this.__SYSTEM_TEST_RUNNING__
       return [hv, this.appearance_theme_key]
     },
   },
