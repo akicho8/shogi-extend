@@ -3,7 +3,7 @@
   .modal-card-head
     .modal-card-title.is-flex-shrink-1
       | どっちのチームに参加する？
-      template(v-if="SB.voted_result.already_vote_p(SB.user_name)")
+      template(v-if="SB.quiz_voted_result.already_vote_p(SB.user_name)")
         span.mx-1.has-text-grey.has-text-weight-normal
           | 投票済み
   .modal-card-body
@@ -38,10 +38,10 @@ export default {
   methods: {
     // 選択
     select_handle(name, index) {
-      if (this.SB.voted_latest_index !== index) {
+      if (this.SB.quiz_voted_index !== index) {
         this.sfx_click()
         this.SB.sb_talk(name)
-        this.SB.voted_latest_index = index
+        this.SB.quiz_voted_index = index
       }
     },
     // やめとく
@@ -51,17 +51,17 @@ export default {
     },
     // このチームに参加する
     submit_handle() {
-      if (this.SB.voted_latest_index == null) {
+      if (this.SB.quiz_voted_index == null) {
         this.sfx_play("se_bubuu")
         this.toast_warn("選択してから投票してください")
         return
       }
       this.$emit("close")
-      this.SB.vote_select_share()
+      this.SB.quiz_voted_index_share()
     },
     // 選択した方の css クラス
     vote_select_item_class(i) {
-      if (i === this.SB.voted_latest_index) {
+      if (i === this.SB.quiz_voted_index) {
         return "is_active"
       } else {
         return "is_inactive"

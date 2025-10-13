@@ -1,6 +1,6 @@
 import { GX } from "@/components/models/gx.js"
 
-export class VotedResult {
+export class QuizVotedResult {
   // Value Object
   static create(...args) {
     return Object.freeze(new this(...args))

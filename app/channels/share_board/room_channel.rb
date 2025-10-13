@@ -211,9 +211,9 @@ module ShareBoard
       broadcast(:quiz_delete_broadcasted, data)
     end
 
-    def vote_select_share(data)
-      track(data, subject: "投票選択", body: data["voted_latest_index"], emoji: ":お題:")
-      broadcast(:vote_select_share_broadcasted, data)
+    def quiz_voted_index_share(data)
+      track(data, subject: "投票選択", body: data["quiz_voted_index"], emoji: ":お題:")
+      broadcast(:quiz_voted_index_share_broadcasted, data)
     end
 
     private

@@ -377,10 +377,10 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       }.to have_broadcasted_to(channel_key).with(bc_action: "quiz_delete_broadcasted", bc_params: data)
     end
     it "投票" do
-      data = data_factory("voted_latest_index" => 0)
+      data = data_factory("quiz_voted_index" => 0)
       expect {
-        subscription.vote_select_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "vote_select_share_broadcasted", bc_params: data)
+        subscription.quiz_voted_index_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "quiz_voted_index_share_broadcasted", bc_params: data)
     end
   end
 end

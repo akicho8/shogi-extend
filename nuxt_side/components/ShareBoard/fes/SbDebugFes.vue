@@ -16,7 +16,7 @@
     .panel
       .panel-heading
         | 投票(クライアント側)
-      a.panel-block(@click="SB.client_vote_reset()") 初期化
+      a.panel-block(@click="SB.quiz_client_vote_reset()") 初期化
       a.panel-block(@click="SB.client_vote_sample()") 確認用データ投入
       a.panel-block(@click="SB.quiz_vote_modal_handle()") 投票
   .column.is-3
@@ -25,7 +25,7 @@
         | 内部変数
       pre.panel-block [お題元] master_quiz: {{SB.master_quiz}}
       pre.panel-block [お題受信] received_quiz: {{SB.received_quiz}}
-      pre.panel-block [投票結果] voted_result: {{SB.voted_result}}
+      pre.panel-block [投票結果] quiz_voted_result: {{SB.quiz_voted_result}}
   .column.is-3
     .panel.assert_var
       .panel-heading
@@ -34,10 +34,10 @@
       .panel-block received_quiz.items:{{SB.received_quiz.items}}
       .panel-block received_quiz.subject:{{SB.received_quiz.subject}}
       .panel-block received_quiz.unique_code:{{SB.received_quiz.unique_code}}
-      .panel-block voted_result:{{SB.voted_result}}
+      .panel-block quiz_voted_result:{{SB.quiz_voted_result}}
       .panel-block 未投票者:{{SB.vote_yet_user_names}}
       .panel-block 全体人数:{{SB.room_user_names.length}}
-      .panel-block 投票者数:{{SB.voted_result.count}}
+      .panel-block 投票者数:{{SB.quiz_voted_result.count}}
 </template>
 
 <script>
