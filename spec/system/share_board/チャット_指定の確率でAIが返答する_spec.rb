@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_room({
         :user_name              => :alice,
         :ai_auto_response_ratio => ai_auto_response_ratio,
-        :__system_test_running__    => "",
+        :__SYSTEM_TEST_RUNNING__    => "",
       })
     chat_modal_open
     chat_message_send("1+2は？")

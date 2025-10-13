@@ -237,7 +237,7 @@ if true
 
     def visit_to(url, params = {})
       params = {
-        :__system_test_running__ => true,
+        :__SYSTEM_TEST_RUNNING__ => true,
       }.merge(params).stringify_keys
       uri = URI(url)                                        # => #<URI::HTTPS https://example.com/?a=1&b=2>
       original_params = Rack::Utils.parse_query(uri.query)  # => {"a"=>"1", "b"=>"2"}

@@ -39,7 +39,7 @@ export const mod_track_log = {
     tl_alert(message, detail_info = null) {
       if (this.production_p) { return }
       if (Gs.blank_p(message)) { return }
-      if (this.__system_test_running__) {
+      if (this.__SYSTEM_TEST_RUNNING__) {
       } else {
         this.debug_alert_core(message)
       }

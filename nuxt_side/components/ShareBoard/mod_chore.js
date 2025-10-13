@@ -26,7 +26,7 @@ export const mod_chore = {
         }
       }
 
-      if (this.__system_test_running__) {
+      if (this.__SYSTEM_TEST_RUNNING__) {
       } else {
         this.debug_alert(`画面:${focus_p}`)
       }

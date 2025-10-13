@@ -134,7 +134,7 @@ export default {
       return str
     },
     duration_sec() {
-      return this.__system_test_running__ ? 2 : 7
+      return this.__SYSTEM_TEST_RUNNING__ ? 2 : 7
     },
     real_value: {
       get() {
