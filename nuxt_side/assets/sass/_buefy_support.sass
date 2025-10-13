@@ -72,3 +72,16 @@
       .help
         &:empty
           display: none            // ヘルプを表示していないときでも(高さを持っているため)無駄な隙間ができるのを防ぐ
+
+// Buefy でモーダルやサイドバーを開くと body.is-noscroll を有効する
+// このとき overflow-y: hidden によって画面外のテキストを Capybara は読めなくなる
+// つまり assert_turn(0) などの状態確認ができなくなってしまう
+// それを解決するための設定
+.STAGE-development
+  // ~/src/shogi-extend/nuxt_side/node_modules/buefy/src/scss/utils/_helpers.scss
+  .is-noscroll
+    // position: fixed
+    // overflow-y: hidden
+    overflow-y: auto ! important
+    // width: 100%
+    // bottom: 0
