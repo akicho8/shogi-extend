@@ -9,15 +9,19 @@ module SharedMethods
     end
   end
 
+  def room_create_sleep
+    5
+  end
+
   # System テスト時の環境はなるべく何もしていない方向にもっていってセットアップをシンプルにする
   # 元々はなるべくデフォルトを production に合わせていたが、それだと初期条件を用意するのが遠回りになる
   def visit_base_default_options
     {
-      :room_restore_feature_p => false, # 盤面を復元しない
-      :room_create_sleep      => 3,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
-      :ng_word_check_p        => false, # ハンドルネームのチェックをしない
-      :room_url_copy_modal_p  => false, # 部屋のリンクのコピーモーダルを出さない
-      :auto_close_p           => false, # 入退室・順番・時計を自動的に閉じない
+      :room_restore_feature_p => false,             # 盤面を復元しない
+      :room_create_sleep      => room_create_sleep, # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
+      :ng_word_check_p        => false,             # ハンドルネームのチェックをしない
+      :room_url_copy_modal_p  => false,             # 部屋のリンクのコピーモーダルを出さない
+      :auto_close_p           => false,             # 入退室・順番・時計を自動的に閉じない
     }
   end
 
@@ -91,7 +95,7 @@ module SharedMethods
   end
 
   def assert_room_created
-    assert_var("ac_room", "true", wait: 5)
+    assert_var("ac_room", "true", wait: room_create_sleep + 2) # wait は room_create_sleep より大きくすること
   end
 
   def gate_modal_open_handle
