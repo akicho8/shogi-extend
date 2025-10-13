@@ -104,13 +104,12 @@ export const mod_chat_message_history = {
 
     // 新しいメッセージを読み込む
     // http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
-    mh_read() {
+    async mh_read() {
       this.tl_add("MH", "mh_read")
-      this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params(), progress: true}).then(e => {
-        this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
-        this.ml_concat(e.chat_messages)
-        this.$nextTick(() => this.mh_next_process())
-      })
+      const e = await this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params(), progress: true})
+      this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
+      this.ml_concat(e.chat_messages)
+      this.$nextTick(() => this.mh_next_process())
     },
 
     // APIに渡すパラメータ
