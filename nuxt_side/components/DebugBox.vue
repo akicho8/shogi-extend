@@ -14,7 +14,7 @@ name: "DebugBox",
   },
   data() {
     return {
-      show_p: this.$gs.blank_p(this.__SYSTEM_TEST_RUNNING__),
+      show_p: !this.__SYSTEM_TEST_RUNNING__,
     }
   },
   methods: {

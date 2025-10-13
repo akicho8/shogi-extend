@@ -340,7 +340,7 @@ export const vue_support = {
     _()          { return _          },
     util()       { return util       },
 
-    __SYSTEM_TEST_RUNNING__() { this.$route.query.__SYSTEM_TEST_RUNNING__ === "true" },
+    __SYSTEM_TEST_RUNNING__() { return this.$route.query.__SYSTEM_TEST_RUNNING__ === "true" },
   },
 
   directives: {

@@ -3,7 +3,7 @@ module SharedMethods
 
   # turn 手目
   def assert_turn(turn)
-    assert_text("current_turn:#{turn}", wait: 10)
+    assert_text("current_turn:#{turn}")
   end
 
   # 駒移動できる
