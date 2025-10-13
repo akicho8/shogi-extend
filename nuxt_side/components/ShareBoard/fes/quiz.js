@@ -84,7 +84,7 @@ export class Quiz {
     })
   }
 
-  // フォームでマジックナンバーを書きたくないのでエイリアス的なアクセサを用意した
+  // フォームでマジックナンバーを書きたくないのでエイリアス的なアクセサを用意する
   set left_value(value) { Vue.set(this.items, 0, value) }
   get left_value()      { return this.items[0]          }
   set right_value(value) { Vue.set(this.items, 1, value) }
