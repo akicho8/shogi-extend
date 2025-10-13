@@ -1,4 +1,4 @@
-http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b,c,d&handle_name_ng_word_check_p=false&room_enter_autoexec=os_modal_open_handle&auto_close_p=true
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b,c,d&room_enter_autoexec=os_modal_open_handle&auto_close_p=true
 http://localhost:4000/experiment/OrderUiTest
 
 fixed_member=ありす,ぼぶ,きゃろる,でーぶ,ふらんく
@@ -20,5 +20,5 @@ fixed_member=ありす,ぼぶ,きゃろる,でーぶ,ふらんく
 |      | 落ち | ▲ | △ |
 |------+------+----+----|
 
-http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b&handle_name_ng_word_check_p=false
-http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member=a,b&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b&handle_name_ng_word_check_p=false
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b
+http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member=a,b&fixed_order_state=to_o2_state&change_per=2&fixed_order=a,b
