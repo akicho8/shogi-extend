@@ -73,7 +73,7 @@
   | fixed_order_state           | 順番設定方法                                            |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=bob               |
-  | handle_name_ng_word_check_p        | false ならバリデーションを飛ばす                        |                                                                                  |
+  | ng_word_check_p        | false ならバリデーションを飛ばす                        |                                                                                  |
   | RS_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=alice&RS_SUCCESS_DELAY=-1 |
   | RS_RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                  |
