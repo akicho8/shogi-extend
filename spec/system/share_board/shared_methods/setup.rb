@@ -1,14 +1,23 @@
-
 module SharedMethods
+  included do
+    include AliceBobCarol
+
+    before do
+      eval_code %(ShareBoard.setup(force: true))
+      sfen_info = SfenInfo["相全駒手番△"]
+      eval_code %(ShareBoard::Room.mock(room_key: 'test_room', sfen: "#{sfen_info.sfen}"))
+    end
+  end
+
   # System テスト時の環境はなるべく何もしていない方向にもっていってセットアップをシンプルにする
   # 元々はなるべくデフォルトを production に合わせていたが、それだと初期条件を用意するのが遠回りになる
   def visit_base_default_options
     {
-      :room_restore_feature_p     => false, # 盤面を復元しない
-      :room_create_sleep          => 3,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
-      :ng_word_check_p            => false, # ハンドルネームのチェックをしない
-      :room_url_copy_modal_p => false, # 部屋のリンクのコピーモーダルを出さない
-      :auto_close_p               => false, # 入退室・順番・時計を自動的に閉じない
+      :room_restore_feature_p => false, # 盤面を復元しない
+      :room_create_sleep      => 3,     # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
+      :ng_word_check_p        => false, # ハンドルネームのチェックをしない
+      :room_url_copy_modal_p  => false, # 部屋のリンクのコピーモーダルを出さない
+      :auto_close_p           => false, # 入退室・順番・時計を自動的に閉じない
     }
   end
 

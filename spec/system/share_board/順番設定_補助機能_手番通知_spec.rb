@@ -1,16 +1,12 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_board_spec: true do
-  def case1(user_name)
-    room_setup_by_user(user_name)
-  end
-
   it "works" do
     window_a do
-      case1(:alice)                                  # aliceが部屋を作る
+      room_setup_by_user(:alice)                      # aliceが部屋を作る
     end
     window_b do
-      case1(:bob)                                    # bobも同じ入退室
+      room_setup_by_user(:bob)                        # bobも同じ入退室
       os_modal_open                                   # 「順番設定」モーダルを開く (まだ無効の状態)
     end
     window_a do
@@ -35,7 +31,7 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
       assert_var(:next_turn_message, "次は、bobさんの手番です")
     end
     window_b do
-      assert_var(:tn_counter, 1)                      # bobさんだけに牛が知らせている
+      assert_var(:tn_bell_count, 1)                      # bobさんだけに牛が知らせている
     end
     window_a do
       piece_move_x("33", "34", "☖3四歩")              # aliceもう指したので指せない
@@ -45,7 +41,7 @@ RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_bo
     window_b do
       piece_move_o("33", "34", "☖3四歩")              # 2番目のbobは指せる
       assert_var(:next_turn_message, "次は、aliceさんの手番です")
-      assert_var(:tn_counter, 1)                      # aliceさんの手番なので出ない(変化せず)
+      assert_var(:tn_bell_count, 1)                      # aliceさんの手番なので出ない(変化せず)
     end
   end
 end

@@ -194,44 +194,16 @@ export const mod_sfen_share = {
 
     next_turn_call(params) {
       if (params.next_user_name) {                       // 順番設定しているときだけ入っている
-        if (this.next_notify_p) {
+        if (this.tn_bell_call_p) {
           if (this.user_name === params.next_user_name) {
-            this.tn_notify()
+            this.tn_bell_call()
           }
-          this.next_turn_message = `${this.next_turn_message_prefix(params)}${this.user_call_name(params.next_user_name)}の手番です`
+        }
+        if (this.tn_name_call_p) {
+          this.next_turn_message = this.tn_message_build(params)
           this.toast_ok(this.next_turn_message)
         }
       }
-    },
-
-    next_turn_message_prefix(params) {
-      Gs.assert(this.order_unit, "this.order_unit")
-
-      // console.log(this.change_per)                                             // => 2
-      // console.log(params.lmi.next_turn_offset)                             // => 1
-      // console.log(params.from_user_name)                                   // => alice
-      // console.log(params.next_user_name)                                   // => bob
-      // console.log(this.turn_to_user_name(params.lmi.next_turn_offset - 2)) // => dave
-      // console.log(this.turn_to_user_name(params.lmi.next_turn_offset - 1)) // => alice
-      // console.log(this.turn_to_user_name(params.lmi.next_turn_offset - 0)) // => bob
-      // console.log(this.order_unit.order_state.state_name)                  // => O2State
-      // console.log(this.order_unit.order_state.teams[0].length)             // => 2
-      // console.log(this.order_unit.order_state.teams[1].length)             // => 2
-
-      if (this.order_unit.order_state.state_name === "O2State") {           // 正確なチーム分けモードなら
-        const turn = params.lmi.next_turn_offset
-        const location = this.turn_to_location(turn)                        // 渡ってきたこれから指す側のチームを求めて
-        if (this.order_unit.order_state.teams[location.code].length >= 2) { // そのチーム内にメンバーが2人以上いる場合は
-          const user_name = this.turn_to_user_name(turn - 2)                // 2手前の名前を求めて
-          if (params.next_user_name === user_name) {                        // 再度同じ人が指す場合には
-            return "次も、"
-          }
-        }
-      } else {
-        // O1State の場合は所属チームが曖昧になるため判定ができない
-      }
-
-      return "次は、"
     },
 
     // 即時実行させたいエフェクト

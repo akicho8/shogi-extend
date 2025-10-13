@@ -9,16 +9,16 @@ RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手
       piece_move_o("77", "76", "☗7六歩")      # aliceが指す
     end
     window_b do
-      assert_var(:tn_counter, 1) # aliceが指し終わったのでaliceに通知
+      assert_var(:tn_bell_count, 1) # aliceが指し終わったのでaliceに通知
       piece_move_o("33", "34", "☖3四歩")      # bobが指す
     end
     window_a do
-      assert_var(:tn_counter, 1) # bobが指し終わったのでaliceに通知
+      assert_var(:tn_bell_count, 1) # bobが指し終わったのでaliceに通知
       order_set_off                           # 順番設定OFF
       piece_move_o("27", "26", "☗2六歩")      # aliceが指す
     end
     window_b do
-      assert_var(:tn_counter, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
+      assert_var(:tn_bell_count, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
     end
   end
 end

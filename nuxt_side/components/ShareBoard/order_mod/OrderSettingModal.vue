@@ -141,7 +141,7 @@ export default {
 
     test_handle() {
       this.sfx_click()
-      this.SB.tn_notify()
+      this.SB.tn_bell_call()
     },
 
     // 全体ｼｬｯﾌﾙ

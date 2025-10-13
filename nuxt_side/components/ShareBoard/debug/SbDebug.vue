@@ -81,7 +81,7 @@
       a.panel-block(@click="SB.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="SB.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="SB.cc_next_message") 順番設定後に時計設置を促す
-      a.panel-block(@click="SB.tn_notify") 牛
+      a.panel-block(@click="SB.tn_bell_call") 牛
       a.panel-block(@click="SB.kifu_mail_handle") 棋譜メール
       a.panel-block(@click="SB.ac_log({subject: 'ac_log', body: 'b', emoji: ':SOS:', level: 'critical'})") ac_log
       a.panel-block(@click="app_log({subject: 'app_log', body: 'b', emoji: ':SOS:', level: 'critical'})") app_log
