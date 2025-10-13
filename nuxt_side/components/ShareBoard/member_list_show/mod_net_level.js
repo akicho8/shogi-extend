@@ -1,7 +1,7 @@
 import { NetLevelInfo } from "./net_level_info.js"
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 
 const MS_PER_SECOND = 1000

@@ -10,7 +10,7 @@
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class RoomKeyValidator {

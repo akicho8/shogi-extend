@@ -2,7 +2,7 @@
 // 将来的に user_name 以外のものを入れるかもしれないのでラップしておく
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export class Item {
   static create(user_name) {

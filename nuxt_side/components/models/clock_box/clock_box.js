@@ -1,6 +1,6 @@
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 
 const HUMAN_STATUS_LABELS = {

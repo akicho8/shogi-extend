@@ -19,7 +19,7 @@ dayjs.locale("ja")
 import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const TimeUtil = {
   create(...args) {

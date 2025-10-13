@@ -22,7 +22,7 @@
 //    return this.clipboard_copy(url)
 //  }
 //
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export class SimpleCache {
   constructor() {

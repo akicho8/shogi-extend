@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const vue_dialog = {
   methods: {

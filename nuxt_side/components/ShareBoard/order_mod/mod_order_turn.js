@@ -14,7 +14,7 @@
 // FIXME: ユーザー名を引数に取りメソッドが多いということはユーザー名の Value Object にするべきか？
 //
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_order_turn = {
   methods: {

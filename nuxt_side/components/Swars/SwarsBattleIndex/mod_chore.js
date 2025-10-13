@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 import QueryString from "query-string"

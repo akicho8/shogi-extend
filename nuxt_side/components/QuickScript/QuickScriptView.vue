@@ -29,7 +29,7 @@
 
 <script>
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import Vue from 'vue'
 import QueryString from "query-string"
 import isMobile from "ismobilejs"

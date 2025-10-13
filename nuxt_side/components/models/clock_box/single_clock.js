@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const SEC_PER_MIN = 60
 const MIN_PER_HOUR = 60

@@ -56,7 +56,7 @@ client-only
 </template>
 
 <script>
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 import { Location                          } from "shogi-player/components/models/location.js"

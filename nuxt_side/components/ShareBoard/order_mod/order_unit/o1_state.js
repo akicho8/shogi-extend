@@ -3,7 +3,7 @@ import { OxState } from "./ox_state.js"
 import { O2State } from "./o2_state.js"
 import { Item } from "./item.js"
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 

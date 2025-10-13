@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import dayjs from "dayjs"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export class AudioThemeInfo extends ApplicationMemoryRecord {
   static field_label = "BGM"

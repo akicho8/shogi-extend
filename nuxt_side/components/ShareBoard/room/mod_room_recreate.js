@@ -1,5 +1,5 @@
 import RoomRecreateModal from "./RoomRecreateModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const ROOM_DESTROY_AFTER_DELAY_SEC = 3.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
 

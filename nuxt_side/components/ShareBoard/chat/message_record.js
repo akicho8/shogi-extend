@@ -8,7 +8,7 @@
 // | message_class       |
 // |---------------------|
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
 import { MessageValidator } from "@/components/models/arashi_killer/message_validator.js"

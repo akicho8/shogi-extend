@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import XmatchModal from "./XmatchModal.vue"
 import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 import { XmatchAuthInfo } from "@/components/models/xmatch_auth_info.js"

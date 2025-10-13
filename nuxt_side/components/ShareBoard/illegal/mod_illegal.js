@@ -1,5 +1,5 @@
 import IllegalModal from "./IllegalModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_illegal = {
   data() {

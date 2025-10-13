@@ -1,7 +1,7 @@
 // 投了時の棋譜送信
 // 確認方法: README_kifu_mail.org
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 export const mod_kifu_mail = {

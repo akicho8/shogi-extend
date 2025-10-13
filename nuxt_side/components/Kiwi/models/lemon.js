@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { Model } from "./model.js"
 import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"

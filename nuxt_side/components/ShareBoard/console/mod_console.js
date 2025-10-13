@@ -1,7 +1,7 @@
 // チャット発言送信
 
 import { CommandInfo } from "./command_info.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 export const mod_console = {

@@ -1,5 +1,5 @@
 import { DebugModeInfo } from "./models/debug_mode_info.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_debug = {
   methods: {

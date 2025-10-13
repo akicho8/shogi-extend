@@ -1,7 +1,7 @@
 const PEPPER_DATE_FORMAT = "-" // 守護獣が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 
 export const mod_guardian = {

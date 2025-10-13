@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export class O1Strategy {

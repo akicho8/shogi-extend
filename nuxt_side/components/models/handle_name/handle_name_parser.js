@@ -1,6 +1,6 @@
 import _ from "lodash"
 import NodeEmoji from "node-emoji"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const CLEAN_TRY_COUNT = 2
 

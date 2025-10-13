@@ -24,7 +24,7 @@
 import VueDraggable from "vuedraggable"
 import { MemberStatusInfo } from "./member_status_info.js"
 import { support_child } from "../support_child.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export default {
   name: "OrderTeamOne",

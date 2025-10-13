@@ -3,7 +3,7 @@
 import ChatModal from "./ChatModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { SendTriggerInfo } from "../models/send_trigger_info.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
 

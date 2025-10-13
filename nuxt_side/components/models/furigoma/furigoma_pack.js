@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { FurigomaPawn } from "./furigoma_pawn.js"
 
 export class FurigomaPack {

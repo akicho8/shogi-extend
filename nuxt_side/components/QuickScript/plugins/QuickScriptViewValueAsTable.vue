@@ -31,7 +31,7 @@ b-table.QuickScriptViewValueAsTable(
 
 <script>
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const OPTIMIZE_ROWS = true
 

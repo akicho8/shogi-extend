@@ -5,7 +5,7 @@ Terms
 
 <script>
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import Terms from "@/pages/about/terms.vue"
 import ShareBoard2 from "@/pages/share-board/index.vue"
 

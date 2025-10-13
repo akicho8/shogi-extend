@@ -1,5 +1,5 @@
 import TimeoutModal from "./TimeoutModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const CC_TIMEOUT_BC_DELAY    = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミューレートをする用)
 const CC_TIMEOUT_JUDGE_DELAY = 10 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する

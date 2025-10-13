@@ -7,7 +7,7 @@ const AL_SAME_SFEN_SKIP = false // 同じ局面なら何もしない？
 const AL_TURN_ONLY_REVERT = true // 過去の履歴なら手数だけ戻す？
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import ActionLogModal from "./ActionLogModal.vue"
 import { ActionLogDto } from "./action_log_dto.js"

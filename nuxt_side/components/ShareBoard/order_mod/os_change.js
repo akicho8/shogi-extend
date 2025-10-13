@@ -1,4 +1,4 @@
-import { GX } from '@/components/models/gs.js'
+import { GX } from '@/components/models/gx.js'
 const MD5 = require("md5.js")
 
 export class OsChange {

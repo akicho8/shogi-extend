@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
 import _ from "lodash"
 

@@ -1,5 +1,5 @@
 // 汎用コード
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { AppHelper } from "@/components/models/app_helper.js"
 import { SpUtil } from "@/components/models/sp_util.js"
 import { MyMobile } from "@/components/models/my_mobile.js"

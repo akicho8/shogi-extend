@@ -9,7 +9,7 @@ import { AiResponseInfo } from "./ai_response_info.js"
 import { MessageRecord } from "./message_record.js"
 import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_chat_ai_trigger_rule = {
   data() {

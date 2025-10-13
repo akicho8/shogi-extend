@@ -3,7 +3,7 @@
 import { OsChange } from "./os_change.js"
 import { OrderUnit } from "./order_unit/order_unit.js"
 import OrderSettingModal from "./OrderSettingModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_order_new = {
   data() {

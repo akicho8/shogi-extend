@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { PaletteGenerator } from "@/components/models/palette_generator.js"
 
 const CHART_CONFIG_DEFAULT = {

@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const PING_OK_SEC           = 3    // N秒以内ならPINGを成功とみなす
 const PONG_DELAY            = 0    // PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)

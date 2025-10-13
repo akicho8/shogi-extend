@@ -4,7 +4,7 @@ import { OxState } from "./ox_state.js"
 import { O1State } from "./o1_state.js"
 import { Item } from "./item.js"
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 // TODO: 最後にできれば Immutable にしたい
 export class O2State extends OxState {

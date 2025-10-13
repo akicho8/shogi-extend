@@ -7,7 +7,7 @@ import { mod_order_turn   } from "./mod_order_turn.js"
 import { mod_order_option } from "./mod_order_option.js"
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_order_main = {
   mixins: [

@@ -24,7 +24,7 @@
 //   }
 //
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const params_controller = {
   mixins: [

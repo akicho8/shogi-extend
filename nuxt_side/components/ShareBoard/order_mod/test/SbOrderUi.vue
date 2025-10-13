@@ -57,7 +57,7 @@
 <script>
 import _ from "lodash"
 import VueDraggable from "vuedraggable"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 import { OrderUnit } from "../order_unit/order_unit.js"
 

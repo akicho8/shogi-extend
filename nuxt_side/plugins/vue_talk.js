@@ -1,5 +1,5 @@
 import { VolumeConfig } from "@/components/models/volume_config.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 const MESSAGE_LENGTH_MAX = 140  // N文字を越えるとしゃべらない
 

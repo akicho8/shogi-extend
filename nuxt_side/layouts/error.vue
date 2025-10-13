@@ -29,7 +29,7 @@ client-only
 
 <script>
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { ResponseStatusCodeInfo } from "@/components/models/response_status_code_info.js"
 
 export default {

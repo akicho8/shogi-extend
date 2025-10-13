@@ -13,7 +13,7 @@ import QuizVoteModal from "./QuizVoteModal.vue"
 import { OrderUnit } from "../order_mod/order_unit/order_unit.js"
 import { Quiz } from "./quiz.js"
 import { VotedResult } from "./voted_result.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_client_vote = {
   data() {

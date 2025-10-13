@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
 

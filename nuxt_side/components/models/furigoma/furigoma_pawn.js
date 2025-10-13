@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { Soldier } from "shogi-player/components/models/soldier.js" // FIXME: テストで読み込めない。修正方法不明。
 import { Piece } from "shogi-player/components/models/piece.js"
 import _ from "lodash"

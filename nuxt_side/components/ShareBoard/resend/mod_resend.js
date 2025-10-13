@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import SbResendModal from "./SbResendModal.vue"
 
 const RS_ENABLE           = true // この機能を有効にするか？

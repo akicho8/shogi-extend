@@ -1,6 +1,6 @@
 // 本譜共有機能
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_honpu_share = {
   methods: {

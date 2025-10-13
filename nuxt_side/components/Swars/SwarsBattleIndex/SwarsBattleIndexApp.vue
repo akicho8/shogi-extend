@@ -77,7 +77,7 @@ import { ParamInfo  } from "./models/param_info.js"
 import { SceneInfo  } from "../models/scene_info.js"
 import { LayoutInfo } from "./models/layout_info.js"
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export default {
   name: "SwarsBattleIndexApp",

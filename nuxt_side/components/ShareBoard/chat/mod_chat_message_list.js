@@ -3,7 +3,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { MessageRecord } from "./message_record.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_chat_message_list = {
   data() {

@@ -60,7 +60,7 @@
 <script>
 import { support_child } from "../support_child.js"
 import { mod_urls } from "./mod_urls.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export default {
   name: "ActionLogModal",

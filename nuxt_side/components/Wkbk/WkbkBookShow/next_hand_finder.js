@@ -1,5 +1,5 @@
 // 相手の指し手を求める
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export class NextHandFinder {
   constructor(list_of_moves, inputs, options = {}) {

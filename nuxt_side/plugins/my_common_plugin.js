@@ -7,7 +7,7 @@ import { TimeUtil } from "@/components/models/time_util.js"
 import { DebugUtil } from "@/components/models/debug_util.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { marked } from 'marked'
 import isMobile from "ismobilejs"
 

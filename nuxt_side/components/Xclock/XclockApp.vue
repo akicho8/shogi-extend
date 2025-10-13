@@ -74,7 +74,7 @@ import { mouse_cursor_hidden_mixin  } from "../models/mouse_cursor_hidden_mixin.
 import { mobile_screen_adjust_mixin } from "../models/mobile_screen_adjust_mixin.js"
 import { mod_keyboard_shortcut      } from "./mod_keyboard_shortcut.js"
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export default {
   name: "XclockApp",

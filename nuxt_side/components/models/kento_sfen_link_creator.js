@@ -1,5 +1,5 @@
 import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 

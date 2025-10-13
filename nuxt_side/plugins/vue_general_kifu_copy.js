@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { SimpleCache } from "@/components/models/simple_cache.js"
 
 const simple_cache = new SimpleCache()

@@ -1,7 +1,7 @@
 // 投了関連
 
 import GiveUpModal from "./GiveUpModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_give_up = {
   data() {

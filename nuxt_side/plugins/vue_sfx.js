@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
   console.log(`[${process.client ? 'CSR' : 'SSR'}][load] Howler`)
 }
 
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import { VolumeConfig } from "@/components/models/volume_config.js"
 import _ from "lodash"

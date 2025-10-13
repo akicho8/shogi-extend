@@ -21,7 +21,7 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 export default {

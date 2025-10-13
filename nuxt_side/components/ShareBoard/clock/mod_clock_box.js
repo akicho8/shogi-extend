@@ -5,7 +5,7 @@ const CC_KOREYORI_DELAY       = 1.0  // N秒の発声とかぶるためすこし
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
 import { CcBehaviorInfo     } from "./cc_behavior_info.js"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 export const mod_clock_box = {

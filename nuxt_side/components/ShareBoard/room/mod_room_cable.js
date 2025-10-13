@@ -9,7 +9,7 @@
 // |-----------------------------------------------------+-----------------------------------------|
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 

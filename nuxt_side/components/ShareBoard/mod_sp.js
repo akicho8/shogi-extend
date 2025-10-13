@@ -1,7 +1,7 @@
 const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 
 import _ from "lodash"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_sp = {
   data() {

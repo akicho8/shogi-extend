@@ -9,7 +9,7 @@
 //     xprofile_share : 他者が入室するたびに配布
 //   xprofile_leave  : 退室
 //
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { XprofileDecorator } from "./xprofile_decorator.js"
 

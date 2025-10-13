@@ -1,4 +1,4 @@
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import dayjs from "dayjs"
 import TrackLogModal from "./TrackLogModal.vue"

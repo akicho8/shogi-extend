@@ -1,5 +1,5 @@
 import KifuReadModal from "@/components/KifuReadModal.vue"
-import { GX } from "@/components/models/gs.js"
+import { GX } from "@/components/models/gx.js"
 
 export const mod_kifu_read = {
   data() {
