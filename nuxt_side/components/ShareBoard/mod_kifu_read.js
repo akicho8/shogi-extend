@@ -67,33 +67,32 @@ export const mod_kifu_read = {
     },
 
     // 棋譜読み込み処理
-    kifu_read_direct_handle(any_source) {
+    async kifu_read_direct_handle(any_source) {
       const params = {
         any_source: any_source,
         to_format: "sfen",
       }
-      this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
-        this.bs_error_message_dialog(e)
-        if (e.body) {
-          this.sfx_click()
-          this.toast_ok("棋譜を読み込みました")
-          this.al_share({label: "棋譜読込前"})
+      const e = await this.$axios.$post("/api/general/any_source_to.json", params)
+      this.bs_error_message_dialog(e)
+      if (e.body) {
+        this.sfx_click()
+        this.toast_ok("棋譜を読み込みました")
+        this.al_share({label: "棋譜読込前"})
 
-          this.current_sfen = e.body
-          this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-          this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
-          this.honpu_share()             // それを他の人に共有する
+        this.current_sfen = e.body
+        this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
+        this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
+        this.honpu_share()             // それを他の人に共有する
 
-          this.viewpoint = "black"
-          this.ac_log({subject: "棋譜読込", body: e.body})
+        this.viewpoint = "black"
+        this.ac_log({subject: "棋譜読込", body: e.body})
 
-          this.kifu_read_modal_close()
+        this.kifu_read_modal_close()
 
-          // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-          GX.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))
-          GX.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました`))
-        }
-      })
+        // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
+        GX.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))
+        GX.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました`))
+      }
     },
   },
 }
