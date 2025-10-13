@@ -5,7 +5,7 @@
       | お題メーカー
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.debug_mode_p")
         | (ID:{{SB.master_quiz.unique_code}})
-    a.quiz_src_random_handle.is-unselectable(@click="quiz_src_random_handle")
+    a.quiz_source_random_handle.is-unselectable(@click="quiz_source_random_handle")
       | 🎲
   .modal-card-body
     b-field(label-position="on-border")
@@ -61,8 +61,8 @@ export default {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
     },
-    quiz_src_random_handle() {
-      this.SB.quiz_src_random_handle()
+    quiz_source_random_handle() {
+      this.SB.quiz_source_random_handle()
     },
   },
   computed: {

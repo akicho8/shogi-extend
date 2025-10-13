@@ -18,7 +18,7 @@ RSpec.describe type: :system, share_board_spec: true do
       within(".quiz_left")    { assert_selector(:fillable_field, with: "") }
       within(".quiz_right")   { assert_selector(:fillable_field, with: "") }
 
-      find(".quiz_src_random_handle").click # ランダム入力
+      find(".quiz_source_random_handle").click # ランダム入力
 
       # 入力がある
       within(".quiz_subject") { assert_selector(:fillable_field, with: /.+/) }

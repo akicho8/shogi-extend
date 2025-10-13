@@ -9,13 +9,13 @@ export const mod_quiz_host = {
     }
   },
   methods: {
-    quiz_src_clear() {
+    quiz_source_clear() {
       this.master_quiz = Quiz.create()
     },
-    quiz_src_sample() {
+    quiz_source_sample() {
       this.master_quiz = Quiz.sample
     },
-    quiz_src_random_handle() {
+    quiz_source_random_handle() {
       this.sfx_click()
       const quiz = QuizTemplateInfo.sample
       if (quiz) {
