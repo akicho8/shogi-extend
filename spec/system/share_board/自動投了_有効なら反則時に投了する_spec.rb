@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member   => "a,b",
         :fixed_order    => "a,b",
         :fixed_order_state    => "to_o1_state",
-        :room_enter_autoexec => "cc_auto_start",
+        :room_enter_autoexec => :cc_auto_start,
         :auto_resign_key      => auto_resign_key,
         :RS_ENABLE            => false,
       })

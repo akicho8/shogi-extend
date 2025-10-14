@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name          => user_name,
         :fixed_member => "alice,bob",
         :fixed_order  => "alice,bob",
-        :room_enter_autoexec => "cc_auto_start",
+        :room_enter_autoexec => :cc_auto_start,
       })
   end
 

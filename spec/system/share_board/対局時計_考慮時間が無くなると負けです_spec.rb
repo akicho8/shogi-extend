@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def case1(params)
-    visit_app({ **clock_box_params(params), autoexec: "cc_auto_start", clock_speed: 60 })
+    visit_app({ **clock_box_params(params), autoexec: :cc_auto_start, clock_speed: 60 })
   end
 
   def assert_extra_koreyori_true
