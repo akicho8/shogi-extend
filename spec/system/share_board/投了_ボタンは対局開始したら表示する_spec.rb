@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :user_name          => :alice,
         :fixed_member => "alice,bob",
         :fixed_order  => "alice,bob",
-        :autoexec           => "cc_auto_start",
+        :room_enter_autoexec => "cc_auto_start",
       })
     assert_give_up_button
   end

@@ -3,20 +3,16 @@ require "#{__dir__}/shared_methods"
 RSpec.describe "投了_ランキングに反映する", type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
-        :user_name          => user_name,
+        :user_name    => user_name,
         :fixed_member => "alice,bob",
         :fixed_order  => "alice,bob",
-        :autoexec           => "cc_auto_start",
+        :room_enter_autoexec => "cc_auto_start",
       })
   end
 
   it "works" do
-    window_a do
-      case1(:alice)
-    end
-    window_b do
-      case1(:bob)
-    end
+    window_a { case1(:alice) }
+    window_b { case1(:bob) }
     window_a do
       give_up_run
       sidebar_open
