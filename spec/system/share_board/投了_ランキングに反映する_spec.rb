@@ -6,7 +6,7 @@ RSpec.describe "投了_ランキングに反映する", type: :system, share_boa
         :user_name    => user_name,
         :fixed_member => "alice,bob",
         :fixed_order  => "alice,bob",
-        :room_enter_autoexec => :cc_auto_start,
+        :room_create_after_action => :cc_auto_start,
       })
   end
 
