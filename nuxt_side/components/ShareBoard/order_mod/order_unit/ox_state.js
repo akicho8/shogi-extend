@@ -102,7 +102,7 @@ export class OxState {
     }
     return messages
   }
-  
+
   get empty_p()        { return this.main_user_count === 0 } // 対戦者がいない？
   get self_vs_self_p() { return this.main_user_count === 1 } // 自分vs自分で対戦している？ (または相手がいない)
   get one_vs_one_p()   { return this.main_user_count === 2 } // 1vs1で対戦している？
