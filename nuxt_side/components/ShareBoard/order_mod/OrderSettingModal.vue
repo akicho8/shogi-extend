@@ -139,11 +139,6 @@ export default {
       this.SB.os_modal_close()
     },
 
-    test_handle() {
-      this.sfx_click()
-      this.SB.tn_bell_call()
-    },
-
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.sfx_click()
