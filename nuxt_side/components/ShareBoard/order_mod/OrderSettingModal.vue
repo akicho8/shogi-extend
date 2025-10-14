@@ -6,7 +6,7 @@
 
       template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{SB.new_v.order_unit.main_user_count}}人
+          | 参加者{{SB.new_o.order_unit.main_user_count}}人
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
 
@@ -20,14 +20,14 @@
       | 右上のスイッチで有効にしよう
 
     template(v-if="SB.order_enable_p || development_p")
-      //- pre {{JSON.stringify(SB.new_v.os_change.to_h)}}
+      //- pre {{JSON.stringify(SB.new_o.os_change.to_h)}}
       .TeamsContainer
-        template(v-if="SB.new_v.order_unit.order_state.state_name === 'O1State'")
-          OrderTeamOne.dnd_both(:items.sync="SB.new_v.order_unit.order_state.users"   label="対局")
-        template(v-if="SB.new_v.order_unit.order_state.state_name === 'O2State'")
-          OrderTeamOne.dnd_black(:items.sync="SB.new_v.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne.dnd_white(:items.sync="SB.new_v.order_unit.order_state.teams[1]" label="☖")
-        OrderTeamOne.dnd_watch_users(:items.sync="SB.new_v.order_unit.watch_users" label="観戦")
+        template(v-if="SB.new_o.order_unit.order_state.state_name === 'O1State'")
+          OrderTeamOne.dnd_both(:items.sync="SB.new_o.order_unit.order_state.users"   label="対局")
+        template(v-if="SB.new_o.order_unit.order_state.state_name === 'O2State'")
+          OrderTeamOne.dnd_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne.dnd_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖")
+        OrderTeamOne.dnd_watch_users(:items.sync="SB.new_o.order_unit.watch_users" label="観戦")
 
       .shuffle_buttons.mt-4
         b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
@@ -65,21 +65,21 @@
 
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
         .column.is-12(v-if="SB.debug_mode_p")
-          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_v.foul_mode_key")
+          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_o.foul_mode_key")
         .column.is-12(v-if="SB.debug_mode_p")
-          SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
+          SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_o.auto_resign_key")
         .column.is-12
           SimpleRadioButton.change_per(
             :base="SB"
             custom-class="is-small"
             element_size="is-small"
             model_name="ChangePerInfo"
-            :sync_value="SB.new_v.change_per"
-            @update:sync_value="v => SB.new_v.change_per = _.max([1, $GX.to_i(v)])"
+            :sync_value="SB.new_o.change_per"
+            @update:sync_value="v => SB.new_o.change_per = _.max([1, $GX.to_i(v)])"
             )
-          //- | {{SB.new_v.change_per}}
+          //- | {{SB.new_o.change_per}}
         .column.is-12
-          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_v.think_mark_receive_scope_key")
+          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_o.think_mark_receive_scope_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -142,14 +142,14 @@ export default {
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.sfx_click()
-      this.SB.new_v.order_unit.shuffle_all()
+      this.SB.new_o.order_unit.shuffle_all()
       this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.sfx_click()
-      this.SB.new_v.order_unit.teams_each_shuffle()
+      this.SB.new_o.order_unit.teams_each_shuffle()
       this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
@@ -163,8 +163,8 @@ export default {
       })
       const prefix = `振り駒をした結果、${furigoma_pack.message}`
       this.sfx_click()
-      this.SB.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
-      const user = this.SB.new_v.order_unit.first_user(this.SB.start_color)
+      this.SB.new_o.order_unit.furigoma_core(furigoma_pack.swap_p)
+      const user = this.SB.new_o.order_unit.first_user(this.SB.start_color)
       GX.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.SB.al_share({label: furigoma_pack.piece_names, message: message})
@@ -174,13 +174,13 @@ export default {
     swap_handle() {
       if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
-      this.SB.new_v.order_unit.swap_run()
+      this.SB.new_o.order_unit.swap_run()
       this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
     },
 
     // 偶数人数であること
     swap_invalid(name) {
-      if (!this.SB.new_v.order_unit.swap_enable_p) {
+      if (!this.SB.new_o.order_unit.swap_enable_p) {
         this.sfx_play("x")
         this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
@@ -188,17 +188,17 @@ export default {
     },
 
     os_before_apply() {
-      // let v = this.SB.new_v.change_per
+      // let v = this.SB.new_o.change_per
       // v = GX.to_i(v)
       // if (v <= 0) {
       //   v = 1
       // }
-      // this.SB.new_v.change_per = v
+      // this.SB.new_o.change_per = v
     },
 
-    // 反映時のエラーの内容は new_v.order_unit に任せる
+    // 反映時のエラーの内容は new_o.order_unit に任せる
     order_unit_invalid() {
-      const messages = this.SB.new_v.order_unit.error_messages
+      const messages = this.SB.new_o.order_unit.error_messages
       if (GX.present_p(messages)) {
         this.sfx_play("x")
         messages.forEach(e => this.toast_warn(e))
@@ -207,7 +207,7 @@ export default {
     },
 
     options_invalid() {
-      if (GX.blank_p(this.SB.new_v.change_per)) {
+      if (GX.blank_p(this.SB.new_o.change_per)) {
         this.sfx_play("x")
         this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
         return true
@@ -220,7 +220,7 @@ export default {
       if (this.order_unit_invalid()) { return }
       if (this.options_invalid()) { return }
       this.sfx_click()
-      if (!this.SB.new_v.os_change.has_changes_to_save_p) {
+      if (!this.SB.new_o.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
         return
       }
@@ -248,7 +248,7 @@ export default {
 
     state_toggle_handle() {
       this.sfx_click()
-      this.SB.new_v.order_unit.state_toggle()
+      this.SB.new_o.order_unit.state_toggle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -276,10 +276,10 @@ export default {
   },
   computed: {
     submit_button_color() {
-      if (this.SB.new_v.order_unit.invalid_p) {
+      if (this.SB.new_o.order_unit.invalid_p) {
         return "is-warning"
       }
-      if (this.SB.new_v.os_change.has_changes_to_save_p) {
+      if (this.SB.new_o.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
     },

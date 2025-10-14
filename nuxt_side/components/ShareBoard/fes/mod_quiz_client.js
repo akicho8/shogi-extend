@@ -84,10 +84,10 @@ export const mod_quiz_client = {
 
     // 順番設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を順番設定に適用する
     voted_result_to_order_apply() {
-      GX.assert(GX.present_p(this.new_v), "GX.present_p(this.new_v)")
-      GX.assert(GX.present_p(this.new_v.order_unit), "GX.present_p(this.new_v.order_unit)")
-      this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.quiz_voted_result.to_h) // 反映
-      this.new_v.order_unit.teams_each_shuffle() // チーム内シャッフル実行
+      GX.assert(GX.present_p(this.new_o), "GX.present_p(this.new_o)")
+      GX.assert(GX.present_p(this.new_o.order_unit), "GX.present_p(this.new_o.order_unit)")
+      this.new_o.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.quiz_voted_result.to_h) // 反映
+      this.new_o.order_unit.teams_each_shuffle() // チーム内シャッフル実行
     },
 
     // private

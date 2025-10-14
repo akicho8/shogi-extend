@@ -103,11 +103,11 @@ export class OrderUnit {
     this.order_state = order_state
   }
 
-  // これを使って new_v.order_unit を作っている
+  // これを使って new_o.order_unit を作っている
   deep_clone() {
     const object = new this.constructor()
     object.attributes = this.attributes // 内部は同じものを見ているので危険
-    return _.cloneDeep(object)          // 別のものにしないと new_v.order_unit が order_unit に即反映されてしまう
+    return _.cloneDeep(object)          // 別のものにしないと new_o.order_unit が order_unit に即反映されてしまう
   }
 
   dump_and_load() {

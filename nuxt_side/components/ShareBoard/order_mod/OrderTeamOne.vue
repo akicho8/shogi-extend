@@ -50,12 +50,12 @@ export default {
     // dnd
 
     start_handle() {
-      this.SB.new_v.os_dnd_count += 1
+      this.SB.new_o.os_dnd_count += 1
     },
     end_handle() {
       this.sfx_play("se_transition_up")
-      this.SB.new_v.os_dnd_count -= 1
-      this.SB.new_v.order_unit.cache_clear()
+      this.SB.new_o.os_dnd_count -= 1
+      this.SB.new_o.order_unit.cache_clear()
     },
 
     // name

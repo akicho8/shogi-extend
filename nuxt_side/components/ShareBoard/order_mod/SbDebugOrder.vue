@@ -18,8 +18,8 @@
     .panel
       .panel-heading
         | 順番操作
-      template(v-if="SB.new_v.order_unit")
-        .panel-block {{SB.new_v.order_unit.inspect}}
+      template(v-if="SB.new_o.order_unit")
+        .panel-block {{SB.new_o.order_unit.inspect}}
   .column.is-4
     .panel
       .panel-heading
@@ -40,8 +40,8 @@
       .panel-block order_enable_p:{{SB.order_enable_p}}
       .panel-block
         | 本順序:{{SB.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}
-      .panel-block(v-if="SB.new_v.order_unit")
-        | 仮順序:{{SB.new_v.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}
+      .panel-block(v-if="SB.new_o.order_unit")
+        | 仮順序:{{SB.new_o.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}
       .panel-block rs_resend_delay_id:{{SB.rs_resend_delay_id}}
   .column.is-4
     .panel
@@ -65,20 +65,20 @@
       .panel-block 自分チームのメンバーは2人以上いる？ {{SB.my_team_member_is_many_p}}
       .panel-block 自分チームのメンバーは自分だけか？ {{SB.my_team_member_is_one_p}}
 
-  .column.is-4(v-if="SB.new_v.order_unit")
+  .column.is-4(v-if="SB.new_o.order_unit")
     .panel
       .panel-heading
-        | new_v stringify
+        | new_o stringify
       .panel-block
         pre
-          | {{SB.new_v.order_unit}}
-  .column.is-4(v-if="SB.new_v.order_unit")
+          | {{SB.new_o.order_unit}}
+  .column.is-4(v-if="SB.new_o.order_unit")
     .panel
       .panel-heading
-        | new_v attributes
+        | new_o attributes
       .panel-block
         pre
-          | {{SB.new_v.order_unit.attributes}}
+          | {{SB.new_o.order_unit.attributes}}
 </template>
 
 <script>
