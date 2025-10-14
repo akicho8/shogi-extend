@@ -113,7 +113,6 @@
     .panel
       .panel-heading
         | ActionCable
-      a.panel-block(@click="SB.room_recreate") 再起動
       a.panel-block(@click="SB.room_create") 接続
       a.panel-block(@click="SB.room_destroy") 切断
       a.panel-block(@click="SB.fake_error") 値null送信

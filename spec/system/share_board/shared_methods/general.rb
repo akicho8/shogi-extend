@@ -7,12 +7,6 @@ module SharedMethods
     assert_no_selector(".assert_var .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end
 
-  def room_recreate_apply
-    sidebar_open
-    menu_item_click("再起動")     # モーダルを開く
-    apply_button  # 実行する
-  end
-
   def buefy_dialog_button_click(type = "")
     find(".modal button#{type}").click
   end
