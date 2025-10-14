@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "投了_ランキングに反映する", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name    => user_name,

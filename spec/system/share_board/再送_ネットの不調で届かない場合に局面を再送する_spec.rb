@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1
     window_a do
       visit_room(user_name: :alice, fixed_order: "alice,bob", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY)

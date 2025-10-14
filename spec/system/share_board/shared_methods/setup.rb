@@ -1,12 +1,7 @@
 module SharedMethods
-  included do
-    include AliceBobCarol
-
-    before do
-      eval_code %(ShareBoard.setup(force: true))
-      sfen_info = SfenInfo["相全駒手番△"]
-      eval_code %(ShareBoard::Room.mock(room_key: 'test_room', sfen: "#{sfen_info.sfen}"))
-    end
+  def setup_share_board
+    sfen_info = SfenInfo["相全駒手番△"]
+    eval_code %(ShareBoard.setup(force: true); ShareBoard::Room.mock(room_key: 'test_room', sfen: "#{sfen_info.sfen}"))
   end
 
   def room_create_delay

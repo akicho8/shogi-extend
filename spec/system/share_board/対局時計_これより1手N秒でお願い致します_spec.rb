@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(params)
     visit_app({ **clock_box_params(params), autoexec: :cc_auto_start, clock_speed: 60 })
   end

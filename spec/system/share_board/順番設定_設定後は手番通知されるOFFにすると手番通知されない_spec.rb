@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手番通知されない", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a { room_setup_by_user(:alice) }
     window_b { room_setup_by_user(:bob)   }

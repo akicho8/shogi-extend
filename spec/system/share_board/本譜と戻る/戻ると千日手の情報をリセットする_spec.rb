@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "戻ると千日手の情報をリセットする", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1
     piece_move("77", "76")
   end

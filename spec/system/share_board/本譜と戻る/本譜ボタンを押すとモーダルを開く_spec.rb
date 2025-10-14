@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it do
     visit_app(body: "position startpos")
     find("a", text: "本譜", exact_text: true).click   # 本譜のリンクをクリック

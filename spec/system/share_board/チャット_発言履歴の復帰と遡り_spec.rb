@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   let(:content1) { SecureRandom.hex }
 
   it "完全に抜けた状態から再度入室すると発言履歴がある" do

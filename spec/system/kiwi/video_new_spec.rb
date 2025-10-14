@@ -6,6 +6,11 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
     visit_app
   end
 
+  it "meta_check" do |example|
+    pp example.metadata
+    assert_text "動画作成"
+  end
+
   it "トップ" do
     assert_text "動画作成"
   end

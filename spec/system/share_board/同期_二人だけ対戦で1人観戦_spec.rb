@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a { room_setup_by_user(:alice) }         # alice が部屋を作る
     window_b { room_setup_by_user(:bob)   }         # bob も同じ部屋に入る

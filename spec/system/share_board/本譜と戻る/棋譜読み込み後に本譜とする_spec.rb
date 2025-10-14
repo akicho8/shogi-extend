@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "通常" do
     visit_app
     kifu_read_run               # 棋譜読み込み後に

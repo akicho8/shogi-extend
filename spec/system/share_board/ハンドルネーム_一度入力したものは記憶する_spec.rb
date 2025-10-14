@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 # このテストは ordered_members が nil のまま共有されるのをスキップするのを保証するので消してはいけない
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a do
       room_setup_by_user(:alice)

@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "対局時計_個別設定_片方を変更したとき片方は連動しない", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a do
       room_setup_by_user(:alice)

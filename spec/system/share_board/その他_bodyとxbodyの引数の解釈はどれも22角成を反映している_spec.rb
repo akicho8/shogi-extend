@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   describe "body" do
     it "sfen" do
       visit_app(body: SfenGenerator.santeme_kakunari)

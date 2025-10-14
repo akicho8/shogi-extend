@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def sfen
     "position sfen 8+r/8B/7PK/9/9/9/9/9/9 b P 1"
   end

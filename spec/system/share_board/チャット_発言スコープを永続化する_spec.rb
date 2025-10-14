@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   # 部屋に入り直した際に発言スコープが ms_public に戻ったことに気づかないで発言する事例があったため永続化する
   it "works" do
     visit_room(user_name: :alice, fixed_order: :alice)

@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "基本的な挙動", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "印モードの初期値は無効だが右上のペン印をクリックすると有効になる" do
     visit_app
     assert_var :think_mark_mode_p, "false"

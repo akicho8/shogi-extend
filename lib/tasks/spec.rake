@@ -32,8 +32,8 @@ if defined?(RSpec)
 
     desc "共有将棋盤のシステムテストすべて"
     RSpec::Core::RakeTask.new(:share_board => "spec:prepare") do |t|
-      t.pattern = "spec/system/share_board/**/*_spec.rb"
-      t.rspec_opts = "-f p"
+      t.pattern = "spec/system/{kiwi,share_board}/**/*_spec.rb"
+      t.rspec_opts = "-f p --fail-fast"
     end
 
     desc "QuickScript 以下のテストすべて"

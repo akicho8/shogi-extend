@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_app(auto_close_p: true) # 自動的に閉じるモード (production では true にしている)
     clock_open                    # 対局時計を開いて

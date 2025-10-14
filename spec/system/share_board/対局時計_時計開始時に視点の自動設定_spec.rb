@@ -2,7 +2,7 @@
 
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def visit_room(fixed_order_state, b_or_w, user_name)
     visit_app({
         :user_name      => user_name,

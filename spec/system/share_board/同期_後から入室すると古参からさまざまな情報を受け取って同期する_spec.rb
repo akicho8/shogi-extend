@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   describe "盤面" do
     it "最大2手まである棋譜の1手目を指している部屋に入ったとき1手目になる" do
       window_a do

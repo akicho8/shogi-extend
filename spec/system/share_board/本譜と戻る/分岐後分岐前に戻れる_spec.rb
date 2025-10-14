@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "分岐したとき戻れる", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_app(body: "position startpos") # 棋譜がある状態で来たので
     assert_honpu_open_on                 # 「本譜」ボタンがあり

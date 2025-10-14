@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "編集モードでは発動しない" do
     visit_app(sp_mode: "edit")
     Capybara.current_session.active_element.send_keys("?") # 表示

@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "順番設定_補助機能_手番通知", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a do
       room_setup_by_user(:alice)                      # aliceが部屋を作る

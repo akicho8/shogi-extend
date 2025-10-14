@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "対局時計_設定の操作中に値を同期する", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   CC_INPUT_DEBOUNCE_DELAY = 0.5
 
   def case1(user_name)

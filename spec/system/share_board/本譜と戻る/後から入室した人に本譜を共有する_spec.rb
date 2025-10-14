@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "後から入室した人に本譜を共有する", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a { visit_app(body: Bioshogi::SFEN1) }         # 盤面情報をつけてくると本譜ができる
     window_b { visit_app }

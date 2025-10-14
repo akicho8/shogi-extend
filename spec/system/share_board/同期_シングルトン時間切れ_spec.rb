@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   before do
     @initial_read_sec       = 5 # 5秒切れ負け
     @CC_TIMEOUT_BC_DELAY    = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミュレート)

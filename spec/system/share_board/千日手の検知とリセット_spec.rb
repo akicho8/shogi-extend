@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "4回目の同一局面で指し手に千日手のラベルついてモーダルが発動して閉じれる" do
     visit_app
     perpetual_trigger

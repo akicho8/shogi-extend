@@ -1,6 +1,6 @@
 require "#{__dir__}/helper"
 
-RSpec.describe "順番設定直後の自動設定", type: :system, share_board_spec: true do
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name, think_mark_mode_p)
     visit_room({
         :user_name            => user_name,
