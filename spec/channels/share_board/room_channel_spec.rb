@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true do
+RSpec.describe ShareBoard::RoomChannel, type: :channel do
   let(:user1)       { User.create!                            }
   let(:room_key)   { SecureRandom.hex                        }
   let(:channel_key) { "share_board/room_channel/#{room_key}" }
