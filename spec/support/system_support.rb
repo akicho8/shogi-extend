@@ -232,7 +232,7 @@ if true
 
     def eval_code(*code)
       code = Array.wrap(code).flatten.join(";")
-      visit "http://localhost:3000/eval?#{code.to_query(:code)}"
+      visit_to("http://localhost:3000/eval", code: code)
     end
 
     def visit_to(url, params = {})
@@ -243,6 +243,7 @@ if true
       original_params = Rack::Utils.parse_query(uri.query)  # => {"a"=>"1", "b"=>"2"}
       params = original_params.merge(params)                # => {"a"=>"1", "b"=>"2", "c"=>3}
       uri.query = params.to_query                           # => "a=1&b=2&c=3"
+      puts "[visit_to] #{uri}"
       visit(uri.to_s)
     end
 

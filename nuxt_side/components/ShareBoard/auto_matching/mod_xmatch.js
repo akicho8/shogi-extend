@@ -173,19 +173,19 @@ export const mod_xmatch = {
     },
 
     // マッチング成立
-    xmatch_establishment(params) {
+    async xmatch_establishment(params) {
       this.xmatch_rule_key_reset()
       if (this.development_p) {
         this.debug_alert("production なら XmatchModal は閉じる")
       } else {
         this.xmatch_modal_close()
       }
-      this.xmatch_setup1_member(params)   // 順番設定(必ず最初)
-      this.xmatch_setup2_handicap(params) // 手合割
-      this.xmatch_setup3_clock(params)    // チェスクロック
-      this.xmatch_setup4_join(params)     // 入退室
-      this.xmatch_setup5_call(params)     // 「開始してください」コール
-      this.xmatch_setup6_title(params)    // タイトル変更
+      await this.xmatch_setup4_join(params) // 入退室
+      this.xmatch_setup2_handicap(params)   // 手合割
+      this.xmatch_setup1_member(params)     // 順番設定(必ず最初)
+      this.xmatch_setup3_clock(params)      // チェスクロック
+      this.xmatch_setup5_call(params)       // 「開始してください」コール
+      this.xmatch_setup6_title(params)      // タイトル変更
     },
 
     // 順番設定
@@ -201,19 +201,19 @@ export const mod_xmatch = {
       this.current_sfen = xmatch_rule_info.board_preset_info.sfen // 手合割の反映
       this.sp_viewpoint_set_by_self_location()                       // 自分の場所を調べて正面をその視点にする
     },
+    async xmatch_setup4_join(params) {
+      // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
+      // めちゃくちゃだけどホストの概念がないのでこれでいい
+      this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
+      this.room_key = params.room_key // サーバー側で決めた共通の合言葉を使う
+      await this.room_create()
+    },
     xmatch_setup3_clock(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.cc_params = xmatch_rule_info.cc_params        // チェスクロック時間設定
       this.cc_create()                                   // チェスクロック起動 (先後は current_location.code で決める)
       this.cc_params_apply()                             // チェスクロックに時間設定を適用
       this.clock_box.play_handle()                       // PLAY押す
-    },
-    xmatch_setup4_join(params) {
-      // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
-      // めちゃくちゃだけどホストの概念がないのでこれでいい
-      this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
-      this.room_key = params.room_key // サーバー側で決めた共通の合言葉を使う
-      this.room_create()
     },
     xmatch_setup5_call(params) {
       GX.delay_block(START_TOAST_DELAY, () => {
