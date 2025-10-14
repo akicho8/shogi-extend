@@ -18,19 +18,22 @@ RSpec.describe type: :system, share_board_spec: true do
     window_b do
       find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛vs角を選択 (ここでマッチング成立)
     end
-
-    # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
-    # app/models/xmatch_rule_info.rb
     window_a do
       xmatch_modal_close
       assert_room_created
-      assert_viewpoint(:black)                         # alice, bob の順で alice は先手なので▲の向きになっている
-      assert_member_status(:alice, :is_turn_active)   # 1人目(alice)に丸がついている
-      assert_member_status(:bob, :is_turn_standby)    # 2人目(bob)は待機中
     end
     window_b do
       xmatch_modal_close
       assert_room_created
+    end
+    # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
+    # app/models/xmatch_rule_info.rb
+    window_a do
+      assert_viewpoint(:black)                        # alice, bob の順で alice は先手なので▲の向きになっている
+      assert_member_status(:alice, :is_turn_active)   # 1人目(alice)に丸がついている
+      assert_member_status(:bob, :is_turn_standby)    # 2人目(bob)は待機中
+    end
+    window_b do
       assert_viewpoint(:white)                         # alice, bob の順で bob は後手なので△の向きになっている
       assert_member_status(:alice, :is_turn_active)   # 1人目(alice)に丸がついている
       assert_member_status(:bob, :is_turn_standby)    # 2人目(bob)は待機中

@@ -181,8 +181,8 @@ export const mod_xmatch = {
         this.xmatch_modal_close()
       }
       await this.xmatch_setup4_join(params) // 入退室
+      this.xmatch_setup1_member(params)     // 順番設定
       this.xmatch_setup2_handicap(params)   // 手合割
-      this.xmatch_setup1_member(params)     // 順番設定(必ず最初)
       this.xmatch_setup3_clock(params)      // チェスクロック
       this.xmatch_setup5_call(params)       // 「開始してください」コール
       this.xmatch_setup6_title(params)      // タイトル変更
