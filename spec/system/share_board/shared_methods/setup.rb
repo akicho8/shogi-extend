@@ -10,7 +10,7 @@ module SharedMethods
   end
 
   def room_create_sleep
-    5
+    (ENV["ROOM_CREATE_SLEEP"] || 0).to_i
   end
 
   # System テスト時の環境はなるべく何もしていない方向にもっていってセットアップをシンプルにする
@@ -63,12 +63,12 @@ module SharedMethods
 
   def room_menu_open_and_input(room_key, user_name)
     sidebar_open
-    gate_modal_open_handle                               # 「入退室」を自分でクリックする
+    gate_modal_open_handle                        # 「入退室」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
-      find(".close_handle").click                 # 閉じる
+      # find(".close_handle").click                 # 閉じる
     end
     assert_text(user_name)                        # 入力したハンドルネームの人が参加している
     assert_room_created
@@ -79,7 +79,7 @@ module SharedMethods
     gate_modal_open_handle                  # 「入退室」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
-      find(".close_handle").click                 # 閉じる
+      # find(".close_handle").click                 # 閉じる
     end
     assert_room_created
   end
@@ -89,13 +89,13 @@ module SharedMethods
     Capybara.within(".GateModal") do
       find(".new_user_name input").set(:alice)  # ハンドルネームを入力する
       find(".gate_enter_handle").click          # 入室ボタンをクリックする
-      find(".close_handle").click               # 閉じる
+      # find(".close_handle").click               # 閉じる
     end
     assert_room_created
   end
 
   def assert_room_created
-    assert_var("ac_room", "true", wait: room_create_sleep + 2) # wait は room_create_sleep より大きくすること
+    assert_var("ac_room", "true", wait: room_create_sleep + Capybara.default_max_wait_time) # wait は room_create_sleep より大きくすること
   end
 
   def gate_modal_open_handle

@@ -1443,11 +1443,8 @@ example_id                                                                      
 ./spec/system/share_board/メンバー情報_PING機能_spec.rb[1:1]                                  | passed  | 17.8 seconds    |
 ./spec/system/share_board/メンバー情報_PING機能_spec.rb[1:2]                                  | passed  | 19.15 seconds   |
 ./spec/system/share_board/メンバー情報_通信状況_spec.rb[1:1]                                    | passed  | 8.77 seconds    |
-./spec/system/share_board/入室時通知_直接URLから来たら何も促さない_spec.rb[1:1]                         | passed  | 7.89 seconds    |
-./spec/system/share_board/入室時通知_自分だけなら部屋のリンクのクリックを促す_spec.rb[1:1]                    | passed  | 8.88 seconds    |
-./spec/system/share_board/入室時通知_自分だけなら部屋のリンクのモーダルを出す_spec.rb[1:1]                   | passed  | 9.32 seconds    |
-./spec/system/share_board/入室時通知_自分だけなら部屋のリンクのクリックを促す_spec.rb[1:1]                     | passed  | 19.79 seconds   |
-./spec/system/share_board/入室時通知_自分だけなら部屋のリンクのモーダルを出す_spec.rb[1:1]                     | passed  | 19.86 seconds   |
+./spec/system/share_board/入室時通知_spec.rb[1:1]                                          | passed  | 9.08 seconds    |
+./spec/system/share_board/入室時通知_spec.rb[1:2]                                          | passed  | 4.66 seconds    |
 ./spec/system/share_board/入室直前に盤面やタイトルを復元する_spec.rb[1:1]                              | passed  | 15.62 seconds   |
 ./spec/system/share_board/再送_「順番設定有効→退室→指す」では退室しているので再送は発動しない_spec.rb[1:1]          | passed  | 6.32 seconds    |
 ./spec/system/share_board/再送_「順番設定有効→退室→指す」では退室しているので再送は発動しない_spec.rb[1:1]            | passed  | 11.77 seconds   |
@@ -1482,7 +1479,7 @@ example_id                                                                      
 ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:3]                                  | passed  | 27.72 seconds   |
 ./spec/system/share_board/同期_タイトルを編集して共有する_spec.rb[1:1]                               | passed  | 18.91 seconds   |
 ./spec/system/share_board/同期_メンバーの並び_先輩であっても入り直すと後輩になる_spec.rb[1:1]                | passed  | 12.28 seconds   |
-./spec/system/share_board/同期_メンバーの並び_先輩であっても入り直すと後輩になる_spec.rb[1:1]                   | passed  | 29.41 seconds   |
+./spec/system/share_board/同期_メンバーの並び_先輩であっても入り直すと後輩になる_spec.rb[1:1]                   | passed  | 11.82 seconds   |
 ./spec/system/share_board/同期_二人だけ対戦で1人観戦_spec.rb[1:1]                               | passed  | 13.64 seconds   |
 ./spec/system/share_board/同期_二人だけ対戦で1人観戦_spec.rb[1:1]                                 | passed  | 31.81 seconds   |
 ./spec/system/share_board/同期_今の指す人と次に指す人を持駒の下に表示する_spec.rb[1:1]                       | passed  | 8.58 seconds    |
@@ -1490,10 +1487,10 @@ example_id                                                                      
 ./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:2:1]            | passed  | 4.84 seconds    |
 ./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:3:1]            | passed  | 5.17 seconds    |
 ./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:4:1]            | passed  | 4.42 seconds    |
-./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:1:1]             | passed  | 18.05 seconds   |
-./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:2:1]             | passed  | 15.56 seconds   |
-./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:3:1]             | passed  | 16.18 seconds   |
-./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:4:1]             | passed  | 15.46 seconds   |
+./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:1:1]             | passed  | 41.98 seconds   |
+./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:2:1]             | passed  | 4.89 seconds    |
+./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:3:1]             | passed  | 5.12 seconds    |
+./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb[1:4:1]             | passed  | 36.05 seconds   |
 ./spec/system/share_board/同期_最初に来たときのタイトルが正しい_spec.rb[1:1]                           | passed  | 2.14 seconds    |
 ./spec/system/share_board/同期_最初に来たときのタイトルが正しい_spec.rb[1:1]                            | passed  | 2.82 seconds    |
 ./spec/system/share_board/同期_順番設定OFF状態で共有した場合_spec.rb[1:1]                           | passed  | 7.54 seconds    |

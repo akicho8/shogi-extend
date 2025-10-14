@@ -84,7 +84,7 @@ export const mod_gate_modal = {
         return
       }
 
-      if (this.auto_close_p) {
+      if (this.auto_close_p || true) {
         this.sidebar_p = false
         this.gate_modal_close()
       }

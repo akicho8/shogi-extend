@@ -19,11 +19,11 @@ RSpec.describe type: :system, share_board_spec: true do
     it "works" do
       window_a do
         visit_room(user_name: :alice, fixed_order: "alice,bob")
-        assert_text("order_enable_p:true")
+        assert_var(:order_enable_p, true)
       end
       window_b do
         visit_room(user_name: :bob)
-        assert_text("order_enable_p:true")
+        assert_var(:order_enable_p, true)
       end
     end
   end
@@ -33,11 +33,11 @@ RSpec.describe type: :system, share_board_spec: true do
         visit_room(user_name: :alice)
         clock_open
         cc_modal_close
-        assert_text("clock_box:true")
+        assert_var(:clock_box, true)
       end
       window_b do
         visit_room(user_name: :bob)
-        assert_text("clock_box:true")
+        assert_var(:clock_box, true)
       end
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe type: :system, share_board_spec: true do
       end
       window_b do
         visit_room(user_name: :bob)
-        assert_text("(alice_room_title)")
+        assert_var(:current_title, "(alice_room_title)")
       end
     end
   end
