@@ -1,6 +1,8 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 
+const SELF_VS_SELF_MODE = false
+
 export const mod_sfen_share = {
   data() {
     return {
@@ -53,6 +55,13 @@ export const mod_sfen_share = {
       const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
       if (next_user_name) {
         this.sfen_share_params["next_user_name"] = next_user_name
+      } else {
+        if (SELF_VS_SELF_MODE) {
+          // 次に指す人がいない場合に前の人を入れておけば一応自分vs自分ができる
+          const next_user_name = this.turn_to_user_name(lmi.next_turn_offset - 1)
+          this.toast_ok(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指してください`)
+          this.sfen_share_params["next_user_name"] = next_user_name
+        }
       }
 
       if (this.clock_box && this.clock_box.play_p) {

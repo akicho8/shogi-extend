@@ -3,6 +3,13 @@ client-only
   .SbApp(:style="component_style" :class="component_class")
     | {{$debug.trace('SbApp', 'render')}}
     DebugBox.is-hidden-mobile(v-if="development_p && false")
+      p sp_human_side: {{sp_human_side}}
+      p current_turn_self_p: {{current_turn_self_p}}
+      p current_turn_user_name: {{current_turn_user_name}}
+      p current_turn: {{current_turn}}
+      p viewpoint: {{viewpoint}}
+      p sp_player_info: {{JSON.stringify(sp_player_info)}}
+
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p mobile_layout_key: {{mobile_layout_key}}
@@ -24,12 +31,6 @@ client-only
       p rs_failed_count={{rs_failed_count}}
       p rs_seq_ids={{rs_seq_ids}}
       p $route.query: {{$route.query}}
-      p sp_human_side: {{sp_human_side}}
-      p current_turn_self_p: {{current_turn_self_p}}
-      p current_turn_user_name: {{current_turn_user_name}}
-      p current_turn: {{current_turn}}
-      p viewpoint: {{viewpoint}}
-      p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_key: {{JSON.stringify(room_key)}}
       //- p user_name: {{JSON.stringify(user_name)}}
       //- p 人数: {{JSON.stringify(member_infos.length)}}
