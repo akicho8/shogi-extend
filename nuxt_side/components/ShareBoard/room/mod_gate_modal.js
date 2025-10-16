@@ -80,7 +80,7 @@ export const mod_gate_modal = {
       }
 
       // ニックネームがNGであれば再入力を促す
-      if (this.handle_name_invalid_then_toast_warn(this.new_user_name)) {
+      if (this.handle_name_invalid_then_show(this.new_user_name)) {
         return
       }
 

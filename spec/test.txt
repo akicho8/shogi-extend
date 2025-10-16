@@ -1433,11 +1433,9 @@ example_id                                                                      
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:3]                          | passed  | 2.52 seconds    |
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:4]                          | passed  | 3.14 seconds    |
 ./spec/system/share_board/ハンドルネーム_一度入力したものは記憶する_spec.rb[1:1]                         | passed  | 10.68 seconds   |
-./spec/system/share_board/ハンドルネーム_入力時のバリデーション_spec.rb[1:1]                         | passed  | 3.12 seconds    |
-./spec/system/share_board/ハンドルネーム_入力時のバリデーション_spec.rb[1:2]                         | passed  | 2.27 seconds    |
 ./spec/system/share_board/ハンドルネーム_URLから来ても不正なハンドルネームは通さない_spec.rb[1:1]                | passed  | 2.01 seconds    |
 ./spec/system/share_board/ハンドルネーム_一度入力したものは記憶する_spec.rb[1:1]                          | passed  | 11.1 seconds    |
-./spec/system/share_board/ハンドルネーム_入力時のバリデーション_spec.rb[1:1]                            | passed  | 3.46 seconds    |
+./spec/system/share_board/ハンドルネーム_入室後に変更しようとすると警告を出す_spec.rb[1:1]                     | passed  | 4.37 seconds    |
 ./spec/system/share_board/メンバー情報_PING機能_spec.rb[1:1]                                 | passed  | 6.76 seconds    |
 ./spec/system/share_board/メンバー情報_PING機能_spec.rb[1:2]                                 | passed  | 8.48 seconds    |
 ./spec/system/share_board/メンバー情報_通信状況_spec.rb[1:1]                                   | passed  | 3.27 seconds    |
@@ -1640,8 +1638,6 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:2]           | passed  | 2.56 seconds    |
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:1]            | passed  | 3.19 seconds    |
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:2]            | passed  | 2.99 seconds    |
-./spec/system/share_board/順番設定_有効にした後はハンドルネームを変更させない_spec.rb[1:1]                    | passed  | 2.46 seconds    |
-./spec/system/share_board/順番設定_有効にした後はハンドルネームを変更させない_spec.rb[1:1]                     | passed  | 3.03 seconds    |
 ./spec/system/share_board/順番設定_正確なチーム分けかつ自分チームに2人以上いたとき続けて指す場合は「次も」になる_spec.rb[1:1]   | passed  | 9.65 seconds    |
 ./spec/system/share_board/順番設定_補助機能_先後入替_spec.rb[1:1]                                 | passed  | 3.43 seconds    |
 ./spec/system/share_board/順番設定_補助機能_手番通知_spec.rb[1:1]                                 | passed  | 12.95 seconds   |

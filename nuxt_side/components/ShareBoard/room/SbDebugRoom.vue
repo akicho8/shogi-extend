@@ -4,6 +4,12 @@
     .column.is-4
       .panel
         .panel-heading
+          | 部屋のリンクをコピーする
+        a.panel-block(href="?room_url_copy_modal_p=true") 自動発動 ON
+        a.panel-block(@click="SB.room_url_copy_modal_handle") 強制発動
+    .column.is-4
+      .panel
+        .panel-heading
           | 盤面ロード
         a.panel-block(href="?room_restore_feature_p=true") [環境] リストアする(初期値)
         a.panel-block(href="?room_restore_feature_p=false") [環境] リストアしない
@@ -15,12 +21,6 @@
           | 環境切り替え
         a.panel-block(href="?room_url_copy_modal_p=true") 「部屋のリンクをコピーする」自動発動有効化
         a.panel-block(href="?ng_word_check_p=true") 「NGワードチェック」有効化
-    .column.is-4
-      .panel
-        .panel-heading
-          | 部屋のリンクをコピーする
-        a.panel-block(href="?room_url_copy_modal_p=true") 自動発動 ON
-        a.panel-block(@click="SB.room_url_copy_modal_handle") 強制発動
 </template>
 
 <script>

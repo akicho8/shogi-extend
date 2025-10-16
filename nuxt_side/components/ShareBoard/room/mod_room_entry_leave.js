@@ -9,20 +9,18 @@ export const mod_room_entry_leave = {
       this.sfx_play("se_room_entry")
       GX.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
 
-      GX.delay_block(this.room_url_copy_modal_delay, () => {
-        if (this.received_from_self(params)) {
-          this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
-          if (!this.url_room_key_exist_p) { // 「入退室」から入室 (部屋のリンクから来ていない場合)
-            if (this.member_infos.length <= 1) {           // 自分だけなら
-              if (this.room_url_copy_modal_p) {
+      if (this.room_url_copy_modal_p) {
+        GX.delay_block(this.room_url_copy_modal_delay, () => {
+          if (this.received_from_self(params)) {
+            this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
+            if (!this.url_room_key_exist_p) { // 「入退室」から入室 (部屋のリンクから来ていない場合)
+              if (this.member_infos.length <= 1) {           // 自分だけなら
                 this.room_url_copy_modal_handle()
-              } else {
-                this.toast_ok("部屋のリンクを仲間に伝えよう")
               }
             }
           }
-        }
-      })
+        })
+      }
     },
 
     // 退室時の通知

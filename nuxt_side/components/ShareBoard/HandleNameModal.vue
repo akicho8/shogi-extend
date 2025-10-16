@@ -2,13 +2,13 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | ハンドルネーム
+      | ハンドルネーム変更
   .modal-card-body
     b-field
       b-input(v-model.trim="new_name" ref="main_input_tag")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.save_handle(@click="save_handle" type="is-primary") 保存
+    b-button.save_handle(@click="save_handle" type="is-primary") これにする
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
     save_handle() {
       this.sfx_click()
       this.new_name = HandleNameNormalizer.normalize(this.new_name)
-      if (this.SB.handle_name_invalid_then_toast_warn(this.new_name)) {
+      if (this.SB.handle_name_invalid_then_show(this.new_name)) {
         return
       }
 

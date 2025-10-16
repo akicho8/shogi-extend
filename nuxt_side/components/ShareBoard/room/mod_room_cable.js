@@ -44,7 +44,7 @@ export const mod_room_cable = {
         }
 
         // 名前が未入力または不正な場合はモーダルを表示する
-        if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
+        if (this.handle_name_invalid_then_show(this.user_name)) {
           this.gate_modal_open()
           return
         }

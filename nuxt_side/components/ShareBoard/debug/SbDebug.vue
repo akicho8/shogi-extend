@@ -1,5 +1,13 @@
 <template lang="pug">
 .SbDebug.columns.is-multiline
+  .column.is-2
+    .panel
+      .panel-heading
+        | ハンドルネーム関連
+      a.panel-block(@click="SB.handle_name_modal_handle") 入力
+      a.panel-block(@click="SB.handle_name_alert") 変更禁止警告
+      a.panel-block(@click="SB.handle_name_clear") 空にする
+
   SbDebugRoom
   SbDebugXprofile
   SbDebugHonpu
@@ -68,9 +76,6 @@
     .panel
       .panel-heading
         | その他
-      a.panel-block(@click="SB.handle_name_modal_handle") ハンドルネーム入力
-      a.panel-block(@click="SB.handle_name_alert") 順番設定中のハンドルネーム入力
-      a.panel-block(@click="SB.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="SB.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="SB.al_test") 指し手
       a.panel-block(@click="SB.clock_box_share('cc_behavior_manual_sync')") 時計同期
