@@ -85,7 +85,7 @@ export const mod_room_cable = {
       GX.assert(this.room_key, "this.room_key")
       GX.assert(this.ac_room == null, "this.ac_room == null")
 
-      await this.sleep(this.room_create_delay)
+      await GX.sleep(this.room_create_delay)
 
       this.room_keys_update_and_save_to_storage()
 

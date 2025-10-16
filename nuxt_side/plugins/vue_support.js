@@ -329,10 +329,6 @@ export const vue_support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // await this.sleep(1)
-    sleep(sec) {
-      return new Promise(resolve => setTimeout(resolve, sec * 1000.0))
-    },
   },
 
   // FIXME: plugin にする

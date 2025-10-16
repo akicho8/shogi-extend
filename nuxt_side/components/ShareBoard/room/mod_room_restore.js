@@ -13,7 +13,7 @@ export const mod_room_restore = {
         const e = await this.$axios.$get("/api/share_board/room_restore", {params: params, progress: true})
         this.tl_puts("room_restore_call: 2")
         this.tl_puts("room_restore_call then", e)
-        await this.sleep(this.room_restore_sleep)
+        await GX.sleep(this.room_restore_sleep)
         this.tl_puts("room_restore_call: 3")
         if (e) {
           if (this.room_restore_update_p) {
