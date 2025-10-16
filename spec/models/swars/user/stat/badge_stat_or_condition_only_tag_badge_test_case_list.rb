@@ -59,7 +59,6 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "エルモマン",       strike_plan: "エルモ囲い",         n_times: 1,  },
   { expected_badge_key: "小部屋マン",       strike_plan: "銀冠の小部屋",       n_times: 1,  },
   { expected_badge_key: "レグスペマン",     strike_plan: "レグスペ",           n_times: 1,  },
-  { expected_badge_key: "入玉勝ちマン",     strike_plan: "入玉",               n_times: 1,  },
   { expected_badge_key: "金銀橋マン",       strike_plan: "リッチブリッジ",     n_times: 1,  },
   { expected_badge_key: "雲隠れマン",       strike_plan: "雲隠れ玉",           n_times: 1,  },
   { expected_badge_key: "雀刺しマン",       strike_plan: "雀刺し",             n_times: 1,  },

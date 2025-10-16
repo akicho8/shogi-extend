@@ -169,6 +169,7 @@ module Swars
         ################################################################################ 結末
 
         { key: "切断マン",       icon: "🪳",   message: "切断逃亡の使い手",   if_cond: -> { judge_final_stat.count_by(:lose, :DISCONNECT).try { self >= 1 } }, },
+        { key: "持将棋勝ちマン", icon: "⚖",    message: "持将棋で勝った",     if_cond: -> { judge_final_stat.count_by(:win, :ENTERINGKING).try { self >= 1 } }, },
         { key: "投了マン",       icon: "🤚",   message: "投了を究めし者",     if_cond: -> { judge_final_stat.master_ratio(:TORYO).try { self == 1.0 } }, },
         { key: "詰まされマン",   icon: "🩸️",   message: "マゾの傾向がある",   if_cond: -> { judge_final_stat.master_ratio(:CHECKMATE).try { self == 1.0 } }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "時間の使い方が下手", if_cond: -> { judge_final_stat.master_ratio(:TIMEOUT).try { self >= 0.25 } }, },

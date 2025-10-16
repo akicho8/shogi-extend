@@ -262,6 +262,18 @@ module Swars
         },
       },
       {
+        key: "持将棋勝ちマン",
+        message: -> m { "持将棋で判定勝ちした (#{m.ek_score_without_cond}点 vs #{m.opponent.ek_score_without_cond}点)" },
+        badge_params: "⚖",
+        if_cond: -> m {
+          if m.battle.imode_info.key == :normal
+            if m.judge_key == "win"
+              m.battle.final_info.key == :ENTERINGKING
+            end
+          end
+        },
+      },
+      {
         key: "入玉勝ちマン",
         message: "入玉で勝った",
         badge_params: "🏈",
