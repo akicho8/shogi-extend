@@ -18,8 +18,9 @@
     .column.is-4
       .panel
         .panel-heading
-          | 起動
-        a.panel-block(@click="SB.room_url_copy_modal_handle") 「部屋のリンクをコピーする」モーダル発動
+          | 部屋のリンクをコピーする
+        a.panel-block(href="?room_url_copy_modal_p=true") 自動発動 ON
+        a.panel-block(@click="SB.room_url_copy_modal_handle") 強制発動
 </template>
 
 <script>
