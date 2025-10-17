@@ -44,7 +44,7 @@ export const mod_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 順番設定を無効化する
+    // 順番設定を解除する
     order_switch_off_share() {
       this.order_switch_share({order_enable_p: false, message: "", talk: false})
     },

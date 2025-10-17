@@ -123,7 +123,7 @@ export const mod_clock_box_modal = {
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
       if (this.ac_room && this.order_enable_p) {
-        this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください"))
+        this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を解除してください"))
       }
     },
     cbm_stop_handle() {
