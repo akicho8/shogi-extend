@@ -27,15 +27,15 @@ export const mod_handle_name = {
         message: `
             <div class="content">
               <p>入室後は名前を変更できません。</p>
-              <p>変更するには<b>入退室</b>からいったん退室し、新しい名前で入り直してください。入退室はメニューの一番上にあります。</p>
-              <p>もし、${this.my_safe_call_name}がすでに対局者だった場合は、入り直したあと、ホスト担当に<b>新しい名前で再度順番設定</b>をしてもらう(または自分で行う)必要があります。</p>
-              <p>といった感じで、名前自体が識別子となっているため、途中で名前を変更するとクソ面倒なことになります。</p>
+              <p>変更するには<b>入退室からいったん退室し、新しい名前で入り直して</b>ください。入退室はメニューの一番上にあります。</p>
+              <p>もし${this.my_call_name}がすでに対局者だった場合は、入り直したあとホスト担当に<b>新しい名前で再度順番設定</b>をしてもらうか自分でする必要があります。</p>
+              <p>といった感じで名前自体が識別子なので途中で名前を変えると面倒なことになります。</p>
             </div>`,
-        type: "is-warning",
+        // type: "is-warning",
         onConfirm: () => this.sfx_play("o"),
         onCancel: () => this.sfx_play("x"),
-        confirmText: "理解した",
-        cancelText: "何言ってんのかわからない",
+        confirmText: "わかった",
+        cancelText: "わからん",
       })
     },
 
@@ -68,6 +68,6 @@ export const mod_handle_name = {
     },
   },
   computed: {
-    my_safe_call_name() { return this.user_call_name(this.user_name || "あなた") },
+    my_call_name() { return this.user_call_name(this.user_name || "あなた") },
   },
 }
