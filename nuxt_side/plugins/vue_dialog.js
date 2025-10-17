@@ -186,10 +186,7 @@ export const vue_dialog = {
       return this.$buefy.dialog.alert({
         animation: "",
         confirmText: "OK",
-        onConfirm: () => {
-          this.sfx_stop_all()
-          this.sfx_click()
-        },
+        onConfirm: () => this.sfx_click(),
         ...params,
       })
     },
