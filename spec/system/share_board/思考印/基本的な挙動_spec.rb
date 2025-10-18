@@ -23,7 +23,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "持駒に印が出る" do
     visit_app(think_mark_mode_p: true, body: king_vs_king_sfen)
-    find(".Membership.is_black .piece_P").click
+    stand_click(:black, :P)
     assert_selector(".Membership.is_black .ThinkMark")
   end
 

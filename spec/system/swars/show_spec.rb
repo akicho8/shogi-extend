@@ -26,8 +26,8 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   describe "表示・コピー・ダウンロード" do
     before do
       visit_to "/swars/battles/#{@key}"
-      find(".ShogiPlayer .button.first").click # 0手目
-      find(".ShogiPlayer .button.next").click  # 1手目
+      find(".CustomShogiPlayer .button.first").click # 0手目
+      find(".CustomShogiPlayer .button.next").click  # 1手目
       sidebar_open
     end
     it "棋譜表示" do
@@ -93,6 +93,6 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
 
   it "開いたときスライダーにフォーカスしている" do
     visit_to "/swars/battles/#{@key}"
-    assert_selector(".ShogiPlayer .b-slider-thumb", focused: true)
+    assert_selector(".CustomShogiPlayer .b-slider-thumb", focused: true)
   end
 end

@@ -1,14 +1,12 @@
 module ShogiPlayerMethods
   # 将棋盤内でプレイヤー名が表示されている
   def assert_has_sp_player_name
-    assert_no_selector(".MembershipLocationPlayerInfoName")
+    assert_selector(".MembershipLocationPlayerInfoName")
   end
 
   # 将棋盤内で location_key 側のプレイヤー名は user_name になっている
   def assert_sp_player_name(location_key, user_name)
-    within(".ShogiPlayer") do
-      assert_selector(:element, :class => ["Membership", "is_#{location_key}"], text: user_name, exact_text: true)
-    end
+    assert_selector(".CustomShogiPlayer .Membership.is_#{location_key} .MembershipLocationPlayerInfoName", text: user_name, exact_text: true)
   end
 
   # ▲△の順に指定のプレイヤー名を表示している
@@ -18,7 +16,7 @@ module ShogiPlayerMethods
   end
 
   def sp_controller_click(klass)
-    find(".ShogiPlayer .NavigateBlock .button.#{klass}").click
+    find(".CustomShogiPlayer .NavigateBlock .button.#{klass}").click
   end
 
   # 向き
@@ -40,6 +38,10 @@ module ShogiPlayerMethods
     [".place", place.chars].join("_")
   end
 
+  def stand_click(location, piece)
+    find(".Membership.is_#{location} .piece_#{piece}").click
+  end
+
   # place の位置の駒を持ち上げ中か？
   def lifted_from(place)
     assert_selector "#{place_class(place)}.lifted_from_p"
@@ -52,6 +54,6 @@ module ShogiPlayerMethods
 
   # location_key 色の piece_key が盤上にある
   def assert_soldier_exist(location_key, piece_key, promoted)
-    assert_selector ".ShogiPlayer .MainBoard .PieceTexture.location_#{location_key}.promoted_#{promoted}.piece_name.piece_#{piece_key}"
+    assert_selector ".CustomShogiPlayer .MainBoard .PieceTexture.location_#{location_key}.promoted_#{promoted}.piece_name.piece_#{piece_key}"
   end
 end

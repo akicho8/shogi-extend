@@ -3,13 +3,13 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1
     window_a do
-      visit_room(user_name: :alice, fixed_order: "alice,bob", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY)
+      visit_room(user_name: :a, fixed_order: "a,b", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY, room_create_after_action: :cc_auto_start_longtime)
     end
     window_b do
-      visit_room(user_name: :bob, fixed_order: "alice,bob")
+      visit_room(user_name: :b, fixed_order: "a,b", room_create_after_action: :cc_auto_start_longtime)
     end
     window_a do
-      piece_move_o("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
+      piece_move_o("77", "76", "☗7六歩")     # aが指した直後bから応答OKが0.75秒ぐらいで帰ってくる
       sleep(@RS_RESEND_DELAY)                 # 再送モーダルが出るころまで待つ
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     case1
     window_a do
       assert_rs_faild_count(1)
-      assert_text("次の手番のbobさんの通信状況が悪いため再送してください")
+      assert_text("次の手番のbさんの通信状況が悪いため再送してください")
 
       find(:button, text: "再送する", exact_text: true).click
       assert_action_text("再送1")
@@ -42,7 +42,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
   end
 
-  it "いったん再送モーダル表示を出したが数秒後にbobは指したため再送モーダルを消す" do
+  it "いったん再送モーダル表示を出したが数秒後にbは指したため再送モーダルを消す" do
     @RS_RESEND_DELAY  = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
     @RS_SUCCESS_DELAY = 3 # しかし3秒後に成功したのでダイアログを消される
     case1
@@ -53,12 +53,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
   end
 
-  it "再送モーダル表示中にbobが落ちたことに気づいて順番設定から除外して同期したタイミングでモーダルとタイマーを消す" do
+  it "再送モーダル表示中にbが落ちたことに気づいて順番設定から除外して同期したタイミングでモーダルとタイマーを消す" do
     @RS_RESEND_DELAY  = 0  # 0秒後に返信をチェックするのですぐにダイアログ表示
     @RS_SUCCESS_DELAY = -1 # 応答しない
     case1
     window_a do
-      find(:button, text: "bobさんを順番から外す", exact_text: true).click
+      find(:button, text: "bさんを順番から外す", exact_text: true).click
       assert_rs_modal_closed
     end
   end

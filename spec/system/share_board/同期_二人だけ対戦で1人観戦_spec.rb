@@ -11,12 +11,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       drag_to_watch("dnd_black", 1)                 # 黒の[1]にいる carol を観戦に移動する
       os_submit_button_click                        # 適用クリック
       os_modal_close                                # 閉じる (ヘッダーに置いている)
+      clock_start                                   # 時計を開始する
     end
     window_c do
       assert_member_status(:alice, :is_turn_active) # 1人目(alice)に丸がついている
       assert_member_status(:bob, :is_turn_standby)  # 2人目(bob)は待機中
       assert_member_status(:carol, :is_watching)    # 3人目(carol)は観戦中
-      piece_move_x("77", "76", "☗7六歩")            #  なので3番目のcarolは指せない
+      piece_move_x("77", "76", "☗7六歩")           #  なので3番目のcarolは指せない
     end
     window_a do
       piece_move_o("77", "76", "☗7六歩")            # 1番目のaliceが指す

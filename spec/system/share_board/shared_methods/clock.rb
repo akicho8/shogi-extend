@@ -102,7 +102,7 @@ module SharedMethods
   end
 
   def cc_timeout_modal_close
-    find(".TimeoutModal .close_handle").click
+    find(".TimeoutModal .ok_handle").click
   end
 
   # 時間切れモーダルが存在する

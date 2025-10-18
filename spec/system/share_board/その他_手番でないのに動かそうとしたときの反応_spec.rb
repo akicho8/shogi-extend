@@ -1,6 +1,7 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe __FILE__, type: :system, share_board_spec: true do
+# このテストは 盤面操作禁止と警告_spec.rb があるのでいらない。
+RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name => user_name,
@@ -13,7 +14,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1(:bob)   }
     window_c { case1(:carol) }
   end
-
   it "時計OFF順番設定ONでは検討をしていると思われる" do
     case2
     window_b do

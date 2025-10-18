@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_app
     sidebar_open
     menu_item_click("局面編集")
-    find(".ShogiPlayer .ToolBelt .dropdown:first-child").click    # 左から1つ目の dropdown をクリック
+    find(".CustomShogiPlayer .ToolBelt .dropdown:first-child").click    # 左から1つ目の dropdown をクリック
     menu_item_sub_menu_click("詰将棋")
 
     # 「ぴよ将棋」ボタンのURLに編集モードの棋譜を反映している

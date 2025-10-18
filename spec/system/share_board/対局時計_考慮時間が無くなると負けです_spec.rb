@@ -30,7 +30,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "考慮時間が残っていないときは発動しない" do
     case1([0, 1, 0, 0])
-    find(".TimeoutModal .close_handle").click
+    cc_timeout_modal_close
     assert_extra_koreyori_false
   end
 
