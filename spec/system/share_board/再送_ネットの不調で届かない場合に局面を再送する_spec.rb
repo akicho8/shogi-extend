@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1
     window_a do
-      visit_room(user_name: :a, fixed_order: "a,b", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY, room_create_after_action: :cc_auto_start_longtime)
+      visit_room(user_name: :a, fixed_order: "a,b", RS_RESEND_DELAY: @RS_RESEND_DELAY, RS_SUCCESS_DELAY: @RS_SUCCESS_DELAY, room_after_create: :cc_auto_start_10m)
     end
     window_b do
-      visit_room(user_name: :b, fixed_order: "a,b", room_create_after_action: :cc_auto_start_longtime)
+      visit_room(user_name: :b, fixed_order: "a,b", room_after_create: :cc_auto_start_10m)
     end
     window_a do
       piece_move_o("77", "76", "☗7六歩")     # aが指した直後bから応答OKが0.75秒ぐらいで帰ってくる

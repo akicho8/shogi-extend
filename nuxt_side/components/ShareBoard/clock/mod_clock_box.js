@@ -35,13 +35,16 @@ export const mod_clock_box = {
   },
 
   methods: {
-    // for autoexec
+    // for room_after_create
+    // パラメータ設置なしで開始する
     cc_auto_start() {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
     },
-    cc_auto_start_longtime() {
+    // for room_after_create
+    // 10分で開始する
+    cc_auto_start_10m() {
       this.cc_params = [{ initial_main_min: 10, initial_read_sec: 0, initial_extra_min: 0, every_plus: 0 }]
       this.cc_auto_start()
     },

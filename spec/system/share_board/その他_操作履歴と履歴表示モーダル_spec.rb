@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
           :fixed_member   => "a,b",
           :fixed_order    => "a,b",
           :quick_sync_key => "is_quick_sync_off", # 手動同期にしておく
-          :room_create_after_action => :cc_auto_start_longtime,
+          :room_after_create => :cc_auto_start_10m,
         })
     end
     window_a { case1(:a) }
@@ -36,7 +36,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name => :a,
         :fixed_order => :a,
         :fixed_order_state => "to_o1_state",
-        :room_create_after_action => :cc_auto_start_longtime,
+        :room_after_create => :cc_auto_start_10m,
       })
 
     piece_move_o("77", "76", "☗7六歩")              # 初手を指す

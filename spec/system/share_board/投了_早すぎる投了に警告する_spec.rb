@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :fixed_member   => names,
         :fixed_order    => names,
         :fixed_order_state    => "to_o2_state",
-        :room_create_after_action => :cc_auto_start,
+        :room_after_create => :cc_auto_start_10m,
       })
   end
 

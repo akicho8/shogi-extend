@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name          => user_name,
         :fixed_member => "a,b",
         :fixed_order  => "a,b",
-        :room_create_after_action => :cc_auto_start,
+        :room_after_create => :cc_auto_start_10m,
       })
   end
 

@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name => :a,
         :fixed_member => "a,b",
         :fixed_order => "a,b",
-        :room_create_after_action => :cc_auto_start_longtime
+        :room_after_create => :cc_auto_start_10m
       })
     sleep(2)                                   # 2秒待つ
     piece_move_o("77", "76", "☗7六歩")        # 初手を指す

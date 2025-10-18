@@ -2,8 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
-    window_a { visit_room(user_name: :a, fixed_order: "a,b", room_create_after_action: :cc_auto_start_longtime) }
-    window_b { visit_room(user_name: :b, fixed_order: "a,b", room_create_after_action: :cc_auto_start_longtime) }
+    window_a { visit_room(user_name: :a, fixed_order: "a,b", room_after_create: :cc_auto_start_10m) }
+    window_b { visit_room(user_name: :b, fixed_order: "a,b", room_after_create: :cc_auto_start_10m) }
     window_a do
       place_click("77")          # a は77の駒を持つ
       lifted_from("77")          # 77の駒を持っていることを保証する

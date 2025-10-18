@@ -134,7 +134,7 @@ export const mod_room_cable = {
           this.api_version_valid(e.bc_params.API_VERSION)
         },
       })
-      this.autoexec({key: "room_create_after_action"})
+      this.autoexec({key: "room_after_create"})
       this.tl_puts("<-- room_create")
     },
 

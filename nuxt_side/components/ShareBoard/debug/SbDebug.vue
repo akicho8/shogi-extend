@@ -6,11 +6,11 @@
         | コンテキスト変更
       a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c")                                                                 順番🔴 時計🔴 入室 a
       a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b")                                                 順番🟢 時計🔴 先手 a
-      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&room_create_after_action=cc_auto_start_longtime")                 順番🔴 時計🟢 先手 a
-      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 先手 a
-      a.panel-block(href="?room_key=dev_room&user_name=b&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 後手 b
-      a.panel-block(href="?room_key=dev_room&user_name=c&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 観戦 c
-      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a&fixed_order=a&fixed_order_swap=true&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 後手 a ※先手不明
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&room_after_create=cc_auto_start_10m")                 順番🔴 時計🟢 先手 a
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b&room_after_create=cc_auto_start_10m") 順番🟢 時計🟢 先手 a
+      a.panel-block(href="?room_key=dev_room&user_name=b&fixed_member=a,b,c&fixed_order=a,b&room_after_create=cc_auto_start_10m") 順番🟢 時計🟢 後手 b
+      a.panel-block(href="?room_key=dev_room&user_name=c&fixed_member=a,b,c&fixed_order=a,b&room_after_create=cc_auto_start_10m") 順番🟢 時計🟢 観戦 c
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a&fixed_order=a&fixed_order_swap=true&room_after_create=cc_auto_start_10m") 順番🟢 時計🟢 後手 a ※先手不明
   .column.is-2
     .panel
       .panel-heading

@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :fixed_order    => "a,b",
         :fixed_order_state    => "to_o2_state",
         :auto_resign_key      => "is_auto_resign_on",
-        :room_create_after_action => :cc_auto_start,
+        :room_after_create => :cc_auto_start_10m,
       })
   end
 

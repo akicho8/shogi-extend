@@ -9,12 +9,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   def case1(user_name)
     visit_room({
-        "user_name"              => user_name,
-        "fixed_member"           => "a,b",
-        "fixed_order"            => "a,b",
-        "RS_RESEND_DELAY"        => -1,
-        "CC_TIMEOUT_JUDGE_DELAY" => @CC_TIMEOUT_JUDGE_DELAY,
-        "CC_TIMEOUT_BC_DELAY"    => @CC_TIMEOUT_BC_DELAY,
+        :user_name              => user_name,
+        :fixed_member           => "a,b",
+        :fixed_order            => "a,b",
+        :RS_RESEND_DELAY        => -1,
+        :CC_TIMEOUT_JUDGE_DELAY => @CC_TIMEOUT_JUDGE_DELAY,
+        :CC_TIMEOUT_BC_DELAY    => @CC_TIMEOUT_BC_DELAY,
         **clock_box_params([0, @initial_read_sec, 0, 0]),
       })
   end
