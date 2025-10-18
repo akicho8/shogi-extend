@@ -89,56 +89,9 @@ export const mod_sp = {
     //   this.$router.replace({query: this.current_url_params})
     // },
 
-    // 手番が違うのに操作しようとした
-    ev_illegal_click_but_self_is_not_turn() {
-      if (this.think_mark_mode_p || this.think_mark_watcher_then_always_enable_p) {
-        return
-      }
+    //////////////////////////////////////////////////////////////////////////////// 警告
 
-      // if (this.think_mark_mode_global_p) {
-      //   if (this.i_am_member_p) {
-      //     this.debug_alert("手番ではないが対局メンバー")
-      //   }
-      // } else {
-      if (this.order_enable_p) {
-        this.debug_alert("手番が違うのに操作しようとした")
-        this.sfx_play("se_tebanjanainoni_sawanna")
-        const messages = []
-        const name = this.current_turn_user_name
-        if (GX.blank_p(name)) {
-          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
-        } else {
-          if (this.i_am_member_p) {
-            messages.push(`今は${this.user_call_name(name)}の手番です`)
-          }
-          if (this.i_am_watcher_p) {
-            messages.push(`今は${this.user_call_name(name)}の手番です`)
-            messages.push(`それにあなたは観戦者なんで触らんといてください`)
-          }
-          if (this.clock_box && this.clock_box.play_p) {
-            // 対局中と思われる
-          } else {
-            // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
-            messages.push(`みんなで盤をつついて検討する場合は順番設定を解除してください`)
-          }
-        }
-        if (GX.present_p(messages)) {
-          const full_message = messages.join("。")
-          this.toast_ok(full_message)
-          this.tl_add("OPVALID", `(${full_message})`)
-        }
-      }
-      // }
-    },
-
-    // 自分が手番だが相手の駒を動かそうとした
-    ev_illegal_my_turn_but_oside_click() {
-      this.debug_alert("自分が手番だが相手の駒を動かそうとした")
-      this.sfx_play("se_aitenokoma_sawannna")
-      // if (this.development_p) {
-      //   this.toast_ok("それは相手の駒です")
-      // }
-    },
+    ////////////////////////////////////////////////////////////////////////////////
 
     // ShogiPlayer コンポーネント自体を実行したいとき用
     sp_call(func) {
@@ -200,5 +153,57 @@ export const mod_sp = {
     // 盤の下のコントローラーを表示しない条件
     controller_hide_p() { return this.cc_play_p          },
     controller_show_p() { return !this.controller_hide_p },
+
+    // 手番制限
+    // 条件 順番設定ON
+    // 条件 部屋が立っている
+    // 条件 メンバーリストが揃っている
+    // 条件 自分の手番はないとき
+    sp_human_side() {
+      // どんな状況でもマークモードでは駒を動かせないようにする
+      if (this.think_mark_mode_p) {
+        return "none"
+      }
+
+      // // 不整合な状態では動かせないとする
+      // // 順番設定中に指されて動かすなと注意している場面も見られるので完全にロックする方針で良い
+      // if (this.inconsistency_p) {
+      //   return "none"
+      // }
+
+      if (this.order_clock_both_empty) {
+        return "both"
+      }
+
+      if (this.order_clock_both_ok) {
+        if (this.current_turn_self_p) {
+          return "both"
+        }
+      }
+
+      // if (this.integrity_ok_p) {
+      //   return "both"
+      // }
+
+      // if (this.current_turn_self_p) {
+      //   return "both"
+      // }
+
+      // let retval = "both"                                          // デフォルトは誰でも動かせる
+      // if (this.order_enable_p) {                                 // 順番設定が有効かつ
+      //   if (this.ac_room) {                                      // 部屋が立てられていて
+      //     retval = "none"                                        // 観戦者含めて全体を「禁止」にする
+      //     if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
+      //       retval = "both"
+      //     }
+      //     if (this.current_turn_self_p) {                    // そのあとで対象者だけを
+      //       retval = "both"                                    // 指せるようにする
+      //     }
+      //   }
+      // }
+      // return retval
+
+      return "none"
+    },
   },
 }

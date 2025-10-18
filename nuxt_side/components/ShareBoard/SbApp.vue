@@ -86,6 +86,7 @@ import { mod_share_data                    } from "./mod_share_data.js"
 import { mod_edit_mode                     } from "./mod_edit_mode.js"
 import { mod_kifu_read                      } from "./mod_kifu_read.js"
 import { mod_sp                            } from "./mod_sp.js"
+import { mod_warning                            } from "./mod_warning.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
 import { mod_think_mark                } from "./think_mark/mod_think_mark.js"
 import { mod_devise                        } from "./mod_devise.js"
@@ -199,6 +200,7 @@ export default {
     mod_edit_mode,
     mod_kifu_read,
     mod_sp,
+    mod_warning,
     mod_perpetual,
     mod_think_mark,
     mod_devise,

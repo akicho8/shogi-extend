@@ -28,6 +28,9 @@ export const mod_order_main = {
       // 引数があればその順番にする
       if (GX.present_p(this.fixed_order)) {
         this.os_setup_by_names(GX.str_to_words(this.fixed_order))
+        if (this.fixed_order_swap) {
+          this.order_unit.swap_run()
+        }
       }
       // 1列か2列かを確定する。初期値は2列
       this.order_unit.state_switch_to(this.fixed_order_state)
@@ -161,33 +164,6 @@ export const mod_order_main = {
       }
     },
 
-    // 手番制限
-    // 条件 順番設定ON
-    // 条件 部屋が立っている
-    // 条件 メンバーリストが揃っている
-    // 条件 自分の手番はないとき
-    sp_human_side() {
-      // マークモードでは駒を動かせないようにする
-      if (this.think_mark_mode_p) {
-        return "none"
-      }
-
-      let retval = "both"                                          // デフォルトは誰でも動かせる
-      if (this.order_enable_p) {                                 // 順番設定が有効かつ
-        if (this.ac_room) {                                      // 部屋が立てられていて
-          retval = "none"                                        // 観戦者含めて全体を「禁止」にする
-          if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
-            retval = "both"
-          } else {
-            if (this.current_turn_self_p) {                    // そのあとで対象者だけを
-              retval = "both"                                    // 指せるようにする
-            }
-          }
-        }
-      }
-      return retval
-    },
-
     order_ok() { return this.order_enable_p && this.order_unit }, // 順番設定ONかつ、順番情報が入っている状態か？
 
     self_vs_self_p() { return this.order_enable_p && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
@@ -207,6 +183,8 @@ export const mod_order_main = {
     // +1
     next_turn_user_name()       { return this.turn_to_user_name(this.current_turn + 1)   }, // 次の局面のメンバーの名前
     next_turn_self_p()          { return this.next_turn_user_name === this.user_name     }, // 次は自分の手番か？
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////////////
 
