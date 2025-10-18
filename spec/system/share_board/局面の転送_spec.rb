@@ -6,8 +6,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "works" do
-    window_a { case1(:alice) }
-    window_b { case1(:bob)   }
+    window_a { case1(:a) }
+    window_b { case1(:b)   }
     window_a do
       piece_move_o("77", "76", "☗7六歩")                      # 1手目
     end
@@ -31,7 +31,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       find(:button, text: "転送する", exact_text: true).click # 反映する
     end
     window_b do
-      assert_turn(1)                                          # bobの局面が戻っている
+      assert_turn(1)                                          # bの局面が戻っている
     end
   end
 end

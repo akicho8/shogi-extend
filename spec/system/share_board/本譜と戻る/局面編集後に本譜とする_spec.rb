@@ -2,8 +2,8 @@ require "#{__dir__}/helper"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
-    window_a { visit_room(user_name: :alice) }
-    window_b { visit_room(user_name: :bob)   }
+    window_a { visit_room(user_name: :a) }
+    window_b { visit_room(user_name: :b)   }
     window_a do
       sidebar_open
       menu_item_click("局面編集")

@@ -6,12 +6,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { visit_app }
     window_a do
       assert_honpu_open_on                               # 本譜がある
-      room_menu_open_and_input(:test_room, :alice)     # 入室
+      room_menu_open_and_input(:test_room, :a)     # 入室
       sleep(1)
     end
     window_b do
       assert_honpu_open_off                              # 本譜が共有されていない
-      room_menu_open_and_input(:test_room, :bob)       # 入室
+      room_menu_open_and_input(:test_room, :b)       # 入室
       assert_honpu_open_on                               # 本譜が共有された
     end
   end

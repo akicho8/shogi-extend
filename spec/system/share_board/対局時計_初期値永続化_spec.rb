@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit "/share-board"
 
     clock_open
-    clock_box_form_set(:black, *@CLOCK_VALUES) # aliceが時計を設定する
+    clock_box_form_set(:black, *@CLOCK_VALUES) # aが時計を設定する
     find(".play_button").click         # 開始 (このタイミングで初期値として保存する)
 
     visit(current_path)                # リロード

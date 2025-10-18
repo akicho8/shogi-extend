@@ -79,10 +79,10 @@ module SharedMethods
     assert_room_created
   end
 
-  def room_auto_enter_but_confirm
+  def room_auto_enter_but_confirm(user_name)
     assert_selector(".GateModal")               # 「入退室」のモーダルが自動的に表示されている
     Capybara.within(".GateModal") do
-      find(".new_user_name input").set(:alice)  # ハンドルネームを入力する
+      find(".new_user_name input").set(user_name)  # ハンドルネームを入力する
       find(".gate_enter_handle").click          # 入室ボタンをクリックする
       # find(".close_handle").click               # 閉じる
     end
@@ -105,10 +105,10 @@ module SharedMethods
     first(".close_handle").click   # 閉じる
   end
 
-  # alice と bob が同じ部屋で2手目まで進めた状態
-  def setup_alice_bob_turn2
-    window_a { room_setup_by_user(:alice) }
-    window_b { room_setup_by_user(:bob) }
+  # a と b が同じ部屋で2手目まで進めた状態
+  def setup_a_b_turn2
+    window_a { room_setup_by_user(:a) }
+    window_b { room_setup_by_user(:b) }
     window_a { piece_move_o("77", "76", "☗7六歩") }
     window_b { piece_move_o("33", "34", "☖3四歩") }
     window_a { assert_turn(2) }

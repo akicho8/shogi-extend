@@ -7,8 +7,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     visit_to("/share-board/dashboard", room_key: room_key)
     assert_text("順位")
-    assert_text(:alice)
-    assert_text(:bob)
-    assert_text(:carol)
+    assert_text(:a)
+    assert_text(:b)
+    assert_text(:c)
   end
 end

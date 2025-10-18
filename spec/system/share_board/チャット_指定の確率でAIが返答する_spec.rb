@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(ai_auto_response_ratio)
     visit_room({
-        :user_name               => :alice,
+        :user_name               => :a,
         :ai_auto_response_ratio  => ai_auto_response_ratio,
         :__SYSTEM_TEST_RUNNING__ => "",
       })

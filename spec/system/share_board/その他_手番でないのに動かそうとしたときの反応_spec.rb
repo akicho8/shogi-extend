@@ -5,27 +5,27 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name => user_name,
-        :fixed_order => "alice,bob",
+        :fixed_order => "a,b",
       })
   end
 
   def case2
-    window_a { case1(:alice) }
-    window_b { case1(:bob)   }
-    window_c { case1(:carol) }
+    window_a { case1(:a) }
+    window_b { case1(:b)   }
+    window_c { case1(:c) }
   end
   it "時計OFF順番設定ONでは検討をしていると思われる" do
     case2
     window_b do
       place_click("77")
-      assert_text("(今はaliceさんの手番です。みんなで盤をつついて検討する場合は順番設定を解除してください)")
+      assert_text("(今はaさんの手番です。みんなで盤をつついて検討する場合は順番設定を解除してください)")
     end
   end
   it "時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
     case2
     window_c do
       place_click("77")
-      assert_text("(今はaliceさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は順番設定を解除してください)")
+      assert_text("(今はaさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は順番設定を解除してください)")
     end
   end
   it "時計ON順番設定ONは対局中と思われる" do
@@ -33,7 +33,7 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
     window_b do
       clock_start
       place_click("77")
-      assert_text("(今はaliceさんの手番です)")
+      assert_text("(今はaさんの手番です)")
     end
   end
   it "順番設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do

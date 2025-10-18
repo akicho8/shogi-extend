@@ -23,14 +23,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       visit_app
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      room_menu_open_and_input(:test_room, :alice) # 入室
+      room_menu_open_and_input(:test_room, :a) # 入室
       assert_var("perpetual_cop.count", 0)
     end
   end
 
   it "退室時にリセットする" do
     window_a do
-      room_setup_by_user(:alice)
+      room_setup_by_user(:a)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
       gate_leave_handle
@@ -39,10 +39,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "同期したとき相手もリセットする" do
-    window_a { room_setup_by_user(:alice) }
-    window_b { room_setup_by_user(:bob) }
+    window_a { room_setup_by_user(:a) }
+    window_b { room_setup_by_user(:b) }
     window_a do
-      room_setup_by_user(:alice)
+      room_setup_by_user(:a)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
       gate_leave_handle

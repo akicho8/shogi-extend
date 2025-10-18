@@ -3,9 +3,9 @@ require "#{__dir__}/helper"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_room({
-        :user_name            => :alice,
-        :fixed_member   => "alice,bob",
-        :fixed_order    => "alice,bob",
+        :user_name            => :a,
+        :fixed_member   => "a,b",
+        :fixed_order    => "a,b",
         :fixed_order_state    => "to_o2_state",
         :autoexec             => "honpu_main_setup",
       })

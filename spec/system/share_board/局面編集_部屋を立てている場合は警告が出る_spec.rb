@@ -10,8 +10,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "部屋を立てている場合は「理解した上で編集する」の警告ダイアログが出る" do
-    window_a { visit_room(user_name: :alice) }
-    window_b { visit_room(user_name: :bob)   }
+    window_a { visit_room(user_name: :a) }
+    window_b { visit_room(user_name: :b)   }
     window_a do
       sidebar_open
       menu_item_click("局面編集")

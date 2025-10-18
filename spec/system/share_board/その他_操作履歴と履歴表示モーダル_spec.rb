@@ -27,7 +27,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_turn(1)             # 1手目に戻った
     end
     window_b do
-      assert_turn(2)        # 戻るのはalice側だけなのでbob側は2手目のまま
+      assert_turn(2)        # 戻るのはa側だけなのでb側は2手目のまま
     end
   end
 

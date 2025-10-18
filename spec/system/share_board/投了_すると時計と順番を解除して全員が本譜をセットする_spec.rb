@@ -4,15 +4,15 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name                   => user_name,
-        :fixed_member          => "alice,bob",
-        :fixed_order           => "alice,bob",
+        :fixed_member          => "a,b",
+        :fixed_order           => "a,b",
         "clock_box.initial_main_min" => 60,
       })
   end
 
   it "works" do
-    window_a { case1(:alice) }
-    window_b { case1(:bob)   }
+    window_a { case1(:a) }
+    window_b { case1(:b)   }
     window_a do
       clock_start
       give_up_run
@@ -20,7 +20,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_honpu_open_on         # 本譜のリンクがある
     end
     window_b do
-      assert_order_off_and_clock_stop # bob 側も同様の状態になっている
+      assert_order_off_and_clock_stop # b 側も同様の状態になっている
       assert_honpu_open_on         # 本譜のリンクがある
     end
   end

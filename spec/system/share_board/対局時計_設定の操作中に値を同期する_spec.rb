@@ -17,10 +17,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1("b") }
     window_a do
       clock_open
-      clock_box_form_set(:black, 1, 2, 3, 4)   # alice が時計を操作し終わると 0.5 秒に
+      clock_box_form_set(:black, 1, 2, 3, 4)   # a が時計を操作し終わると 0.5 秒に
     end
     window_b do
-      assert_text "cc_params:[[1,2,3,4]]", wait: CC_INPUT_DEBOUNCE_DELAY + 5 # bob の画面に反映する
+      assert_text "cc_params:[[1,2,3,4]]", wait: CC_INPUT_DEBOUNCE_DELAY + 5 # b の画面に反映する
     end
   end
 end
