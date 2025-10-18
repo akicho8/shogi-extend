@@ -223,6 +223,14 @@ export const mod_clock_box = {
         this.clock_box.stop_handle()
       }
     },
+    // 順番OFFであれば時計を停止する
+    order_off_then_cc_stop() {
+      if (!this.order_enable_p) {
+        if (this.clock_box) {
+          this.clock_box.stop_handle()
+        }
+      }
+    },
     // 対局時計が動いている場合は停止する
     cc_stop_share_handle() {
       if (this.cc_play_p) {

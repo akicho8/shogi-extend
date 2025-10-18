@@ -63,6 +63,7 @@ export const mod_order_main = {
       }
       this.order_enable_p = params.order_enable_p
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
+      this.order_off_then_cc_stop()                      // 順番設定OFFになったら時計を停止する
       // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       if (params.message) {
@@ -87,6 +88,7 @@ export const mod_order_main = {
 
       this.order_enable_p = params.order_enable_p
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
+      this.order_off_then_cc_stop()                      // 順番設定OFFになったら時計を停止する
       this.order_copy_from_bc(params)
     },
     // 後から参加したとき、または順番設定を適用したときに呼ばれる
