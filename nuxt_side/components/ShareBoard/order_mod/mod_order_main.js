@@ -42,6 +42,10 @@ export const mod_order_main = {
       this.order_enable_p = true
     },
 
+    order_leave() {
+      this.order_enable_p = false
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 順番設定を解除する

@@ -154,6 +154,7 @@ export const mod_room_cable = {
         this.active_level_init()
         this.active_level_increment_timer.stop()
         this.xprofile_leave()
+        this.order_leave()
       }
     },
 
