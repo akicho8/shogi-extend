@@ -99,8 +99,8 @@ export default {
     mi1_hand_p() { return !this.SB.ac_room                                                                },
     mi2_bold_p() { return this.SB.ac_room && this.SB.order_enable_p && this.SB.order_unit.valid_p     },
     mi2_hand_p() { return this.SB.ac_room && (!this.SB.order_enable_p || !this.SB.order_unit.valid_p) },
-    mi3_bold_p() { return this.mi2_bold_p && this.SB.clock_box                                            },
-    mi3_hand_p() { return this.mi2_bold_p && !this.SB.clock_box                                           },
+    mi3_bold_p() { return this.SB.clock_box                                            },
+    mi3_hand_p() { return !this.SB.clock_box                                           },
   },
 }
 </script>
