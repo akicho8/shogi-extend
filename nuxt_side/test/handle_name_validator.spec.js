@@ -114,6 +114,10 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("🥇🥇")).toEqual(false)
   })
 
+  test("GPT の成り済ましはダメ", () => {
+    expect(HandleNameValidator.valid_p("GPT")).toEqual(false)
+  })
+
   test("段級位のみはダメ", () => {
     expect(HandleNameValidator.valid_p("初段")).toEqual(false)
     expect(HandleNameValidator.valid_p("1級")).toEqual(false)

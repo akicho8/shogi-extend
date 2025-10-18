@@ -16,6 +16,8 @@ export const HandleNameNgWordList = [
   "初心者",
   "死",
   "通りすがり",
+  "荒らし",
+  "^GPT$",
   "^あいう$",
   "^あいうえ$",
   "あいうえお",
