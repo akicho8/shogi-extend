@@ -41,6 +41,10 @@ export const mod_clock_box = {
       this.cc_params_apply()
       this.clock_box.play_handle()
     },
+    cc_auto_start_longtime() {
+      this.cc_params = [{ initial_main_min: 10, initial_read_sec: 0, initial_extra_min: 0, every_plus: 0 }]
+      this.cc_auto_start()
+    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -462,36 +466,6 @@ export const mod_clock_box = {
       })
     },
 
-    //////////////////////////////////////////////////////////////////////////////// 警告
-
-    cc_not_use_battle_start_warn(params) {
-      const message = this.cc_not_use_battle_start_warn_message(params)
-      if (message) {
-        this.toast_warn(message, {duration: 1000 * 5})
-      }
-    },
-    cc_not_use_battle_start_warn_message(params) {
-      let message = null
-      if (this.order_enable_p) {
-        const turn_to = this.order_unit.main_user_count // 対局者数の数分の手数まで警告を出す
-        if (params.turn <= turn_to) {
-          if (this.clock_box) {
-            if (this.clock_box.play_p) {
-            } else {
-              // message = `対局開始ボタンを押していないのに${this.user_call_name(params.from_user_name)}が指しました`
-              message = `対局開始ボタンを押してから始めよう`
-            }
-          } else {
-            // message = `対局時計を設置していない状態で${this.user_call_name(params.from_user_name)}が指しました`
-            message = `対局時計を設置してから始めよう`
-          }
-        }
-      }
-      return message
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
   },
 
   computed: {
@@ -511,11 +485,6 @@ export const mod_clock_box = {
         params.clock_box_attributes = this.clock_box.attributes
       }
       return params
-    },
-
-    // 順番設定を有効にしてないのに時計を開始しようとしている？
-    cc_start_even_though_order_is_not_enabled_p() {
-      return this.ac_room && !this.order_enable_p
     },
   },
 }

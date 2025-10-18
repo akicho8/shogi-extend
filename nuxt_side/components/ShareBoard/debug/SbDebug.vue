@@ -3,6 +3,16 @@
   .column.is-2
     .panel
       .panel-heading
+        | コンテキスト変更
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c")                                                                 順番🔴 時計🔴 入室 a
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b")                                                 順番🟢 時計🔴 先手 a
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&room_create_after_action=cc_auto_start_longtime")                 順番🔴 時計🟢 先手 a
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 先手 a
+      a.panel-block(href="?room_key=dev_room&user_name=b&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 後手 b
+      a.panel-block(href="?room_key=dev_room&user_name=c&fixed_member=a,b,c&fixed_order=a,b&room_create_after_action=cc_auto_start_longtime") 順番🟢 時計🟢 観戦 c
+  .column.is-2
+    .panel
+      .panel-heading
         | ハンドルネーム関連
       a.panel-block(@click="SB.handle_name_modal_handle") 入力
       a.panel-block(@click="SB.handle_name_alert") 変更禁止警告
