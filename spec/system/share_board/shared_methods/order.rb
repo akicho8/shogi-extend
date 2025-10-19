@@ -1,8 +1,8 @@
 module SharedMethods
   # 順番OFF 時計STOP
   def assert_order_off_and_clock_stop
-    assert_var("order_enable_p", "false")
-    assert_var("clock_box.current_status", "stop")
+    assert_order_off
+    assert_clock(:stop)
   end
 
   def os_modal_open_handle

@@ -42,6 +42,10 @@ module SharedMethods
     assert_no_selector(".MembershipLocationPlayerInfoTime")
   end
 
+  def assert_clock(current_status)
+    assert_var("clock_box.current_status", current_status)
+  end
+
   def clock_open
     sidebar_open
     cc_modal_open_handle             # 「対局時計」モーダルを開く
