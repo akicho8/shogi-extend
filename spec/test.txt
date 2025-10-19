@@ -1465,7 +1465,7 @@ example_id                                                                      
 ./spec/system/share_board/千日手の検知とリセット_spec.rb[1:6:1]                                  | passed  | 6.48 seconds    |
 ./spec/system/share_board/千日手の検知とリセット_spec.rb[1:6:2]                                  | passed  | 6.62 seconds    |
 ./spec/system/share_board/千日手の検知とリセット_spec.rb[1:6:3]                                  | passed  | 6.29 seconds    |
-./spec/system/share_board/千日手の検知とリセット_spec.rb[1:7]                                    | passed  | 14.74 seconds   |
+./spec/system/share_board/千日手の検知とリセット_spec.rb[1:7]                                    | passed  | 13.94 seconds   |
 ./spec/system/share_board/反則_挙動_spec.rb[1:1:1]                                        | passed  | 4.57 seconds    |
 ./spec/system/share_board/反則_挙動_spec.rb[1:2:1]                                        | passed  | 1.88 seconds    |
 ./spec/system/share_board/反則_挙動_spec.rb[1:2:2]                                        | passed  | 1.77 seconds    |
@@ -1599,9 +1599,9 @@ example_id                                                                      
 ./spec/system/share_board/盤面操作禁止と警告_spec.rb[1:5]                                      | passed  | 3.52 seconds    |
 ./spec/system/share_board/自動投了_投了モーダルが開いていたら閉じる_spec.rb[1:1]                       | passed  | 5.45 seconds    |
 ./spec/system/share_board/自動投了_投了モーダルが開いていたら閉じる_spec.rb[1:1]                          | passed  | 7.31 seconds    |
-./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb[1:1]                              | passed  | 3.31 seconds    |
+./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb[1:1]                              | passed  | 4.47 seconds    |
 ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb[1:2]                              | passed  | 3.59 seconds    |
-./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb[1:1]                            | passed  | 5.17 seconds    |
+./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb[1:1]                            | passed  | 6.65 seconds    |
 ./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb[1:2]                            | passed  | 5.73 seconds    |
 ./spec/system/share_board/補助機能_KI2棋譜コピー_spec.rb[1:1]                                 | passed  | 2.94 seconds    |
 ./spec/system/share_board/補助機能_KI2棋譜コピー_spec.rb[1:1]                                  | passed  | 3.23 seconds    |
@@ -1623,9 +1623,7 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_N手毎交代_spec.rb[1:3]                                     | passed  | 2.67 seconds    |
 ./spec/system/share_board/順番設定_N手毎交代_spec.rb[1:4]                                     | passed  | 3.33 seconds    |
 ./spec/system/share_board/順番設定_シャッフル_spec.rb[1:1]                                     | passed  | 7.12 seconds    |
-./spec/system/share_board/順番設定_バリデーション_1列_対戦相手がいない_spec.rb[1:1]                    | passed  | 2.91 seconds    |
 ./spec/system/share_board/順番設定_バリデーション_2列_対戦相手がいない_spec.rb[1:1]                    | passed  | 3.38 seconds    |
-./spec/system/share_board/順番設定_バリデーション_1列_対戦相手がいない_spec.rb[1:1]                       | passed  | 3.86 seconds    |
 ./spec/system/share_board/順番設定_バリデーション_2列_対戦相手がいない_spec.rb[1:1]                       | passed  | 3.93 seconds    |
 ./spec/system/share_board/順番設定_フェス_お題作成_ランダム入力_spec.rb[1:1]                          | passed  | 2.86 seconds    |
 ./spec/system/share_board/順番設定_フェス_お題作成_ランダム入力_spec.rb[1:1]                           | passed  | 3.78 seconds    |
@@ -1648,7 +1646,7 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_補助機能_手番通知_spec.rb[1:1]                                 | passed  | 13.98 seconds   |
 ./spec/system/share_board/順番設定_補助機能_振り駒_spec.rb[1:1]                                  | passed  | 5.38 seconds    |
 ./spec/system/share_board/順番設定_補助機能_振り駒_spec.rb[1:2]                                  | passed  | 4.26 seconds    |
-./spec/system/share_board/順番設定_設定後に時計設置を促す_spec.rb[1:1]                               | passed  | 3.17 seconds    |
+./spec/system/share_board/順番設定_設定後に時計設置を促す_spec.rb[1:1]                               | passed  | 5.26 seconds    |
 ./spec/system/share_board/順番設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb[1:1]                | passed  | 12.54 seconds   |
 ./spec/system/short_url_spec.rb[1:1]                                                  | passed  | 0.62025 seconds |
 ./spec/system/sitemap_spec.rb[1:1]                                                    | passed  | 0.3775 seconds  |

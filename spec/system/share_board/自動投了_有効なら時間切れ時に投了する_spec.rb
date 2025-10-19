@@ -7,7 +7,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name         => "a",
         :fixed_member      => "a,b",
         :fixed_order       => "a,b",
-        :fixed_order_state => "to_o1_state",
         :auto_resign_key   => auto_resign_key,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })
@@ -18,12 +17,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "無効だと順番設定は解除されていない" do
-    case1("is_auto_resign_off")
+    case1 :is_auto_resign_off
     assert_order_on
   end
 
   it "有効だと順番設定は解除されている" do
-    case1("is_auto_resign_on")
+    case1 :is_auto_resign_on
     assert_order_off
   end
 end

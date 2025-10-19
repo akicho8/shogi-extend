@@ -3,12 +3,11 @@ require "#{__dir__}/shared_methods"
 RSpec.xdescribe "対局時計で初期配置に戻さずに対局開始しようとしている場合の確認モーダル", type: :system, share_board_spec: true do
   def case1
     visit_app({
-        :user_name            => "a",
-        :fixed_member   => "a,b",
-        :fixed_order    => "a,b",
-        :fixed_order_state    => "to_o1_state",
-        :body                 => "68S",
-        :autoexec             => "cc_create,cc_modal_open_handle",
+        :user_name         => "a",
+        :fixed_member      => "a,b",
+        :fixed_order       => "a,b",
+        :body              => "68S",
+        :autoexec          => "cc_create,cc_modal_open_handle",
       })
     clock_play_button_click
     assert_selector(".dialog .modal-card-title", text: "ちょっと待って")
