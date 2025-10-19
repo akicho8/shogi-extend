@@ -1,22 +1,16 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  def case1
+  it "works" do
     visit_room({
-        :user_name            => "1",
-        :fixed_member   => "1,2,3,4",
-        :fixed_order    => "1,2,3,4",
-        :fixed_order_state    => "to_o2_state",
+        :user_name    => "a",
+        :fixed_member => "a,b,c,d",
+        :fixed_order  => "a,b,c,d",
       })
     os_modal_open
-    os_switch_toggle
-  end
-
-  it "works" do
-    case1
-    assert_order_team_one "13", "24"
+    assert_order_team_one "ac", "bd"
     find(".swap_handle").click
-    assert_text("1さんが先後を入れ替えました", wait: 30)
-    assert_order_team_one "24", "13"
+    assert_text("aさんが先後を入れ替えました")
+    assert_order_team_one "bd", "ac"
   end
 end

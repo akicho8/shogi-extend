@@ -3,10 +3,9 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_room({
-        :user_name            => "a",
-        :fixed_member   => "a",
-        :fixed_order    => "a",
-        :fixed_order_state    => "to_o2_state",
+        :user_name    => "a",
+        :fixed_member => "a",
+        :fixed_order  => "a",
       })
 
     os_modal_open

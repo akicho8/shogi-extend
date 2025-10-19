@@ -3,10 +3,9 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
-        :user_name            => user_name,
-        :fixed_member   => "a,b",
-        :fixed_order    => "a,b",
-        :fixed_order_state    => "to_o2_state",
+        :user_name    => user_name,
+        :fixed_member => "a,b",
+        :fixed_order  => "a,b",
       })
     os_modal_open
     os_switch_toggle

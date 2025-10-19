@@ -3,11 +3,10 @@ require "#{__dir__}/helper"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name, think_mark_mode_p)
     visit_room({
-        :user_name            => user_name,
-        :fixed_member   => "a,b,c",
-        :fixed_order    => "a,b",
-        :fixed_order_state    => :to_o2_state,
-        :think_mark_mode_p    => think_mark_mode_p,
+        :user_name         => user_name,
+        :fixed_member      => "a,b,c",
+        :fixed_order       => "a,b",
+        :think_mark_mode_p => think_mark_mode_p,
       })
   end
 

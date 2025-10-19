@@ -4,10 +4,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "操作履歴から過去の局面に戻る" do
     def case1(user_name)
       visit_room({
-          :user_name      => user_name,
-          :fixed_member   => "a,b",
-          :fixed_order    => "a,b",
-          :quick_sync_key => "is_quick_sync_off", # 手動同期にしておく
+          :user_name         => user_name,
+          :fixed_member      => "a,b",
+          :fixed_order       => "a,b",
+          :quick_sync_key    => :is_quick_sync_off, # 手動同期にしておく
           :room_after_create => :cc_auto_start_10m,
         })
     end
@@ -32,13 +32,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "操作履歴モーダル内の補助機能" do
-    visit_room({
-        :user_name => :a,
-        :fixed_order => :a,
-        :fixed_order_state => "to_o1_state",
-        :room_after_create => :cc_auto_start_10m,
-      })
-
+    visit_room(user_name: :a)
     piece_move_o("77", "76", "☗7六歩")              # 初手を指す
     assert_turn(1)
     action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動

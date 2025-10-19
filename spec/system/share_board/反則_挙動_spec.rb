@@ -29,17 +29,16 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       visit_room({
           :body              => sfen,
           :foul_mode_key     => foul_mode_key,
-          :user_name         => "1",
-          :fixed_member      => "1,2",
-          :fixed_order       => "1,2",
-          :fixed_order_state => "to_o2_state",
+          :user_name         => "a",
+          :fixed_member      => "a,b",
+          :fixed_order       => "a,b",
           :room_after_create => :cc_auto_start_10m,
         })
       stand_click(:black, :P)
       place_click("22")
     end
 
-    it "一般用「できる・注意あり(全体へ)」" do
+    it "(1) 一般用「できる・注意あり(全体へ)」" do
       case1(:lose)
       assert_selector(".place_2_2.current")
 
@@ -49,12 +48,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
     end
 
-    it "初心者用「できない・注意あり(本人へ)」" do
+    it "(2) 初心者用「できない・注意あり(本人へ)」" do
       case1(:block)
       double_pawn_warning
     end
 
-    it "玄人用「できる・注意なし」" do
+    it "(3) 玄人用「できる・注意なし」" do
       case1(:ignore)
       assert_selector(".place_2_2.current")
       assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)

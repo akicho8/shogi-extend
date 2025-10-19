@@ -107,10 +107,10 @@
 ** 振り駒
 
    # 常に反転 x 2回 なので 歩5枚
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&room_after_create=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=2
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=2
 
    # 常に反転 x 3回 なので と金5枚
-   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&room_after_create=os_modal_open_handle&furigoma_random_key=is_true&shakashaka_count=3
+   http://localhost:4000/share-board?room_key=a&user_name=alice&fixed_order_state=to_o1_state&fixed_order=alice,bob,carol,dave&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=3
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
@@ -122,7 +122,7 @@
 
 ** 再送モーダルが出ているときに順番設定されたら再送モーダルが消されるテスト用
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order_state=to_o2_state&fixed_order=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1
 
 ** 時計設定済みで入退室には？
 

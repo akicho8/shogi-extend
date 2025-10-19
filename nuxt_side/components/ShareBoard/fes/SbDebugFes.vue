@@ -4,7 +4,7 @@
     .panel
       .panel-heading
         | 投票(ホスト側)
-      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&fixed_order_state=to_o2_state&autoexec=client_vote_sample") 確認用の環境に変更する
+      a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c,d,e&autoexec=client_vote_sample") 確認用の環境に変更する
       a.panel-block(@click="SB.quiz_source_clear()") お題初期化
       a.panel-block(@click="SB.quiz_source_sample()") お題サンプル投入
       a.panel-block(@click="SB.quiz_maker_handle()") お題メーカー

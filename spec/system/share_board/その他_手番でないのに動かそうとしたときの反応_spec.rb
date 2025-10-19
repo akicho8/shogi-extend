@@ -38,11 +38,10 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
   end
   it "順番設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
     visit_room({
-        :user_name            => "a",
-        :fixed_member   => "a",
-        :fixed_order    => "a", # 順番設定で黒側に一人aがいる
-        :fixed_order_state    => "to_o2_state",
-        :body                 => SfenGenerator.start_from(:white), # 後手から始まる
+        :user_name    => "a",
+        :fixed_member => "a",
+        :fixed_order  => "a", # 順番設定で黒側に一人aがいる
+        :body         => SfenGenerator.start_from(:white), # 後手から始まる
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する
     piece_move_o("77", "76", "☗7六歩") # a が自分の手を指す

@@ -3,10 +3,9 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(button_name)
     visit_room({
-        :user_name            => "1",
-        :fixed_member   => "1,2,3,4,5,6,7,8",
-        :fixed_order    => "1,2,3,4,5,6,7,8",
-        :fixed_order_state    => "to_o2_state",
+        :user_name    => "1",
+        :fixed_member => "1,2,3,4,5,6,7,8",
+        :fixed_order  => "1,2,3,4,5,6,7,8",
       })
 
     os_modal_open
@@ -16,7 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_var("仮順序", "12345678")
     os_modal_open
     find(:button, text: button_name, exact_text: true).click
-    assert_text("1さんが#{button_name}しました", wait: 5)
+    assert_text("1さんが#{button_name}しました")
     os_modal_close
     os_modal_close_force
     assert_no_var("仮順序", "12345678")
