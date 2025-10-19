@@ -68,7 +68,9 @@ export const mod_order_turn = {
       GX.assert_kind_of_string(user_name)
       if (this.order_enable_p) {
         const turn = this.user_name_to_initial_turn(user_name)
-        return this.turn_to_location(turn)
+        if (turn != null) {
+          return this.turn_to_location(turn)
+        }
       }
     },
 

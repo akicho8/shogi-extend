@@ -3,9 +3,9 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
-        user_name: user_name,
-        fixed_order: "a,b",
-        title: "(title)",
+        :user_name => user_name,
+        :fixed_order => "a,b",
+        :title => "(title)",
       })
   end
 
@@ -22,7 +22,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "部屋を立てた後はメンバーリストから取得する" do
     window_a { case1(:a) }
-    window_b { case1(:b)   }
+    window_b { case1(:b) }
     window_c { case1(:c) }
     window_a do
       sidebar_open
