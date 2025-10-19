@@ -15,7 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "2回反転して元に戻る" do
-    case1(:b)
+    case1(2)
     assert_text("aさんが振り駒をした結果、歩が5枚でaさんの先手になりました")
     assert_order_team_one "ac", "bd"
     os_modal_force_submit
@@ -24,7 +24,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "3回反転して逆になる" do
-    case1(:c)
+    case1(3)
     assert_text("aさんが振り駒をした結果、と金が5枚でbさんの先手になりました")
     assert_order_team_one "bd", "ac"
     os_modal_force_submit
