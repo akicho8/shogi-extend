@@ -161,7 +161,6 @@ export const mod_sfen_share = {
       this.ai_say_case_turn(params)
       this.al_add(params)
       this.honpu_branch_setup(params)
-      this.cc_not_use_battle_start_warn(params)                              // 対局時計使えやの警告
     },
     from_user_name_valid(params) {
       if (this.development_p) {

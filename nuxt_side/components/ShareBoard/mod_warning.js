@@ -46,72 +46,14 @@ export const mod_warning = {
       }
       if (message) {
         this.sfx_play("se_tebanjanainoni_sawanna")
-        this.common_warn_show(message)
-        // this.toast_warn(message, {duration: 1000 * 5})
-        // this.tl_add("OPVALID", message)
+        this.toast_warn(message, {duration: 1000 * 5})
+        this.ac_log({subject: "警告発動", body: message})
       }
     },
 
-    // 自分が手番だが相手の駒を動かそうとした
     ev_illegal_my_turn_but_oside_click() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.sfx_play("se_aitenokoma_sawannna")
-      // this.common_warn_show(this.common_warn_message)
-      // if (this.development_p) {
-      //   this.toast_ok("それは相手の駒です")
-      // }
-    },
-
-    // 順番設定ON 対局時計ON じゃないのに指したときの警告
-    cc_not_use_battle_start_warn(params) {
-      // const message = this.cc_not_use_battle_start_warn_message(params)
-      // if (message) {
-      //   this.toast_warn(message, {duration: 1000 * 5})
-      // }
-
-      // if (this.order_enable_p && !this.cc_play_p) {
-      //   // this.sfx_click()
-      //   // this.sb_talk(`ちょっと待って。途中の局面になっています。初期配置に戻してから開始しますか？`)
-      //   this.dialog_alert({
-      //     // type: "is-warning",
-      //     // hasIcon: false,
-      //     title: "警告",
-      //     message: `
-      //       <div class="content">
-      //         <p>対局を開始していないのに${this.user_call_name(params.from_user_name)}が指しました。</p>
-      //         <p>対局する場合は対局時計から対局開始してください。</p>
-      //         <p>検討する場合は順番設定を解除してください。</p>
-      //       </div>`,
-      //     // type: "is-warning",
-      //     // confirmText: "OK",
-      //     // cancelText: `いいえ`,
-      //     // focusOn: "confirm",
-      //     // canCancel: ["button"],
-      //     // ...params,
-      //   })
-      // }
-
-      // this.common_warn_show(this.common_warn_message)
-    },
-
-    // cc_not_use_battle_start_warn_message(params) {
-    //   let message = null
-    //   if (this.order_enable_p) {
-    //     // const turn_to = this.order_unit.main_user_count // 対局者数の数分の手数まで警告を出す
-    //     // if (params.turn <= turn_to || true) {
-    //     if (!this.cc_play_p) {
-    //       message = `対局開始していないのに${this.user_call_name(params.from_user_name)}が指しました`
-    //       message = `検討する場合は順番設定を解除してください`
-    //     }
-    //   }
-    //   return message
-    // },
-
-    common_warn_show(message) {
-      if (message) {
-        this.ac_log({subject: "警告発動", body: message})
-        this.toast_warn(message, {duration: 1000 * 5})
-      }
     },
   },
   computed: {
@@ -126,21 +68,5 @@ export const mod_warning = {
     order_clock_both_ok()    { return this.order_enable_p && this.cc_play_p   },                 // 両方ON
     order_clock_both_empty() { return !this.order_enable_p && !this.cc_play_p },                 // 両方OFF
     integrity_ok_p()         { return this.order_clock_both_ok || this.order_clock_both_empty }, // どちらか
-
-    // // 手番で指したときと手番でないのに指したときの共通のバリデーション
-    // common_warn_message() {
-    //   let message = null
-    //   if (message == null) {
-    //     if (!this.order_enable_p && this.cc_play_p) {
-    //       message = `対局する場合は順番設定をしてください` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
-    //     }
-    //   }
-    //   if (message == null) {
-    //     if (this.order_enable_p && !this.cc_play_p) {
-    //       message = `対局するなら対局時計を押して検討するなら順番設定を解除してください`
-    //     }
-    //   }
-    //   return message
-    // },
   },
 }
