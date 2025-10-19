@@ -11,7 +11,7 @@ export class FurigomaPack {
   constructor(options = {}) {
     this.options = {
       size: 5,                     // 「歩」の枚数
-      furigoma_random_key: null,   // is_true: 必ず反転, is_false: 必ず反転しない, null: ランダム
+      furigoma_random_key: null,   // force_true: 必ず反転, force_false: 必ず反転しない, null: ランダム
       shakashaka_count: null,      // しゃかしゃかする回数 0 なら「歩5枚」
       ...options,
     }

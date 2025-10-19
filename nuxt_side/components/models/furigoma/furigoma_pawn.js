@@ -13,7 +13,7 @@ export class FurigomaPawn {
   }
 
   shaka() {
-    if (this.boolean_random) {
+    if (this.__random_call) {
       this.soldier.promoted = !this.soldier.promoted
     }
   }
@@ -22,12 +22,12 @@ export class FurigomaPawn {
     return this.soldier.name
   }
 
-  get boolean_random() {
+  get __random_call() {
     const key = this.options.furigoma_random_key
-    if (key === "is_true") {
+    if (key === "force_true") {
       return true
     }
-    if (key === "is_false") {
+    if (key === "force_false") {
       return false
     }
     return _.sample([true, false])

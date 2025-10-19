@@ -3,12 +3,11 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(shakashaka_count)
     visit_room({
-        :user_name            => "1",
-        :fixed_member   => "1,2,3,4",
-        :fixed_order    => "1,2,3,4",
-        :fixed_order_state    => "to_o2_state",
-        :furigoma_random_key  => "is_true",        # 毎回反転させる
-        :shakashaka_count     => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
+        :user_name           => "a",
+        :fixed_member        => "a,b,c,d",
+        :fixed_order         => "a,b,c,d",
+        :furigoma_random_key => "force_true",     # 毎回反転させる
+        :shakashaka_count    => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
       })
     os_modal_open
     os_switch_toggle
@@ -16,18 +15,18 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "2回反転して元に戻る" do
-    case1("2")
-    assert_text("1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
-    assert_order_team_one "13", "24"
+    case1(:b)
+    assert_text("aさんが振り駒をした結果、歩が5枚でaさんの先手になりました")
+    assert_order_team_one "ac", "bd"
     os_modal_force_submit
     os_modal_close
     assert_text("歩歩歩歩歩")
   end
 
   it "3回反転して逆になる" do
-    case1("3")
-    assert_text("1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
-    assert_order_team_one "24", "13"
+    case1(:c)
+    assert_text("aさんが振り駒をした結果、と金が5枚でbさんの先手になりました")
+    assert_order_team_one "bd", "ac"
     os_modal_force_submit
     os_modal_close
     assert_text("ととととと")
