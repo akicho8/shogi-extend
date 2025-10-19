@@ -109,6 +109,7 @@ export const mod_warning = {
 
     common_warn_show(message) {
       if (message) {
+        this.ac_log({subject: "警告発動", body: message})
         this.toast_warn(message, {duration: 1000 * 5})
       }
     },
