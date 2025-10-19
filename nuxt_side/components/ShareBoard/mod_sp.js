@@ -154,55 +154,18 @@ export const mod_sp = {
     controller_hide_p() { return this.cc_play_p          },
     controller_show_p() { return !this.controller_hide_p },
 
-    // 手番制限
-    // 条件 順番設定ON
-    // 条件 部屋が立っている
-    // 条件 メンバーリストが揃っている
-    // 条件 自分の手番はないとき
+    // ここめっちゃ重要
+    // デフォルトでは盤面を動かせないようにして条件に一致しているときだけ動かせるようにする
     sp_human_side() {
-      // どんな状況でもマークモードでは駒を動かせないようにする
-      if (this.think_mark_mode_p) {
-        return "none"
-      }
-
-      // // 不整合な状態では動かせないとする
-      // // 順番設定中に指されて動かすなと注意している場面も見られるので完全にロックする方針で良い
-      // if (this.inconsistency_p) {
-      //   return "none"
-      // }
-
-      if (this.order_clock_both_empty) {
+      // 思考印モードOFF 順番設定OFF 対局時計動いていない
+      if (!this.think_mark_mode_p && this.order_clock_both_empty) {
         return "both"
       }
-
-      if (this.order_clock_both_ok) {
-        if (this.current_turn_self_p) {
-          return "both"
-        }
+      // 思考印モードOFF 順番設定ON 対局時計動いている 自分の手番
+      if (!this.think_mark_mode_p && this.order_clock_both_ok && this.current_turn_self_p) {
+        return "both"
       }
-
-      // if (this.integrity_ok_p) {
-      //   return "both"
-      // }
-
-      // if (this.current_turn_self_p) {
-      //   return "both"
-      // }
-
-      // let retval = "both"                                          // デフォルトは誰でも動かせる
-      // if (this.order_enable_p) {                                 // 順番設定が有効かつ
-      //   if (this.ac_room) {                                      // 部屋が立てられていて
-      //     retval = "none"                                        // 観戦者含めて全体を「禁止」にする
-      //     if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
-      //       retval = "both"
-      //     }
-      //     if (this.current_turn_self_p) {                    // そのあとで対象者だけを
-      //       retval = "both"                                    // 指せるようにする
-      //     }
-      //   }
-      // }
-      // return retval
-
+      // それ以外全部禁止
       return "none"
     },
   },
