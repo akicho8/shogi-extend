@@ -3,9 +3,10 @@
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | Method                                   | Description                |                                   |
 // |------------------------------------------+----------------------------+-----------------------------------|
-// | turn_to_item(turn)                       | 手数 → ユーザー情報       | change_per, start_color 依存          |
+// | turn_to_item(turn)                       | 手数 → ユーザー情報       | change_per, start_color 依存      |
 // | turn_to_user_name(turn)                  | 手数 → ユーザー名         | 同上                              |
 // |------------------------------------------+----------------------------+-----------------------------------|
+// | __user_name_to_turns(user_name)          | 名前 → 番号(複数)         | [1, 3]                            |
 // | user_name_to_initial_turn(user_name)     | 名前 → 手数               | 平手・駒落ちに関係なく最初の人は0 |
 // | user_name_to_initial_location(user_name) | 名前 → Location           | 駒落ちで最初の人は白              |
 // | user_name_to_display_turns(user_name)    | 名前 → 表示用の番号文字列 | "(1, 3)"                          |
@@ -24,27 +25,39 @@ export const mod_order_turn = {
     turn_to_item(turn) {
       GX.assert_kind_of_integer(turn)
       if (this.order_enable_p) {
-        return this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
+        let e = this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
+        if (this.self_vs_self_enable_p) {
+          if (!e) {
+            e = this.order_unit.flat_uniq_users[0]
+          }
+        }
+        return e
       }
     },
 
     // 手数からユーザー名を取得する
     turn_to_user_name(turn) {
       GX.assert_kind_of_integer(turn)
-      const e = this.turn_to_item(turn)
-      if (e) {
-        return e.user_name
+      if (this.order_enable_p) {
+        const e = this.turn_to_item(turn)
+        if (e) {
+          return e.user_name
+        }
       }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // 指定の名前の人の最初の順序
-    // 優先度をつける順番であって location ではないので注意
+    // 指す順番であって 0 = black とは限らない (重要)
     user_name_to_initial_turn(user_name) {
-      GX.assert_kind_of_string(user_name)
       if (this.order_enable_p) {
-        GX.assert(user_name, "user_name")
+        GX.assert_kind_of_string(user_name)
         const turns = this.name_to_turns_hash[user_name]
         if (turns) {
+          if (this.self_vs_self_enable_p && this.self_vs_self_p) {
+            return 0
+          }
           return turns[0]
         }
       }
@@ -67,6 +80,8 @@ export const mod_order_turn = {
         return "(" + turns.map(e => e + 1).join(",") + ")"
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
 
   computed: {

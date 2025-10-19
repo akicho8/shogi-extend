@@ -115,7 +115,10 @@ export const mod_sp = {
 
     // 手数 → 色変換
     // 駒落ちによる開始色が変わる条件の大元はこれ
-    turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
+    turn_to_location(turn) {
+      GX.assert_kind_of_integer(turn)
+      return this.current_sfen_info.location_by_offset(turn)
+    },
   },
   computed: {
     play_mode_p() { return this.sp_mode === 'play' },

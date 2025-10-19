@@ -27,6 +27,8 @@ export const mod_battle_save = {
 
     // 出入りが激しいと名前が重複している状態があるためユニークにした this.room_user_names を使うこと
     battle_memberships(win_location_key) {
+      // this.order_lookup_from_name
+      // ↓ ここは flat_uniq_users でいい
       const filtered_names = this.room_user_names.filter(e => this.user_name_to_initial_turn(e) != null) // ← リファクタリングする
       const sorted_names = _.sortBy(filtered_names, e => this.user_name_to_initial_turn(e))
       return sorted_names.map(name => {
