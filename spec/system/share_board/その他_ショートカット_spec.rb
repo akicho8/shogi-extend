@@ -49,13 +49,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "通常モード←→編集モード" do
     visit_app
 
-    assert_selector(".SbApp.normal_mode_p")
+    assert_selector(".SbApp.play_mode_p")
 
     Capybara.current_session.active_element.send_keys([:shift, "e"])
     assert_selector(".SbApp.edit_mode_p")
 
     Capybara.current_session.active_element.send_keys([:shift, "e"])
-    assert_selector(".SbApp.normal_mode_p")
+    assert_selector(".SbApp.play_mode_p")
   end
 
   # クリップボードの許可モーダルが出るためテストできない
