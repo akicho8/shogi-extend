@@ -1338,6 +1338,9 @@ example_id                                                                      
 ./spec/system/share_board/その他_モーダルを表示した状態でも裏のテキストが読める_spec.rb[1:1]                    | passed  | 2.21 seconds    |
 ./spec/system/share_board/その他_不正なSFENでエラー画面になる_spec.rb[1:1]                          | passed  | 1.92 seconds    |
 ./spec/system/share_board/その他_不正なSFENでエラー画面になる_spec.rb[1:1]                           | passed  | 2.09 seconds    |
+./spec/system/share_board/その他_合言葉を含むURLから来たときの挙動_spec.rb[1:1]                         | passed  | 4.66 seconds    |
+./spec/system/share_board/その他_合言葉を含むURLから来たときの挙動_spec.rb[1:2]                         | passed  | 1.36 seconds    |
+./spec/system/share_board/その他_合言葉を含むURLから来たときの挙動_spec.rb[1:3]                         | passed  | 1.33 seconds    |
 ./spec/system/share_board/その他_合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす_spec.rb[1:1]         | passed  | 2.92 seconds    |
 ./spec/system/share_board/その他_合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす_spec.rb[1:1]          | passed  | 2.63 seconds    |
 ./spec/system/share_board/その他_将棋のルール無視なら反則判定しない_spec.rb[1:1]                          | passed  | 2.63 seconds    |
@@ -1432,7 +1435,6 @@ example_id                                                                      
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:3]                          | passed  | 2.34 seconds    |
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:4]                          | passed  | 3.05 seconds    |
 ./spec/system/share_board/ハンドルネーム_一度入力したものは記憶する_spec.rb[1:1]                         | passed  | 10.68 seconds   |
-./spec/system/share_board/ハンドルネーム_URLから来ても不正なハンドルネームは通さない_spec.rb[1:1]                | passed  | 1.95 seconds    |
 ./spec/system/share_board/ハンドルネーム_モーダルから入力する_バリデーション_spec.rb[1:1]                     | passed  | 3.62 seconds    |
 ./spec/system/share_board/ハンドルネーム_一度入力したものは記憶する_spec.rb[1:1]                          | passed  | 10.95 seconds   |
 ./spec/system/share_board/ハンドルネーム_入室後に変更しようとすると警告を出す_spec.rb[1:1]                     | passed  | 2.46 seconds    |

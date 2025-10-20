@@ -3,7 +3,7 @@
   .column.is-3
     .panel
       .panel-heading
-        | コンテキスト変更
+        | コンテキスト変更1
       a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c")                                                                 順番🔴 時計🔴 入室 a
       a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b")                                                 順番🟢 時計🔴 先手 a
       a.panel-block(href="?room_key=dev_room&user_name=a&fixed_member=a,b,c&room_after_create=cc_auto_start_10m")                 順番🔴 時計🟢 先手 a
@@ -19,6 +19,11 @@
       a.panel-block(@click="SB.handle_name_modal_handle") 入力
       a.panel-block(@click="SB.handle_name_alert") 変更禁止警告
       a.panel-block(@click="SB.handle_name_clear") 空にする
+  .column.is-3
+    .panel
+      .panel-heading
+        | コンテキスト変更2
+      a.panel-block(href="?room_key=dev_room&user_name=a&url_room_key_exist_behavior=modal_open") 合言葉ありURL時はモーダル表示で止める
 
   SbDebugRoom
   SbDebugXprofile

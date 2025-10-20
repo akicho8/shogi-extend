@@ -20,9 +20,7 @@ export const mod_room_cable = {
     }
   },
   mounted() {
-    this.tl_puts("--> mod_room_cable.mounted")
     this.room_create_if_exist_room_key_in_url()
-    this.tl_puts("<-- mod_room_cable.mounted")
   },
   beforeDestroy() {
     this.room_destroy()
@@ -30,29 +28,30 @@ export const mod_room_cable = {
   methods: {
     // URLに合言葉の指定があればそのまま入退室
     async room_create_if_exist_room_key_in_url() {
-      this.tl_puts("--> room_create_if_exist_room_key_in_url")
-      if (true) {
-        // URLに合言葉がない場合は何もしない
-        if (!this.url_room_key_exist_p) {
-          return
-        }
+      // URLに合言葉がない場合は何もしない
+      if (!this.url_room_key_exist_p) {
+        return
+      }
 
-        // 合言葉が復元できたとしても元々空であれば何もしない
-        if (GX.blank_p(this.room_key)) {
-          return
-        }
+      // 合言葉が復元できたとしても元々空であれば何もしない
+      if (GX.blank_p(this.room_key)) {
+        return
+      }
 
-        // 名前が未入力または不正な場合はモーダルを表示する
-        if (this.handle_name_invalid_then_show(this.user_name)) {
-          this.gate_modal_open()
-          return
-        }
+      // 名前が未入力または不正な場合はモーダルを表示する
+      if (this.handle_name_invalid_then_show(this.user_name)) {
+        this.gate_modal_open()
+        return
+      }
+
+      if (this.url_room_key_exist_behavior === "modal_open") {
+        this.gate_modal_open()
+        return
       }
 
       // 合言葉と名前は問題ないので入退室
       await this.room_restore_call()
       this.room_create()
-      this.tl_puts("<-- room_create_if_exist_room_key_in_url")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
