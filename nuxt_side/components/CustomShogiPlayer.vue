@@ -33,11 +33,14 @@ export default {
 </script>
 
 <style lang="sass">
+:root
+  +setvar(sp_edit_mode_board_color, hsla(149.57,38.12%,35.49%,0.53))
+
 .CustomShogiPlayer
   width: 100%   // ←これいる？
 
   &.is_mode_edit
-    +setvar(sp_board_color, hsla(149.57,38.12%,35.49%,0.53))
+    +setvar(sp_board_color, var(--sp_edit_mode_board_color))
 
   +mobile
     +setvar(sp_grid_outer_color, hsla(0, 0%, 0%, 0.4)) // スマホだと少し薄すくる

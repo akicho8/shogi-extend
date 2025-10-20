@@ -121,8 +121,8 @@ export const mod_sp = {
     },
   },
   computed: {
-    play_mode_p() { return this.sp_mode === 'play' },
-    edit_mode_p() { return this.sp_mode === 'edit' },
+    play_mode_p() { return this.sp_mode === "play" },
+    edit_mode_p() { return this.sp_mode === "edit" },
     advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる

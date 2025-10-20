@@ -118,7 +118,7 @@ export default {
 
 // .SbApp
 //   &.is_appearance_theme_b
-//     &.normal_mode_p
+//     &.play_mode_p
 //       .SbNavbar
 //         &.is-primary
 //           background-color: transparent

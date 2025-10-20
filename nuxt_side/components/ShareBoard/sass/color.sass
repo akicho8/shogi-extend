@@ -1,5 +1,5 @@
 .SbApp
-  &.normal_mode_p
+  &.play_mode_p
     background-color: var(--sb_bg_color)
 
     .SideColumn
@@ -7,7 +7,7 @@
         color:            var(--sb_side_fg_color)
         background-color: var(--sb_side_bg_color)
 
-  // // //////////////////////////////////////////////////////////////////////////////// __theme__
-  // &.edit_mode_p
-  //   // background-color: change_color($black, $lightness: 80%)
-  //   background-color: hsla(149.57,38.12%,35.49%,0.3)
+  // どのモードでも編集モードの色は固定する
+  &.edit_mode_p
+    +setvar(sp_edit_mode_board_color, hsla(0,0%,0%,0.2))
+    background-color: hsl(240,28.95%,85.1%)

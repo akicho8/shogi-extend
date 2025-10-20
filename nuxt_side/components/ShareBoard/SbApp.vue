@@ -342,8 +342,6 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////////////////////
-
     // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
     component_style() {
       return {
@@ -356,13 +354,14 @@ export default {
     // いちばん外側に設定するタグのclassでグローバル的なものを指定する
     component_class() {
       const hv = {}
-      hv.debug_mode_p        = this.debug_mode_p
-      hv.order_enable_p      = this.order_enable_p
-      hv.current_turn_self_p = this.current_turn_self_p
-      hv.edit_mode_p         = this.edit_mode_p
-      hv.normal_mode_p       = !this.edit_mode_p
-      // hv.__SYSTEM_TEST_RUNNING__ = this.__SYSTEM_TEST_RUNNING__
-      return [hv, this.appearance_theme_key]
+      hv.debug_mode_p               = this.debug_mode_p
+      hv.order_enable_p             = this.order_enable_p
+      hv.current_turn_self_p        = this.current_turn_self_p
+      hv.edit_mode_p                = this.edit_mode_p
+      hv.play_mode_p                = this.play_mode_p
+      hv[this.appearance_theme_key] = true
+      hv.__SYSTEM_TEST_RUNNING__    = this.__SYSTEM_TEST_RUNNING__
+      return hv
     },
   },
 }
