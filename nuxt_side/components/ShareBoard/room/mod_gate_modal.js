@@ -79,15 +79,12 @@ export const mod_gate_modal = {
         }
       }
 
-      // ニックネームがNGであれば再入力を促す
       if (this.handle_name_invalid_then_show(this.new_user_name)) {
         return
       }
 
-      if (this.auto_close_p || true) {
-        this.sidebar_p = false
-        this.gate_modal_close()
-      }
+      this.sidebar_p = false
+      this.gate_modal_close()
 
       this.room_create_from_modal(this.new_room_key, this.new_user_name)
     },
