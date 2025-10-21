@@ -155,18 +155,21 @@ export default {
 
     // 振り駒
     furigoma_handle() {
-      if (this.order_unit_invalid()) { return }
+      if (this.invalid_member_empty()) { return }
+      if (this.invalid_team_empty()) { return }
       if (this.swap_invalid("振り駒")) { return }
       const furigoma_pack = FurigomaPack.call({
         furigoma_random_key: this.$route.query.furigoma_random_key,
         shakashaka_count: this.$route.query.shakashaka_count,
       })
-      const prefix = `振り駒をした結果、${furigoma_pack.message}`
       this.sfx_click()
       this.SB.new_o.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.SB.new_o.order_unit.first_user(this.SB.start_color)
-      GX.assert(user != null, "user != null")
-      const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
+      let who = "誰かさん"
+      if (user) {
+        who = this.user_call_name(user.user_name)
+      }
+      const message = `振り駒をした結果、${furigoma_pack.message}で${who}の先手になりました`
       this.SB.al_share({label: furigoma_pack.piece_names, message: message})
     },
 
@@ -181,9 +184,7 @@ export default {
     // 偶数人数であること
     swap_invalid(name) {
       if (!this.SB.new_o.order_unit.swap_enable_p) {
-        this.sfx_play("x")
-        this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
-        return true
+        return this.error_message_show(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
       }
     },
 
@@ -196,29 +197,35 @@ export default {
       // this.SB.new_o.change_per = v
     },
 
-    // 反映時のエラーの内容は new_o.order_unit に任せる
-    order_unit_invalid() {
-      const messages = this.SB.new_o.order_unit.error_messages
-      if (GX.present_p(messages)) {
+    invalid_member_empty() {
+      return this.error_message_show(this.SB.new_o.order_unit.member_empty_message)
+    },
+    invalid_team_empty() {
+      if (this.SB.self_vs_self_enable_p) {
+        return
+      }
+      return this.error_message_show(this.SB.new_o.order_unit.team_empty_message)
+    },
+    error_message_show(message) {
+      if (GX.present_p(message)) {
         this.sfx_play("x")
-        messages.forEach(e => this.toast_warn(e))
+        this.toast_warn(message)
         return true
       }
     },
 
-    options_invalid() {
+    invalid_options() {
       if (GX.blank_p(this.SB.new_o.change_per)) {
-        this.sfx_play("x")
-        this.toast_warn("「X回指したら交代する」の項目を正しく入力してください")
-        return true
+        return this.error_message_show("「X回指したら交代する」の項目を正しく入力してください")
       }
     },
 
-    // 反映
+    // 確定
     apply_handle() {
       this.os_before_apply()
-      if (this.order_unit_invalid()) { return }
-      if (this.options_invalid()) { return }
+      if (this.invalid_member_empty()) { return }
+      if (this.invalid_team_empty()) { return }
+      if (this.invalid_options()) { return }
       this.sfx_click()
       if (!this.SB.new_o.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
@@ -228,11 +235,11 @@ export default {
       this.$GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
-    // バリデーションなしで反映する
+    // バリデーションなしで確定する
     os_modal_force_submit_handle() {
       this.os_before_apply()
-      if (this.options_invalid()) { return }
-      this.SB.new_order_share("バリデーションなしで順番設定を反映しました")
+      if (this.invalid_options()) { return }
+      this.SB.new_order_share("バリデーションなしで順番設定を確定しました")
     },
 
     option_block_show_handle() {

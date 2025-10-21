@@ -120,14 +120,23 @@ export class O2State extends OxState {
   }
 
   // 準備できたか？
-  get error_messages() {
-    const messages = super.error_messages
+  // get member_empty_message() {
+  //   const messages = super.member_empty_message
+  //   if (!this.empty_p) {
+  //     if (this.teams.some(e => e.length === 0)) {
+  //       messages.push(`各チームに最低1人入れてください`)
+  //     }
+  //   }
+  //   return messages
+  // }
+
+  // 「各チームに最低1人入れてください」
+  get team_empty_message() {
     if (!this.empty_p) {
       if (this.teams.some(e => e.length === 0)) {
-        messages.push(`各チームに最低1人入れてください`)
+        return `各チームに最低1人入れてください`
       }
     }
-    return messages
   }
 
   // 黒白の順で分ける

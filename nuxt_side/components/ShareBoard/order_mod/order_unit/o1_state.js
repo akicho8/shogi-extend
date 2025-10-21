@@ -102,11 +102,11 @@ export class O1State extends OxState {
     return GX.even_p(this.main_user_count)
   }
 
-  // 準備できたか？
-  get error_messages() {
-    const messages = super.error_messages
-    return messages
-  }
+  // // 準備できたか？
+  // get member_empty_message() {
+  //   const messages = super.member_empty_message
+  //   return messages
+  // }
 
   // 黒白の順で分ける
   // a b

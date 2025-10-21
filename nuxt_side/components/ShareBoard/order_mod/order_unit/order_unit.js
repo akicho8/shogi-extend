@@ -42,7 +42,8 @@ export class OrderUnit {
   get flat_uniq_users()                     { return this.order_state.flat_uniq_users                           }
   get round_size()                          { return this.order_state.round_size                                }
   get swap_enable_p()                       { return this.order_state.swap_enable_p                             }
-  get error_messages()                      { return this.order_state.error_messages                            }
+  get member_empty_message()                 { return this.order_state.member_empty_message                       }
+  get team_empty_message()             { return this.order_state.team_empty_message                           }
   users_allocate(users)                     { this.order_state.users_allocate(users)                            }
   users_allocate_from_teams(teams)          { this.order_state.users_allocate_from_teams(teams)                 }
   shuffle_all()                             { this.order_state.shuffle_all()                                    }
@@ -117,7 +118,7 @@ export class OrderUnit {
   }
 
   get valid_p() {
-    return GX.blank_p(this.order_state.error_messages)
+    return GX.blank_p(this.order_state.member_empty_message)
   }
 
   get invalid_p() {

@@ -95,12 +95,15 @@ export class OxState {
   }
 
   // 準備できたか？
-  get error_messages() {
-    const messages = []
+  get member_empty_message() {
     if (this.empty_p) {
-      messages.push(`誰も参加していません`)
+      return `誰も参加していません`
     }
-    return messages
+  }
+
+  // 「各チームに最低1人入れてください」
+  get team_empty_message() {
+    // 1列の場合は不要
   }
 
   get empty_p()        { return this.main_user_count === 0 } // 対戦者がいない？
