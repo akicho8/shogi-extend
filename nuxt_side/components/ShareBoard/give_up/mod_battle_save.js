@@ -1,6 +1,10 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
+const SELF_VS_SELF_THEN_SKIP             = false // 自分vs自分のときは保存しない？
+const SELF_VS_SELF_THEN_MEMBER_ZERO_SAVE = true  // 自分vs自分のときは対局者なしで保存する？
+const SELF_VS_SELF_THEN_FORCE_LOSE       = true  // 自分vs自分のときは必ず自分は負けとして保存する？
+
 export const mod_battle_save = {
   methods: {
     // 棋譜保存。投了時に呼ぶ。
@@ -11,6 +15,12 @@ export const mod_battle_save = {
     // 棋譜保存。win_location_key 側を勝ちとする
     async battle_save_by_win_location(win_location_key) {
       GX.assert(win_location_key)
+      if (SELF_VS_SELF_THEN_SKIP) {
+        if (this.self_vs_self_p) {
+          this.debug_alert("自分vs自分のため棋譜保存しない")
+          return
+        }
+      }
       const params = {
         room_key:         this.room_key,
         title:            this.current_title,
@@ -19,27 +29,40 @@ export const mod_battle_save = {
         memberships:      this.__battle_memberships(win_location_key),
         win_location_key: win_location_key,
       }
+      // app/models/share_board/battle_create.rb
       const e = await this.$axios.$post("/api/share_board/battle_create.json", params, {progress: false})
       if (e.error) {
         this.toast_ng(e.error.message, {talk: false})
       }
     },
 
-    // 出入りが激しいと名前が重複している状態があるためユニークにした this.room_user_names を使うこと
     __battle_memberships(win_location_key) {
-      // 対局者だけは一発で求められる
-      // this.order_lookup_from_name
-      // ↓ ここは flat_uniq_users でいい
-      const filtered_names = this.room_user_names.filter(e => this.user_name_to_initial_turn(e) != null)
-      const sorted_names = _.sortBy(filtered_names, e => this.user_name_to_initial_turn(e))
-      return sorted_names.map(name => {
-        const location = this.user_name_to_initial_location(name)
-        return {
-          user_name: name,
-          location_key: location.key,
-          judge_key: location.key === win_location_key ? "win" : "lose",
+      if (this.order_enable_p) {
+        if (SELF_VS_SELF_THEN_FORCE_LOSE) {
+          if (this.self_vs_self_p) {
+            return []
+          }
         }
-      })
+        return this.vs_member_names_uniq_and_ordered.map(name => {
+          const location = this.user_name_to_initial_location(name)
+          return {
+            user_name: name,
+            location_key: location.key,
+            judge_key: this.__battle_memberships_judge_key(location, win_location_key), // FIXME: ここってサーバー側でやればよくね？
+          }
+        })
+      }
     },
+
+    // location 側の勝ち負けを返す
+    // 自分vs自分の場合は必ず負けとする
+    __battle_memberships_judge_key(location, win_location_key) {
+      if (SELF_VS_SELF_THEN_FORCE_LOSE) {
+        if (this.self_vs_self_p) {
+          return "lose"
+        }
+      }
+      return location.key === win_location_key ? "win" : "lose"
+    }
   },
 }

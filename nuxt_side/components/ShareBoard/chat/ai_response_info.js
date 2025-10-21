@@ -49,8 +49,8 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
               return `${teams}の対局が開始されました。観戦者の立場で特定の人を応援したり、将棋の嘘の格言を(嘘とバレないように)一言添えたりして、自由に盛り上げてください。`
             }
             if (false) {
-              if (context.versus_member_infos) {
-                const member_info = _.sample(context.versus_member_infos)
+              if (context.vs_member_infos) {
+                const member_info = _.sample(context.vs_member_infos)
                 if (member_info) {
                   const call_name = context.user_call_name(member_info.from_user_name)
                   return `対局が開始されました。${call_name}に将棋の嘘の格言を(嘘とバレないように)アドバイスしてください。`

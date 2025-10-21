@@ -216,9 +216,26 @@ export const mod_order_main = {
     },
 
     // 対局に参加しているメンバー一覧(順不同)
-    versus_member_infos() {
+    vs_member_infos() {
       if (this.order_enable_p) {
-        return this.member_infos.filter(e => this.user_name_to_initial_turn(e.from_user_name))
+        return GX.ary_find_all(this.member_infos, e => this.user_name_to_initial_turn(e.from_user_name))
+      }
+    },
+
+    // 対局に参加しているメンバーの名前一覧(順不同)
+    vs_member_names() {
+      if (this.order_enable_p) {
+        return this.vs_member_infos.map(e => e.from_user_name)
+      }
+    },
+
+    // 対局に参加しているメンバーの名前をユニークにするかつ指す順番に並べるたもの
+    vs_member_names_uniq_and_ordered() {
+      if (this.order_enable_p) {
+        let av = this.vs_member_names
+        av = _.uniq(av)
+        av = _.sortBy(av, e => this.user_name_to_initial_turn(e))
+        return av
       }
     },
 
