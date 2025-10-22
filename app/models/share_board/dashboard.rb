@@ -31,36 +31,9 @@ module ShareBoard
                 },
               },
             },
-            battles: {
-              only: [
-                :sfen,
-                :position,
-                :created_at,
-              ],
-              include: {
-                win_location: {
-                  only: [
-                    :key,
-                  ],
-                },
-                black: MEMBERSHIP_STRUCT_TYPE1,
-                white: MEMBERSHIP_STRUCT_TYPE1,
-              },
-            },
           },
+          methods: [:latest_battles_max, :latest_battles],
         })
     end
-
-    private
-
-    MEMBERSHIP_STRUCT_TYPE1 = {
-      include: {
-        user: {
-          only: [
-            :name,
-          ],
-        },
-      },
-    }
   end
 end

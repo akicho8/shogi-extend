@@ -1,8 +1,8 @@
 <template lang="pug">
-.SbDashboardBattleIndex.box(v-if="$GX.present_p(TheDb.info.battles)")
-  .title 対局履歴
+.SbDashboardBattleIndex.box(v-if="$GX.present_p(TheDb.info.latest_battles)")
+  .title 対局履歴(直近{{TheDb.info.latest_battles_max}}件)
   b-table(
-    :data="TheDb.info.battles"
+    :data="TheDb.info.latest_battles"
     :mobile-cards="false"
     )
     // ☗☖

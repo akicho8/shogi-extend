@@ -91,6 +91,27 @@ module ShareBoard
       hv
     end
 
+    def latest_battles_max
+      50
+    end
+
+    # 対局履歴用
+    # 最新10件の battles を JSON 用に整形して返す
+    def latest_battles
+      s = battles
+      s = s.order(created_at: :desc)
+      s = s.limit(latest_battles_max)
+      s = s.includes(win_location: nil, black: :user, white: :user)
+      s.as_json({
+          only: [:sfen, :position, :created_at],
+          include: {
+            win_location: { only: [:key] },
+            black: { only: [], include: {user: { only: [:name] }}},
+            white: { only: [], include: {user: { only: [:name] }}},
+          }
+        })
+    end
+
     ################################################################################
 
     concerning :RankingMethods do
