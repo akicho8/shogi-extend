@@ -40,10 +40,12 @@ export class OrderUnit {
   get name_to_object_hash()                 { return this.order_state.name_to_object_hash                       }
   get hash()                                { return this.order_state.hash                                      }
   get flat_uniq_users()                     { return this.order_state.flat_uniq_users                           }
+  get flat_uniq_users_sole()                { return this.order_state.flat_uniq_users_sole                           }
   get round_size()                          { return this.order_state.round_size                                }
   get swap_enable_p()                       { return this.order_state.swap_enable_p                             }
   get member_empty_message()                 { return this.order_state.member_empty_message                       }
   get team_empty_message()             { return this.order_state.team_empty_message                           }
+  get team_empty_location()                       { return this.order_state.team_empty_location                           }
   users_allocate(users)                     { this.order_state.users_allocate(users)                            }
   users_allocate_from_teams(teams)          { this.order_state.users_allocate_from_teams(teams)                 }
   shuffle_all()                             { this.order_state.shuffle_all()                                    }
@@ -55,6 +57,7 @@ export class OrderUnit {
   get simple_teams()                        { return this.order_state.simple_teams                              }
   turn_to_item(turn, change_per, scolor)    { return this.order_state.turn_to_item(turn, change_per, scolor)    }
   team_member_count(location)           { return this.order_state.team_member_count(location)           }
+  get team_member_counts()                  { return this.order_state.team_member_counts           }
 
   constructor() {
     this.order_state = new O2State()

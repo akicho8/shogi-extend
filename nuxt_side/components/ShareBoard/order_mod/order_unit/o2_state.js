@@ -5,6 +5,7 @@ import { O1State } from "./o1_state.js"
 import { Item } from "./item.js"
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 // TODO: 最後にできれば Immutable にしたい
 export class O2State extends OxState {
@@ -132,9 +133,17 @@ export class O2State extends OxState {
 
   // 「各チームに最低1人入れてください」
   get team_empty_message() {
+    if (this.team_empty_location) {
+      return `各チームに最低1人入れてください`
+    }
+  }
+
+  // 空になっている方の Location を返す
+  get team_empty_location() {
     if (!this.empty_p) {
-      if (this.teams.some(e => e.length === 0)) {
-        return `各チームに最低1人入れてください`
+      const index = GX.ary_find_index(this.teams, e => e.length === 0)
+      if (GX.truthy_p(index)) {
+        return Location.fetch(index)
       }
     }
   }
@@ -155,6 +164,11 @@ export class O2State extends OxState {
   // 指定の色のチームのメンバー数を返す
   team_member_count(location) {
     return this.teams[location.code].length
+  }
+
+  // チームのメンバー数を返す
+  get team_member_counts() {
+    return this.teams.map(e => e.length)
   }
 
   ////////////////////////////////////////////////////////////////////////////////

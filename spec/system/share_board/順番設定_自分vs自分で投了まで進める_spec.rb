@@ -1,0 +1,29 @@
+require "#{__dir__}/shared_methods"
+
+RSpec.describe __FILE__, type: :system, share_board_spec: true do
+  it "works" do
+    visit_room({
+        :room_key              => SecureRandom.hex,
+        :user_name             => "a",
+        :fixed_member          => "a",
+        :fixed_order           => "a",
+        :self_vs_self_enable_p => true,
+      })
+
+    os_modal_open
+    assert_selector(".realtime_notice", text: "aさん同士で練習対局できます", exact_text: true)
+    os_modal_close
+    clock_start
+
+    piece_move_o("77", "76", "☗7六歩")
+    piece_move_o("33", "34", "☖3四歩")
+    give_up_run
+
+    sidebar_open
+    menu_item_click("対局履歴")
+
+    assert_no_selector(".SbDashboardUserRanking")                                                      # ランキングは表示されていない
+    assert_selector(".SbDashboardBattleIndex tr")                                                      # 対局履歴が1件ある
+    assert_selector(".SbDashboardBattleIndex .memberships_cell", text: "", exact_text: true, count: 2) # しかし両対者は空である
+  end
+end

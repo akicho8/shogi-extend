@@ -55,14 +55,19 @@ module SharedMethods
     first(".os_modal_force_submit_button").click
   end
 
-  # klass の上からn番目のメンバーを観戦に移動する
-  # klass: [dnd_black, dnd_white, dnd_both]
-  def drag_to_watch(klass, n)
-    a = find(".#{klass} .draggable_item:nth-child(#{n.next})")
-    b = find(".dnd_watch_users .draggable_area")
+  # from_klass の上から row_index 番目のメンバーを観戦に移動する
+  def drag_to_watch(from_klass, row_index)
+    drag_a_to_b(from_klass, row_index, "is_team_watcher")
+  end
+
+  # from_klass の上から row_index 番目のメンバーを to_klass に移動する
+  # [is_team_black, is_team_white, is_team_both]
+  def drag_a_to_b(from_klass, row_index, to_klass)
+    from = find(".#{from_klass} .draggable_item:nth-child(#{row_index.next})")
+    to = find(".#{to_klass} .draggable_area")
     # forceFallback: true によって drag_to が動かなくなるため revert した
     # https://github.com/SortableJS/Vue.Draggable/issues/1156#issuecomment-1340558451
-    a.drag_to(b)
+    from.drag_to(to)
   end
 
   def assert_order_on
@@ -80,13 +85,13 @@ module SharedMethods
 
   # 順番設定画面内の黒白チームの人たち
   def assert_order_team_one(black, white, options = {})
-    __assert_order_dnd_team_one("dnd_black", black, options)
-    __assert_order_dnd_team_one("dnd_white", white, options)
+    __assert_order_dnd_team_one("is_team_black", black, options)
+    __assert_order_dnd_team_one("is_team_white", white, options)
   end
 
   # 順番設定画面内の観戦者の人たち
   def assert_order_dnd_watcher(users, options = {})
-    __assert_order_dnd_team_one("dnd_watch_users", users, options)
+    __assert_order_dnd_team_one("is_team_watcher", users, options)
   end
 
   def __assert_order_dnd_team_one(klass, names_str, options)

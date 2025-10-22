@@ -21,13 +21,18 @@
 
     template(v-if="SB.order_enable_p || development_p")
       //- pre {{JSON.stringify(SB.new_o.os_change.to_h)}}
-      .TeamsContainer
+
+      .TeamsContainer.is-unselectable
         template(v-if="SB.new_o.order_unit.order_state.state_name === 'O1State'")
-          OrderTeamOne.dnd_both(:items.sync="SB.new_o.order_unit.order_state.users"   label="対局")
+          OrderTeamOne.is_team_both(:items.sync="SB.new_o.order_unit.order_state.users"   label="対局")
         template(v-if="SB.new_o.order_unit.order_state.state_name === 'O2State'")
-          OrderTeamOne.dnd_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne.dnd_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖")
-        OrderTeamOne.dnd_watch_users(:items.sync="SB.new_o.order_unit.watch_users" label="観戦")
+          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖")
+        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_unit.watch_users" label="観戦")
+
+      .realtime_notice_container.my-4.mx-1.is-unselectable(v-if="realtime_notice")
+        .realtime_notice.tag.is-light(:class="realtime_notice.css_klass")
+          | {{realtime_notice.message}}
 
       .shuffle_buttons.mt-4
         b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
@@ -45,7 +50,7 @@
 
       hr.my-4
 
-      .has-text-centered.is-size-7
+      .has-text-centered.is-size-7.is-unselectable
         | 投票でﾁｰﾑ分けするなら
       .buttons.is-centered.mb-0.mt-2
         b-button.mb-0(size="is-small" @click="quiz_maker_handle")
@@ -84,7 +89,7 @@
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
-      b-button.apply_button(@click="apply_handle" :type="submit_button_color") 確定
+      b-button.apply_button(@click="apply_handle" :type="apply_button_type") 確定
       template(v-if="SB.debug_mode_p")
         b-button.os_modal_force_submit_button(@click="os_modal_force_submit_handle") 確定(force)
 </template>
@@ -202,9 +207,9 @@ export default {
     },
     invalid_team_empty() {
       if (this.SB.self_vs_self_enable_p) {
-        return
+      } else {
+        return this.error_message_show(this.SB.new_o.order_unit.team_empty_message)
       }
-      return this.error_message_show(this.SB.new_o.order_unit.team_empty_message)
     },
     error_message_show(message) {
       if (GX.present_p(message)) {
@@ -229,6 +234,7 @@ export default {
       this.sfx_click()
       if (!this.SB.new_o.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
+        this.SB.os_modal_close()
         return
       }
       this.SB.new_order_share("順番設定を反映しました")
@@ -282,13 +288,55 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
-    submit_button_color() {
-      if (this.SB.new_o.order_unit.invalid_p) {
-        return "is-warning"
-      }
+    apply_button_type() {
+      // const hv = this.realtime_notice
+      // if (hv) {
+      //   if (hv.status === "error") {
+      //     return hv.css_klass
+      //   }
+      // }
       if (this.SB.new_o.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
+    },
+
+    realtime_notice() {
+      const hv = {}
+      if (hv.message == null) {
+        if (this.SB.new_o.order_unit.empty_p) {
+          hv.message = "対局する人を☗と☖に放り込んでください"
+          hv.css_klass = "is-warning"
+          hv.status = "error"
+        }
+      }
+      if (hv.message == null) {
+        const location = this.SB.new_o.order_unit.team_empty_location
+        if (location) {
+          if (this.SB.self_vs_self_enable_p) {
+            const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
+            hv.message = `${this.SB.user_call_name(elem.user_name)}同士で練習対局できます`
+            hv.css_klass = ""
+            hv.status = "success"
+          } else {
+            hv.message = `${location.name}にも入れてください`
+            hv.css_klass = "is-warning"
+            hv.status = "error"
+          }
+        }
+      }
+      if (hv.message == null) {
+        if (this.SB.new_o.order_unit.order_state.state_name === "O2State") {
+          const b_vs_w = this.SB.new_o.order_unit.team_member_counts.join(" vs ")
+          hv.message = `${b_vs_w} で対局を開始できます`
+          hv.css_klass = ""
+          hv.status = "success"
+        } else {
+          hv.message = "対局を開始できます"
+          hv.css_klass = ""
+          hv.status = "success"
+        }
+      }
+      return hv
     },
   },
 }
@@ -306,6 +354,11 @@ export default {
     display: flex // OrderTeamOne を横並び化
     justify-content: center
     gap: 6px
+
+  .realtime_notice_container
+    display: flex
+    align-items: center
+    justify-content: center
 
   .shuffle_buttons
     display: flex

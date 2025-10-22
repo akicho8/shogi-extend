@@ -123,6 +123,11 @@ export class O1State extends OxState {
 
   // 指定の色のチームのメンバー数を返す
   team_member_count(location) {
+    alert("must not happen")
+  }
+
+  get team_member_counts() {
+    alert("must not happen")
   }
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -106,8 +106,16 @@ export class OxState {
     // 1列の場合は不要
   }
 
+  get team_empty_location() {
+  }
+
   get empty_p()        { return this.main_user_count === 0 } // 対戦者がいない？
   get self_vs_self_p() { return this.main_user_count === 1 } // 自分vs自分で対戦している？ (または相手がいない)
   get one_vs_one_p()   { return this.main_user_count === 2 } // 1vs1で対戦している？
   get many_vs_many_p() { return this.main_user_count >= 3  } // 3人以上で対戦している？
+
+  get flat_uniq_users_sole() {
+    GX.assert(this.flat_uniq_users.length === 1, "this.flat_uniq_users.length === 1")
+    return this.flat_uniq_users[0]
+  }
 }

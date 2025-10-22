@@ -53,4 +53,8 @@ describe("O2State", () => {
     expect(object.team_member_count(Location.fetch("black"))).toEqual(2)
     expect(object.team_member_count(Location.fetch("white"))).toEqual(1)
   })
+  test("flat_uniq_users_sole", () => {
+    const object = new O2State([[Item.create("a")], []])
+    expect(object.flat_uniq_users_sole.user_name).toEqual("a")
+  })
 })

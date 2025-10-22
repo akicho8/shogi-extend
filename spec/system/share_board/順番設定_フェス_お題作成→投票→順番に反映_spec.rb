@@ -18,8 +18,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
       within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入
-      within(".quiz_left")    { find(:fillable_field).set("(team_black)")   } # 選択肢1
-      within(".quiz_right")   { find(:fillable_field).set("(team_white)")   } # 選択肢2
+      within(".quiz_left")    { find(:fillable_field).set("(quiz_left)")   } # 選択肢1
+      within(".quiz_right")   { find(:fillable_field).set("(quiz_right)")   } # 選択肢2
       find(:button, text: "出題する", exact_text: true).click
     end
     window_a do
@@ -27,11 +27,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_text("選択してから投票してください")
     end
     window_a do
-      find(".item", text: "(team_white)").click
+      find(".item", text: "(quiz_right)").click
       find(:button, text: "このチームに参加する", exact_text: true).click
     end
     window_b do
-      find(".item", text: "(team_white)").click
+      find(".item", text: "(quiz_right)").click
       find(:button, text: "このチームに参加する", exact_text: true).click
     end
     window_c do
@@ -41,7 +41,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       sidebar_open
       os_modal_open_handle
       find(:button, text: "結果を反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
-      assert_order_team_one "", "ab", sort: true # 順番に反映した。a も b も右側である "(team_white)" を選択したため偏っている
+      assert_order_team_one "", "ab", sort: true # 順番に反映した。a も b も右側である "(quiz_right)" を選択したため偏っている
       assert_order_dnd_watcher "c"               # c は投票しなかったので観戦者になっている
     end
   end
