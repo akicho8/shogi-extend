@@ -8,7 +8,9 @@ module ShareBoard
     # GET http://localhost:3000/api/share_board/dashboard?room_key=xxx
     # GET https://www.shogi-extend.com/api/share_board/dashboard?room_key=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def call
-      room = Room.find_or_initialize_by(key: @params[:room_key])
+      room = Room.all
+      room = room.includes(roomships: :user) # やや奇妙ではあるが find_or_initialize_by の前に指定することで N+1 問題を解決できる
+      room = room.find_or_initialize_by(key: params[:room_key])
       room.as_json({
           only: [
             :key,
@@ -30,10 +32,14 @@ module ShareBoard
                   ],
                 },
               },
-            },
+            }
           },
           methods: [:latest_battles_max, :latest_battles],
         })
     end
+
+    private
+
+    attr_reader :params
   end
 end
