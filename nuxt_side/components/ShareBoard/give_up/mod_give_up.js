@@ -67,7 +67,7 @@ export const mod_give_up = {
     },
 
     give_up_messsage_post() {
-      this.message_share({content: "負けました", message_scope_key: "ms_public"})
+      this.message_share({content: "負けました", message_scope_key: "ms_public", force_talk: true, asdfgh: "okok"})
     },
 
     // 投了トリガーを配る

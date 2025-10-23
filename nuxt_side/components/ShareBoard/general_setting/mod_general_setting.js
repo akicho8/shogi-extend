@@ -14,6 +14,7 @@ import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
 import { VibrationModeInfo    } from "../models/vibration_mode_info.js"
 import { NextTurnCallInfo     } from "../models/next_turn_call_info.js"
+import { ChatTalkBehaviorInfo     } from "../models/chat_talk_behavior_info.js"
 import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
 import { LegalInfo            } from "../models/legal_info.js"
 import { SettingRootInfo  } from "./setting_root_info.js"
@@ -75,6 +76,9 @@ export const mod_general_setting = {
 
     NextTurnCallInfo()        { return NextTurnCallInfo                                          },
     next_turn_call_info()     { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)      },
+
+    ChatTalkBehaviorInfo()        { return ChatTalkBehaviorInfo                                          },
+    chat_talk_behavior_info()     { return this.ChatTalkBehaviorInfo.fetch(this.chat_talk_behavior_key)      },
 
     LiftCancelActionInfo()    { return LiftCancelActionInfo                                      },
     lift_cancel_action_info() { return this.LiftCancelActionInfo.fetch(this.lift_cancel_action)  },

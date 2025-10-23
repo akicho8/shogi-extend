@@ -59,6 +59,7 @@ module ShareBoard
             :session_user_id    => data[:session_user_id],
             :primary_emoji      => data[:primary_emoji],
             :performed_at       => data[:performed_at],
+            :force_talk         => data[:force_talk],
           })
       end
     end

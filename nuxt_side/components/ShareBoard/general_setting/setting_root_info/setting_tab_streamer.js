@@ -5,6 +5,7 @@ export class SettingTabStreamer extends SettingTabBase {
     return [
       { key: "yomiage_mode_key",   },
       { key: "next_turn_call_key", },
+      { key: "chat_talk_behavior_key", },
     ]
   }
 }

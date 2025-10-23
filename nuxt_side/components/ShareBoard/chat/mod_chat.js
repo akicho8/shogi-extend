@@ -98,7 +98,9 @@ export const mod_chat = {
         this.sfx_play("se_chat_message_receive")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
         if (message_record.content_valid_p) {               // 荒らし判定されていなければ
-          this.sb_talk(message_record.content)              // しゃべる
+          if (this.chat_talk_behavior_info.key === "is_chat_talk_behavior_on" || message_record.force_talk) {
+            this.sb_talk(message_record.content)              // しゃべる
+          }
         }
       }
       this.ai_random_say(params)                            // AIに反応させる

@@ -37,6 +37,7 @@ module ShareBoard
         :session_user_id,
         :from_connection_id,
         :primary_emoji,
+        :force_talk,
       ],
       methods: [
         :message_scope_key,
@@ -61,6 +62,7 @@ module ShareBoard
 
     before_validation do
       self.performed_at ||= (Time.current.to_f * 1000).to_i
+      self.force_talk ||= false
 
       self.content ||= ""
       self.content = StringSupport.user_message_normalize(content)

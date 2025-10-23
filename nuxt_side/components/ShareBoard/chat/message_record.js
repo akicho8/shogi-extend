@@ -27,6 +27,7 @@ export class MessageRecord {
     this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null は守護獣
     this.primary_emoji      = params.primary_emoji                         // 優先する絵文字
     this.performed_at       = params.performed_at ?? TimeUtil.current_ms() // unique_key 生成用だけに利用
+    this.force_talk         = params.force_talk                            // 必ず発音するか？
 
     this.unique_key = this.unique_key_generate()
 

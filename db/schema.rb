@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_06_000000) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_23_000000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -434,6 +434,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_06_000000) do
     t.bigint "session_user_id", comment: "ログインユーザー"
     t.string "from_connection_id", comment: "null なら bot 等"
     t.string "primary_emoji", comment: "優先する絵文字"
+    t.boolean "force_talk", null: false, comment: "ONなら必ず発声する"
     t.index ["message_scope_id"], name: "index_share_board_chat_messages_on_message_scope_id"
     t.index ["room_id"], name: "index_share_board_chat_messages_on_room_id"
     t.index ["session_user_id"], name: "index_share_board_chat_messages_on_session_user_id"
