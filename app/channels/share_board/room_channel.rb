@@ -38,7 +38,7 @@ module ShareBoard
 
     def rs_receive_success(data)
       if data["debug_mode_p"]
-        track(data, subject: "指手受信", body: "OK > #{data['to_user_name']}", emoji: ":OK:")
+        track(data, subject: "指手受信", body: "OK → #{data['to_user_name'].inspect}", emoji: ":OK:")
       end
       broadcast(:rs_receive_success_broadcasted, data)
     end
@@ -75,7 +75,13 @@ module ShareBoard
       values = data["cc_params"].collect do |e|
         e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_min", "every_plus")
       end
-      message = [data["cc_behavior_key"], values.inspect, data["member_data"], data["current_url"]].compact.join("\n\n")
+      message = [
+        data["cc_behavior_key"].inspect,
+        data["cc_behavior_name"].inspect,
+        values.inspect,
+        data["member_data"],
+        data["current_url"],
+      ].compact.join("\n\n")
       track(data, subject: "対局時計", body: message, emoji: ":対局時計:", level: data["log_level"])
       broadcast(:clock_box_share_broadcasted, data)
     end
@@ -274,16 +280,17 @@ module ShareBoard
     def sfen_share_track_body(data)
       lmi = data["lmi"]
       player_location = LocationInfo.fetch(lmi["player_location_key"])
+      next_turn_offset = lmi["next_turn_offset"]
 
       s = []
-      s << %([#{lmi["next_turn_offset"]}])
+      s << "#{next_turn_offset}手目"
       s << player_location.mark
-      s << lmi["kif_without_from"]
+      s << lmi["kif_without_from"].inspect
       if v = data["next_user_name"]
-        s << "> #{v}"
+        s << "→ #{v.inspect}"
       end
       if v = data["elapsed_sec"]
-        s << "#{-v}秒"
+        s << "(#{-v}秒)"
       end
       if v = data["illegal_names"].presence
         s << "反則:#{v}"

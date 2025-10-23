@@ -314,6 +314,7 @@ export const mod_clock_box = {
       const cc_behavior_info = CcBehaviorInfo.fetch(cc_behavior_key)
       params = {
         cc_behavior_key: cc_behavior_info.key,
+        cc_behavior_name: cc_behavior_info.name,
         talk: true,
         ...params,
         ...this.clock_share_data,

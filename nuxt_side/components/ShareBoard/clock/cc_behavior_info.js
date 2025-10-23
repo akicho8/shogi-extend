@@ -17,4 +17,8 @@ export class CcBehaviorInfo extends ApplicationMemoryRecord {
       { key: "cc_behavior_silent",        receive_message: "SFENと一緒に送る",   label: "SFENと一緒に送る", label_type: null,         with_url: false, with_member_data: false, log_level: null,   toast_p: false, with_talk: false, history: false, },
     ]
   }
+
+  get name() {
+    return this.label
+  }
 }
