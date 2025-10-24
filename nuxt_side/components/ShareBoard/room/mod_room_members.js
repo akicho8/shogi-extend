@@ -40,7 +40,7 @@ export const mod_room_members = {
           params["from_session_counter"] = this.session_counter
           params["from_connection_id"] = this.connection_id
         }
-        this.member_add(params)
+        this.__member_add(params)
       })
     },
 
@@ -51,7 +51,7 @@ export const mod_room_members = {
       this.tl_puts("<--> member_infos_init")
       this.member_infos = []
 
-      if (this.fixed_member_names_p) {
+      if (this.fixed_member_p) {
         this.member_add_by_url_params()
       } else {
         this.member_bc_create()
@@ -77,7 +77,7 @@ export const mod_room_members = {
         // alive_notice_count が変化しないようにするため
         return
       }
-      if (this.fixed_member_names_p) {
+      if (this.fixed_member_p) {
         return
       }
       this.tl_alert("生存通知")
@@ -106,48 +106,63 @@ export const mod_room_members = {
         this.room_entry_call(params)
         this.ai_say_case_hello(params)
       }
-      this.member_add(params)
+      this.__member_add(params)
     },
 
-    member_add(params) {
-      this.tl_puts(`--> member_add: ${params.from_user_name}`, params)
-      const size = this.member_infos.length
+    __member_add(params) {
+      this.tl_puts(`--> __member_add: ${params.from_user_name}`, params)
+      const original_size = this.member_infos.length
+      const original_names = this.member_infos.map(e => e.from_user_name)
 
       this.member_infos.push(params)
-      this.member_infos_normalize()
+      if (!this.fixed_member_p) {
+        this.member_infos_normalize()
+      }
+
+      const now_names = this.member_infos.map(e => e.from_user_name)
 
       if (this.current_member_is_leader_p) {
-        if (this.member_infos.length === size) {
+        if (this.member_infos.length === original_size) {
           // 個数変化なし
         } else {
           // 個数変化あり
-          this.ac_log({subject: "仲間一覧", body: this.member_infos.map(e => e.from_user_name)})
+          this.ac_log({subject: "仲間一覧", body: now_names})
         }
       }
-      this.tl_puts(`<-- member_add: ${params.from_user_name}`, params)
+
+      // 減ったときに誰が消えたかを報告する
+      if (true) {
+        const diff_names = GX.ary_minus(original_names, now_names)
+        if (GX.present_p(diff_names)) {
+          const user_call_names = diff_names.map(e => this.user_call_name(e))
+          const str = user_call_names.join("と")
+          this.toast_ok(`${str}の霊圧が消えました`)
+        }
+      }
+
+      this.tl_puts(`<-- __member_add: ${params.from_user_name}`, params)
     },
 
     // 処理順序重要
     // セッションIDはブラウザをリロードしても同じIDを返すため同じ人と判断できる
+    // this.member_infos = _.uniqBy(this.member_infos, "from_connection_id") としてユーザーの重複を防ぐ(新しい方を採取できる) とすると、分身してしまう
     member_infos_normalize() {
-      this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")      // 情報が新しいもの順に並べてから
-      // this.member_infos = _.uniqBy(this.member_infos, "from_connection_id")         // ユーザーの重複を防ぐ(新しい方を採取できる) ←分身してしまう
-      this.member_infos = _.uniqBy(this.member_infos, e => [e.from_user_name, e.from_session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
-      this.member_infos = this.member_infos_find_all_newest(this.member_infos)      // 通知が来た時間が最近の人だけを採取する
-      this.member_infos = _.orderBy(this.member_infos, ["room_joined_at"], ["asc"]) // 上から古参順に並べる
+      let av = this.member_infos
+      av = _.orderBy(av, "performed_at", "desc")                              // 情報が新しいもの順に並べてから
+      av = _.uniqBy(av, e => [e.from_user_name, e.from_session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
+      av = this.__member_infos_find_all_newest(av)                            // 通知が来た時間が最近の人だけを採取する
+      av = _.orderBy(av, ["room_joined_at"], ["asc"])                         // 上から古参順に並べる
+      this.member_infos = av
     },
 
     // 通知が来た日時が最近の人だけを採取する
-    member_infos_find_all_newest(list) {
-      if (this.fixed_member_names_p) {
-        return list
-      }
-      return list.filter(e => this.member_elapsed_sec(e) < this.AppConfig.KILL_SEC)
+    __member_infos_find_all_newest(list) {
+      return list.filter(e => this.member_elapsed_sec(e) < this.KILL_SEC)
     },
 
     // 生きているか？
     member_alive_p(e) {
-      if (this.fixed_member_names_p) {
+      if (this.fixed_member_p) {
         return true
       }
       return this.member_elapsed_sec(e) < this.AppConfig.ALIVE_SEC
@@ -176,13 +191,15 @@ export const mod_room_members = {
     room_user_names()      { return this.uniq_member_infos.map(e => e.from_user_name) },                            // ユニークな名前のリスト
     room_user_names_hash() { return this.uniq_member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {}) }, // 名前からO(1)で member_infos の要素を引くためのハッシュ
 
+    KILL_SEC()  { return parseFloat(this.$route.query.KILL_SEC ?? this.AppConfig.KILL_SEC) },
+
     // メンバーリストを固定させるか？
-    fixed_member_names_p() {
+    fixed_member_p() {
       return "fixed_member" in this.$route.query
     },
     // 固定されるメンバーたち
     fixed_member() {
-      if (this.fixed_member_names_p) {
+      if (this.fixed_member_p) {
         return GX.str_to_words(this.$route.query.fixed_member)
       }
     },
