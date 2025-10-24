@@ -1,3 +1,4 @@
+# ~/src/shogi-extend/nuxt_side/components/ShareBoard/room/mod_room_channel.js
 module ShareBoard
   class RoomChannel < ApplicationCable::Channel
     class SfenNotReachError < StandardError
@@ -188,24 +189,14 @@ module ShareBoard
       broadcast(:xprofile_share_broadcasted, data)
     end
 
-    # ################################################################################
-    #
-    # def xprofile_load(data)
-    #   if room = Room[room_key]
-    #     room.
-    #   end
-    #   if users_match_record
-    #     data["users_match_record"] = users_match_record
-    #     broadcast(:xprofile_load_broadcasted, data)
-    #   end
-    # end
-
     ################################################################################
 
     def user_kick(data)
       track(data, subject: "強制退出", body: "KILL #{data["kicked_user_name"]}")
       broadcast(:user_kick_broadcasted, data)
     end
+
+    ################################################################################
 
     def quiz_share(data)
       track(data, subject: "お題配送", body: data["quiz"], emoji: ":お題:")
@@ -222,6 +213,8 @@ module ShareBoard
       broadcast(:quiz_voted_index_share_broadcasted, data)
     end
 
+    ################################################################################
+
     private
 
     def room_key
@@ -232,17 +225,13 @@ module ShareBoard
       Broadcaster.new(room_key).call(...)
     end
 
-    def track(data, **options)
-      subject = []
-      subject << "共有将棋盤"
-      subject << "[#{room_key}]"
-      if v = options[:subject].presence
-        subject << v
-      end
-      subject = subject.join(" ")
+    def subject_build(action)
+      ["共有将棋盤", "[#{room_key}]", *action].join(" ")
+    end
 
+    def body_build(data, options)
       body = []
-      body << [":", data["ua_icon_key"], ":"].join # FIXME: Slackを使っていないので入れる意味がない
+      body << [":", data["ua_icon_key"], ":"].join
       body << ac_event_str(data)
       body << data["from_user_name"].inspect
       if v = data["active_level"]
@@ -252,16 +241,16 @@ module ShareBoard
         body << v
       end
       body = body.join(" ").squish
+    end
 
+    def track(data, **options)
+      subject = subject_build(options[:subject])
+      body = body_build(data, options)
       AppLog.call(subject: subject, body: body, emoji: options[:emoji], level: options[:level])
     end
 
     def subscribed_track(action)
-      subject = [
-        "共有将棋盤",
-        "[#{room_key}]",
-        action,
-      ].join(" ")
+      subject = subject_build(action)
 
       if current_user
         body = [

@@ -118,7 +118,7 @@ import { mod_shortcut                      } from "./shortcut/mod_shortcut.js"
 import { window_active_detector            } from "./window_active_detector.js"
 import { browser_slide_lock                } from "./browser_slide_lock.js"
 
-import { mod_room_cable                    } from "./room/mod_room_cable.js"
+import { mod_room_channel                    } from "./room/mod_room_channel.js"
 import { mod_gate_modal              } from "./room/mod_gate_modal.js"
 import { mod_room_entry_leave              } from "./room/mod_room_entry_leave.js"
 import { mod_room_board_setup              } from "./room/mod_room_board_setup.js"
@@ -243,7 +243,7 @@ export default {
 
     mod_room_url_copy,
     mod_room_key_autocomplete,
-    mod_room_cable,
+    mod_room_channel,
     mod_gate_modal,
     mod_room_entry_leave,
     mod_room_board_setup,

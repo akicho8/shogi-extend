@@ -12,7 +12,7 @@ import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
-export const mod_room_cable = {
+export const mod_room_channel = {
   data() {
     return {
       ac_room: null,      // subscriptions.create のインスタンス
@@ -77,6 +77,7 @@ export const mod_room_cable = {
       // this.toast_ok("入室しました")
     },
 
+    // ~/src/shogi-extend/app/channels/share_board/room_channel.rb
     async room_create() {
       this.tl_puts("--> room_create")
       GX.assert(this.user_name, "this.user_name")
