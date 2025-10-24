@@ -4,6 +4,17 @@ module ShareBoard
     class SfenNotReachError < StandardError
     end
 
+    # before_subscribe do
+    # end
+    # after_subscribe do
+    # end
+    # before_unsubscribe do
+    # end
+    # after_unsubscribe do
+    # end
+
+    ################################################################################
+
     def subscribed
       if room_key.blank?
         reject
@@ -16,6 +27,8 @@ module ShareBoard
     def unsubscribed
       subscribed_track("購読停止")
     end
+
+    ################################################################################
 
     def room_leave_share(data)
       track(data, subject: "部屋退出", body: "BYE")
@@ -66,9 +79,8 @@ module ShareBoard
     end
 
     def setup_info_send(data)
-      if !Rails.env.production?
-        track(data, subject: "情報送信", body: "あげます > #{data["to_user_name"]}")
-      end
+      active_level = data["active_level"]
+      track(data, subject: "情報送信", body: "あげます (LV:#{active_level}) > #{data["to_user_name"]}")
       broadcast(:setup_info_send_broadcasted, data)
     end
 
@@ -88,14 +100,11 @@ module ShareBoard
     end
 
     def member_info_share(data)
-      if data["debug_mode_p"]
-        body = [
-          "#{data['alive_notice_count']}回目",
-          "LV:#{data['active_level']}",
-          "(#{data['from_connection_id']})",
-        ].join(" ")
-        track(data, subject: "生存通知", body: body)
-      end
+      body = [
+        "#{data['alive_notice_count']}回目",
+        "LV:#{data['active_level']}",
+      ].join(" ")
+      track(data, subject: "生存通知", body: body)
       broadcast(:member_info_share_broadcasted, data)
     end
 
@@ -231,12 +240,13 @@ module ShareBoard
 
     def body_build(data, options)
       body = []
-      body << [":", data["ua_icon_key"], ":"].join
+      body << data["from_connection_id"].inspect
       body << ac_event_str(data)
-      body << data["from_user_name"].inspect
       if v = data["active_level"]
-        body << v.to_s + ":"
+        body << "LV:#{v}".inspect
       end
+      body << [":", data["ua_icon_key"], ":"].join
+      body << data["from_user_name"].inspect
       if v = options[:body].presence
         body << v
       end
