@@ -7,7 +7,7 @@ const CLEAN_TRY_COUNT = 2
 export class HandleNameParser {
   static DELETE_SUFFIX_CHARS = "!！.／-"        // 最後にあると削除する文字たち
   static DELETE_SUFFIX_WORD  = ["だよ", "です"] // 最後にあると削除する単語たち
-  static DELETE_CHAR         = "。"             // どこにあっても削除する文字たち
+  static DELETE_CHAR         = "。☆★"         // どこにあっても削除する文字たち
 
   // call_name("SOS団")             → "SOS団"
   // call_name("ありす")            → "ありすさん"
