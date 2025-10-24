@@ -118,16 +118,16 @@ export class O1State extends OxState {
   // ]
   // 1:100 人だと無駄が多いことがわかるので、つまり teams だけを参照するのがいい
   get simple_teams() {
-    alert("must not happen")
+    alert("simple_teams: must not happen")
   }
 
   // 指定の色のチームのメンバー数を返す
   team_member_count(location) {
-    alert("must not happen")
+    // alert("team_member_count: must not happen")
   }
 
   get team_member_counts() {
-    alert("must not happen")
+    alert("team_member_counts: must not happen")
   }
 
   ////////////////////////////////////////////////////////////////////////////////
