@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       member_list_name_click(:b)
       find(:button, :class => "ping_handle").click
-      assert_text("#{:b}さんの反応速度は")
+      assert_text("応答速度:")
     end
   end
 
