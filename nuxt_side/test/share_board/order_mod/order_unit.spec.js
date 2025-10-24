@@ -3,26 +3,26 @@ import { OrderUnit } from "@/components/ShareBoard/order_mod/order_unit/order_un
 describe("OrderUnit", () => {
   test("順番方式の相互変換ができる", () => {
     const order_unit = OrderUnit.create(["a", "b", "c"])
-    expect(order_unit.inspect).toEqual("[黒開始:abcb] [白開始:babc] [観:] [整:true] [替:o] (O2State)")
+    expect(order_unit.inspect).toEqual("[黒開始:abcb] [白開始:babc] [観:] [替:o] (O2State)")
 
     order_unit.state_switch_to("to_o1_state")
-    expect(order_unit.inspect).toEqual("[黒開始:abc] [白開始:abc] [観:] [整:true] [替:x] (O1State)")
+    expect(order_unit.inspect).toEqual("[黒開始:abc] [白開始:abc] [観:] [替:x] (O1State)")
 
     order_unit.state_switch_to("to_o2_state")
-    expect(order_unit.inspect).toEqual("[黒開始:abcb] [白開始:babc] [観:] [整:true] [替:o] (O2State)")
+    expect(order_unit.inspect).toEqual("[黒開始:abcb] [白開始:babc] [観:] [替:o] (O2State)")
   })
   describe("対局者または観戦者を追加する", () => {
     test("対局者が空なので全員を対局者とする", () => {
       const order_unit = OrderUnit.create()
-      expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:] [整:false] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:] [替:o] (O2State)")
       order_unit.auto_users_set(["a", "b"], {with_shuffle: false})
-      expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:] [整:true] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:] [替:o] (O2State)")
     })
     test("対局者がいるので対局者を除いて観戦者にする", () => {
       const order_unit = OrderUnit.create(["a"])
-      expect(order_unit.inspect).toEqual("[黒開始:a?] [白開始:?a] [観:] [整:false] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:a?] [白開始:?a] [観:] [替:o] (O2State)")
       order_unit.auto_users_set(["a", "b"])
-      expect(order_unit.inspect).toEqual("[黒開始:a?] [白開始:?a] [観:b] [整:false] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:a?] [白開始:?a] [観:b] [替:o] (O2State)")
     })
   })
   test("name_to_turns_hash", () => {
@@ -41,17 +41,17 @@ describe("OrderUnit", () => {
     test("両チームに分かれていてcさんは投票していないので観戦者になる", () => {
       const order_unit = OrderUnit.create()
       order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {a:0, b:1})
-      expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:c] [整:true] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:c] [替:o] (O2State)")
     })
     test("黒に偏っている場合", () => {
       const order_unit = OrderUnit.create()
       order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {a:0, b:0})
-      expect(order_unit.inspect).toEqual("[黒開始:a?b?] [白開始:?a?b] [観:c] [整:false] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:a?b?] [白開始:?a?b] [観:c] [替:o] (O2State)")
     })
     test("誰も投票していない場合", () => {
       const order_unit = OrderUnit.create()
       order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {})
-      expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:a,b,c] [整:false] [替:o] (O2State)")
+      expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:a,b,c] [替:o] (O2State)")
     })
   })
 })

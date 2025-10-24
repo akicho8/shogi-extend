@@ -132,7 +132,7 @@ export class OrderUnit {
     const list0 = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join("")
     const list1 = this.real_order_users(1, 1).map(e => e ? e.to_s : "?").join("")
     const wlist = this.watch_users.map(e => e.to_s).join(",")
-    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.state_name})`
+    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.state_name})`
   }
 
   // 順番設定モーダル内で使うデータの準備

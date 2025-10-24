@@ -32,9 +32,4 @@ describe("O1State", () => {
     const object = new O1State([Item.create("a"), Item.create("b"), Item.create("c")])
     expect(object.real_order_users_to_s(1, 0)).toEqual("abc")
   })
-  test("team_member_count", () => {
-    const object = new O1State([Item.create("a"), Item.create("b"), Item.create("c")])
-    expect(object.team_member_count(Location.fetch("black"))).toEqual(undefined)
-    expect(object.team_member_count(Location.fetch("white"))).toEqual(undefined)
-  })
 })
