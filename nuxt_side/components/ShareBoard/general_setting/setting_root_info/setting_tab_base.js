@@ -5,4 +5,8 @@ export class SettingTabBase extends ApplicationMemoryRecord {
   get param_info() {
     return ParamInfo.fetch(this.key)
   }
+
+  showable_p(context) {
+    return context.debug_mode_p || this.show
+  }
 }

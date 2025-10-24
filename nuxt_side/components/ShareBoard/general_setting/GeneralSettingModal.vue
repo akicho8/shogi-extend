@@ -12,7 +12,7 @@
     .tab_content
       .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_root_info.key")
         template(v-for="item in SB.setting_root_info.tab_model.values")
-          .column(:class="item.column_class || 'is-12-tablet'")
+          .column(v-if="item.showable_p(SB)" :class="item.column_class || 'is-12-tablet'")
             SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
       ul
