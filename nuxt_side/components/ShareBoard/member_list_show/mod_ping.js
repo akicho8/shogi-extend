@@ -67,13 +67,9 @@ export const mod_ping = {
         }
         this.ping_done()
         const now = this.$time.current_ms()
-        const gap = now - params.ping_at
-        const sec = GX.number_floor(gap / 1000, 3)
-        if (this.development_p) {
-          this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {talk: false})
-        }
-        this.toast_ok(`応答速度: ${sec}秒`, {talk: false, duration: 1000})
-        this.ac_log({subject: "PONG", body: `${this.user_name} ← ${params.from_user_name} ${gap}ms`})
+        const speed_ms = now - params.ping_at
+        this.toast_ok(`応答速度: ${speed_ms} ms`, {talk: false, duration: 1000})
+        this.ac_log({subject: "PONG", body: `${this.user_name} ← ${params.from_user_name} ${speed_ms}ms`})
       }
     },
 
@@ -85,7 +81,9 @@ export const mod_ping = {
       this.ping_callback_stop()
       this.ping_runner_id = GX.delay_block(this.PING_OK_SEC, () => {
         if (!this.ping_success) {
-          this.toast_ok(`${this.user_call_name(e.from_user_name)}の霊圧が消えました`)
+          const messsage = `${this.user_call_name(e.from_user_name)}の霊圧が消えました`
+          this.toast_ok(messsage)
+          this.ac_log({subject: "PING", body: messsage})
         }
         this.ping_callback_stop()
       })
