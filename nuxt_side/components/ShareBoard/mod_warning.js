@@ -21,7 +21,7 @@ export const mod_warning = {
       let message = null
       if (message == null) {
         if (this.inconsistency_order_only) {
-          message = `対局するなら対局時計を押して検討するなら順番設定を解除してください`
+          message = `対局するなら対局時計を押してください。検討するなら駒を動かせるように順番設定を解除してください。`
         }
       }
       if (message == null) {

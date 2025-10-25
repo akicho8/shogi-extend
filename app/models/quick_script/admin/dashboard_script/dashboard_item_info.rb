@@ -18,6 +18,11 @@ module QuickScript
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "共有将棋盤" }),
             func: -> { AppLog.subject_like("共有将棋盤").where(created_at: 1.hours.ago..).count },
           },
+          {
+            name: "[共有] 警告発動",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "警告発動" }),
+            func: -> { AppLog.subject_like("警告発動").where(created_at: 24.hours.ago..).count },
+          },
 
           ################################################################################
 
