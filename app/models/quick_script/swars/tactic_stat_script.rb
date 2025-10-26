@@ -56,7 +56,7 @@ module QuickScript
               },
             },
             {
-              :label        => "勝率ランキング参加条件 出現率N以上",
+              :label        => "勝率ランキング参加条件 出現率X以上",
               :key          => :freq_ratio_gteq,
               :type         => :numeric,
               :session_sync => true,

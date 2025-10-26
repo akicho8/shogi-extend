@@ -14,7 +14,7 @@ module QuickScript
       self.title_click_behaviour                    = nil
 
       RANGE_SIZE_DEFAULT   = 10000   # 初期値
-      RANGE_SIZE_THRESHOLD = 30000   # N以上ならバックグラウンド実行する
+      RANGE_SIZE_THRESHOLD = 30000   # X以上ならバックグラウンド実行する
       RANGE_SIZE_MAX       = 100000  # 対象件数は N 以下
       REQUEST_SIZE_DEFAULT = 50      # 抽出希望件数初期値
       REQUEST_SIZE_MAX     = 200     # 抽出希望件数は N 以下
