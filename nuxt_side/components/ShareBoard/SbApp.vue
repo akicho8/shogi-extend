@@ -46,7 +46,7 @@ client-only
     SbSidebar
     SbNavbar
 
-    MainSection.is_mobile_padding_zero
+    MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
         .columns.is-centered.is-desktop.is-variable.is-0
@@ -124,6 +124,7 @@ import { mod_room_entry_leave              } from "./room/mod_room_entry_leave.j
 import { mod_room_board_setup              } from "./room/mod_room_board_setup.js"
 import { mod_room_active_level             } from "./room/mod_room_active_level.js"
 import { mod_room_members                  } from "./room/mod_room_members.js"
+import { mod_room_recreate                 } from "./room/mod_room_recreate.js"
 import { mod_room_url_copy                 } from "./room/mod_room_url_copy.js"
 import { mod_room_key_autocomplete } from "./room/mod_room_key_autocomplete.js"
 
@@ -241,6 +242,7 @@ export default {
     mod_xprofile_console,
     mod_room_restore,
 
+    mod_room_recreate,
     mod_room_url_copy,
     mod_room_key_autocomplete,
     mod_room_channel,

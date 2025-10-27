@@ -43,7 +43,6 @@ export default {
     return {
       charactor: null,
       error_for_show: null,
-      is_online: true,
     }
   },
 
@@ -63,8 +62,6 @@ export default {
     if (this.development_p && false) {
       this.error_show_toggle_handle(null)
     }
-
-    this.is_online = navigator.onLine // ここで設定すれば絶対に navigator が無いで怒られる心配がない
   },
 
   methods: {
@@ -91,8 +88,8 @@ export default {
 
     // オフラインの場合
     offline_message() {
-      if (!this.is_online) {
-        return "インターネットが切れました" // ← 実際にはオフラインになっても is_online が真にならないため使えない
+      if (this.$nuxt.isOffline) {
+        return "インターネットが切れました"
       }
 
       if (this.english_message === "Network Error") {

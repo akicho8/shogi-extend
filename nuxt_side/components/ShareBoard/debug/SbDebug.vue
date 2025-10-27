@@ -24,6 +24,20 @@
       .panel-heading
         | コンテキスト変更2
       a.panel-block(href="?room_key=dev_room&user_name=a&url_room_key_exist_behavior=modal_open") 合言葉ありURL時はモーダル表示で止める
+  .column.is-2
+    .panel
+      .panel-heading
+        | ActionCable
+      a.panel-block(@click="SB.room_create") 接続
+      a.panel-block(@click="SB.room_recreate") 再起動
+      a.panel-block(@click="SB.room_destroy") 切断
+      a.panel-block(@click="SB.fake_error") 値null送信
+  .column.is-1
+    .panel
+      .panel-heading
+        | ネット
+      a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
+      a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
   SbDebugRoom
   SbDebugXprofile
@@ -101,7 +115,6 @@
       a.panel-block(@click="SB.clock_box_share('cc_behavior_manual_sync')") 時計同期
       a.panel-block(@click="SB.reload_modal_handle") リロード確認
       a.panel-block(@click="SB.room_entry_call({from_user_name: 'alice'})") 入室コール
-      a.panel-block(@click="SB.room_leave_call({from_user_name: 'alice'})") 退室コール
       a.panel-block(@click="SB.run_or_room_out_confirm()") 退室確認
       a.panel-block(@click="SB.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="SB.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
@@ -134,13 +147,6 @@
       a.panel-block(@click="SB.cc_params_load") ロード
       a.panel-block(@click="SB.cc_params_save") 保存
       a.panel-block(@click="SB.cc_params_reset") リセット
-  .column.is-2
-    .panel
-      .panel-heading
-        | ActionCable
-      a.panel-block(@click="SB.room_create") 接続
-      a.panel-block(@click="SB.room_destroy") 切断
-      a.panel-block(@click="SB.fake_error") 値null送信
   .column.is-3
     .panel
       .panel-heading

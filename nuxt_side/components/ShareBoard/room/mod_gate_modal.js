@@ -62,7 +62,7 @@ export const mod_gate_modal = {
         this.toast_warn("今は部屋の外です")
         return
       }
-      this.room_destroy()
+      this.room_destroy_handle()
     },
 
     gate_enter_handle() {

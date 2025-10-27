@@ -17,6 +17,7 @@ export const mod_room_channel = {
     return {
       ac_room: null,      // subscriptions.create のインスタンス
       ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
+      offline_check_show: false,
     }
   },
   mounted() {
@@ -137,6 +138,13 @@ export const mod_room_channel = {
       this.tl_p("<-- room_create")
     },
 
+    room_destroy_handle() {
+      if (this.ac_room) {
+        this.room_destroy()
+        this.toast_ok("退室しました")
+      }
+    },
+
     // 退室
     room_destroy() {
       if (this.ac_room) {
@@ -241,6 +249,8 @@ export const mod_room_channel = {
         return true
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
     connection_id()   { return this.config.record.connection_id   }, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
