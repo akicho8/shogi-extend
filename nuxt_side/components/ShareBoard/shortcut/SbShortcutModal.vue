@@ -25,7 +25,7 @@
         .sc_item
           .sc_label 棋譜ダウンロード (KIF)
           .sc_buttons
-            b-tag(type="is-primary") s
+            b-tag(type="is-primary") d
         .sc_item
           .sc_label 短縮した棋譜URLコピー
           .sc_buttons

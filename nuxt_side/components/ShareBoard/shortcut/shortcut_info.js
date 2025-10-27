@@ -73,7 +73,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.kifu_copy_handle(c.FormatTypeInfo.fetch("bod")),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "s"),
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "d"),
         call: c => c.kifu_download_handle(c.FormatTypeInfo.fetch("kif_utf8")),
       },
       {
