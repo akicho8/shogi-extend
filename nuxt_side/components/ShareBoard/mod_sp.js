@@ -11,11 +11,7 @@ export const mod_sp = {
   },
 
   methods: {
-    // internal_rule_input_handle() {
-    //   this.sfx_click()
-    // },
-
-    // 操作モードで指したときmovesあり棋譜(URLに反映する)
+    // 操作モードで指したときの処理
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     ev_play_mode_move(e) {
       this.se_piece_move()
