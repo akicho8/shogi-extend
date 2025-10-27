@@ -91,7 +91,7 @@ export const mod_kifu_read = {
 
         // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
         GX.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))
-        GX.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました`))
+        GX.delay_block(1.0, () => this.quick_sync(`${this.my_call_name}が棋譜を読み込んで共有しました`))
       }
     },
   },

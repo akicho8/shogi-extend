@@ -75,7 +75,7 @@ export const mod_sp = {
     ev_action_turn_change_lazy: _.debounce(function(v) {
       if (this.ac_room) {
         // https://twitter.com/Sushikuine_24/status/1522370383131062272
-        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`, {notify_mode: "fs_notify_without_self"}))
+        this.$nextTick(() => this.quick_sync(`${this.my_call_name}が${v}手目に変更しました`, {notify_mode: "fs_notify_without_self"}))
       }
     }, DEBOUNCE_DELAY),
 

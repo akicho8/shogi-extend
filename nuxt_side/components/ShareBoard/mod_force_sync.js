@@ -21,7 +21,7 @@ export const mod_force_sync = {
 
     force_sync_direct() {
       this.ac_log({subject: "局面操作", body: `直接${this.current_turn}手目`})
-      this.force_sync(`${this.user_call_name(this.user_name)}が局面を共有しました`)
+      this.force_sync(`${this.my_call_name}が局面を共有しました`)
     },
 
     // turn = 0
@@ -32,7 +32,7 @@ export const mod_force_sync = {
     force_sync_turn_zero() {
       this.current_turn = 0
       this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
-      this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
+      this.force_sync(`${this.my_call_name}が初期配置に戻しました`)
     },
 
     // turn -= 1
@@ -45,14 +45,14 @@ export const mod_force_sync = {
         this.current_turn -= 1
       }
       this.ac_log({subject: "局面操作", body: "1手戻す"})
-      this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
+      this.force_sync(`${this.my_call_name}が1手戻しました`)
     },
 
     force_sync_preset() {
       this.current_turn = 0
       this.current_sfen = this.board_preset_info.sfen
       this.ac_log({subject: "駒落適用", body: this.board_preset_info.name})
-      this.force_sync(`${this.user_call_name(this.user_name)}が${this.board_preset_info.name}に変更しました`)
+      this.force_sync(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
     },
 
     // TurnChangeModal 用
@@ -72,9 +72,9 @@ export const mod_force_sync = {
       if (this.ac_room) {
         let message = null
         if (diff < 0) {
-          message = `"${this.user_call_name(this.user_name)}が${-diff}手戻しました`
+          message = `"${this.my_call_name}が${-diff}手戻しました`
         } else {
-          message = `"${this.user_call_name(this.user_name)}が${diff}手進めました`
+          message = `"${this.my_call_name}が${diff}手進めました`
         }
         this.force_sync(message)
       }
