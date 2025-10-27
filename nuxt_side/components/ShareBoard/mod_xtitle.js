@@ -8,10 +8,10 @@ export const mod_xtitle = {
   },
   methods: {
     current_title_set(title) {
-      this.tl_puts(`--> current_title_set("${title}")`)
+      this.tl_p(`--> current_title_set("${title}")`)
       title = _.trim(title)
       if (this.current_title != title) {
-        this.tl_puts(`current_title = "${title}"`)
+        this.tl_p(`current_title = "${title}"`)
         this.current_title = title
         this.room_name_share()
       }
@@ -43,7 +43,7 @@ export const mod_xtitle = {
     room_name_share_data_receive(params) {
       GX.assert(params)
       GX.assert("room_name" in params)
-      this.tl_puts(`room_name_share_data_receive: current_title = "${params.room_name}" from ${params.from_user_name}`)
+      this.tl_p(`room_name_share_data_receive: current_title = "${params.room_name}" from ${params.from_user_name}`)
       this.current_title = params.room_name
       this.ac_log({subject: "部屋名変更", body: `部屋名 "${this.current_title}" を受信`})
     },

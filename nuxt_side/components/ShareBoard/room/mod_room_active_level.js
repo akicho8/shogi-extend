@@ -23,7 +23,7 @@ export const mod_room_active_level = {
     // private
 
     active_level_increment_timer_create() {
-      this.tl_puts("--> active_level_increment_timer_create")
+      this.tl_p("--> active_level_increment_timer_create")
       if (this.active_level_increment_timer == null) {
         this.active_level_increment_timer = new IntervalRunner(this.active_level_increment_timer_callback, {
           name: "先輩度更新",
@@ -32,7 +32,7 @@ export const mod_room_active_level = {
           interval: 1.0,
         })
       }
-      this.tl_puts("<-- active_level_increment_timer_create")
+      this.tl_p("<-- active_level_increment_timer_create")
     },
     active_level_increment_timer_destroy() {
       if (this.active_level_increment_timer) {

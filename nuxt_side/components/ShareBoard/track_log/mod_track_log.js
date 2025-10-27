@@ -11,6 +11,7 @@ export const mod_track_log = {
     return {
       track_logs: [],
       track_logs_id: 0,
+      tl_modal_instance: null,
     }
   },
   mounted() {
@@ -21,15 +22,42 @@ export const mod_track_log = {
     }
   },
   methods: {
-    tl_modal_handle() {
-      this.sidebar_p = false
-      this.sfx_click()
-      // https://buefy.org/documentation/modal
-      this.modal_card_open({
-        component: TrackLogModal,
-        fullScreen: true,
-      })
+    ////////////////////////////////////////////////////////////////////////////////
+
+    tl_modal_open_handle() {
+      if (!this.tl_modal_instance) {
+        this.sfx_click()
+        this.tl_modal_open()
+      }
     },
+    tl_modal_open() {
+      if (!this.tl_modal_instance) {
+        // https://buefy.org/documentation/modal
+        this.tl_modal_instance = this.modal_card_open({
+          component: TrackLogModal,
+          fullScreen: true,
+          onCancel: () => {
+            this.sfx_click()
+            this.tl_modal_close()
+          },
+        })
+      }
+    },
+    tl_modal_close_handle() {
+      if (this.tl_modal_instance) {
+        this.sfx_click()
+        this.tl_modal_close()
+      }
+    },
+    tl_modal_close() {
+      if (this.tl_modal_instance) {
+        this.tl_modal_instance.close()
+        this.tl_modal_instance = null
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     tl_clear() {
       this.track_logs = []
     },
@@ -66,7 +94,7 @@ export const mod_track_log = {
         }
       }
     },
-    tl_puts(message, detail_info = null) {
+    tl_p(message, detail_info = null) {
       this.tl_add("", message, detail_info)
     },
     tl_scroll_to_bottom() {

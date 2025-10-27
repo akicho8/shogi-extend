@@ -48,7 +48,7 @@ export const mod_room_members = {
 
     // created, room_create, room_destroy で呼ばれる
     member_infos_init() {
-      this.tl_puts("<--> member_infos_init")
+      this.tl_p("<--> member_infos_init")
       this.member_infos = []
 
       if (this.fixed_member_p) {
@@ -65,7 +65,7 @@ export const mod_room_members = {
     // 接続するタイミングで初期化
     // room_joined_at は古参度でソートするため
     member_info_init() {
-      this.tl_puts("<--> member_info_init")
+      this.tl_p("<--> member_info_init")
       this.alive_notice_count = 0
       this.room_joined_at = this.$time.current_ms()
     },
@@ -110,7 +110,7 @@ export const mod_room_members = {
     },
 
     __member_add(params) {
-      this.tl_puts(`--> __member_add: ${params.from_user_name}`, params)
+      this.tl_p(`--> __member_add: ${params.from_user_name}`, params)
       const original_size = this.member_infos.length
       const original_names = this.member_infos.map(e => e.from_user_name)
 
@@ -140,7 +140,7 @@ export const mod_room_members = {
         }
       }
 
-      this.tl_puts(`<-- __member_add: ${params.from_user_name}`, params)
+      this.tl_p(`<-- __member_add: ${params.from_user_name}`, params)
     },
 
     // 処理順序重要

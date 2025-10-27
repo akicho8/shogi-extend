@@ -79,7 +79,7 @@ export const mod_room_channel = {
 
     // ~/src/shogi-extend/app/channels/share_board/room_channel.rb
     async room_create() {
-      this.tl_puts("--> room_create")
+      this.tl_p("--> room_create")
       GX.assert(this.user_name, "this.user_name")
       GX.assert(this.room_key, "this.room_key")
       GX.assert(this.ac_room == null, "this.ac_room == null")
@@ -134,13 +134,13 @@ export const mod_room_channel = {
         },
       })
       this.autoexec({key: "room_after_create"})
-      this.tl_puts("<-- room_create")
+      this.tl_p("<-- room_create")
     },
 
     // 退室
     room_destroy() {
       if (this.ac_room) {
-        this.tl_puts("room_destroy")
+        this.tl_p("room_destroy")
 
         this.mh_room_leave()
 

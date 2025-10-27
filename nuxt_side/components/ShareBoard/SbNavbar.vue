@@ -26,7 +26,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag.has-text-weight-bold(rounded)
           .has-text-primary {{SB.perpetual_cop.count}}
 
-      b-navbar-item.is-hidden-mobile(@click="SB.tl_modal_handle")
+      b-navbar-item.is-hidden-mobile(@click="SB.tl_modal_open_handle")
         b-tag(rounded)
           .has-text-primary {{SB.track_logs.length}}
 
