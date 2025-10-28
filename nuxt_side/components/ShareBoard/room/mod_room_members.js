@@ -169,7 +169,7 @@ export const mod_room_members = {
     },
 
     // 寝ているか？
-    member_is_disconnect(e) {
+    member_is_heartbeat_lost(e) {
       return this.MEMBER_IS_DISCONNECT || !this.member_alive_p(e)
     },
 

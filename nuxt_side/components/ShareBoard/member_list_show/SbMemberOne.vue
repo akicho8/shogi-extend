@@ -12,10 +12,10 @@ SbAvatarLine.SbMemberOne.is-clickable(
     | {{SB.user_name_to_display_turns(info.from_user_name)}}
 
   // 反応がない場合
-  //- b-icon.flex_item(v-if="SB.member_is_disconnect(info)" icon="lan-disconnect" type="is-danger" size="is-small")
+  //- b-icon.flex_item(v-if="SB.member_is_heartbeat_lost(info)" icon="lan-disconnect" type="is-danger" size="is-small")
 
   .flex_item.is-size-7(v-if="SB.member_is_look_away(info)") よそ見中
-  .flex_item.is-size-7(v-if="SB.member_is_disconnect(info)") 応答なし
+  .flex_item.is-size-7(v-if="SB.member_is_heartbeat_lost(info)") 応答なし
   .flex_item.is-size-7(v-if="SB.debug_mode_p && SB.member_is_self(info)") ← 自分
   .flex_item.is-size-7(v-if="SB.current_turn_user_name === info.from_user_name") ← 今
   .flex_item.is-size-7(v-if="SB.next_turn_user_name === info.from_user_name") ← 次
@@ -49,7 +49,7 @@ export default {
       return dayjs(info.performed_at).format("HH:mm:ss")
     },
     replace_icon(info) {
-      if (this.SB.member_is_disconnect(info)) {
+      if (this.SB.member_is_heartbeat_lost(info)) {
         return "😴"
       }
     },
@@ -63,7 +63,7 @@ export default {
   &.SbAvatarLine
     &.is_look_away
       __css_keep__: 0
-    &.is_disconnect
+    &.is_heartbeat_lost
       __css_keep__: 0
     &.is_self
       __css_keep__: 0

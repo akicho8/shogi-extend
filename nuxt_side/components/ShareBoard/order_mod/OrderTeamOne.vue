@@ -85,7 +85,7 @@ export default {
       if (this.SB.member_is_look_away(member_info)) {
         return "status_look_away"
       }
-      if (this.SB.member_is_disconnect(member_info)) {
+      if (this.SB.member_is_heartbeat_lost(member_info)) {
         return "status_disconnet"
       }
       return "status_active"
