@@ -184,16 +184,14 @@ export const mod_clock_box = {
       }
     },
 
-    cc_read_koreyori(sec) {
-      GX.delay_block(CC_KOREYORI_DELAY, () => {
-        this.cc_talk(`これより1手${sec}秒でお願い致します`)
-      })
+    async cc_read_koreyori(sec) {
+      await GX.sleep(CC_KOREYORI_DELAY)
+      this.cc_talk(`これより1手${sec}秒でお願い致します`)
     },
 
-    cc_extra_koreyori(sec) {
-      GX.delay_block(CC_KOREYORI_DELAY, () => {
-        this.cc_talk(`考慮時間が0になったら負けなので御注意ください`)
-      })
+    async cc_extra_koreyori(sec) {
+      await GX.sleep(CC_KOREYORI_DELAY)
+      this.cc_talk(`考慮時間が0になったら負けなので御注意ください`)
     },
 
     cc_talk(s, options = {}) {
