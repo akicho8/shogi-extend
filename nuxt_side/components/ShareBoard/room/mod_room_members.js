@@ -162,15 +162,12 @@ export const mod_room_members = {
 
     // 生きているか？
     member_alive_p(e) {
-      if (this.FIXED_MEMBER) {
-        return true
-      }
-      return this.member_elapsed_sec(e) < this.AppConfig.ALIVE_SEC
+      return this.FIXED_MEMBER || (this.member_elapsed_sec(e) < this.AppConfig.ALIVE_SEC)
     },
 
     // 寝ているか？
     member_is_heartbeat_lost(e) {
-      return this.MEMBER_IS_DISCONNECT || !this.member_alive_p(e)
+      return this.MEMBER_IS_HEARTBEAT_LOST || !this.member_alive_p(e)
     },
 
     // 通達があってからの経過秒数
@@ -184,8 +181,8 @@ export const mod_room_members = {
     },
   },
   computed: {
-    KILL_SEC()             { return this.param_to_f("KILL_SEC", this.AppConfig.KILL_SEC) },
-    MEMBER_IS_DISCONNECT() { return this.param_to_b("MEMBER_IS_DISCONNECT")              },
+    KILL_SEC()                 { return this.param_to_f("KILL_SEC", this.AppConfig.KILL_SEC) },
+    MEMBER_IS_HEARTBEAT_LOST() { return this.param_to_b("MEMBER_IS_HEARTBEAT_LOST")          },
 
     uniq_member_infos()    { return _.uniqBy(this.member_infos, "from_user_name") },                                // 名前でユニークにした member_infos
     room_user_names()      { return this.uniq_member_infos.map(e => e.from_user_name) },                            // ユニークな名前のリスト
