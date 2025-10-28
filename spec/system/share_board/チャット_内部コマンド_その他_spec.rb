@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   before do
     visit_room({
         :user_name            => "a",
-        :fixed_member   => "a,b,c,d",
+        :FIXED_MEMBER   => "a,b,c,d",
         :fixed_order    => "a,b,c,d",
         :title                => "(title)",
       })

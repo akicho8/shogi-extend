@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     def case1(user_name)
       visit_room({
           :user_name         => user_name,
-          :fixed_member      => "a,b",
+          :FIXED_MEMBER      => "a,b",
           :fixed_order       => "a,b",
           :quick_sync_key    => :is_quick_sync_off, # 手動同期にしておく
           :room_after_create => :cc_auto_start_10m,

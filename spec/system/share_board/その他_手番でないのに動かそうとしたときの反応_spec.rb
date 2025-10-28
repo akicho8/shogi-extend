@@ -39,7 +39,7 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
   it "順番設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
     visit_room({
         :user_name    => "a",
-        :fixed_member => "a",
+        :FIXED_MEMBER => "a",
         :fixed_order  => "a", # 順番設定で黒側に一人aがいる
         :body         => SfenGenerator.start_from(:white), # 後手から始まる
       })

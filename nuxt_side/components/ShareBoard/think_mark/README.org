@@ -5,24 +5,24 @@
 |------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 面子 | 観戦 | 自分 | 操作 | 理由         |                                                                                                                                                              |
 |------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| a b  | c    | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b&autoexec=cc_create |
-| a b  | c    | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member=a,b,c&fixed_order=a,b&autoexec=cc_create |
-| a b  | c    | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&fixed_member=a,b,c&fixed_order=a,b&autoexec=cc_create |
+| a b  | c    | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c&fixed_order=a,b&autoexec=cc_create |
+| a b  | c    | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_MEMBER=a,b,c&fixed_order=a,b&autoexec=cc_create |
+| a b  | c    | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&FIXED_MEMBER=a,b,c&fixed_order=a,b&autoexec=cc_create |
 |------+------+------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 * 順番設定UI確認
 
-http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c&fixed_order=a,b&room_after_create=os_modal_open_handle
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c&fixed_order=a,b&room_after_create=os_modal_open_handle
 
 * 正しい動作
 
 |------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 面子 | 観戦 | 自分 | 操作 | 理由         |                                                                                                                                                                |
 |------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| a b  | c d  | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
-| a b  | c d  | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
-| a b  | c d  | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
-| a b  | c d  | d    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=d&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | a    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | b    | ×   | 対局者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | c    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=c&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | d    | ○   | 観戦者だから | http://localhost:4000/share-board?room_key=dev_room&user_name=d&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
 |------+------+------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 * 2つのブラウザでテストする場合
@@ -30,8 +30,8 @@ http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b
 |------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 面子 | 観戦 | 自分 |                                                                                                                                                                |
 |------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| a b  | c d  | a    | http://localhost:4000/share-board?room_key=dev_room&user_name=a&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
-| a b  | c d  | b    | http://localhost:4000/share-board?room_key=dev_room&user_name=b&fixed_member=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | a    | http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
+| a b  | c d  | b    | http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_MEMBER=a,b,c,d&fixed_order=a,b&autoexec=cc_create |
 |------+------+------+----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 * マーク送受信条件

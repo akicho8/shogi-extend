@@ -4,7 +4,7 @@ RSpec.xdescribe "対局時計で初期配置に戻さずに対局開始しよう
   def case1
     visit_app({
         :user_name         => "a",
-        :fixed_member      => "a,b",
+        :FIXED_MEMBER      => "a,b",
         :fixed_order       => "a,b",
         :body              => "68S",
         :autoexec          => "cc_create,cc_modal_open_handle",

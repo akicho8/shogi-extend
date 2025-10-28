@@ -55,7 +55,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "部屋に abcdef がいる順番が bdac のとき順番通り先手 ba 後手 dc の順の表記になり観戦は部屋にいる順になる" do
     visit_room({
         :user_name => "a",
-        :fixed_member => "a,b,c,d,e,f",
+        :FIXED_MEMBER => "a,b,c,d,e,f",
         :fixed_order => "b,d,a,c",
         :title => "(title)",
       })

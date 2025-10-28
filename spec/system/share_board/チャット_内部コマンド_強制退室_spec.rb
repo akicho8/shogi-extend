@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a do
-      visit_room(user_name: :a) # このテストに限っては fixed_member 使用禁止
+      visit_room(user_name: :a) # このテストに限っては FIXED_MEMBER 使用禁止
     end
     window_b do
       visit_room(user_name: :b)

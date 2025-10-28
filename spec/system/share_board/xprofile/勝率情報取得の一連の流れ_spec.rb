@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :room_key           => @room_key,
         :user_name          => user_name,
-        :fixed_member => "a,b",
+        :FIXED_MEMBER => "a,b",
         :fixed_order  => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })

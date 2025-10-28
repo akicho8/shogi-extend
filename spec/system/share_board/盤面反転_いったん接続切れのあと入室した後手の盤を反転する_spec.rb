@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       visit_room({
           :user_name    => :a,
-          :fixed_member => "a,b",
+          :FIXED_MEMBER => "a,b",
           :fixed_order  => "a,b",
         })
       assert_viewpoint(:black)

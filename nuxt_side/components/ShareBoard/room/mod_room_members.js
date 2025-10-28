@@ -15,7 +15,7 @@ export const mod_room_members = {
     // member_names=alice,bob,carol,dave とする
     // member_names= なら空で設定
     member_add_by_url_params() {
-      this.member_add_by_names(this.fixed_member)
+      this.member_add_by_names(this.FIXED_MEMBER)
     },
 
     // ダミーをうめる
@@ -51,7 +51,7 @@ export const mod_room_members = {
       this.tl_p("<--> member_infos_init")
       this.member_infos = []
 
-      if (this.fixed_member) {
+      if (this.FIXED_MEMBER) {
         this.member_add_by_url_params()
       } else {
         this.member_bc_create()
@@ -77,7 +77,7 @@ export const mod_room_members = {
         // alive_notice_count が変化しないようにするため
         return
       }
-      if (this.fixed_member) {
+      if (this.FIXED_MEMBER) {
         return
       }
       this.tl_alert("生存通知")
@@ -115,7 +115,7 @@ export const mod_room_members = {
       const original_names = this.member_infos.map(e => e.from_user_name)
 
       this.member_infos.push(params)
-      if (!this.fixed_member) {
+      if (!this.FIXED_MEMBER) {
         this.member_infos_normalize()
       }
 
@@ -162,7 +162,7 @@ export const mod_room_members = {
 
     // 生きているか？
     member_alive_p(e) {
-      if (this.fixed_member) {
+      if (this.FIXED_MEMBER) {
         return true
       }
       return this.member_elapsed_sec(e) < this.AppConfig.ALIVE_SEC
@@ -192,8 +192,8 @@ export const mod_room_members = {
     room_user_names_hash() { return this.uniq_member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {}) }, // 名前からO(1)で member_infos の要素を引くためのハッシュ
 
     // 固定されるメンバーたち
-    fixed_member() {
-      const str = this.param_to_s("fixed_member")
+    FIXED_MEMBER() {
+      const str = this.param_to_s("FIXED_MEMBER")
       if (GX.present_p(str)) {
         return GX.str_to_words(str)
       }

@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :room_key              => SecureRandom.hex,
         :user_name             => "a",
-        :fixed_member          => "a",
+        :FIXED_MEMBER          => "a",
         :fixed_order           => "a",
         :self_vs_self_enable_p => true,
       })

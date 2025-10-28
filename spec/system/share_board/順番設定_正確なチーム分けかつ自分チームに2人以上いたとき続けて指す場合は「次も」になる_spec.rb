@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name        => user_name,
-        :fixed_member     => "a,b,c",
+        :FIXED_MEMBER     => "a,b,c",
         :fixed_order      => "a,b,c",
         :change_per       => 2,
         :yomiage_mode_key => :is_yomiage_mode_off, # 音声再生の終了に影響するため読み上げをOFFにしておく

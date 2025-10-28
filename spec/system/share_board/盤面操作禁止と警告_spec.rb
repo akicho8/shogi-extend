@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "順番設定をしたのに時計で対局開始せずに盤に触った (あるある)" do
     visit_room({
         :user_name => "a",
-        :fixed_member => "a,b",
+        :FIXED_MEMBER => "a,b",
         :fixed_order => "a,b,c",
       })
     place_click("11")
@@ -17,7 +17,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "時計は動いているのに順番設定がOFFの状態で盤に触った" do
     visit_room({
         :user_name => "a",
-        :fixed_member => "a,b",
+        :FIXED_MEMBER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
     place_click("11")
@@ -27,7 +27,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "自分は観戦者なのに盤に触った" do
     visit_room({
         :user_name => "c",
-        :fixed_member => "a,b,c",
+        :FIXED_MEMBER => "a,b,c",
         :fixed_order => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
@@ -38,7 +38,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "自分は対局者だが手番ではないのに盤に触った (あるある)" do
     visit_room({
         :user_name => "b",
-        :fixed_member => "a,b",
+        :FIXED_MEMBER => "a,b",
         :fixed_order => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
@@ -50,7 +50,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "「今は○○さんの手番です」と警告を出したいのだが順番設定の現在手番に該当する人が設定されていない" do
     visit_room({
         :user_name => "a",
-        :fixed_member => "a",
+        :FIXED_MEMBER => "a",
         :fixed_order => "a",
         :fixed_order_swap => true, # これによって a は後手番になる。body: SfenGenerator.start_from(:white) で fixed_order_swap を使わない方法でもよい。
         :room_after_create => :cc_auto_start_10m,

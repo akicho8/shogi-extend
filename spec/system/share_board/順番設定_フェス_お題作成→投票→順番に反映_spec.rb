@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name            => user_name,
-        :fixed_member   => "a,b,c",
+        :FIXED_MEMBER   => "a,b,c",
         :ng_word_check_p => false,
       })
   end
