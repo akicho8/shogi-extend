@@ -313,6 +313,9 @@ export const vue_support = {
     // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
     // this.app_log("(body)")
     app_log(params = {}) {
+      if (this.$nuxt.isOffline) {
+        return
+      }
       if (typeof params === "string") {
         params = { body: params }
       }
