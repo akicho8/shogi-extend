@@ -26,14 +26,14 @@ export const mod_order_main = {
   methods: {
     os_setup() {
       // 引数があればその順番にする
-      if (GX.present_p(this.fixed_order)) {
-        this.os_setup_by_names(GX.str_to_words(this.fixed_order))
-        if (this.fixed_order_swap) {
+      if (GX.present_p(this.FIXED_ORDER)) {
+        this.os_setup_by_names(GX.str_to_words(this.FIXED_ORDER))
+        if (this.FIXED_ORDER_SWAP) {
           this.order_unit.swap_run()
         }
       }
       // 1列か2列かを確定する。初期値は2列
-      this.order_unit.state_switch_to(this.fixed_order_state)
+      this.order_unit.state_switch_to(this.FIXED_ORDER_STATE)
 
       // 自分の場所を調べて正面をその視点にする
       this.sp_viewpoint_set_by_self_location()
@@ -151,6 +151,10 @@ export const mod_order_main = {
   },
 
   computed: {
+    FIXED_ORDER()       { return this.param_to_s("FIXED_ORDER")                      }, // 順番設定の順番
+    FIXED_ORDER_STATE() { return this.param_to_s("FIXED_ORDER_STATE", "to_o2_state") }, // 順番設定の方法
+    FIXED_ORDER_SWAP()  { return this.param_to_b("FIXED_ORDER_SWAP")                 }, // 先後を入れ替えるか？
+
     // あとから接続した人に伝える内容
     order_share_data() {
       return {

@@ -1,7 +1,7 @@
 |------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | メール文言確認         | http://localhost:3000/rails/mailers/kifu/basic_mail                                                                                                                                                        |
 | フロント側から自動実行 | http://localhost:4000/share-board?autoexec=kifu_mail_handle                                                                                                                                                |
-| 投了ボタンから実行     | http://localhost:4000/share-board?room_key=my_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&fixed_order=a,b,c,d&room_after_create=cc_auto_start |
+| 投了ボタンから実行     | http://localhost:4000/share-board?room_key=my_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER=a,b,c,d&room_after_create=cc_auto_start |
 | APIをGETで実行         | http://localhost:3000/api/share_board/kifu_mail.json                                                                                                                                                       |
 |------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 

@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :room_key              => SecureRandom.hex,
         :user_name             => "a",
         :FIXED_MEMBER          => "a",
-        :fixed_order           => "a",
+        :FIXED_ORDER           => "a",
         :self_vs_self_enable_p => true,
       })
 

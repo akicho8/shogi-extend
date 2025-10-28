@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_room({
         :user_name         => :a,
-        :fixed_order       => :a, # 白側に誰もいないため初手を指したあとで失敗する
+        :FIXED_ORDER       => :a, # 白側に誰もいないため初手を指したあとで失敗する
         :RS_SUCCESS_DELAY  => -1, # 相手が応答しない
         :RS_RESEND_DELAY   => 0,  # しかも0秒後に応答確認
         :room_after_create => :cc_auto_start_10m,

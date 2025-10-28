@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name           => "a",
         :FIXED_MEMBER        => "a,b,c,d",
-        :fixed_order         => "a,b,c,d",
+        :FIXED_ORDER         => "a,b,c,d",
         :furigoma_random_key => "force_true",     # 毎回反転させる
         :shakashaka_count    => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
       })

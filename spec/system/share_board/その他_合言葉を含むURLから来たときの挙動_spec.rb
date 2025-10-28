@@ -12,7 +12,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_base({
         :room_key => :test_room,
         :user_name => "nanashi",
-        :fixed_order => "nanashi",
+        :FIXED_ORDER => "nanashi",
         :ng_word_check_p => true,
         :url_room_key_exist_behavior => :room_enter_direct,
       })

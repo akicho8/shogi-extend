@@ -5,7 +5,7 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name => user_name,
-        :fixed_order => "a,b",
+        :FIXED_ORDER => "a,b",
       })
   end
 
@@ -40,7 +40,7 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name    => "a",
         :FIXED_MEMBER => "a",
-        :fixed_order  => "a", # 順番設定で黒側に一人aがいる
+        :FIXED_ORDER  => "a", # 順番設定で黒側に一人aがいる
         :body         => SfenGenerator.start_from(:white), # 後手から始まる
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する

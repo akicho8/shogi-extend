@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :room_key           => @room_key,
         :user_name          => user_name,
         :FIXED_MEMBER => "a,b",
-        :fixed_order  => "a,b",
+        :FIXED_ORDER  => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
   end

@@ -1,13 +1,13 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  def case1(fixed_order_state, change_per, order)
+  def case1(FIXED_ORDER_STATE, change_per, order)
     visit_room({
         :change_per           => change_per,
         :user_name            => "a",
         :FIXED_MEMBER   => "a,b,c",
-        :fixed_order    => "a,b,c",
-        :fixed_order_state    => fixed_order_state,
+        :FIXED_ORDER    => "a,b,c",
+        :FIXED_ORDER_STATE    => FIXED_ORDER_STATE,
         :body                 => SfenGenerator.start_from(:white),
       })
     assert_var("本順序", order)

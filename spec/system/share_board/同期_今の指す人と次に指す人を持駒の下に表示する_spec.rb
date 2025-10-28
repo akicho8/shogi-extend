@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_room({
         :user_name       => :a,
-        :fixed_order     => "a,b,c",
+        :FIXED_ORDER     => "a,b,c",
         :RS_RESEND_DELAY => -1,
         :room_after_create => :cc_auto_start_10m,
       })

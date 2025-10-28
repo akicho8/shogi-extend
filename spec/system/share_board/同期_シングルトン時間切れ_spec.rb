@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name              => user_name,
         :FIXED_MEMBER           => "a,b",
-        :fixed_order            => "a,b",
+        :FIXED_ORDER            => "a,b",
         :RS_RESEND_DELAY        => -1,
         :CC_TIMEOUT_JUDGE_DELAY => @CC_TIMEOUT_JUDGE_DELAY,
         :CC_TIMEOUT_BC_DELAY    => @CC_TIMEOUT_BC_DELAY,

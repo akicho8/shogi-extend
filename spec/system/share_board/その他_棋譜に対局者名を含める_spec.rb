@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
     visit_room({
         :user_name => user_name,
-        :fixed_order => "a,b",
+        :FIXED_ORDER => "a,b",
         :title => "(title)",
       })
   end
@@ -47,7 +47,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "メンバーからコピーできる" do
-    visit_room(user_name: :a, fixed_order: "a,b")
+    visit_room(user_name: :a, FIXED_ORDER: "a,b")
     find(".player_names_copy_handle").click
     assert_text "コピーしました"
   end
@@ -56,7 +56,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a,b,c,d,e,f",
-        :fixed_order => "b,d,a,c",
+        :FIXED_ORDER => "b,d,a,c",
         :title => "(title)",
       })
     sidebar_open

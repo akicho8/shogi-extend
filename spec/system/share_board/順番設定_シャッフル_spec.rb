@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name    => "1",
         :FIXED_MEMBER => "1,2,3,4,5,6,7,8",
-        :fixed_order  => "1,2,3,4,5,6,7,8",
+        :FIXED_ORDER  => "1,2,3,4,5,6,7,8",
       })
 
     os_modal_open

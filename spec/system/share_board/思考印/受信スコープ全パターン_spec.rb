@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name                    => user_name,
         :FIXED_MEMBER                 => "a,b,c",
-        :fixed_order                  => "a,b",
+        :FIXED_ORDER                  => "a,b",
         :think_mark_mode_p            => true,
         :think_mark_receive_scope_key => think_mark_receive_scope_key,
       })

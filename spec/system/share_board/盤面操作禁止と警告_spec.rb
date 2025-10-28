@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a,b",
-        :fixed_order => "a,b,c",
+        :FIXED_ORDER => "a,b,c",
       })
     place_click("11")
     assert_text "対局するなら対局時計を押してください。検討するなら駒を動かせるように順番設定を解除してください。"
@@ -28,7 +28,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name => "c",
         :FIXED_MEMBER => "a,b,c",
-        :fixed_order => "a,b",
+        :FIXED_ORDER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
     place_click("11")
@@ -39,7 +39,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name => "b",
         :FIXED_MEMBER => "a,b",
-        :fixed_order => "a,b",
+        :FIXED_ORDER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
     place_click("11")
@@ -51,8 +51,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a",
-        :fixed_order => "a",
-        :fixed_order_swap => true, # これによって a は後手番になる。body: SfenGenerator.start_from(:white) で fixed_order_swap を使わない方法でもよい。
+        :FIXED_ORDER => "a",
+        :FIXED_ORDER_SWAP => true, # これによって a は後手番になる。body: SfenGenerator.start_from(:white) で FIXED_ORDER_SWAP を使わない方法でもよい。
         :room_after_create => :cc_auto_start_10m,
       })
     place_click("11")

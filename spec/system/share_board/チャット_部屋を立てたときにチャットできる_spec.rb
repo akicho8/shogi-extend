@@ -24,7 +24,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   def case1(user_name)
-    visit_room(user_name: user_name, fixed_order: :a)
+    visit_room(user_name: user_name, FIXED_ORDER: :a)
     chat_modal_open
   end
 
@@ -56,7 +56,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "順番設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
-    visit_room(user_name: :a, fixed_order: :a)
+    visit_room(user_name: :a, FIXED_ORDER: :a)
     chat_modal_open
     assert_selector(".ChatModal .message_scope_dropdown")
   end

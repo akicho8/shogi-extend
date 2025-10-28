@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name         => "a",
         :FIXED_MEMBER      => "a,b",
-        :fixed_order       => "a,b",
+        :FIXED_ORDER       => "a,b",
         :auto_resign_key   => auto_resign_key,
         **clock_box_params([0, initial_read_sec, 0, 0]),
       })
