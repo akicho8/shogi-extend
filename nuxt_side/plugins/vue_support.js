@@ -330,10 +330,10 @@ export const vue_support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 面倒なことになるので必ずその型で返せ
-    param_to_s(key, default_value = "")      { return this.$route.query[key] ?? default_value             },
-    param_to_b(key, default_value = "false") { String(this.$route.query[key] ?? default_value) === "true" },
-    param_to_f(key, default_value = 0)       { return parseFloat(this.$route.query[key] ?? default_value) },
-    param_to_i(key, default_value = 0)       { return parseInt(this.$route.query[key] ?? default_value)   },
+    param_to_s(key, default_value = "")      { return this.$route.query[key] ?? default_value                    },
+    param_to_b(key, default_value = "false") { return String(this.$route.query[key] ?? default_value) === "true" },
+    param_to_f(key, default_value = 0)       { return parseFloat(this.$route.query[key] ?? default_value)        },
+    param_to_i(key, default_value = 0)       { return parseInt(this.$route.query[key] ?? default_value)          },
 
     ////////////////////////////////////////////////////////////////////////////////
   },
