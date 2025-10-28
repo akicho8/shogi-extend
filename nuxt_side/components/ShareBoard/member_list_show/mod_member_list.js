@@ -8,12 +8,12 @@ export const mod_member_list = {
     member_info_class(e) {
       return {
         is_standby:                this.member_is_standby(e),                // 初期状態(順番設定をしていない)
-        is_heartbeat_lost:            this.member_is_heartbeat_lost(e),            // 霊圧が消えかけ
+        is_look_away:              this.member_is_look_away(e),             // よそ見中
+        is_heartbeat_lost:         this.member_is_heartbeat_lost(e),            // 霊圧が消えかけ
         is_battle_current_player: this.member_is_battle_current_player(e), // 手番の人
         is_battle_other_player:   this.member_is_battle_other_player(e),   // 手番待ちの人
         is_battle_watcher:        this.member_is_battle_watcher(e),        // 観戦
         is_self:                  this.member_is_self(e),                  // 自分
-        is_look_away:             this.member_is_look_away(e),             // よそ見中
       }
     },
     member_is_standby(e)                { return !this.order_enable_p                                                     }, // 初期状態(順番設定をしていない)
