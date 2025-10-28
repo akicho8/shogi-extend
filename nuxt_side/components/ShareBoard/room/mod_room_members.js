@@ -51,7 +51,7 @@ export const mod_room_members = {
       this.tl_p("<--> member_infos_init")
       this.member_infos = []
 
-      if (this.fixed_member_p) {
+      if (this.fixed_member) {
         this.member_add_by_url_params()
       } else {
         this.member_bc_create()
@@ -77,7 +77,7 @@ export const mod_room_members = {
         // alive_notice_count が変化しないようにするため
         return
       }
-      if (this.fixed_member_p) {
+      if (this.fixed_member) {
         return
       }
       this.tl_alert("生存通知")
@@ -89,7 +89,7 @@ export const mod_room_members = {
         from_session_counter: this.session_counter,    //
         alive_notice_count:   this.alive_notice_count,      // 通知した回数
         room_joined_at:       this.room_joined_at,          // 部屋に入った日時(古参比較用)
-        window_active_p:      this.window_active_p,         // Windowの状態
+        window_active_p:      this.latest_window_active_p,        // Windowの状態
         user_agent:           window.navigator.userAgent,   // ブラウザ情報
         active_level:         this.active_level,            // 先輩度(高い方が信憑性のある情報)
       }) // --> app/channels/share_board/room_channel.rb
@@ -115,7 +115,7 @@ export const mod_room_members = {
       const original_names = this.member_infos.map(e => e.from_user_name)
 
       this.member_infos.push(params)
-      if (!this.fixed_member_p) {
+      if (!this.fixed_member) {
         this.member_infos_normalize()
       }
 
@@ -162,7 +162,7 @@ export const mod_room_members = {
 
     // 生きているか？
     member_alive_p(e) {
-      if (this.fixed_member_p) {
+      if (this.fixed_member) {
         return true
       }
       return this.member_elapsed_sec(e) < this.AppConfig.ALIVE_SEC
@@ -191,14 +191,11 @@ export const mod_room_members = {
     room_user_names()      { return this.uniq_member_infos.map(e => e.from_user_name) },                            // ユニークな名前のリスト
     room_user_names_hash() { return this.uniq_member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {}) }, // 名前からO(1)で member_infos の要素を引くためのハッシュ
 
-    // メンバーリストを固定させるか？
-    fixed_member_p() {
-      return "fixed_member" in this.$route.query
-    },
     // 固定されるメンバーたち
     fixed_member() {
-      if (this.fixed_member_p) {
-        return GX.str_to_words(this.$route.query.fixed_member)
+      const str = this.param_to_s("fixed_member")
+      if (GX.present_p(str)) {
+        return GX.str_to_words(str)
       }
     },
 

@@ -6,17 +6,21 @@
 // 2021-11-23 スマホの focus, blur 問題
 // ・上下にスクロールした時点で blur になってしまう
 // ・なので visibilitychange に変更
+//
+// 参照
+// https://developer.mozilla.org/ja/docs/Web/API/Page_Visibility_API
+// https://developer.mozilla.org/ja/docs/Web/API/Document/visibilitychange_event
 
-export const window_active_detector = {
+export const window_activity_detector = {
   data() {
     return {
-      window_active_p: null, // ここで this.__native_window_active_p() を呼ぶと SSR でひっかる
+      latest_window_active_p: null, // ここで this.__native_window_active_p() を呼ぶと SSR でひっかる
     }
   },
 
   // client でしか呼ばれないのでここで呼ぶ
   mounted() {
-    this.window_active_p = this.__native_window_active_p()
+    this.latest_window_active_p = this.__native_window_active_p()
     document.addEventListener("visibilitychange", this.__visibilitychange_hook)
   },
 
@@ -25,31 +29,32 @@ export const window_active_detector = {
   },
 
   methods: {
-    // private
-    __native_window_active_p() {
-      return document.visibilityState === "visible"
-    },
+    __native_window_active_p()   { return document.visibilityState === "visible" },
+    __native_window_inactive_p() { return document.visibilityState === "hidden"  },
 
     __visibilitychange_hook() {
-      if (this.debug_mode_p) {
-        this.tl_add("HOOK", document.visibilityState)
-      }
+      this.tl_add("HOOK", document.visibilityState)
       this.__window_active_change_hook(this.__native_window_active_p())
     },
 
-    __window_active_change_hook(focus_p) {
-      this.window_active_p = focus_p
-      if (focus_p) {
-        if (this.window_focus_user_after_hook) {
-          this.window_focus_user_after_hook()
+    __window_active_change_hook(active_p) {
+      this.latest_window_active_p = active_p
+      if (active_p) {
+        const fn = this.window_active_fn
+        if (fn) {
+          fn()
         }
       } else {
-        if (this.window_blur_user_after_hook) {
-          this.window_blur_user_after_hook()
+        const fn = this.window_inactive_fn
+        if (fn) {
+          fn()
         }
       }
-      if (this.window_active_change_user_hook) {
-        this.window_active_change_user_hook(focus_p)
+      {
+        const fn = this.window_activity_change_fn
+        if (fn) {
+          fn(active_p)
+        }
       }
     },
   },

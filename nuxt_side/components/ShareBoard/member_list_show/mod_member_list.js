@@ -17,15 +17,11 @@ export const mod_member_list = {
       }
     },
     member_is_standby(e)                { return !this.order_enable_p                                                     }, // 初期状態(順番設定をしていない)
+    member_is_look_away(e)             { return this.MEMBER_IS_LOOK_AWAY || !e.window_active_p },
     member_is_battle_current_player(e) { return this.order_lookup(e) && this.current_turn_user_name === e.from_user_name }, // 手番の人
     member_is_battle_other_player(e)   { return this.order_lookup(e) && this.current_turn_user_name !== e.from_user_name }, // 手番待ちの人
     member_is_battle_watcher(e)        { return this.order_enable_p && !this.order_lookup(e)                             }, // 観戦
     member_is_self(e)                  { return this.connection_id === e.from_connection_id                              }, // 自分
-
-    // Windowが非アクティブ状態か？
-    member_is_look_away(e)  {
-      return this.MEMBER_IS_LOOK_AWAY || !e.window_active_p
-    },
 
     member_status_label(e) {
       if (this.member_is_battle_current_player(e)) {
