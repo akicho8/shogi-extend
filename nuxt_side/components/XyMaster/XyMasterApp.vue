@@ -480,7 +480,7 @@ export default {
     is_mode_active()    { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
     countdown()         { return COUNTDOWN_MAX - this.countdown_counter                       },
 
-    NEXT_IF_X()         { return this.$route.query.NEXT_IF_X || NEXT_IF_X                     },
+    NEXT_IF_X()         { return this.param_to_s("NEXT_IF_X", NEXT_IF_X)                     },
 
     tap_mode_p()        { return this.rule_info.input_mode === "is_input_mode_tap"            },
     kb_mode_p()         { return this.rule_info.input_mode === "is_input_mode_kb"             },

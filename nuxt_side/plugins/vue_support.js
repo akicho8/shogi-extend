@@ -217,7 +217,7 @@ export const vue_support = {
         return true
       }
       // http://localhost:4000/video/new?__nuxt_login_required_force=name
-      if (this.$GX.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
+      if (GX.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
         // なぜか名前が空の人がいる
         this.toast_warn("名前を設定してください")
         this.$router.push("/lab/account/name-edit")
@@ -329,6 +329,12 @@ export const vue_support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    param_to_s(key, default_value = null) { return String(this.$route.query[key] ?? default_value) },
+    param_to_b(key, default_value = null) { return String(this.$route.query[key] ?? default_value) === "true" },
+    param_to_f(key, default_value = null) { return parseFloat(this.$route.query[key] ?? default_value) },
+    param_to_i(key, default_value = null) { return parseInt(this.$route.query[key] ?? default_value) },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
 
   // FIXME: plugin にする

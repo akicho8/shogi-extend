@@ -161,8 +161,8 @@ export const mod_chat_ai_trigger_rule = {
   },
 
   computed: {
-    ARASHI_THRESHOLD() { return parseInt(this.$route.query.ARASHI_THRESHOLD ?? ARASHI_THRESHOLD) },
-    ARASHI_RE_RATE()   { return parseInt(this.$route.query.ARASHI_RE_RATE ?? ARASHI_RE_RATE) },
+    ARASHI_THRESHOLD() { return this.param_to_i("ARASHI_THRESHOLD", ARASHI_THRESHOLD) },
+    ARASHI_RE_RATE()   { return this.param_to_i("ARASHI_RE_RATE", ARASHI_RE_RATE) },
 
     GPT_FUNCTION() { return this.ai_mode_info.key === "ai_mode_on" && this.AppConfig.GPT_FUNCTION },
   },

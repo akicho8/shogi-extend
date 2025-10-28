@@ -106,8 +106,8 @@ export const mod_ping = {
   },
 
   computed: {
-    PING_OK_SEC() { return this.$route.query.PING_OK_SEC || PING_OK_SEC },
-    PONG_DELAY()  { return this.$route.query.PONG_DELAY || PONG_DELAY   },
+    PING_OK_SEC() { return this.param_to_f("PING_OK_SEC", PING_OK_SEC) },
+    PONG_DELAY()  { return this.param_to_f("PONG_DELAY", PONG_DELAY)   },
 
     ping_running_p() { return GX.present_p(this.ping_runner_id) }, // PING実行中？
   },

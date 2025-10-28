@@ -134,7 +134,7 @@ export default {
         this.placement_tab_handle()
         this.sfen_trim_modal_handle({
           default_sp_body: body,
-          default_sp_turn: parseInt(this.$route.query.turn ?? -1),
+          default_sp_turn: this.param_to_i("turn", -1),
           default_sp_viewpoint: this.$route.query.viewpoint ?? "black",
         })
         performed = true

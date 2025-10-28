@@ -191,7 +191,7 @@ export const mod_room_members = {
     room_user_names()      { return this.uniq_member_infos.map(e => e.from_user_name) },                            // ユニークな名前のリスト
     room_user_names_hash() { return this.uniq_member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {}) }, // 名前からO(1)で member_infos の要素を引くためのハッシュ
 
-    KILL_SEC()  { return parseFloat(this.$route.query.KILL_SEC ?? this.AppConfig.KILL_SEC) },
+    KILL_SEC()  { return this.param_to_f("KILL_SEC", this.AppConfig.KILL_SEC) },
 
     // メンバーリストを固定させるか？
     fixed_member_p() {

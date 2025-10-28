@@ -50,7 +50,7 @@ export const mod_member_bc = {
     },
   },
   computed: {
-    ALIVE_NOTIFY_INTERVAL() { return parseFloat(this.$route.query.ALIVE_NOTIFY_INTERVAL ?? this.AppConfig.ALIVE_NOTIFY_INTERVAL) },
+    ALIVE_NOTIFY_INTERVAL() { return this.param_to_f("ALIVE_NOTIFY_INTERVAL", this.AppConfig.ALIVE_NOTIFY_INTERVAL) },
 
     member_bc_status() {
       if (this.member_bc_interval_runner) {

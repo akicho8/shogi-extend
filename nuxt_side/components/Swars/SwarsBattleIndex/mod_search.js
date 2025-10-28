@@ -88,7 +88,7 @@ export const mod_search = {
     },
   },
   computed: {
-    current_page() { return parseInt(this.$route.query.page ?? "1") },
+    current_page() { return this.param_to_i("page", "1") },
     current_route_query() {
       return {
         query:       this.query,

@@ -314,13 +314,8 @@ export default {
       }
     },
 
-    default_viewpoint() {
-      return this.$route.query.viewpoint || "black"
-    },
-
-    color_theme_key() {
-      return this.$route.query.color_theme_key || "is_color_theme_modern"
-    },
+    default_viewpoint() { return this.param_to_s("viewpoint", "black")                       },
+    color_theme_key()   { return this.param_to_s("color_theme_key", "is_color_theme_modern") },
 
     og_image_path() {
       return QueryString.stringifyUrl({

@@ -7,8 +7,8 @@ export const simple_patination_methods = {
     }
   },
   // created() {
-  //   this.page = parseInt(this.$route.query.page || 1)
-  //   this.per = parseInt(this.$route.query.per || this.default_per)
+  //   this.page = this.param_to_i("page", 1)
+  //   this.per = this.param_to_i("per", this.default_per)
   // },
   methods: {
     page_change_handle(page) {

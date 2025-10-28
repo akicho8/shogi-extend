@@ -140,9 +140,9 @@ export const mod_resend = {
   },
 
   computed: {
-    RS_ENABLE()        { return String(this.$route.query.RS_ENABLE ?? RS_ENABLE) === "true"        },
-    RS_RESEND_DELAY()  { return parseFloat(this.$route.query.RS_RESEND_DELAY ?? RS_RESEND_DELAY)   },
-    RS_SUCCESS_DELAY() { return parseFloat(this.$route.query.RS_SUCCESS_DELAY ?? RS_SUCCESS_DELAY) },
+    RS_ENABLE()        { return this.param_to_b("RS_ENABLE", RS_ENABLE) },
+    RS_RESEND_DELAY()  { return this.param_to_f("RS_RESEND_DELAY", RS_RESEND_DELAY) },
+    RS_SUCCESS_DELAY() { return this.param_to_f("RS_SUCCESS_DELAY", RS_SUCCESS_DELAY) },
 
     // 再送モーダルを発動するまでの時間(秒)
     // RS_RESEND_DELAY が 5 であれば 5, 6, 8, 11, 15 の順に増えていく

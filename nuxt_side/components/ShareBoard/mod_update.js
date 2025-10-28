@@ -27,8 +27,8 @@ export const mod_update = {
       }
     },
     reload_modal_handle() {
-      this.sb_talk(MESSAGE)
       this.sfx_stop_all()
+      this.sb_talk(MESSAGE)
       this.dialog_alert({
         message: MESSAGE,
         onConfirm: () => this.force_reload(),
@@ -39,6 +39,6 @@ export const mod_update = {
     },
   },
   computed: {
-    API_VERSION() { return parseFloat(this.$route.query.API_VERSION || this.record.API_VERSION) },
+    API_VERSION() { return this.param_to_i("API_VERSION", this.record.API_VERSION) },
   },
 }

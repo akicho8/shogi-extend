@@ -112,7 +112,7 @@ export const mod_clock_box_timeout = {
     },
   },
   computed: {
-    CC_TIMEOUT_JUDGE_DELAY() { return parseFloat(this.$route.query.CC_TIMEOUT_JUDGE_DELAY ?? CC_TIMEOUT_JUDGE_DELAY) },
-    CC_TIMEOUT_BC_DELAY()    { return parseFloat(this.$route.query.CC_TIMEOUT_BC_DELAY ?? CC_TIMEOUT_BC_DELAY)       },
+    CC_TIMEOUT_JUDGE_DELAY() { return this.param_to_f("CC_TIMEOUT_JUDGE_DELAY", CC_TIMEOUT_JUDGE_DELAY) },
+    CC_TIMEOUT_BC_DELAY()    { return this.param_to_f("CC_TIMEOUT_BC_DELAY", CC_TIMEOUT_BC_DELAY)       },
   },
 }

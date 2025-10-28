@@ -101,6 +101,6 @@ export const mod_room_recreate = {
     },
   },
   computed: {
-    ROOM_DESTROY_AFTER_DELAY_SEC() { return this.$route.query.ROOM_DESTROY_AFTER_DELAY_SEC || ROOM_DESTROY_AFTER_DELAY_SEC },
+    ROOM_DESTROY_AFTER_DELAY_SEC() { return this.param_to_s("ROOM_DESTROY_AFTER_DELAY_SEC", ROOM_DESTROY_AFTER_DELAY_SEC) },
   },
 }
