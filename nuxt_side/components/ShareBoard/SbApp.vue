@@ -76,7 +76,7 @@ import { mod_action_log_share              } from "./action_log/mod_action_log_s
 
 import { mod_turn_notify                   } from "./mod_turn_notify.js"
 import { mod_otasuke                       } from "./mod_otasuke.js"
-import { mod_order_main                    } from "./order_mod/mod_order_main.js"
+import { mod_order_main                    } from "./mod_order/mod_order_main.js"
 import { mod_battle_session                } from "./mod_battle_session.js"
 import { mod_chore                         } from "./mod_chore.js"
 import { mod_guardian                      } from "./mod_guardian.js"

@@ -10,7 +10,7 @@
 // このスコープで this.master_quiz に依存してはいけない
 
 import QuizVoteModal from "./QuizVoteModal.vue"
-import { OrderUnit } from "../order_mod/order_unit/order_unit.js"
+import { OrderUnit } from "../mod_order/order_unit/order_unit.js"
 import { Quiz } from "./quiz.js"
 import { QuizVotedResult } from "./quiz_voted_result.js"
 import { GX } from "@/components/models/gx.js"

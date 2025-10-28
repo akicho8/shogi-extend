@@ -1,4 +1,4 @@
-import { OrderUnit } from "@/components/ShareBoard/order_mod/order_unit/order_unit.js"
+import { OrderUnit } from "@/components/ShareBoard/mod_order/order_unit/order_unit.js"
 
 describe("OrderUnit", () => {
   test("順番方式の相互変換ができる", () => {

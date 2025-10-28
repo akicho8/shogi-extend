@@ -1,4 +1,4 @@
-import { O2Strategy } from "@/components/ShareBoard/order_mod/order_unit/o2_strategy.js"
+import { O2Strategy } from "@/components/ShareBoard/mod_order/order_unit/o2_strategy.js"
 
 describe("O2Strategy", () => {
   test("works", () => {

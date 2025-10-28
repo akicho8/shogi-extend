@@ -1,5 +1,5 @@
-import { O1State } from "@/components/ShareBoard/order_mod/order_unit/o1_state.js"
-import { Item } from "@/components/ShareBoard/order_mod/order_unit/item.js"
+import { O1State } from "@/components/ShareBoard/mod_order/order_unit/o1_state.js"
+import { Item } from "@/components/ShareBoard/mod_order/order_unit/item.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 describe("O1State", () => {
