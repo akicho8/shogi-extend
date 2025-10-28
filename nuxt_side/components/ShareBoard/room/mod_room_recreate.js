@@ -1,7 +1,7 @@
 import RoomRecreateModal from "./RoomRecreateModal.vue"
 import { GX } from "@/components/models/gx.js"
 
-const ROOM_DESTROY_AFTER_DELAY_SEC = 3.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
+const ROOM_DESTROY_AFTER_DELAY_SEC = 2.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
 
 const APP_RELOAD_IF_RECREATE = false // 再起動するときリロードする？
 
@@ -83,7 +83,7 @@ export const mod_room_recreate = {
     async room_recreate() {
       if (this.ac_room && !this.room_recreate_now) {
         this.room_recreate_now = true
-        this.toast_ok("復帰中です")
+        this.toast_ok("復帰中です", {talk: false})
         this.room_destroy()
         const loading = this.$buefy.loading.open()
         await GX.sleep(this.ROOM_DESTROY_AFTER_DELAY_SEC)
