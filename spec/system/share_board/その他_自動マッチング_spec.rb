@@ -30,13 +30,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     # app/models/xmatch_rule_info.rb
     window_a do
       assert_viewpoint(:black)                        # a, b の順で a は先手なので▲の向きになっている
-      assert_member_status(:a, :is_turn_active)   # 1人目(a)に丸がついている
-      assert_member_status(:b, :is_turn_standby)    # 2人目(b)は待機中
+      assert_member_status(:a, :is_battle_current_player)   # 1人目(a)に丸がついている
+      assert_member_status(:b, :is_battle_other_player)    # 2人目(b)は待機中
     end
     window_b do
       assert_viewpoint(:white)                         # a, b の順で b は後手なので△の向きになっている
-      assert_member_status(:a, :is_turn_active)   # 1人目(a)に丸がついている
-      assert_member_status(:b, :is_turn_standby)    # 2人目(b)は待機中
+      assert_member_status(:a, :is_battle_current_player)   # 1人目(a)に丸がついている
+      assert_member_status(:b, :is_battle_other_player)    # 2人目(b)は待機中
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_room_created
 
       assert_viewpoint(:black)                         # 平手の初手なので▲視点
-      assert_member_status(:a, :is_turn_active) # 1人目(a)に丸がついている
+      assert_member_status(:a, :is_battle_current_player) # 1人目(a)に丸がついている
     end
   end
 

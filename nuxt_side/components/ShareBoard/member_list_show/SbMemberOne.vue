@@ -14,7 +14,7 @@ SbAvatarLine.SbMemberOne.is-clickable(
   // 反応がない場合
   //- b-icon.flex_item(v-if="SB.member_is_disconnect(info)" icon="lan-disconnect" type="is-danger" size="is-small")
 
-  .flex_item.is-size-7(v-if="SB.member_is_window_blur(info)") よそ見中
+  .flex_item.is-size-7(v-if="SB.member_is_look_away(info)") よそ見中
   .flex_item.is-size-7(v-if="SB.member_is_disconnect(info)") 応答なし
   .flex_item.is-size-7(v-if="SB.debug_mode_p && SB.member_is_self(info)") ← 自分
   .flex_item.is-size-7(v-if="SB.current_turn_user_name === info.from_user_name") ← 今
@@ -61,14 +61,14 @@ export default {
 @import "../sass/support.sass"
 .SbMemberOne
   &.SbAvatarLine
-    &.is_window_blur
+    &.is_look_away
       __css_keep__: 0
     &.is_disconnect
       __css_keep__: 0
     &.is_self
       __css_keep__: 0
-    &.is_turn_standby
+    &.is_battle_other_player
       __css_keep__: 0
-    &.is_turn_active
+    &.is_battle_current_player
       font-weight: bold
 </style>

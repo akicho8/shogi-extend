@@ -76,14 +76,14 @@ export default {
     member_status_key_by(item) {
       // return "status_leave"
       // return "status_disconnet"
-      // return "status_blur"
+      // return "status_look_away"
 
       const member_info = this.SB.room_user_names_hash[item.to_s]
       if (member_info == null) {
         return "status_leave"
       }
-      if (this.SB.member_is_window_blur(member_info)) {
-        return "status_blur"
+      if (this.SB.member_is_look_away(member_info)) {
+        return "status_look_away"
       }
       if (this.SB.member_is_disconnect(member_info)) {
         return "status_disconnet"
