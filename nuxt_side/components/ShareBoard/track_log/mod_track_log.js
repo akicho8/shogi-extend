@@ -21,6 +21,9 @@ export const mod_track_log = {
       }
     }
   },
+  beforeDestroy() {
+    this.tl_modal_close()
+  },
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 

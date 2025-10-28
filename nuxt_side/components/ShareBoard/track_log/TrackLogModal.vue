@@ -8,9 +8,8 @@
     TrackLogModalTable(ref="TrackLogModalTable")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.close_handle(@click="test_handle" v-if="development_p") テスト
-    b-button.close_handle(@click="clear_handle") クリア
+    b-button.tl_modal_close_handle.has-text-weight-normal(@click="SB.tl_modal_close_handle" icon-left="chevron-left")
+    b-button.tl_clear(@click="SB.tl_clear") クリア
 </template>
 
 <script>
@@ -22,20 +21,6 @@ export default {
   mixins: [support_child],
   mounted() {
     this.SB.tl_scroll_to_bottom()
-  },
-  methods: {
-    close_handle() {
-      this.sfx_click()
-      this.$emit("close")
-    },
-    test_handle() {
-      this.sfx_click()
-      this.SB.tl_test()
-    },
-    clear_handle() {
-      this.sfx_click()
-      this.SB.tl_clear()
-    },
   },
 }
 </script>

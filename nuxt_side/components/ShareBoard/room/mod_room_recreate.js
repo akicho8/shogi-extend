@@ -12,7 +12,6 @@ export const mod_room_recreate = {
       room_recreate_modal_instance: null,
     }
   },
-
   watch: {
     "$nuxt.isOnline"(is_online) {
       if (is_online) {
@@ -22,7 +21,9 @@ export const mod_room_recreate = {
       }
     },
   },
-
+  beforeDestroy() {
+    this.room_recreate_modal_close()
+  },
   methods: {
     internet_on_trigger() {
       this.toast_ok("オンラインになりました")
