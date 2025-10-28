@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER       => "a,b",
         :room_after_create => :cc_auto_start_10m,
         :auto_resign_key   => auto_resign_key,
-        :RS_ENABLE         => false,
+        :RS_FEATURE         => false,
       })
     piece_move("88", "55") # 55角を指した瞬間にモーダルが出ているため piece_move_o でのチェックはできない
     assert_selector(".IllegalModal")

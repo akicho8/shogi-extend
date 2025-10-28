@@ -76,7 +76,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER_STATE => "to_o1_state",
         :room_after_create => :cc_auto_start_10m,
         :auto_resign_key   => :is_auto_resign_on,
-        :RS_ENABLE         => false,
+        :RS_FEATURE         => false,
       })
     perpetual_trigger
     assert_selector(".IllegalModal", text: "千日手で☖の勝ち")

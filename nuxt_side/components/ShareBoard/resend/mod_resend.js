@@ -2,7 +2,7 @@ import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 import SbResendModal from "./SbResendModal.vue"
 
-const RS_ENABLE           = true // この機能を有効にするか？
+const RS_FEATURE          = true // この機能を有効にするか？
 const RS_SEQ_IDS_SIZE     = 5    // rs_seq_id は直近X件保持しておく
 const RS_RESEND_DELAY     = 3    // 再送モーダル発動までN秒待つ
 const RS_RESEND_DELAY_MAX = 8    // 再送モーダル発動まで最大N秒待つ
@@ -27,7 +27,7 @@ export const mod_resend = {
   methods: {
     // あとで確認するため、指し手情報に指し手の番号を埋めておく
     sequence_code_embed() {
-      if (!this.RS_ENABLE) { return }
+      if (!this.RS_FEATURE) { return }
       this.rs_seq_id += 1
       this.rs_seq_ids.push(this.rs_seq_id)
       this.rs_seq_ids = _.takeRight(this.rs_seq_ids, RS_SEQ_IDS_SIZE)
@@ -36,7 +36,7 @@ export const mod_resend = {
 
     // sfen_share の実行直後に呼ぶ
     rs_sfen_share_after_hook() {
-      if (!this.RS_ENABLE) { return }
+      if (!this.RS_FEATURE) { return }
       if (this.order_enable_p && this.order_unit.valid_p) {
         if (this.RS_RESEND_DELAY >= 0) {
           this.rs_resend_delay_cancel()
@@ -95,7 +95,7 @@ export const mod_resend = {
 
     // 指し手を受信した次に人が sfen_share_broadcasted のなかで呼ぶ
     rs_receive_success_send(params) {
-      if (!this.RS_ENABLE) { return }
+      if (!this.RS_FEATURE) { return }
       if (this.order_enable_p) {
         // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
         GX.assert(params.rs_failed_count != null, "params.rs_failed_count != null")
@@ -140,7 +140,7 @@ export const mod_resend = {
   },
 
   computed: {
-    RS_ENABLE()        { return this.param_to_b("RS_ENABLE", RS_ENABLE) },
+    RS_FEATURE()        { return this.param_to_b("RS_FEATURE", RS_FEATURE) },
     RS_RESEND_DELAY()  { return this.param_to_f("RS_RESEND_DELAY", RS_RESEND_DELAY) },
     RS_SUCCESS_DELAY() { return this.param_to_f("RS_SUCCESS_DELAY", RS_SUCCESS_DELAY) },
 
