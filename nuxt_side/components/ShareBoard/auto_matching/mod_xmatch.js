@@ -199,7 +199,7 @@ export const mod_xmatch = {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.current_turn = 0                                           // 手数0から始める
       this.current_sfen = xmatch_rule_info.board_preset_info.sfen // 手合割の反映
-      this.sp_viewpoint_set_by_self_location()                       // 自分の場所を調べて正面をその視点にする
+      this.sp_viewpoint_switch_to_self_location()                       // 自分の場所を調べて正面をその視点にする
     },
     async xmatch_setup4_join(params) {
       // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる

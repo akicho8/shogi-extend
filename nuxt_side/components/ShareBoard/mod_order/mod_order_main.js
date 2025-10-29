@@ -36,7 +36,7 @@ export const mod_order_main = {
       this.order_unit.state_switch_to(this.FIXED_ORDER_STATE)
 
       // 自分の場所を調べて正面をその視点にする
-      this.sp_viewpoint_set_by_self_location()
+      this.sp_viewpoint_switch_to_self_location()
     },
 
     // 指定の名前
@@ -99,7 +99,7 @@ export const mod_order_main = {
       GX.assert(params.order_unit, "params.order_unit")
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
-      this.sp_viewpoint_set_by_self_location() // 自分の場所を調べて正面をその視点にする
+      this.sp_viewpoint_switch_to_self_location() // 自分の場所を調べて正面をその視点にする
       // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       this.os_options_copy_a_to_b(params, this)
@@ -108,12 +108,9 @@ export const mod_order_main = {
     },
 
     // 自分の場所を調べて正面をその視点にする
-    sp_viewpoint_set_by_self_location() {
-      if (this.user_name) {
-        const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
-        if (location) {
-          this.viewpoint = location.key                     // その視点に変更する
-        }
+    sp_viewpoint_switch_to_self_location() {
+      if (this.my_location) {
+        this.viewpoint = this.my_location
       }
     },
 
