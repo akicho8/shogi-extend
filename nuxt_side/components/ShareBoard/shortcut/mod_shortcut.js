@@ -18,20 +18,13 @@ export const mod_shortcut = {
         return
       }
       if (this.focus_on_input_tag_p()) {
-        this.tl_add("SHORTCUT", "INPUTタグにフォーカスされていたのでキャンセルする", e)
         return
       }
-      const found = ShortcutInfo.values.find(o => o._if(this, e))
-      if (!found) {
-        this.tl_add("SHORTCUT", "対応する命令が見つからない", e)
+      const info = ShortcutInfo.values.find(o => o._if(this, e))
+      if (!info) {
         return
       }
-      this.tl_add("SHORTCUT", "対応する命令が見つかったので実行する", e)
-      if (found.call(this)) {
-        this.tl_add("SHORTCUT", "戻値 true")
-      } else {
-        this.tl_add("SHORTCUT", "戻値 false")
-      }
+      info.call(this)
       e.preventDefault()
     },
   },
