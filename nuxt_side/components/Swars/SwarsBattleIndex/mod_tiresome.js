@@ -65,7 +65,7 @@ export const mod_tiresome = {
 
       this.$GX.delay_block(1, () => {
         this.sfx_stop_all()
-        this.talk("ところで毎回ウォーズID入力するの面倒じゃない？")
+        this.talk("ところでウォーズID入力するの面倒じゃない？")
       })
 
       const subject = "ウォーズID記憶案内"
@@ -73,13 +73,8 @@ export const mod_tiresome = {
         canCancel: ["button"],
         // hasIcon: true,
         type: "is-info",
-        title: "ところで毎回ウォーズID入力するの面倒じゃない？",
-        message: `
-          <div class="">
-            <ul class="mt-0">
-              <p>あなたはこれまでに${this.tiresome_count}回もそのウォーズIDを無駄に入力していますけど右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けますよ。</p>
-            </ul>
-          </div>`,
+        title: "ところでウォーズID入力するの面倒じゃない？",
+        message: `これまでに${this.tiresome_count}回同じウォーズIDを入力していますが、右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>でその入力を省けますよ`,
         confirmText: "やってみる",
         cancelText: "絶対やらない",
         onConfirm: () => {
