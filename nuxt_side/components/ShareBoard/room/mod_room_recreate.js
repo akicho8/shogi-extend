@@ -33,6 +33,9 @@ export const mod_room_recreate = {
     },
     internet_off_trigger() {
       this.toast_ng("オフラインになりました", {talk: false})
+      if (this.clock_box) {
+        this.clock_box.pause_handle()
+      }
       if (this.ac_room) {
         this.room_recreate_modal_open_handle()
       }
