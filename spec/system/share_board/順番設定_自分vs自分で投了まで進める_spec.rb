@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
 
     os_modal_open
-    assert_selector(".realtime_notice", text: "aさん同士で練習対局できます", exact_text: true)
+    assert_selector(".realtime_notice", text: "☖にも入れてください (この状態でもaさん同士で対局可)", exact_text: true)
     os_modal_close
     clock_start
 

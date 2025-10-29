@@ -371,12 +371,33 @@ export const mod_clock_box = {
         onend: () => {
           // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
           if (this.current_turn_user_name) {
+            // if (this.self_vs_self_p) {
+            //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
+            // }
             this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
           } else {
             // 順番設定をしていない場合
           }
         },
       })
+
+      if (this.debug_mode_p) {
+        if (this.received_from_self(params)) {
+          this.$buefy.snackbar.open({
+            message: `これは${this.user_call_name(this.current_turn_user_name)}同士の対局です`,
+            // type: "is-primary is-light",
+            position: "is-top",
+            actionText: "わかってる",
+            indefinite: true,
+            // onAction: () => {
+            //   this.$buefy.toast.open({
+            //     message: "Action pressed",
+            //     queue: false,
+            //   });
+            // },
+          })
+        }
+      }
     },
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意

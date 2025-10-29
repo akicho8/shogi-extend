@@ -314,8 +314,8 @@ export default {
         if (location) {
           if (this.SB.self_vs_self_enable_p) {
             const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
-            hv.message = `${this.SB.user_call_name(elem.user_name)}同士で練習対局できます`
-            hv.css_klass = ""
+            hv.message = `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`
+            hv.css_klass = "is-warning"
             hv.status = "success"
           } else {
             hv.message = `${location.name}にも入れてください`
