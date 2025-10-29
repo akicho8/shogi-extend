@@ -60,6 +60,7 @@ module ShareBoard
             :primary_emoji      => data[:primary_emoji],
             :performed_at       => data[:performed_at],
             :force_talk         => data[:force_talk],
+            :session_id         => data[:session_id],
           })
       end
     end

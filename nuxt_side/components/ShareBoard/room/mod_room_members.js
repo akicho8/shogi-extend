@@ -24,7 +24,7 @@ export const mod_room_members = {
       names.forEach((name, index) => {
         const params = {
           ...this.ac_room_perform_default_params(),
-          from_session_id:    index,        //
+          session_id:    index,        //
           from_session_counter: 0,          //
           from_connection_id: index,        // 送信者識別子
           from_user_name:     name,         // 名前
@@ -36,7 +36,7 @@ export const mod_room_members = {
           user_agent:         null,         // ブラウザ情報
         }
         if (this.user_name === name) {
-          params["from_session_id"] = this.session_id
+          params["session_id"] = this.session_id
           params["from_session_counter"] = this.session_counter
           params["from_connection_id"] = this.connection_id
         }
@@ -85,7 +85,6 @@ export const mod_room_members = {
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
         // この情報はそのまま member_infos に追加する
-        from_session_id:      this.session_id,              // 送信者識別子
         from_session_counter: this.session_counter,    //
         alive_notice_count:   this.alive_notice_count,      // 通知した回数
         room_joined_at:       this.room_joined_at,          // 部屋に入った日時(古参比較用)
@@ -148,10 +147,10 @@ export const mod_room_members = {
     // this.member_infos = _.uniqBy(this.member_infos, "from_connection_id") としてユーザーの重複を防ぐ(新しい方を採取できる) とすると、分身してしまう
     member_infos_normalize() {
       let av = this.member_infos
-      av = _.orderBy(av, "performed_at", "desc")                              // 情報が新しいもの順に並べてから
-      av = _.uniqBy(av, e => [e.from_user_name, e.from_session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
-      av = this.__member_infos_find_all_newest(av)                            // 通知が来た時間が最近の人だけを採取する
-      av = _.orderBy(av, ["room_joined_at"], ["asc"])                         // 上から古参順に並べる
+      av = _.orderBy(av, "performed_at", "desc")                         // 情報が新しいもの順に並べてから
+      av = _.uniqBy(av, e => [e.from_user_name, e.session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
+      av = this.__member_infos_find_all_newest(av)                       // 通知が来た時間が最近の人だけを採取する
+      av = _.orderBy(av, ["room_joined_at"], ["asc"])                    // 上から古参順に並べる
       this.member_infos = av
     },
 

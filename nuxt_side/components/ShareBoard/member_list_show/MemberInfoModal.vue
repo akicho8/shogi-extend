@@ -151,7 +151,7 @@ export default {
         {
           enabled: true,
           label: "セッションID",
-          value: this.member_info.from_session_id,
+          value: this.member_info.session_id,
         },
         {
           enabled: true,

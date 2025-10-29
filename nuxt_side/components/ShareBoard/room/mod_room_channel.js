@@ -183,7 +183,8 @@ export const mod_room_channel = {
     // 共有時の共通情報
     ac_room_perform_default_params() {
       const params = {
-        from_connection_id: this.connection_id,      // 送信者識別子
+        session_id:         this.session_id,         // 同じブラウザで何度アクセスしても同じ
+        from_connection_id: this.connection_id,      // 同じブラウザで来訪するたびに変わる
         from_user_name:     this.user_name,          // 送信者名
         performed_at:       this.$time.current_ms(), // 実行日時(ms)
         ua_icon_key:        this.ua_icon_key,        // 端末の種類を表すアイコン文字列
