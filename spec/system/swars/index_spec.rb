@@ -96,7 +96,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         # +9回で計10回になり発動する
         9.times { find(".search_click_handle").click }
-        assert_text "ところで毎回ウォーズID入力するの面倒じゃない？", wait: 5
+        assert_text "ところでウォーズID入力するの面倒じゃない？", wait: 5
 
         find(".dialog.modal.is-active button.is-info").click # 「わかった」をクリック
         assert_no_selector ".modal"
