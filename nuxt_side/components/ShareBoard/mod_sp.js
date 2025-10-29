@@ -115,12 +115,6 @@ export const mod_sp = {
       GX.assert_kind_of_integer(turn)
       return this.current_sfen_info.location_by_offset(turn)
     },
-
-    foobar() {
-      if (this.ac_room && this.$nuxt.isOffline) {
-        
-      }
-    },
   },
   computed: {
     play_mode_p() { return this.sp_mode === "play" },
