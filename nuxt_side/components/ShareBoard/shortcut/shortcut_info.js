@@ -6,7 +6,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
     return [
       {
         _if: (c, e) => c.play_mode_p && e.key === "?",
-        call: c => c.shortcut_modal_shortcut_handle(),
+        call: c => c.shortcut_modal_toggle_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_code_equal(e, "Enter"),

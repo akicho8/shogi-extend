@@ -12,7 +12,7 @@ export const sw_shortcut_modal = {
   },
 
   methods: {
-    shortcut_modal_shortcut_handle() {
+    shortcut_modal_toggle_handle() {
       if (this._shortcut_modal_instance == null) {
         this.shortcut_modal_open_handle()
       } else {

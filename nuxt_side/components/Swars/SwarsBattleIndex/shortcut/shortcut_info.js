@@ -44,7 +44,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: (c, e) => c.goto_custom_search(e),
       }, {
         _if: (c, e) => e.key === "?",
-        call: (c, e) => c.shortcut_modal_shortcut_handle(),
+        call: (c, e) => c.shortcut_modal_toggle_handle(),
       },
 
       // {
