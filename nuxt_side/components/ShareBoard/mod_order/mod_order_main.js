@@ -110,7 +110,7 @@ export const mod_order_main = {
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_switch_to_my_location() {
       if (this.my_location) {
-        this.viewpoint = this.my_location
+        this.viewpoint = this.my_location.key
       }
     },
 
