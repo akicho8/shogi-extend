@@ -28,7 +28,7 @@ export class MessageRecord {
     this.primary_emoji      = params.primary_emoji                         // 優先する絵文字
     this.performed_at       = params.performed_at ?? TimeUtil.current_ms() // unique_key 生成用だけに利用
     this.force_talk         = params.force_talk                            // 必ず発音するか？
-    this.session_id         = params.session_id                            // Rails 側の session_id
+    this.client_token         = params.client_token                            // Rails 側の client_token
 
     this.unique_key = this.unique_key_generate()
 

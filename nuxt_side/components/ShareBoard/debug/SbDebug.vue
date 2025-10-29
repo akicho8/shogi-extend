@@ -98,7 +98,7 @@
       .panel-heading
         | メンバーリスト({{SB.member_infos.length}})
       template(v-for="e in SB.member_infos")
-        .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.session_id}} {{e.from_session_counter}} {{e.from_connection_id}})
+        .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.client_token}} {{e.from_session_counter}} {{e.from_connection_id}})
   SbDebugHowler
   .column.is-2
     .panel

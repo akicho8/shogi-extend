@@ -435,7 +435,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_23_000001) do
     t.string "from_connection_id", comment: "null なら bot 等"
     t.string "primary_emoji", comment: "優先する絵文字"
     t.boolean "force_talk", null: false, comment: "ONなら必ず発声する"
-    t.string "session_id", null: false, comment: "Rails の発行する session_id"
+    t.string "client_token", null: false, comment: "クライアント固有の識別子"
     t.index ["message_scope_id"], name: "index_share_board_chat_messages_on_message_scope_id"
     t.index ["room_id"], name: "index_share_board_chat_messages_on_room_id"
     t.index ["session_user_id"], name: "index_share_board_chat_messages_on_session_user_id"

@@ -183,7 +183,7 @@ export const mod_room_channel = {
     // 共有時の共通情報
     ac_room_perform_default_params() {
       const params = {
-        session_id:         this.session_id,         // 同じブラウザで何度アクセスしても同じ
+        client_token:         this.client_token,         // 同じブラウザで何度アクセスしても同じ
         from_connection_id: this.connection_id,      // 同じブラウザで来訪するたびに変わる
         from_user_name:     this.user_name,          // 送信者名
         performed_at:       this.$time.current_ms(), // 実行日時(ms)
@@ -255,7 +255,7 @@ export const mod_room_channel = {
   },
   computed: {
     connection_id()   { return this.config.record.connection_id   }, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
-    session_id()      { return this.config.record.session_id      }, // 同じタブから再度入ったとき同じになる
+    client_token()      { return this.config.record.client_token      }, // 同じタブから再度入ったとき同じになる
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
     // 合言葉と名前が入力済みなので共有可能か？ (未使用)

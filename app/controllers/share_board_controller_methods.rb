@@ -173,7 +173,7 @@ module ShareBoardControllerMethods
     attrs = attrs.merge({
         # :room_key => params[:room_key] || "",
         :connection_id   => StringSupport.secure_random_urlsafe_base64_token,
-        :session_id      => sb_session_id,
+        :client_token      => sb_client_token,
         :session_counter => sb_session_counter,
         :API_VERSION     => AppConfig[:share_board_api_version], # これとActionCableで返すバージョンを比較する
       })
@@ -205,12 +205,8 @@ module ShareBoardControllerMethods
     current_record.sfen_info.location.code + initial_turn
   end
 
-  def sb_session_id
-    if false
-      session[:sb_session_id] ||= StringSupport.secure_random_urlsafe_base64_token
-    else
-      Digest::MD5.hexdigest(session.id.to_s)
-    end
+  def sb_client_token
+    session[:sb_client_token] ||= SecureRandom.hex
   end
 
   def sb_session_counter

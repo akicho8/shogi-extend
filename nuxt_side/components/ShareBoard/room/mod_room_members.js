@@ -24,7 +24,7 @@ export const mod_room_members = {
       names.forEach((name, index) => {
         const params = {
           ...this.ac_room_perform_default_params(),
-          session_id:    index,        //
+          client_token:    index,        //
           from_session_counter: 0,          //
           from_connection_id: index,        // 送信者識別子
           from_user_name:     name,         // 名前
@@ -36,7 +36,7 @@ export const mod_room_members = {
           user_agent:         null,         // ブラウザ情報
         }
         if (this.user_name === name) {
-          params["session_id"] = this.session_id
+          params["client_token"] = this.client_token
           params["from_session_counter"] = this.session_counter
           params["from_connection_id"] = this.connection_id
         }
@@ -148,7 +148,7 @@ export const mod_room_members = {
     member_infos_normalize() {
       let av = this.member_infos
       av = _.orderBy(av, "performed_at", "desc")                         // 情報が新しいもの順に並べてから
-      av = _.uniqBy(av, e => [e.from_user_name, e.session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
+      av = _.uniqBy(av, e => [e.from_user_name, e.client_token].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
       av = this.__member_infos_find_all_newest(av)                       // 通知が来た時間が最近の人だけを採取する
       av = _.orderBy(av, ["room_joined_at"], ["asc"])                    // 上から古参順に並べる
       this.member_infos = av
