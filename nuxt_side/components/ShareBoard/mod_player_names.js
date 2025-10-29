@@ -13,15 +13,15 @@ export const mod_player_names = {
 
   computed: {
     player_names_with_title_as_human_text() {
-      let info = {}
-      info["棋戦"] = this.player_names_with_title.title
+      let hv = {}
+      hv["棋戦"] = this.player_names_with_title.title
       Location.values.forEach(e => {
-        info[`${e.name}側`] = this.player_names_with_title[e.key]
+        hv[`${e.name}側`] = this.player_names_with_title[e.key]
       })
-      info["観戦"] = this.player_names_with_title.other
-      info["面子"] = this.player_names_with_title.member
-      info = GX.hash_compact_blank(info)
-      return _.map(info, (v, k) => `${k}: ${v}\n`).join("")
+      hv["観戦"] = this.player_names_with_title.other
+      hv["面子"] = this.player_names_with_title.member
+      hv = GX.hash_compact_blank(hv)
+      return _.map(hv, (v, k) => `${k}: ${v}\n`).join("")
     },
 
     // ぴよ将棋用のパラメータに変換する
