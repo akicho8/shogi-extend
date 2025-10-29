@@ -409,7 +409,7 @@ export const mod_clock_box = {
     __cc_location_change_and_call(params) {
       if (this.first_play_trigger_p(params)) { // PLAYの初回なら
         // 開始時の処理
-        // this.sp_viewpoint_switch_to_self_location()               // 自分の場所を調べて正面をその視点にする
+        // this.sp_viewpoint_switch_to_my_location()               // 自分の場所を調べて正面をその視点にする
         if (this.current_turn_self_p) {       // 自分が手番なら
           // this.tn_bell_call()                 // 牛
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
