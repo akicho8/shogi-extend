@@ -381,7 +381,7 @@ export const mod_clock_box = {
         },
       })
 
-      if (this.debug_mode_p) {
+      if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         if (this.received_from_self(params)) {
           this.$buefy.snackbar.open({
             message: `これは${this.user_call_name(this.current_turn_user_name)}同士の対局です。意図していない場合は順番設定から対局者を指定してください。`,
