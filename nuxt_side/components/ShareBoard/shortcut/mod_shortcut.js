@@ -14,6 +14,9 @@ export const mod_shortcut = {
 
   methods: {
     keydown_handle(e) {
+      if (this.$nuxt.isOffline) {
+        return
+      }
       if (this.focus_on_input_tag_p()) {
         this.tl_add("SHORTCUT", "INPUTタグにフォーカスされていたのでキャンセルする", e)
         return

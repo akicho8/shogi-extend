@@ -27,6 +27,9 @@ export const vue_talk = {
     // ・タブが見えているときだけの条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
     talk(message, options = {}) {
+      if (this.$nuxt.isOffline) {
+        return
+      }
       message = String(message ?? "")
       if (message === "") {
         return
