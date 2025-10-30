@@ -81,6 +81,8 @@ export default {
 
       // hv.transparent = true
       hv.type = this.SB.appearance_theme_info.navbar_type
+      // hv["fixed-top"] = true
+      // hv.fixedTop = true
 
       hv.spaced = false
       if (this.SB.edit_mode_p) {
@@ -132,6 +134,9 @@ export default {
 
   .otasuke_blink
     animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
+
+  // background-color: transparent
+  // +is_backdrop_filter(10px)
 
 @keyframes otasuke_blink
   0%

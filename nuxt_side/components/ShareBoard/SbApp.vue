@@ -45,6 +45,7 @@ client-only
 
     SbSidebar
     SbNavbar
+    SbBottomNav
 
     MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
       .container.is-fluid

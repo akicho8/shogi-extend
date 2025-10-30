@@ -49,9 +49,7 @@
 //////// モーダルの背景をぼかす
 
 .modal
-  backdrop-filter: blur(4px)
-  // iOS では↓これを入れないと効かない
-  -webkit-backdrop-filter: blur(4px)
+  +is_backdrop_filter(4px)
 
 //////// .modal-background の濃さを切り替える
 //

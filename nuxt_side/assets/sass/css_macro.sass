@@ -40,6 +40,11 @@
   overflow-y: auto
   overscroll-behavior-y: none
 
+=is_backdrop_filter($value)
+  backdrop-filter: blur($value)
+  // iOS 18 未満では↓これを入れないと効かない
+  -webkit-backdrop-filter: blur($value)
+
 =icon_rorate_if_button_hover($button_class)
   transition: transform 0.5s 0.3s ease-in-out
   @at-root .#{$button_class}:hover
