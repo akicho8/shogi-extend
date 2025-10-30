@@ -189,4 +189,6 @@ export class OrderUnit {
       O2State: O2State,
     }
   }
+
+  get all_user_count() { return this.main_user_count + this.watch_users.length }
 }

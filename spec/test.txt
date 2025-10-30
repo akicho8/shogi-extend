@@ -1649,7 +1649,7 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:1]            | passed  | 3.09 seconds    |
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:2]            | passed  | 2.95 seconds    |
 ./spec/system/share_board/順番設定_正確なチーム分けかつ自分チームに2人以上いたとき続けて指す場合は「次も」になる_spec.rb[1:1]   | passed  | 8.57 seconds    |
-./spec/system/share_board/順番設定_自分vs自分で投了まで進める_spec.rb[1:1]                            | passed  | 7.3 seconds     |
+./spec/system/share_board/順番設定_自分vs自分で投了まで進める_spec.rb[1:1]                            | passed  | 4.99 seconds    |
 ./spec/system/share_board/順番設定_補助機能_先後入替_spec.rb[1:1]                                 | passed  | 3.17 seconds    |
 ./spec/system/share_board/順番設定_補助機能_手番通知_spec.rb[1:1]                                 | passed  | 12.63 seconds   |
 ./spec/system/share_board/順番設定_補助機能_振り駒_spec.rb[1:1]                                  | passed  | 5.39 seconds    |

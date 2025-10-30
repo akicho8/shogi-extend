@@ -312,7 +312,7 @@ export default {
       if (hv.message == null) {
         const location = this.SB.new_o.order_unit.team_empty_location
         if (location) {
-          if (this.SB.self_vs_self_enable_p) {
+          if (this.SB.self_vs_self_enable_p && this.SB.new_o.order_unit.main_user_count === 1) {
             const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
             hv.message = `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`
             hv.css_klass = "is-warning"

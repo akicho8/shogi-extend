@@ -11,7 +11,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
 
     os_modal_open
+    # assert_selector(".realtime_notice", text: "1 vs 1 で対局を開始できます", exact_text: true)
+    # debugger
+    # drag_a_to_b(:is_team_white, 0, :is_team_black)
     assert_selector(".realtime_notice", text: "☖にも入れてください (この状態でもaさん同士で対局可)", exact_text: true)
+
     os_modal_close
     clock_start
 
