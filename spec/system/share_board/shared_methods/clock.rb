@@ -87,7 +87,7 @@ module SharedMethods
   end
 
   def cc_modal_open_handle
-    find(".cc_modal_open_handle").click
+    find(".SbSidebar .cc_modal_open_handle").click
     assert_selector(".ClockBoxModal")
   end
 

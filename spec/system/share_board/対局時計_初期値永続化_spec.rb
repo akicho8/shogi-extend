@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     @CLOCK_VALUES = [1, 2, 3, 4]
 
-    visit "/share-board"
+    visit_app
 
     clock_open
     clock_box_form_set(:black, *@CLOCK_VALUES) # aが時計を設定する

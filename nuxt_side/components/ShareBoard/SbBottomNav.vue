@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbBottomNav(v-if="SB.debug_mode_p")
+.SbBottomNav(v-if="SB.debug_mode_p && !__SYSTEM_TEST_RUNNING__")
   .buttons_container
     a.button.is-marginless.is-small.is-primary.gate_modal_open_handle(@click="SB.gate_modal_open_handle") 入退室
     a.button.is-marginless.is-small.is-primary.os_modal_open_handle(@click="SB.os_modal_open_handle") 順番設定
