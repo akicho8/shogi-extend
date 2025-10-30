@@ -206,7 +206,7 @@ export default {
       return this.error_message_show(this.SB.new_o.order_unit.member_empty_message)
     },
     invalid_team_empty() {
-      if (this.SB.self_vs_self_enable_p) {
+      if (this.self_vs_self_mode_p) {
       } else {
         return this.error_message_show(this.SB.new_o.order_unit.team_empty_message)
       }
@@ -288,6 +288,8 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
+    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.new_o.order_unit.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
+
     apply_button_type() {
       // const hv = this.realtime_notice
       // if (hv) {
@@ -312,7 +314,7 @@ export default {
       if (hv.message == null) {
         const location = this.SB.new_o.order_unit.team_empty_location
         if (location) {
-          if (this.SB.self_vs_self_enable_p && this.SB.new_o.order_unit.main_user_count === 1) {
+          if (this.self_vs_self_mode_p) {
             const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
             hv.message = `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`
             hv.css_klass = "is-warning"
