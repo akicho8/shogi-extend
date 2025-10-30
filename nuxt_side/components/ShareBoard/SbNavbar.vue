@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.SbNavbar(v-bind="component_attrs")
+b-navbar.SbNavbar(v-bind="component_attrs")
   template(slot="brand")
     template(v-if="SB.home_display_p")
       b-navbar-item(@click.native="SB.exit_handle" v-if="SB.home_display_p")
@@ -80,9 +80,9 @@ export default {
       // hv.shadow = true
 
       // hv.transparent = true
-      hv.type = this.SB.appearance_theme_info.navbar_type
+      // hv.type = this.SB.appearance_theme_info.navbar_type
       // hv["fixed-top"] = true
-      // hv.fixedTop = true
+      hv.fixedTop = true
 
       hv.spaced = false
       if (this.SB.edit_mode_p) {
@@ -135,8 +135,8 @@ export default {
   .otasuke_blink
     animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
 
-  // background-color: transparent
-  // +is_backdrop_filter(10px)
+  background-color: hsla(0, 0%, 0%, 0.5)
+  +is_backdrop_filter(10px)
 
 @keyframes otasuke_blink
   0%
