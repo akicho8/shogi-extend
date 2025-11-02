@@ -17,6 +17,14 @@ module Swars
 
       # インポートする条件 (重要)
       def import_enable?
+        if user_key = current_swars_user_key
+          if user_key = UserKey.safe_create(user_key)
+            if user_key.blocked?
+              return false
+            end
+          end
+        end
+
         [
           current_swars_user_key, # 正しい形式のウォーズIDが指定されている (Userレコードの有無は関係なし)
           params[:page].blank?,   # ページング中ではないこと

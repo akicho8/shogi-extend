@@ -26,6 +26,13 @@ module Swars
         if UserKeyValidator.invalid?(key)
           return
         end
+        create(key)
+      end
+
+      def friendly_user_only_create(key)
+        if UserKeyValidator.invalid?(key)
+          return
+        end
         object = create(key)
         if object.blocked?
           return

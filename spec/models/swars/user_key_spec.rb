@@ -11,5 +11,6 @@ RSpec.describe Swars::UserKey, type: :model, swars_spec: true do
     assert { user_key.google_search_url     == "https://www.google.co.jp/search?q=alice+%E5%B0%86%E6%A3%8B"     }
     assert { user_key.twitter_search_url    == "https://twitter.com/search?q=alice+%E5%B0%86%E6%A3%8B"          }
     assert { !user_key.blocked? }
+    assert { Swars::UserKey.safe_create("x") == nil }
   end
 end
