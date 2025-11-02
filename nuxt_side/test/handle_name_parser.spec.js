@@ -57,4 +57,8 @@ describe("HandleNameParser", () => {
   test("なんとかして装飾を削除する", () => {
     expect(HandleNameParser.call_name("○○○ンです( ᐛ )／")).toEqual("○○○ン")
   })
+
+  test("Xさん777", () => {
+    expect(HandleNameParser.call_name("Xさん777")).toEqual("Xさん")
+  })
 })
