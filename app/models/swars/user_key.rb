@@ -21,6 +21,21 @@ module Swars
         end
         new(key)
       end
+
+      def safe_create(key)
+        if UserKeyValidator.invalid?(key)
+          return
+        end
+        object = create(key)
+        if object.blocked?
+          return
+        end
+        object
+      end
+
+      def block_target
+        @block_target ||= (Rails.application.credentials.config.dig(:swars, :user_keys, :block_target) || []).to_set
+      end
     end
 
     attr_reader :key
@@ -72,6 +87,12 @@ module Swars
     def twitter_search_url
       query = { q: [key, "将棋"] * " " }
       "https://twitter.com/search?#{query.to_query}"
+    end
+
+    ################################################################################
+
+    def blocked?
+      self.class.block_target.include?(to_s)
     end
 
     ################################################################################

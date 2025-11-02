@@ -28,8 +28,7 @@ module Swars
       # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
       # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
       def current_swars_user_key
-        # return @current_swars_user_key if defined?(@current_swars_user_key)
-        @current_swars_user_key ||= params[:user_key].presence || query_info.swars_user_key
+        @current_swars_user_key ||= UserKey.safe_create((params[:user_key].presence || query_info.swars_user_key).to_s)
       end
 
       def current_swars_user
