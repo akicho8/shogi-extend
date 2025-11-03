@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.4.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 # gem "propshaft"
 # Use sqlite3 as the database for Active Record
@@ -163,7 +163,8 @@ gem "nokogiri", ">= 1.18.4" # 「force_ruby_platform: true」を指定してな�
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
 
-gem "acts-as-taggable-on"
+# gem "acts-as-taggable-on", "~> 12.0"
+gem "acts-as-taggable-on", github: "mbleigh/acts-as-taggable-on", branch: "master"
 
 gem "rubyzip", "~> 2.3.0", require: "zip" # KIF一括ダウンロード用, bioshogi to_animation_zip
 
