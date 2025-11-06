@@ -130,4 +130,9 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("｢｣")).toEqual(false)
     expect(HandleNameValidator.valid_p("「」")).toEqual(false)
   })
+
+  test("記号的な文字の繰り返し", () => {
+    expect(HandleNameValidator.valid_p("_")).toEqual(false)
+    expect(HandleNameValidator.valid_p("__")).toEqual(false)
+  })
 })

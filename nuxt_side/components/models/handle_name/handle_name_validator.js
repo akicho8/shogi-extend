@@ -11,7 +11,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
-import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
@@ -20,7 +19,7 @@ export class HandleNameValidator {
 
   static PREFIX_LIST = [
     "もっと素敵な",
-    "真面目に",
+    // "真面目に",
     // "友好的な",
     // "親近感のある",
     // "フレンドリーな",
@@ -73,37 +72,53 @@ export class HandleNameValidator {
       }
     }
 
-    let s = this.normalized_source
+    const name = this.normalized_name
     if (message == null) {
-      if (GX.blank_p(s)) {
+      if (GX.blank_p(name)) {
         message = `${this.options.name}を入力してください`
       }
     }
 
     if (this.options.ng_word_check_p) {
       if (message == null) {
-        if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
+        // 「記号や絵文字のみ」
+        const all_emoji_or_symbols = /^[\p{P}\p{S}\p{Emoji_Presentation}\p{Emoji}\u200d\uFE0F\s]+$/u.test(name)
+        if (all_emoji_or_symbols) {
           message = this.message_sample
         }
       }
       if (message == null) {
-        if (s.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {  // 通りすがり
+        // 「漢字を除いた文字列」を作成
+        const without_kanji = name.replace(/[一-龥]/g, "")
+        // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
+        const is_single_non_kanji = without_kanji.length === 1
+        if (is_single_non_kanji) {
           message = this.message_sample
         }
       }
       if (message == null) {
-        if (s.match(new RegExp(SystemNgWordList.join("|"), "i"))) {  // URLとして使えない文字
+        // 「普通の文字」（ひらがな・カタカナ・漢字・英数字）
+        const has_normal_char = /[ぁ-んァ-ン一-龥a-zA-Z0-9]/.test(name)
+        if (!has_normal_char) {
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        // 「もっと素敵な」を弾く
+        if (name.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) {
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        // 「通りすがり」
+        if (name.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        // URLとして使えない文字を弾く
+        if (name.match(new RegExp(SystemNgWordList.join("|"), "i"))) {
           message = `${this.options.name}には記号のような文字を含めないでください`
-        }
-      }
-      if (message == null) {
-        if (s.length <= 1 && !s.match(/[一-龠]/)) { // 漢字を除く、1文字はだめ
-          message = this.message_sample
-        }
-      }
-      if (message == null) {
-        if ([...s].length === TwitterEmojiParser(s).length) { // すべて絵文字
-          message = `${this.options.name}には絵文字以外も入力してください`
         }
       }
     }
@@ -113,12 +128,12 @@ export class HandleNameValidator {
 
   // private
 
-  get normalized_source() {
-    let s = this.source
-    s = GX.str_control_chars_remove(s)
-    s = GX.str_space_remove(s)
-    s = GX.hankaku_format(s)    // バリデーションしやすくするため
-    return s
+  get normalized_name() {
+    let name = this.source
+    name = GX.str_control_chars_remove(name)
+    name = GX.str_space_remove(name)
+    name = GX.hankaku_format(name)    // バリデーションしやすくするため
+    return name
   }
 
   get message_sample() {
