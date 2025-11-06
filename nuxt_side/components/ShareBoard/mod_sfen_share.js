@@ -235,12 +235,7 @@ export const mod_sfen_share = {
       if (this.received_from_self(params)) {
         if (GX.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
-            const body = [
-              params.from_user_name,
-              params.illegal_names,
-              this.current_url,
-            ]
-            this.ac_log({subject: "反則発動", body: GX.short_inspect(body)})
+            this.ac_log({subject: "反則発動", body: {"種類": params.illegal_names, "局面": this.current_url}})
           }
         }
       }
