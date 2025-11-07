@@ -86,6 +86,8 @@ export const HandleNameNgWordList = [
   "ちんぐり返し",
   "ちんこ",
   "チンコ",
+  "チンポ",
+  "ちんぽ",
   "ちんカス",
   "つんぼ",
   "どもり",
