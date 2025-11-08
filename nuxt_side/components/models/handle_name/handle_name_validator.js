@@ -81,9 +81,8 @@ export class HandleNameValidator {
 
     if (this.options.ng_word_check_p) {
       if (message == null) {
-        // 「記号や絵文字のみ」
-        const all_emoji_or_symbols = /^[\p{P}\p{S}\p{Emoji_Presentation}\p{Emoji}\u200d\uFE0F\s]+$/u.test(name)
-        if (all_emoji_or_symbols) {
+        // 許可する文字：英数字、ひらがな、カタカナ、漢字
+        if (!name.match(/^[a-zA-Z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]+$/)) {
           message = this.message_sample
         }
       }
@@ -97,13 +96,6 @@ export class HandleNameValidator {
         }
       }
       if (message == null) {
-        // 「普通の文字」（ひらがな・カタカナ・漢字・英数字）
-        const has_normal_char = /[ぁ-んァ-ン一-龥a-zA-Z0-9]/.test(name)
-        if (!has_normal_char) {
-          message = this.message_sample
-        }
-      }
-      if (message == null) {
         // 「もっと素敵な」を弾く
         if (name.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) {
           message = this.message_sample
@@ -113,12 +105,6 @@ export class HandleNameValidator {
         // 「通りすがり」
         if (name.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {
           message = this.message_sample
-        }
-      }
-      if (message == null) {
-        // URLとして使えない文字を弾く
-        if (name.match(new RegExp(SystemNgWordList.join("|"), "i"))) {
-          message = `${this.options.name}には記号のような文字を含めないでください`
         }
       }
     }
