@@ -16,4 +16,13 @@ export const RegexpSet = {
     "half_width_number",
     "full_width_number",
   ]),
+
+  COMMON_GRADE: (() => {
+    const numbers = RegexpBuilder.string([
+      "half_width_number",
+      "full_width_number",
+      "kansuuji",
+    ])
+    return new RegExp(`[初${numbers}]+[段級]`)
+  })(),
 }

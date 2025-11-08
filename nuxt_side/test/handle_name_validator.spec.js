@@ -124,14 +124,6 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("GPT")).toEqual(false)
   })
 
-  test("段級位のみはダメ", () => {
-    expect(HandleNameValidator.valid_p("初段")).toEqual(false)
-    expect(HandleNameValidator.valid_p("1級")).toEqual(false)
-
-    expect(HandleNameValidator.valid_p("初段のX")).toEqual(true)
-    expect(HandleNameValidator.valid_p("Xの初段")).toEqual(true)
-  })
-
   test("「」", () => {
     expect(HandleNameValidator.valid_p("｢｣")).toEqual(false)
     expect(HandleNameValidator.valid_p("「」")).toEqual(false)
@@ -174,5 +166,12 @@ describe("HandleNameValidator", () => {
   test("ビックリマークはだめ", () => {
     expect(HandleNameValidator.valid_p("alice!")).toEqual(false)
     expect(HandleNameValidator.valid_p("alice！")).toEqual(false)
+  })
+
+  test("段級位を入れるな", () => {
+    expect(HandleNameValidator.valid_p("十段のalice")).toEqual(false)
+    expect(HandleNameValidator.valid_p("alice初段")).toEqual(false)
+    expect(HandleNameValidator.valid_p("alice1段")).toEqual(false)
+    expect(HandleNameValidator.valid_p("alice30級")).toEqual(false)
   })
 })

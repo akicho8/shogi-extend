@@ -19,14 +19,9 @@ import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 export class HandleNameValidator {
   static MAX_LENGTH = 10
 
-  static PREFIX_LIST = [
+  static NG_PREFIX_LIST = [
     "もっと素敵な",
-    // "真面目に",
-    // "友好的な",
-    // "親近感のある",
-    // "フレンドリーな",
-    // "親しみのある",
-    // "捨てハンでない",
+    "真面目に",
   ]
 
   static create(source, options = {}) {
@@ -82,36 +77,50 @@ export class HandleNameValidator {
     }
 
     if (this.options.ng_word_check_p) {
+      // 絵文字とか使うな
       if (message == null) {
         if (!name.match(RegexpSet.COMMON_SAFE_CHAR)) {
-          message = this.message_sample
+          message = `使用できない文字が含まれています`
         }
       }
+
+      // 1文字にするな
       if (message == null) {
         // 「漢字を除いた文字列」を作成
         const without_kanji = name.replace(/[一-龥]/g, "")
         // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
         const is_single_non_kanji = without_kanji.length === 1
         if (is_single_non_kanji) {
-          message = this.message_sample
+          message = `もう少しユニークな${this.options.name}を入力してください`
         }
       }
+
+      // 全部数字は名前じゃない
       if (message == null) {
         // 全体が「全角数字」「半角数字」で構成されているものはダメ
         if (name.match(RegexpSet.COMMON_NUMBER)) {
-          message = this.message_sample
+          message = `それはただの数字です`
         }
       }
+
+      // 段級位を書くな
       if (message == null) {
-        // 「もっと素敵な」を弾く
-        if (name.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) {
-          message = this.message_sample
+        if (name.match(RegexpSet.COMMON_GRADE)) {
+          message = `段級位を含めないでください`
         }
       }
+
+      // 「もっと素敵な」や「真面目に」を弾く (エラー文言に合わせて必ずこれを入力するやつがいる)
       if (message == null) {
-        // 「通りすがり」
+        if (name.match(new RegExp(this.constructor.NG_PREFIX_LIST.join("|"), "i"))) {
+          message = `真面目に入力してください`
+        }
+      }
+
+      // 卑猥な用語を入れるやつを弾く
+      if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {
-          message = this.message_sample
+          message = `もっと素敵な${this.options.name}を入力してください`
         }
       }
     }
@@ -123,12 +132,5 @@ export class HandleNameValidator {
 
   get normalized_name() {
     return HandleNameNormalizer.normalize(this.source)
-  }
-
-  get message_sample() {
-    const pepper = dayjs().format("YYYY-MM-DD")
-    const hash_number = GX.str_to_hash_number([pepper, this.source].join("-"))
-    const prefix = GX.ary_cycle_at(this.constructor.PREFIX_LIST, hash_number)
-    return `${prefix}${this.options.name}を入力してください`
   }
 }

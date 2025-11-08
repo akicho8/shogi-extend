@@ -14,7 +14,6 @@ export const HandleNameNgWordList = [
   "^asdf.*$",
   "^hoge",
   "戦.*犯",
-  "^([初二三四五六七八九]段|[1-9]級)$",
   "初心者",
   "失礼",
   ".します$",

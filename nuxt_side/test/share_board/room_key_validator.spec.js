@@ -5,9 +5,9 @@ describe("RoomKeyValidator", () => {
     expect(RoomKeyValidator.valid_p("")).toEqual(false)
   })
 
-  test("長いはダメ", () => {
-    expect(RoomKeyValidator.valid_p("12345678901234567890123456789012")).toEqual(true)
-    expect(RoomKeyValidator.valid_p("12345678901234567890123456789012_")).toEqual(false)
+  test("12文字を越えるとダメ", () => {
+    expect(RoomKeyValidator.valid_p("123456789012")).toEqual(true)
+    expect(RoomKeyValidator.valid_p("123456789012_")).toEqual(false)
   })
 
   test("危険文字はダメ", () => {
