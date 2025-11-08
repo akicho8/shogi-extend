@@ -11,10 +11,11 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
+import { RegexpSet } from "@/components/models/regexp_set.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class RoomKeyValidator {
-  static MAX_LENGTH = 32 // できれば10文字にぐらいにしたかったがすでに19文字で入力されている部屋がある
+  static MAX_LENGTH = 12
 
   static create(source, options = {}) {
     return new this(source, options)
@@ -50,7 +51,7 @@ export class RoomKeyValidator {
   }
 
   get valid_message() {
-    let s = this.normalized_source
+    const s = this.normalized_source
     let message = null
     if (message == null) {
       if (GX.blank_p(s)) {
@@ -65,8 +66,8 @@ export class RoomKeyValidator {
       }
     }
     if (message == null) {
-      if (s.match(new RegExp(SystemNgWordList.join("|"), "i"))) {
-        message = `${this.options.name}には記号のような文字を含めないでください`
+      if (!s.match(RegexpSet.COMMON_SAFE_CHAR)) {
+        message = `特殊な文字を含めないでください`
       }
     }
     return message
@@ -75,7 +76,6 @@ export class RoomKeyValidator {
   // private
 
   get normalized_source() {
-    let s = this.source ?? ""
-    return s
+    return this.source ?? ""
   }
 }

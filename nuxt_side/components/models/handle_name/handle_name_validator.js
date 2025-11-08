@@ -11,7 +11,9 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
+import { RegexpSet } from "@/components/models/regexp_set.js"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
+import { HandleNameNormalizer } from "./handle_name_normalizer.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class HandleNameValidator {
@@ -81,8 +83,7 @@ export class HandleNameValidator {
 
     if (this.options.ng_word_check_p) {
       if (message == null) {
-        // 許可する文字：英数字、ひらがな、カタカナ、漢字
-        if (!name.match(/^[a-zA-Z0-9\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]+$/)) {
+        if (!name.match(RegexpSet.COMMON_SAFE_CHAR)) {
           message = this.message_sample
         }
       }
@@ -92,6 +93,12 @@ export class HandleNameValidator {
         // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
         const is_single_non_kanji = without_kanji.length === 1
         if (is_single_non_kanji) {
+          message = this.message_sample
+        }
+      }
+      if (message == null) {
+        // 全体が「全角数字」「半角数字」で構成されているものはダメ
+        if (name.match(RegexpSet.COMMON_NUMBER)) {
           message = this.message_sample
         }
       }
@@ -115,11 +122,7 @@ export class HandleNameValidator {
   // private
 
   get normalized_name() {
-    let name = this.source
-    name = GX.str_control_chars_remove(name)
-    name = GX.str_space_remove(name)
-    name = GX.hankaku_format(name)    // バリデーションしやすくするため
-    return name
+    return HandleNameNormalizer.normalize(this.source)
   }
 
   get message_sample() {

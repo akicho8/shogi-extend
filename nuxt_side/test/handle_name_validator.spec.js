@@ -84,8 +84,10 @@ describe("HandleNameValidator", () => {
 
   test("全部数字はダメ", () => {
     expect(HandleNameValidator.valid_p("123")).toEqual(false)
+  })
+
+  test("全角数字のみはダメ", () => {
     expect(HandleNameValidator.valid_p("７７７")).toEqual(false)
-    expect(HandleNameValidator.valid_p("2.3")).toEqual(false)
   })
 
   test("NGワードはダメ", () => {
@@ -133,6 +135,8 @@ describe("HandleNameValidator", () => {
   test("「」", () => {
     expect(HandleNameValidator.valid_p("｢｣")).toEqual(false)
     expect(HandleNameValidator.valid_p("「」")).toEqual(false)
+    expect(HandleNameValidator.valid_p("(foo)")).toEqual(false)
+    expect(HandleNameValidator.valid_p("（ｆｏｏ）")).toEqual(false)
   })
 
   test("記号的な文字の繰り返し", () => {
@@ -150,5 +154,25 @@ describe("HandleNameValidator", () => {
   test("自分に敬称をつけるな", () => {
     expect(HandleNameValidator.valid_p("fooさん")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo様")).toEqual(false)
+  })
+
+  test("全角を含めてホワイトスペースはダメ", () => {
+    expect(HandleNameValidator.valid_p("foo bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo　bar")).toEqual(false)
+  })
+
+  test("コントロール文字が含まれているものはダメ", () => {
+    expect(HandleNameValidator.valid_p("foo\nbar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo\tbar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo\u007bar")).toEqual(false) // \u007 = BELL
+  })
+
+  test("ハイフンは通る", () => {
+    expect(HandleNameValidator.valid_p("パーマン")).toEqual(true)
+  })
+
+  test("ビックリマークはだめ", () => {
+    expect(HandleNameValidator.valid_p("alice!")).toEqual(false)
+    expect(HandleNameValidator.valid_p("alice！")).toEqual(false)
   })
 })
