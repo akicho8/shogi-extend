@@ -12,4 +12,7 @@ export const SystemNgWordList = [
   "%",
   "~",
   "\\^",
+  "@",
+  "\"",
+  "'",
 ]

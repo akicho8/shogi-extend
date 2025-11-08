@@ -24,6 +24,9 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("foo%bar")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo~bar")).toEqual(false)
     expect(HandleNameValidator.valid_p("foo^bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo'bar")).toEqual(false)
+    expect(HandleNameValidator.valid_p('foo"bar')).toEqual(false)
+    expect(HandleNameValidator.valid_p('foo@bar')).toEqual(false)
   })
 
   test("短かくても漢字なら良い", () => {
@@ -107,6 +110,7 @@ describe("HandleNameValidator", () => {
 
   test("文章を書いているのはダメ", () => {
     expect(HandleNameValidator.valid_p("よろしく。")).toEqual(false)
+    expect(HandleNameValidator.valid_p("致します")).toEqual(false)
   })
 
   test("絵文字のみはダメ", () => {
@@ -134,5 +138,17 @@ describe("HandleNameValidator", () => {
   test("記号的な文字の繰り返し", () => {
     expect(HandleNameValidator.valid_p("_")).toEqual(false)
     expect(HandleNameValidator.valid_p("__")).toEqual(false)
+  })
+
+  test("前後に？を入れるな", () => {
+    expect(HandleNameValidator.valid_p("?foo")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo?")).toEqual(false)
+    expect(HandleNameValidator.valid_p("？foo")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo？")).toEqual(false)
+  })
+
+  test("自分に敬称をつけるな", () => {
+    expect(HandleNameValidator.valid_p("fooさん")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo様")).toEqual(false)
   })
 })
