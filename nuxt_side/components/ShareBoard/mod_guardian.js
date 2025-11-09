@@ -28,7 +28,7 @@ export const mod_guardian = {
     guardian_list() {
       return _.uniq([
         // 人
-        ..."🎃",
+        ..."",
         // 食べ物
         ..."🍉🥕🍆🥦🥝🍩",
         // シンボル
