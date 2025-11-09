@@ -17,7 +17,7 @@ import { HandleNameNormalizer } from "./handle_name_normalizer.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class HandleNameValidator {
-  static MAX_LENGTH = 10
+  static MAX_LENGTH = 10        // Nintendo Switch は10文字
 
   static NG_PREFIX_LIST = [
     "もっと素敵な",
