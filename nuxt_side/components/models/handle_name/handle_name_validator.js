@@ -79,7 +79,7 @@ export class HandleNameValidator {
     if (this.options.ng_word_check_p) {
       // 絵文字とか使うな
       if (message == null) {
-        if (!name.match(RegexpSet.COMMON_SAFE_CHAR)) {
+        if (!name.match(RegexpSet.HANDLE_NAME_SAFE_CHAR)) {
           message = `使用できない文字が含まれています`
         }
       }

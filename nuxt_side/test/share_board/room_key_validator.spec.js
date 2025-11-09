@@ -19,4 +19,9 @@ describe("RoomKeyValidator", () => {
     expect(RoomKeyValidator.valid_p("foo　bar")).toEqual(false)
     expect(RoomKeyValidator.valid_p("foo\tbar")).toEqual(false)
   })
+
+  test("ダンダーバーとハイフンは良い", () => {
+    expect(RoomKeyValidator.valid_p("foo-bar")).toEqual(true)
+    expect(RoomKeyValidator.valid_p("foo_bar")).toEqual(true)
+  })
 })

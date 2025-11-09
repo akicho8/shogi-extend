@@ -19,5 +19,6 @@ export const RegexpBuilder = {
     full_width_kanji:    '\u4E00-\u9FFF',              // 全角漢字
     full_width_hiragana: '\u3040-\u309F',              // 全角ひらがな
     kansuuji:            '一二三四五六七八九十',       // 漢数字
+    half_width_hyphen_underscore: '_\\-',              // Hyhen Underscore
   },
 }

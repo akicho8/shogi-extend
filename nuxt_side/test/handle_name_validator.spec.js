@@ -174,4 +174,8 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("alice1段")).toEqual(false)
     expect(HandleNameValidator.valid_p("alice30級")).toEqual(false)
   })
+
+  test("ng_word_check_p が無効なら1文字も通る", () => {
+    expect(HandleNameValidator.valid_p("a", {ng_word_check_p: false})).toEqual(true)
+  })
 })

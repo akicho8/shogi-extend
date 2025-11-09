@@ -66,7 +66,7 @@ export class RoomKeyValidator {
       }
     }
     if (message == null) {
-      if (!s.match(RegexpSet.COMMON_SAFE_CHAR)) {
+      if (!s.match(RegexpSet.ROOM_KEY_SAFE_CHAR)) {
         message = `特殊な文字を含めないでください`
       }
     }
