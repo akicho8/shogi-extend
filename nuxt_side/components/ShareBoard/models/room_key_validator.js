@@ -15,7 +15,7 @@ import { RegexpSet } from "@/components/models/regexp_set.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
 
 export class RoomKeyValidator {
-  static MAX_LENGTH = 12
+  static MAX_LENGTH = 32
 
   static create(source, options = {}) {
     return new this(source, options)
