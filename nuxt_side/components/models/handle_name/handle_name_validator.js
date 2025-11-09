@@ -80,7 +80,7 @@ export class HandleNameValidator {
       // 絵文字とか使うな
       if (message == null) {
         if (!name.match(RegexpSet.HANDLE_NAME_SAFE_CHAR)) {
-          message = `使用できない文字が含まれています`
+          message = `${this.options.name}に使用できない文字が含まれています (絵文字や記号は使用できません)`
         }
       }
 
@@ -91,7 +91,7 @@ export class HandleNameValidator {
         // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
         const is_single_non_kanji = without_kanji.length === 1
         if (is_single_non_kanji) {
-          message = `もう少しユニークな${this.options.name}を入力してください`
+          message = `もう少しユニークな${this.options.name}にしてください`
         }
       }
 
@@ -99,21 +99,21 @@ export class HandleNameValidator {
       if (message == null) {
         // 全体が「全角数字」「半角数字」で構成されているものはダメ
         if (name.match(RegexpSet.COMMON_NUMBER)) {
-          message = `それはただの数字です`
+          message = `それは${this.options.name}ではなく数字です`
         }
       }
 
       // 段級位を書くな
       if (message == null) {
         if (name.match(RegexpSet.COMMON_GRADE)) {
-          message = `段級位を含めないでください`
+          message = `${this.options.name}に段級位を含めないでください`
         }
       }
 
       // 「もっと素敵な」や「真面目に」を弾く (エラー文言に合わせて必ずこれを入力するやつがいる)
       if (message == null) {
         if (name.match(new RegExp(this.constructor.NG_PREFIX_LIST.join("|"), "i"))) {
-          message = `真面目に入力してください`
+          message = `${this.options.name}を真面目に入力してください`
         }
       }
 
