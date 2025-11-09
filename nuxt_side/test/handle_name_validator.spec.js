@@ -2,7 +2,7 @@ import { HandleNameValidator } from "@/components/models/handle_name/handle_name
 
 describe("HandleNameValidator", () => {
   test("valid_message", () => {
-    expect(HandleNameValidator.valid_message("a").includes("ハンドルネームを入力してください")).toEqual(true)
+    expect(HandleNameValidator.valid_message("").includes("ハンドルネームを入力してください")).toEqual(true)
   })
 
   test("長すぎる", () => {
