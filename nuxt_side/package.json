@@ -39,6 +39,7 @@
     "jest": "^29.7.0",
     "lzma": "2.3.2",
     "marked": "^15.0.7",
+    "moji": "^0.5.1",
     "node-emoji": "1.11.0",
     "nuxt": "2.18.1",
     "nuxt-basic-auth-module": "1.4.1",

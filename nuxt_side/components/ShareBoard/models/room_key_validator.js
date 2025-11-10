@@ -13,6 +13,7 @@ import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
 import { RegexpSet } from "@/components/models/regexp_set.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
+const Moji = require("moji")
 
 export class RoomKeyValidator {
   static MAX_LENGTH = 32
@@ -76,6 +77,11 @@ export class RoomKeyValidator {
   // private
 
   get normalized_source() {
-    return this.source ?? ""
+    let moji = Moji(this.source)
+    moji = moji.convert("HK", "ZK") // 半角カナ     → 全角カナ
+    moji = moji.convert("KK", "HG") // 全角カナ     → ひらがな
+    moji = moji.convert("ZE", "HE") // 全角英数     → 全角英数
+    moji = moji.convert("ZS", "HS") // 全角スペース → 半角スペース
+    return moji.toString()
   }
 }

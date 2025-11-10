@@ -25,7 +25,8 @@ describe("RoomKeyValidator", () => {
     expect(RoomKeyValidator.valid_p("foo_bar")).toEqual(true)
   })
 
-  test("全角ハイフン", () => {
+  test("全角ハイフンと波線はOK", () => {
     expect(RoomKeyValidator.valid_p("ホーム")).toEqual(true)
+    expect(RoomKeyValidator.valid_p("ホ〜ム")).toEqual(true)
   })
 })

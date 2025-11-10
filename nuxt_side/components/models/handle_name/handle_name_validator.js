@@ -12,17 +12,14 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
 import { RegexpSet } from "@/components/models/regexp_set.js"
-import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
+import { HandleNameNgWordCommonList } from "./handle_name_ng_word_common_list.js"
+import { HandleNameNgWordUserList } from "./handle_name_ng_word_user_list.js"
 import { HandleNameNormalizer } from "./handle_name_normalizer.js"
 import { SystemNgWordList } from "@/components/models/system_ng_word_list.js"
+const Moji = require("moji")
 
 export class HandleNameValidator {
   static MAX_LENGTH = 10        // Nintendo Switch は10文字
-
-  static NG_PREFIX_LIST = [
-    "もっと素敵な",
-    "真面目に",
-  ]
 
   static create(source, options = {}) {
     return new this(source, options)
@@ -110,16 +107,23 @@ export class HandleNameValidator {
         }
       }
 
-      // 「もっと素敵な」や「真面目に」を弾く (エラー文言に合わせて必ずこれを入力するやつがいる)
+      // 自分に敬称をつけんな
       if (message == null) {
-        if (name.match(new RegExp(this.constructor.NG_PREFIX_LIST.join("|"), "i"))) {
-          message = `${this.options.name}を真面目に入力してください`
+        if (name.match(/(ちゃん|さん|様|君|殿|氏|先生)$/)) {
+          message = `自分の${this.options.name}に敬称をつけないでください`
         }
       }
 
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
-        if (name.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {
+        if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
+          message = `そのような${this.options.name}を入力した場合、利用制限の監視対象になります`
+        }
+      }
+
+      // へんな用語を入れるやつを弾く
+      if (message == null) {
+        if (name.match(new RegExp(HandleNameNgWordUserList.join("|"), "i"))) {
           message = `もっと素敵な${this.options.name}を入力してください`
         }
       }
@@ -131,6 +135,13 @@ export class HandleNameValidator {
   // private
 
   get normalized_name() {
-    return HandleNameNormalizer.normalize(this.source)
+    let moji = Moji(this.source)
+    moji = moji.convert("HK", "ZK") // 半角カナ     → 全角カナ
+    moji = moji.convert("KK", "HG") // 全角カナ     → ひらがな
+    moji = moji.convert("ZE", "HE") // 全角英数     → 全角英数
+    moji = moji.convert("ZS", "HS") // 全角スペース → 半角スペース
+    let str = moji.toString()
+    str = str.replace(/ +/g, "")    // 半角スペース → (削除) ※ \s を使うと \n まで消えてしまってエラーにできない
+    return str
   }
 }
