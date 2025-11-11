@@ -117,7 +117,7 @@ export class HandleNameValidator {
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
-          message = `そのような${this.options.name}を入力した場合、利用制限の監視対象になります`
+          message = `恥ずかしくない${this.options.name}を入力してください`
         }
       }
 
