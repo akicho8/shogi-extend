@@ -16,6 +16,7 @@
     .panel
       .panel-heading
         | ハンドルネーム関連
+      a.panel-block(href="?ng_word_check_p=true") 「NGワードチェック」有効化
       a.panel-block(@click="SB.handle_name_modal_handle") 入力
       a.panel-block(@click="SB.handle_name_alert") 変更禁止警告
       a.panel-block(@click="SB.handle_name_clear") 空にする

@@ -20,7 +20,6 @@
         .panel-heading
           | 環境切り替え
         a.panel-block(href="?room_url_copy_modal_p=true") 「部屋のリンクをコピーする」自動発動有効化
-        a.panel-block(href="?ng_word_check_p=true") 「NGワードチェック」有効化
 </template>
 
 <script>

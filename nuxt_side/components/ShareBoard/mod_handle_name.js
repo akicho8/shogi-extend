@@ -58,12 +58,19 @@ export const mod_handle_name = {
     },
 
     handle_name_invalid_then_show(user_name) {
-      const message = HandleNameValidator.valid_message(user_name, {ng_word_check_p: this.ng_word_check_p})
+      const message = this.handle_name_invalid_message(user_name)
       if (message) {
         this.toast_warn(message)
+        this.app_log({emoji: ":名前違反:", subject: "共有将棋盤 名前違反", body: {user_name: user_name, message: message}})
         return true
       }
       return false
+    },
+
+    // private
+
+    handle_name_invalid_message(user_name) {
+      return HandleNameValidator.valid_message(user_name, {ng_word_check_p: this.ng_word_check_p})
     },
   },
   computed: {

@@ -28,6 +28,11 @@ module QuickScript
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "反則" }),
             func: -> { AppLog.subject_like("反則").where(created_at: 24.hours.ago..).count },
           },
+          {
+            name: "[共有] 名前違反",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "名前違反" }),
+            func: -> { AppLog.subject_like("名前違反").where(created_at: 24.hours.ago..).count },
+          },
 
           ################################################################################
 

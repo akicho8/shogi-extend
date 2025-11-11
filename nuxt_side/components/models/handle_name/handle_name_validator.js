@@ -94,7 +94,7 @@ export class HandleNameValidator {
 
       // 全部数字は名前じゃない
       if (message == null) {
-        // 全体が「全角数字」「半角数字」で構成されているものはダメ
+        // 全体が「半角数字」で構成されているものはダメ
         if (name.match(RegexpSet.COMMON_NUMBER)) {
           message = `それは${this.options.name}ではなく数字です`
         }
@@ -109,15 +109,15 @@ export class HandleNameValidator {
 
       // 自分に敬称をつけんな
       if (message == null) {
-        if (name.match(/(ちゃん|さん|様|君|殿|氏|先生)$/)) {
-          message = `自分の${this.options.name}に敬称をつけないでください`
+        if (name.match(/(ちゃん|君|くん|さん|様|殿|氏|先生)$/)) {
+          message = `自分に敬称をつけないでください`
         }
       }
 
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
-          message = `恥ずかしくない${this.options.name}を入力してください`
+          message = `呼ばれて恥ずかしくない${this.options.name}を入力してください`
         }
       }
 
