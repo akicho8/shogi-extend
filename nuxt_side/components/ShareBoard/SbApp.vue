@@ -66,7 +66,7 @@ import { Location                          } from "shogi-player/components/model
 import { FormatTypeInfo                    } from "@/components/models/format_type_info.js"
 import { autoexec_methods                  } from "@/components/models/autoexec_methods.js"
 
-import { AppConfig                         } from "./models/mod_config.js"
+import { AppConfig                         } from "./models/mod_app_config.js"
 
 import { support_parent                    } from "./support_parent.js"
 

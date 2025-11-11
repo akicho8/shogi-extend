@@ -69,7 +69,7 @@
         b-button.mb-0(size="is-small" @click="option_block_show_handle" icon-left="cog") オプション
 
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
-        .column.is-12(v-if="SB.debug_mode_p")
+        .column.is-12(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
           SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_o.foul_mode_key")
         .column.is-12(v-if="SB.debug_mode_p")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_o.auto_resign_key")
