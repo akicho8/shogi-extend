@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     find(".chat_modal_open_handle").click
   end
 
-  it "@gpt", chat_gpt_spec: true do
+  it "@gpt", ai_active: true do
     chat_message_send("@gpt こんにちは")
     assert_message_latest_from("GPT", wait: 30)
   end

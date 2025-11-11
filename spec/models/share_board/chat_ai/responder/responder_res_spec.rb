@@ -5,7 +5,7 @@ RSpec.describe ShareBoard::ChatAi::Responder::ResponderRes do
     ShareBoard.setup
   end
 
-  it "works", chat_gpt_spec: true do
+  it "works", ai_active: true do
     history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 

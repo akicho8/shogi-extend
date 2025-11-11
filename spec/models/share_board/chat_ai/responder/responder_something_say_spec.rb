@@ -5,7 +5,7 @@ RSpec.describe ShareBoard::ChatAi::Responder::ResponderSomethingSay do
     ShareBoard.setup
   end
 
-  it "works", chat_gpt_spec: true do
+  it "works", ai_active: true do
     history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 
@@ -18,7 +18,7 @@ RSpec.describe ShareBoard::ChatAi::Responder::ResponderSomethingSay do
     assert { history.to_topic[0].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
   end
 
-  it "一人称を把握している", chat_gpt_spec: true do
+  it "一人称を把握している", ai_active: true do
     history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 

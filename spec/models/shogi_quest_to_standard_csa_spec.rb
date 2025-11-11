@@ -18,7 +18,7 @@ $START_TIME:2000/01/01 00:00:00
 EOT
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
+# >> Run options: exclude {ai_active: true, login_spec: true, slow_spec: true}
 # >>
 # >> ShogiQuestToStandardCsa
 # >>   works

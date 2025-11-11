@@ -13,7 +13,7 @@ export const AppConfig = {
 
   NAVBAR_COLOR_CHANGE: false,                 // 残り時間によってバーの色を変更するか？
 
-  GPT_FUNCTION: true,                         // ChatGPT を有効にするか？
+  ai_active: true,                         // ChatGPT を有効にするか？
 
   STORAGE_KEY_SUFFIX_NEW: "/V1",              // localStorage のキーの新しいサフィックス 例: "/V1"
   STORAGE_KEY_SUFFIX_OLD: "",                 // localStorage のキーの古いサフィックス 例: "/V1"

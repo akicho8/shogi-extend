@@ -22,7 +22,7 @@ RSpec.describe Swars::User::Stat::TurnStat, type: :model, swars_spec: true do
     end
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
+# >> Run options: exclude {ai_active: true, login_spec: true, slow_spec: true}
 # >>
 # >> Swars::User::Stat::TurnStat
 # >>   平均手数・最長手数

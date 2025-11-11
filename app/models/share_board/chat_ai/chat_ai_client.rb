@@ -23,7 +23,7 @@ module ShareBoard
           AppLog.info(subject: "チャット (GPT)", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT_IN:")
         end
 
-        if !AppConfig[:GPT_FUNCTION]
+        if !AppConfig[:ai_active]
           return
         end
 

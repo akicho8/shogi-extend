@@ -17,7 +17,7 @@ RSpec.describe Swars::User::Stat::AverageMovesAtResignationStat, type: :model, s
     end
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
+# >> Run options: exclude {ai_active: true, login_spec: true, slow_spec: true}
 # >>
 # >> Swars::User::Stat::AverageMovesAtResignationStat
 # >>   投了時の平均手数

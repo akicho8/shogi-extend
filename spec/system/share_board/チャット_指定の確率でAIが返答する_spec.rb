@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     chat_message_send("1+2は？")
   end
 
-  it "必ず返答する", chat_gpt_spec: true do
+  it "必ず返答する", ai_active: true do
     case1(1)
     assert_message_latest_from("GPT", wait: 5)
   end

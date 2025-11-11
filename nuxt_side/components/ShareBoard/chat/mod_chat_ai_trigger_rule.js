@@ -36,7 +36,7 @@ export const mod_chat_ai_trigger_rule = {
 
     // /gpt xxx の xxx を自動で作る
     ai_say_for(delay, key, params) {
-      if (!this.GPT_FUNCTION) { return }
+      if (!this.ai_active) { return }
       if (!AI_RESPONSE_MODE) { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
@@ -53,7 +53,7 @@ export const mod_chat_ai_trigger_rule = {
     // ときどき自動で /gpt を実行する
     // このとき直前に送った人のスコープを真似する
     ai_random_say(params) {
-      if (!this.GPT_FUNCTION) { return }
+      if (!this.ai_active) { return }
       if (this.__SYSTEM_TEST_RUNNING__) { return }
 
       if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
@@ -164,6 +164,6 @@ export const mod_chat_ai_trigger_rule = {
     ARASHI_THRESHOLD() { return this.param_to_i("ARASHI_THRESHOLD", ARASHI_THRESHOLD) },
     ARASHI_RE_RATE()   { return this.param_to_i("ARASHI_RE_RATE", ARASHI_RE_RATE) },
 
-    GPT_FUNCTION() { return this.ai_mode_info.key === "ai_mode_on" && this.AppConfig.GPT_FUNCTION },
+    ai_active() { return this.ai_mode_info.key === "ai_mode_on" && this.AppConfig.ai_active },
   },
 }

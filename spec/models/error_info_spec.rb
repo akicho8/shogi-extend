@@ -12,7 +12,7 @@ RSpec.describe ErrorInfo do
     # puts "--------"
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
+# >> Run options: exclude {ai_active: true, login_spec: true, slow_spec: true}
 # >>
 # >> ErrorInfo
 # >>   works

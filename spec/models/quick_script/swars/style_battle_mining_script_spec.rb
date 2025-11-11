@@ -12,7 +12,7 @@ RSpec.describe QuickScript::Swars::StyleBattleMiningScript, type: :model do
     assert { QuickScript::Swars::StyleBattleMiningScript.new.aggregate[:"王道"] == [battle.id] }
   end
 end
-# >> Run options: exclude {chat_gpt_spec: true, login_spec: true, slow_spec: true}
+# >> Run options: exclude {ai_active: true, login_spec: true, slow_spec: true}
 # >>
 # >> QuickScript::Swars::StyleBattleMiningScript
 # >> 1999-12-31T15:00:00.000Z pid=77627 tid=1lvn INFO: Sidekiq 7.3.9 connecting to Redis with options {size: 10, pool_name: "internal", url: "redis://localhost:6379/4"}
