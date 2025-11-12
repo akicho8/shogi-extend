@@ -20,7 +20,7 @@ export const AppConfig = {
 
   CLOCK_START_CONFIRM: false,                 // 途中の局面から対局開始した際に確認するか？
 
-  foul_mode_ui_show: true,                    // 反則なしにできるようにする
+  foul_mode_ui_show: false,                   // 反則なしにできるようにする
 }
 
 if (process.env.NODE_ENV === "development") {
