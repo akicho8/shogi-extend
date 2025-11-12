@@ -20,6 +20,7 @@ export const mod_illegal = {
       this.sfx_play("x")               // 自分だけに軽く知らせる
       this.latest_illegal_name = attrs.name // デバッグ用
       this.toast_ng(attrs.name)          // "二歩"
+      this.ac_log({subject: "反則検知", body: {"種類": attrs.name, "局面": this.current_url}})
     },
 
     // 一般モードの反則チェックありで自動的に指摘するときの処理
