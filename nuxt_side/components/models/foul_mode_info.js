@@ -29,7 +29,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "block",
         name: "できない",
-        message: "緊張感↓ 逆転の余地↓ 盛り上がり↓ (超初心者向け)",
+        message: "緊張感↓ 逆転の余地↓ 盛り上がり↓ (接待用)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,

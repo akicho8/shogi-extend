@@ -115,6 +115,17 @@ export default {
       option_block_show_p: this.SB.debug_mode_p,
     }
   },
+  watch: {
+    "SB.new_o.foul_mode_key"(new_val, old_val) {
+      if (new_val === this.SB.FoulModeInfo.fetch("block").key) {
+        GX.delay_block(1, () => {
+          this.sfx_stop_all()
+          this.toast_ok(`反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}には不要でしょう。`, {duration: 1000 * 10, validate_length: false})
+        })
+      }
+    },
+  },
+
   methods: {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
