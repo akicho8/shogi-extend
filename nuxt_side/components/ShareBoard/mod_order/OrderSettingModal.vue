@@ -70,7 +70,7 @@
 
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
         .column.is-12(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
-          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_o.foul_mode_key")
+          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_o.foul_mode_key" @user_input="foul_mode_key_updated")
         .column.is-12(v-if="SB.debug_mode_p")
           SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_o.auto_resign_key")
         .column.is-12
@@ -114,16 +114,6 @@ export default {
     return {
       option_block_show_p: this.SB.debug_mode_p,
     }
-  },
-  watch: {
-    "SB.new_o.foul_mode_key"(new_val, old_val) {
-      if (new_val === this.SB.FoulModeInfo.fetch("block").key) {
-        GX.delay_block(1, () => {
-          this.sfx_stop_all()
-          this.toast_ok(`反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}には不要でしょう。`, {duration: 1000 * 10, validate_length: false})
-        })
-      }
-    },
   },
 
   methods: {
@@ -294,6 +284,18 @@ export default {
       this.sfx_click()
       this.SB.quiz_delete()
       this.SB.al_share({label: "お題削除", message: "お題を削除しました"})
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    foul_mode_key_updated(foul_mode_key) {
+      if (foul_mode_key === this.SB.FoulModeInfo.fetch("block").key) {
+        GX.delay_block(1, () => {
+          this.sfx_stop_all()
+          const message = `反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}に補助輪は不要でしょう。`
+          this.toast_ok(message, {duration: 1000 * 10, validate_length: false})
+        })
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////

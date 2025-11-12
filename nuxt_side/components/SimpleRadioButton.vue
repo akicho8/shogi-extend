@@ -104,7 +104,7 @@ export default {
       if (this.buttons_p) {
         this.talk(this.current.talk_message || this.current.name)
       }
-      this.$emit("user_input", this.real_model)
+      this.$emit("user_input", e)
     },
     label_click_handle(e) {
       if (GX.present_p(this.hint_str)) {
