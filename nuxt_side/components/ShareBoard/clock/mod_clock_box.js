@@ -367,6 +367,7 @@ export const mod_clock_box = {
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     __cc_start_call(params) {
+      // this.toast_ok(`ABC`, {onend: () => { this.toast_ok(`DEF`, {onend: () => {}}) }})
       this.toast_ok(this.__cc_receive_message(params), {
         onend: () => {
           // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
@@ -374,7 +375,11 @@ export const mod_clock_box = {
             // if (this.self_vs_self_p) {
             //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
             // }
-            this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+            this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`, {
+              onend: () => {
+                this.think_mark_invite_to_watcher()
+              },
+            })
           } else {
             // 順番設定をしていない場合
           }

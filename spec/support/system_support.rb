@@ -205,6 +205,12 @@ if true
       find(".sidebar_close_handle").click
     end
 
+    # サイドバーの開閉をすることで音が鳴るようになる
+    def browser_audio_wakeup
+      sidebar_open
+      sidebar_close
+    end
+
     def menu_item_click(text)
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
@@ -245,7 +251,14 @@ if true
       uri.query = params.to_query                           # => "a=1&b=2&c=3"
       puts "[visit_to] #{uri}"
       visit(uri.to_s)
+      # browser_audio_wakeup
     end
+
+    # # 一度画面をクリックすることで音が出るようになる
+    # # それに伴って Howler の onend フックも動くようになる
+    # def browser_audio_wakeup
+    #   Capybara.find("body").click(x: 0, y: 0)
+    # end
 
     def current_query
       Rack::Utils.parse_query(URI(current_url).query)

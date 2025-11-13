@@ -90,6 +90,7 @@ import { mod_sp                            } from "./mod_sp.js"
 import { mod_warning                            } from "./mod_warning.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
 import { mod_think_mark                } from "./think_mark/mod_think_mark.js"
+import { mod_think_mark_invite                } from "./think_mark/mod_think_mark_invite.js"
 import { mod_devise                        } from "./mod_devise.js"
 import { mod_user_kick                     } from "./mod_user_kick.js"
 import { mod_track_log                     } from "./track_log/mod_track_log.js"
@@ -205,6 +206,7 @@ export default {
     mod_warning,
     mod_perpetual,
     mod_think_mark,
+    mod_think_mark_invite,
     mod_devise,
     mod_user_kick,
     mod_track_log,
