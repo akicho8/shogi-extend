@@ -14,14 +14,7 @@ export const mod_illegal = {
   },
 
   methods: {
-    // 初心者モードの反則チェックありだけど反則できないときに反則したときの処理
-    // ここは何もしなければ将棋ウォーズのようになる
-    ev_illegal_illegal_accident(attrs) {
-      this.sfx_play("x")               // 自分だけに軽く知らせる
-      this.latest_illegal_name = attrs.name // デバッグ用
-      this.toast_ng(attrs.name)          // "二歩"
-      this.ac_log({subject: "反則検知", body: {"種類": attrs.name, "局面": this.current_url}})
-    },
+    //////////////////////////////////////////////////////////////////////////////// 反則 = したら負け
 
     // 一般モードの反則チェックありで自動的に指摘するときの処理
     // 反則モーダル発動
@@ -52,6 +45,34 @@ export const mod_illegal = {
         this.illegal_modal_instance.close()
         this.illegal_modal_instance = null
       }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 反則 = できない
+
+    // 初心者モードの反則チェックありだけど反則できないときに反則したときの処理
+    // ここは何もしなければ将棋ウォーズのようになる
+    ev_illegal_illegal_accident(attrs) {
+      this.illegal_activation(attrs.name)
+    },
+    illegal_activation(illegal_name) {
+      this.illegal_show(illegal_name)         // 当事者には最速で知らせたいのでブロードキャスト前にする
+      this.illegal_share(illegal_name)        // 共有する
+      this.ac_log({subject: "反則検知", body: {"種類": illegal_name, "局面": this.current_url}})
+    },
+    illegal_share(illegal_name) {
+      this.ac_room_perform("illegal_share", {illegal_name: illegal_name}) // --> app/channels/share_board/room_channel.rb
+    },
+    illegal_share_broadcasted(params) {
+      if (this.received_from_self(params)) {
+      } else {
+        this.illegal_show(params.illegal_name)
+      }
+      this.al_add({...params, label: params.illegal_name, label_type: "is-danger"})
+    },
+    illegal_show(illegal_name) {
+      this.sfx_play("x")
+      this.toast_ng(illegal_name)
+      this.latest_illegal_name = illegal_name // デバッグ用
     },
   },
 }

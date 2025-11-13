@@ -26,14 +26,19 @@ export const mod_sfen_share = {
 
       this.rs_failed_count = 0    // 着手したので再送回数を0にしておく
 
+      // 反則名リストを作る
       const illegal_names = lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
 
-      if (this.foul_mode_info.perpetual_check_p) {
+      // 千日手
+      if (true) {
         this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
-        // 反則名を配列を作る
         // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する
         if (this.perpetual_cop.available_p(e.snapshot_hash)) {    // 千日手か？
-          illegal_names.push("千日手")                            // ["駒ワープ", "王手放置", "千日手"]
+          if (this.foul_mode_info.perpetual_check_p) {
+            illegal_names.push("千日手")                          // ["駒ワープ", "王手放置", "千日手"]
+          } else {
+            this.illegal_activation("千日手")                     // 通知のみする
+          }
         }
       }
 

@@ -175,6 +175,10 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
+    def illegal_share(data)
+      broadcast(:illegal_share_broadcasted, data)
+    end
+
     ################################################################################
 
     def xprofile_load(data)

@@ -323,6 +323,18 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
+  describe "illegal_share" do
+    before do
+      subscribe(room_key: room_key)
+    end
+    it "works" do
+      data = data_factory("illegal_share" => "二歩")
+      expect {
+        subscription.illegal_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "illegal_share_broadcasted", bc_params: data)
+    end
+  end
+
   describe "xprofile_load" do
     before do
       ShareBoard::Room.mock(room_key: room_key)
