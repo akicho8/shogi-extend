@@ -1,16 +1,16 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
+  before do
+    setup_share_board           # 「メッセージが自分と相手に届く」のテストが不安定なため
+  end
+
   let(:message1) { SecureRandom.hex }
   let(:message2) { SecureRandom.hex }
 
   it "メッセージが自分と相手に届く" do
-    window_a do
-      room_setup_by_user(:a) # aが部屋を作る
-    end
-    window_b do
-      room_setup_by_user(:b) # bも同じ入退室
-    end
+    window_a { room_setup_by_user(:a) }
+    window_b { room_setup_by_user(:b) }
     window_a do
       find(".chat_modal_open_handle").click            # 開く
       chat_message_send(message1)
