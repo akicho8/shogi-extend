@@ -290,9 +290,10 @@ export default {
 
     foul_mode_key_updated(foul_mode_key) {
       if (foul_mode_key === this.SB.FoulModeInfo.fetch("block").key) {
-        GX.delay_block(1, () => {
+        GX.delay_block(0.7, () => {
           this.sfx_stop_all()
-          const message = `反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}に補助輪は不要でしょう。`
+          this.sfx_play("se_notification")
+          const message = `反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう。`
           this.toast_ok(message, {duration: 1000 * 10, validate_length: false})
         })
       }
