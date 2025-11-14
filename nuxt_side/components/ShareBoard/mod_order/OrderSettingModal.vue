@@ -42,6 +42,8 @@
             | ☗
             b-icon(icon="swap-horizontal")
             | ☖
+        template(v-if="SB.debug_mode_p")
+          b-button.preset_select_modal_open_handle(size="is-small" @click="SB.preset_select_modal_open_handle") 手合割
 
       .buttons.is-centered.mb-0.mt-4
         b-button.furigoma_handle.mb-0(@click="furigoma_handle")
