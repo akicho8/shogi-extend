@@ -86,7 +86,7 @@ export default {
 
       hv.spaced = false
       if (this.SB.edit_mode_p) {
-        hv.type = "is-dark"
+        // hv.type = "is-dark"
       } else {
         if (this.SB.order_enable_p) {
           // hv.transparent = true
