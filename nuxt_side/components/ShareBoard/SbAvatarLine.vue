@@ -3,15 +3,14 @@
 .SbAvatarLine(v-bind="$attrs" v-on="$listeners")
   // すべて名前が入力されていないとだめ
   .name_block(v-if="info.from_user_name")
-    // replace_icon が最優先
+    // 絵文字表示順序
+    //  (1) 置き換え
+    //  (2) 優先絵文字
+    //  (3) 自分プロフィール画像
+    //  (4) 守護獣画像
     template(v-if="replace_icon")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
-
-    // 絵文字表示順序
-    //  (1) 優先絵文字
-    //  (2) 自分プロフィール画像
-    //  (3) 守護獣画像
-    template(v-if="info.primary_emoji")
+    template(v-else-if="info.primary_emoji")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="info.primary_emoji")
     template(v-else-if="info.from_avatar_path")
       img.avatar_img.flex_item(:src="info.from_avatar_path")
