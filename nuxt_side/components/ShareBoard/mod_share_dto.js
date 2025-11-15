@@ -1,4 +1,4 @@
-export const mod_share_data = {
+export const mod_share_dto = {
   methods: {
     // 他者からの受信を自分に反映する
     share_dto_receive(params) {

@@ -83,7 +83,7 @@ import { mod_chore                         } from "./mod_chore.js"
 import { mod_guardian                      } from "./mod_guardian.js"
 import { mod_handle_name                   } from "./mod_handle_name.js"
 import { mod_urls                          } from "./mod_urls.js"
-import { mod_share_data                    } from "./mod_share_data.js"
+import { mod_share_dto                    } from "./mod_share_dto.js"
 import { mod_edit_mode                     } from "./mod_edit_mode.js"
 import { mod_kifu_read                      } from "./mod_kifu_read.js"
 import { mod_sp                            } from "./mod_sp.js"
@@ -199,7 +199,7 @@ export default {
     mod_handle_name,
     mod_member_info_modal,
     mod_urls,
-    mod_share_data,
+    mod_share_dto,
     mod_edit_mode,
     mod_kifu_read,
     mod_sp,
