@@ -319,8 +319,8 @@ export default {
     foul_mode_block_warn_modal_open() {
       const message = [
         `<div class="content">`,
-          `<p>「反則できない」は接待用のインチキモードです。</p>`,
-          `<p>平均以上の棋力を持ち、真摯に将棋に向き合う${this.SB.my_call_name}には必要ないでしょう。</p>`,
+          `<p>「反則できない」は接待用の簡易モードであり、棋力向上の妨げになります。</p>`,
+          `<p>すでに将棋のルールを正しく理解し、真摯な姿勢で将棋に取り組む${this.SB.my_call_name}には必要ないでしょう。</p>`,
         `</div>`,
       ].join("")
       this.sfx_play("se_notification")
@@ -330,7 +330,7 @@ export default {
         title: `${this.SB.my_call_name}へ`,
         type: "is-danger",
         message: message,
-        confirmText: "プライドを捨てる",
+        confirmText: "補助輪が必要です",
         cancelText: "もちろん必要ない",
         focusOn: "confirm",
         onConfirm: () => {
