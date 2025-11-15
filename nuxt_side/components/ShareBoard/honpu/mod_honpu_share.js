@@ -5,9 +5,9 @@ import { GX } from "@/components/models/gx.js"
 export const mod_honpu_share = {
   methods: {
     honpu_share() {
-      this.tl_add("HONPU", "本譜の配布", this.honpu_share_data)
+      this.tl_add("HONPU", "本譜の配布", this.honpu_share_dto)
       if (this.honpu_main) {
-        this.ac_room_perform("honpu_share", this.honpu_share_data) // --> app/channels/share_board/room_channel.rb
+        this.ac_room_perform("honpu_share", this.honpu_share_dto) // --> app/channels/share_board/room_channel.rb
       }
     },
     honpu_share_broadcasted(params) {
@@ -15,10 +15,10 @@ export const mod_honpu_share = {
       if (this.received_from_self(params)) {
       } else {
         // 相手側で本譜とする
-        this.honpu_share_data_receive(params)
+        this.honpu_share_dto_receive(params)
       }
     },
-    honpu_share_data_receive(params) {
+    honpu_share_dto_receive(params) {
       if (params.honpu_main) {
         this.honpu_main = this.al_create(params.honpu_main)
       } else {
@@ -32,7 +32,7 @@ export const mod_honpu_share = {
     },
   },
   computed: {
-    honpu_share_data() {
+    honpu_share_dto() {
       return {
         __nil_check_skip_keys__: ["honpu_main", "honpu_branch"],
         honpu_main: this.honpu_main,

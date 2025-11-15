@@ -210,7 +210,7 @@ export const mod_room_channel = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    sfen_share_data_receive(params) {
+    sfen_share_dto_receive(params) {
       GX.assert(GX.present_p(params), "GX.present_p(params)")
       GX.assert("sfen" in params, '"sfen" in params')
       GX.assert("turn" in params, '"turn" in params')

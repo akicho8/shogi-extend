@@ -63,7 +63,7 @@ export const mod_room_board_setup = {
       params = {
         ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
-        share_data_all: this.share_data_all,
+        share_dto_all: this.share_dto_all,
         ////////////////////////////////////////////////////////////////////////////////
         active_level: this.active_level,      // 先輩度(高い方が信憑性のある情報)
       }
@@ -81,7 +81,7 @@ export const mod_room_board_setup = {
             this.ac_log({subject: "情報設定", body: `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`})
             this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
-            this.share_data_receive(params.share_data_all)
+            this.share_dto_receive(params.share_dto_all)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

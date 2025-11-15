@@ -135,7 +135,7 @@ export const mod_sp = {
     base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
     start_color()           { return this.base_location.code                  }, // 0:平手 1:駒落ち (超重要)
 
-    sfen_share_data()         { return { sfen: this.current_sfen, turn: this.current_turn } },
+    sfen_share_dto()         { return { sfen: this.current_sfen, turn: this.current_turn } },
 
     sp_class() {
       const av = []

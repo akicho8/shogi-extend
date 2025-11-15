@@ -117,7 +117,7 @@ export const mod_sfen_share = {
         }
 
         // 受信したSFENを盤に反映
-        this.sfen_share_data_receive(params)
+        this.sfen_share_dto_receive(params)
         this.se_piece_move() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
       }
 
@@ -130,7 +130,7 @@ export const mod_sfen_share = {
         if (true) {
           this.clock_box_share_broadcasted(params.clock_box_params)
         } else {
-          this.clock_share_data_receive(params.clock_box_params) // 他者の時計の内部情報だけを更新する
+          this.clock_share_dto_receive(params.clock_box_params) // 他者の時計の内部情報だけを更新する
         }
       }
 

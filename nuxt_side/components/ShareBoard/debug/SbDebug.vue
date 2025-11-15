@@ -170,9 +170,9 @@
   .column.is-3
     .panel
       .panel-heading
-        | clock_share_data
+        | clock_share_dto
       .panel-block
-        pre {{JSON.stringify(SB.clock_share_data, null, 4)}}
+        pre {{JSON.stringify(SB.clock_share_dto, null, 4)}}
   .column.is-3
     .panel
       .panel-heading

@@ -82,7 +82,7 @@ export const mod_order_main = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
-    order_share_data_receive(params) {
+    order_share_dto_receive(params) {
       GX.assert(GX.present_p(params), "GX.present_p(params)")
       GX.assert("order_enable_p" in params, '"order_enable_p" in params')
       GX.assert("order_unit" in params, '"order_unit" in params')
@@ -153,7 +153,7 @@ export const mod_order_main = {
     FIXED_ORDER_SWAP()  { return this.param_to_b("FIXED_ORDER_SWAP")                 }, // 先後を入れ替えるか？
 
     // あとから接続した人に伝える内容
-    order_share_data() {
+    order_share_dto() {
       return {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
