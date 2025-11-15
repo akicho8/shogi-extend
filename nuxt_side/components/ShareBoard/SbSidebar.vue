@@ -3,7 +3,7 @@
 b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
-      NavbarItemSidebarClose(@click="SB.sidebar_toggle")
+      NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
       template(v-if="$GX.blank_p(SB.ac_room) || !SB.i_am_member_p")
         NavbarItemLogin(component="a")
         NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
@@ -60,7 +60,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="SB.current_url" @click.prevent="SB.current_url_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
-          b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_handle")
+          b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_set_handle")
           b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.kifu_read_modal_open_handle()")
 
         SbSidebarExport(:base="SB")

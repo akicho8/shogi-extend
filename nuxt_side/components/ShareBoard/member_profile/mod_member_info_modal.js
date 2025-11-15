@@ -3,7 +3,7 @@ import MemberInfoModal from "./MemberInfoModal.vue"
 export const mod_member_info_modal = {
   methods: {
     member_info_modal_handle(member_info) {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.modal_card_open({
         component: MemberInfoModal,

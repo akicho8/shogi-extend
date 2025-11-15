@@ -55,14 +55,14 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     template(v-if="SB.edit_mode_p")
       b-navbar-item.has-text-weight-bold(tag="div")
         .buttons
-          a.button.is-primary(@click="SB.play_mode_handle")
+          a.button.is-primary(@click="SB.play_mode_set_handle")
             | 編集完了
 
     SbChatOpenButton2
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
     template(v-if="SB.play_mode_p")
-      NavbarItemSidebarOpen(@click="SB.sidebar_toggle")
+      NavbarItemSidebarOpen(@click="SB.sidebar_toggle_handle")
 </template>
 
 <script>

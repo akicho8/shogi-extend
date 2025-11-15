@@ -38,7 +38,7 @@ export const mod_order_new = {
 
         if (this.room_is_empty_p()) { return }
 
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
 
         this.os_modal_init()

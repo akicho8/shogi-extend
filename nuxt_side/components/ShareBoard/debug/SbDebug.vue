@@ -111,7 +111,7 @@
     .panel
       .panel-heading
         | その他
-      a.panel-block(@click="SB.edit_warn_modal_handle") 編集警告
+      a.panel-block(@click="SB.edit_warn_modal_open") 編集警告
       a.panel-block(@click="SB.al_test") 指し手
       a.panel-block(@click="SB.clock_box_share('cc_behavior_manual_sync')") 時計同期
       a.panel-block(@click="SB.reload_modal_handle") リロード確認

@@ -27,7 +27,7 @@ export const mod_export = {
         ...this.player_names,
       })
       if (success) {
-        this.sidebar_p = false
+        this.sidebar_close()
       }
     },
 

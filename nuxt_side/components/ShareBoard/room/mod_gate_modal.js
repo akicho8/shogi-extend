@@ -19,7 +19,7 @@ export const mod_gate_modal = {
   methods: {
     gate_modal_open_handle() {
       if (this.gate_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.gate_modal_open()
       }
@@ -27,7 +27,7 @@ export const mod_gate_modal = {
 
     gate_modal_close_handle() {
       if (this.gate_modal_instance) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.gate_modal_close()
       }
@@ -83,7 +83,7 @@ export const mod_gate_modal = {
         return
       }
 
-      this.sidebar_p = false
+      this.sidebar_close()
       this.gate_modal_close()
 
       this.room_create_from_modal(this.new_room_key, this.new_user_name)

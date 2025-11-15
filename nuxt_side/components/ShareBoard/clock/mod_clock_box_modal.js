@@ -42,7 +42,7 @@ export const mod_clock_box_modal = {
 
     cc_modal_open_handle() {
       if (this.cc_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.cc_modal_open()
       }
@@ -62,7 +62,7 @@ export const mod_clock_box_modal = {
 
     cc_modal_close_handle() {
       if (this.cc_modal_instance) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.cc_modal_close()
       }

@@ -19,7 +19,7 @@ export const mod_turn_change = {
 
     turn_change_to_zero_modal_open_handle() {
       if (this.turn_change_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         // if (CONFIRM_METHOD) {
         //   this.turn_change_modal_instance = this.dialog_confirm({
@@ -61,7 +61,7 @@ export const mod_turn_change = {
 
     turn_change_to_previous_modal_open_handle() {
       if (this.turn_change_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
 
         // if (CONFIRM_METHOD) {

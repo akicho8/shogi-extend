@@ -22,13 +22,13 @@ export const sb_shortcut_modal = {
     },
 
     shortcut_modal_open_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.shortcut_modal_open()
     },
 
     shortcut_modal_close_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.shortcut_modal_close()
     },

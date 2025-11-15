@@ -5,9 +5,15 @@ export const mod_sidebar = {
     }
   },
   methods: {
-    sidebar_toggle() {
+    sidebar_toggle_handle() {
       this.sfx_click()
       this.sidebar_p = !this.sidebar_p
+    },
+    sidebar_close() {
+      this.sidebar_p = false
+    },
+    sidebar_open() {
+      this.sidebar_p = true
     },
   },
 }

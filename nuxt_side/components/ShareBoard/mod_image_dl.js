@@ -9,7 +9,7 @@ export const mod_image_dl = {
   },
   methods: {
     image_dl_modal_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.modal_card_open({
         component: ImageDlModal,

@@ -14,7 +14,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "/"),
-        call: c => c.sidebar_toggle(),
+        call: c => c.sidebar_toggle_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "0"),
@@ -46,11 +46,11 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.keyboard_shift_p(e),
-        call: c => c.edit_mode_handle(),
+        call: c => c.edit_mode_set_handle(),
       },
       {
         _if: (c, e) => c.edit_mode_p && e.code === "KeyE" && c.keyboard_shift_p(e),
-        call: c => c.play_mode_handle(),
+        call: c => c.play_mode_set_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && e.key === "!",

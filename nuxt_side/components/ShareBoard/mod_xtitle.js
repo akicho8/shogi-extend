@@ -17,7 +17,7 @@ export const mod_xtitle = {
       }
     },
     title_edit_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.dialog_prompt({
         title: "タイトル",

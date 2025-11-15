@@ -24,7 +24,7 @@ export const mod_chat = {
 
     chat_modal_shortcut_handle() {
       if (this.chat_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.chat_modal_open()
         return true
@@ -37,7 +37,7 @@ export const mod_chat = {
       if (this.mouse_event_p(e)) {
         this.toast_ok("ENTER キーで開けれるよ")
       }
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.chat_modal_open()
     },
@@ -46,7 +46,7 @@ export const mod_chat = {
       if (this.mouse_event_p(e)) {
         this.toast_ok("ENTER キーで閉じれるよ")
       }
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.chat_modal_close()
     },

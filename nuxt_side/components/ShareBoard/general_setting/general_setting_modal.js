@@ -22,13 +22,13 @@ export const general_setting_modal = {
     },
 
     general_setting_modal_open_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.general_setting_modal_open()
     },
 
     general_setting_modal_close_handle() {
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       this.general_setting_modal_close()
     },

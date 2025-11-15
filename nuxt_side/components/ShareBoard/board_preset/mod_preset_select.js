@@ -34,7 +34,7 @@ export const mod_preset_select = {
 
     preset_select_modal_open_handle() {
       if (this.preset_select_modal_instance == null) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.preset_select_modal_instance = this.modal_card_open({
           component: PresetSelectModal,

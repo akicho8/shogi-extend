@@ -5,7 +5,7 @@ export const mod_edit_mode = {
     }
   },
   methods: {
-    edit_warn_modal_handle() {
+    edit_warn_modal_open() {
       if (this.edit_warn_modal_instance) {
         return
       }
@@ -14,9 +14,9 @@ export const mod_edit_mode = {
         message: `
           <div class="content">
             <ul class="mt-0 ml-5 is-size-7">
-              <li>初期配置に戻したければここではなく<b>初期配置に戻す</b>をタップすべし</li>
-              <li>局面編集すると編集後の局面を0手目とした棋譜になってしまう</li>
-              <li>共有中の局面編集は変則的な配置で対局したいときだけ使うべし</li>
+              <li>初期配置に戻す目的なら<b>初期配置に戻す</b>をタップしよう</li>
+              <li>編集すると編集後の局面を0手目とした棋譜になってしまう</li>
+              <li>共有中の編集は変則的な配置で対局したいときだけ使おう</li>
             </ul>
           </div>
         `,
@@ -45,14 +45,14 @@ export const mod_edit_mode = {
     },
 
     // 編集モード
-    edit_mode_handle() {
+    edit_mode_set_handle() {
       if (this.edit_warn_modal_instance) {
         return
       }
-      this.sidebar_p = false
+      this.sidebar_close()
       this.sfx_click()
       if (this.ac_room) {
-        this.edit_warn_modal_handle()
+        this.edit_warn_modal_open()
         return
       }
       this.edit_mode_sfen = null // 編集モードで動かしたらこれに入る
@@ -60,8 +60,8 @@ export const mod_edit_mode = {
     },
 
     // 編集完了
-    play_mode_handle() {
-      this.sidebar_p = false
+    play_mode_set_handle() {
+      this.sidebar_close()
       this.sfx_click()
       // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
@@ -95,7 +95,7 @@ export const mod_edit_mode = {
     // 編集モードの棋譜をコピーする
     edit_mode_kifu_copy_handle() {
       if (this.edit_mode_sfen) {
-        this.sidebar_p = false
+        this.sidebar_close()
         this.sfx_click()
         this.general_kifu_copy(this.edit_mode_sfen, {
           to_format: this.FormatTypeInfo.fetch("kif_utf8").format_key,
