@@ -53,8 +53,9 @@ export const mod_handle_name = {
       this.member_bc_restart()      // 新しい名前をBCする
     },
 
+    // デバッグ用
     handle_name_clear() {
-      this.handle_name_set("")
+      this.user_name = ""
     },
 
     handle_name_invalid_then_show(user_name) {
