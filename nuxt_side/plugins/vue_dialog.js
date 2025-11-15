@@ -170,6 +170,7 @@ export const vue_dialog = {
       })
     },
 
+    // https://buefy.org/documentation/dialog
     // focusOn の初期値は "confirm"
     dialog_confirm(params = {}) {
       return this.$buefy.dialog.confirm({

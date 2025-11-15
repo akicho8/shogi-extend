@@ -320,7 +320,7 @@ export default {
       const message = [
         `<div class="content">`,
           `<p>「反則できない」は接待用のインチキモードです。</p>`,
-          `<p>平均以上の棋力を持ち、真摯に将棋に向き合う${this.SB.my_call_name}にはもちろん必要ないでしょう。</p>`,
+          `<p>平均以上の棋力を持ち、真摯に将棋に向き合う${this.SB.my_call_name}には必要ないでしょう。</p>`,
         `</div>`,
       ].join("")
       this.sfx_play("se_notification")
@@ -328,12 +328,18 @@ export default {
       this.foul_mode_block_warn_modal_close()
       this.foul_mode_block_warn_modal_instance = this.dialog_confirm({
         title: `${this.SB.my_call_name}へ`,
+        type: "is-danger",
         message: message,
-        confirmText: "そうだな",
-        cancelText: "プライドを捨てる",
+        confirmText: "プライドを捨てる",
+        cancelText: "もちろん必要ない",
         focusOn: "confirm",
-        onConfirm: () => this.sfx_play("o"),
-        onCancel: ()  => this.sfx_play("x"),
+        onConfirm: () => {
+          this.sfx_play("x")
+        },
+        onCancel: () => {
+          this.sfx_play("o")
+          this.SB.new_o.foul_mode_key = "lose"
+        },
       })
     },
 
