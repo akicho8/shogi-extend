@@ -3,7 +3,7 @@ const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 
-export const mod_sp = {
+export const mod_shogi_player = {
   data() {
     return {
       short_sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",

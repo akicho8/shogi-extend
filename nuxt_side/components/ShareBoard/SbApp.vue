@@ -86,7 +86,7 @@ import { mod_urls                          } from "./mod_urls.js"
 import { mod_share_dto                    } from "./mod_share_dto.js"
 import { mod_edit_mode                     } from "./mod_edit_mode.js"
 import { mod_kifu_read                      } from "./mod_kifu_read.js"
-import { mod_sp                            } from "./mod_sp.js"
+import { mod_shogi_player                            } from "./mod_shogi_player.js"
 import { mod_warning                            } from "./mod_warning.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
 import { mod_think_mark                } from "./think_mark/mod_think_mark.js"
@@ -202,7 +202,7 @@ export default {
     mod_share_dto,
     mod_edit_mode,
     mod_kifu_read,
-    mod_sp,
+    mod_shogi_player,
     mod_warning,
     mod_perpetual,
     mod_think_mark,
