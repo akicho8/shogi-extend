@@ -295,7 +295,10 @@ export default {
         GX.delay_block(0.7, () => {
           this.sfx_stop_all()
           this.sfx_play("se_notification")
-          const message = `反則できないは、職場の上司に誘われたときに使う、絶対に負けてもらっては困る接待用のモードです。もちろん平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう`
+          const message = [
+            `「反則できない」は、職場の上司に誘われたときに使う、接待用のモードです。`,
+            `平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう。`,
+          ].join("")
           this.toast_ok(message, {duration: 1000 * 10})
         })
       }
