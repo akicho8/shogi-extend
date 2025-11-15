@@ -115,7 +115,11 @@ export default {
   data() {
     return {
       option_block_show_p: this.SB.debug_mode_p,
+      foul_mode_block_warn_modal_instance: null,
     }
+  },
+  beforeDestroy() {
+    this.foul_mode_block_warn_modal_close()
   },
 
   methods: {
@@ -292,15 +296,51 @@ export default {
 
     foul_mode_key_updated(foul_mode_key) {
       if (foul_mode_key === this.SB.FoulModeInfo.fetch("block").key) {
-        GX.delay_block(0.7, () => {
-          this.sfx_stop_all()
-          this.sfx_play("se_notification")
-          const message = [
-            `「反則できない」は、職場の上司に誘われたときに使う、接待用のモードです。`,
-            `平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう。`,
-          ].join("")
-          this.toast_ok(message, {duration: 1000 * 10})
-        })
+        if (false) {
+          this.foul_mode_block_warn_toast_show()
+        } else {
+          this.foul_mode_block_warn_modal_open()
+        }
+      }
+    },
+
+    foul_mode_block_warn_toast_show() {
+      GX.delay_block(0.7, () => {
+        this.sfx_stop_all()
+        this.sfx_play("se_notification")
+        const message = [
+          `「反則できない」は、職場の上司に誘われたときに使う、接待用のモードです。`,
+          `平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう。`,
+        ].join("")
+        this.toast_ok(message, {duration: 1000 * 10})
+      })
+    },
+
+    foul_mode_block_warn_modal_open() {
+      const message = [
+        `<div class="content">`,
+          `<p>「反則できない」は接待用のインチキモードです。</p>`,
+          `<p>平均以上の棋力を持ち、真摯に将棋に向き合う${this.SB.my_call_name}にはもちろん必要ないでしょう。</p>`,
+        `</div>`,
+      ].join("")
+      this.sfx_play("se_notification")
+      // this.SB.sb_talk(message)
+      this.foul_mode_block_warn_modal_close()
+      this.foul_mode_block_warn_modal_instance = this.dialog_confirm({
+        title: `${this.SB.my_call_name}へ`,
+        message: message,
+        confirmText: "そうだな",
+        cancelText: "プライドを捨てる",
+        focusOn: "confirm",
+        onConfirm: () => this.sfx_play("o"),
+        onCancel: ()  => this.sfx_play("x"),
+      })
+    },
+
+    foul_mode_block_warn_modal_close() {
+      if (this.foul_mode_block_warn_modal_instance) {
+        this.foul_mode_block_warn_modal_instance.close()
+        this.foul_mode_block_warn_modal_instance = null
       }
     },
 
