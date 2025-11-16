@@ -83,12 +83,14 @@ export class HandleNameValidator {
 
       // 1文字にするな
       if (message == null) {
-        // 「漢字を除いた文字列」を作成
-        const without_kanji = name.replace(/[一-龥]/g, "")
-        // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
-        const is_single_non_kanji = without_kanji.length === 1
-        if (is_single_non_kanji) {
-          message = `もう少しユニークな${this.options.name}にしてください`
+        if (name.length === 1) {
+          // 「漢字を除いた文字列」を作成
+          const without_kanji = name.replace(/[一-龥]/g, "")
+          // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
+          const is_single_non_kanji = without_kanji.length === 1
+          if (is_single_non_kanji) {
+            message = `もう少しユニークな${this.options.name}にしてください`
+          }
         }
       }
 

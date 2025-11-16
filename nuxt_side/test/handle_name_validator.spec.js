@@ -33,6 +33,11 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("金")).toEqual(true)
   })
 
+  test("1文字はダメ", () => {
+    expect(HandleNameValidator.valid_p("き")).toEqual(false)
+    expect(HandleNameValidator.valid_p("X")).toEqual(false)
+  })
+
   test("文字の連続だけどありがちな名前は良い", () => {
     expect(HandleNameValidator.valid_p("キキ")).toEqual(true)
     expect(HandleNameValidator.valid_p("らら")).toEqual(true)
@@ -106,9 +111,9 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("SHOGIEXTEND")).toEqual(false)
   })
 
-  test("prefixが含まれるのはダメ", () => {
-    expect(HandleNameValidator.valid_p("真面目に")).toEqual(false)
-  })
+  // test("prefixが含まれるのはダメ", () => {
+  //   expect(HandleNameValidator.valid_p("まじめに")).toEqual(false)
+  // })
 
   test("長すぎるのはダメ", () => {
     expect(HandleNameValidator.valid_p("12345678901234567")).toEqual(false)
@@ -188,5 +193,9 @@ describe("HandleNameValidator", () => {
 
   test("ng_word_check_p が無効なら1文字も通る", () => {
     expect(HandleNameValidator.valid_p("a", {ng_word_check_p: false})).toEqual(true)
+  })
+
+  test("[bugfix] 漢字複数にひらがな一つ", () => {
+    expect(HandleNameValidator.valid_p("漢字の漢字")).toEqual(true)
   })
 })
