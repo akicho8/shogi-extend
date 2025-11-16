@@ -68,7 +68,7 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p これを設定するときは<b>秒読み</b>と<b>考慮時間</b>を 0 にするのをおすすめします
+              p フィッシャールール用で持ち時間に加算します
           | 1手毎加算(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.every_plus(
