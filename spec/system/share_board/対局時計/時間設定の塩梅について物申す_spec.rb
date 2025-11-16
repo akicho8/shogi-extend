@@ -7,6 +7,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "works" do
     case1([0, 30, 5, 0])
-    assert_selector("span", text: "たいへん良い設定です", exact_text: true)
+    assert_selector("span", text: "GOOD", exact_text: true)
   end
 end
