@@ -33,13 +33,13 @@ export default {
   name: "SbAvatarLine",
   mixins: [support_child],
   props: {
-    info:         { type: Object, required: true  },
-    replace_icon: { type: String, required: false },
+    info:            { type: Object, required: true  },
+    replace_icon:    { type: String, required: false },
     xprofile_show_p: { type: Boolean, default: true  },
   },
   computed: {
-    default_guardian() { return this.SB.guardian_from_str(this.info.from_user_name)       },
-    xprofile_decorator()  { return this.SB.xprofile_decorator_by_name(this.info.from_user_name) },
+    default_guardian()   { return this.SB.guardian_from_str(this.info.from_user_name)          },
+    xprofile_decorator() { return this.SB.xprofile_decorator_by_name(this.info.from_user_name) },
   },
 }
 </script>
