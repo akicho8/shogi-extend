@@ -368,39 +368,49 @@ export default {
     },
 
     realtime_notice() {
-      const hv = {}
-      if (hv.message == null) {
+      let hv = null
+      if (hv == null) {
         if (this.SB.new_o.order_unit.empty_p) {
-          hv.message = "対局する人を☗と☖に放り込んでください"
-          hv.css_klass = "is-warning"
-          hv.status = "error"
+          hv = {
+            message: "対局する人を☗と☖に放り込んでください",
+            css_klass: "is-warning",
+            status: "error",
+          }
         }
       }
-      if (hv.message == null) {
+      if (hv == null) {
         const location = this.SB.new_o.order_unit.team_empty_location
         if (location) {
           if (this.self_vs_self_mode_p) {
             const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
-            hv.message = `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`
-            hv.css_klass = "is-warning"
-            hv.status = "success"
+            hv = {
+              message: `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`,
+              css_klass: "is-warning",
+              status: "success",
+            }
           } else {
-            hv.message = `${location.name}にも入れてください`
-            hv.css_klass = "is-warning"
-            hv.status = "error"
+            hv = {
+              message: `${location.name}にも入れてください`,
+              css_klass: "is-warning",
+              status: "error",
+            }
           }
         }
       }
-      if (hv.message == null) {
+      if (hv == null) {
         if (this.SB.new_o.order_unit.order_state.state_name === "O2State") {
           const b_vs_w = this.SB.new_o.order_unit.team_member_counts.join(" vs ")
-          hv.message = `${b_vs_w} で対局を開始できます`
-          hv.css_klass = ""
-          hv.status = "success"
+          hv = {
+            message: `${b_vs_w} で対局を開始できます`,
+            css_klass: "",
+            status: "success",
+          }
         } else {
-          hv.message = "対局を開始できます"
-          hv.css_klass = ""
-          hv.status = "success"
+          hv = {
+            message: "対局を開始できます",
+            css_klass: "",
+            status: "success",
+          }
         }
       }
       return hv
