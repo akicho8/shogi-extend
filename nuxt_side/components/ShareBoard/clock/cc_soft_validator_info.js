@@ -20,7 +20,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "棋力向上が目的であれば<b>秒読み</b>の設定をおすすめします",
+        message: "上達を目的としているなら<b>秒読み</b>も設定しましょう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -33,7 +33,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "それは持ち時間を設定したのと同じことなので、<b>秒読み</b>の設定をおすすめします",
+        message: "それは持ち時間を設定したのと同じことなので<b>秒読み</b>の設定をおすすめします",
         cond_if: context => {
           return [
             context.initial_main_min === 0,
@@ -46,7 +46,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "それだと持ち時間と考慮時間を分ける意味がないです",
+        message: "それだと持ち時間と考慮時間を分ける意味がありません",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -72,7 +72,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "check-bold",
         icon_type: "is-success",
-        message: "それでもええけど熱い終盤戦を期待するなら<b>持ち時間</b>のかわりに<b>考慮時間</b>を設定するのも良いでしょう",
+        message: "白熱した終盤戦を望むなら<b>持ち時間</b>ではなく<b>考慮時間</b>を設定しましょう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -101,7 +101,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "フィッシャールールでは<b>持ち時間</b>も設定しよう",
+        message: "フィッシャールールでは<b>持ち時間</b>も設定しましょう",
         cond_if: context => {
           return [
             context.initial_main_min === 0,
@@ -112,7 +112,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "check-bold",
         icon_type: "is-success",
-        message: "それでもええけど、フィッシャーなら混乱を避けるため、<b>秒読み</b>と<b>考慮時間</b>を 0 にしておいたほうがいいかもしれない",
+        message: "フィッシャーなら混乱を避けるため、<b>秒読み</b>と<b>考慮時間</b>を 0 にしておいたほうがいいかもしれません",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -128,7 +128,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
         key: "clock_setting_is_perfect",
         icon_code: "check-bold",
         icon_type: "is-success",
-        message: "たいへん良い設定です",
+        message: "GOOD",
         cond_if: context => true,
       },
     ]
