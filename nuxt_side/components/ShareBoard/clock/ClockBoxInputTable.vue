@@ -49,7 +49,7 @@ table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
               p 秒読みが切れた後の持ち時間です
               p
                 | 勝負どころのための時間であり、切れ負け防止用の猶予ではありません
-                | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
+              //- | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
           | 考慮時間(分)
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_min(
