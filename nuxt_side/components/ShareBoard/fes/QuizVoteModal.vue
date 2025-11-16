@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 import { support_child } from "../support_child.js"
 

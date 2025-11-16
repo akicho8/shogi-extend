@@ -25,7 +25,6 @@
 
 <script>
 import { TimeoutInfo } from "./timeout_info.js"
-import { Location } from "shogi-player/components/models/location.js"
 import { support_child } from "../support_child.js"
 import { GX } from "@/components/models/gx.js"
 

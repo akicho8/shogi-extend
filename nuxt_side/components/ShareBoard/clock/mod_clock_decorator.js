@@ -1,5 +1,3 @@
-import { Location   } from "shogi-player/components/models/location.js"
-
 export const mod_clock_decorator = {
   methods: {
     // private
@@ -71,7 +69,7 @@ export const mod_clock_decorator = {
     //   white: { name: "後手", time: this.clock_box.single_clocks[1].main_sec_mmss },
     // }
     sp_player_info() {
-      return Location.values.reduce((a, e) => {
+      return this.Location.values.reduce((a, e) => {
         return {
           ...a,
           [e.key]: {

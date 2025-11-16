@@ -1,7 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { GX } from "@/components/models/gx.js"
 import { Quiz } from "../fes/quiz.js"
-import { Location } from "shogi-player/components/models/location.js"
 import { MessageRecord } from "./message_record.js"
 import _ from "lodash"
 
@@ -40,7 +39,7 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
               return `対局が開始されました。簡潔に短い言葉で盛り上げてください。`
             }
             if (false) {
-              const teams = Location.values.map(location => {
+              const teams = this.Location.values.map(location => {
                 const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
                 const names = members.map(e => context.user_call_name(e.from_user_name))
                 const names_str = names.join("と、")

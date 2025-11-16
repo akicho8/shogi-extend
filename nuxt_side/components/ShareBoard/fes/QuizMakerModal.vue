@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 const VALIDATION_ON = false

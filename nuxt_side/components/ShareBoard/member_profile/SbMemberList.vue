@@ -13,7 +13,7 @@
           template(v-if="true")
             // member_infos の中身を余さず表示する方法
             // ・名前が重複していても表示する
-            .TeamBlock(v-for="location in Location.values" :class="location.key")
+            .TeamBlock(v-for="location in SB.Location.values" :class="location.key")
               .TeamName
                 HexagonMark(:location_key="location.key")
               .SbAvatarLines
@@ -29,7 +29,7 @@
             template(v-for="(user_names, i) in SB.order_unit.simple_teams")
               .TeamBlock
                 .TeamName
-                  b-tag(rounded) {{Location.fetch(i).name}}
+                  b-tag(rounded) {{SB.Location.fetch(i).name}}
                 .SbAvatarLines
                   template(v-for="user_name in user_names")
                     template(v-if="SB.room_user_names_hash[user_name]")
@@ -41,15 +41,11 @@
 
 <script>
 import dayjs from "dayjs"
-import { Location } from "shogi-player/components/models/location.js"
 import { support_child } from "../support_child.js"
 
 export default {
   name: "SbMemberList",
   mixins: [support_child],
-  computed: {
-    Location() { return Location },
-  },
 }
 </script>
 

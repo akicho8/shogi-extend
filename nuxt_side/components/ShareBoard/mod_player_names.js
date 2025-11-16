@@ -1,6 +1,5 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
-import { Location } from "shogi-player/components/models/location.js"
 
 export const mod_player_names = {
   methods: {
@@ -15,7 +14,7 @@ export const mod_player_names = {
     player_names_with_title_as_human_text() {
       let hv = {}
       hv["棋戦"] = this.player_names_with_title.title
-      Location.values.forEach(e => {
+      this.Location.values.forEach(e => {
         hv[`${e.name}側`] = this.player_names_with_title[e.key]
       })
       hv["観戦"] = this.player_names_with_title.other
@@ -96,7 +95,7 @@ export const mod_player_names = {
 
     // クエリから作成する。部屋を立ててないとき用
     player_names_from_query() {
-      let hv = Location.values.reduce((a, e, i) => ({...a, [e.key]: this.$route.query[e.key]}), {})
+      let hv = this.Location.values.reduce((a, e, i) => ({...a, [e.key]: this.$route.query[e.key]}), {})
       hv["other"] = this.$route.query["other"]
       hv["member"] = this.$route.query["member"]
       hv = GX.hash_compact_blank(hv)
