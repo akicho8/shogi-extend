@@ -1,6 +1,6 @@
 # 対局時計のタイミングでは反転しないようにしたのでこのテストはスキップする
 
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/../shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def visit_room(fixed_order_state, b_or_w, user_name)
