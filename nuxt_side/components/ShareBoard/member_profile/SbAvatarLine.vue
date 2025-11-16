@@ -27,7 +27,7 @@
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbAvatarLine",
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
+@import "../sass/support.sass"
 
 .SbAvatarLine
   line-height: 1.75  // 以下共通とする
