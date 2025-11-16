@@ -80,7 +80,6 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
 </template>
 
 <script>
-import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 import { support_child } from "../support_child.js"
 
@@ -88,8 +87,6 @@ export default {
   name: "ClockBoxForm",
   mixins: [support_child],
   computed: {
-    Location() { return Location },
-
     // https://buefy.org/documentation/numberinput
     input_default_attrs() {
       return {

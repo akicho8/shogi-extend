@@ -344,6 +344,7 @@ export default {
     TheSelf()        { return this },
     FormatTypeInfo() { return FormatTypeInfo },
     AppConfig()      { return AppConfig },
+    Location()       { return Location },
 
     ////////////////////////////////////////////////////////////////////////////////
 
