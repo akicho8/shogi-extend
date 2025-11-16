@@ -21,6 +21,8 @@ export const AppConfig = {
   CLOCK_START_CONFIRM: false,                 // 途中の局面から対局開始した際に確認するか？
 
   foul_mode_ui_show: true,                    // 反則なしにできるようにする
+
+  think_mark_invite_watcher_count_skip: true, // 対局開始時には観戦者の数とかに関係なく思考印への導線ダイアログを表示する
 }
 
 if (process.env.NODE_ENV === "development") {

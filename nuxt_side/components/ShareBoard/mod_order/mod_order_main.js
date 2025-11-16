@@ -173,7 +173,9 @@ export const mod_order_main = {
     one_vs_one_p()   { return this.order_enable_p && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
     many_vs_many_p() { return this.order_enable_p && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
 
-    watching_member_count() { return this.uniq_member_infos.filter(e => this.member_is_battle_watcher(e)).length }, // 観戦者数
+    watching_member_count()   { return this.uniq_member_infos.filter(e => this.member_is_battle_watcher(e)).length }, // 観戦者数
+    watching_member_exist_p() { return this.watching_member_count >= 1 },                                             // 観戦者が存在する？
+    watching_member_many_p()  { return this.watching_member_count >= 2 },                                             // 観戦者は二人以上いる？
 
     //////////////////////////////////////////////////////////////////////////////// 手番関連
 

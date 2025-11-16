@@ -377,7 +377,7 @@ export const mod_clock_box = {
             // }
             this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`, {
               onend: () => {
-                this.think_mark_invite_to_watcher()
+                this.think_mark_invite_trigger()
               },
             })
           } else {

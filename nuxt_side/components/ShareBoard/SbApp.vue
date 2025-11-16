@@ -323,6 +323,7 @@ export default {
       })
     }
 
+    // this.autoexec({next_tick: false, sleep: 10})
     this.autoexec()
   },
 

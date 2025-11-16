@@ -17,7 +17,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { case1(:a) }
     window_b { case1(:b) }
     window_a { clock_start }
-    window_b { Capybara.assert_selector(".dialog.modal") }      # 観戦者だけに出ている
-    window_a { Capybara.assert_no_selector(".dialog.modal") }   # 対局者には表示されていない
+    window_a { assert_text("aさんの対局を1人みています") } # 対局者へ
+    window_b { assert_text("観戦者のbさんへ") }            # 観戦者へ
   end
 end

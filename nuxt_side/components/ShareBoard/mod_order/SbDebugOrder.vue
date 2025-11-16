@@ -53,6 +53,8 @@
       .panel-block 3人以上で対戦している？ {{SB.many_vs_many_p}}
       .panel-block 対局者数 {{SB.order_unit.main_user_count}}
       .panel-block 観戦者数 {{SB.watching_member_count}}
+      .panel-block 観戦者が存在する？ {{SB.watching_member_exist_p}}
+      .panel-block 観戦者は二人以上いる？ {{SB.watching_member_many_p}}
       .panel-block 今の局面のメンバーの名前 {{SB.current_turn_user_name}}
       .panel-block 今は自分の手番か？ {{SB.current_turn_self_p}}
       .panel-block 次の局面のメンバーの名前 {{SB.next_turn_user_name}}
