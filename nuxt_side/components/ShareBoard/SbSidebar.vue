@@ -64,7 +64,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="import"             label="棋譜の入力" @click="SB.kifu_read_modal_open_handle()")
 
         SbSidebarExport(:base="SB")
-          b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_dl_modal_handle")
+          b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_download_modal_handle")
           b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="SB.video_new_handle")
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
 

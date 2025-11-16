@@ -13,7 +13,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(fullheight right overlay v-mode
         SbSidebarExport(:base="base")
           b-menu-item.is_active_unset(icon="printer" label="棋譜用紙 (PDF)" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="sfx_click()")
           b-menu-item.is_active_unset(icon="movie"   label="動画変換"       tag="nuxt-link" :to="{name: 'video-new', query: {body: base.record.sfen_body, viewpoint: base.viewpoint}}" @click.native="sfx_click()")
-          b-menu-item.is_active_unset(icon="image"   :label="`画像ダウンロード #${base.current_turn}`" @click.native="base.image_dl_modal_handle")
+          b-menu-item.is_active_unset(icon="image"   :label="`画像ダウンロード #${base.current_turn}`" @click.native="base.image_download_modal_handle")
 
         b-menu-list(label="短かめの直リンコピー")
           b-menu-item.is_active_unset(label="この画面" @click="base.current_url_copy")

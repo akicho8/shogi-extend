@@ -4,7 +4,7 @@
     .modal-card-title
       | 画像ダウンロード
       template(v-if="SB.debug_mode_p")
-        | ({{SB.image_dl_success_count}})
+        | ({{SB.image_download_success_count}})
 
     SbColorThemeDropdown
 
@@ -31,7 +31,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ImageDlModal",
+  name: "ImageDownloadModal",
   mixins: [support_child],
   beforeMount() {
     this.SB.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
@@ -43,17 +43,17 @@ export default {
     },
     download_handle() {
       this.sfx_click()
-      this.SB.image_dl_run()
+      this.SB.image_download_run()
     },
   },
   computed: {
-    preview_url() { return this.SB.image_dl_preview_url() },
+    preview_url() { return this.SB.image_download_preview_url() },
   },
 }
 </script>
 
 <style lang="sass">
-.ImageDlModal
+.ImageDownloadModal
   +modal_max_width(960px)
 
   .preview_image_container

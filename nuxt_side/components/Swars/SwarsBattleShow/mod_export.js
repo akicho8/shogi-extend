@@ -57,12 +57,12 @@ export const mod_export = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    image_dl_modal_handle() {
+    image_download_modal_handle() {
       this.sidebar_close()
       this.toast_ok("共有将棋盤に転送して画像を生成します")
       const params = {
         ...this.share_board_query,
-        autoexec: "image_dl_modal_handle",
+        autoexec: "image_download_modal_handle",
       }
       this.$router.push({name: "share-board", query: params})
     },
