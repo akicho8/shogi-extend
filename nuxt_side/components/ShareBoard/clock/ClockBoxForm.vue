@@ -5,10 +5,11 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
       th
       template(v-if="SB.cc_unique_p")
         th(v-for="(e, i) in SB.cc_params")
-          | {{Location.fetch(i).name}}
+          | {{SB.Location.fetch(i).name}}
       template(v-else)
         th
-          | ☗ ☖
+          template(v-for="e in SB.Location.values")
+            span {{e.name}}
   tbody
     tr
       th
