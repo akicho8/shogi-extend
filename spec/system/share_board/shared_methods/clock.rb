@@ -1,13 +1,13 @@
 module SharedMethods
-  # ".ClockBoxInputTable td:nth-child(2) .initial_main_min input" → ☗ 持ち時間(分)
-  # ".ClockBoxInputTable td:nth-child(3) .initial_main_min input" → ☖ 持ち時間(分)
+  # ".ClockBoxForm td:nth-child(2) .initial_main_min input" → ☗ 持ち時間(分)
+  # ".ClockBoxForm td:nth-child(3) .initial_main_min input" → ☖ 持ち時間(分)
   def cc_white_black_to_nth_child(location_key)
     { black: 2, white: 3 }.fetch(location_key)
   end
 
   def cc_input(location_key, input_class)
     index = cc_white_black_to_nth_child(location_key)
-    ".ClockBoxInputTable td:nth-child(#{index}) .#{input_class}"
+    ".ClockBoxForm td:nth-child(#{index}) .#{input_class}"
   end
 
   def clock_box_form_set(location_key, initial_main_min, initial_read_sec, initial_extra_min, every_plus)

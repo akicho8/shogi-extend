@@ -1,5 +1,5 @@
 <template lang="pug">
-table.ClockBoxInputTable(:class="{cc_unique_p: SB.cc_unique_p}")
+table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
   thead
     tr
       th
@@ -84,7 +84,7 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ClockBoxInputTable",
+  name: "ClockBoxForm",
   mixins: [support_child],
   computed: {
     Location() { return Location },
@@ -109,11 +109,11 @@ export default {
 @import "../sass/support.sass"
 
 .STAGE-development
-  .ClockBoxInputTable
+  .ClockBoxForm
     td, th
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.ClockBoxInputTable
+.ClockBoxForm
   width: 100%
   th
     font-size: $size-7

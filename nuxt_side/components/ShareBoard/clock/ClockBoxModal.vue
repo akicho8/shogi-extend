@@ -43,7 +43,7 @@
               .active_bar(:class="[SB.clock_box.timer_to_css_class, {is_active: e.active_p}]")
 
       .forms_block(v-if="!SB.clock_box.pause_or_play_p")
-        ClockBoxInputTable
+        ClockBoxForm
         pre.is-size-7(v-if="SB.debug_mode_p") {{SB.cc_params}}
 
   .modal-card-foot
