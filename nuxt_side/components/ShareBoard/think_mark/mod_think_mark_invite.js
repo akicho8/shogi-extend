@@ -32,7 +32,7 @@ export const mod_think_mark_invite = {
           `</div>`,
         ].join(""),
         confirmText: "わかった",
-        cancelText: "見てるだけ",
+        cancelText: "断わる",
         focusOn: "confirm",
         onConfirm: () => this.sfx_play("o"),
         onCancel: ()  => this.sfx_play("x"),
