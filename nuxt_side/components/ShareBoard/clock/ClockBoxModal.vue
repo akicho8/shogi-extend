@@ -44,6 +44,12 @@
 
       .forms_block(v-if="!SB.clock_box.pause_or_play_p")
         ClockBoxForm
+
+        template(v-if="SB.cc_soft_validator_info")
+          .cc_soft_validator_container.mt-4.is-unselectable.is_line_break_on
+            b-icon.mx-1(:icon="SB.cc_soft_validator_info.icon_code" :type="SB.cc_soft_validator_info.icon_type")
+            span(v-html="SB.cc_soft_validator_info.message")
+
         pre.is-size-7(v-if="SB.debug_mode_p") {{SB.cc_params}}
 
   .modal-card-foot
@@ -82,11 +88,6 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 
-.STAGE-development
-  .ClockBoxModal
-    .modal-card-body, .field
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-
 .ClockBoxModal
   +modal_width(24rem)
 
@@ -120,4 +121,14 @@ export default {
             opacity: 1.0
           100%
             opacity: 0.0
+
+  .cc_soft_validator_container
+    display: flex
+    justify-content: center
+    align-items: center
+
+.STAGE-development
+  .ClockBoxModal
+    .modal-card-body, .field, .cc_soft_validator_container, .cc_soft_validator_info, .XemojiWrap
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

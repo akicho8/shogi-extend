@@ -1,7 +1,8 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
+import { CcSoftValidatorInfo } from "./cc_soft_validator_info.js"
 
-import ClockBoxModal  from "./ClockBoxModal.vue"
+import ClockBoxModal from "./ClockBoxModal.vue"
 
 export const mod_clock_box_modal = {
   data() {
@@ -160,5 +161,24 @@ export const mod_clock_box_modal = {
       this.sfx_play_toggle(value)
       this.cc_unique_mode_set(value)
     },
+
+  },
+
+  computed: {
+    cc_soft_validator_info() {
+      let info = null
+      if (this.cc_params) {
+        this.cc_params.forEach(params => {
+          if (info == null) {
+            const matched = CcSoftValidatorInfo.match(params)
+            if (matched) {
+              info = matched
+              // 本当はここで break したいがクソ言語はできない
+            }
+          }
+        })
+      }
+      return info
+    }
   },
 }
