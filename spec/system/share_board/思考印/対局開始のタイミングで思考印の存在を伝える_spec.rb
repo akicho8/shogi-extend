@@ -21,7 +21,15 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       clock_open                # 対局時計を開いて
       clock_play_button_click   # 開始
     end
-    window_a { assert_text("aさんの対局を1人みています") } # 対局者へ
-    window_b { assert_text("観戦者のbさんへ") }            # 観戦者へ
+    window_b do
+      assert_text("観戦者のbさんへ")
+      click_on("わかった")
+      assert_no_selector(".dialog.modal")
+    end
+    window_a do
+      assert_text("aさんの対局を1人みています")
+      click_on("そんな余裕ないわ")
+      assert_no_selector(".dialog.modal")
+    end
   end
 end

@@ -30,7 +30,7 @@ export const mod_think_mark_invite = {
 
     // 観戦者用
     think_mark_invite_dialog_show_for_watcher() {
-      this.__think_mark_invite_dialog_show_for_common({
+      this.__think_mark_invite_dialog_show({
         title: `観戦者の${this.my_call_name}へ`,
         message: [
           `<div>`,
@@ -46,7 +46,7 @@ export const mod_think_mark_invite = {
 
     // 対局者用
     think_mark_invite_dialog_show_for_member() {
-      this.__think_mark_invite_dialog_show_for_common({
+      this.__think_mark_invite_dialog_show({
         title: `${this.my_call_name}の対局を${this.watching_member_count}人みています`,
         message: [
           `<div>`,
@@ -60,7 +60,7 @@ export const mod_think_mark_invite = {
       })
     },
 
-    __think_mark_invite_dialog_show_for_common(params) {
+    __think_mark_invite_dialog_show(params) {
       params = {
         title: `(title)`,
         message: "(message)",
@@ -69,12 +69,12 @@ export const mod_think_mark_invite = {
         focusOn: "confirm",
         onConfirm: () => {
           this.sfx_play("o")
-          this.toast_ok("ありがとうな")
+          // GX.delay_block(0.5, () => this.toast_ok("ありがとうな"))
           this.ac_log({subject: "思考印導線", body: params.confirmText})
         },
         onCancel: () => {
           this.sfx_play("x")
-          this.toast_ok("なんじゃそれ")
+          // GX.delay_block(0.5, () => this.toast_ok("なんじゃそれ"))
           this.ac_log({subject: "思考印導線", body: params.cancelText})
         },
         ...params,
