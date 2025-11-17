@@ -8,7 +8,7 @@ export const mod_think_mark_invite = {
     }
   },
   beforeDestroy() {
-    this.think_mark_invite_dialog_close()
+    this.__think_mark_invite_dialog_close()
   },
   methods: {
     // 思考印を使ってみないか促す
@@ -30,9 +30,7 @@ export const mod_think_mark_invite = {
 
     // 観戦者用
     think_mark_invite_dialog_show_for_watcher() {
-      this.sfx_play("se_notification")
-      this.think_mark_invite_dialog_close()
-      this.think_mark_invite_dialog_instance = this.dialog_confirm({
+      this.__think_mark_invite_dialog_show_for_common({
         title: `観戦者の${this.my_call_name}へ`,
         message: [
           `<div>`,
@@ -43,34 +41,50 @@ export const mod_think_mark_invite = {
         ].join(""),
         confirmText: "わかった",
         cancelText: "いやです",
-        focusOn: "confirm",
-        onConfirm: () => this.sfx_play("o"),
-        onCancel: ()  => this.sfx_play("x"),
       })
     },
 
     // 対局者用
     think_mark_invite_dialog_show_for_member() {
-      this.sfx_play("se_notification")
-      this.think_mark_invite_dialog_close()
-      this.think_mark_invite_dialog_instance = this.dialog_confirm({
+      this.__think_mark_invite_dialog_show_for_common({
         title: `${this.my_call_name}の対局を${this.watching_member_count}人みています`,
         message: [
           `<div>`,
           /**/ `<img src="${share_board_think_mark_invite_png}" />`,
-          /**/ `<p class="mt-2 mb-0">長考するような局面では観戦者に向けて<b>右クリック</b>で指し手の候補を示してあげよう</p>`,
+          /**/ `<p class="mt-2 mb-0">変化の多い局面では観戦者に向けて<b>右クリック</b>で指し手の候補を示してあげよう</p>`,
           /**/ `<p class="mt-2 mb-0 is-size-7 has-text-grey is-hidden-desktop">スマホの人は右上の鉛筆を押してください</p>`,
           `</div>`,
         ].join(""),
         confirmText: "わかった",
         cancelText: "そんな余裕ないわ",
-        focusOn: "confirm",
-        onConfirm: () => this.sfx_play("o"),
-        onCancel: ()  => this.sfx_play("x"),
       })
     },
 
-    think_mark_invite_dialog_close() {
+    __think_mark_invite_dialog_show_for_common(params) {
+      params = {
+        title: `(title)`,
+        message: "(message)",
+        confirmText: "(confirmText)",
+        cancelText: "(cancelText)",
+        focusOn: "confirm",
+        onConfirm: () => {
+          this.sfx_play("o")
+          this.toast_ok("ありがとうな")
+          this.ac_log({subject: "思考印導線", body: params.confirmText})
+        },
+        onCancel: () => {
+          this.sfx_play("x")
+          this.toast_ok("なんじゃそれ")
+          this.ac_log({subject: "思考印導線", body: params.cancelText})
+        },
+        ...params,
+      }
+      this.sfx_play("se_notification")
+      this.__think_mark_invite_dialog_close()
+      this.think_mark_invite_dialog_instance = this.dialog_confirm(params)
+    },
+
+    __think_mark_invite_dialog_close() {
       if (this.think_mark_invite_dialog_instance) {
         this.think_mark_invite_dialog_instance.close()
         this.think_mark_invite_dialog_instance = null
