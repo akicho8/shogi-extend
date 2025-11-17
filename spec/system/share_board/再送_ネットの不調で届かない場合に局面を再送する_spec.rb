@@ -31,12 +31,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_rs_faild_count(1)
       assert_text("次の手番のbさんの通信状況が悪いため再送してください")
 
-      find(:button, text: "再送する", exact_text: true).click
+      find(".rs_resend_handle").click # 再送する
       assert_action_text("再送1")
       assert_text("再送1")
       assert_rs_faild_count(2)
 
-      find(:button, text: "再送する", exact_text: true).click
+      find(".rs_resend_handle").click # 再送する
       assert_action_text("再送2")
       assert_rs_faild_count(3)
     end

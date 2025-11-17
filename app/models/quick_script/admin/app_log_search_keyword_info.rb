@@ -52,6 +52,7 @@ module QuickScript
             "オーダー配布",
             "cc_behavior_start",
             "cc_behavior_silent_stop",
+            "cc_behavior_silent_pause",
             "棋譜メール",
           ],
         },

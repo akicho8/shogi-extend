@@ -25,6 +25,21 @@ export const mod_resend = {
     this.rs_modal_with_timer_close()
   },
   methods: {
+    // 「対局を中断する」ボタン
+    rs_break_handle() {
+      this.sfx_click()
+      this.rs_modal_with_timer_close()
+      this.cc_silent_pause_share()
+      this.al_share({label: "対局中断", label_type: "is-danger", message: `対局を中断しました`})
+    },
+
+    // 「再送する」ボタン
+    rs_resend_handle() {
+      this.sfx_click()
+      this.rs_modal_with_timer_close()
+      this.sfen_share()
+    },
+
     // あとで確認するため、指し手情報に指し手の番号を埋めておく
     sequence_code_embed() {
       if (!this.RS_FEATURE) { return }

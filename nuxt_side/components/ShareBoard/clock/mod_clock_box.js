@@ -223,6 +223,12 @@ export const mod_clock_box = {
         this.clock_box.pause_handle()
       }
     },
+    cc_silent_pause_share() {
+      if (this.cc_play_p) {
+        this.cc_pause_handle()
+        this.clock_box_share("cc_behavior_silent_pause")
+      }
+    },
     cc_stop_handle() {
       if (this.clock_box.pause_or_play_p) {
         this.clock_box.stop_handle()
