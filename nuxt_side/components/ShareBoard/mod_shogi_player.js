@@ -156,6 +156,10 @@ export const mod_shogi_player = {
     // ここめっちゃ重要
     // デフォルトでは盤面を動かせないようにして条件に一致しているときだけ動かせるようにする
     sp_human_side() {
+      // 思考印モードOFF 入室していない (これで対局時計だけを動かしてオフライン対局できるようになる)
+      if (!this.think_mark_mode_p && this.ac_room == null) {
+        return "both"
+      }
       // 思考印モードOFF 順番設定OFF 対局時計動いていない
       if (!this.think_mark_mode_p && this.order_clock_both_empty) {
         return "both"
