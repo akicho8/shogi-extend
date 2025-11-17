@@ -28,7 +28,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="TheA
 
         hr
 
-        b-button.style_default_handle(@click="TheApp.style_default_handle" size="is-small") デフォルトに戻す
+        b-button.style_default_handle(@click="TheApp.style_default_handle" size="is-small") 初期値に戻す
 
       .box(v-if="development_p")
         .title.is-5 操作感
