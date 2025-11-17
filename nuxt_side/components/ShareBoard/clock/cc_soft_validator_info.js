@@ -72,7 +72,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "check-bold",
         icon_type: "is-success",
-        message: "白熱した終盤戦を望むなら<b>持ち時間</b>ではなく<b>考慮時間</b>を設定しましょう",
+        message: "白熱した終盤戦を望むなら<b>持ち時間</b>よりも<b>考慮時間</b>を設定しましょう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
