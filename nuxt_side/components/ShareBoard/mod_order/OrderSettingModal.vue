@@ -318,7 +318,7 @@ export default {
     foul_mode_block_warn_modal_open() {
       const message = [
         `<div class="content">`,
-          `<p>「反則できない」は接待用の簡易モードであり、棋力向上の妨げになります。</p>`,
+          `<p>「反則できない」は接待用の特殊モードです。</p>`,
           `<p>すでに将棋のルールを正しく理解し、真摯な姿勢で将棋に取り組む${this.SB.my_call_name}には必要ないでしょう。</p>`,
         `</div>`,
       ].join("")
@@ -327,17 +327,18 @@ export default {
       this.foul_mode_block_warn_modal_close()
       this.foul_mode_block_warn_modal_instance = this.dialog_confirm({
         title: `${this.SB.my_call_name}へ`,
-        type: "is-danger",
+        // type: "is-danger",
         message: message,
-        confirmText: "補助輪が必要です",
-        cancelText: "もちろん必要ない",
+        confirmText: "もちろん必要ない",
+        cancelText: "接待する",
         focusOn: "confirm",
         onConfirm: () => {
-          this.sfx_play("x")
+          this.sfx_play("o")
+          this.toast_ok("さすがです")
+          this.SB.new_o.foul_mode_key = "lose"
         },
         onCancel: () => {
-          this.sfx_play("o")
-          this.SB.new_o.foul_mode_key = "lose"
+          this.sfx_play("x")
         },
       })
     },
