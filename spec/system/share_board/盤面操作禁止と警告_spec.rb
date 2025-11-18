@@ -8,7 +8,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER => "a,b,c",
       })
     place_click("11")
-    assert_text "対局するなら対局時計を押してください。検討するなら駒を動かせるように順番設定を解除してください。"
+    assert_text "対局するなら対局時計を押してください"
+    assert_text "検討するなら駒を動かせるように順番設定を解除してください"
   end
 
   # 本番では「順番設定」→「時計」の順で設定してもらうのでこうなることはないのだが、よそ見の影響でこの不整合状態になる場合がある
