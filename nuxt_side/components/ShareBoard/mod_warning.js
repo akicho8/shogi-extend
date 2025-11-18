@@ -5,7 +5,7 @@ export const mod_warning = {
   methods: {
     // 手番が違うのに操作しようとした
     // order_clock_both_ok でないときは sp_human_side に none を設定するため、その状態のとき盤駒を触られるとこれが呼ばれる
-    ev_illegal_click_but_self_is_not_turn() {
+    async ev_illegal_click_but_self_is_not_turn() {
       // 思考印モードの場合は無視する
       if (this.think_mark_mode_p) {
         return
@@ -18,36 +18,13 @@ export const mod_warning = {
 
       this.debug_alert("手番が違うのに操作しようとした")
 
-      let message = null
-      if (message == null) {
-        if (this.inconsistency_order_only) {
-          message = `対局するなら対局時計を押してください。検討するなら駒を動かせるように順番設定を解除してください。`
-        }
-      }
-      if (message == null) {
-        if (this.inconsistency_clock_only) {
-          message = `対局する場合は順番設定をしてください` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
-        }
-      }
-      if (message == null) {
-        if (this.i_am_watcher_p) {
-          message = `${this.my_call_name}は観戦者なので触らんといてください`
-        }
-      }
-      if (message == null) {
-        if (this.order_enable_p && this.current_turn_user_name == null) {
-          message = `順番設定で対局者の指定がないので誰も操作できません` // ここにこさせるのはむつかしい
-        }
-      }
-      if (message == null) {
-        if (this.i_am_member_p) {
-          message = `今は${this.user_call_name(this.current_turn_user_name)}の手番です`
-        }
-      }
+      const message = this.ev_illegal_click_but_self_is_not_turn_message
       if (message) {
         this.sfx_play("se_tebanjanainoni_sawanna")
-        this.toast_warn(message, {duration: 1000 * 5})
         this.ac_log({subject: "警告発動", body: message})
+        for (const message of _.castArray(message)) { // クソ言語は forEach にすると await が使えない
+          await this.toast_warn(message, { duration: 1000 * 5 })
+        }
       }
     },
 
@@ -68,5 +45,40 @@ export const mod_warning = {
     order_clock_both_ok()    { return this.order_enable_p && this.cc_play_p   },                 // 両方ON
     order_clock_both_empty() { return !this.order_enable_p && !this.cc_play_p },                 // 両方OFF
     integrity_ok_p()         { return this.order_clock_both_ok || this.order_clock_both_empty }, // どちらか
+
+    ev_illegal_click_but_self_is_not_turn_message() {
+      let message = null
+      if (message == null) {
+        if (this.inconsistency_order_only) {
+          message = [
+            `対局するなら対局時計を押してください`,
+            `検討するなら駒を動かせるように順番設定を解除してください`,
+          ]
+        }
+      }
+      if (message == null) {
+        if (this.inconsistency_clock_only) {
+          message = `対局する場合は順番設定をしてください` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
+        }
+      }
+      if (message == null) {
+        if (this.i_am_watcher_p) {
+          message = [
+            `${this.my_call_name}は観戦者なので触らんといてください`,
+          ]
+        }
+      }
+      if (message == null) {
+        if (this.order_enable_p && this.current_turn_user_name == null) {
+          message = `順番設定で対局者の指定がないので誰も操作できません` // ここにこさせるのはむつかしい
+        }
+      }
+      if (message == null) {
+        if (this.i_am_member_p) {
+          message = `今は${this.user_call_name(this.current_turn_user_name)}の手番です`
+        }
+      }
+      return message
+    },
   },
 }
