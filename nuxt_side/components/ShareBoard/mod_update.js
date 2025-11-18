@@ -8,19 +8,18 @@ export const mod_update = {
     }
   },
   methods: {
-    api_version_valid(new_api_version) {
+    async api_version_valid(new_api_version) {
       if (this.app_update_now) {
         return
       }
       if (new_api_version == null) {
         return
       }
-      if (new_api_version === this.API_VERSION) {
-        // this.tl_alert("VERSION OK")
-      } else {
+      if (new_api_version !== this.API_VERSION) {
         this.app_update_now = true
         if (AUTO_RELOAD) {
-          this.toast_ok(MESSAGE, {onend: () => this.force_reload()})
+          await this.toast_ok(MESSAGE)
+          this.force_reload()
         } else {
           this.reload_modal_handle()
         }

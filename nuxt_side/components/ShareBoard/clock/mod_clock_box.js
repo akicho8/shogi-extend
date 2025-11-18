@@ -339,7 +339,7 @@ export const mod_clock_box = {
       params = this.clock_box_share_params_factory(cc_behavior_key, params)
       this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    clock_box_share_broadcasted(params) {
+    async clock_box_share_broadcasted(params) {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       this.tl_add("時計受信", `${params.from_user_name} -> ${this.user_name}`, params)
       this.tl_alert("時計同期")
@@ -357,11 +357,10 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.key === "cc_behavior_start") {
         this.__cc_start_call(params)
       } else if (cc_behavior_info.key === "cc_behavior_on") {
-        this.toast_ok(this.__cc_receive_message(params), {onend: () => {
-          if (this.received_from_self(params)) {
-            this.toast_ok("時間を設定したら対局を開始してください", {duration: 1000 * 3})
-          }
-        }})
+        await this.toast_ok(this.__cc_receive_message(params))
+        if (this.received_from_self(params)) {
+          this.toast_ok("時間を設定したら対局を開始してください", {duration: 1000 * 3})
+        }
       } else if (cc_behavior_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
       }
@@ -372,25 +371,18 @@ export const mod_clock_box = {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
-    __cc_start_call(params) {
-      // this.toast_ok(`ABC`, {onend: () => { this.toast_ok(`DEF`, {onend: () => {}}) }})
-      this.toast_ok(this.__cc_receive_message(params), {
-        onend: () => {
-          // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
-          if (this.current_turn_user_name) {
-            // if (this.self_vs_self_p) {
-            //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
-            // }
-            this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`, {
-              onend: () => {
-                this.think_mark_invite_trigger()
-              },
-            })
-          } else {
-            // 順番設定をしていない場合
-          }
-        },
-      })
+    async __cc_start_call(params) {
+      await this.toast_ok(this.__cc_receive_message(params))
+      // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
+      if (this.current_turn_user_name) {
+        // if (this.self_vs_self_p) {
+        //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
+        // }
+        await this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+        this.think_mark_invite_trigger()
+      } else {
+        // 順番設定をしていない場合
+      }
 
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         if (this.received_from_self(params)) {

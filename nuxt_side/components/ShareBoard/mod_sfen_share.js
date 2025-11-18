@@ -190,18 +190,14 @@ export const mod_sfen_share = {
       // }
     },
 
-    sfen_shared_after_notice(params) {
+    async sfen_shared_after_notice(params) {
       this.next_turn_message = null
       if (GX.blank_p(params.illegal_names)) {                // 反則がなかった場合
         if (this.yomiagable_p) {
-          this.sb_talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
-            onend: () => this.sb_talk(params.lmi.yomiage, {          // 「7 6 ふー！」
-              onend: () => this.next_turn_call(params),            // 「次は〜」
-            }),
-          })
-        } else {
-          this.next_turn_call(params) // 「次は〜」
+          await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
+          await this.sb_talk(params.lmi.yomiage)                         // 「7 6 ふ」
         }
+        this.next_turn_call(params) // 「次は〜」
       }
     },
 

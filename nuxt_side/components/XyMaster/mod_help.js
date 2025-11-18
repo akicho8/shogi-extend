@@ -17,7 +17,7 @@ const TALK_MESSAGE = `
 
 export const mod_help = {
   methods: {
-    help_dialog_show() {
+    async help_dialog_show() {
       this.help_dialog_cancel_process()
 
       const help_dialog_instance = this.dialog_alert({
@@ -29,7 +29,8 @@ export const mod_help = {
         onCancel:  () => this.help_dialog_cancel_process(),
       })
 
-      this.talk(TALK_MESSAGE, {validate_length: false, rate: 2.0, onend: () => help_dialog_instance.close()})
+      await this.talk(TALK_MESSAGE, {validate_length: false, rate: 2.0})
+      help_dialog_instance.close()
     },
 
     // private

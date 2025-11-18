@@ -19,7 +19,7 @@ export const mod_answer = {
       this.answer_create(this.current_moves())
     },
 
-    answer_create(moves) {
+    async answer_create(moves) {
       if (moves.length === 0) {
         this.toast_warn("1手以上動かしてください")
         return
@@ -41,11 +41,10 @@ export const mod_answer = {
       this.article.moves_answers.push({moves: moves})
       this.$nextTick(() => this.answer_tab_index = this.article.moves_answers.length - 1)
 
-      this.toast_ok(`${this.article.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
-        if (this.article.moves_answers.length === 1) {
-          this.toast_ok(`他の手順で正解がある場合は続けて追加してください`)
-        }
-      }})
+      await this.toast_ok(`${this.article.moves_answers.length}つ目の正解を追加しました`)
+      if (this.article.moves_answers.length === 1) {
+        this.toast_ok(`他の手順で正解がある場合は続けて追加してください`)
+      }
     },
 
     answer_delete_at(index) {
