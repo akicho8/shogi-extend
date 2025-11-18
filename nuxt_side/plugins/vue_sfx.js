@@ -45,7 +45,7 @@ export const vue_sfx = {
     },
 
     sfx_click(options = {}) {
-      this.sfx_play("se_click", options)
+      return this.sfx_play("se_click", options)
     },
 
     sfx_play_toggle(enabled, options = {}) {
@@ -55,7 +55,7 @@ export const vue_sfx = {
       } else {
         key = "se_toggle_off"
       }
-      this.sfx_play(key, options)
+      return this.sfx_play(key, options)
     },
 
     sfx_stop_all() {
