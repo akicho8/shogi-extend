@@ -44,6 +44,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     place_click("11")
     assert_text "今はaさんの手番です"
+    assert_text "bさんの手番は次です"
   end
 
   # 本番の順番設定のUIではそれぞれのチームに最低1人入れないといけないのでこの警告がでることはない
