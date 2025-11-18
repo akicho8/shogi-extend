@@ -34,18 +34,18 @@ export const vue_dialog = {
     //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
 
     toast_ok(message, options = {}) {
-      this.toast_primitive(message, {type: "is-primary", ...options})
+      return this.toast_primitive(message, {type: "is-primary", ...options})
     },
 
     toast_warn(message, options = {}) {
-      this.toast_primitive(message, {type: "is-warning", ...options})
+      return this.toast_primitive(message, {type: "is-warning", ...options})
     },
 
     toast_ng(message, options = {}) {
-      this.toast_primitive(message, {type: "is-danger", ...options})
+      return this.toast_primitive(message, {type: "is-danger", ...options})
     },
 
-    toast_primitive(message, params = {}) {
+    async toast_primitive(message, params = {}) {
       params = {
         toast: true,
         talk: true,
@@ -63,7 +63,7 @@ export const vue_dialog = {
           this.$buefy.toast.open({...params, message: message})
         }
         if (h.talk) {
-          this.talk(message, params) // volume, rate, onend は talk 用オプション
+          return this.talk(message, params) // volume, rate, onend は talk 用オプション
         }
       }
     },

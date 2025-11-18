@@ -1,7 +1,7 @@
 // |----------------------------------------|
 // | sfx_play(key, options = {})            |
 // | sfx_play_random(keys, options = {})    |
-// | sfx_click(options = {})           |
+// | sfx_click(options = {})                |
 // | sfx_play_toggle(enabled, options = {}) |
 // | sfx_stop_all()                         |
 // | sfx_resume_all()                       |
@@ -87,7 +87,14 @@ export const vue_sfx = {
       }
       options.volume *= GX.map_range(this.g_common_volume_scale, 0, 10, 0.0, 2.0)
 
-      return new Howl(options)
+      return new Promise((resolve, reject) => {
+        const sound = new Howl({
+          ...options,
+          onend: () => resolve(),
+          onloaderror: (_, msg) => reject(msg),
+          onplayerror: (_, msg) => reject(msg),
+        })
+      })
     },
   },
 }

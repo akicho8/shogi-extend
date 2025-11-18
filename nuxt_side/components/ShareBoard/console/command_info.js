@@ -151,6 +151,27 @@ export class CommandInfo extends ApplicationMemoryRecord {
           // }
         },
       },
+
+      {
+        desc: "talkの同期実行",
+        key: "test:talk",
+        example: "/test:talk",
+        command_fn: async (context, args) => {
+          await context.talk("a")
+          await context.talk("b")
+          await context.talk("c")
+        },
+      },
+      {
+        desc: "toast_okの同期実行",
+        key: "test:toast_ok",
+        example: "/test:toast_ok",
+        command_fn: async (context, args) => {
+          await context.toast_ok("a")
+          await context.toast_ok("b")
+          await context.toast_ok("c")
+        },
+      },
     ]
   }
 }

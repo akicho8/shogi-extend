@@ -26,11 +26,11 @@ export const vue_talk = {
     // しゃべる
     // ・タブが見えているときだけの条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
-    talk(message, options = {}) {
+    async talk(message, options = {}) {
+      message = String(message ?? "")
       if (this.$nuxt.isOffline) {
         return
       }
-      message = String(message ?? "")
       if (message === "") {
         return
       }
@@ -40,26 +40,25 @@ export const vue_talk = {
         }
       }
       if (this.__SYSTEM_TEST_RUNNING__) {
-        this.sfx_play_now({...options, rate: 2.0, volume: 0, volume_scale: 0})
-        return
+        return this.sfx_play_now({...options, rate: 2.0, volume: 0, volume_scale: 0})
       }
       const params = {
         source_text: message,
         data: options.data,     // ログに出すため
       }
-      return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
-        if (e.browser_path == null) {
-          return Promise.reject("browser_path is blank") // ExclusiveAccess::TimeoutError のときここにくる
-        }
-        this.__talk_core(e, options) // onend にフックできればいいので戻値不要
-      })
+      const e = await this.$axios.$post("/api/talk", params, {progress: false})
+      if (e.talk_process_skip) {
+        console.warn(`テキストを音声に変換することができなかったがエラーとはせず単に await を通過させる : ${message}`)
+        return
+      }
+      return this.__talk_core(e, options)
     },
 
     // private
 
     // https://github.com/goldfire/howler.js#documentation
     __talk_core(e, options = {}) {
-      this.sfx_play_now({
+      return this.sfx_play_now({
         ...HOWL_DEFAULT_OPTIONS,
         src: e.browser_path,
         volume_scale: this.g_talk_volume_scale,
