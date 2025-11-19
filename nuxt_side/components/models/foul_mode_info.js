@@ -20,7 +20,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       {
         key: "lose",
         name: "したら負け",
-        message: "緊張感↑ 逆転の余地↑ 盛り上がり↑ (推奨)",
+        message: "棋力↑ 逆転の余地↑ 楽しさ↑ (推奨)",
         type: "is-primary",
         sp_illegal_validate: true,
         sp_illegal_cancel: false,
@@ -29,7 +29,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "block",
         name: "できない",
-        message: "緊張感↓ 逆転の余地↓ 盛り上がり↓ (接待用)",
+        message: "棋力↓ 逆転の余地↓ 楽しさ↓ (接待用)",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
