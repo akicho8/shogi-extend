@@ -89,12 +89,12 @@ module ShareBoard
         e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_min", "every_plus")
       end
       message = [
-        data["cc_behavior_key"].inspect,
-        data["cc_behavior_name"].inspect,
-        values.inspect,
+        data["cc_behavior_key"],
+        data["cc_behavior_name"],
+        values,
         data["member_data"],
         data["current_url"],
-      ].compact.join("\n\n")
+      ].compact
       track(data, subject: "対局時計", body: message, emoji: ":対局時計:", level: data["log_level"])
       broadcast(:clock_box_share_broadcasted, data)
     end
@@ -252,6 +252,9 @@ module ShareBoard
       body << [":", data["ua_icon_key"], ":"].join
       body << data["from_user_name"].inspect
       if v = options[:body].presence
+        if !v.kind_of?(String)
+          v = v.inspect
+        end
         body << v
       end
       body = body.join(" ").squish
