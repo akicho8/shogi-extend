@@ -14,7 +14,7 @@ b-sidebar.is-unselectable.KiwiLemonNewSidebar(fullheight right overlay v-model="
 
       //- .style_container.box.mt-5
       //-   .title.is-5 スタイル設定
-      //-   b-field(custom-class="is-small" label="盤の大きさ")
+      //-   b-field(custom-class="is-small" label="盤サイズ")
       //-     b-slider(v-bind="slider_attrs" v-model="" :min="0" :max="100" :step="1.0")
 </template>
 

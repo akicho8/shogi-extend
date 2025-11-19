@@ -62,6 +62,7 @@ export default {
       hv.sp_my_piece_kill_disabled   = this.SB.legal_strict_p
       hv.sp_lift_cancel_action       = this.SB.lift_cancel_action_info.key
       hv.sp_mobile_vertical          = this.SB.mobile_layout_info.sp_mobile_vertical
+      hv.sp_layout                   = this.SB.desktop_layout_info.sp_layout
       hv.sp_layer                    = this.sp_layer
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
