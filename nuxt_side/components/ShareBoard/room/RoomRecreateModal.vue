@@ -4,11 +4,12 @@
     .message-header
       | 通信不調
     .message-body
-      | インターネットに接続してください。
-      | 接続したら自動的に部屋に復帰します。
-      template(v-if="SB.debug_mode_p")
-        a.mx-1.room_recreate_modal_close(@click="SB.room_recreate_modal_close") [CLOSE]
-        a.mx-1.internet_on_trigger(@click="SB.internet_on_trigger") [接続]
+      .text_content
+        | インターネットに接続してください<br>
+        | 接続できたら自動的に復帰します<br>
+      .buttons.is-centered.mb-0(v-if="SB.debug_mode_p")
+        b-button.mb-0.room_recreate_modal_close(@click="SB.room_recreate_modal_close") CLOSE
+        b-button.mb-0.internet_on_trigger(@click="SB.internet_on_trigger") 接続
 
   //- b-notification(type="is-danger is-light" has-icon)
   //-   | インターネットに接続してください。

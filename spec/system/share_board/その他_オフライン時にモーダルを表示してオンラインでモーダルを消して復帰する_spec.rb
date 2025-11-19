@@ -31,6 +31,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_room_created
       assert_turn(2)
       assert_clock(:play)                  # b から復帰用の情報を受け取ったので a の時計は動いている
+      assert_action_text("通信復旧")
     end
   end
 end
