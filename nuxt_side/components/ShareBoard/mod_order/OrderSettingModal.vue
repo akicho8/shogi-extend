@@ -30,9 +30,9 @@
           OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖")
         OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_unit.watch_users" label="観戦")
 
-      .realtime_notice_container.my-4.mx-1.is-unselectable(v-if="realtime_notice")
-        .realtime_notice.tag.is-light(:class="realtime_notice.css_klass")
-          | {{realtime_notice.message}}
+      .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
+        b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
+        .is-size-7(v-html="realtime_notice.message")
 
       .shuffle_buttons.mt-4
         b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
@@ -166,10 +166,10 @@ export default {
       })
       this.sfx_click()
       this.SB.new_o.order_unit.furigoma_core(furigoma_pack.swap_p)
-      const user = this.SB.new_o.order_unit.first_user(this.SB.start_color)
+      const item = this.SB.new_o.order_unit.first_user(this.SB.start_color)
       let who = "誰かさん"
-      if (user) {
-        who = this.user_call_name(user.user_name)
+      if (item) {
+        who = this.user_call_name(item.user_name)
       }
       const message = `振り駒をした結果、${furigoma_pack.message}で${who}の先手になりました`
       this.SB.al_share({label: furigoma_pack.piece_names, message: message})
@@ -347,12 +347,6 @@ export default {
     self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.new_o.order_unit.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
     apply_button_type() {
-      // const hv = this.realtime_notice
-      // if (hv) {
-      //   if (hv.status === "error") {
-      //     return hv.css_klass
-      //   }
-      // }
       if (this.SB.new_o.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
@@ -363,9 +357,9 @@ export default {
       if (hv == null) {
         if (this.SB.new_o.order_unit.empty_p) {
           hv = {
-            message: "対局する人を☗と☖に放り込んでください",
-            css_klass: "is-warning",
-            status: "error",
+            icon_code: "alert-circle-outline",
+            icon_type: "is-danger",
+            message: "対局する人を☗と☖に放り込もう",
           }
         }
       }
@@ -375,15 +369,15 @@ export default {
           if (this.self_vs_self_mode_p) {
             const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
             hv = {
-              message: `${location.name}にも入れてください (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`,
-              css_klass: "is-warning",
-              status: "success",
+              icon_code: "alert-circle-outline",
+              icon_type: "is-danger",
+              message: `次は${location.human_color_name}チームを決めよう (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`,
             }
           } else {
             hv = {
-              message: `${location.name}にも入れてください`,
-              css_klass: "is-warning",
-              status: "error",
+              icon_code: "alert-circle-outline",
+              icon_type: "is-danger",
+              message: `次は${location.human_color_name}チームを決めよう`,
             }
           }
         }
@@ -392,15 +386,15 @@ export default {
         if (this.SB.new_o.order_unit.order_state.state_name === "O2State") {
           const b_vs_w = this.SB.new_o.order_unit.team_member_counts.join(" vs ")
           hv = {
-            message: `${b_vs_w} で対局を開始できます`,
-            css_klass: "",
-            status: "success",
+            icon_code: "check-bold",
+            icon_type: "is-success",
+            message: `${b_vs_w} で対局できます`,
           }
         } else {
           hv = {
-            message: "対局を開始できます",
-            css_klass: "",
-            status: "success",
+            icon_code: "check-bold",
+            icon_type: "is-success",
+            message: "対局できます",
           }
         }
       }
