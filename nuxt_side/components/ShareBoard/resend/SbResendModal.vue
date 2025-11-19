@@ -4,7 +4,7 @@
     .modal-card-title
       | 同期失敗 {{SB.rs_failed_count}}回目
   .modal-card-body(v-if="SB.rs_next_user_name")
-    | 次の手番の{{SB.user_call_name(SB.rs_next_user_name)}}の通信状況が悪いので再送しよう
+    | {{SB.user_call_name(SB.rs_next_user_name)}}の反応がないので再送しよう
     ul.has-text-grey.is-size-7.mt-2
       li {{SB.user_call_name(SB.rs_next_user_name)}}がいなくなっている場合は順番設定から外そう
       template(v-if="SB.debug_mode_p")

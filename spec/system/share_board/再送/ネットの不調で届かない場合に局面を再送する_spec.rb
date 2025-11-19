@@ -29,7 +29,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     case1
     window_a do
       assert_rs_faild_count(1)
-      assert_text("次の手番のbさんの通信状況が悪いので再送しよう")
+      assert_text("bさんの反応がないので再送しよう")
 
       find(".rs_resend_handle").click # 再送する
       assert_action_text("再送1")
