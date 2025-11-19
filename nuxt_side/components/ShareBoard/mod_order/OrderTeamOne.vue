@@ -1,6 +1,6 @@
 <template lang="pug">
 .OrderTeamOne
-  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable.has-text-centered(@dblclick="TheOSM.state_toggle_handle")
+  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable.has-text-centered(@click="$emit('label_click', $event)")
     | {{label}}
   VueDraggable.draggable_area(
     tag="div"

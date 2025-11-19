@@ -9,6 +9,7 @@
           | 参加者{{SB.new_o.order_unit.main_user_count}}人
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
+    b-button.state_toggle_handle(@click="state_toggle_handle" size="is-small" v-if="SB.debug_mode_p") ｱﾙｺﾞﾘｽﾞﾑ変更
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -26,9 +27,9 @@
         template(v-if="SB.new_o.order_unit.order_state.state_name === 'O1State'")
           OrderTeamOne.is_team_both(:items.sync="SB.new_o.order_unit.order_state.users"   label="対局")
         template(v-if="SB.new_o.order_unit.order_state.state_name === 'O2State'")
-          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖")
-        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_unit.watch_users" label="観戦")
+          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗" @label_click="swap_handle")
+          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖" @label_click="swap_handle")
+        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_unit.watch_users" label="観戦" @label_click="all_member_as_watcher_handle")
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
@@ -181,6 +182,12 @@ export default {
       this.sfx_click()
       this.SB.new_o.order_unit.swap_run()
       this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
+    },
+
+    // すべてのメンバーを観戦に移動する
+    all_member_as_watcher_handle(e) {
+      this.sfx_click()
+      this.toast_ok("TODO: すべてのメンバーを観戦に移動する")
     },
 
     // 偶数人数であること
