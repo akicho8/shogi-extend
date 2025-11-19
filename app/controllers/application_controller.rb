@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
       if current_user
         if current_user.auth_infos.exists?
           if current_user.name.blank?
-            redirect_to [:edit, current_user], notice: "名前を入力してください"
+            redirect_to [:edit, current_user], notice: "名前を入力しよう"
           end
         end
       end

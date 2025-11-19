@@ -27,8 +27,8 @@
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加しよう
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 module Api

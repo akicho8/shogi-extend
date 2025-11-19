@@ -27,8 +27,8 @@
 # |------------------+--------------------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加しよう
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 require "rails_helper"

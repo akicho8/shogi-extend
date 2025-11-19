@@ -20,7 +20,7 @@ export const mod_search = {
 
     search_with_valid_handle() {
       if (this.$GX.blank_p(this.query)) {
-        this.toast_warn("なんかしら入力してから検索してください")
+        this.toast_warn("なんかしら入力してから検索しよう")
         return
       }
       this.interactive_search({query: this.query})

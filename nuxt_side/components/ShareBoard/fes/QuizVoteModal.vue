@@ -52,7 +52,7 @@ export default {
     submit_handle() {
       if (this.SB.quiz_voted_index == null) {
         this.sfx_play("se_bubuu")
-        this.toast_warn("選択してから投票してください")
+        this.toast_warn("選択してから投票しよう")
         return
       }
       this.$emit("close")

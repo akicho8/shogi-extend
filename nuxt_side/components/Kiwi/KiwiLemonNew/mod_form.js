@@ -106,7 +106,7 @@ export const mod_form = {
       }
 
       if (this.$GX.blank_p(this.body)) {
-        this.toast_warn("棋譜を入力してください")
+        this.toast_warn("棋譜を入力しよう")
         return
       }
 

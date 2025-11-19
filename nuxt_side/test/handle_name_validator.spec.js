@@ -2,12 +2,12 @@ import { HandleNameValidator } from "@/components/models/handle_name/handle_name
 
 describe("HandleNameValidator", () => {
   test("valid_message", () => {
-    expect(HandleNameValidator.valid_message("").includes("ハンドルネームを入力してください")).toEqual(true)
+    expect(HandleNameValidator.valid_message("").includes("ハンドルネームを入力しよう")).toEqual(true)
   })
 
   test("長すぎる", () => {
     expect(HandleNameValidator.valid_message("alice６７８９０")).toEqual(null)
-    expect(HandleNameValidator.valid_message("alice６７８９０１").includes("ハンドルネームは10文字以内にしてください")).toEqual(true)
+    expect(HandleNameValidator.valid_message("alice６７８９０１").includes("ハンドルネームは10文字以内にしよう")).toEqual(true)
   })
 
   test("危険文字", () => {

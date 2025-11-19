@@ -24,7 +24,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_a do
       find(:button, text: "このチームに参加する", exact_text: true).click # 選択せずに決定した
-      assert_text("選択してから投票してください")
+      assert_text("選択してから投票しよう")
     end
     window_a do
       find(".item", text: "(quiz_right)").click

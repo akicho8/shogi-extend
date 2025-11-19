@@ -16,7 +16,7 @@ module Swars
     end
 
     class RaiseConnectionFailed < BaseError
-      def initialize(message = "混み合っています<br>しばらくしてからアクセスしてください")
+      def initialize(message = "混み合っています<br>しばらくしてからアクセスしよう")
         super(:request_timeout, message)
       end
     end

@@ -10,7 +10,7 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
   end
 
   it "めちゃくちゃな入力" do
-    assert { Swars::UserKeySuggestion.message_for("あ" * 50) == "めちゃくちゃな入力をしないでください" }
+    assert { Swars::UserKeySuggestion.message_for("あ" * 50) == "めちゃくちゃな入力はやめよう" }
   end
 
   it "メールアドレスの入力" do
@@ -24,11 +24,11 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
   end
 
   it "全角で入力した場合" do
-    assert { Swars::UserKeySuggestion.message_for("ａｌｉｃｅ") == "ウォーズIDは半角で入力してください" }
+    assert { Swars::UserKeySuggestion.message_for("ａｌｉｃｅ") == "ウォーズIDは半角で入力しよう" }
   end
 
   it "アルファベットと数字だけ半角だけど記号が全角" do
-    assert { Swars::UserKeySuggestion.message_for("alice＿bob") == "＿ の部分も半角で入力してください" }
+    assert { Swars::UserKeySuggestion.message_for("alice＿bob") == "＿ の部分も半角で入力しよう" }
   end
 
   describe "アルファベットを含む半角で入力しているが長さが範囲外" do
@@ -36,14 +36,14 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
       assert { Swars::UserKeySuggestion.message_for("ab") == "ウォーズIDは3文字以上です" }
     end
     it "長すぎる" do
-      assert { Swars::UserKeySuggestion.message_for("1234567890abcdef") == "真面目に入力してください" }
+      assert { Swars::UserKeySuggestion.message_for("1234567890abcdef") == "真面目に入力しよう" }
     end
   end
 
   describe "アルファベットを含む半角を3文字以上入力したのでサジェクションが発動する" do
     it "大文字小文字を無視すると一致する場合" do
       Swars::User.create!(user_key: "alice")
-      assert { Swars::UserKeySuggestion.message_for("ALICE") == "もしかして alice ですか？ 大文字と小文字を区別して入力してください" }
+      assert { Swars::UserKeySuggestion.message_for("ALICE") == "もしかして alice ですか？ 大文字と小文字を区別して入力しよう" }
     end
 
     it "複数人マッチした場合" do
@@ -53,7 +53,7 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
     end
 
     it "マッチしない" do
-      assert { Swars::UserKeySuggestion.message_for("alice") == "alice に似た人はいません。正確に入力してください" }
+      assert { Swars::UserKeySuggestion.message_for("alice") == "alice に似た人はいません。正確に入力しよう" }
     end
 
     it "部分一致とする" do
@@ -62,7 +62,7 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
     end
 
     it "数字だけ" do
-      assert { Swars::UserKeySuggestion.message_for("123") == "123 に似た人はいません。正確に入力してください" }
+      assert { Swars::UserKeySuggestion.message_for("123") == "123 に似た人はいません。正確に入力しよう" }
     end
 
     it "マッチする人数が多い" do
@@ -73,7 +73,7 @@ RSpec.describe Swars::UserKeySuggestion, type: :model, swars_spec: true do
 
   describe "記号を入力した場合" do
     it do
-      assert { Swars::UserKeySuggestion.message_for(".") == "真面目に入力してください" }
+      assert { Swars::UserKeySuggestion.message_for(".") == "真面目に入力しよう" }
     end
   end
 end

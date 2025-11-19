@@ -66,7 +66,7 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.2]
       t.string   :unlock_token # Only if unlock strategy is :email or :both
       t.datetime :locked_at
 
-      # 元のモデルにタイムスタンプが含まれていない場合は、コメントを外してください。
+      # 元のモデルにタイムスタンプが含まれていない場合は、コメントを外そう。
       # t.timestamps null: false
 
       t.index :email,                unique: true

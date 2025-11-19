@@ -18,7 +18,7 @@
 # |-----------------+-----------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加しよう
 # --------------------------------------------------------------------------------
 
 require "rails_helper"

@@ -61,7 +61,7 @@ export class HandleNameValidator {
     if (message == null) {
       if (this.options.max_length) {
         if (this.source.length > this.options.max_length) {
-          message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
+          message = `${this.options.name}は${this.options.max_length}文字以内にしよう`
         }
       }
     }
@@ -69,7 +69,7 @@ export class HandleNameValidator {
     const name = this.normalized_name
     if (message == null) {
       if (GX.blank_p(name)) {
-        message = `${this.options.name}を入力してください`
+        message = `${this.options.name}を入力しよう`
       }
     }
 
@@ -119,14 +119,14 @@ export class HandleNameValidator {
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
-          message = `呼ばれて恥ずかしくない${this.options.name}を入力してください`
+          message = `呼ばれて恥ずかしくない${this.options.name}を入力しよう`
         }
       }
 
       // へんな用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordUserList.join("|"), "i"))) {
-          message = `もっと素敵な${this.options.name}を入力してください`
+          message = `もっと素敵な${this.options.name}を入力しよう`
         }
       }
     }

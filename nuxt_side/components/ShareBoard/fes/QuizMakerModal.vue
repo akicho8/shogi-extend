@@ -47,7 +47,7 @@ export default {
       this.sfx_click()
       if (VALIDATION_ON) {
         if (this.SB.master_quiz.invalid_p) {
-          this.toast_warn("ぜんぶ入力してください")
+          this.toast_warn("ぜんぶ入力しよう")
           return
         }
       }

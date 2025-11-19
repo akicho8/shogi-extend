@@ -4,7 +4,7 @@ module Api
 
     def api_login_required
       if !current_user
-        render json: { statusCode: 403, message: "ログインしてください" }, status: 403
+        render json: { statusCode: 403, message: "ログインしよう" }, status: 403
       end
     end
 

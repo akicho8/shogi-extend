@@ -2036,7 +2036,7 @@
   source_published_on: 
   created_at: '2020-07-05T19:34:56.850+09:00'
   updated_at: '2020-07-23T23:30:55.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -3143,7 +3143,7 @@
   source_published_on: 
   created_at: '2020-07-15T01:32:21.546+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -3598,7 +3598,7 @@
   source_published_on: 
   created_at: '2020-07-16T20:33:40.935+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -3730,7 +3730,7 @@
   source_published_on: 
   created_at: '2020-07-17T20:56:34.139+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -3958,7 +3958,7 @@
   source_published_on: 
   created_at: '2020-07-17T23:40:26.553+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - 嬉野流
@@ -4067,7 +4067,7 @@
   source_published_on: 
   created_at: '2020-07-18T21:20:18.171+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -4100,7 +4100,7 @@
   source_published_on: 
   created_at: '2020-07-18T21:46:05.014+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -4127,7 +4127,7 @@
   source_published_on: 
   created_at: '2020-07-18T22:05:06.118+09:00'
   updated_at: '2020-07-21T20:50:51.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -4601,7 +4601,7 @@
   source_published_on: 
   created_at: '2020-07-23T11:30:23.994+09:00'
   updated_at: '2020-07-24T15:51:09.000+09:00'
-  direction_message: 初手を指してください。
+  direction_message: 初手を指そう。
   mate_skip: false
   tag_list: []
   lineage_key: 定跡
@@ -4671,7 +4671,7 @@
   source_published_on: 
   created_at: '2020-07-23T23:42:31.408+09:00'
   updated_at: '2020-07-23T23:49:17.000+09:00'
-  direction_message: 3手指してください。2手目は△87角です
+  direction_message: 3手指そう。2手目は△87角です
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -4727,7 +4727,7 @@
   source_published_on: 
   created_at: '2020-07-23T23:57:26.566+09:00'
   updated_at: '2020-07-23T23:57:26.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -5003,7 +5003,7 @@
   source_published_on: 
   created_at: '2020-07-24T18:15:55.956+09:00'
   updated_at: '2020-07-25T16:29:44.000+09:00'
-  direction_message: 早石田の定石を指してください
+  direction_message: 早石田の定石を指そう
   mate_skip: false
   tag_list: []
   lineage_key: 定跡
@@ -5201,7 +5201,7 @@
   source_published_on: 
   created_at: '2020-07-24T23:25:07.158+09:00'
   updated_at: '2020-08-12T18:58:41.276+09:00'
-  direction_message: 中盤のおわりぐらいの局面です。45歩か45桂の良いと思うほうを指してください
+  direction_message: 中盤のおわりぐらいの局面です。45歩か45桂の良いと思うほうを指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -5529,7 +5529,7 @@
   source_published_on: 
   created_at: '2020-07-26T23:10:45.405+09:00'
   updated_at: '2020-07-26T23:10:45.000+09:00'
-  direction_message: "▲34飛の状態で9筋を攻められました。都合よく5手指してください"
+  direction_message: "▲34飛の状態で9筋を攻められました。都合よく5手指そう"
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -5773,7 +5773,7 @@
   source_published_on: 
   created_at: '2020-07-27T08:36:36.370+09:00'
   updated_at: '2020-07-27T08:36:36.000+09:00'
-  direction_message: 3手、指してください
+  direction_message: 3手、指そう
   mate_skip: false
   tag_list: []
   lineage_key: 必死
@@ -6245,7 +6245,7 @@
   source_published_on: 
   created_at: '2020-07-28T10:52:59.408+09:00'
   updated_at: '2020-07-28T10:56:47.000+09:00'
-  direction_message: 1手、指してください
+  direction_message: 1手、指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -6442,7 +6442,7 @@
   source_published_on: 
   created_at: '2020-07-28T21:12:40.691+09:00'
   updated_at: '2020-07-28T21:12:40.000+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -6720,7 +6720,7 @@
   source_published_on: 
   created_at: '2020-07-30T12:52:17.216+09:00'
   updated_at: '2020-08-05T21:36:24.900+09:00'
-  direction_message: 15手指してください
+  direction_message: 15手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 詰将棋
@@ -6854,7 +6854,7 @@
   source_published_on: 
   created_at: '2020-07-31T00:42:57.936+09:00'
   updated_at: '2020-07-31T00:46:30.160+09:00'
-  direction_message: どこを攻めますか？ 1手指してください
+  direction_message: どこを攻めますか？ 1手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -7516,7 +7516,7 @@
   source_published_on: 
   created_at: '2020-08-04T01:04:50.829+09:00'
   updated_at: '2020-08-05T07:34:14.154+09:00'
-  direction_message: "▲96歩に対して1手指してください"
+  direction_message: "▲96歩に対して1手指そう"
   mate_skip: false
   tag_list:
   - 早石田対策
@@ -7675,7 +7675,7 @@
   init_sfen: position sfen 9/8k/7p1/7P1/5P3/9/9/9/9 b B 1
   time_limit_sec: 10
   difficulty: 1
-  title: 玉の斜めの駒が前進するなら先に角
+  title: 玉の斜めの駒が前進するんなら先に角
   description: |-
     歩成 同玉 のあとでは角を打っても効果がない。
     相手の駒が一歩前に出ることで玉が見える場合は角を先に打つ。
@@ -8076,7 +8076,7 @@
   source_published_on: 
   created_at: '2020-08-07T00:31:29.334+09:00'
   updated_at: '2020-08-07T00:31:29.378+09:00'
-  direction_message: 攻めを継続する1手を指してください
+  direction_message: 攻めを継続する1手を指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -8158,7 +8158,7 @@
   source_published_on: 
   created_at: '2020-08-07T11:11:03.907+09:00'
   updated_at: '2020-08-07T11:11:03.931+09:00'
-  direction_message: 5手指してください
+  direction_message: 5手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -9063,7 +9063,7 @@
   source_published_on: 
   created_at: '2020-08-11T13:27:28.794+09:00'
   updated_at: '2020-08-11T13:27:28.817+09:00'
-  direction_message: 大駒を活用する1手を指してください
+  direction_message: 大駒を活用する1手を指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -9405,7 +9405,7 @@
   source_published_on: 
   created_at: '2020-08-13T13:48:16.764+09:00'
   updated_at: '2020-08-13T13:48:16.787+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -10588,7 +10588,7 @@
   source_published_on: 
   created_at: '2020-09-05T10:41:23.697+09:00'
   updated_at: '2020-09-05T10:41:23.749+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -10726,7 +10726,7 @@
   source_published_on: 
   created_at: '2020-09-05T21:20:11.358+09:00'
   updated_at: '2020-09-05T21:20:11.416+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -12250,7 +12250,7 @@
   source_published_on: 
   created_at: '2020-09-11T21:59:39.404+09:00'
   updated_at: '2020-09-11T21:59:39.430+09:00'
-  direction_message: 都合よく7手指してください
+  direction_message: 都合よく7手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -12302,7 +12302,7 @@
   source_published_on: 
   created_at: '2020-09-11T23:28:12.137+09:00'
   updated_at: '2020-09-11T23:28:12.191+09:00'
-  direction_message: 都合よく5手指してください
+  direction_message: 都合よく5手指そう
   mate_skip: false
   tag_list:
   - 十字飛車
@@ -12381,7 +12381,7 @@
   source_published_on: 
   created_at: '2020-09-12T23:08:13.109+09:00'
   updated_at: '2020-09-12T23:08:13.130+09:00'
-  direction_message: 34歩打ちとしてきました。3手指してください
+  direction_message: 34歩打ちとしてきました。3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -12488,7 +12488,7 @@
   source_published_on: 
   created_at: '2020-09-13T22:54:41.143+09:00'
   updated_at: '2020-09-13T22:54:41.165+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -12540,7 +12540,7 @@
   source_published_on: 
   created_at: '2020-09-13T23:18:12.615+09:00'
   updated_at: '2020-09-13T23:18:12.636+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -13033,7 +13033,7 @@
   source_published_on: 
   created_at: '2020-09-17T21:19:38.862+09:00'
   updated_at: '2020-09-17T21:19:38.916+09:00'
-  direction_message: 都合よく7手指してください
+  direction_message: 都合よく7手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -13143,7 +13143,7 @@
   source_published_on: 
   created_at: '2020-09-20T23:58:43.633+09:00'
   updated_at: '2020-09-20T23:58:43.692+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -13205,7 +13205,7 @@
   source_published_on: 
   created_at: '2020-09-21T20:51:00.414+09:00'
   updated_at: '2020-09-21T21:42:02.034+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -13232,7 +13232,7 @@
   source_published_on: 
   created_at: '2020-09-21T21:00:41.289+09:00'
   updated_at: '2020-09-21T21:00:41.346+09:00'
-  direction_message: 都合よく3手指してください
+  direction_message: 都合よく3手指そう
   mate_skip: false
   tag_list:
   - アヒル戦法
@@ -13259,7 +13259,7 @@
   source_published_on: 
   created_at: '2020-09-21T21:41:37.572+09:00'
   updated_at: '2020-09-21T21:41:37.596+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -13526,7 +13526,7 @@
   source_published_on: 
   created_at: '2020-09-26T09:35:13.720+09:00'
   updated_at: '2020-09-26T09:35:13.742+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋
@@ -13786,7 +13786,7 @@
   source_published_on: 
   created_at: '2020-09-29T23:19:03.738+09:00'
   updated_at: '2020-09-29T23:19:03.789+09:00'
-  direction_message: 3手指してください
+  direction_message: 3手指そう
   mate_skip: false
   tag_list: []
   lineage_key: 手筋

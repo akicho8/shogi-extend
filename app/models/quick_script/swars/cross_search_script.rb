@@ -105,7 +105,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:x_user_keys].presence,
-                :help_message => "複数指定可 (ここで一人だけ指定するなら通常の棋譜検索を使った方がいい)",
+                :help_message => "複数指定可 (ここで一人だけ指定するんなら通常の棋譜検索を使った方がいい)",
               }
             },
           },
@@ -436,12 +436,12 @@ module QuickScript
         ################################################################################
 
         if range_size > RANGE_SIZE_MAX
-          flash[:notice] = "検索対象件数は#{RANGE_SIZE_MAX}件以下にしてください"
+          flash[:notice] = "検索対象件数は#{RANGE_SIZE_MAX}件以下にしよう"
           return
         end
         if range_size > RANGE_SIZE_THRESHOLD
           if bg_request_info.key == :off
-            flash[:notice] = "検索対象件数が#{RANGE_SIZE_THRESHOLD}件を越える場合はバックグラウンド実行してください"
+            flash[:notice] = "検索対象件数が#{RANGE_SIZE_THRESHOLD}件を越える場合はバックグラウンド実行しよう"
             return
           end
         end
@@ -449,14 +449,14 @@ module QuickScript
         ################################################################################
 
         if request_size > REQUEST_SIZE_MAX
-          flash[:notice] = "抽出希望件数は#{REQUEST_SIZE_MAX}件以下にしてください"
+          flash[:notice] = "抽出希望件数は#{REQUEST_SIZE_MAX}件以下にしよう"
           return
         end
 
         if params[:experiment]
           if request_size > REQUEST_SIZE_DEFAULT
             if download_info.key == :on && bg_request_info.key == :off
-              flash[:notice] = "#{REQUEST_SIZE_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行してください"
+              flash[:notice] = "#{REQUEST_SIZE_DEFAULT}件を越える件数をZIPダウンロードする場合はバックグラウンド実行しよう"
               return
             end
           end
@@ -491,7 +491,7 @@ module QuickScript
 
         unless params[:experiment]
           if download_info.key == :on && bg_request_info.key == :off
-            flash[:notice] = "ZIPダウンロードする場合はバックグラウンド実行してください"
+            flash[:notice] = "ZIPダウンロードする場合はバックグラウンド実行しよう"
             return
           end
         end
@@ -500,11 +500,11 @@ module QuickScript
 
         if bg_request_info.key == :on
           unless current_user
-            flash[:notice] = "バックグラウンド実行する場合は結果をメールするのでログインしてください"
+            flash[:notice] = "バックグラウンド実行する場合は結果をメールするのでログインしよう"
             return
           end
           unless current_user.email_valid?
-            flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+            flash[:notice] = "ちゃんとしたメールアドレスを登録しよう"
             return
           end
         end

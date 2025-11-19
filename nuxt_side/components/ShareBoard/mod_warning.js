@@ -51,14 +51,14 @@ export const mod_warning = {
       if (message == null) {
         if (this.inconsistency_order_only) {
           message = [
-            `対局するなら対局時計を押してください`,
-            `検討するなら駒を動かせるように順番設定を解除してください`,
+            `対局するんなら対局時計を押そう`,
+            `検討するんなら駒を動かせるように順番設定を解除しよう`,
           ]
         }
       }
       if (message == null) {
         if (this.inconsistency_clock_only) {
-          message = `対局する場合は順番設定をしてください` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
+          message = `対局する場合は順番設定をしよう` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
         }
       }
       if (message == null) {

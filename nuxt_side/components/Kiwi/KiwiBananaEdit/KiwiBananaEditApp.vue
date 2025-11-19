@@ -89,7 +89,7 @@ export default {
       }
 
       if (this.$GX.blank_p(this.banana.title)) {
-        this.toast_warn("なんかしらのタイトルを捻り出してください")
+        this.toast_warn("なんかしらのタイトルを捻り出そう")
         return
       }
 

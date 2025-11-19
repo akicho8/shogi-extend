@@ -52,7 +52,7 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
                 const member_info = _.sample(context.vs_member_infos)
                 if (member_info) {
                   const call_name = context.user_call_name(member_info.from_user_name)
-                  return `対局が開始されました。${call_name}に将棋の嘘の格言を(嘘とバレないように)アドバイスしてください。`
+                  return `対局が開始されました。${call_name}に将棋の嘘の格言を(嘘とバレないように)アドバイスしよう。`
                 }
               }
             }

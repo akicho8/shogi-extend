@@ -53,7 +53,7 @@ module BattleControllerSharedMethods
           if !editable_record?(current_record)
             message = ["アクセス権限がありません"]
             if Rails.env.development?
-              message << "(フッターのデバッグリンクから任意のユーザーまたは admin でログインしてください)"
+              message << "(フッターのデバッグリンクから任意のユーザーまたは admin でログインしよう)"
             end
             if Rails.env.test?
             else
@@ -114,7 +114,7 @@ module BattleControllerSharedMethods
         #     end
         #
         #     if !current_user
-        #       render html: "ログインしてください"
+        #       render html: "ログインしよう"
         #       return
         #     end
         #

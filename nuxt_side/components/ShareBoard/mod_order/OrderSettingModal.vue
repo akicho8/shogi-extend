@@ -227,7 +227,7 @@ export default {
 
     invalid_options() {
       if (GX.blank_p(this.SB.new_o.change_per)) {
-        return this.error_message_show("「X回指したら交代する」の項目を正しく入力してください")
+        return this.error_message_show("「X回指したら交代する」の項目を正しく入力しよう")
       }
     },
 

@@ -20,7 +20,7 @@ RSpec.describe "認証", type: :system, login_spec: true do
     it "works" do
       eval_code(%(User.create!(name: :alice, email: "#{system_test_twitter_account[:email]}", confirmed_at: Time.current)))
       twitter_login
-      assert_text("メールアドレスとパスワードでログインしてください")
+      assert_text("メールアドレスとパスワードでログインしよう")
     end
   end
 

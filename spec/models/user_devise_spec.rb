@@ -31,6 +31,6 @@ RSpec.describe User, type: :model do
   it "emailが重複したときのエラーメッセージが利用者向けの案内になっている" do
     User.create!(email: "alice@example.com", confirmed_at: Time.current)
     user = User.create(email: "alice@example.com", confirmed_at: Time.current)
-    assert { user.errors.full_messages.join.include?("メールアドレスとパスワードでログインしてください") }
+    assert { user.errors.full_messages.join.include?("メールアドレスとパスワードでログインしよう") }
   end
 end

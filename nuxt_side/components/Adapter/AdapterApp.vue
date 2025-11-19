@@ -260,7 +260,7 @@ export default {
         return
       }
       if (!this.input_text) {
-        this.toast_warn("棋譜を入力してください")
+        this.toast_warn("棋譜を入力しよう")
         return
       }
       if (this.change_counter === 0) {

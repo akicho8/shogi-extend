@@ -87,7 +87,7 @@ export const mod_clock_box_modal = {
     cbm_play_handle() {
       if (this.cc_start_even_though_order_is_not_enabled_p && !this.debug_mode_p) {
         this.sfx_click()
-        this.toast_ng("先に順番設定をしてください")
+        this.toast_ng("先に順番設定をしよう")
         return
       }
 
@@ -124,7 +124,7 @@ export const mod_clock_box_modal = {
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
       // if (this.ac_room && this.order_enable_p) {
-      //   this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を解除してください"))
+      //   this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を解除しよう"))
       // }
     },
     cbm_stop_handle() {

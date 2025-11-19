@@ -29,7 +29,7 @@ export const mod_form = {
 
     swars_id_required_message() {
       if (GX.blank_p(this.user_key)) {
-        return "1つだけ入力してください"
+        return "1つだけ入力しよう"
       }
     },
   },

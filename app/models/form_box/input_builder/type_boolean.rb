@@ -6,7 +6,7 @@ module FormBox
     class TypeBoolean < Base
       def tag_build
         if params[:elems]
-          raise "elems を独自に指定するなら checkbox を使った方がいい"
+          raise "elems を独自に指定するんなら checkbox を使った方がいい"
         end
 
         _for = key

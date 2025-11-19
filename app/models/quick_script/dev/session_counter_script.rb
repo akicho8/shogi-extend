@@ -12,7 +12,7 @@ module QuickScript
         self.button_label = count
         if submitted?
           unless throttle.call
-            return "あと #{throttle.ttl_sec} 秒待ってから実行してください (あと #{throttle.ttl_ms} ms)"
+            return "あと #{throttle.ttl_sec} 秒待ってから実行しよう (あと #{throttle.ttl_ms} ms)"
           end
           self.count += 1
           self.button_label = count

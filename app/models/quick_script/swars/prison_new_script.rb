@@ -26,7 +26,7 @@ module QuickScript
       def call
         if request_post?
           if current_swars_user_key.blank?
-            flash[:notice] = "囚人のウォーズIDを入力してください"
+            flash[:notice] = "囚人のウォーズIDを入力しよう"
             return
           end
           if ::Swars::UserKeyValidator.invalid?(current_swars_user_key)
@@ -34,7 +34,7 @@ module QuickScript
             return
           end
           unless throttle.call
-            flash[:notice] = "あと #{throttle.ttl_sec} 秒待ってから実行してください"
+            flash[:notice] = "あと #{throttle.ttl_sec} 秒待ってから実行しよう"
             return
           end
           my_page = ::Swars::Agent::MyPage.new(user_key: current_swars_user_key)

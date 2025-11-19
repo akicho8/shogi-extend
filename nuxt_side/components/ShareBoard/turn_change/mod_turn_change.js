@@ -24,7 +24,7 @@ export const mod_turn_change = {
         // if (CONFIRM_METHOD) {
         //   this.turn_change_modal_instance = this.dialog_confirm({
         //     title: "初期配置に戻す (0手目に移動する)",
-        //     message: `途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください`,
+        //     message: `途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択しよう`,
         //     confirmText: "実行",
         //     type: "is-danger",
         //     focusOn: "cancel",

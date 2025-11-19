@@ -21,14 +21,14 @@ export const mod_answer = {
 
     async answer_create(moves) {
       if (moves.length === 0) {
-        this.toast_warn("1手以上動かしてください")
+        this.toast_warn("1手以上動かそう")
         return
       }
 
       // {
       //   const limit = this.config.turm_max_limit
       //   if (limit && moves.length > limit) {
-      //     this.toast_warn(`${this.config.turm_max_limit}手以内にしてください`)
+      //     this.toast_warn(`${this.config.turm_max_limit}手以内にしよう`)
       //     return
       //   }
       // }
@@ -43,7 +43,7 @@ export const mod_answer = {
 
       await this.toast_ok(`${this.article.moves_answers.length}つ目の正解を追加しました`)
       if (this.article.moves_answers.length === 1) {
-        this.toast_ok(`他の手順で正解がある場合は続けて追加してください`)
+        this.toast_ok(`他の手順で正解がある場合は続けて追加しよう`)
       }
     },
 

@@ -15,7 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       switch_to_window(window)
       assert { Capybara.current_url.include?("x.com") }
       # headless と head で LANG が変わる
-      # assert_text("ツイートを共有するにはログインしてください", wait: 10)
+      # assert_text("ツイートを共有するにはログインしよう", wait: 10)
       # assert_text("x.com", wait: 10) # headless だと英語になってしまう
     end
   end

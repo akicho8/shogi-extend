@@ -56,13 +56,13 @@ export class RoomKeyValidator {
     let message = null
     if (message == null) {
       if (GX.blank_p(s)) {
-        message = `${this.options.name}を入力してください`
+        message = `${this.options.name}を入力しよう`
       }
     }
     if (message == null) {
       if (this.options.max_length) {
         if (s.length > this.options.max_length) {
-          message = `${this.options.name}は${this.options.max_length}文字以内にしてください`
+          message = `${this.options.name}は${this.options.max_length}文字以内にしよう`
         }
       }
     }

@@ -137,12 +137,12 @@ module QuickScript
 
       def validate!
         unless current_user
-          flash[:notice] = "ZIP をメールするのでログインしてください"
+          flash[:notice] = "ZIP をメールするのでログインしよう"
           return
         end
 
         unless current_user.email_valid?
-          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+          flash[:notice] = "ちゃんとしたメールアドレスを登録しよう"
           return
         end
 

@@ -33,7 +33,7 @@ module QuickScript
             return
           end
           if current_username.blank?
-            flash[:notice] = "あなたの名前を入力してください"
+            flash[:notice] = "あなたの名前を入力しよう"
             return
           end
           if current_user.name != current_username

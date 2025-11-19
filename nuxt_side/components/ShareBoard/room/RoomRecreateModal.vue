@@ -5,14 +5,14 @@
       | 通信不調
     .message-body
       .text_content
-        | インターネットに接続してください<br>
+        | インターネットに接続しよう<br>
         | 接続できたら自動的に復帰します<br>
       .buttons.is-centered.mb-0(v-if="SB.debug_mode_p")
         b-button.mb-0.room_recreate_modal_close(@click="SB.room_recreate_modal_close") CLOSE
         b-button.mb-0.internet_on_trigger(@click="SB.internet_on_trigger") 接続
 
   //- b-notification(type="is-danger is-light" has-icon)
-  //-   | インターネットに接続してください。
+  //-   | インターネットに接続しよう。
   //-   | 接続したら自動的に部屋に復帰します。
   //-   template(v-if="SB.debug_mode_p")
   //-     a.mx-1.room_recreate_modal_close(@click="SB.room_recreate_modal_close") [CLOSE]
@@ -23,7 +23,7 @@
 //-     .modal-card-title
 //-       | オフラインです
 //-   .modal-card-body
-//-     p 通信環境を見直してインターネットに接続してください
+//-     p 通信環境を見直してインターネットに接続しよう
 //-     p 接続したら自動的に部屋に復帰します
 //-   .modal-card-foot.is-justify-content-end
 //-     //- b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")

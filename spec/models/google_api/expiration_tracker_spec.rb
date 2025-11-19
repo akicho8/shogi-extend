@@ -14,8 +14,8 @@
 # |----------------+-------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add index] create_google_api_expiration_trackers マイグレーションに add_index :google_api_expiration_trackers, :spreadsheet_id を追加してください
-# [Warning: Need to add relation] GoogleApi::ExpirationTracker モデルに belongs_to :spreadsheet を追加してください
+# [Warning: Need to add index] create_google_api_expiration_trackers マイグレーションに add_index :google_api_expiration_trackers, :spreadsheet_id を追加しよう
+# [Warning: Need to add relation] GoogleApi::ExpirationTracker モデルに belongs_to :spreadsheet を追加しよう
 # --------------------------------------------------------------------------------
 
 require "rails_helper"

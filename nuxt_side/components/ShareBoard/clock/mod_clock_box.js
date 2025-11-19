@@ -359,7 +359,7 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.key === "cc_behavior_on") {
         await this.toast_ok(this.__cc_receive_message(params))
         if (this.received_from_self(params)) {
-          this.toast_ok("時間を設定したら対局を開始してください", {duration: 1000 * 3})
+          this.toast_ok("時間を設定したら対局を開始しよう", {duration: 1000 * 3})
         }
       } else if (cc_behavior_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
@@ -378,7 +378,7 @@ export const mod_clock_box = {
         // if (this.self_vs_self_p) {
         //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
         // }
-        await this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+        await this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
         this.think_mark_invite_trigger()
       } else {
         // 順番設定をしていない場合
@@ -387,7 +387,7 @@ export const mod_clock_box = {
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         if (this.received_from_self(params)) {
           this.$buefy.snackbar.open({
-            message: `これは${this.user_call_name(this.current_turn_user_name)}同士の対局です。意図していない場合は順番設定から対局者を指定してください。`,
+            message: `これは${this.user_call_name(this.current_turn_user_name)}同士の対局です。意図していない場合は順番設定から対局者を指定しよう。`,
             // type: "is-primary is-light",
             position: "is-top",
             actionText: "OK",
@@ -455,13 +455,13 @@ export const mod_clock_box = {
       let message = null
       if (this.clock_box) {
         if (this.clock_box.current_status === "pause") {
-          message = "次は時計を再開してください"
+          message = "次は時計を再開しよう"
         }
         if (this.clock_box.current_status === "stop") {
-          message = "次は時計を設定してください"
+          message = "次は時計を設定しよう"
         }
       } else {
-        message = "次は時計を設置してください"
+        message = "次は時計を設置しよう"
       }
       this.toast_ok(message)
     },

@@ -20,7 +20,7 @@ export const mod_edit_mode = {
             </ul>
           </div>
         `,
-        // <p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください</p>
+        // <p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指そう</p>
         confirmText: `理解した上で編集する`,
         focusOn: "cancel", // confirm or cancel
         type: "is-danger",

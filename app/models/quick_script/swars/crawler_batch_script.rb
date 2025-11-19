@@ -77,15 +77,15 @@ module QuickScript
 
       def validate!
         unless current_user
-          flash[:notice] = "完了後の通知を受け取るためにログインしてください"
+          flash[:notice] = "完了後の通知を受け取るためにログインしよう"
           return
         end
         unless current_user.email_valid?
-          flash[:notice] = "ちゃんとしたメールアドレスを登録してください"
+          flash[:notice] = "ちゃんとしたメールアドレスを登録しよう"
           return
         end
         if current_swars_user_key.blank?
-          flash[:notice] = "ウォーズIDを入力してください"
+          flash[:notice] = "ウォーズIDを入力しよう"
           return
         end
         unless current_swars_user

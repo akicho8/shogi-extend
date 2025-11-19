@@ -25,8 +25,8 @@ ja:
       last_attempt: "あなたのアカウントが凍結される前に、複数回の操作がおこなわれています"
       locked: "あなたのアカウントは凍結されています"
       not_found_in_database: "メールアドレスまたはパスワードが違います"
-      timeout: "セッションがタイムアウトしました。もう一度ログインしてください"
-      unauthenticated: "アカウント登録もしくはログインしてください"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしよう"
+      unauthenticated: "アカウント登録もしくはログインしよう"
       unconfirmed: "メールアドレスの本人確認が必要です"
     mailer:
       confirmation_instructions:
@@ -78,7 +78,7 @@ ja:
         title: "%{resource}編集"
         unhappy: "気に入りません"
         update: "更新"
-        we_need_your_current_password_to_confirm_your_changes: "変更を反映するには現在のパスワードを入力してください"
+        we_need_your_current_password_to_confirm_your_changes: "変更を反映するには現在のパスワードを入力しよう"
       new:
         sign_up: "面倒なアカウント登録"
       signed_up: "面倒なアカウント登録が完了しました"
@@ -111,7 +111,7 @@ ja:
       unlocked: "アカウントを凍結解除しました"
   errors:
     messages:
-      already_confirmed: "は既に登録済みです。ログインしてください"
+      already_confirmed: "は既に登録済みです。ログインしよう"
       confirmation_period_expired: "の期限が切れました。%{period} までに確認する必要があります。 新しくリクエストしてください"
       expired: "の有効期限が切れました。新しくリクエストしてください"
       not_found: "は見つかりませんでした"

@@ -27,7 +27,7 @@ module QuickScript
         if current_user
           if request_post?
             if current_email.blank?
-              flash[:notice] = "メールアドレスを入力してください"
+              flash[:notice] = "メールアドレスを入力しよう"
               return
             end
             if current_user.email == current_email

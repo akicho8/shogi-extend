@@ -64,7 +64,7 @@ export const mod_sfen_share = {
         if (SELF_VS_SELF_MODE) {
           // 次に指す人がいない場合に前の人を入れておけば一応自分vs自分ができる
           const next_user_name = this.turn_to_user_name(lmi.next_turn_offset - 1)
-          this.toast_ok(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指してください`)
+          this.toast_ok(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指そう`)
           this.sfen_share_params["next_user_name"] = next_user_name
         }
       }

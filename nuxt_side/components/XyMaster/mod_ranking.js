@@ -21,14 +21,14 @@ export const mod_ranking = {
     ranking_goal_process() {
       // ログインしていない場合
       if (this.$GX.blank_p(this.g_current_user_name)) {
-        this.$GX.delay_block(1.0, () => this.toast_ok("名前を入力してください。できれば入力の手間を省くためにログインしてください"))
+        this.$GX.delay_block(1.0, () => this.toast_ok("名前を入力しよう。できれば入力の手間を省くためにログインしよう"))
         this.name_input_dialog()
         return
       }
 
       // ログインしているけど名前が不正な場合
       if (HandleNameValidator.invalid_p(this.g_current_user_name)) {
-        this.$GX.delay_block(1.0, () => this.toast_ok("適切な名前を入力してください。この入力を省くにはプロフィール編集で適切な名前に変更してください", {duration: 1000 * 5}))
+        this.$GX.delay_block(1.0, () => this.toast_ok("適切な名前を入力しよう。この入力を省くにはプロフィール編集で適切な名前に変更してください", {duration: 1000 * 5}))
         this.name_input_dialog()
         return
       }
@@ -39,7 +39,7 @@ export const mod_ranking = {
 
     name_input_dialog() {
       this.dialog_prompt({
-        title: "名前を入力してください",
+        title: "名前を入力しよう",
         confirmText: "保存",
         inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
         canCancel: false,

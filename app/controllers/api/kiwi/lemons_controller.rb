@@ -27,8 +27,8 @@
 # |------------------+--------------------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加しよう
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 module Api
@@ -63,7 +63,7 @@ module Api
       # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/app_form.js
       def record_create
         if !current_user
-          render html: "ログインしてください"
+          render html: "ログインしよう"
           return
         end
 

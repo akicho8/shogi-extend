@@ -76,7 +76,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       logout                                                 # ログアウト状態にする
       visit_app(xmatch_auth_key: "login_required")           # 来る
       xmatch_select_1vs1                                     # 1vs1のルールを選択
-      assert_selector(".NuxtLoginContainer")                 # 「ログインしてください」が発動
+      assert_selector(".NuxtLoginContainer")                 # 「ログインしよう」が発動
     end
   end
 

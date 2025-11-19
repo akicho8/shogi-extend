@@ -40,13 +40,13 @@ export const mod_article = {
 
       if (this.WkbkConfig.value_of("moves_answers_empty_validate_p")) {
         if (this.article.moves_answers.length === 0) {
-          this.toast_warn("正解を登録してください")
+          this.toast_warn("正解を登録しよう")
           return true
         }
       }
 
       if (!this.article.title && false) {
-        this.toast_warn("なんかしらのタイトルを捻り出してください")
+        this.toast_warn("なんかしらのタイトルを捻り出そう")
         return true
       }
 
@@ -54,7 +54,7 @@ export const mod_article = {
         if (this.article.moves_answers.length >= 1) {
           if (this.article.new_record_p) {
             if (this.valid_count === 0) {
-              this.toast_warn("検証してください")
+              this.toast_warn("検証しよう")
               return true
             }
           }

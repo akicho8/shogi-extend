@@ -9,6 +9,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     os_modal_open
     os_switch_toggle
     os_submit_button_click
-    assert_text "次は時計を設置してください"
+    assert_text "次は時計を設置しよう"
   end
 end

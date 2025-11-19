@@ -82,7 +82,7 @@
 # |-----------------+-----------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -103,7 +103,7 @@
 # |-----------------+-----------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -178,8 +178,8 @@
 # |-------------------+-------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加しよう
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -204,8 +204,8 @@
 # |-------------------+-------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加しよう
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -235,8 +235,8 @@
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加しよう
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -266,8 +266,8 @@
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
-# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加しよう
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -626,8 +626,8 @@
 # - Remarks ----------------------------------------------------------------------
 # User.has_many :share_board_chat_messages, foreign_key: :session_user_id
 # User.has_one :profile
-# [Warning: Need to add index] create_share_board_chat_messages マイグレーションに add_index :share_board_chat_messages, :from_connection_id を追加してください
-# [Warning: Need to add relation] ShareBoard::ChatMessage モデルに belongs_to :from_connection を追加してください
+# [Warning: Need to add index] create_share_board_chat_messages マイグレーションに add_index :share_board_chat_messages, :from_connection_id を追加しよう
+# [Warning: Need to add relation] ShareBoard::ChatMessage モデルに belongs_to :from_connection を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -840,8 +840,8 @@
 # |------------------+--------------------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加しよう
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -871,8 +871,8 @@
 # |------------------+--------------------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
-# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加しよう
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -933,9 +933,9 @@
 # |-----------------------+----------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :folder を追加してください
-# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :lemon を追加してください
-# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :folder を追加しよう
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :lemon を追加しよう
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -1020,8 +1020,8 @@
 # |----------------+-------------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add index] create_google_api_expiration_trackers マイグレーションに add_index :google_api_expiration_trackers, :spreadsheet_id を追加してください
-# [Warning: Need to add relation] GoogleApi::ExpirationTracker モデルに belongs_to :spreadsheet を追加してください
+# [Warning: Need to add index] create_google_api_expiration_trackers マイグレーションに add_index :google_api_expiration_trackers, :spreadsheet_id を追加しよう
+# [Warning: Need to add relation] GoogleApi::ExpirationTracker モデルに belongs_to :spreadsheet を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -1112,8 +1112,8 @@
 # |------------+----------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add index] create_app_logs マイグレーションに add_index :app_logs, :process_id を追加してください
-# [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加してください
+# [Warning: Need to add index] create_app_logs マイグレーションに add_index :app_logs, :process_id を追加しよう
+# [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加しよう
 # --------------------------------------------------------------------------------
 
 # == Schema Information ==

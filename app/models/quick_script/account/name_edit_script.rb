@@ -27,7 +27,7 @@ module QuickScript
         if current_user
           if request_post?
             if current_username.blank?
-              flash[:notice] = "名前を入力してください"
+              flash[:notice] = "名前を入力しよう"
               return
             end
             user = current_user.clone

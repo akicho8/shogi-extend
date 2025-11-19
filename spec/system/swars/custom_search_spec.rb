@@ -23,6 +23,6 @@ RSpec.describe "カスタム検索", type: :system, swars_spec: true do
   it "ウォーズIDが入力されていない場合にエラーメッセージが出るのと検索ボタンがdisabledになる" do
     visit_to "/swars/search/custom", query: ""
     assert_selector(:button, text: "検索", exact_text: true, disabled: true) # 検索ボタンが押せない
-    assert_text("1つだけ入力してください")
+    assert_text("1つだけ入力しよう")
   end
 end

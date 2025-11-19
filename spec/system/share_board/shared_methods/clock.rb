@@ -65,7 +65,7 @@ module SharedMethods
     cc_modal_close
   end
 
-  # 順番設定をしてください状態で対局時計を設置してPLAY押して閉じる
+  # 順番設定をしよう状態で対局時計を設置してPLAY押して閉じる
   def clock_start_force
     clock_open                                     # 対局時計を開いて
     clock_play_button_click                     # 開始

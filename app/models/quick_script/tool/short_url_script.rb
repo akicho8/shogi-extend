@@ -37,7 +37,7 @@ module QuickScript
 
       def validate!
         unless current_original_url.match?(URI.regexp(["https", "http"]))
-          flash[:notice] = "正しいURLを入力してください"
+          flash[:notice] = "正しいURLを入力しよう"
           return
         end
         unless current_original_url.start_with?(ShortUrl::Component.root_url)

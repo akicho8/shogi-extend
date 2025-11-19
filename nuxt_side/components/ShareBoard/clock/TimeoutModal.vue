@@ -17,7 +17,7 @@
         p ですが時計はまだ動いているので<b>手番の人はこのまま次の手を指せば</b>対局を続行できます
         template(v-if="!snapshot_clock.current.time_recovery_mode_p")
           p しかし現在の時計の設定では<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため回復しません
-          p もし続行する場合は時計を再設定してください
+          p もし続行する場合は時計を再設定しよう
         //- p 続行しない場合は左上から投了しましょう
   .modal-card-foot
     b-button.ok_handle(@click="ok_handle" type="is-primary") わかった

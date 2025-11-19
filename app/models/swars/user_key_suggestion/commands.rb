@@ -15,7 +15,7 @@ module Swars
       },
       Command.new { |user_key|
         if user_key.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) && user_key.length >= 50
-          "めちゃくちゃな入力をしないでください"
+          "めちゃくちゃな入力はやめよう"
         end
       },
       Command.new { |user_key|
@@ -30,13 +30,13 @@ module Swars
       },
       Command.new { |user_key|
         if user_key.match?(/[[:^ascii:]&&[:alnum:]]/) # 全角 かつ ０−９Ａ−Ｚ
-          "ウォーズIDは半角で入力してください"
+          "ウォーズIDは半角で入力しよう"
         end
       },
       Command.new { |user_key|
         if av = user_key.scan(/[[:^ascii:]&&[:^alnum:]]/).presence # 全角 かつ ０−９Ａ−Ｚ 以外なので全角記号
           s = av.uniq.join
-          "#{s} の部分も半角で入力してください"
+          "#{s} の部分も半角で入力しよう"
         end
       },
       Command.new { |user_key|
@@ -48,16 +48,16 @@ module Swars
         if user_key.match?(/[[:alnum:]]/) && SWARS_ID_LENGTH_RANGE.cover?(user_key.length)
           case
           when user = user_key.same_length_user
-            "もしかして #{user.key} ですか？ 大文字と小文字を区別して入力してください"
+            "もしかして #{user.key} ですか？ 大文字と小文字を区別して入力しよう"
           when user = user_key.suggestion_user
             "#{user_key} に似た人は#{user_key.suggestion_count_human}います。もしかして #{user.key} ですか？"
           else
-            "#{user_key} に似た人はいません。正確に入力してください"
+            "#{user_key} に似た人はいません。正確に入力しよう"
           end
         end
       },
       Command.new { |user_key|
-        "真面目に入力してください"
+        "真面目に入力しよう"
       },
     ]
   end

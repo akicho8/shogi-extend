@@ -11,7 +11,7 @@
 # 実行できるブロックよりも、実行できない状態を先に判定したい場合
 #
 #   unless throttle.call
-#     return "あと #{throttle.ttl_sec} 秒待ってから実行してください (あと #{throttle.ttl_ms} ms)"
+#     return "あと #{throttle.ttl_sec} 秒待ってから実行しよう (あと #{throttle.ttl_ms} ms)"
 #   end
 #   self.count += 1
 #

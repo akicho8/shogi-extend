@@ -24,7 +24,7 @@ module AdapterMethods
   #     if url = Swars::BattleUrl.url(current_input_text)
   #       AppLog.info(subject: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
   #       if Rails.env.development?
-  #         flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
+  #         flash[:warning] = "ウォーズの対局URLはこちらに入力しよう"
   #       end
   #       render json: { redirect_to: url_for([:swars, :battles, query: current_input_text]) }
   #     end

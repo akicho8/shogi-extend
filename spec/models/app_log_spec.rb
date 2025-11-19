@@ -17,8 +17,8 @@
 # |------------+----------+-------------+-------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add index] create_app_logs マイグレーションに add_index :app_logs, :process_id を追加してください
-# [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加してください
+# [Warning: Need to add index] create_app_logs マイグレーションに add_index :app_logs, :process_id を追加しよう
+# [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加しよう
 # --------------------------------------------------------------------------------
 
 require "rails_helper"

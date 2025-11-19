@@ -22,8 +22,8 @@
 # |-------------------+-------------------+-------------+---------------------+------+-------|
 #
 # - Remarks ----------------------------------------------------------------------
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
-# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加しよう
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加しよう
 # --------------------------------------------------------------------------------
 
 require "nkf"
