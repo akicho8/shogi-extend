@@ -33,7 +33,7 @@
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
-        .is-size-7(v-html="realtime_notice.message")
+        .realtime_notice.is-size-7(v-html="realtime_notice.message")
 
       .shuffle_buttons.mt-4
         b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
