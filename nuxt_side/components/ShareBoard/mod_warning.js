@@ -58,7 +58,7 @@ export const mod_warning = {
       }
       if (message == null) {
         if (this.inconsistency_clock_only) {
-          message = `対局する場合は順番設定をしよう` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
+          message = `対局する場合は順番設定しよう` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
         }
       }
       if (message == null) {
