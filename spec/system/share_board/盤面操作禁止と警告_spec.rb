@@ -22,7 +22,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :room_after_create => :cc_auto_start_10m,
       })
     place_click("11")
-    assert_text "対局する場合は順番設定をしよう"
+    assert_text "対局する場合は順番設定しよう"
   end
 
   it "自分は観戦者なのに盤に触った" do
@@ -34,6 +34,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     place_click("11")
     assert_text "cさんは観戦者なので触らんといてください"
+    assert_text "暇だったら盤を右クリックして検討しよう"
   end
 
   it "自分は対局者だが手番ではないのに盤に触った (あるある)" do
