@@ -293,24 +293,8 @@ export default {
 
     foul_mode_key_updated(foul_mode_key) {
       if (foul_mode_key === this.SB.FoulModeInfo.fetch("block").key) {
-        if (false) {
-          this.foul_mode_block_warn_toast_show()
-        } else {
-          this.foul_mode_block_warn_modal_open()
-        }
+        this.foul_mode_block_warn_modal_open()
       }
-    },
-
-    foul_mode_block_warn_toast_show() {
-      GX.delay_block(0.7, () => {
-        this.sfx_stop_all()
-        this.sfx_play("se_notification")
-        const message = [
-          `「反則できない」は、職場の上司に誘われたときに使う、接待用のモードです。`,
-          `平均以上の棋力を持つ${this.SB.my_call_name}には必要ないでしょう。`,
-        ].join("")
-        this.toast_ok(message, {duration: 1000 * 10})
-      })
     },
 
     foul_mode_block_warn_modal_open() {
