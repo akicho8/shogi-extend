@@ -77,7 +77,7 @@ export class HandleNameValidator {
       // 絵文字とか使うな
       if (message == null) {
         if (!name.match(RegexpSet.HANDLE_NAME_SAFE_CHAR)) {
-          message = `${this.options.name}に使用できない文字が含まれています (絵文字や記号は使用できません)`
+          message = `${this.options.name}に使用できない文字が含まれているようです (絵文字や記号は使用できません)`
         }
       }
 
@@ -89,7 +89,7 @@ export class HandleNameValidator {
           // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
           const is_single_non_kanji = without_kanji.length === 1
           if (is_single_non_kanji) {
-            message = `もう少しユニークな${this.options.name}にしよう`
+            message = `もっとユニークな${this.options.name}にしよう`
           }
         }
       }
@@ -112,21 +112,21 @@ export class HandleNameValidator {
       // 自分に敬称をつけんな
       if (message == null) {
         if (name.match(/(ちゃん|君|くん|さん|様|殿|氏|先生)$/)) {
-          message = `自分に敬称をつけないでください`
+          message = `自分に敬称をつけるのはやめよう`
         }
       }
 
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
-          message = `呼ばれて恥ずかしくない${this.options.name}を入力しよう`
+          message = `呼ばれて恥ずかしくない${this.options.name}にしよう`
         }
       }
 
       // へんな用語を入れるやつを弾く
       if (message == null) {
         if (name.match(new RegExp(HandleNameNgWordUserList.join("|"), "i"))) {
-          message = `もっと素敵な${this.options.name}を入力しよう`
+          message = `もっと素敵な${this.options.name}にしよう`
         }
       }
     }
