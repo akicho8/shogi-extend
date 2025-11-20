@@ -19,6 +19,7 @@ module SharedMethods
       :auto_close_p           => false,             # 入退室・順番・時計を自動的に閉じない
       :self_vs_self_enable_p  => false,             # 自分vs自分禁止 (順番設定で対戦相手がいない場合はバリデーションする)
       :think_mark_invite_feature_p => false,        # 観戦者に促すか？
+      :is_auto_resign_off     => false,             # 自動投了しない
     }
   end
 
