@@ -60,7 +60,7 @@
       hr.my-4
 
       .buttons.is-centered.mb-0.mt-2(v-if="!option_block_show_p")
-        b-button.mb-0(size="is-small" @click="option_block_show_handle" icon-left="cog") オプション
+        b-button.mb-0(size="is-small" @click="option_block_show_handle") オプション
 
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
         .column.is-12(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
