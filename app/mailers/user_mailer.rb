@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
     body << ""
 
     if record.attachment_mode == "nothing" || Rails.env.development?
-      body << "※棋譜を添付するには「ZIPファイルの添付」を有効にしてください"
+      body << "※棋譜を添付するには「ZIPファイルの添付」を有効にしよう"
       body << ""
     end
 

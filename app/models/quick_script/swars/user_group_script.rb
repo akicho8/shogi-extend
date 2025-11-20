@@ -40,7 +40,7 @@ EOS
               {
                 :elems   => { "grade" => "最高段位", "gentleman" => "行動規範", "vitality" => "勢い", "original" => "そのまま" },
                 :default => params[:order_by].presence || "grade",
-                :help_message => "上で記入した通りの並びでいいなら「そのまま」にしてください",
+                :help_message => "上で記入した通りの並びでいいなら「そのまま」にしよう",
               }
             },
           },

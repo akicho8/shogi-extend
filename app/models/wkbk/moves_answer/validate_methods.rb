@@ -80,7 +80,7 @@ module Wkbk
           if container.opponent_player.piece_box.empty?
             # 攻め手の持駒は空なのでOK
           else
-            errors.add(:base, "攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください")
+            errors.add(:base, "攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしよう")
           end
         end
       end

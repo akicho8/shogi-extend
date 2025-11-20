@@ -89,7 +89,7 @@ export class HandleNameValidator {
           // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
           const is_single_non_kanji = without_kanji.length === 1
           if (is_single_non_kanji) {
-            message = `もう少しユニークな${this.options.name}にしてください`
+            message = `もう少しユニークな${this.options.name}にしよう`
           }
         }
       }

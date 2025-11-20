@@ -50,7 +50,7 @@ module Swars
           if user
             n = user.swars_crawl_reservations.active_only.count
             if n >= maximum_reservation_number_of_per_capita
-              errors.add(:base, "もう#{n}件も予約してるので次のは明日以降にしてください")
+              errors.add(:base, "もう#{n}件も予約してるので次のは明日以降にしよう")
             end
           end
         end

@@ -62,7 +62,7 @@ RSpec.describe Wkbk::Article, type: :model do
       article.save!
 
       moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
-      moves_answer.errors.full_messages # => ["攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください"]
+      moves_answer.errors.full_messages # => ["攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしよう"]
       assert { moves_answer.errors.present? }
     end
 

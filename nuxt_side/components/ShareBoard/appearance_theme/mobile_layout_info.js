@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export class MobileLayoutInfo extends ApplicationMemoryRecord {
   static field_label = "スマホ用画面レイアウト"
-  static field_message = "持駒が見切れる人は<b>横長</b>にしてください"
+  static field_message = "持駒が見切れる人は<b>横長</b>にしよう"
 
   static get define() {
     return [

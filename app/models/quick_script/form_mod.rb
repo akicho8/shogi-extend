@@ -42,7 +42,7 @@ module QuickScript
         end
         if v = form_part[:dynamic_part]
           unless v.kind_of?(Proc)
-            raise "#{self.class.name} の #{form_part[:key]} の #{column_key} をブロックにしてください"
+            raise "#{self.class.name} の #{form_part[:key]} の #{column_key} をブロックにしよう"
           end
           form_part = form_part.merge(v.call, dynamic_part: nil)
         end
