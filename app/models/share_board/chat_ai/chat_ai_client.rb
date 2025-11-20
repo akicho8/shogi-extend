@@ -5,8 +5,7 @@ module ShareBoard
         def text_normalize(text)
           text = text.strip
           text = text.remove(/。\z/)
-          text = text.remove(/\A「/)
-          text = text.remove(/」\z/)
+          text = text.remove(/[「」]/) # ChatGPT はやたらと「○○」と表現するため「」を外す
         end
       end
 
