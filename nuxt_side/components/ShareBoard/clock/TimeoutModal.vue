@@ -20,7 +20,7 @@
           p もし続行する場合は時計を再設定しよう
         //- p 続行しない場合は左上から投了しましょう
   .modal-card-foot
-    b-button.ok_handle(@click="ok_handle" type="is-primary") わかった
+    b-button.ok_handle(@click="ok_handle" type="is-primary") 閉じる
 </template>
 
 <script>
