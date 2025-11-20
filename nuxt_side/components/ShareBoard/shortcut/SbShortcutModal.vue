@@ -29,11 +29,11 @@
         .sc_item
           .sc_label 短縮した棋譜URLコピー
           .sc_buttons
-            b-tag(type="is-primary") u
+            b-tag(type="is-primary") s
         .sc_item
           .sc_label そのままの棋譜URLコピー
           .sc_buttons
-            b-tag(type="is-primary") l
+            b-tag(type="is-primary") u
         .sc_item
           .sc_label 局面編集 / 完了
           .sc_buttons
