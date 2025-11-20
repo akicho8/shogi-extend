@@ -6,8 +6,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "works" do
-    window_a { room_setup_by_user(:a) }
-    window_b { room_setup_by_user(:b) }
+    window_a { room_setup_by_user(:a, auto_resign_key: "is_auto_resign_off") }
+    window_b { room_setup_by_user(:b, auto_resign_key: "is_auto_resign_off") }
     window_a do
       order_set_on
       clock_open
