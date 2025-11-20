@@ -12,6 +12,15 @@ export const mod_action_log_share = {
     },
 
     al_share(params) {
+      if (params.single_mode_support) {
+        if (this.ac_room == null) {
+          this.al_share_broadcasted({
+            ...this.ac_room_perform_default_params(),
+            ...params,
+          })
+          return
+        }
+      }
       this.ac_room_perform("al_share", params) // --> app/channels/share_board/room_channel.rb
     },
     al_share_broadcasted(params) {

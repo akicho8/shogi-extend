@@ -1,7 +1,5 @@
 // 本譜機能
 
-const HONPU_SHOW_ALWAYS = false
-
 import { GX } from "@/components/models/gx.js"
 
 export const mod_honpu_core = {
@@ -50,6 +48,7 @@ export const mod_honpu_core = {
       if (this.honpu_main) {
         if (this.honpu_branch == null) {
           this.honpu_branch = this.al_create(params)
+          this.al_share({label: "変化", label_type: "is-danger", single_mode_support: true})
         }
       }
     },
@@ -66,6 +65,7 @@ export const mod_honpu_core = {
       if (this.honpu_main && this.honpu_branch) {
         this.sfx_click()
         this.al_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
+        this.al_share({label: "本譜", label_type: "is-primary", single_mode_support: true})
       }
     },
   },
@@ -74,19 +74,17 @@ export const mod_honpu_core = {
     // 本譜ボタンの表示条件
     honpu_open_button_show_p() {
       if (this.honpu_button_show_share_condition) {
-        if (HONPU_SHOW_ALWAYS) {
-          // 本譜は常に表示する場合
-          // スマホだとヘッダ内の表示が多すぎてずれる場合がある
-          return this.honpu_main
-        } else {
-          // 本譜に戻るがある場合は本譜は表示しない場合
-          return this.honpu_main && this.honpu_branch == null
-        }
+        // 本譜は常に表示する場合
+        // スマホだとヘッダ内の表示が多すぎてずれる場合がある
+        return this.honpu_main
+
+        // 本譜に戻るがある場合は本譜は表示しない場合
+        // return this.honpu_main && this.honpu_branch == null
       }
     },
 
     // 本譜に戻るボタンの表示条件
-    honpu_return_button_show_p() {
+    honpu_return_button_active_p() {
       if (this.honpu_button_show_share_condition) {
         return this.honpu_main && this.honpu_branch
       }

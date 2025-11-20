@@ -1,16 +1,16 @@
 <template lang="pug">
 b-navbar-item.SbHonpuButton.has-text-weight-bold(
   tag="div"
-  v-if="SB.honpu_button_show_share_condition && (SB.honpu_open_button_show_p || SB.honpu_return_button_show_p)"
+  v-if="SB.honpu_button_show_share_condition && (SB.honpu_open_button_show_p || SB.honpu_return_button_active_p)"
   )
   .field.is-grouped
-    p.control(v-if="SB.honpu_return_button_show_p")
-      a.button.honpu_return_button(@click="SB.honpu_return_click_handle" :class="SB.appearance_theme_info.undo_button_color")
-        b-icon(icon="undo")
-    p.control(v-if="SB.honpu_open_button_show_p")
+    p.control
       a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.toryo_button_color")
         | 本譜
         //- b-icon(icon="note")
+    p.control
+      a.button.honpu_return_button(@click="SB.honpu_return_click_handle" :class="SB.appearance_theme_info.undo_button_color" :disabled="!SB.honpu_return_button_active_p")
+        b-icon(icon="undo")
 </template>
 
 <script>
