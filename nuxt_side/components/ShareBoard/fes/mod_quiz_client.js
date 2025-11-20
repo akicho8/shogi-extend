@@ -59,13 +59,13 @@ export const mod_quiz_client = {
     },
 
     // お題に投票する
-    quiz_vote_modal_handle() {
-      this.sfx_play("se_deden")
-      GX.delay_block(0.6, () => this.sb_talk(this.received_quiz.subject))
+    async quiz_vote_modal_handle() {
       this.modal_card_open({
         component: QuizVoteModal,
         canCancel: [],
       })
+      await this.sfx_play("se_deden")
+      this.sb_talk(this.received_quiz.subject)
     },
 
     // 投票結果をみんなに伝える
