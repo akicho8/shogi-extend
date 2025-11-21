@@ -133,7 +133,7 @@ export const mod_think_mark = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    think_mark_toggle_button_click_handle(e = null) {
+    async think_mark_toggle_button_click_handle(e = null) {
       // if (!this.think_mark_mode_global_p) {
       //   return
       // }
@@ -141,12 +141,15 @@ export const mod_think_mark = {
         this.think_mark_mode_p = false
       } else {
         this.think_mark_mode_p = true
-        if (this.mouse_event_p(e)) {
-          this.toast_ok("ここ押さんでも右クリックで書けるよ")
-        }
       }
       this.sfx_play_toggle(this.think_mark_mode_p)
-      return true
+
+      if (this.think_mark_mode_p) {
+        if (this.mouse_event_p(e)) {
+          await this.toast_ok("ここ押さんでも右クリックで書けるよ")
+          await this.toast_ok("でもここを押していると左クリックで書けるよ")
+        }
+      }
     },
 
     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
