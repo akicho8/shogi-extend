@@ -73,6 +73,7 @@ export default {
     enter_handle(e) {
       // 空 + Enter で閉じる (ここは送信トリガーの方法とは関係なく Enter 固定とする)
       if (GX.blank_p(this.SB.message_body)) {
+        this.sfx_click()
         this.SB.chat_modal_close()
         return
       }
