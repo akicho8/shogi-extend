@@ -32,10 +32,6 @@ export const mod_order_new = {
   methods: {
     os_modal_open_handle() {
       if (this.os_modal_instance == null) {
-
-        // 動かしている途中で消すとエラーになる
-        // GX.delay_block(5, () => this.os_modal_close())
-
         if (this.room_is_empty_p()) { return }
 
         this.sidebar_close()
