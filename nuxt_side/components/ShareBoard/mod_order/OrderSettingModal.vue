@@ -314,6 +314,7 @@ export default {
         confirmText: "もちろん必要ない",
         cancelText: "接待する",
         focusOn: "confirm",
+        canCancel: ["button"],
         onConfirm: () => {
           this.sfx_play("o")
           this.toast_ok("さすがです")
