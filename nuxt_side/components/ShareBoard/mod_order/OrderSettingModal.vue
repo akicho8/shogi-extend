@@ -181,7 +181,7 @@ export default {
       if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
       this.SB.new_o.order_unit.swap_run()
-      this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
+      this.SB.al_share({label: "先後入替", message: "チームを入れ替えました"})
     },
 
     // すべてのメンバーを観戦に移動する
