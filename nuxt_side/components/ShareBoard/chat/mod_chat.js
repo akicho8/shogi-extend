@@ -80,14 +80,14 @@ export const mod_chat = {
         message_scope_key: this.message_scope_info.key,
         ...params,
       }
-      if (this.ac_room) {
-        this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
-      } else {
+      if (this.ac_room == null) {
         this.message_share_broadcasted({
           ...this.ac_room_perform_default_params(),
           ...params,
         })
+        return
       }
+      this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
     },
 
     // 受信
