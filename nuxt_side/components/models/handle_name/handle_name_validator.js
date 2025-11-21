@@ -111,7 +111,7 @@ export class HandleNameValidator {
 
       // 自分に敬称をつけんな
       if (message == null) {
-        if (name.match(/(ちゃん|君|くん|さん|様|殿|氏|先生)$/)) {
+        if (name.match(/(ちゃん|君|くん|さん|様|さま|殿|氏|先生)$/)) {
           message = `自分に敬称をつけるのはやめよう`
         }
       }
