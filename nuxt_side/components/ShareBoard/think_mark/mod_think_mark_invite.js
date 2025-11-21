@@ -47,11 +47,12 @@ export const mod_think_mark_invite = {
     // 対局者用
     think_mark_invite_dialog_show_for_member() {
       this.__think_mark_invite_dialog_show({
-        title: `${this.my_call_name}の対局を${this.watching_member_count}人みています`,
+        // title: `${this.my_call_name}の対局を${this.watching_member_count}人みています`,
+        title: `${this.my_call_name}へ`,
         message: [
           `<div>`,
           /**/ `<img src="${share_board_think_mark_invite_png}" />`,
-          /**/ `<p class="mt-2 mb-0">変化の多い局面では観戦者に向けて<b>右クリック</b>で指し手の候補を示してあげよう</p>`,
+          /**/ `<p class="mt-2 mb-0"><b>右クリック</b>で観戦者に指し手の候補を示してあげよう</p>`,
           // /**/ `<p class="mt-2 mb-0 is-size-7 has-text-grey is-hidden-desktop">スマホの人は右上の鉛筆を押そう</p>`,
           `</div>`,
         ].join(""),
