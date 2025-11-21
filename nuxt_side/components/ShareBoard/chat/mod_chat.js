@@ -35,7 +35,7 @@ export const mod_chat = {
 
     chat_modal_open_handle(e = null) {
       if (this.mouse_event_p(e)) {
-        this.toast_ok("ENTER キーで開けれるよ")
+        this.toast_ok("ENTER キーで開こう")
       }
       this.sidebar_close()
       this.sfx_click()
@@ -44,7 +44,7 @@ export const mod_chat = {
 
     chat_modal_close_handle(e = null) {
       if (this.mouse_event_p(e)) {
-        this.toast_ok("ENTER キーで閉じれるよ")
+        this.toast_ok("ENTER キーで閉じよう")
       }
       this.sidebar_close()
       this.sfx_click()
