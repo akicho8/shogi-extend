@@ -67,6 +67,7 @@ export const mod_think_mark_invite = {
         confirmText: "(confirmText)",
         cancelText: "(cancelText)",
         focusOn: "confirm",
+        canCancel: ["button"],
         onConfirm: () => {
           this.sfx_play("o")
           // GX.delay_block(0.5, () => this.toast_ok("ありがとうな"))
