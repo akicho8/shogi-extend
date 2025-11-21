@@ -27,7 +27,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_no_selector(".dialog.modal")
     end
     window_a do
-      assert_text("aさんの対局を1人みています")
+      assert_text("aさんへ")
       click_on("そんな余裕ないわ")
       assert_no_selector(".dialog.modal")
     end
