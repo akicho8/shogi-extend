@@ -18,6 +18,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     place_click("11")
     assert_text "今はaさんの手番です"
-    assert_text "cさんの手番は4手後です"
+    assert_text "cさんは4手後です"
   end
 end
