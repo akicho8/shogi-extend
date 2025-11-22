@@ -36,7 +36,7 @@ export const HandleNameNgWordUserList = [
   "shogi.*extend",
 
   // ネガティブ
-  "死|鬱",
+  "死", "鬱", "行方不明",
 
   // 汎用罵詈雑言系
   "馬鹿|ばか",
