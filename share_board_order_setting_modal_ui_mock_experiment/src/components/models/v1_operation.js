@@ -1,12 +1,12 @@
-import { O1Strategy } from "./o1_strategy.js"
-import { OxState } from "./ox_state.js"
-import { O2State } from "./o2_state.js"
+import { V1Strategy } from "./v1_strategy.js"
+import { AbstractOperation } from "./abstract_operation.js"
+import { V2Operation } from "./v2_operation.js"
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
 import _ from "lodash"
 
 // value object 化する
-export class O1State extends OxState {
+export class V1Operation extends AbstractOperation {
   constructor(users = []) {
     super()
     this.users = users
@@ -29,7 +29,7 @@ export class O1State extends OxState {
   }
 
   strategy_create(...args) {
-    return new O1Strategy(this.users.length, ...args)
+    return new V1Strategy(this.users.length, ...args)
   }
 
   current_user_by_turn(...args) {
@@ -42,22 +42,22 @@ export class O1State extends OxState {
     return strategy.team_index
   }
 
-  get to_o1_state() {
+  get to_v1_operation() {
     return this
   }
 
-  get to_o2_state() {
-    const state = new O2State()
+  get to_v2_operation() {
+    const operation_object = new V2Operation()
     if (false) {
       this.users.forEach((e, i) => {
-        const strategy = new O1Strategy(this.users.length, i, 1, 0)
+        const strategy = new V1Strategy(this.users.length, i, 1, 0)
         const user = this.users[strategy.user_index]
-        state.teams[strategy.team_index].push(user)
+        operation_object.teams[strategy.team_index].push(user)
       })
     } else {
-      state.reset_by_users(this.users)
+      operation_object.reset_by_users(this.users)
     }
-    return state
+    return operation_object
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -81,4 +81,4 @@ export class O1State extends OxState {
   }
 }
 
-window.O1State = O1State
+window.V1Operation = V1Operation

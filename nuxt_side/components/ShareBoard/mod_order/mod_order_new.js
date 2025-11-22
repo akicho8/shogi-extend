@@ -1,7 +1,7 @@
 // 順番設定モーダル用
 
 import { OsChange } from "./os_change.js"
-import { OrderUnit } from "./order_unit/order_unit.js"
+import { OrderFlow } from "./order_flow/order_flow.js"
 import OrderSettingModal from "./OrderSettingModal.vue"
 import { GX } from "@/components/models/gx.js"
 
@@ -12,7 +12,7 @@ export const mod_order_new = {
       // 「適用」してはじめて実変数に反映する
       // new_o は順番設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
       new_o: {
-        order_unit:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+        order_flow:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
 
         foul_mode_key:                null, // 反則をどうするか
         auto_resign_key:              null, // 投了のタイミング
@@ -58,7 +58,7 @@ export const mod_order_new = {
     // 順番設定モーダル内で使うデータの準備
     os_modal_init() {
       // 現在の順番設定をコピーする
-      this.new_o.order_unit = this.order_unit.deep_clone()
+      this.new_o.order_flow = this.order_flow.deep_clone()
 
       // オプション的なものもコピーする
       this.os_options_copy_a_to_b(this, this.new_o)
@@ -67,7 +67,7 @@ export const mod_order_new = {
       this.new_o.os_change = new OsChange(this.new_o)
 
       // 残りの観戦者をセットする(対局者は自動的に除く・始めての場合は全員入れてシャッフルする)
-      this.new_o.order_unit.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
+      this.new_o.order_flow.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
     },
     os_options_copy_a_to_b(a, b) {
       GX.assert_kind_of_integer(a.change_per)
@@ -108,9 +108,9 @@ export const mod_order_new = {
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
     new_order_share(message) {
-      GX.assert(this.new_o.order_unit, "this.new_o.order_unit")
+      GX.assert(this.new_o.order_flow, "this.new_o.order_flow")
       const params = {
-        order_unit: this.new_o.order_unit.attributes,
+        order_flow: this.new_o.order_flow.attributes,
         message: message,
       }
       this.os_options_copy_a_to_b(this.new_o, params)
@@ -126,13 +126,13 @@ export const mod_order_new = {
         this.al_add({...params, label: "順番更新"})
       }
 
-      // new_o.order_unit のパラメータを order_unit に反映する
+      // new_o.order_flow のパラメータを order_flow に反映する
       this.order_copy_from_bc(params)
 
       this.think_mark_auto_set() // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
-      // 新しくなった order_unit を new_o.order_unit に反映する
+      // 新しくなった order_flow を new_o.order_flow に反映する
       if (this.os_modal_update_ok) {
         this.os_modal_init()
       }
@@ -154,9 +154,9 @@ export const mod_order_new = {
 
     // 特定の人を除外するショートカット
     os_member_delete(user_name) {
-      this.clog(this.order_unit.flat_uniq_users)
+      this.clog(this.order_flow.flat_uniq_users)
       this.os_modal_init()                                                         // new_o を準備する
-      this.new_o.order_unit.user_name_reject(user_name)                            // new_o から次の人を除外する
+      this.new_o.order_flow.user_name_reject(user_name)                            // new_o から次の人を除外する
       this.new_order_share(`順番設定から${this.user_call_name(user_name)}を外しました`) // new_o を配って更新する
     },
   },

@@ -207,7 +207,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
     it "works" do
       data = data_factory({
-          "order_unit" => [
+          "order_flow" => [
             # FIXME
             { "user_name" => "alice", },
             { "user_name" => "bob",   },

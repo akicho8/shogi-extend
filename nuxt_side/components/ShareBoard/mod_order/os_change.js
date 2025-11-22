@@ -29,7 +29,7 @@ export class OsChange {
 
   get current_hash() {
     const str = JSON.stringify([
-      this.context.order_unit.hash,
+      this.context.order_flow.hash,
       [
         this.context.foul_mode_key,
         this.context.auto_resign_key,

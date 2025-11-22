@@ -1,21 +1,21 @@
-import { O1Strategy } from "./o1_strategy.js"
-import { O2Strategy } from "./o2_strategy.js"
-import { OxState } from "./ox_state.js"
-import { O1State } from "./o1_state.js"
+import { V1Strategy } from "./v1_strategy.js"
+import { V2Strategy } from "./v2_strategy.js"
+import { AbstractOperation } from "./abstract_operation.js"
+import { V1Operation } from "./v1_operation.js"
 import { Item } from "./item.js"
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 // TODO: 最後にできれば Immutable にしたい
-export class O2State extends OxState {
+export class V2Operation extends AbstractOperation {
   constructor(teams = [[], []]) {
     super()
     this.teams = teams
   }
 
-  get state_name() {
-    return "O2State"
+  get operation_name() {
+    return "V2Operation"
   }
 
   // 全体シャッフル
@@ -53,7 +53,7 @@ export class O2State extends OxState {
     this.teams = [[], []]
     this.cache_clear()
     _.times(users.length, i => {
-      const strategy = new O1Strategy(users.length, i, 1, 0) // 0:左右の順で振り分ける
+      const strategy = new V1Strategy(users.length, i, 1, 0) // 0:左右の順で振り分ける
       const user = users[strategy.user_index]
       this.teams[strategy.team_index].push(user)
     })
@@ -66,7 +66,7 @@ export class O2State extends OxState {
   }
 
   strategy_create(...args) {
-    return new O2Strategy(this.teams.map(e => e.length), ...args)
+    return new V2Strategy(this.teams.map(e => e.length), ...args)
   }
 
   turn_to_item(...args) {
@@ -79,13 +79,13 @@ export class O2State extends OxState {
     return strategy.team_index
   }
 
-  get to_o1_state() {
-    const state = new O1State()
-    state.users_allocate(this.black_start_order_uniq_users)
-    return state
+  get to_v1_operation() {
+    const operation_object = new V1Operation()
+    operation_object.users_allocate(this.black_start_order_uniq_users)
+    return operation_object
   }
 
-  get to_o2_state() {
+  get to_v2_operation() {
     return this
   }
 
@@ -175,8 +175,8 @@ export class O2State extends OxState {
 
   // {
   //   "watch_users": [],
-  //   "order_state": {
-  //     "state_name": "O2State",
+  //   "order_operation": {
+  //     "operation_name": "V2Operation",
   //     "teams": [
   //       [
   //         "a",
@@ -202,5 +202,5 @@ export class O2State extends OxState {
 }
 
 if (typeof window !== 'undefined') {
-  window.O2State = O2State
+  window.V2Operation = V2Operation
 }

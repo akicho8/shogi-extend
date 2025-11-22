@@ -1,6 +1,6 @@
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
-export class O2Strategy {
+export class V2Strategy {
   constructor(sizes, turn, change_per, scolor) {
     this.sizes = sizes
     this.turn = turn          // N手目

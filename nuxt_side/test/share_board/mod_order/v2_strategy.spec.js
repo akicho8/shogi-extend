@@ -1,9 +1,9 @@
-import { O2Strategy } from "@/components/ShareBoard/mod_order/order_unit/o2_strategy.js"
+import { V2Strategy } from "@/components/ShareBoard/mod_order/order_flow/v2_strategy.js"
 
-describe("O2Strategy", () => {
+describe("V2Strategy", () => {
   test("works", () => {
     const f = turn => {
-      const object = new O2Strategy([2, 1], turn, 2, 1)
+      const object = new V2Strategy([2, 1], turn, 2, 1)
       return [object.team_index, object.user_index]
     }
     expect(f(-1)).toEqual([0, 1])

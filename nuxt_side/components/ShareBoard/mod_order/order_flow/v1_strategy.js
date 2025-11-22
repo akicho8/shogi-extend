@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 
-export class O1Strategy {
+export class V1Strategy {
   constructor(size, turn, change_per, scolor) {
     GX.assert(size != null, "size != null")
     GX.assert(turn != null, "turn != null")

@@ -12,19 +12,19 @@
     .panel
       .panel-heading
         | 順番設定 ({{SB.order_enable_p}})
-      template(v-if="SB.order_unit")
-        .panel-block {{SB.order_unit.inspect}}
+      template(v-if="SB.order_flow")
+        .panel-block {{SB.order_flow.inspect}}
   .column.is-4
     .panel
       .panel-heading
         | 順番操作
-      template(v-if="SB.new_o.order_unit")
-        .panel-block {{SB.new_o.order_unit.inspect}}
+      template(v-if="SB.new_o.order_flow")
+        .panel-block {{SB.new_o.order_flow.inspect}}
   .column.is-4
     .panel
       .panel-heading
         | 名前から引くハッシュ
-      template(v-if="SB.order_unit")
+      template(v-if="SB.order_flow")
         .panel-block
           pre
             | 名前→indexes
@@ -32,16 +32,16 @@
         .panel-block
           pre
             | 名前→情報
-            | {{SB.order_unit.name_to_object_hash}}
+            | {{SB.order_flow.name_to_object_hash}}
   .column.is-4
     .panel.assert_var
       .panel-heading
         | [assert_var]
       .panel-block order_enable_p:{{SB.order_enable_p}}
       .panel-block
-        | 本順序:{{SB.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}
-      .panel-block(v-if="SB.new_o.order_unit")
-        | 仮順序:{{SB.new_o.order_unit.real_order_users_to_s(SB.change_per, SB.start_color)}}
+        | 本順序:{{SB.order_flow.real_order_users_to_s(SB.change_per, SB.start_color)}}
+      .panel-block(v-if="SB.new_o.order_flow")
+        | 仮順序:{{SB.new_o.order_flow.real_order_users_to_s(SB.change_per, SB.start_color)}}
       .panel-block rs_resend_delay_id:{{SB.rs_resend_delay_id}}
   .column.is-4
     .panel
@@ -51,7 +51,7 @@
       .panel-block 自分vs自分で対戦している？ {{SB.self_vs_self_p}}
       .panel-block 1vs1で対戦している？ {{SB.one_vs_one_p}}
       .panel-block 3人以上で対戦している？ {{SB.many_vs_many_p}}
-      .panel-block 対局者数 {{SB.order_unit.main_user_count}}
+      .panel-block 対局者数 {{SB.order_flow.main_user_count}}
       .panel-block 観戦者数 {{SB.watching_member_count}}
       .panel-block 観戦者が存在する？ {{SB.watching_member_exist_p}}
       .panel-block 観戦者は二人以上いる？ {{SB.watching_member_many_p}}
@@ -67,20 +67,20 @@
       .panel-block 自分チームのメンバーは2人以上いる？ {{SB.my_team_member_is_many_p}}
       .panel-block 自分チームのメンバーは自分だけか？ {{SB.my_team_member_is_one_p}}
 
-  .column.is-4(v-if="SB.new_o.order_unit")
+  .column.is-4(v-if="SB.new_o.order_flow")
     .panel
       .panel-heading
         | new_o stringify
       .panel-block
         pre
-          | {{SB.new_o.order_unit}}
-  .column.is-4(v-if="SB.new_o.order_unit")
+          | {{SB.new_o.order_flow}}
+  .column.is-4(v-if="SB.new_o.order_flow")
     .panel
       .panel-heading
         | new_o attributes
       .panel-block
         pre
-          | {{SB.new_o.order_unit.attributes}}
+          | {{SB.new_o.order_flow.attributes}}
 </template>
 
 <script>

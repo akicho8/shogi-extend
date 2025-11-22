@@ -70,7 +70,7 @@
   | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=a                     |
   | FIXED_MEMBER                | 部屋にいるメンバーの名前たち                            |                                                                                  |
   | FIXED_ORDER                 | 順番設定した名前たち                                    |                                                                                  |
-  | FIXED_ORDER_STATE           | 順番設定方法                                            |                                                                                  |
+  | FIXED_ORDER_OPERATION           | 順番設定方法                                            |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=b               |
   | ng_word_check_p             | false ならバリデーションを飛ばす                        |                                                                                  |
@@ -94,31 +94,31 @@
 
 ** 順番設定済みで開始するには？
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a
 
 ** 順番設定済みのテスト
 
    3人
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c&room_after_create=os_modal_open_handle
 
    4人
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
 
 ** 振り駒
 
    # 常に反転 x 2回 なので 歩5枚
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=2
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=2
 
    # 常に反転 x 3回 なので と金5枚
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=3
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=3
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=3
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=3
 
 ** 再送モーダル発動確認するには？
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a&RS_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a&RS_SUCCESS_DELAY=-1
 
 ** 再送モーダルが出ているときに順番設定されたら再送モーダルが消されるテスト用
 
@@ -138,12 +138,12 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
-   http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
 
 ** 観戦者だけでチャット (a が対局者で b, c が観戦で、自分が b)
 
-   http://localhost:4000/share-board?room_key=a&user_name=b&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c&autoexec=chat_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=b&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c&autoexec=chat_modal_open_handle
 
 ** メンバーステイタス確認
 
@@ -161,7 +161,7 @@
 
 ** 順番設定済み + 対局時計ON
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b&autoexec=cc_create
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b&autoexec=cc_create
 
 ** 棋譜を持っている状態で飛んでくるとそれが本譜になる
 
@@ -169,15 +169,15 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b&clock_box.initial_main_min=60&room_after_create=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b&clock_box.initial_main_min=60&room_after_create=cc_auto_start
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e,f&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=b,d,a,c
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e,f&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=b,d,a,c
 
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
 
 ** 自分は a で部屋に abcd がいて順番が abcd で a が棋譜をサーバーに記録する
 
@@ -189,7 +189,7 @@
 
 ** 順番設定と対局時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 
-    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_STATE=to_o1_state&FIXED_ORDER=a&room_after_create=cc_auto_start
+    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER_OPERATION=to_v1_operation&FIXED_ORDER=a&room_after_create=cc_auto_start
 
 ** 対局開始時に ChatGPT の発言を確認する
 

@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-export class O2Strategy {
+export class V2Strategy {
   constructor(sizes, turn, change_per, scolor) {
     // このようなチェックを自力で行うのであれば TypeScript にした方がいいのかもしれない
     GX.assert(sizes != null, "sizes != null")

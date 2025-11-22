@@ -192,7 +192,7 @@ export const mod_xmatch = {
     xmatch_setup1_member(params) {
       const names = params.members.map(e => e.from_user_name)
       this.os_setup_by_names(names)
-      this.tl_add("順番設定", names, this.order_unit)
+      this.tl_add("順番設定", names, this.order_flow)
     },
     // 手合割と視点設定
     xmatch_setup2_handicap(params) {

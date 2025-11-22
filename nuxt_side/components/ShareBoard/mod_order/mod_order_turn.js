@@ -25,10 +25,10 @@ export const mod_order_turn = {
     turn_to_item(turn) {
       GX.assert_kind_of_integer(turn)
       if (this.order_enable_p) {
-        let e = this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
+        let e = this.order_flow.turn_to_item(turn, this.change_per, this.start_color)
         if (this.self_vs_self_enable_p) {
           if (!e) {
-            e = this.order_unit.flat_uniq_users[0]
+            e = this.order_flow.flat_uniq_users[0]
           }
         }
         return e
@@ -89,6 +89,6 @@ export const mod_order_turn = {
   computed: {
     // 名前からO(1)で参照するためのハッシュたち
     // turnからは直接計算で一発で求まる
-    name_to_turns_hash() { return this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
+    name_to_turns_hash() { return this.order_flow.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
   },
 }

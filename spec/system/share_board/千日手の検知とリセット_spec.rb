@@ -73,7 +73,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name         => "a",
         :FIXED_MEMBER      => "a",
         :FIXED_ORDER       => "a",
-        :FIXED_ORDER_STATE => "to_o1_state",
+        :FIXED_ORDER_OPERATION => "to_v1_operation",
         :room_after_create => :cc_auto_start_10m,
         :auto_resign_key   => :is_auto_resign_on,
         :RS_FEATURE         => false,

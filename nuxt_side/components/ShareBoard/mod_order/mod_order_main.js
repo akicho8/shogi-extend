@@ -1,6 +1,6 @@
 // 対局中に参照する順番設定
 
-import { OrderUnit } from "./order_unit/order_unit.js"
+import { OrderFlow } from "./order_flow/order_flow.js"
 
 import { mod_order_new    } from "./mod_order_new.js"
 import { mod_order_turn   } from "./mod_order_turn.js"
@@ -19,7 +19,7 @@ export const mod_order_main = {
   ],
   data() {
     return {
-      order_unit: OrderUnit.create(), // 順番設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
+      order_flow: OrderFlow.create(), // 順番設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
     }
   },
   mounted() {
@@ -31,11 +31,11 @@ export const mod_order_main = {
       if (GX.present_p(this.FIXED_ORDER)) {
         this.os_setup_by_names(GX.str_to_words(this.FIXED_ORDER))
         if (this.FIXED_ORDER_SWAP) {
-          this.order_unit.swap_run()
+          this.order_flow.swap_run()
         }
       }
       // 1列か2列かを確定する。初期値は2列
-      this.order_unit.state_switch_to(this.FIXED_ORDER_STATE)
+      this.order_flow.operation_change(this.FIXED_ORDER_OPERATION)
 
       // 自分の場所を調べて正面をその視点にする
       this.sp_viewpoint_switch_to_my_location()
@@ -43,7 +43,7 @@ export const mod_order_main = {
 
     // 指定の名前
     os_setup_by_names(names) {
-      this.order_unit = OrderUnit.create(names)
+      this.order_flow = OrderFlow.create(names)
       this.order_enable_p = true
     },
 
@@ -87,7 +87,7 @@ export const mod_order_main = {
     order_share_dto_receive(params) {
       GX.assert(GX.present_p(params), "GX.present_p(params)")
       GX.assert("order_enable_p" in params, '"order_enable_p" in params')
-      GX.assert("order_unit" in params, '"order_unit" in params')
+      GX.assert("order_flow" in params, '"order_flow" in params')
 
       this.tl_alert("順番設定パラメータを先代から受信")
 
@@ -98,9 +98,9 @@ export const mod_order_main = {
     },
     // 後から参加したとき、または順番設定を適用したときに呼ばれる
     order_copy_from_bc(params) {
-      GX.assert(params.order_unit, "params.order_unit")
+      GX.assert(params.order_flow, "params.order_flow")
 
-      this.order_unit        = OrderUnit.from_attributes(params.order_unit)
+      this.order_flow        = OrderFlow.from_attributes(params.order_flow)
       this.sp_viewpoint_switch_to_my_location() // 自分の場所を調べて正面をその視点にする
       // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
@@ -120,7 +120,7 @@ export const mod_order_main = {
     // なければ対局者ではない
     order_lookup_from_name(user_name) {
       if (this.order_enable_p) {
-        return this.order_unit.name_to_object_hash[user_name]
+        return this.order_flow.name_to_object_hash[user_name]
       }
     },
 
@@ -153,7 +153,7 @@ export const mod_order_main = {
     // _.range(a, b + 1) は a..b の意味になる
     about_next_turn_count(user_name) {
       if (this.order_lookup_from_name(user_name)) {
-        const max_step = this.order_unit.round_size * this.change_per
+        const max_step = this.order_flow.round_size * this.change_per
         const next_step = _.range(1, max_step + 1).find(next_step => {
           return this.turn_to_user_name(this.current_turn + next_step) === user_name
         })
@@ -176,27 +176,27 @@ export const mod_order_main = {
 
   computed: {
     FIXED_ORDER()       { return this.param_to_s("FIXED_ORDER")                      }, // 順番設定の順番
-    FIXED_ORDER_STATE() { return this.param_to_s("FIXED_ORDER_STATE", "to_o2_state") }, // 順番設定の方法
+    FIXED_ORDER_OPERATION() { return this.param_to_s("FIXED_ORDER_OPERATION", "to_v2_operation") }, // 順番設定の方法
     FIXED_ORDER_SWAP()  { return this.param_to_b("FIXED_ORDER_SWAP")                 }, // 先後を入れ替えるか？
 
     // あとから接続した人に伝える内容
     order_share_dto() {
       return {
         order_enable_p:    this.order_enable_p,
-        order_unit:        this.order_unit ? this.order_unit.attributes : null,
+        order_flow:        this.order_flow ? this.order_flow.attributes : null,
         foul_mode_key: this.foul_mode_key,
         auto_resign_key: this.auto_resign_key,
         think_mark_receive_scope_key: this.think_mark_receive_scope_key,
         change_per:            this.change_per,
-        __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
+        __nil_check_skip_keys__: "order_flow", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
 
-    order_ok() { return this.order_enable_p && this.order_unit }, // 順番設定ONかつ、順番情報が入っている状態か？
+    order_ok() { return this.order_enable_p && this.order_flow }, // 順番設定ONかつ、順番情報が入っている状態か？
 
-    self_vs_self_p() { return this.order_enable_p && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
-    one_vs_one_p()   { return this.order_enable_p && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
-    many_vs_many_p() { return this.order_enable_p && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
+    self_vs_self_p() { return this.order_enable_p && this.order_flow.self_vs_self_p }, // 自分vs自分で対戦している？
+    one_vs_one_p()   { return this.order_enable_p && this.order_flow.one_vs_one_p   }, // 1vs1で対戦している？
+    many_vs_many_p() { return this.order_enable_p && this.order_flow.many_vs_many_p }, // 3人以上で対戦している？
 
     watching_member_count()   { return this.uniq_member_infos.filter(e => this.member_is_battle_watcher(e)).length }, // 観戦者数
     watching_member_exist_p() { return this.watching_member_count >= 1 },                                             // 観戦者が存在する？
@@ -226,7 +226,7 @@ export const mod_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_member_names_oneline() { return this.order_unit.real_order_users(this.change_per, this.start_color).map(e => e ? e.user_name : "?").join("→") }, // 順序(デバッグ用)
+    ordered_member_names_oneline() { return this.order_flow.real_order_users(this.change_per, this.start_color).map(e => e ? e.user_name : "?").join("→") }, // 順序(デバッグ用)
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -286,7 +286,7 @@ export const mod_order_main = {
     // 自分の色のチームのメンバー数を返す
     my_team_member_count() {
       if (this.my_location) {
-        return this.order_unit.team_member_count(this.my_location)
+        return this.order_flow.team_member_count(this.my_location)
       }
     },
 

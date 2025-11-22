@@ -46,7 +46,7 @@ export default {
   methods: {
     end_handle() {
       this.TheApp.os_dnd_count -= 1
-      this.TheApp.order_unit.cache_clear()
+      this.TheApp.order_flow.cache_clear()
     },
   },
 }

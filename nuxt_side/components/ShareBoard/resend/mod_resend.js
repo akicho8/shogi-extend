@@ -52,7 +52,7 @@ export const mod_resend = {
     // sfen_share の実行直後に呼ぶ
     rs_sfen_share_after_hook() {
       if (!this.RS_FEATURE) { return }
-      if (this.order_enable_p && this.order_unit.valid_p) {
+      if (this.order_enable_p && this.order_flow.valid_p) {
         if (this.RS_RESEND_DELAY >= 0) {
           this.rs_resend_delay_cancel()
           this.rs_resend_delay_id = GX.delay_block(this.rs_resend_delay_real_sec, () => {

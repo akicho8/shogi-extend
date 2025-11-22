@@ -55,7 +55,7 @@ export default {
     end_handle() {
       this.sfx_play("se_transition_up")
       this.SB.new_o.os_dnd_count -= 1
-      this.SB.new_o.order_unit.cache_clear()
+      this.SB.new_o.order_flow.cache_clear()
     },
 
     // name

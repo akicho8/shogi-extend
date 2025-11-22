@@ -5,11 +5,11 @@
       | メンバー
     .SbAvatarLinesWrap
       template(v-if="SB.order_enable_p")
-        template(v-if="SB.order_unit.state_name === 'O1State'")
+        template(v-if="SB.order_flow.operation_name === 'V1Operation'")
           // 従来の分けない方法
           .SbAvatarLines
             SbMemberOne(v-for="info in SB.visible_member_infos" :info="info" :key="info.from_connection_id")
-        template(v-if="SB.order_unit.state_name === 'O2State'")
+        template(v-if="SB.order_flow.operation_name === 'V2Operation'")
           template(v-if="true")
             // member_infos の中身を余さず表示する方法
             // ・名前が重複していても表示する
@@ -26,7 +26,7 @@
           template(v-if="false")
             // simple_teams を元に表示する方法
             // ・名前が重複している場合に1つしか表示されないのでやめ
-            template(v-for="(user_names, i) in SB.order_unit.simple_teams")
+            template(v-for="(user_names, i) in SB.order_flow.simple_teams")
               .TeamBlock
                 .TeamName
                   b-tag(rounded) {{SB.Location.fetch(i).name}}

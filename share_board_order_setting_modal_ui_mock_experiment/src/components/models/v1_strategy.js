@@ -1,7 +1,7 @@
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
 
-export class O1Strategy {
+export class V1Strategy {
   constructor(size, turn, change_per, scolor) {
     this.size = size          // ユーザーはN人いる
     this.turn = turn          // N手目

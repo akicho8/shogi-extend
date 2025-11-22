@@ -1,4 +1,4 @@
-export class OxState {
+export class AbstractOperation {
   static create_by_users(...args) {
     const object = new this()
     object.reset_by_users(...args)

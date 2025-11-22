@@ -1,12 +1,12 @@
-import { O1Strategy } from "./o1_strategy.js"
-import { O2Strategy } from "./o2_strategy.js"
-import { OxState } from "./ox_state.js"
-import { O1State } from "./o1_state.js"
+import { V1Strategy } from "./v1_strategy.js"
+import { V2Strategy } from "./v2_strategy.js"
+import { AbstractOperation } from "./abstract_operation.js"
+import { V1Operation } from "./v1_operation.js"
 import _ from "lodash"
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
 // TODO: 最後にできれば Immutable にしたい
-export class O2State extends OxState {
+export class V2Operation extends AbstractOperation {
   constructor(teams = [[], []]) {
     super()
     this.teams = teams
@@ -27,14 +27,14 @@ export class O2State extends OxState {
   reset_by_users(users) {
     this.teams = [[], []]
     _.times(users.length, i => {
-      const strategy = new O1Strategy(users.length, i, 1, 0)
+      const strategy = new V1Strategy(users.length, i, 1, 0)
       const user = users[strategy.user_index]
       this.teams[strategy.team_index].push(user)
     })
   }
 
   strategy_create(...args) {
-    return new O2Strategy(this.teams.map(e => e.length), ...args)
+    return new V2Strategy(this.teams.map(e => e.length), ...args)
   }
 
   current_user_by_turn(...args) {
@@ -47,26 +47,26 @@ export class O2State extends OxState {
     return strategy.team_index
   }
 
-  get to_o1_state() {
-    const state = new O1State()
+  get to_v1_operation() {
+    const operation_object = new V1Operation()
 
     if (false) {
       _.times(this.round_size, turn => {
-        const strategy = new O2Strategy(this.teams.map(e => e.length), turn, 1, 0)
+        const strategy = new V2Strategy(this.teams.map(e => e.length), turn, 1, 0)
         const name = this.teams[strategy.team_index][strategy.user_index]
         console.log(name)
-        if (!state.users.includes(name)) {
-          state.users.push(name)
+        if (!operation_object.users.includes(name)) {
+          operation_object.users.push(name)
         }
       })
     } else {
       const users = _.compact(_.uniq(this.round_users))
-      state.reset_by_users(users)
+      operation_object.reset_by_users(users)
     }
-    return state
+    return operation_object
   }
 
-  get to_o2_state() {
+  get to_v2_operation() {
     return this
   }
 
@@ -112,4 +112,4 @@ export class O2State extends OxState {
   }
 }
 
-window.O2State = O2State
+window.V2Operation = V2Operation

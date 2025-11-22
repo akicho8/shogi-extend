@@ -1,9 +1,9 @@
-import { O1Strategy } from "@/components/ShareBoard/mod_order/order_unit/o1_strategy.js"
+import { V1Strategy } from "@/components/ShareBoard/mod_order/order_flow/v1_strategy.js"
 
-describe("O1Strategy", () => {
+describe("V1Strategy", () => {
   test("works", () => {
     const f = turn => {
-      const object = new O1Strategy(3, turn, 2, 1)
+      const object = new V1Strategy(3, turn, 2, 1)
       return object.user_index
     }
     expect(f(-1)).toEqual(2)

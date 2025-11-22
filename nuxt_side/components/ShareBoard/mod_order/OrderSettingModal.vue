@@ -6,10 +6,10 @@
 
       template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{SB.new_o.order_unit.main_user_count}}人
+          | 参加者{{SB.new_o.order_flow.main_user_count}}人
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
-    b-button.state_toggle_handle(@click="state_toggle_handle" size="is-small" v-if="SB.debug_mode_p") ｱﾙｺﾞﾘｽﾞﾑ変更
+    b-button.operation_toggle_handle(@click="operation_toggle_handle" size="is-small" v-if="SB.debug_mode_p") ｱﾙｺﾞﾘｽﾞﾑ変更
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -24,12 +24,12 @@
       //- pre {{JSON.stringify(SB.new_o.os_change.to_h)}}
 
       .TeamsContainer.is-unselectable
-        template(v-if="SB.new_o.order_unit.order_state.state_name === 'O1State'")
-          OrderTeamOne.is_team_both(:items.sync="SB.new_o.order_unit.order_state.users"   label="対局")
-        template(v-if="SB.new_o.order_unit.order_state.state_name === 'O2State'")
-          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_unit.order_state.teams[0]" label="☗" @label_click="swap_handle")
-          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_unit.order_state.teams[1]" label="☖" @label_click="swap_handle")
-        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_unit.watch_users" label="観戦" @label_click="all_member_as_watcher_handle")
+        template(v-if="SB.new_o.order_flow.order_operation.operation_name === 'V1Operation'")
+          OrderTeamOne.is_team_both(:items.sync="SB.new_o.order_flow.order_operation.users"   label="対局")
+        template(v-if="SB.new_o.order_flow.order_operation.operation_name === 'V2Operation'")
+          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
+          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
+        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_flow.watch_users" label="観戦" @label_click="all_member_as_watcher_handle")
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
@@ -122,7 +122,7 @@ export default {
 
       // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
       // if (v) {
-      //   if (this.SB.order_unit.main_user_count === 0) {
+      //   if (this.SB.order_flow.main_user_count === 0) {
       //     this.SB.new_order_share("")
       //   }
       // }
@@ -145,14 +145,14 @@ export default {
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.sfx_click()
-      this.SB.new_o.order_unit.shuffle_all()
+      this.SB.new_o.order_flow.shuffle_all()
       this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.sfx_click()
-      this.SB.new_o.order_unit.teams_each_shuffle()
+      this.SB.new_o.order_flow.teams_each_shuffle()
       this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
@@ -166,8 +166,8 @@ export default {
         shakashaka_count: this.$route.query.shakashaka_count,
       })
       this.sfx_click()
-      this.SB.new_o.order_unit.furigoma_core(furigoma_pack.swap_p)
-      const item = this.SB.new_o.order_unit.first_user(this.SB.start_color)
+      this.SB.new_o.order_flow.furigoma_core(furigoma_pack.swap_p)
+      const item = this.SB.new_o.order_flow.first_user(this.SB.start_color)
       let who = "誰かさん"
       if (item) {
         who = this.user_call_name(item.user_name)
@@ -180,7 +180,7 @@ export default {
     swap_handle() {
       if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
-      this.SB.new_o.order_unit.swap_run()
+      this.SB.new_o.order_flow.swap_run()
       this.SB.al_share({label: "先後入替", message: "チームを入れ替えました"})
     },
 
@@ -192,7 +192,7 @@ export default {
 
     // 偶数人数であること
     swap_invalid(name) {
-      if (!this.SB.new_o.order_unit.swap_enable_p) {
+      if (!this.SB.new_o.order_flow.swap_enable_p) {
         return this.error_message_show(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
       }
     },
@@ -207,12 +207,12 @@ export default {
     },
 
     invalid_member_empty() {
-      return this.error_message_show(this.SB.new_o.order_unit.member_empty_message)
+      return this.error_message_show(this.SB.new_o.order_flow.member_empty_message)
     },
     invalid_team_empty() {
       if (this.self_vs_self_mode_p) {
       } else {
-        return this.error_message_show(this.SB.new_o.order_unit.team_empty_message)
+        return this.error_message_show(this.SB.new_o.order_flow.team_empty_message)
       }
     },
     error_message_show(message) {
@@ -263,9 +263,9 @@ export default {
       this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
     },
 
-    state_toggle_handle() {
+    operation_toggle_handle() {
       this.sfx_click()
-      this.SB.new_o.order_unit.state_toggle()
+      this.SB.new_o.order_flow.operation_toggle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +336,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
-    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.new_o.order_unit.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
+    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.new_o.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
     apply_button_type() {
       if (this.SB.new_o.os_change.has_changes_to_save_p) {
@@ -347,7 +347,7 @@ export default {
     realtime_notice() {
       let hv = null
       if (hv == null) {
-        if (this.SB.new_o.order_unit.empty_p) {
+        if (this.SB.new_o.order_flow.empty_p) {
           hv = {
             icon_code: "alert-circle-outline",
             icon_type: "is-danger",
@@ -356,10 +356,10 @@ export default {
         }
       }
       if (hv == null) {
-        const location = this.SB.new_o.order_unit.team_empty_location
+        const location = this.SB.new_o.order_flow.team_empty_location
         if (location) {
           if (this.self_vs_self_mode_p) {
-            const elem = this.SB.new_o.order_unit.flat_uniq_users_sole
+            const elem = this.SB.new_o.order_flow.flat_uniq_users_sole
             hv = {
               icon_code: "alert-circle-outline",
               icon_type: "is-danger",
@@ -375,8 +375,8 @@ export default {
         }
       }
       if (hv == null) {
-        if (this.SB.new_o.order_unit.order_state.state_name === "O2State") {
-          const b_vs_w = this.SB.new_o.order_unit.team_member_counts.join(" vs ")
+        if (this.SB.new_o.order_flow.order_operation.operation_name === "V2Operation") {
+          const b_vs_w = this.SB.new_o.order_flow.team_member_counts.join(" vs ")
           hv = {
             icon_code: "check-bold",
             icon_type: "is-success",
