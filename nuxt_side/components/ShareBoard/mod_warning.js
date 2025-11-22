@@ -78,35 +78,11 @@ export const mod_warning = {
         if (this.i_am_member_p) {
           message = [
             `今は${this.user_call_name(this.current_turn_user_name)}の手番です`,
-            `${this.my_call_name}は${this.my_turn_distance_text}です`,
+            `${this.my_call_name}は${this.my_about_next_turn_count}です`,
           ]
         }
       }
       return message
-    },
-
-    // 自分の手番まであとどれくらいかを表す文字列を返す
-    // max_step は「5vs1 3手毎」なら 5x2 * 3 = 30 になる。このあたりは決め打ちで 10 とするのでもよい
-    // _.range(a, b + 1) は a..b の意味になる
-    my_turn_distance_text() {
-      GX.assert(this.i_am_member_p)
-      const max_step = this.order_unit.round_size * this.change_per
-      const next_step = _.range(1, max_step + 1).find(next_step => {
-        return this.turn_to_user_name(this.current_turn + next_step) === this.user_name
-      })
-      if (next_step == null) {
-        return "とうぶん先"
-      }
-      if (next_step === 1) {
-        return "次"
-      }
-      if (next_step === 2) {
-        return "次の次"
-      }
-      if (next_step === 3) {
-        return "次の次の次"
-      }
-      return `${next_step}手後`
     },
   },
 }

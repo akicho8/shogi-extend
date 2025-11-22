@@ -146,7 +146,32 @@ export const mod_order_main = {
     user_name_is_same_watcher_p(user_name) {
       const location = this.user_name_to_initial_location(user_name)
       return location == null && this.my_location == null
-    }
+    },
+
+    // 自分の手番まであとどれくらいかを表す文字列を返す
+    // max_step は「5vs1 3手毎」なら 5x2 * 3 = 30 になる。このあたりは決め打ちで 10 とするのでもよい
+    // _.range(a, b + 1) は a..b の意味になる
+    about_next_turn_count(user_name) {
+      if (this.order_lookup_from_name(user_name)) {
+        const max_step = this.order_unit.round_size * this.change_per
+        const next_step = _.range(1, max_step + 1).find(next_step => {
+          return this.turn_to_user_name(this.current_turn + next_step) === user_name
+        })
+        if (next_step == null) {
+          return "とうぶん先"
+        }
+        if (next_step === 1) {
+          return "次"
+        }
+        if (next_step === 2) {
+          return "次の次"
+        }
+        if (next_step === 3) {
+          return "次の次の次"
+        }
+        return `${next_step}手後`
+      }
+    },
   },
 
   computed: {
@@ -274,5 +299,8 @@ export const mod_order_main = {
     my_team_member_is_one_p() {
       return (this.my_team_member_count ?? 0) === 1
     },
+
+    // 自分の手番まであとどれくらいかを表す文字列を返す
+    my_about_next_turn_count() { return this.about_next_turn_count(this.user_name) },
   },
 }

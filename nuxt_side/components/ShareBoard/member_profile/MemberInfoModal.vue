@@ -118,6 +118,11 @@ export default {
         },
         {
           enabled: true,
+          label: "次回の手番",
+          value: this.SB.about_next_turn_count(this.member_info.from_user_name),
+        },
+        {
+          enabled: true,
           label: "画面フォーカス",
           value: this.member_info.window_active_p ? "ON" : "OFF (よそ見中)",
           // desc: this.member_info.window_active_p ? null : "よそ見中",
