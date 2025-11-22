@@ -13,6 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     window_a do
       assert_text("bさんの霊圧が消えました", wait: @KILL_SEC * 2) # 余裕をもって2倍待つ
+      assert_action_index(0, "b", "💀")                           # 主語が b である (重要)
     end
   end
 end
