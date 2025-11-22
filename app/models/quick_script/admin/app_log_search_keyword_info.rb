@@ -47,6 +47,7 @@ module QuickScript
             "警告発動",
             "名前違反",
             "反則",
+            "反則ブロック",
             "返答記録",
             "指手不達",
             "オーダー配布",
@@ -54,6 +55,7 @@ module QuickScript
             "cc_behavior_silent_stop",
             "cc_behavior_silent_pause",
             "棋譜メール",
+            "思考印導線",
           ],
         },
         {

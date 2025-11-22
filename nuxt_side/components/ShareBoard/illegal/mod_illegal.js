@@ -57,7 +57,7 @@ export const mod_illegal = {
     illegal_activation(illegal_name) {
       this.illegal_show(illegal_name)         // 当事者には最速で知らせたいのでブロードキャスト前にする
       this.illegal_share(illegal_name)        // 共有する
-      this.ac_log({subject: "反則検知", body: {"種類": illegal_name, "局面": this.current_url}})
+      this.ac_log({subject: "反則ブロック", body: {"種類": illegal_name, "局面": this.current_url}})
     },
     illegal_share(illegal_name) {
       this.ac_room_perform("illegal_share", {illegal_name: illegal_name}) // --> app/channels/share_board/room_channel.rb
