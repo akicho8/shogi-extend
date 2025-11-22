@@ -37,21 +37,22 @@ export const mod_battle_save = {
     },
 
     __battle_memberships(win_location_key) {
-      if (this.order_enable_p) {
-        if (SELF_VS_SELF_THEN_FORCE_LOSE) {
-          if (this.self_vs_self_p) {
-            return []
-          }
-        }
-        return this.vs_member_names_uniq_and_ordered.map(name => {
-          const location = this.user_name_to_initial_location(name)
-          return {
-            user_name: name,
-            location_key: location.key,
-            judge_key: this.__battle_memberships_judge_key(location, win_location_key), // FIXME: ここってサーバー側でやればよくね？
-          }
-        })
+      if (!this.order_enable_p) {
+        return []
       }
+      if (SELF_VS_SELF_THEN_FORCE_LOSE) {
+        if (this.self_vs_self_p) {
+          return []
+        }
+      }
+      return this.vs_member_names_uniq_and_ordered.map(name => {
+        const location = this.user_name_to_initial_location(name)
+        return {
+          user_name: name,
+          location_key: location.key,
+          judge_key: this.__battle_memberships_judge_key(location, win_location_key), // FIXME: ここってサーバー側でやればよくね？
+        }
+      })
     },
 
     // location 側の勝ち負けを返す
