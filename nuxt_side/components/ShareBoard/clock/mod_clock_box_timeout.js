@@ -95,6 +95,7 @@ export const mod_clock_box_timeout = {
         props: {
           timeout_key: timeout_key,
         },
+        canCancel: ["button", "escape"],
         onCancel: () => {
           this.sfx_click()
           this.cc_timeout_modal_close()

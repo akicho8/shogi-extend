@@ -32,6 +32,7 @@ export const mod_illegal = {
           props: {
             illegal_names: illegal_names,
           },
+          canCancel: ["button", "escape"],
           onCancel: () => {
             this.sfx_click()
             this.illegal_modal_close()
