@@ -50,4 +50,7 @@ export const HandleNameNgWordUserList = [
   "癩病",
   "気違い",
   "乞食",
+
+  // 無理矢理NGを抜けてくるやつ
+  "あなぁる",
 ]
