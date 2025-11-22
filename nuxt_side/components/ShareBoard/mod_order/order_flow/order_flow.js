@@ -175,6 +175,16 @@ export class OrderFlow {
     this.watch_users = users.filter(e => !this.name_to_object_hash[e.user_name])
   }
 
+  all_move_to_watcher() {
+    const user_names = [
+      ...this.watch_users.map(e => e.user_name),
+      ...this.flat_uniq_users.map(e => e.user_name),
+    ]
+    const items = user_names.map(e => Item.create(e))
+    this.users_allocate([])
+    this.watch_users = items
+  }
+
   operation_toggle() {
     if (this.order_operation.operation_name === "V1Operation") {
       this.operation_change("to_v2_operation")

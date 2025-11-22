@@ -35,7 +35,7 @@ describe("OrderFlow", () => {
   })
   test("hash", () => {
     const order_flow = OrderFlow.create(["a", "b", "c"])
-    expect(order_flow.hash).toEqual("cc4ec9d81da1bcfb4795b2617ef14d78")
+    expect(order_flow.hash).toEqual("3e7b82f05fca833ef961c45e391e8c32")
   })
   describe("auto_users_set_with_voted_hash", () => {
     test("両チームに分かれていてcさんは投票していないので観戦者になる", () => {
@@ -53,5 +53,11 @@ describe("OrderFlow", () => {
       order_flow.auto_users_set_with_voted_hash(["a", "b", "c"], {})
       expect(order_flow.inspect).toEqual("[黒開始:] [白開始:] [観:a,b,c] [替:o] (V2Operation)")
     })
+  })
+  test("all_move_to_watcher", () => {
+    const order_flow = OrderFlow.create(["a", "b"])
+    order_flow.no_entry_user_only_watch_users_set(["c"]) // 観戦者をセットする
+    order_flow.all_move_to_watcher()                                   // 全員を観戦者にする
+    expect(order_flow.inspect).toEqual("[黒開始:] [白開始:] [観:c,a,b] [替:o] (V2Operation)")
   })
 })

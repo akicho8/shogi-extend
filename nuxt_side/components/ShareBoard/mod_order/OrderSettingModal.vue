@@ -29,7 +29,7 @@
         template(v-if="SB.new_o.order_flow.order_operation.operation_name === 'V2Operation'")
           OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
           OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
-        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_flow.watch_users" label="観戦" @label_click="all_member_as_watcher_handle")
+        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
@@ -185,9 +185,10 @@ export default {
     },
 
     // すべてのメンバーを観戦に移動する
-    all_member_as_watcher_handle(e) {
+    all_move_to_watcher_handle(e) {
       this.sfx_click()
-      this.toast_ok("TODO: すべてのメンバーを観戦に移動する")
+      this.SB.new_o.order_flow.all_move_to_watcher()
+      this.toast_ok("いったん全員を観戦者にしました")
     },
 
     // 偶数人数であること

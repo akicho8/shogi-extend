@@ -13,6 +13,7 @@
         .button(@click="order_flow.furigoma_core(Math.random() < 0.5)") 振り駒
         .button(@click="order_flow.swap_run()") 先後反転
         .button(@click="order_flow.dump_and_load()") JSON化して元に戻す(観戦者消滅)
+        .button(@click="order_flow.all_move_to_watcher()") 観戦に集める
     .column.is-4
       b-field(grouped)
         b-field(:label="`${change_per}手毎`")
