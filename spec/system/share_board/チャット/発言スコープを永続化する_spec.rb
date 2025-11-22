@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   # 部屋に入り直した際に発言スコープが ms_public に戻ったことに気づかないで発言する事例があったため永続化する
