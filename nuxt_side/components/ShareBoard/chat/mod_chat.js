@@ -1,11 +1,14 @@
 // チャット発言送信
 
-import ChatModal from "./ChatModal.vue"
-import { MessageScopeInfo } from "./message_scope_info.js"
-import { SendTriggerInfo } from "./send_trigger_info.js"
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
-import { MessageRecord } from "./message_record.js"
+
+import { MessageScopeInfo     } from "./message_scope_info.js"
+import { SendTriggerInfo      } from "./send_trigger_info.js"
+import { ChatContentScaleInfo } from "./chat_content_scale_info.js"
+import { MessageRecord        } from "./message_record.js"
+
+import ChatModal from "./ChatModal.vue"
 
 export const mod_chat = {
   data() {
@@ -55,7 +58,7 @@ export const mod_chat = {
       this.chat_modal_close()
       this.chat_modal_instance = this.modal_card_open({
         component: ChatModal,
-        // fullScreen: this.fs_xxx_info.full_screen_p,
+        fullScreen: this.chat_content_scale_info.full_screen_p,
         onCancel: () => {
           this.sfx_click()
           this.chat_modal_close()
@@ -137,6 +140,9 @@ export const mod_chat = {
 
     SendTriggerInfo()   { return SendTriggerInfo                                    },
     send_trigger_info() { return this.SendTriggerInfo.fetch(this.send_trigger_key) },
+
+    ChatContentScaleInfo()   { return ChatContentScaleInfo                                    },
+    chat_content_scale_info() { return this.ChatContentScaleInfo.fetch(this.chat_content_scale_key) },
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {
