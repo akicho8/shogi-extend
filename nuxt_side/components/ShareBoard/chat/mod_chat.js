@@ -1,8 +1,8 @@
 // チャット発言送信
 
 import ChatModal from "./ChatModal.vue"
-import { MessageScopeInfo } from "../models/message_scope_info.js"
-import { SendTriggerInfo } from "../models/send_trigger_info.js"
+import { MessageScopeInfo } from "./message_scope_info.js"
+import { SendTriggerInfo } from "./send_trigger_info.js"
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
@@ -55,6 +55,7 @@ export const mod_chat = {
       this.chat_modal_close()
       this.chat_modal_instance = this.modal_card_open({
         component: ChatModal,
+        // fullScreen: this.fs_xxx_info.full_screen_p,
         onCancel: () => {
           this.sfx_click()
           this.chat_modal_close()
