@@ -4,7 +4,7 @@
 import { GX } from "@/components/models/gx.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 
-export class ActionLogDto {
+export class ActionLogRecord {
   static create(params) {
     return new this(params)
   }

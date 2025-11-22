@@ -2,7 +2,6 @@
 // タップ局面変更
 
 const AL_RECORDS_MAX    = 200   // 履歴の最大長
-const AL_PUSH_TO        = "top" // 追加位置
 const AL_SAME_SFEN_SKIP = false // 同じ局面なら何もしない？
 const AL_TURN_ONLY_REVERT = true // 過去の履歴なら手数だけ戻す？
 
@@ -10,7 +9,7 @@ import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import ActionLogModal from "./ActionLogModal.vue"
-import { ActionLogDto } from "./action_log_dto.js"
+import { ActionLogRecord } from "./action_log_record.js"
 
 export const mod_action_log = {
   data() {
@@ -34,19 +33,12 @@ export const mod_action_log = {
       // KIF に埋めたいものも合わせて保持しておく
       params.player_names_with_title ??= this.player_names_with_title
 
-      return ActionLogDto.create(params)
+      return ActionLogRecord.create(params)
     },
 
     al_add(params) {
-      const action_log_dto = this.al_create(params)
-      if (AL_PUSH_TO === "top") {
-        this.action_logs.unshift(action_log_dto)
-        this.action_logs = _.take(this.action_logs, AL_RECORDS_MAX)
-      } else {
-        this.action_logs.push(action_log_dto)
-        this.action_logs = _.takeRight(this.action_logs, AL_RECORDS_MAX)
-        this.$nextTick(() => this.al_scroll_to_bottom())
-      }
+      const action_log_record = this.al_create(params)
+      this.action_logs = _.take([action_log_record, ...this.action_logs], AL_RECORDS_MAX)
     },
 
     al_test() {
