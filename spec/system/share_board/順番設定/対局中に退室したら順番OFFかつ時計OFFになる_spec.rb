@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
@@ -10,7 +10,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     assert_order_on
     assert_clock_on
-    order_set_off
-    assert_order_off_and_clock_stop
+    gate_leave_handle
+    assert_order_off
+    assert_clock_off
   end
 end
