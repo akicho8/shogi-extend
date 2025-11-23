@@ -22,7 +22,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "i"),
-        call: c => c.preset_select_modal_open_handle(),
+        call: c => c.board_preset_modal_open_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "1"),

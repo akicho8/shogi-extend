@@ -21,7 +21,7 @@ module SharedMethods
   def preset_select(preset_key)
     sidebar_open
     menu_item_click("手合割")
-    find(".PresetSelectModal .board_preset_key").select(preset_key)
+    find(".BoardPresetModal .board_preset_key").select(preset_key)
     find(".apply_button").click
   end
 

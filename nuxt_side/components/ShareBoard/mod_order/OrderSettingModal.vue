@@ -40,7 +40,7 @@
         b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
         b-button.furigoma_handle(size="is-small" @click="furigoma_handle") 振り駒
         b-button.swap_handle(v-if="SB.debug_mode_p" size="is-small" @click="swap_handle") 先後入替
-        b-button.preset_select_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.preset_select_modal_open_handle") 手合割
+        b-button.board_preset_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
 
       hr.my-4
 

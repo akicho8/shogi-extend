@@ -48,13 +48,6 @@ export const mod_force_sync = {
       this.force_sync(`${this.my_call_name}が1手戻しました`)
     },
 
-    force_sync_preset() {
-      this.current_turn = 0
-      this.current_sfen = this.board_preset_info.sfen
-      this.ac_log({subject: "駒落適用", body: this.board_preset_info.name})
-      this.force_sync(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
-    },
-
     // TurnChangeModal 用
     new_turn_set_and_sync(e) {
       if (false) {

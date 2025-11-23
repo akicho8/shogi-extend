@@ -42,7 +42,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送" @click="SB.force_sync_modal_handle" v-if="SB.quick_sync_info.sidebar_function_show || SB.debug_mode_p")
 
         b-menu-list(label="対局サポート")
-          b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="SB.preset_select_modal_open_handle")
+          b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="SB.board_preset_modal_open_handle")
           b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="SB.room_url_copy_handle")
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="SB.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="SB.room_recreate_modal_open_handle" v-if="SB.debug_mode_p")

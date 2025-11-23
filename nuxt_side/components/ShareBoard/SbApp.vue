@@ -115,7 +115,7 @@ import { mod_look_away                        } from "./look_away/mod_look_away.
 import { mod_force_sync                    } from "./mod_force_sync.js"
 import { mod_turn_change                   } from "./turn_change/mod_turn_change.js"
 import { mod_illegal                       } from "./illegal/mod_illegal.js"
-import { mod_preset_select                 } from "./board_preset/mod_preset_select.js"
+import { mod_board_preset                 } from "./board_preset/mod_board_preset.js"
 import { mod_back_to                       } from "./mod_back_to.js"
 import { mod_shortcut                      } from "./shortcut/mod_shortcut.js"
 import { browser_slide_lock                } from "./browser_slide_lock.js"
@@ -236,7 +236,7 @@ export default {
     mod_force_sync,
     mod_turn_change,
     mod_illegal,
-    mod_preset_select,
+    mod_board_preset,
     mod_back_to,
     mod_shortcut,
     mod_give_up,
