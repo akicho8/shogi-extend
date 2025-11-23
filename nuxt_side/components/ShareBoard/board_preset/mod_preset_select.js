@@ -7,25 +7,21 @@ export const mod_preset_select = {
       preset_select_modal_instance: null,
     }
   },
-
   created() {
     this.sfen_set_by_url_params()
   },
-
   beforeDestroy() {
     this.preset_select_modal_close()
   },
-
   methods: {
-    // FIXME: 取る
     // 引数でプリセットの初期値設定
     // http://localhost:4000/share-board?board_preset_key=八枚落ち
-    // これいらんか？
+    // これ使ってない？
     sfen_set_by_url_params() {
-      const v = this.$route.query.board_preset_key
-      if (v) {
-        this.board_preset_key = v
-        const info = this.BoardPresetInfo.fetch(v)
+      const key = this.$route.query.board_preset_key
+      if (key) {
+        this.board_preset_key = key
+        const info = this.BoardPresetInfo.fetch(key)
         this.current_sfen = info.sfen
       }
     },
@@ -36,6 +32,12 @@ export const mod_preset_select = {
       if (this.preset_select_modal_instance == null) {
         this.sidebar_close()
         this.sfx_click()
+        this.preset_select_modal_open()
+      }
+    },
+
+    preset_select_modal_open() {
+      if (this.preset_select_modal_instance == null) {
         this.preset_select_modal_instance = this.modal_card_open({
           component: PresetSelectModal,
           onCancel: () => this.preset_select_modal_close(),
@@ -43,11 +45,17 @@ export const mod_preset_select = {
       }
     },
 
+    preset_select_modal_close_handle() {
+      if (this.preset_select_modal_instance) {
+        this.sfx_click()
+        this.preset_select_modal_close()
+      }
+    },
+
     preset_select_modal_close() {
       if (this.preset_select_modal_instance) {
         this.preset_select_modal_instance.close()
         this.preset_select_modal_instance = null
-        this.debug_alert("PresetSelectModal close")
       }
     },
   },
