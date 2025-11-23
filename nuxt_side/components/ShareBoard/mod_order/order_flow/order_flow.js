@@ -107,11 +107,11 @@ export class OrderFlow {
     this.order_operation = order_operation
   }
 
-  // これを使って new_o.order_flow を作っている
+  // これを使って order_draft.order_flow を作っている
   deep_clone() {
     const object = new this.constructor()
     object.attributes = this.attributes // 内部は同じものを見ているので危険
-    return _.cloneDeep(object)          // 別のものにしないと new_o.order_flow が order_flow に即反映されてしまう
+    return _.cloneDeep(object)          // 別のものにしないと order_draft.order_flow が order_flow に即反映されてしまう
   }
 
   dump_and_load() {

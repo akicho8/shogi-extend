@@ -10,7 +10,7 @@ client-only
       p viewpoint: {{viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
 
-      p new_o.os_dnd_count: {{new_o.os_dnd_count}}
+      p order_draft.os_dnd_count: {{order_draft.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p mobile_layout_key: {{mobile_layout_key}}
       p watching_member_count: {{watching_member_count}}

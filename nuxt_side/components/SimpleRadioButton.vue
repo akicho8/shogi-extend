@@ -60,7 +60,7 @@ b-field.SimpleRadioButton(
 import { GX } from "@/components/models/gx.js"
 
 // 使い方
-//  SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_o.auto_resign_key")
+//  SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.order_draft.auto_resign_key")
 export default {
   name: "SimpleRadioButton",
   props: {

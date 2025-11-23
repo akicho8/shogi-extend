@@ -231,7 +231,7 @@ export const mod_order_main = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
-    os_modal_close_if_not_save_p() { return this.order_enable_p && this.new_o.os_change.has_changes_to_save_p },
+    os_modal_close_if_not_save_p() { return this.order_enable_p && this.order_draft.os_change.has_changes_to_save_p },
 
     // 最終的に左側に表示する並びになっているメンバーリスト
     // 順番設定されているときは対局者を優先的に上に表示する

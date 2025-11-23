@@ -6,7 +6,7 @@
 
       template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{SB.new_o.order_flow.main_user_count}}人
+          | 参加者{{SB.order_draft.order_flow.main_user_count}}人
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
     b-button.operation_toggle_handle(@click="operation_toggle_handle" size="is-small" v-if="SB.debug_mode_p") ｱﾙｺﾞﾘｽﾞﾑ変更
@@ -21,15 +21,15 @@
       | 右上のスイッチで有効にしよう
 
     template(v-if="SB.order_enable_p || development_p")
-      //- pre {{JSON.stringify(SB.new_o.os_change.to_h)}}
+      //- pre {{JSON.stringify(SB.order_draft.os_change.to_h)}}
 
       .TeamsContainer.is-unselectable
-        template(v-if="SB.new_o.order_flow.order_operation.operation_name === 'V1Operation'")
-          OrderTeamOne.is_team_both(:items.sync="SB.new_o.order_flow.order_operation.users"   label="対局")
-        template(v-if="SB.new_o.order_flow.order_operation.operation_name === 'V2Operation'")
-          OrderTeamOne.is_team_black(:items.sync="SB.new_o.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
-          OrderTeamOne.is_team_white(:items.sync="SB.new_o.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
-        OrderTeamOne.is_team_watcher(:items.sync="SB.new_o.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
+        template(v-if="SB.order_draft.order_flow.order_operation.operation_name === 'V1Operation'")
+          OrderTeamOne.is_team_both(:items.sync="SB.order_draft.order_flow.order_operation.users"   label="対局")
+        template(v-if="SB.order_draft.order_flow.order_operation.operation_name === 'V2Operation'")
+          OrderTeamOne.is_team_black(:items.sync="SB.order_draft.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
+          OrderTeamOne.is_team_white(:items.sync="SB.order_draft.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
+        OrderTeamOne.is_team_watcher(:items.sync="SB.order_draft.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
@@ -64,21 +64,21 @@
 
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
         .column.is-12(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
-          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.new_o.foul_mode_key" @user_input="foul_mode_key_updated")
+          SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.order_draft.foul_mode_key" @user_input="foul_mode_key_updated")
         .column.is-12(v-if="SB.debug_mode_p")
-          SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_o.auto_resign_key")
+          SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.order_draft.auto_resign_key")
         .column.is-12
           SimpleRadioButton.change_per(
             :base="SB"
             custom-class="is-small"
             element_size="is-small"
             model_name="ChangePerInfo"
-            :sync_value="SB.new_o.change_per"
-            @update:sync_value="v => SB.new_o.change_per = _.max([1, $GX.to_i(v)])"
+            :sync_value="SB.order_draft.change_per"
+            @update:sync_value="v => SB.order_draft.change_per = _.max([1, $GX.to_i(v)])"
             )
-          //- | {{SB.new_o.change_per}}
+          //- | {{SB.order_draft.change_per}}
         .column.is-12
-          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.new_o.think_mark_receive_scope_key")
+          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.order_draft.think_mark_receive_scope_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -123,7 +123,7 @@ export default {
       // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
       // if (v) {
       //   if (this.SB.order_flow.main_user_count === 0) {
-      //     this.SB.new_order_share("")
+      //     this.SB.order_draft_publish("")
       //   }
       // }
     },
@@ -145,14 +145,14 @@ export default {
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.sfx_click()
-      this.SB.new_o.order_flow.shuffle_all()
+      this.SB.order_draft.order_flow.shuffle_all()
       this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.sfx_click()
-      this.SB.new_o.order_flow.teams_each_shuffle()
+      this.SB.order_draft.order_flow.teams_each_shuffle()
       this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
@@ -166,8 +166,8 @@ export default {
         shakashaka_count: this.$route.query.shakashaka_count,
       })
       this.sfx_click()
-      this.SB.new_o.order_flow.furigoma_core(furigoma_pack.swap_p)
-      const item = this.SB.new_o.order_flow.first_user(this.SB.start_color)
+      this.SB.order_draft.order_flow.furigoma_core(furigoma_pack.swap_p)
+      const item = this.SB.order_draft.order_flow.first_user(this.SB.start_color)
       let who = "誰かさん"
       if (item) {
         who = this.user_call_name(item.user_name)
@@ -180,40 +180,40 @@ export default {
     swap_handle() {
       if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
-      this.SB.new_o.order_flow.swap_run()
+      this.SB.order_draft.order_flow.swap_run()
       this.SB.al_share({label: "先後入替", message: "チームを入れ替えました"})
     },
 
     // すべてのメンバーを観戦に移動する
     all_move_to_watcher_handle(e) {
       this.sfx_click()
-      this.SB.new_o.order_flow.all_move_to_watcher()
+      this.SB.order_draft.order_flow.all_move_to_watcher()
       this.toast_ok("いったん全員を観戦者にしました")
     },
 
     // 偶数人数であること
     swap_invalid(name) {
-      if (!this.SB.new_o.order_flow.swap_enable_p) {
+      if (!this.SB.order_draft.order_flow.swap_enable_p) {
         return this.error_message_show(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
       }
     },
 
     os_before_apply() {
-      // let v = this.SB.new_o.change_per
+      // let v = this.SB.order_draft.change_per
       // v = GX.to_i(v)
       // if (v <= 0) {
       //   v = 1
       // }
-      // this.SB.new_o.change_per = v
+      // this.SB.order_draft.change_per = v
     },
 
     invalid_member_empty() {
-      return this.error_message_show(this.SB.new_o.order_flow.member_empty_message)
+      return this.error_message_show(this.SB.order_draft.order_flow.member_empty_message)
     },
     invalid_team_empty() {
       if (this.self_vs_self_mode_p) {
       } else {
-        return this.error_message_show(this.SB.new_o.order_flow.team_empty_message)
+        return this.error_message_show(this.SB.order_draft.order_flow.team_empty_message)
       }
     },
     error_message_show(message) {
@@ -225,7 +225,7 @@ export default {
     },
 
     invalid_options() {
-      if (GX.blank_p(this.SB.new_o.change_per)) {
+      if (GX.blank_p(this.SB.order_draft.change_per)) {
         return this.error_message_show("「X回指したら交代する」の項目を正しく入力しよう")
       }
     },
@@ -237,12 +237,12 @@ export default {
       if (this.invalid_team_empty()) { return }
       if (this.invalid_options()) { return }
       this.sfx_click()
-      if (!this.SB.new_o.os_change.has_changes_to_save_p) {
+      if (!this.SB.order_draft.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
         this.SB.os_modal_close()
         return
       }
-      this.SB.new_order_share("順番設定を反映しました")
+      this.SB.order_draft_publish("順番設定を反映しました")
       this.$GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
@@ -250,7 +250,7 @@ export default {
     os_modal_force_submit_handle() {
       this.os_before_apply()
       if (this.invalid_options()) { return }
-      this.SB.new_order_share("バリデーションなしで順番設定を確定しました")
+      this.SB.order_draft_publish("バリデーションなしで順番設定を確定しました")
     },
 
     option_block_show_handle() {
@@ -266,7 +266,7 @@ export default {
 
     operation_toggle_handle() {
       this.sfx_click()
-      this.SB.new_o.order_flow.operation_toggle()
+      this.SB.order_draft.order_flow.operation_toggle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -319,7 +319,7 @@ export default {
         onConfirm: () => {
           this.sfx_play("o")
           this.toast_ok("さすがです")
-          this.SB.new_o.foul_mode_key = "lose"
+          this.SB.order_draft.foul_mode_key = "lose"
         },
         onCancel: () => {
           this.sfx_play("x")
@@ -337,10 +337,10 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
-    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.new_o.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
+    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
     apply_button_type() {
-      if (this.SB.new_o.os_change.has_changes_to_save_p) {
+      if (this.SB.order_draft.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
     },
@@ -348,7 +348,7 @@ export default {
     realtime_notice() {
       let hv = null
       if (hv == null) {
-        if (this.SB.new_o.order_flow.empty_p) {
+        if (this.SB.order_draft.order_flow.empty_p) {
           hv = {
             icon_code: "alert-circle-outline",
             icon_type: "is-danger",
@@ -357,10 +357,10 @@ export default {
         }
       }
       if (hv == null) {
-        const location = this.SB.new_o.order_flow.team_empty_location
+        const location = this.SB.order_draft.order_flow.team_empty_location
         if (location) {
           if (this.self_vs_self_mode_p) {
-            const elem = this.SB.new_o.order_flow.flat_uniq_users_sole
+            const elem = this.SB.order_draft.order_flow.flat_uniq_users_sole
             hv = {
               icon_code: "alert-circle-outline",
               icon_type: "is-danger",
@@ -376,8 +376,8 @@ export default {
         }
       }
       if (hv == null) {
-        if (this.SB.new_o.order_flow.order_operation.operation_name === "V2Operation") {
-          const b_vs_w = this.SB.new_o.order_flow.team_member_counts.join(" vs ")
+        if (this.SB.order_draft.order_flow.order_operation.operation_name === "V2Operation") {
+          const b_vs_w = this.SB.order_draft.order_flow.team_member_counts.join(" vs ")
           hv = {
             icon_code: "check-bold",
             icon_type: "is-success",

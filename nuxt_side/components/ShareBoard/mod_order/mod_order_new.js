@@ -10,8 +10,8 @@ export const mod_order_new = {
     return {
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
-      // new_o は順番設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
-      new_o: {
+      // order_draft は順番設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
+      order_draft: {
         order_flow:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
 
         foul_mode_key:                null, // 反則をどうするか
@@ -58,24 +58,24 @@ export const mod_order_new = {
     // 順番設定モーダル内で使うデータの準備
     os_modal_init() {
       // 現在の順番設定をコピーする
-      this.new_o.order_flow = this.order_flow.deep_clone()
+      this.order_draft.order_flow = this.order_flow.deep_clone()
 
       // オプション的なものもコピーする
-      this.os_options_copy_a_to_b(this, this.new_o)
+      this.os_options_copy_a_to_b(this, this.order_draft)
 
       // 変更記録用
-      this.new_o.os_change = new OsChange(this.new_o)
+      this.order_draft.os_change = new OsChange(this.order_draft)
 
       // 残りの観戦者をセットする(対局者は自動的に除く・始めての場合は全員入れてシャッフルする)
-      this.new_o.order_flow.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
+      this.order_draft.order_flow.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
     },
-    os_options_copy_a_to_b(a, b) {
-      GX.assert_kind_of_integer(a.change_per)
+    os_options_copy_a_to_b(from, to) {
+      GX.assert_kind_of_integer(from.change_per)
 
-      b.foul_mode_key                = a.foul_mode_key
-      b.auto_resign_key              = a.auto_resign_key
-      b.think_mark_receive_scope_key = a.think_mark_receive_scope_key
-      b.change_per                   = a.change_per
+      to.foul_mode_key                = from.foul_mode_key
+      to.auto_resign_key              = from.auto_resign_key
+      to.think_mark_receive_scope_key = from.think_mark_receive_scope_key
+      to.change_per                   = from.change_per
     },
 
     // 順番設定モーダルを閉じる
@@ -96,7 +96,7 @@ export const mod_order_new = {
         title: "ちょっと待って",
         type: "is-warning",
         hasIcon: true,
-        message: this.new_o.os_change ? this.new_o.os_change.message : "(new_o.os_change undefined)",
+        message: this.order_draft.os_change ? this.order_draft.os_change.message : "(order_draft.os_change undefined)",
         confirmText: "確定せずに閉じる",
         focusOn: "cancel",
         ...params,
@@ -107,32 +107,32 @@ export const mod_order_new = {
     // 「順番設定(仮)」の値を全体送信する
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
-    new_order_share(message) {
-      GX.assert(this.new_o.order_flow, "this.new_o.order_flow")
+    order_draft_publish(message) {
+      GX.assert(this.order_draft.order_flow, "this.order_draft.order_flow")
       const params = {
-        order_flow: this.new_o.order_flow.attributes,
+        order_flow: this.order_draft.order_flow.attributes,
         message: message,
       }
-      this.os_options_copy_a_to_b(this.new_o, params)
-      this.ac_room_perform("new_order_share", params) // --> app/channels/share_board/room_channel.rb
+      this.os_options_copy_a_to_b(this.order_draft, params)
+      this.ac_room_perform("order_draft_publish", params) // --> app/channels/share_board/room_channel.rb
     },
-    new_order_share_broadcasted(params) {
+    order_draft_publish_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.tl_alert("new_order_share 自分→自分")
+        this.tl_alert("order_draft_publish 自分→自分")
       } else {
-        this.tl_alert("new_order_share 自分→他者")
+        this.tl_alert("order_draft_publish 自分→他者")
       }
       if (GX.present_p(params.message)) {
         this.al_add({...params, label: "順番更新"})
       }
 
-      // new_o.order_flow のパラメータを order_flow に反映する
+      // order_draft.order_flow のパラメータを order_flow に反映する
       this.order_copy_from_bc(params)
 
       this.think_mark_auto_set() // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
-      // 新しくなった order_flow を new_o.order_flow に反映する
+      // 新しくなった order_flow を order_draft.order_flow に反映する
       if (this.os_modal_update_ok) {
         this.os_modal_init()
       }
@@ -155,12 +155,12 @@ export const mod_order_new = {
     // 特定の人を除外するショートカット
     os_member_delete(user_name) {
       this.clog(this.order_flow.flat_uniq_users)
-      this.os_modal_init()                                                         // new_o を準備する
-      this.new_o.order_flow.user_name_reject(user_name)                            // new_o から次の人を除外する
-      this.new_order_share(`順番設定から${this.user_call_name(user_name)}を外しました`) // new_o を配って更新する
+      this.os_modal_init()                                                         // order_draft を準備する
+      this.order_draft.order_flow.user_name_reject(user_name)                            // order_draft から次の人を除外する
+      this.order_draft_publish(`順番設定から${this.user_call_name(user_name)}を外しました`) // order_draft を配って更新する
     },
   },
   computed: {
-    os_modal_update_ok() { return this.new_o.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
+    os_modal_update_ok() { return this.order_draft.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
   },
 }

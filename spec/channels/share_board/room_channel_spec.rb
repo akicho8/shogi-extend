@@ -214,8 +214,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
           ],
         })
       expect {
-        subscription.new_order_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "new_order_share_broadcasted", bc_params: data)
+        subscription.order_draft_publish(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "order_draft_publish_broadcasted", bc_params: data)
     end
   end
 

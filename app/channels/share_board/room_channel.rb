@@ -114,14 +114,14 @@ module ShareBoard
       broadcast(:order_switch_share_broadcasted, data)
     end
 
-    def new_order_share(data)
+    def order_draft_publish(data)
       user_names = []
       # user_names = data["order_flow"]["order_operation"].collect { |e| e["user_name"] }.join(" → ")
       # user_names = data["order_flow"]["order_operation"] # 動的にかわる
       config = ["foul_mode_key", "auto_resign_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
       track(data, subject: "順番設定", body: message, emoji: ":順番設定:")
-      broadcast(:new_order_share_broadcasted, data)
+      broadcast(:order_draft_publish_broadcasted, data)
     end
 
     def think_mark_share(data)
