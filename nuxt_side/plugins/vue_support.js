@@ -141,12 +141,6 @@ export const vue_support = {
       return this.location_url_without_hash().replace(window.location.search, "")
     },
 
-    // 通知
-    simple_notify(message) {
-      this.talk(message)
-      this.$buefy.toast.open({message: message, position: "is-bottom", type: "is-info", duration: 1000 * 1, queue: false})
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // tweet_url_build_from_text("body")

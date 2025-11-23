@@ -31,7 +31,7 @@ export const vue_dialog = {
       this.dialog_ok(message, params)
     },
 
-    //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
+    ////////////////////////////////////////////////////////////////////////////////
 
     toast_ok(message, options = {}) {
       return this.toast_primitive(message, {type: "is-primary", ...options})
@@ -58,7 +58,13 @@ export const vue_dialog = {
         if (this.development_p) {
           this.clog(message)
         }
-        const h = GX.hash_extract_self(params, "toast", "talk")
+        const h = GX.hash_extract_self(params, "toast", "talk", "duration_sec")
+        if (h.duration_sec) {
+          GX.assert_kind_of_numeric(h.duration_sec)
+          GX.assert(h.duration_sec < 1000)
+          GX.assert(params.duration == null)
+          params.duration = h.duration_sec * 1000.0
+        }
         if (h.toast) {
           this.$buefy.toast.open({...params, message: message})
         }
@@ -127,7 +133,7 @@ export const vue_dialog = {
           type: e.type,
         }
         if (e.duration_sec) {
-          options.duration = e.duration_sec * 1000
+          options.duration_sec = e.duration_sec
         }
         this.toast_ok(e.message, options)
       } else {

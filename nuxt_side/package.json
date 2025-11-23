@@ -28,7 +28,7 @@
     "@nuxtjs/sitemap": "2.4.0",
     "@nuxtjs/style-resources": "^1.2.2",
     "@rails/actioncable": "^8.0.200",
-    "beetleshine": "0.0.22",
+    "beetleshine": "0.0.24",
     "big.js": "^6.2.2",
     "chart.js": "2.9.4",
     "chartjs-plugin-datalabels": "1.0.0",

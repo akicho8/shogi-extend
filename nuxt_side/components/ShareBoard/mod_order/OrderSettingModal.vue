@@ -261,7 +261,7 @@ export default {
     hint_handle(model) {
       this.sfx_stop_all()
       this.sfx_click()
-      this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
+      this.toast_ok(model.hint_messages.join(""), {duration_sec: 7})
     },
 
     operation_toggle_handle() {

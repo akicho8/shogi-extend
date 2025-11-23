@@ -116,7 +116,7 @@ export const mod_resend = {
         GX.assert(params.rs_failed_count != null, "params.rs_failed_count != null")
         if (params.rs_failed_count >= 1) {
           const message = `次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.rs_failed_count}回目)`
-          this.toast_warn(message, {duration: 1000 * RS_RESEND_TOAST_SEC, talk: false})
+          this.toast_warn(message, {duration_sec: RS_RESEND_TOAST_SEC, talk: false})
         }
         if (params.next_user_name === this.user_name) {
           // 自分が下家なので上家に受信したことを伝える

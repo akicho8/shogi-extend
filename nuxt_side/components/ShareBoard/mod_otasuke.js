@@ -11,7 +11,7 @@ export const mod_otasuke = {
         message = _.sample(message)
       }
       this.ac_log({subject: "おたすけ", body: message})
-      this.toast_ok(message, {duration: 3 * 1000})
+      this.toast_ok(message, {duration_sec: 3})
     },
   },
   computed: {

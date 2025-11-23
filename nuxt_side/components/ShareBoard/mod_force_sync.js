@@ -124,8 +124,6 @@ export const mod_force_sync = {
             this.se_force_sync()
             this.toast_ok(params.message, {talk: false}) // 大勢で検討しているときにうるさいのでしゃべらない
           }
-          // this.debug_alert("fs_notify_without_self")
-          // this.toast_ok(params.message, {talk: false, duration: 1000})
         } else {
           throw new Error("must not happen")
         }

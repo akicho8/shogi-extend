@@ -68,7 +68,7 @@ export const mod_ping = {
         this.ping_done()
         const now = this.$time.current_ms()
         const speed_ms = now - params.ping_at
-        this.toast_ok(`応答速度: ${speed_ms} ms`, {talk: false, duration: 1000})
+        this.toast_ok(`応答速度: ${speed_ms} ms`, {talk: false, duration_sec: 1})
         this.ac_log({subject: "PONG", body: `${this.user_name} ← ${params.from_user_name} ${speed_ms}ms`})
       }
     },

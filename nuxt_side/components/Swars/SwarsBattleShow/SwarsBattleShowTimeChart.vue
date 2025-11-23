@@ -534,12 +534,10 @@ export default {
 
       if (turn > this.TheShow.record.turn_max) {
         this.$emit("update:turn", this.TheShow.record.turn_max)
-        // this.simple_notify("時間切れ")
         return
       }
 
       this.$emit("update:turn", turn)
-      // this.simple_notify(`${turn}手目`)
     },
 
     // flip 状態をチャートに反映
