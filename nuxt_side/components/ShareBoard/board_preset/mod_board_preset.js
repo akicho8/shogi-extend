@@ -31,7 +31,7 @@ export const mod_board_preset = {
     // 適用ボタンを押したとき
     board_preset_apply_handle() {
       this.sfx_click()
-      thisboard_preset_modal_close()
+      this.board_preset_modal_close()
 
       this.current_turn = 0
       this.current_sfen = this.board_preset_info.sfen
