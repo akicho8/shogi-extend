@@ -71,12 +71,12 @@ export const mod_think_mark_invite = {
         canCancel: ["button"],
         onConfirm: () => {
           this.sfx_play("o")
-          // GX.delay_block(0.5, () => this.toast_ok("ありがとうな"))
+          // GX.delay_block(0.5, () => this.toast_primary("ありがとうな"))
           this.ac_log({subject: "思考印導線", body: params.confirmText})
         },
         onCancel: () => {
           this.sfx_play("x")
-          // GX.delay_block(0.5, () => this.toast_ok("なんじゃそれ"))
+          // GX.delay_block(0.5, () => this.toast_primary("なんじゃそれ"))
           this.ac_log({subject: "思考印導線", body: params.cancelText})
         },
         ...params,

@@ -18,7 +18,7 @@ export const mod_article_delete = {
           onConfirm: () => {
             this.sfx_click()
             this.$axios.$delete("/api/wkbk/articles/destroy.json", {params: {article_id: article.id}}).then(e => {
-              this.toast_ok("削除しました")
+              this.toast_primary("削除しました")
               this.$router.push({name: "rack-articles"})
             })
           },

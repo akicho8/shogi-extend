@@ -22,7 +22,7 @@ export const mod_color_theme = {
       this.color_theme_loading_close()
       this.debug_alert("読み込み失敗")
       this.tl_add("配色", "読み込み失敗", {event: e, src: src})
-      this.toast_ng("画像の取得に失敗しました")
+      this.toast_danger("画像の取得に失敗しました")
     },
     color_theme_loading_start() {
       this.color_theme_loading = this.$buefy.loading.open()

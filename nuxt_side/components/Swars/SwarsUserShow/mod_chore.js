@@ -4,7 +4,7 @@ export const mod_chore = {
       const message = badge.message
       if (message) {
         this.sfx_click()
-        this.toast_ok(message)
+        this.toast_primary(message)
       }
     },
   },

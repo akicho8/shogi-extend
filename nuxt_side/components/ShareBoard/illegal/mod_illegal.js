@@ -23,7 +23,7 @@ export const mod_illegal = {
         this.sfx_stop_all()
         this.sfx_play("lose") // おおげさに「ちーん」にしておく
         // const str = params.illegal_names.join("と")
-        // this.toast_ng(`${str}の反則です`)
+        // this.toast_danger(`${str}の反則です`)
         // this.tl_alert("反則モーダル起動完了")
         // this.sfx_play("lose")         // ちーん
         this.illegal_modal_close()
@@ -72,7 +72,7 @@ export const mod_illegal = {
     },
     illegal_show(illegal_name) {
       this.sfx_play("x")
-      this.toast_ng(illegal_name)
+      this.toast_danger(illegal_name)
       this.latest_illegal_name = illegal_name // デバッグ用
     },
   },

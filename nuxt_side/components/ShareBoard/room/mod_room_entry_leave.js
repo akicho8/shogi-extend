@@ -7,7 +7,7 @@ export const mod_room_entry_leave = {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
       await this.sfx_play("se_room_entry")
-      await this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`)
+      await this.toast_primary(`${this.user_call_name(params.from_user_name)}が入室しました`)
 
       if (this.room_url_copy_modal_p) {
         await GX.sleep(this.room_url_copy_modal_delay)
@@ -34,7 +34,7 @@ export const mod_room_entry_leave = {
         return
       }
       this.al_add({...params, label: "退室"})
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`)
+      this.toast_primary(`${this.user_call_name(params.from_user_name)}が退室しました`)
       this.member_reject(params)
     },
   },

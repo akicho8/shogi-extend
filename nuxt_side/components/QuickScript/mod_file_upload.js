@@ -16,7 +16,7 @@ export const mod_file_upload = {
           type: file.type,         // "image/png"
           data_uri: reader.result, // "data:image/png;base64,XXXXXXX=="
         })
-        this.toast_ok("アップロードしました")
+        this.toast_primary("アップロードしました")
       }, false)
 
       reader.readAsDataURL(file) // ここで読み取りを開始すると上の load ブロックがあとで呼ばれる (ややこしい)
@@ -25,7 +25,7 @@ export const mod_file_upload = {
     file_upload_cancel_handle(form_part) {
       // this.sfx_click()
       this.$set(this.attributes, form_part.key, null)
-      this.toast_ok("削除しました")
+      this.toast_primary("削除しました")
     },
   },
 }

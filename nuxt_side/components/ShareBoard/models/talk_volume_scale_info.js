@@ -20,7 +20,7 @@ export class TalkVolumeScaleInfo extends ApplicationMemoryRecord {
     } else {
       message = "こんにちは"
     }
-    app.$nextTick(() => app.toast_ok(message))
+    app.$nextTick(() => app.toast_primary(message))
   }
 
   static get define() {

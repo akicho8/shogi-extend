@@ -167,13 +167,13 @@ export default {
       return hv
     },
     params_receive(params) {
-      // fetchOnServer: true のときに実行すると this.toast_ok がないと言われる
+      // fetchOnServer: true のときに実行すると this.toast_primary がないと言われる
       if (process.client) {
         // メッセージ
         // リダイレクトの前に設定すること
         if (_.isPlainObject(params.flash)) {
-          this.toast_ok(params.flash["notice"])
-          this.toast_ng(params.flash["alert"])
+          this.toast_primary(params.flash["notice"])
+          this.toast_danger(params.flash["alert"])
         }
 
         // リダイレクト
@@ -293,7 +293,7 @@ export default {
           this.$fetch()         // Googleシートの場合はこの方法で自力で呼ぶ
         } else {
           this.debug_alert("$router.push 失敗")
-          // this.toast_ok(`もう${this.params.button_label}しました`)
+          // this.toast_primary(`もう${this.params.button_label}しました`)
         }
       })
       // ここで $fetch を呼ぶと $route.query の更新より前に呼ばれてしまう

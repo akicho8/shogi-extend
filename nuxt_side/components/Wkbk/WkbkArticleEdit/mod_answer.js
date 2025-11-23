@@ -43,9 +43,9 @@ export const mod_answer = {
       this.article.moves_answers.push({moves: moves})
       this.$nextTick(() => this.answer_tab_index = this.article.moves_answers.length - 1)
 
-      await this.toast_ok(`${this.article.moves_answers.length}つ目の正解を追加しました`)
+      await this.toast_primary(`${this.article.moves_answers.length}つ目の正解を追加しました`)
       if (this.article.moves_answers.length === 1) {
-        this.toast_ok(`他の手順で正解がある場合は続けて追加しよう`)
+        this.toast_primary(`他の手順で正解がある場合は続けて追加しよう`)
       }
     },
 
@@ -58,7 +58,7 @@ export const mod_answer = {
       })
 
       this.sfx_click()
-      this.toast_ok("削除しました")
+      this.toast_primary("削除しました")
     },
   },
 }

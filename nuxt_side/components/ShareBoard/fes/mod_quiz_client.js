@@ -77,7 +77,7 @@ export const mod_quiz_client = {
     },
     quiz_voted_index_share_broadcasted(params) {
       this.sfx_play("se_pipopipo")
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}が投票しました`)
+      this.toast_primary(`${this.user_call_name(params.from_user_name)}が投票しました`)
       this.al_add({...params, label: "投票完了"})
       this.quiz_voted_result = this.quiz_voted_result.merge({[params.from_user_name]: params.quiz_voted_index})
     },

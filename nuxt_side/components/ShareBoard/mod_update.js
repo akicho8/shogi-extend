@@ -18,7 +18,7 @@ export const mod_update = {
       if (new_api_version !== this.API_VERSION) {
         this.app_update_now = true
         if (AUTO_RELOAD) {
-          await this.toast_ok(MESSAGE)
+          await this.toast_primary(MESSAGE)
           this.force_reload()
         } else {
           this.reload_modal_handle()

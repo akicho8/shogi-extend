@@ -188,7 +188,7 @@ export default {
     all_move_to_watcher_handle(e) {
       this.sfx_click()
       this.SB.order_draft.order_flow.all_move_to_watcher()
-      this.toast_ok("いったん全員を観戦者にしました")
+      this.toast_primary("いったん全員を観戦者にしました")
     },
 
     // 偶数人数であること
@@ -238,7 +238,7 @@ export default {
       if (this.invalid_options()) { return }
       this.sfx_click()
       if (!this.SB.order_draft.os_change.has_changes_to_save_p) {
-        this.toast_ok(`変更はありません`)
+        this.toast_primary(`変更はありません`)
         this.SB.os_modal_close()
         return
       }
@@ -261,7 +261,7 @@ export default {
     hint_handle(model) {
       this.sfx_stop_all()
       this.sfx_click()
-      this.toast_ok(model.hint_messages.join(""), {duration_sec: 7})
+      this.toast_primary(model.hint_messages.join(""), {duration_sec: 7})
     },
 
     operation_toggle_handle() {
@@ -318,7 +318,7 @@ export default {
         canCancel: ["button"],
         onConfirm: () => {
           this.sfx_play("o")
-          this.toast_ok("さすがです")
+          this.toast_primary("さすがです")
           this.SB.order_draft.foul_mode_key = "lose"
         },
         onCancel: () => {

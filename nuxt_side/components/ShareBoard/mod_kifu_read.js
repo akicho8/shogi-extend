@@ -76,7 +76,7 @@ export const mod_kifu_read = {
       this.bs_error_message_dialog(e)
       if (e.body) {
         this.sfx_click()
-        this.toast_ok("棋譜を読み込みました")
+        this.toast_primary("棋譜を読み込みました")
         this.al_share({label: "棋譜読込前"})
 
         this.current_sfen = e.body

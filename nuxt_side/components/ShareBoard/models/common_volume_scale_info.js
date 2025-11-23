@@ -14,7 +14,7 @@ export class CommonVolumeScaleInfo extends ApplicationMemoryRecord {
   static input_handle_callback(context, value) {
     const app = context.base
     GX.assert(app != null, "app != null")
-    app.$nextTick(() => app.toast_ok(`マスター音量${value}`))
+    app.$nextTick(() => app.toast_primary(`マスター音量${value}`))
   }
 
   static get define() {

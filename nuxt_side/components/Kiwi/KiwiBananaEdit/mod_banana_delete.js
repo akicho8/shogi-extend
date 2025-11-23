@@ -13,7 +13,7 @@ export const mod_banana_delete = {
           onConfirm: () => {
             this.sfx_click()
             this.$axios.$delete("/api/kiwi/bananas/destroy.json", {params: {banana_id: banana.id}}).then(e => {
-              this.toast_ok("削除しました")
+              this.toast_primary("削除しました")
               this.$router.push({name: "video-studio"})
             })
           },

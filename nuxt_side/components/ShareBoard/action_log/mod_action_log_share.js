@@ -26,7 +26,7 @@ export const mod_action_log_share = {
     al_share_broadcasted(params) {
       this.al_add(params)
       if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
+        this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`)
       }
       this.ac_log({subject: "履歴追加", body: `「${params.label}」を受信`})
     },

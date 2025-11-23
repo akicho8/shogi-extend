@@ -21,7 +21,7 @@ export const mod_handle_name = {
       this.sidebar_close()
       this.sfx_click()
       this.talk("入室後は名前を変更できません")
-      // this.toast_ng("入室後はハンドルネームを変更できません。1️⃣ の「入退室」からいったん退室し、新しいハンドルネームで入り直そう。")
+      // this.toast_danger("入室後はハンドルネームを変更できません。1️⃣ の「入退室」からいったん退室し、新しいハンドルネームで入り直そう。")
       this.dialog_confirm({
         title: "警告",
         message: `

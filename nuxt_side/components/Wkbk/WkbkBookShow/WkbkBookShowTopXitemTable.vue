@@ -196,7 +196,7 @@ export default {
     //   this.base.book.xitems = this.$GX.ary_move(this.base.book.xitems, index, index + sign)
     //   if (this.run_count === 0) {
     //     if (!MyMobile.mobile_p) {
-    //       this.toast_ok("マウスでドラッグアンドドロップできますよ")
+    //       this.toast_primary("マウスでドラッグアンドドロップできますよ")
     //     }
     //   }
     //   this.run_count += 1

@@ -9,11 +9,11 @@ export const vue_clipboard = {
         ...options,
       }
       if (!navigator.clipboard) {
-        this.toast_ng(options.no_method_message)
+        this.toast_danger(options.no_method_message)
         return Promise.resolve(false)
       }
       return navigator.clipboard.writeText(text).then(() => {
-        this.toast_ok(options.success_message)
+        this.toast_primary(options.success_message)
         return true
       }).catch(error => {
         this.toast_warn(options.failure_message)

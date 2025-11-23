@@ -21,12 +21,12 @@ export const vue_scroll = {
     scroll_set(v) {
       if (v) {
         if (this.development_p) {
-          this.toast_ok("scroll_on")
+          this.toast_primary("scroll_on")
         }
         this.scroll_on()
       } else {
         if (this.development_p) {
-          this.toast_ok("scroll_off")
+          this.toast_primary("scroll_off")
         }
         this.scroll_off()
       }

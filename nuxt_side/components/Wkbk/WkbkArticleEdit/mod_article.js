@@ -12,7 +12,7 @@ export const mod_article = {
     ev_edit_mode_short_sfen_change(sfen) {
       if (this.article.init_sfen !== sfen) {
         if (this.article.moves_answers.length >= 1) {
-          this.toast_ok("元の配置を変更したので正解を削除しました")
+          this.toast_primary("元の配置を変更したので正解を削除しました")
         }
         this.article_init_sfen_set(sfen)
       }
@@ -34,7 +34,7 @@ export const mod_article = {
       this.sfx_click()
 
       if (!this.editable_p) {
-        this.toast_ng("所有者でないため更新できません")
+        this.toast_danger("所有者でないため更新できません")
         return true
       }
 
@@ -71,7 +71,7 @@ export const mod_article = {
         if (e.article) {
           this.article = new Article(e.article)
           this.sfx_stop_all()
-          this.toast_ok(`${before_save_button_name}しました`)
+          this.toast_primary(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
           if (new_record_p) {
@@ -94,7 +94,7 @@ export const mod_article = {
       }
       if (this.article.moves_valid_p(moves)) {
         this.sfx_play("o")
-        this.toast_ok("正解")
+        this.toast_primary("正解")
         this.valid_count += 1
       }
       this.exam_run_count += 1

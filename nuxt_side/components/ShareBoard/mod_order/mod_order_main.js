@@ -73,7 +73,7 @@ export const mod_order_main = {
 
       if (params.message) {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
-        this.toast_ok(message, {toast: true, talk: true, ...params})
+        this.toast_primary(message, {toast: true, talk: true, ...params})
       }
       if (GX.present_p(params.message)) {
         this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})

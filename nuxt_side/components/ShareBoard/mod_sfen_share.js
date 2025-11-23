@@ -64,7 +64,7 @@ export const mod_sfen_share = {
         if (SELF_VS_SELF_MODE) {
           // 次に指す人がいない場合に前の人を入れておけば一応自分vs自分ができる
           const next_user_name = this.turn_to_user_name(lmi.next_turn_offset - 1)
-          this.toast_ok(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指そう`)
+          this.toast_primary(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指そう`)
           this.sfen_share_params["next_user_name"] = next_user_name
         }
       }
@@ -186,7 +186,7 @@ export const mod_sfen_share = {
       // ・「alice ▲76歩」は常に表示する (反則のときも)
       // ・検討中にサイレント更新されると困る
       // , position: "is-top", type: "is-dark"
-      // this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
+      // this.toast_primary(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
       // }
     },
 
@@ -210,7 +210,7 @@ export const mod_sfen_share = {
         }
         if (this.tn_name_call_p) {
           this.next_turn_message = this.tn_message_build(params)
-          this.toast_ok(this.next_turn_message)
+          this.toast_primary(this.next_turn_message)
         }
       }
     },

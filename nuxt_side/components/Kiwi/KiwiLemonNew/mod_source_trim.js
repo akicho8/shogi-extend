@@ -14,7 +14,7 @@ export const mod_source_trim = {
         if (e.body) {
           if (this.sfen_parse(e.body).moves.length === 0 && false) {
             // moves なしなら確定
-            this.toast_ok("反映しました")
+            this.toast_primary("反映しました")
             this.body_update_by(e.body)
           } else {
             // moves があるので範囲を確定してもらう

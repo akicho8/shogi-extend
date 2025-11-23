@@ -74,7 +74,7 @@ export default {
 
     if (this.banana.new_record_p) {
       if (this.banana.lemon.recipe_info.thumbnail_p) {
-        this.toast_ok("サムネイルにする位置とかを決めてください")
+        this.toast_primary("サムネイルにする位置とかを決めてください")
       }
     }
   },
@@ -84,7 +84,7 @@ export default {
       this.sfx_click()
 
       if (!this.editable_p) {
-        this.toast_ng("所有者でないため更新できません")
+        this.toast_danger("所有者でないため更新できません")
         return
       }
 
@@ -105,8 +105,8 @@ export default {
           this.banana = new Banana(this, e.banana)
 
           this.sfx_stop_all()
-          // this.toast_ok(`${before_save_button_name}しました`)
-          this.toast_ok(e.message)
+          // this.toast_primary(`${before_save_button_name}しました`)
+          this.toast_primary(e.message)
 
           // 新規の初期値にするため保存しておく
           if (e.new_record) {

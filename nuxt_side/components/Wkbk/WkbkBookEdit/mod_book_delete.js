@@ -27,7 +27,7 @@ export const mod_book_delete = {
           onConfirm: () => {
             this.sfx_click()
             this.$axios.$delete("/api/wkbk/books/destroy.json", {params: {book_id: book.id}}).then(e => {
-              this.toast_ok("削除しました")
+              this.toast_primary("削除しました")
               this.$router.push({name: "rack-books"})
             })
           },

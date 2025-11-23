@@ -150,7 +150,7 @@ export const mod_clock_box = {
     cc_pause_tick_callback(mm, ss) {
       if (ss === 0 && mm >= 1) {
         this.sfx_play("se_notification")
-        this.toast_ok(`${mm}分経過`)
+        this.toast_primary(`${mm}分経過`)
       }
     },
 
@@ -357,12 +357,12 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.key === "cc_behavior_start") {
         this.__cc_start_call(params)
       } else if (cc_behavior_info.key === "cc_behavior_on") {
-        await this.toast_ok(this.__cc_receive_message(params))
+        await this.toast_primary(this.__cc_receive_message(params))
         if (this.received_from_self(params)) {
-          this.toast_ok("時間を設定したら対局を開始しよう", {duration_sec: 3})
+          this.toast_primary("時間を設定したら対局を開始しよう", {duration_sec: 3})
         }
       } else if (cc_behavior_info.toast_p) {
-        this.toast_ok(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
+        this.toast_primary(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
       }
 
       this.ai_say_case_clock(params)
@@ -372,13 +372,13 @@ export const mod_clock_box = {
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     async __cc_start_call(params) {
-      await this.toast_ok(this.__cc_receive_message(params))
+      await this.toast_primary(this.__cc_receive_message(params))
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (this.current_turn_user_name) {
         // if (this.self_vs_self_p) {
-        //   this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
+        //   this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
         // }
-        await this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+        await this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
         this.think_mark_invite_trigger()
       } else {
         // 順番設定をしていない場合
@@ -463,7 +463,7 @@ export const mod_clock_box = {
       } else {
         message = "次は時計を設置しよう"
       }
-      this.toast_ok(message)
+      this.toast_primary(message)
     },
 
     cc_params_inspect(params) {

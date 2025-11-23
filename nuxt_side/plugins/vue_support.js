@@ -199,7 +199,7 @@ export const vue_support = {
     nuxt_login_required() {
       // http://localhost:4000/video/new?__nuxt_login_required_force=login
       if (!this.g_current_user || this.$route.query.__nuxt_login_required_force === "login") {
-        this.toast_ok("ログインしよう")
+        this.toast_primary("ログインしよう")
         this.nuxt_login_modal_open()
         return true
       }

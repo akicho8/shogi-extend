@@ -99,7 +99,7 @@ export const mod_tweet_stat = {
             this.debug_alert(`ox_create ${e.id}`)
           }
           if (e.message) {
-            this.toast_ok(e.message)
+            this.toast_primary(e.message)
           }
         })
       }

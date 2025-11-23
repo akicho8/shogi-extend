@@ -125,7 +125,7 @@ export const mod_form = {
         this.error_show()
       }
       if (e.error_message) {
-        this.toast_ng(e.error_message)
+        this.toast_danger(e.error_message)
       }
       if (e.response_hash) {
         this.response_hash = e.response_hash
@@ -137,7 +137,7 @@ export const mod_form = {
 
         const message = this.response_hash.message
         if (message) {
-          this.toast_ok(message)
+          this.toast_primary(message)
         }
 
         const alert_message = this.response_hash.alert_message
@@ -205,7 +205,7 @@ export const mod_form = {
               },
               url: reader.result,
             })
-            this.toast_ok(`アップロードしました`)
+            this.toast_primary(`アップロードしました`)
           }, false)
           reader.readAsDataURL(file)
         })
@@ -216,7 +216,7 @@ export const mod_form = {
       this.sfx_click()
       this.base.xaudio_list.splice(index, 1)
       // this.base.xaudio_list_for_v_model.splice(index, 1)
-      this.toast_ok("削除しました")
+      this.toast_primary("削除しました")
     },
 
     // ドロップダウンを開閉するタイミング
@@ -254,7 +254,7 @@ export const mod_form = {
     //           },
     //           url: reader.result,
     //         })
-    //         this.toast_ok(`アップロードしました`)
+    //         this.toast_primary(`アップロードしました`)
     //       }, false)
     //       reader.readAsDataURL(file)
     //     })
@@ -265,7 +265,7 @@ export const mod_form = {
     //   this.sfx_click()
     //   this.base.u_bg_file.splice(index, 1)
     //   // this.base.u_bg_file_for_v_model.splice(index, 1)
-    //   this.toast_ok("削除しました")
+    //   this.toast_primary("削除しました")
     // },
 
     // ximage_one_file_upload_handle(file) {
@@ -286,7 +286,7 @@ export const mod_form = {
     //         },
     //         url: reader.result,
     //       }
-    //       this.toast_ok(`アップロードしました`)
+    //       this.toast_primary(`アップロードしました`)
     //     }, false)
     //     reader.readAsDataURL(file)
     //   }
@@ -295,7 +295,7 @@ export const mod_form = {
     // ximage_one_delete_handle() {
     //   this.sfx_click()
     //   this.base.u_bg_file = null
-    //   this.toast_ok("削除しました")
+    //   this.toast_primary("削除しました")
     // },
 
     page_duration_set_by_fps(fps) {

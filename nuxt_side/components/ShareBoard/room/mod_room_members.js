@@ -136,7 +136,7 @@ export const mod_room_members = {
           diff_names.forEach(user_name => this.al_add({from_user_name: user_name, label: "💀"}))
           const user_call_names = diff_names.map(e => this.user_call_name(e))
           const str = user_call_names.join("と")
-          this.toast_ok(`${str}の霊圧が消えました`)
+          this.toast_primary(`${str}の霊圧が消えました`)
         }
       }
 

@@ -109,7 +109,7 @@ export default {
         const count = (s.match(/\r/g) || 0) + 1
         if (count <= 2) {
           if (s.includes("shogiwars.heroz.jp/games/")) {
-            this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めます")
+            this.toast_primary("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めます")
           }
           if (false) {
             if (s.includes("/kifu.questgames.net/shogi/games/")) {
@@ -186,7 +186,7 @@ export default {
     },
     validate_handle() {
       this.record_fetch(() => {
-        this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
+        this.toast_primary(`${this.record.turn_max}手の棋譜として読み取りました`)
       })
     },
     input_test_handle(input_text) {

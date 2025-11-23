@@ -87,7 +87,7 @@ export const mod_clock_box_modal = {
     cbm_play_handle() {
       if (this.cc_start_even_though_order_is_not_enabled_p && !this.debug_mode_p) {
         this.sfx_click()
-        this.toast_ng("先に順番設定をしよう")
+        this.toast_danger("先に順番設定をしよう")
         return
       }
 
@@ -96,7 +96,7 @@ export const mod_clock_box_modal = {
       if (this.current_turn >= 1 && this.AppConfig.CLOCK_START_CONFIRM) {
         this.cc_play_confirim({
           onCancel: () => {
-            this.toast_ok(`途中の局面から対局を開始しました`)
+            this.toast_primary(`途中の局面から対局を開始しました`)
             this.cbm_play_core_handle()
           },
           onConfirm: () => {
@@ -124,7 +124,7 @@ export const mod_clock_box_modal = {
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
       // if (this.ac_room && this.order_enable_p) {
-      //   this.$GX.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を解除しよう"))
+      //   this.$GX.delay_block(2.5, () => this.toast_primary("続けて検討する場合は順番設定を解除しよう"))
       // }
     },
     cbm_stop_handle() {
@@ -133,7 +133,7 @@ export const mod_clock_box_modal = {
         this.cc_stop_handle()
         this.clock_box_share("cc_behavior_stop")
       } else {
-        this.toast_ok("すでに停止しています")
+        this.toast_primary("すでに停止しています")
       }
     },
     cbm_resume_handle() {
@@ -147,14 +147,14 @@ export const mod_clock_box_modal = {
     cbm_save_handle() {
       this.sfx_click()
       this.cc_params_apply()
-      this.toast_ok("反映しました")
+      this.toast_primary("反映しました")
     },
     cbm_cc_params_set_handle(e) {
       this.cc_params = e.cc_params   // cloneDeep したものを渡している
       if (false) {
-        this.toast_ok(`${e.name}のプリセットを読み込みました`)
+        this.toast_primary(`${e.name}のプリセットを読み込みました`)
       } else {
-        this.toast_ok(`読み込みました`, {talk: false})
+        this.toast_primary(`読み込みました`, {talk: false})
       }
     },
     cbm_cc_unique_mode_sete_handle(value) {

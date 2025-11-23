@@ -75,7 +75,7 @@ export const mod_room_channel = {
 
       await this.room_restore_call()
       this.room_create()
-      // this.toast_ok("入室しました")
+      // this.toast_primary("入室しました")
     },
 
     // ~/src/shogi-extend/app/channels/share_board/room_channel.rb
@@ -141,7 +141,7 @@ export const mod_room_channel = {
     room_destroy_handle() {
       if (this.ac_room) {
         this.room_destroy()
-        this.toast_ok("退室しました")
+        this.toast_primary("退室しました")
       }
     },
 

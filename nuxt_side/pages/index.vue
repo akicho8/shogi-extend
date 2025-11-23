@@ -102,7 +102,7 @@ export default {
   methods: {
     title_click_handle() {
       this.sfx_click()
-      this.toast_ok("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
+      this.toast_primary("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
     },
   },
   computed: {

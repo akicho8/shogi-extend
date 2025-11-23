@@ -18,7 +18,7 @@ export const mod_chore = {
     form_reset_handle() {
       this.sfx_click()
       this.pc_data_reset_resetable_only()
-      this.toast_ok("オプション類を外しました")
+      this.toast_primary("オプション類を外しました")
       this.sidebar_p = false
     },
 
@@ -27,7 +27,7 @@ export const mod_chore = {
       this.sfx_click()
       this.pc_data_reset()
       this.$router.replace({}).catch(err => {}) // "?user_key=YamadaTaro" を外す かつ NavigationDuplicated 対策
-      this.toast_ok("すべてリセットしました")
+      this.toast_primary("すべてリセットしました")
       this.sidebar_p = false
     },
 
@@ -35,7 +35,7 @@ export const mod_chore = {
     parmalink_handle() {
       this.sfx_click()
       this.$router.replace({query: this.parmalink_query}).catch(err => {}) // NavigationDuplicated 対策
-      this.toast_ok("URLを永続化しました")
+      this.toast_primary("URLを永続化しました")
       this.sidebar_p = false
     },
 

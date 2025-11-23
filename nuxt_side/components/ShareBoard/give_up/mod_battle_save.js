@@ -32,7 +32,7 @@ export const mod_battle_save = {
       // app/models/share_board/battle_create.rb
       const e = await this.$axios.$post("/api/share_board/battle_create.json", params, {progress: false})
       if (e.error) {
-        this.toast_ng(e.error.message, {talk: false})
+        this.toast_danger(e.error.message, {talk: false})
       }
     },
 

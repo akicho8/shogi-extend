@@ -19,13 +19,13 @@ export const mod_upload = {
     upload_delete_handle() {
       if (this.book.new_file_src) {
         this.sfx_click()
-        this.toast_ok("いまアップロードした画像を削除しました")
+        this.toast_primary("いまアップロードした画像を削除しました")
         this.book.new_file_src = null
         return
       }
       if (this.book.raw_avatar_path) {
         this.sfx_click()
-        this.toast_ok("既存のアップロード画像を削除しました")
+        this.toast_primary("既存のアップロード画像を削除しました")
         this.book.raw_avatar_path = false
         return
       }

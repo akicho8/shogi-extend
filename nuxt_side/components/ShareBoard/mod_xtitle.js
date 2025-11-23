@@ -38,7 +38,7 @@ export const mod_xtitle = {
     room_name_share_broadcasted(params) {
       this.room_name_share_dto_receive(params)
       this.al_add({...params, label: "部屋名変更"})
-      this.toast_ok(`${this.user_call_name(params.from_user_name)}が部屋名を${params.room_name}に変更しました`)
+      this.toast_primary(`${this.user_call_name(params.from_user_name)}が部屋名を${params.room_name}に変更しました`)
     },
     room_name_share_dto_receive(params) {
       GX.assert(params)

@@ -35,7 +35,7 @@ export const mod_xmatch = {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
-      this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+      this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
     },
 
     // 自動マッチングモーダル起動(ショートカット)
@@ -161,7 +161,7 @@ export const mod_xmatch = {
       // this.sfx_play_random(["dog1", "dog2", "dog3"])
       this.beat_call("middle")
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
-      GX.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
+      GX.delay_block(0, () => this.toast_primary(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.sfx_click()
       // 合言葉がある場合マッチングが成立している
       if (params.room_key) {
@@ -217,7 +217,7 @@ export const mod_xmatch = {
     },
     xmatch_setup5_call(params) {
       GX.delay_block(START_TOAST_DELAY, () => {
-        this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+        this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
       })
     },
     xmatch_setup6_title(params) {
@@ -250,7 +250,7 @@ export const mod_xmatch = {
           if (!this.received_from_self(params)) {
             this.sfx_click()
           }
-          this.toast_ok(_.template(params.message)({name: this.user_call_name(params.from_user_name)}))
+          this.toast_primary(_.template(params.message)({name: this.user_call_name(params.from_user_name)}))
         } else {
           // 静かに処理
         }

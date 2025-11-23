@@ -44,7 +44,7 @@ export default {
             url: reader.result,
           }
           this.$emit("update:file_info", this.new_file_info)
-          this.toast_ok(`アップロードしました`)
+          this.toast_primary(`アップロードしました`)
         }, false)
         reader.readAsDataURL(file)
       }
@@ -54,7 +54,7 @@ export default {
       this.sfx_click()
       this.new_file_info = null
       this.$emit("update:file_info", this.new_file_info)
-      this.toast_ok("削除しました")
+      this.toast_primary("削除しました")
     },
   },
 }

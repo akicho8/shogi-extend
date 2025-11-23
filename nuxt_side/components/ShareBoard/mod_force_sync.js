@@ -52,7 +52,7 @@ export const mod_force_sync = {
     new_turn_set_and_sync(e) {
       if (false) {
         if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
-          this.toast_ok("同じ局面です")
+          this.toast_primary("同じ局面です")
           return
         }
       }
@@ -118,11 +118,11 @@ export const mod_force_sync = {
       if (params.message) {
         if (params.notify_mode === "fs_notify_all") { // 全員
           this.se_force_sync()
-          this.toast_ok(params.message, {talk: false})
+          this.toast_primary(params.message, {talk: false})
         } else if (params.notify_mode === "fs_notify_without_self") { // 自分を除く
           if (!this.received_from_self(params)) {
             this.se_force_sync()
-            this.toast_ok(params.message, {talk: false}) // 大勢で検討しているときにうるさいのでしゃべらない
+            this.toast_primary(params.message, {talk: false}) // 大勢で検討しているときにうるさいのでしゃべらない
           }
         } else {
           throw new Error("must not happen")

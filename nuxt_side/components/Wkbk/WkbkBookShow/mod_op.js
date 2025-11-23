@@ -21,7 +21,7 @@ export const mod_op = {
       })
       this.op_index_set_all()
       this.current_index = 0
-      this.toast_ok("不正解だけにしました")
+      this.toast_primary("不正解だけにしました")
     },
 
     // 元に戻す
@@ -33,7 +33,7 @@ export const mod_op = {
       // }
       // this.book.xitems = _.cloneDeep(this.saved_xitems)
       // this.current_index = 0
-      // this.toast_ok("元に戻しました")
+      // this.toast_primary("元に戻しました")
     },
 
     op_shuffle_handle() {
@@ -55,7 +55,7 @@ export const mod_op = {
 
       this.op_index_set_all()
       this.current_index = 0
-      this.toast_ok("シャッフルしました")
+      this.toast_primary("シャッフルしました")
 
       this.$refs.WkbkBookShowTop.$refs.WkbkBookShowTopXitemTable.$refs.WkbkBookShowTopXitemTableBtable.resetMultiSorting()
       this.debug_alert("resetMultiSorting")

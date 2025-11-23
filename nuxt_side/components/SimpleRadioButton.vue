@@ -110,7 +110,7 @@ export default {
       if (GX.present_p(this.hint_str)) {
         this.sfx_stop_all()
         this.sfx_click()
-        this.toast_ok(this.hint_str, {duration_sec: this.duration_sec})
+        this.toast_primary(this.hint_str, {duration_sec: this.duration_sec})
       }
     },
   },

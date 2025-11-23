@@ -88,7 +88,7 @@ export default {
       this.sfx_click()
 
       if (!this.editable_p) {
-        this.toast_ng("所有者でないため更新できません")
+        this.toast_danger("所有者でないため更新できません")
         return
       }
 
@@ -108,7 +108,7 @@ export default {
           this.book = new Book(e.book)
 
           this.sfx_stop_all()
-          this.toast_ok(`${before_save_button_name}しました`)
+          this.toast_primary(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
           if (new_record_p) {

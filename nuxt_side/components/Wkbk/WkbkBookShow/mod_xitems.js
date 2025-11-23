@@ -93,7 +93,7 @@ export const mod_xitems = {
         if (this.correct_behavior_info.key === "correct_behavior_next") {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
         } else {
-          this.toast_ok("正解")
+          this.toast_primary("正解")
           this.sfx_play("o")
         }
       }

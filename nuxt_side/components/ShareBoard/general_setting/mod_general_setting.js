@@ -44,7 +44,7 @@ export const mod_general_setting = {
           }
         })
       })
-      this.toast_ok(`${count}件の設定を初期値に戻しました`)
+      this.toast_primary(`${count}件の設定を初期値に戻しました`)
     },
   },
   computed: {

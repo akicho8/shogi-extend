@@ -28,7 +28,7 @@ export default {
       this.sfx_click()
       this.$emit("close")
       if (!this.SB.give_up_button_show_p) {
-        this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
+        this.toast_danger("投了確認モーダルを出している間に投了できる条件が無効になりました")
         return
       }
       this.SB.give_up_direct_run_with_valid()

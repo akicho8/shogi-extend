@@ -40,7 +40,7 @@ export default {
     },
 
     memento_restore(row) {
-      this.toast_ok("指定の時間の状態に戻しました")
+      this.toast_primary("指定の時間の状態に戻しました")
       this.data_restore_from_base64(row.enc_base64)
     },
 

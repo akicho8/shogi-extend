@@ -51,7 +51,7 @@ export const mod_export = {
       if (typeof window !== 'undefined') {
         this.sidebar_close()
         window.location.href = this.kifu_download_url(e)
-        this.$GX.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+        this.$GX.delay_block(1, () => this.toast_primary(`たぶんダウンロードしました`))
       }
     },
 
@@ -59,7 +59,7 @@ export const mod_export = {
 
     image_download_modal_handle() {
       this.sidebar_close()
-      this.toast_ok("共有将棋盤に転送して画像を生成します")
+      this.toast_primary("共有将棋盤に転送して画像を生成します")
       const params = {
         ...this.share_board_query,
         autoexec: "image_download_modal_handle",

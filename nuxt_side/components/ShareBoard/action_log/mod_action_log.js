@@ -82,7 +82,7 @@ export const mod_action_log = {
 
       if (AL_SAME_SFEN_SKIP) {
         if (this.current_sfen === action_log.sfen && this.current_turn === action_log.turn) {
-          this.toast_ok("同じ局面です")
+          this.toast_primary("同じ局面です")
           return
         }
       }

@@ -26,13 +26,13 @@ export const mod_room_recreate = {
   },
   methods: {
     internet_on_trigger() {
-      this.toast_ok("オンラインになりました")
+      this.toast_primary("オンラインになりました")
       if (this.ac_room) {
         this.room_recreate_handle()
       }
     },
     internet_off_trigger() {
-      this.toast_ng("オフラインになりました")
+      this.toast_danger("オフラインになりました")
       if (this.clock_box) {
         this.clock_box.pause_handle()
       }
@@ -87,7 +87,7 @@ export const mod_room_recreate = {
     async room_recreate() {
       if (this.ac_room && !this.room_recreate_now) {
         this.room_recreate_now = true
-        this.toast_ok("復帰中です", {talk: false})
+        this.toast_primary("復帰中です", {talk: false})
         this.room_destroy()
         const loading = this.$buefy.loading.open()
         await GX.sleep(this.ROOM_DESTROY_AFTER_DELAY_SEC)

@@ -49,7 +49,7 @@ export const mod_give_up = {
     // 最終投了ボタンを押したときの処理
     give_up_direct_run_with_valid() {
       if (!this.give_up_button_show_p) {
-        this.toast_ng("投了確認を出している間に投了できなくなりました")
+        this.toast_danger("投了確認を出している間に投了できなくなりました")
         return
       }
       this.give_up_direct_run()

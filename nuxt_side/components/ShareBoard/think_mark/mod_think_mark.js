@@ -146,8 +146,8 @@ export const mod_think_mark = {
 
       if (this.think_mark_mode_p) {
         if (this.mouse_event_p(e)) {
-          await this.toast_ok("ここ押さんでも右クリックで書けるよ")
-          await this.toast_ok("でもここを押していると左クリックで書けるよ")
+          await this.toast_primary("ここ押さんでも右クリックで書けるよ")
+          await this.toast_primary("でもここを押していると左クリックで書けるよ")
         }
       }
     },

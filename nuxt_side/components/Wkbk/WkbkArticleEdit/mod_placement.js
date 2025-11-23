@@ -24,7 +24,7 @@ export const mod_placement = {
                 modal_instance.close()
                 if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
                   // moves がないので確定
-                  this.toast_ok("反映しました")
+                  this.toast_primary("反映しました")
                   this.base_sfen_set(e.body)
                   // this.viewpoint = "black"
                 } else {
@@ -58,7 +58,7 @@ export const mod_placement = {
         props: props,
         events: {
           "update:apply": e => {
-            // this.toast_ok("反映しました")
+            // this.toast_primary("反映しました")
 
             this.base.article.viewpoint = e.viewpoint
             this.base_sfen_set(e.base_sfen) // 初期配置の設定

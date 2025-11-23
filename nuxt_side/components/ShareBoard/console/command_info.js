@@ -38,7 +38,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         key: "ping",
         example: "/ping",
         command_fn: (context, args) => {
-          context.toast_ok("pong")
+          context.toast_primary("pong")
           return "pong"
         },
       },
@@ -164,12 +164,12 @@ export class CommandInfo extends ApplicationMemoryRecord {
       },
       {
         desc: "toast_okの同期実行",
-        key: "test:toast_ok",
-        example: "/test:toast_ok",
+        key: "test:toast_primary",
+        example: "/test:toast_primary",
         command_fn: async (context, args) => {
-          await context.toast_ok("a")
-          await context.toast_ok("b")
-          await context.toast_ok("c")
+          await context.toast_primary("a")
+          await context.toast_primary("b")
+          await context.toast_primary("c")
         },
       },
     ]

@@ -22,7 +22,7 @@ export const mod_article = {
       // }
       if (this.article.moves_valid_p(moves)) {
         this.sfx_play("o")
-        this.toast_ok("正解")
+        this.toast_primary("正解")
         // this.valid_count += 1
       }
       // this.exam_run_count += 1

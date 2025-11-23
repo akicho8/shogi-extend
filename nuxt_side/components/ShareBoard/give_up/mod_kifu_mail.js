@@ -45,7 +45,7 @@ export const mod_kifu_mail = {
       }
       this.$axios.$post("/api/share_board/kifu_mail.json", params, {progress: true}).then(e => {
         if (!options.silent) {
-          this.toast_ok(e.message)
+          this.toast_primary(e.message)
         }
       })
     },

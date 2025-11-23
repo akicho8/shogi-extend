@@ -148,7 +148,7 @@ export const mod_order_new = {
       this.rs_modal_with_timer_close()
 
       if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
+        this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`)
       }
     },
 

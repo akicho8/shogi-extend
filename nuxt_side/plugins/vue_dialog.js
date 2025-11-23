@@ -33,7 +33,7 @@ export const vue_dialog = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    toast_ok(message, options = {}) {
+    toast_primary(message, options = {}) {
       return this.toast_primitive(message, {type: "is-primary", ...options})
     },
 
@@ -41,7 +41,7 @@ export const vue_dialog = {
       return this.toast_primitive(message, {type: "is-warning", ...options})
     },
 
-    toast_ng(message, options = {}) {
+    toast_danger(message, options = {}) {
       return this.toast_primitive(message, {type: "is-danger", ...options})
     },
 
@@ -135,7 +135,7 @@ export const vue_dialog = {
         if (e.duration_sec) {
           options.duration_sec = e.duration_sec
         }
-        this.toast_ok(e.message, options)
+        this.toast_primary(e.message, options)
       } else {
         throw new Error("must not happen")
       }
