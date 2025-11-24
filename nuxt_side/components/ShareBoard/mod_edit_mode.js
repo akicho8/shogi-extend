@@ -10,21 +10,18 @@ export const mod_edit_mode = {
         return
       }
       this.edit_warn_modal_instance = this.dialog_confirm({
-        title: "共有中の局面編集は危険",
-        message: `
-          <div class="content">
-            <ul class="mt-0 ml-5 is-size-7">
-              <li>初期配置に戻す目的なら<b>初期配置に戻す</b>をタップしよう</li>
-              <li>編集すると編集後の局面を0手目とした棋譜になってしまう</li>
-              <li>共有中の編集は変則的な配置で対局したいときだけ使おう</li>
-            </ul>
-          </div>
-        `,
-        // <p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指そう</p>
+        title: "共有中の局面編集は危険です",
+        message: [
+          `<div class="content">`,
+            `<p>もしかして1手戻したいだけ？ それならメニューから<b>1手戻す</b>を選択しよう</p>`,
+            `<p>局面編集すると、現時点までの棋譜を破棄し、編集後の局面を0手目とした棋譜になる</p>`,
+            `<p>共有中の局面編集は、手合割にない変則的な配置から対局したいときだけ使おう</p>`,
+          `</div>`,
+        ].join(""),
         confirmText: `理解した上で編集する`,
         focusOn: "cancel", // confirm or cancel
         type: "is-danger",
-        hasIcon: false,
+        hasIcon: true,
         onConfirm: () => {
           this.sfx_click()
           this.al_share({label: "局面編集前"})
