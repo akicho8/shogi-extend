@@ -1,7 +1,7 @@
 import ImageDownloadModal from "./ImageDownloadModal.vue"
 import { ImageSizeInfo } from "./models/image_size_info.js"
 
-export const mod_image_dl = {
+export const mod_image_download = {
   data() {
     return {
       image_download_success_count: 0,        // 正常にダウンロードができた場合にインクリメントしていく
