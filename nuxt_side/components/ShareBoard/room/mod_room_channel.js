@@ -131,7 +131,7 @@ export const mod_room_channel = {
         received: e => {
           this.ac_events_hash_inc("received")
           // this.tl_add("HOOK", `received: ${e.bc_action}`, e)
-          this.api_version_valid(e.bc_params.API_VERSION)
+          this.api_version_validate(e.bc_params.API_VERSION)
         },
       })
       this.autoexec({key: "room_after_create"})

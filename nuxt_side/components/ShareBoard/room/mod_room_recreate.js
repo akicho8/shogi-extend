@@ -92,7 +92,7 @@ export const mod_room_recreate = {
         const loading = this.$buefy.loading.open()
         await GX.sleep(this.ROOM_DESTROY_AFTER_DELAY_SEC)
         if (APP_RELOAD_IF_RECREATE) {
-          this.force_reload()
+          this.app_force_reload()
           return
         }
         await this.room_create()

@@ -114,7 +114,7 @@
       a.panel-block(@click="SB.edit_warn_modal_open") 編集警告
       a.panel-block(@click="SB.al_test") 指し手
       a.panel-block(@click="SB.clock_box_share('cc_behavior_manual_sync')") 時計同期
-      a.panel-block(@click="SB.reload_modal_handle") リロード確認
+      a.panel-block(@click="SB.app_force_reload_notify_modal_open") リロード確認
       a.panel-block(@click="SB.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="SB.run_or_room_out_confirm()") 退室確認
       a.panel-block(@click="SB.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル

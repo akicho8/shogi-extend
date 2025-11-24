@@ -97,7 +97,7 @@ import { mod_track_log                     } from "./track_log/mod_track_log.js"
 import { mod_xmatch                        } from "./auto_matching/mod_xmatch.js"
 import { mod_member_bc                     } from "./mod_member_bc.js"
 import { mod_image_download                      } from "./mod_image_download.js"
-import { mod_update                        } from "./mod_update.js"
+import { mod_app_update                        } from "./mod_app_update.js"
 import { mod_sound_bug                     } from "./sound/mod_sound_bug.js"
 import { mod_sound_effect                  } from "./sound/mod_sound_effect.js"
 import { mod_sound_resume                  } from "./sound/mod_sound_resume.js"
@@ -217,7 +217,7 @@ export default {
     mod_tweet,
     mod_dashboard,
     mod_image_download,
-    mod_update,
+    mod_app_update,
     mod_sound_bug,
     mod_sound_effect,
     mod_general_setting,

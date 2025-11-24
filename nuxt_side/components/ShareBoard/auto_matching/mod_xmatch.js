@@ -100,7 +100,7 @@ export const mod_xmatch = {
         },
         received: e => {
           this.tl_add("XMATCH", `received: ${e.bc_action}`, e)
-          this.api_version_valid(e.bc_params.API_VERSION)
+          this.api_version_validate(e.bc_params.API_VERSION)
         },
       })
     },
