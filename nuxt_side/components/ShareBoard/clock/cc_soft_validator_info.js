@@ -20,7 +20,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "上達を目的としているなら<b>秒読み</b>も設定しましょう",
+        message: "上達を目的としているなら<b>秒読み</b>も設定しよう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -72,7 +72,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "check-bold",
         icon_type: "is-success",
-        message: "白熱した終盤戦を望むなら<b>持ち時間</b>よりも<b>考慮時間</b>を設定しましょう",
+        message: "白熱した終盤戦を望むなら<b>持ち時間</b>よりも<b>考慮時間</b>を設定しよう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
@@ -101,7 +101,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "フィッシャールールでは<b>持ち時間</b>も設定しましょう",
+        message: "フィッシャールールでは<b>持ち時間</b>も設定しよう",
         cond_if: context => {
           return [
             context.initial_main_min === 0,
