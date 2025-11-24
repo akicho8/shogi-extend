@@ -98,7 +98,7 @@ export const mod_room_recreate = {
         await this.room_create()
         loading.close()
         this.ac_log({subject: "通信復旧", body: "入室→オフライン→オンライン→入室"})
-        this.al_share({label: "通信復旧", label_type: "is-primary", message: `${this.my_call_name}が通信不調から復帰しました`})
+        this.al_share({label: "通信復旧", label_type: "is-primary", message: `通信不調から復帰しました`})
         this.room_recreate_now = false
       }
     },
