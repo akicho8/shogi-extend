@@ -163,7 +163,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "toast_okの同期実行",
+        desc: "toast_primary の同期実行",
         key: "test:toast_primary",
         example: "/test:toast_primary",
         command_fn: async (context, args) => {
