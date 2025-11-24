@@ -10,7 +10,7 @@
       template(v-if="SB.debug_mode_p")
         li {{SB.rs_resend_delay_real_sec}}秒後に再度確認します
     template(v-if="development_p")
-      pre {{SB.sfen_share_params}}
+      pre {{SB.sfen_sync_params}}
     template(v-if="SB.debug_mode_p")
       b-button.rs_next_member_delete(size="is-small" @click="SB.rs_next_member_delete" type="is-danger")
         | {{SB.user_call_name(SB.rs_next_user_name)}}を順番から外す

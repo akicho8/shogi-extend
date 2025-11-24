@@ -3,10 +3,10 @@ import { GX } from "@/components/models/gx.js"
 
 const SELF_VS_SELF_MODE = false
 
-export const mod_sfen_share = {
+export const mod_sfen_sync = {
   data() {
     return {
-      sfen_share_params: null, // リトライするとき用に送るパラメータを保持しておく
+      sfen_sync_params: null, // リトライするとき用に送るパラメータを保持しておく
       next_turn_message: null, // 直近の「次は○○の手番です」のメッセージを保持する(テスト用)
     }
   },
@@ -14,7 +14,7 @@ export const mod_sfen_share = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // あとで再送するかもしれないのでいったん送るパラメータを作って保持しておく
-    sfen_share_params_set(e) {
+    sfen_sync_params_set(e) {
       const lmi = e.last_move_info
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
@@ -43,7 +43,7 @@ export const mod_sfen_share = {
       }
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
-      this.sfen_share_params = {
+      this.sfen_sync_params = {
         sfen: e.sfen,
         turn: e.turn,
         lmi: {
@@ -59,31 +59,31 @@ export const mod_sfen_share = {
 
       const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
       if (next_user_name) {
-        this.sfen_share_params["next_user_name"] = next_user_name
+        this.sfen_sync_params["next_user_name"] = next_user_name
       } else {
         if (SELF_VS_SELF_MODE) {
           // 次に指す人がいない場合に前の人を入れておけば一応自分vs自分ができる
           const next_user_name = this.turn_to_user_name(lmi.next_turn_offset - 1)
           this.toast_primary(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指そう`)
-          this.sfen_share_params["next_user_name"] = next_user_name
+          this.sfen_sync_params["next_user_name"] = next_user_name
         }
       }
 
       if (this.clock_box && this.clock_box.play_p) {
-        this.sfen_share_params["elapsed_sec"] = this.clock_box.opponent.elapsed_sec_old // タップし終わったあとなので相手の情報を取る
+        this.sfen_sync_params["elapsed_sec"] = this.clock_box.opponent.elapsed_sec_old // タップし終わったあとなので相手の情報を取る
       }
 
       this.sequence_code_embed()
     },
 
     // 指し手の配信
-    sfen_share() {
+    sfen_sync() {
       if (this.ac_room == null) {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
         const params = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
-          ...this.sfen_share_params,
+          ...this.sfen_sync_params,
         }
         this.illegal_modal_handle(params.illegal_names)
         this.think_mark_all_clear()                         // マークを消す
@@ -94,19 +94,19 @@ export const mod_sfen_share = {
 
       this.rs_send_success_p = false // 数ms後に相手から応答があると true になる
       const params = {
-        ...this.sfen_share_params,
+        ...this.sfen_sync_params,
         rs_failed_count: this.rs_failed_count, // 1以上:再送回数
       }
       if (this.rs_failed_count >= 1) {
         params.label = `再送${this.rs_failed_count}`
         params.label_type = "is-warning"
       }
-      this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
-      this.rs_sfen_share_after_hook()  // もちろん ac_room が有効でないときは呼ばない
+      this.ac_room_perform("sfen_sync", params) // --> app/channels/share_board/room_channel.rb
+      this.rs_sfen_sync_after_hook()  // もちろん ac_room が有効でないときは呼ばない
     },
 
     // 指し手を受信
-    sfen_share_broadcasted(params) {
+    sfen_sync_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
@@ -117,7 +117,7 @@ export const mod_sfen_share = {
         }
 
         // 受信したSFENを盤に反映
-        this.sfen_share_dto_receive(params)
+        this.sfen_sync_dto_receive(params)
         this.se_piece_move() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
       }
 
@@ -158,7 +158,7 @@ export const mod_sfen_share = {
         this.ai_say_case_illegal(params)                // 反則した人を励ます
 
         this.from_user_toast(params)                    // 誰が操作したかを表示する
-        this.sfen_shared_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
+        this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
         this.rs_receive_success_send(params)            // 受信OKを指し手に通知する
         this.think_mark_all_clear()                         // マークを消す
       }
@@ -190,7 +190,7 @@ export const mod_sfen_share = {
       // }
     },
 
-    async sfen_shared_after_notice(params) {
+    async sfen_syncd_after_notice(params) {
       this.next_turn_message = null
       if (GX.blank_p(params.illegal_names)) {                // 反則がなかった場合
         if (this.yomiagable_p) {

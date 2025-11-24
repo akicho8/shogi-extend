@@ -28,8 +28,8 @@ export const mod_shogi_player = {
         this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
-      this.sfen_share_params_set(e) // 再送可能なパラメータ作成
-      this.sfen_share()             // 指し手と時計状態の配信
+      this.sfen_sync_params_set(e) // 再送可能なパラメータ作成
+      this.sfen_sync()             // 指し手と時計状態の配信
 
       // 次の人の視点にする
       if (false) {
@@ -59,7 +59,7 @@ export const mod_shogi_player = {
 
       // 意図せず共有してしまうのを防ぐため共有しない
       // if (false) {
-      //   this.sfen_share_params_set()
+      //   this.sfen_sync_params_set()
       // }
       // }
     },
@@ -135,7 +135,7 @@ export const mod_shogi_player = {
     base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
     start_color()           { return this.base_location.code                  }, // 0:平手 1:駒落ち (超重要)
 
-    sfen_share_dto()         { return { sfen: this.current_sfen, turn: this.current_turn } },
+    sfen_sync_dto()         { return { sfen: this.current_sfen, turn: this.current_turn } },
 
     sp_class() {
       const av = []

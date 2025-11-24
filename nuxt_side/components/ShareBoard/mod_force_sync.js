@@ -95,7 +95,7 @@ export const mod_force_sync = {
     force_sync_broadcasted(params) {
       {
         this.perpetual_cop.reset()
-        this.sfen_share_dto_receive(params)       // これで current_location が更新される
+        this.sfen_sync_dto_receive(params)       // これで current_location が更新される
       }
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)

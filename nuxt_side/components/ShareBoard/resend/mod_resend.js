@@ -12,7 +12,7 @@ const RS_SUCCESS_DELAY    = 0    // 受信OKするまでの秒数(本番では0�
 export const mod_resend = {
   data() {
     return {
-      rs_seq_id: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
+      rs_seq_id: 0,             // sfen_sync する度(正確にはsfen_sync_params_setする度)にインクリメントしていく(乱数でもいい？)
       rs_seq_ids: [],           // それを最大 RS_SEQ_IDS_SIZE 件保持しておく
       rs_send_success_p: false, // 直近のSFENの同期が成功したか？
       rs_resend_delay_id: null, // 送信してから RS_RESEND_DELAY 秒後に動かすための setTimeout の戻値
@@ -37,7 +37,7 @@ export const mod_resend = {
     rs_resend_handle() {
       this.sfx_click()
       this.rs_modal_with_timer_close()
-      this.sfen_share()
+      this.sfen_sync()
     },
 
     // あとで確認するため、指し手情報に指し手の番号を埋めておく
@@ -46,11 +46,11 @@ export const mod_resend = {
       this.rs_seq_id += 1
       this.rs_seq_ids.push(this.rs_seq_id)
       this.rs_seq_ids = _.takeRight(this.rs_seq_ids, RS_SEQ_IDS_SIZE)
-      this.sfen_share_params.rs_seq_id = this.rs_seq_id
+      this.sfen_sync_params.rs_seq_id = this.rs_seq_id
     },
 
-    // sfen_share の実行直後に呼ぶ
-    rs_sfen_share_after_hook() {
+    // sfen_sync の実行直後に呼ぶ
+    rs_sfen_sync_after_hook() {
       if (!this.RS_FEATURE) { return }
       if (this.order_enable_p && this.order_flow.valid_p) {
         if (this.RS_RESEND_DELAY >= 0) {
@@ -108,7 +108,7 @@ export const mod_resend = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 指し手を受信した次に人が sfen_share_broadcasted のなかで呼ぶ
+    // 指し手を受信した次に人が sfen_sync_broadcasted のなかで呼ぶ
     rs_receive_success_send(params) {
       if (!this.RS_FEATURE) { return }
       if (this.order_enable_p) {
@@ -171,8 +171,8 @@ export const mod_resend = {
 
     // 次に指す人の名前
     rs_next_user_name() {
-      if (this.sfen_share_params) {
-        return this.sfen_share_params.next_user_name
+      if (this.sfen_sync_params) {
+        return this.sfen_sync_params.next_user_name
       }
     },
   },

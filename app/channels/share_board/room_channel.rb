@@ -45,9 +45,9 @@ module ShareBoard
       broadcast(:honpu_share_broadcasted, data)
     end
 
-    def sfen_share(data)
-      track(data, subject: "指手送信", body: sfen_share_track_body(data), emoji: ":着手:")
-      broadcast(:sfen_share_broadcasted, data)
+    def sfen_sync(data)
+      track(data, subject: "指手送信", body: sfen_sync_track_body(data), emoji: ":着手:")
+      broadcast(:sfen_sync_broadcasted, data)
     end
 
     def rs_receive_success(data)
@@ -283,7 +283,7 @@ module ShareBoard
       AppLog.info(subject: subject, body: body)
     end
 
-    def sfen_share_track_body(data)
+    def sfen_sync_track_body(data)
       lmi = data["lmi"]
       player_location = LocationInfo.fetch(lmi["player_location_key"])
       next_turn_offset = lmi["next_turn_offset"]

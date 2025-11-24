@@ -5,7 +5,7 @@ export const mod_share_dto = {
       this.tl_add("全共有", "他者からの受信を自分に反映する", params)
       this.room_name_share_dto_receive(params.room_name_share_dto)
       this.xprofile_share_dto_receive(params.xprofile_share_dto)
-      this.sfen_share_dto_receive(params.sfen_share_dto)
+      this.sfen_sync_dto_receive(params.sfen_sync_dto)
       this.order_share_dto_receive(params.order_share_dto)
       this.clock_share_dto_receive(params.clock_share_dto)
       this.honpu_share_dto_receive(params.honpu_share_dto)
@@ -17,7 +17,7 @@ export const mod_share_dto = {
       return {
         room_name_share_dto: this.room_name_share_dto, // タイトル
         xprofile_share_dto: this.xprofile_share_dto, // スコア情報
-        sfen_share_dto:  this.sfen_share_dto,  // 棋譜と現在の局面(手数)
+        sfen_sync_dto:  this.sfen_sync_dto,  // 棋譜と現在の局面(手数)
         order_share_dto: this.order_share_dto, // 順番設定
         clock_share_dto: this.clock_share_dto, // 対局時計
         honpu_share_dto: this.honpu_share_dto, // 本譜

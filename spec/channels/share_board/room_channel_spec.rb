@@ -94,8 +94,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
           },
         })
       expect {
-        subscription.sfen_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "sfen_share_broadcasted", bc_params: data)
+        subscription.sfen_sync(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "sfen_sync_broadcasted", bc_params: data)
     end
   end
 

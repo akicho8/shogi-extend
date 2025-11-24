@@ -109,7 +109,7 @@ import { mod_storage                       } from "./mod_storage.js"
 import { mod_export                        } from "./mod_export.js"
 import { mod_player_names                  } from "./mod_player_names.js"
 import { mod_color_theme                   } from "./mod_color_theme.js"
-import { mod_sfen_share                    } from "./mod_sfen_share.js"
+import { mod_sfen_sync                    } from "./mod_sfen_sync.js"
 import { mod_resend                        } from "./resend/mod_resend.js"
 import { mod_look_away                        } from "./look_away/mod_look_away.js"
 import { mod_force_sync                    } from "./mod_force_sync.js"
@@ -230,7 +230,7 @@ export default {
     mod_player_names,
     mod_color_theme,
     mod_appearance_theme,
-    mod_sfen_share,
+    mod_sfen_sync,
     mod_resend,
     mod_look_away,
     mod_force_sync,
