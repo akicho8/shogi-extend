@@ -236,7 +236,7 @@ export const mod_sfen_sync = {
       if (this.received_from_self(params)) {
         if (GX.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
-            this.ac_log({subject: "反則発動", body: {"種類": params.illegal_names, "局面": this.current_url}})
+            this.ac_log({subject: "反則負け", body: {"種類": params.illegal_names, "局面": this.current_url}})
           }
         }
       }
