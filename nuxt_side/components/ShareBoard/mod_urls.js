@@ -86,8 +86,7 @@ export const mod_urls = {
       this.al_share({
         label: `${app_name}起動`,
         message: `${app_name}を起動しました`,
-        sfen: this.current_sfen,
-        turn: this.current_turn,
+        ...this.current_sfen_and_turn,
       })
     },
 
@@ -140,8 +139,7 @@ export const mod_urls = {
     current_kifu_vo() {
       return this.$KifuVo.create({
         kif_url: this.current_kif_url,
-        sfen: this.current_sfen,
-        turn: this.current_turn,
+        ...this.current_sfen_and_turn,
         viewpoint: this.viewpoint,
       })
     },

@@ -90,18 +90,17 @@ export const mod_action_log = {
       let message = null
       if (AL_TURN_ONLY_REVERT) {
         if (this.current_sfen.startsWith(action_log.sfen)) {
+          // 戻る局面は現在の局面の過去の局面なのでSFENを元に戻さない (重要)
+          this.current_turn = action_log.turn
           message = `${action_log.turn}手目に戻しました`
-          // 戻る局面は現在の局面の過去の局面なのでSFENを元に戻さない
         } else {
           // 戻る局面は現在の局面とまったく異なるのでSFENごと変更する
+          this.current_sfen_set(action_log)
           message = `局面を変更しました`
-          this.current_sfen = action_log.sfen
         }
-        this.current_turn = action_log.turn
       } else {
+        this.current_sfen_set(action_log)
         message = "局面を戻しました"
-        this.current_sfen = action_log.sfen
-        this.current_turn = action_log.turn
       }
 
       this.honpu_branch_clear()

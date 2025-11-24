@@ -215,8 +215,7 @@ export const mod_room_channel = {
       GX.assert("sfen" in params, '"sfen" in params')
       GX.assert("turn" in params, '"turn" in params')
 
-      this.current_sfen = params.sfen
-      this.current_turn = params.turn
+      this.current_sfen_set(params)
 
       if (this.debug_mode_p) {
         this.ac_log({subject: "局面受信", body: `${params.turn}手目の局面を受信`})

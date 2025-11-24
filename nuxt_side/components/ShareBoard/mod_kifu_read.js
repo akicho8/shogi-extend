@@ -79,10 +79,10 @@ export const mod_kifu_read = {
         this.toast_primary("棋譜を読み込みました")
         this.al_share({label: "棋譜読込前"})
 
-        this.current_sfen = e.body
-        this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
+        // TODO: turn は 最大手数ではなく KENTO URL から推測したい default_sp_turn
+        this.current_sfen_set({sfen: e.body, turn: e.turn_max})
         this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
-        this.honpu_share()             // それを他の人に共有する
+        this.honpu_share()                // それを他の人に共有する
 
         this.viewpoint = "black"
         this.ac_log({subject: "棋譜読込", body: e.body})

@@ -65,7 +65,7 @@ export const mod_edit_mode = {
       this.sfx_click()
       // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
-        this.current_sfen = this.edit_mode_sfen
+        this.current_sfen_set({sfen: this.edit_mode_sfen, turn: 0})
         this.edit_mode_sfen = null
 
         this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする

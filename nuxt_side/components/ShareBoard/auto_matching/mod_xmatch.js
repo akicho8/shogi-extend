@@ -197,8 +197,7 @@ export const mod_xmatch = {
     // 手合割と視点設定
     xmatch_setup2_handicap(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
-      this.current_turn = 0                                           // 手数0から始める
-      this.current_sfen = xmatch_rule_info.board_preset_info.sfen // 手合割の反映
+      this.current_sfen_set({sfen: xmatch_rule_info.board_preset_info.sfen, turn: 0})
       this.sp_viewpoint_switch_to_my_location()                       // 自分の場所を調べて正面をその視点にする
     },
     async xmatch_setup4_join(params) {

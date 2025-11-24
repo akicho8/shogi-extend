@@ -59,8 +59,7 @@ export const mod_force_sync = {
 
       const diff = e.turn - this.current_turn
 
-      this.current_sfen = e.sfen
-      this.current_turn = e.turn
+      this.current_sfen_set(e)
 
       if (this.ac_room) {
         let message = null
@@ -84,8 +83,7 @@ export const mod_force_sync = {
     force_sync(message = "", options = {}) {
       const params = {
         message: message,
-        sfen: this.current_sfen,
-        turn: this.current_turn,
+        ...this.current_sfen_and_turn,
         notify_mode: "fs_notify_all",
         ...options,
       }

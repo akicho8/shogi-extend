@@ -20,8 +20,7 @@ export const mod_room_restore = {
             this.tl_p("room_restore_call: run")
             if (e.latest_battle) {
               this.tl_p("room_restore_call: sfen set")
-              this.current_sfen = e.latest_battle.sfen
-              this.current_turn = e.latest_battle.turn
+              this.current_sfen_set(e.latest_battle)
               this.honpu_main_setup()
             }
             this.tl_p("room_restore_call: title set")

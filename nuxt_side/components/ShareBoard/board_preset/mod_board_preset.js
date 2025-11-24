@@ -24,7 +24,7 @@ export const mod_board_preset = {
       const key = this.$route.query.board_preset_key
       if (key) {
         this.board_preset_key = key
-        this.current_sfen = this.board_preset_info.sfen
+        this.current_sfen_set({sfen: this.board_preset_info.sfen, turn: 0})
       }
     },
 
@@ -32,9 +32,7 @@ export const mod_board_preset = {
     board_preset_apply_handle() {
       this.sfx_click()
       this.board_preset_modal_close()
-
-      this.current_turn = 0
-      this.current_sfen = this.board_preset_info.sfen
+      this.current_sfen_set({sfen: this.board_preset_info.sfen, turn: 0})
       this.ac_log({subject: "手合割反映", body: this.board_preset_info.name})
       this.force_sync(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
     },

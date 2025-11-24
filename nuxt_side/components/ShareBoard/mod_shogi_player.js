@@ -18,8 +18,8 @@ export const mod_shogi_player = {
 
       // sfen と turn を同時に更新すること
       // そうしないと computed が二度走ってしまう
-      this.current_sfen = e.sfen
-      this.current_turn = e.turn  // last_move_info.next_turn_offset と同じ
+      // turn は last_move_info.next_turn_offset と同じ
+      this.current_sfen_set(e)
 
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定
@@ -115,11 +115,22 @@ export const mod_shogi_player = {
       GX.assert_kind_of_integer(turn)
       return this.current_sfen_info.location_by_offset(turn)
     },
+
+    // sfen と turn をまとめて設定する
+    current_sfen_set(params) {
+      GX.assert_kind_of_string(params.sfen)
+      GX.assert_kind_of_integer(params.turn)
+      this.current_sfen = params.sfen
+      this.current_turn = params.turn
+    },
   },
   computed: {
     play_mode_p() { return this.sp_mode === "play" },
     edit_mode_p() { return this.sp_mode === "edit" },
     advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
+
+    current_sfen_and_turn() { return {sfen: this.current_sfen, turn: this.current_turn} }, // current_sfen_set に対応するゲッター
+    sfen_sync_dto()         { return this.current_sfen_and_turn },
 
     // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる
     //   return {
@@ -135,8 +146,6 @@ export const mod_shogi_player = {
     base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
     start_color()           { return this.base_location.code                  }, // 0:平手 1:駒落ち (超重要)
 
-    sfen_sync_dto()         { return { sfen: this.current_sfen, turn: this.current_turn } },
-
     sp_class() {
       const av = []
       // if (this.current_turn_self_p) {
@@ -149,7 +158,7 @@ export const mod_shogi_player = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 盤の下のコントローラーを表示しない条件
+    // 盤の下のコントローラーの表示有無条件
     controller_hide_p() { return this.cc_play_p          },
     controller_show_p() { return !this.controller_hide_p },
 
