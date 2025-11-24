@@ -75,10 +75,13 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("test")).toEqual(false)
     expect(HandleNameValidator.valid_p("テスト")).toEqual(false)
     expect(HandleNameValidator.valid_p("てすと")).toEqual(false)
+  })
 
+  test("バリデーションメッセージをまねる奴をNGとする", () => {
     expect(HandleNameValidator.valid_p("ハンドルネーム")).toEqual(false)
     expect(HandleNameValidator.valid_p("ニックネーム")).toEqual(false)
     expect(HandleNameValidator.valid_p("シタシミノアルナマエ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("素敵なハンドル")).toEqual(false)
   })
 
   test("全体一致捨てハン禁止", () => {
