@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title 手合割
-    .evaluation_value {{evaluation_value}}
+    .evaluation_value 評価値 {{SB.board_preset_info.handicap_desc}}
   .modal-card-body
     b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()")
       option(v-for="e in SB.BoardPresetInfo.values" :value="e.key" v-text="e.name")
@@ -13,14 +13,13 @@
       sp_layout="horizontal"
       sp_operation_disabled
     )
-    .description
-      | {{SB.board_preset_info.description}}
+    .description(v-html="SB.board_preset_info.description")
     .buttons.has-addons.is-centered.mb-0
       b-button.mb-0(@click="SB.board_preset_step_handle(-1)" icon-left="chevron-left")
       b-button.mb-0(@click="SB.board_preset_step_handle(1)" icon-left="chevron-right")
   .modal-card-foot
     b-button.board_preset_modal_close_handle.has-text-weight-normal(@click="SB.board_preset_modal_close_handle" icon-left="chevron-left")
-    b-button.board_preset_apply_handle(@click="SB.board_preset_apply_handle" type="is-primary") 適用
+    b-button.board_preset_apply_handle(@click="SB.board_preset_apply_handle" type="is-primary" :disabled="!SB.board_preset_info.can_apply") 適用
 </template>
 
 <script>
@@ -29,17 +28,6 @@ import { support_child } from "../support_child.js"
 export default {
   name: "BoardPresetModal",
   mixins: [support_child],
-  methods: {
-  },
-  computed: {
-    evaluation_value() {
-      let value = this.SB.board_preset_info.handicap_level
-      if (value > 0) {
-        value = `+${value}`
-      }
-      return `評価値 ${value}`
-    },
-  },
 }
 </script>
 
