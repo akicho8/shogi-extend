@@ -20,7 +20,7 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
       {
         icon_code: "alert-circle-outline",
         icon_type: "is-danger",
-        message: "上達を目的としているなら<b>秒読み</b>も設定しよう",
+        message: "上達を目的とするなら<b>秒読み</b>も設定しよう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,
