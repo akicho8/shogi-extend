@@ -15,8 +15,8 @@
     )
     .description(v-html="SB.board_preset_info.description")
     .buttons.has-addons.is-centered.mb-0
-      b-button.mb-0(@click="SB.board_preset_step_handle(-1)" icon-left="chevron-left")
-      b-button.mb-0(@click="SB.board_preset_step_handle(1)" icon-left="chevron-right")
+      b-button.mb-0.board_preset_step_handle.previous(@click="SB.board_preset_step_handle(-1)" icon-left="chevron-left")
+      b-button.mb-0.board_preset_step_handle.next(@click="SB.board_preset_step_handle(1)" icon-left="chevron-right")
   .modal-card-foot
     b-button.board_preset_modal_close_handle.has-text-weight-normal(@click="SB.board_preset_modal_close_handle" icon-left="chevron-left")
     b-button.board_preset_apply_handle(@click="SB.board_preset_apply_handle" type="is-primary" :disabled="!SB.board_preset_info.can_apply") 適用

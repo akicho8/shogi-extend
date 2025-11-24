@@ -17,14 +17,6 @@ module SharedMethods
     find(".modal button#{type}").click
   end
 
-  # 手合割選択
-  def board_preset_select(preset_key)
-    sidebar_open
-    menu_item_click("手合割")
-    find(".BoardPresetModal .board_preset_key").select(preset_key)
-    find(".board_preset_apply_handle").click
-  end
-
   def kifu_read_run
     sidebar_open
     menu_item_click("棋譜の入力")
