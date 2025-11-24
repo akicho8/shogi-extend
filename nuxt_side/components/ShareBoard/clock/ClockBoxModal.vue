@@ -61,12 +61,12 @@
           b-dropdown-item(@click="SB.cbm_cc_params_set_handle(e)") {{e.name}}
       .buttons
         template(v-if="SB.clock_box.stop_p")
-          b-button.play_button(@click="SB.cbm_play_handle" icon-left="play" type="is-primary") 対局開始
+          b-button.play_button(title="対局開始" @click="SB.cbm_play_handle" icon-left="play" type="is-primary") 対局開始
         template(v-if="SB.clock_box.play_p")
-          b-button.pause_button(@click="SB.cbm_pause_handle" icon-left="pause" type="is-primary")
+          b-button.pause_button(title="一時停止" @click="SB.cbm_pause_handle" icon-left="pause" type="is-primary")
         template(v-if="SB.clock_box.pause_p")
-          b-button.stop_button(@click="SB.cbm_stop_handle" icon-left="stop")
-          b-button.resume_button(@click="SB.cbm_resume_handle" icon-left="play-pause" type="is-primary")
+          b-button.stop_button(title="停止" @click="SB.cbm_stop_handle" icon-left="stop")
+          b-button.resume_button(title="再開" @click="SB.cbm_resume_handle" icon-left="play-pause" type="is-primary")
 </template>
 
 <script>
