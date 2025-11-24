@@ -32,7 +32,7 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p 毎回、回復する持ち時間です
+              p 毎回、全回復する持ち時間です
           | 秒読み
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_read_sec(
@@ -51,7 +51,7 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
               p
                 | 勝負どころのための時間であり、切れ負け防止用の猶予ではありません
               //- | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
-          | 考慮時間(分)
+          | 考慮時間<b>(分)</b>
       td(v-for="e in SB.cc_params")
         b-numberinput.initial_extra_min(
           v-bind="input_default_attrs"
@@ -68,7 +68,7 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
         b-tooltip(position="is-right" multilined type="is-light" dashed)
           template(v-slot:content)
             .is-flex.is-flex-direction-column
-              p フィッシャールール用で持ち時間に加算します
+              p フィッシャールール用で1手ごと持ち時間に加算します
           | 1手毎加算(秒)
       td(v-for="e in SB.cc_params")
         b-numberinput.every_plus(
