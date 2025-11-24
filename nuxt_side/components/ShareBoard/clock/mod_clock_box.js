@@ -255,14 +255,6 @@ export const mod_clock_box = {
         this.clock_box.play_handle()
       }
     },
-    cc_dropdown_active_change(on) {
-      if (on) {
-        this.sfx_click()
-      } else {
-        this.sfx_click()
-      }
-    },
-
     // cc_params を clock_box に適用する
     // このタイミングで cc_params を localStorage に保存する
     cc_params_apply() {

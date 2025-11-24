@@ -55,10 +55,6 @@
   .modal-card-foot
     b-button.cc_modal_close_handle.has-text-weight-normal(@click="SB.cc_modal_close_handle" icon-left="chevron-left")
     template(v-if="SB.clock_box")
-      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => SB.cc_dropdown_active_change(e)" v-if="!SB.clock_box.pause_or_play_p && SB.AppConfig.CLOCK_PRESET_USE")
-        b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
-        template(v-for="e in SB.CcRuleInfo.values")
-          b-dropdown-item(@click="SB.cbm_cc_params_set_handle(e)") {{e.name}}
       .buttons
         template(v-if="SB.clock_box.stop_p")
           b-button.play_button(title="対局開始" @click="SB.cbm_play_handle" icon-left="play" type="is-primary") 対局開始

@@ -9,8 +9,6 @@ export const AppConfig = {
 
   CHAT_BLANK_MESSAGE_POST_THEN_CLOSE: true,   // チャットを空送信で閉じるか？
 
-  CLOCK_PRESET_USE: false,                    // 対局時計の初期設定リストを(CcRuleInfo)を表示するか？
-
   NAVBAR_COLOR_CHANGE: false,                 // 残り時間によってバーの色を変更するか？
 
   ai_active: true,                         // ChatGPT を有効にするか？
@@ -26,6 +24,5 @@ export const AppConfig = {
 }
 
 if (process.env.NODE_ENV === "development") {
-  AppConfig.CLOCK_PRESET_USE             = true
   // AppConfig.NAVBAR_COLOR_CHANGE          = true
 }

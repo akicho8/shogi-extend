@@ -149,14 +149,6 @@ export const mod_clock_box_modal = {
       this.cc_params_apply()
       this.toast_primary("反映しました")
     },
-    cbm_cc_params_set_handle(e) {
-      this.cc_params = e.cc_params   // cloneDeep したものを渡している
-      if (false) {
-        this.toast_primary(`${e.name}のプリセットを読み込みました`)
-      } else {
-        this.toast_primary(`読み込みました`, {talk: false})
-      }
-    },
     cbm_cc_unique_mode_sete_handle(value) {
       this.sfx_play_toggle(value)
       this.cc_unique_mode_set(value)
