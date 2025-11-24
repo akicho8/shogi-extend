@@ -16,7 +16,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_text("aから開始をaだけに通知") # 最初はaさんから開始
     end
     window_b do
-      assert_text("aさんから開始しよう") # bさんの方でも誰から開始するかが示された
+      assert_text("aさんから指そう") # bさんの方でも誰から開始するかが示された
     end
   end
 end

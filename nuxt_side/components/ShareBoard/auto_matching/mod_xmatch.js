@@ -5,7 +5,7 @@ import { XmatchRuleInfo } from "@/components/models/xmatch_rule_info.js"
 import { XmatchAuthInfo } from "@/components/models/xmatch_auth_info.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 
-const START_TOAST_DELAY = 3                // 誰々から開始しようをN秒後に発動する
+const START_TOAST_DELAY = 3                // 誰々から指そうをN秒後に発動する
 const UNSELECT_IF_WINDOW_BLUR = true       // ウィンドウを離れたときマッチングをキャンセルするか？
 
 export const mod_xmatch = {
@@ -35,7 +35,7 @@ export const mod_xmatch = {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
-      this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+      this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から指そう`)
     },
 
     // 自動マッチングモーダル起動(ショートカット)
@@ -216,7 +216,7 @@ export const mod_xmatch = {
     },
     xmatch_setup5_call(params) {
       GX.delay_block(START_TOAST_DELAY, () => {
-        this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+        this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から指そう`)
       })
     },
     xmatch_setup6_title(params) {

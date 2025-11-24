@@ -367,15 +367,9 @@ export const mod_clock_box = {
       await this.toast_primary(this.__cc_receive_message(params))
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (this.current_turn_user_name) {
-        // if (this.self_vs_self_p) {
-        //   this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}同士の対局です`)
-        // }
-        await this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から開始しよう`)
+        await this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から指そう`)
         this.think_mark_invite_trigger()
-      } else {
-        // 順番設定をしていない場合
       }
-
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         if (this.received_from_self(params)) {
           this.$buefy.snackbar.open({
