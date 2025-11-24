@@ -141,7 +141,7 @@ export default {
         {
           enabled: true,
           label: "API Version",
-          value: this.member_info.API_VERSION,
+          value: this.member_info.SERVER_SIDE_API_VERSION,
         },
         {
           enabled: true,

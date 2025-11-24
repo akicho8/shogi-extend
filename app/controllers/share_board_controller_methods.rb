@@ -175,7 +175,7 @@ module ShareBoardControllerMethods
         :connection_id   => StringSupport.secure_random_urlsafe_base64_token,
         :client_token      => sb_client_token,
         :session_counter => sb_session_counter,
-        :API_VERSION     => AppConfig[:share_board_api_version], # これとActionCableで返すバージョンを比較する
+        :CLIENT_SIDE_API_VERSION     => AppConfig[:share_board_api_version], # これとActionCableで返すバージョンを比較する
       })
 
     attrs

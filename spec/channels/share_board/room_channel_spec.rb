@@ -32,7 +32,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       "from_user_name" => "alice",
       "performed_at"   => (Time.current.to_f * 1000).to_i,
       "ac_events_hash" => {},
-      "API_VERSION"    => AppConfig[:share_board_api_version], # サーバー側で生める
+      "SERVER_SIDE_API_VERSION"    => AppConfig[:share_board_api_version], # サーバー側で生める
       "debug_mode_p"   => true,
     }.merge(params)
   end

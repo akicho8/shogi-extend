@@ -9,7 +9,7 @@
     "connection_id": "syEUitlPMZj",
     "session_id": "877c0c44c96f226a5eac41ccee458b02",
     "session_counter": 1,
-    "API_VERSION": 29
+    "CLIENT_SIDE_API_VERSION": 29
   },
   "twitter_card_options": {
     "title": "共有将棋盤",

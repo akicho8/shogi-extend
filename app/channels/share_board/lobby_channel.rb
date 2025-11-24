@@ -42,7 +42,7 @@ module ShareBoard
           raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
         end
       end
-      bc_params = bc_params.merge("API_VERSION" => AppConfig[:share_board_api_version])
+      bc_params = bc_params.merge("SERVER_SIDE_API_VERSION" => AppConfig[:share_board_api_version])
       ActionCable.server.broadcast("share_board/lobby_channel", { bc_action: bc_action, bc_params: bc_params })
     end
 

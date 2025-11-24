@@ -5,26 +5,28 @@ export const mod_app_update = {
     }
   },
   methods: {
-    async api_version_validate(new_api_version) {
+    async api_version_validate(server_side_api_version) {
       if (this.app_update_now) {
         return
       }
-      if (new_api_version == null) {
+      if (server_side_api_version == null) {
         return
       }
-      if (new_api_version !== this.API_VERSION) {
+      if (server_side_api_version !== this.CLIENT_SIDE_API_VERSION) {
         this.app_force_reload_notify_modal_open()
       }
     },
     app_force_reload_notify_modal_open() {
-      const message = "新しいプログラムがあるのでブラウザをリロードして更新します (対局中だった場合の対局は無効になります)"
       this.app_update_now = true
-      this.sfx_stop_all()
-      this.sb_talk(message)
       this.dialog_alert({
         title: "アプリ更新",
         confirmText: "わかった",
-        message: message,
+        message: [
+          `<div class="content">`,
+          /**/ `<p>新しいプログラムがあるのでブラウザをリロードして更新します</p>`,
+          /**/ `<p>対局中だった場合の対局は無効になります</p>`,
+          `</div>`,
+        ].join(""),
         onConfirm: () => this.app_force_reload(),
       })
     },
@@ -33,6 +35,6 @@ export const mod_app_update = {
     },
   },
   computed: {
-    API_VERSION() { return this.param_to_i("API_VERSION", this.record.API_VERSION) },
+    CLIENT_SIDE_API_VERSION() { return this.param_to_i("CLIENT_SIDE_API_VERSION", this.record.CLIENT_SIDE_API_VERSION) },
   },
 }
