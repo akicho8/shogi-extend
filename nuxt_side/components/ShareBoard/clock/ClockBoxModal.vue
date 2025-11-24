@@ -48,7 +48,7 @@
         template(v-if="SB.cc_soft_validator_info")
           .cc_soft_validator_container.mt-4.is-unselectable.is_line_break_on
             b-icon.mx-1(:icon="SB.cc_soft_validator_info.icon_code" :type="SB.cc_soft_validator_info.icon_type")
-            .is-size-7(v-html="SB.cc_soft_validator_info.message")
+            .validate_message.is-size-7(v-html="SB.cc_soft_validator_info.message")
 
         pre.is-size-7(v-if="SB.debug_mode_p") {{SB.cc_params}}
 
