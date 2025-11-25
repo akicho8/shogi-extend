@@ -2,44 +2,43 @@ export const mod_clock_decorator = {
   methods: {
     // private
 
-    // shogi-player に渡す名前
-    sp_player_name_for(location) {
-      if (location.key === this.current_location.key) {
-        return this.current_turn_user_name
-      } else {
-        return this.next_turn_user_name
-      }
-    },
-
     // shogi-player に渡す時間のHTMLを作る
     cc_player_info(location) {
       if (this.clock_box == null) {
         return {}
       }
-
       const e = this.clock_box.single_clocks[location.code]
-      let o = []
+      return {
+        time: this.cc_player_time_html(e),
+        class: this.cc_player_container_class(e),
+      }
+    },
+
+    cc_player_time_html(e) {
+      const av = []
       if (e.initial_main_sec >= 1 || e.every_plus >= 1) {
-        o.push(`<div class="second main_sec">${e.main_sec_mmss}</div>`)
+        av.push(`<div class="second main_sec">${e.main_sec_mmss}</div>`)
       }
       if (e.initial_read_sec >= 1) {
-        o.push(`<div class="second read_sec">${e.read_sec_mmss}</div>`)
+        av.push(`<div class="second read_sec">${e.read_sec_mmss}</div>`)
       }
       if (e.initial_extra_sec >= 1) {
-        o.push(`<div class="second extra_sec">${e.extra_sec_mmss}</div>`)
+        av.push(`<div class="second extra_sec">${e.extra_sec_mmss}</div>`)
       }
-      const values = o.join("")
+      return av.join("")
+    },
 
-      const container_class = [...e.dom_class]
+    cc_player_container_class(e) {
+      const av = [...e.dom_class]
       if (e.main_sec === 0) {
         if (e.initial_read_sec >= 1) {
           if (e.read_sec >= 1) {
             if (e.read_sec <= 10) {
-              container_class.push("read_sec_10")
+              av.push("read_sec_10")
             } else if (e.read_sec <= 20) {
-              container_class.push("read_sec_20")
+              av.push("read_sec_20")
             } else {
-              container_class.push("read_sec_60")
+              av.push("read_sec_60")
             }
           }
         }
@@ -47,19 +46,25 @@ export const mod_clock_decorator = {
           if (e.initial_extra_sec >= 1) {
             if (e.extra_sec >= 1) {
               if (e.extra_sec <= 10) {
-                container_class.push("extra_sec_10")
+                av.push("extra_sec_10")
               } else if (e.extra_sec <= 20) {
-                container_class.push("extra_sec_20")
+                av.push("extra_sec_20")
               } else {
-                container_class.push("extra_sec_60")
+                av.push("extra_sec_60")
               }
             }
           }
         }
       }
-      return {
-        time: values,
-        class: container_class,
+      return av
+    },
+
+    // shogi-player に渡す名前
+    sp_player_name_for(location) {
+      if (location.key === this.current_location.key) {
+        return this.current_turn_user_name
+      } else {
+        return this.next_turn_user_name
       }
     },
   },
