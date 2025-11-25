@@ -5,11 +5,8 @@ export const mod_app_update = {
     }
   },
   methods: {
-    async api_version_validate(server_side_api_version) {
+    api_version_validate(server_side_api_version) {
       if (this.app_update_now) {
-        return
-      }
-      if (server_side_api_version == null) {
         return
       }
       if (server_side_api_version !== this.CLIENT_SIDE_API_VERSION) {
