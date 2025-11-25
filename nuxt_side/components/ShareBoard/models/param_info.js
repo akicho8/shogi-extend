@@ -3,6 +3,8 @@ import { ParamBase } from '@/components/models/param_base.js'
 export class ParamInfo extends ParamBase {
   static get define() {
     return [
+      { key: "migrate_version",              type: "integer", name: "Migrate Version",                        defaults: { development: null,                 production: 0,                                   }, permanent: true,  relation: null,                   alias: null,          input_attrs: null, desc: null, after_set: null, },
+
       { key: "room_key",                     type: "string",  name: "合言葉",                                 defaults: { development: null,                 production: "",                                  }, permanent: true,  relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
       { key: "url_room_key_exist_behavior",  type: "string",  name: "合言葉有URL時の挙動",                    defaults: { development: null,                 production: "room_enter_direct",                 }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 }, // modal_open | room_enter_direct
       { key: "complement_room_keys",         type: "array",   name: "合言葉履歴",                             defaults: { development: null,                 production: [],                                  }, permanent: true,  relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
