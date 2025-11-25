@@ -8,7 +8,7 @@ export class ClockVolumeScaleInfo extends ApplicationMemoryRecord {
   static input_type    = "slider"
   static min           = 0
   static step          = 1
-  static max           = 10
+  static max           = 20
   static ticks         = true
 
   static input_handle_callback(context, value) {

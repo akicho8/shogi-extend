@@ -4,21 +4,13 @@ export class MigrateInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       {
-        // version: 20251125185036,
-        // up: context => {
-        //   if (
-        //     true &&
-        //       context.common_volume_scale  <= 5 &&
-        //       context.talk_volume_scale    <= 5 &&
-        //       context.clock_volume_scale   <= 5 &&
-        //       context.komaoto_volume_scale <= 5 &&
-        //       true) {
-        //     context.common_volume_scale *= 2
-        //     context.talk_volume_scale *= 2
-        //     context.clock_volume_scale *= 2
-        //     context.komaoto_volume_scale *= 2
-        //   }
-        // },
+        version: 20251125185039,
+        up: context => {
+          context.common_volume_scale  = 10
+          context.talk_volume_scale    = 10
+          context.clock_volume_scale   = 10
+          context.komaoto_volume_scale = 10
+        },
       },
     ]
   }

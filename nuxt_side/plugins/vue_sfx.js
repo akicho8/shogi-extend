@@ -83,9 +83,9 @@ export const vue_sfx = {
       options.src ??= require("@/assets/silent.mp3")
 
       if (options.volume_scale != null) {
-        options.volume *= GX.map_range(options.volume_scale, 0, 10, 0.0, 2.0)
+        options.volume *= GX.map_range(options.volume_scale, 0, 20, 0.0, 2.0)
       }
-      options.volume *= GX.map_range(this.g_common_volume_scale, 0, 10, 0.0, 2.0)
+      options.volume *= GX.map_range(this.g_common_volume_scale, 0, 20, 0.0, 2.0)
 
       return new Promise((resolve, reject) => {
         const sound = new Howl({
