@@ -13,8 +13,8 @@ export const mod_room_recreate = {
     }
   },
   watch: {
-    "$nuxt.isOnline"(is_online) {
-      if (is_online) {
+    "$nuxt.isOnline"(online_p) {
+      if (online_p) {
         this.internet_on_trigger()
       } else {
         this.internet_off_trigger()
