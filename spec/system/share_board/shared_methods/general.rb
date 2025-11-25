@@ -19,7 +19,7 @@ module SharedMethods
 
   def kifu_read_run
     sidebar_open
-    menu_item_click("棋譜の入力")
+    menu_item_click("棋譜入力")
     find(".KifuReadModal textarea").set("68S", clear: :backspace)
     find(".KifuReadModal .submit_handle").click
   end

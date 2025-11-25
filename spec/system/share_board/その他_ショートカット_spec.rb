@@ -59,7 +59,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   # クリップボードの許可モーダルが出るためテストできない
-  xit "棋譜の入力" do
+  xit "棋譜の読み込み" do
     visit_app
     Clipboard.write("68S")
     Capybara.current_session.active_element.send_keys([:shift, "v"])

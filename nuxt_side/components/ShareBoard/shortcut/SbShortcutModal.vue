@@ -11,7 +11,7 @@
           .sc_buttons
             b-tag(type="is-primary") ⇧ v
         .sc_item
-          .sc_label 棋譜の入力
+          .sc_label 棋譜の読み込み
           .sc_buttons
             b-tag(type="is-primary") ⇧ r
         .sc_item

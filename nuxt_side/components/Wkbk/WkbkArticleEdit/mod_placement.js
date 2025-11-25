@@ -10,7 +10,7 @@ export const mod_placement = {
   },
 
   methods: {
-    // 棋譜の入力タップ時の処理
+    // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sfx_click()
       const modal_instance = this.modal_card_open({
@@ -51,7 +51,7 @@ export const mod_placement = {
       this.$nextTick(() => this.piece_box_piece_counts_adjust()) // 駒箱最適化
     },
 
-    // 棋譜の入力タップ時の処理
+    // 棋譜の読み込みタップ時の処理
     sfen_trim_modal_handle(props) {
       const modal_instance = this.modal_card_open({
         component: SfenTrimModal,

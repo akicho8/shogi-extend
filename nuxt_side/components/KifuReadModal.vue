@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 棋譜の入力
+      | 棋譜の読み込み
   .modal-card-body
     b-input(type="textarea" v-model.trim="mut_source" ref="mut_source" rows="6" :placeholder="SHARED_STRING.kifu_body_placeholder")
   .modal-card-foot

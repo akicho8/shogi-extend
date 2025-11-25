@@ -29,7 +29,7 @@ export const mod_kifu_read = {
       }
     },
 
-    // 棋譜の入力タップ時の処理
+    // 棋譜の読み込みタップ時の処理
     kifu_read_modal_open_handle(source = "") {
       if (this.kifu_read_modal_instance === null) {
         this.sidebar_close()
