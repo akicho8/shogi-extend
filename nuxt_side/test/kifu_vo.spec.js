@@ -10,4 +10,7 @@ describe("KifuVo", () => {
 
   it("piyo_url",  () => { object.piyo_url })
   it("kento_url", () => { object.kento_url })
+  it("sfen_and_turn", () => {
+    expect(object.sfen_and_turn).toEqual({sfen: "position sfen startpos", turn: 0})
+  })
 })

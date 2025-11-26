@@ -4,26 +4,26 @@ import { KentoSfenLinkCreator } from "@/components/models/kento_sfen_link_creato
 import { GX } from "@/components/models/gx.js"
 
 export class KifuVo {
-  static create(params) {
-    return new this(params)
+  static create(attributes) {
+    return new this(attributes)
   }
 
-  constructor(params) {
-    GX.assert(params, "params")
-    GX.assert(GX.blank_p(params.path), "GX.blank_p(params.path)")
-    GX.assert(params["sfen"] || params["kif_url"], 'params["sfen"] || params["kif_url"]')
-    this.params = params
+  constructor(attributes) {
+    GX.assert(attributes, "attributes")
+    GX.assert(GX.blank_p(attributes.path), "GX.blank_p(attributes.path)")
+    GX.assert(attributes["sfen"] || attributes["kif_url"], 'attributes["sfen"] || attributes["kif_url"]')
+    this.attributes = attributes
   }
 
   get piyo_url() {
-    if (this.params["kif_url"]) {
-      return PiyoUrlLinkCreator.url_for(this.params)
+    if (this.attributes["kif_url"]) {
+      return PiyoUrlLinkCreator.url_for(this.attributes)
     } else {
-      return PiyoSfenLinkCreator.url_for(this.params)
+      return PiyoSfenLinkCreator.url_for(this.attributes)
     }
   }
 
-  get kento_url() {
-    return KentoSfenLinkCreator.url_for(this.params)
+  get sfen_and_turn() {
+    return { sfen: this.attributes.sfen, turn: this.attributes.turn }
   }
 }

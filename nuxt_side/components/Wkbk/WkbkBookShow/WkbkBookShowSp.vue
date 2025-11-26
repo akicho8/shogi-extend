@@ -142,12 +142,6 @@ export default {
 
       return hv
     },
-
-    // tweet_button_type() {
-    //   if (this.base.advanced_p) {
-    //     return "is-twitter"
-    //   }
-    // },
   }
 }
 </script>

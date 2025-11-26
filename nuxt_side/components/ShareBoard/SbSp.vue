@@ -5,29 +5,7 @@
     v-on="sp_hook"
     :sp_viewpoint.sync="SB.viewpoint"
   )
-
-  .footer_buttons(v-if="SB.edit_mode_p")
-
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      b-button(@click="SB.king_formation_auto_set(true)") 詰将棋検討用玉配置
-      b-button(@click="SB.king_formation_auto_set(false)") 玉回収
-
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="SB.edit_mode_kifu_vo")
-      PiyoShogiButton(:href="SB.edit_mode_kifu_vo.piyo_url")
-      KentoButton(tag="a" :href="SB.edit_mode_kifu_vo.kento_url" target="_blank")
-      KifCopyButton(@click="SB.edit_mode_kifu_copy_handle") コピー
-
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      b-button(@click="SB.kifu_read_modal_open_handle()") 棋譜の読み込み
-
-  .buttons.is-centered.mt-4(v-if="development_p && false")
-    b-button.has-text-weight-bold(
-      v-if="SB.tweet_button_show_p"
-      :type="tweet_button_type"
-      icon-left="twitter"
-      @click="SB.tweet_modal_handle"
-      )
-      | ツイート
+  SbSpEditSupport
 </template>
 
 <script>
@@ -138,12 +116,6 @@ export default {
 
       return hv
     },
-
-    tweet_button_type() {
-      if (this.SB.advanced_p) {
-        return "is-twitter"
-      }
-    },
   },
 }
 </script>
@@ -153,7 +125,13 @@ export default {
 @import "shogi-player/components/support.sass"
 
 .SbSp
+  +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
+
   +padding_lr(unset)
+
+  .footer_buttons
+    .button
+      margin-bottom: 0
 
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
@@ -163,7 +141,7 @@ export default {
     &.is_sb_mode_edit
       max-width: calc(var(--sb_board_width) * 1.0vmin * 0.75)
 
-  // 残り時間の色
+  //////////////////////////////////////////////////////////////////////////////// 残り時間の少なさを背景色で伝える
   .CustomShogiPlayer
     .MembershipLocationPlayerInfo
       &.read_sec_60, &.extra_sec_60
@@ -176,10 +154,8 @@ export default {
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
 
-  .footer_buttons
-    .button
-      margin-bottom: 0
 
+  //////////////////////////////////////////////////////////////////////////////// 長すぎる名前を切る
   .CustomShogiPlayer
     // 横並びなら3行で切る
     +IF_HORIZONTAL
@@ -194,9 +170,59 @@ export default {
     // 縦並びなら一行の3文字で切る
     +IF_VERTICAL
       .MembershipLocationPlayerInfoName
-        max-width: 3em
+        max-width: 3rem
         white-space: nowrap
         overflow: hidden
 
-  +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
+  //////////////////////////////////////////////////////////////////////////////// アバター表示有無
+  // .CustomShogiPlayer
+  //   // 横配置ではアバターを最大化する
+  //   +IF_HORIZONTAL
+  //     .MembershipLocationPlayerInfoName
+  //       .sb_membershp_player_avatar
+  //         width: 100%
+  //   // 縦配置では表示領域がないので非表示とする
+  //   +IF_VERTICAL
+  //     .MembershipLocationPlayerInfoName
+  //       .sb_membershp_player_avatar
+  //         display: none
+
+  //////////////////////////////////////////////////////////////////////////////// 名前の大きさ
+  .CustomShogiPlayer
+    .MembershipLocationPlayerInfoName
+      font-size: $size-7
+
+  //////////////////////////////////////////////////////////////////////////////// スペース調整
+  // .CustomShogiPlayer
+  //   .MembershipLocationPlayerInfo // flex
+  //     padding: 0
+  //     line-height: unset
+  //     gap: 0em
+  //     .MembershipLocationPlayerInfoName // 名前の中に画像があるため flex で縦に流す
+  //       display: flex
+  //       align-items: center
+  //       justify-content: center
+  //       flex-direction: column
+  //       .sb_membership_player_name
+  //         padding: 0.25rem
+  //     .MembershipLocationPlayerInfoTime
+  //       // ここも flex にする
+  //       // padding: 0.5rem
+  //       // line-height: 1.0
+
+  //////////////////////////////////////////////////////////////////////////////// スペース調整
+  .CustomShogiPlayer
+    .is_black
+      .MembershipLocationMarkTexture
+        background-image: url(https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f436.svg)
+
+.STAGE-development .SbSp .CustomShogiPlayer
+  .MembershipLocationPlayerInfoName
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+  .MembershipLocationPlayerInfoTime
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .sb_membershp_player_avatar
+    //   border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .sb_membership_player_name
+    //   border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
