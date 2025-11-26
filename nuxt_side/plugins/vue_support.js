@@ -4,7 +4,7 @@ import { AppHelper } from "@/components/models/app_helper.js"
 import { SpUtil } from "@/components/models/sp_util.js"
 import { MyMobile } from "@/components/models/my_mobile.js"
 
-import twemoji from 'twemoji'
+import TwemojiApi from "@twemoji/api"
 import _ from "lodash"
 const util = require("util")
 const QueryString = require("query-string")
@@ -364,14 +364,8 @@ export const vue_support = {
     xemoji: {
       // https://jp.vuejs.org/v2/guide/custom-directive.html
       inserted(el) {
-        el.innerHTML = twemoji.parse(el.innerHTML, {
-          folder: "svg",
-          ext: ".svg",
-          className: "xemoji",
-          // Twemojiが2023年になると表示されなくなる問題に対処する
-          // https://zenn.dev/yhatt/articles/60ce0c3ca79994
-          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/",
-        })
+        // https://github.com/jdecked/twemoji?tab=readme-ov-file#folder
+        el.innerHTML = TwemojiApi.parse(el.innerHTML, {folder: "svg", ext: ".svg", className: "xemoji"})
       },
     },
   },
