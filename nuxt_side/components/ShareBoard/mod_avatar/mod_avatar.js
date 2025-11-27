@@ -19,7 +19,7 @@ export const mod_avatar = {
     // name から絵文字1文字に変換する
     // メモ化したくなるが絶対すな
     name_to_avatar_char(name) {
-      const pepper = dayjs().format(this.AppConfig.AVATAR_PEPPER_DATE_FORMAT)
+      const pepper = dayjs().format(this.AppConfig.avatar.pepper_date_format)
       const hash_number = GX.str_to_hash_number([pepper, name].join("-"))
       return GX.ary_cycle_at(this.AvatarChars, hash_number)
     },
@@ -63,13 +63,15 @@ export const mod_avatar = {
 
     // ☗☖をアバターに置き換えるためのCSSを返す
     ms_pentagon_replace_css() {
-      return this.Location.values.map(location => {
-        const name = this.location_to_user_name(location)
-        if (name != null) {
-          const url = this.name_to_avatar_url(name)
-          return this.__ms_pentagon_css_of(location, url)
-        }
-      }).join(" ")
+      if (this.AppConfig.avatar.pentagon_replace_feature) {
+        return this.Location.values.map(location => {
+          const name = this.location_to_user_name(location)
+          if (name != null) {
+            const url = this.name_to_avatar_url(name)
+            return this.__ms_pentagon_css_of(location, url)
+          }
+        }).join(" ")
+      }
     },
   },
 }

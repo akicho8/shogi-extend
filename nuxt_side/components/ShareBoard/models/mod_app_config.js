@@ -22,7 +22,10 @@ export const AppConfig = {
 
   think_mark_invite_watcher_count_skip: true, // 対局開始時には観戦者の数とかに関係なく思考印への導線ダイアログを表示する
 
-  AVATAR_PEPPER_DATE_FORMAT: "-",                    // アバターが変化するタイミング。毎日なら"YYYY-MM-DD"。固定でいいなら "-"。空にすると秒単位の時間になるので注意
+  avatar: {
+    pentagon_replace_feature: false,          // ☗☖を置き換えるか？
+    pepper_date_format: "-",                  // アバターが変化するタイミング。毎日なら"YYYY-MM-DD"。固定でいいなら "-"。空にすると秒単位の時間になるので注意
+  },
 }
 
 if (process.env.NODE_ENV === "development") {
