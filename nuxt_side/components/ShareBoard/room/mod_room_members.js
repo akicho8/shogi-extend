@@ -23,7 +23,7 @@ export const mod_room_members = {
       // const performed_at = this.$time.current_ms()
       names.forEach((name, index) => {
         const params = {
-          ...this.ac_room_perform_default_params(),
+          // ...this.ac_room_perform_default_params(),
           client_token:    index,        //
           from_session_counter: 0,          //
           from_connection_id: index,        // 送信者識別子
@@ -39,6 +39,12 @@ export const mod_room_members = {
           params["client_token"] = this.client_token
           params["from_session_counter"] = this.session_counter
           params["from_connection_id"] = this.connection_id
+          if (this.g_current_user) {
+            params.session_user_id  = this.g_current_user.id
+          }
+          if (this.selfie_image_path) {
+            params.from_avatar_path = this.selfie_image_path
+          }
         }
         this.__member_add(params)
       })

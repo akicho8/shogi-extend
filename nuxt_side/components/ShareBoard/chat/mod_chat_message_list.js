@@ -48,7 +48,7 @@ export const mod_chat_message_list = {
       this.ml_create({
         from_user_name: this.user_name,
         content: content,
-        from_avatar_path: this.g_current_user?.avatar_path,
+        from_avatar_path: this.selfie_image_path,
       })
     },
 

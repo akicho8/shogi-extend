@@ -192,8 +192,10 @@ export const mod_room_channel = {
         debug_mode_p:       this.debug_mode_p,
       }
       if (this.g_current_user) {
-        params.from_avatar_path = this.g_current_user.avatar_path
-        params.session_user_id     = this.g_current_user.id
+        params.session_user_id  = this.g_current_user.id
+      }
+      if (this.selfie_image_path) {
+        params.from_avatar_path = this.selfie_image_path
       }
       return params
     },
@@ -262,5 +264,14 @@ export const mod_room_channel = {
 
     url_room_key()         { return this.$route.query["room_key"] },   // URL 上の合言葉
     url_room_key_exist_p() { return GX.present_p(this.url_room_key) }, // URL 上の合言葉があるか？
+
+    // プロフィール画像
+    selfie_image_path() {
+      if (this.g_current_user) {
+        if (this.AppConfig.avatar.profile_image_first_use) {
+          return this.g_current_user.avatar_path
+        }
+      }
+    },
   },
 }

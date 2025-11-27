@@ -19,6 +19,9 @@ export const mod_avatar = {
     // name から絵文字1文字に変換する
     // メモ化したくなるが絶対すな
     name_to_avatar_char(name) {
+      // if (this.debug_mode_p) {
+      //   return "🐷"
+      // }
       const pepper = dayjs().format(this.AppConfig.avatar.pepper_date_format)
       const hash_number = GX.str_to_hash_number([pepper, name].join("-"))
       return GX.ary_cycle_at(this.AvatarChars, hash_number)
@@ -26,10 +29,10 @@ export const mod_avatar = {
 
     // name から絵文字のURL変換する (画像またはsvgを指す)
     name_to_avatar_url(name) {
-      let url = null
-      url ??= this.__ms_pentagon_name_to_profile_image_url(name)
-      url ??= this.__ms_pentagon_name_to_svg_url(name)
-      return url
+      let hv = null
+      hv ??= this.__ms_pentagon_name_to_profile_image_url(name)
+      hv ??= this.__ms_pentagon_name_to_svg_url(name)
+      return hv
     },
 
     //////////////////////////////////////////////////////////////////////////////// private
@@ -38,7 +41,7 @@ export const mod_avatar = {
     __ms_pentagon_name_to_profile_image_url(name) {
       const member_info = this.room_user_names_hash[name]
       if (member_info && member_info.from_avatar_path) {
-        return member_info.from_avatar_path
+        return { type: "is_avatar_selfie", url: member_info.from_avatar_path }
       }
     },
 
@@ -47,13 +50,45 @@ export const mod_avatar = {
       const avatar = this.name_to_avatar_char(name)
       const elem = TwitterEmojiParser(avatar)[0]
       if (elem) {
-        return elem.url
+        return { type: "is_avatar_animal", url: elem.url }
       }
     },
 
+    // FIXME: ここの部分はあらかじめ sass で記述し、url の部分だけを変更する
+    // 順番 ON のときだけ作動するようにする
     // location 側の☗を url に置き換える
-    __ms_pentagon_css_of(location, url) {
-      return `.SbApp .SbSp .is_${location.key} .MembershipLocationMarkTexture { background-image: url(${url}) }`
+    __ms_pentagon_css_of(location, attrs) {
+      if (attrs.type == "is_avatar_selfie") {
+        return `
+               .SbApp .SbSp .is_${location.key} {
+                 .MembershipLocationMark {
+                   /* width: unset; */           /* 元は升目の同じ大きさなので縦幅だけを無効化し */
+                   /* aspect-ratio: 1; */         /* 比率を1:1にすることで縦も自動的に横と同じになる */
+                   .MembershipLocationMarkTexture {
+                     background-image: url(${attrs.url});
+                     width: 100%;            /* そのため内側は最大化すればよい */
+                     height: 100%;
+                     background-size: cover; /* cover で完全に生める。contain だと元画像が長方形の場合に隙間ができてしまう */
+                     border-radius: 3px;
+                   }
+                 }
+               }
+               `
+      }
+      if (attrs.type == "is_avatar_animal") {
+        return `
+               .SbApp .SbSp .is_${location.key} {
+                 .MembershipLocationMark {
+                   .MembershipLocationMarkTexture {
+                     background-image: url(${attrs.url});
+                     width: 100%;
+                     height: 100%;
+                     background-size: contain; /* 必ず含める */
+                   }
+                 }
+               }
+               `
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +102,8 @@ export const mod_avatar = {
         return this.Location.values.map(location => {
           const name = this.location_to_user_name(location)
           if (name != null) {
-            const url = this.name_to_avatar_url(name)
-            return this.__ms_pentagon_css_of(location, url)
+            const attrs = this.name_to_avatar_url(name)
+            return this.__ms_pentagon_css_of(location, attrs)
           }
         }).join(" ")
       }

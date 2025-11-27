@@ -23,6 +23,7 @@ export const AppConfig = {
   think_mark_invite_watcher_count_skip: true, // 対局開始時には観戦者の数とかに関係なく思考印への導線ダイアログを表示する
 
   avatar: {
+    profile_image_first_use: true,            // プロフィール画像を優先的に使うか？
     pentagon_replace_feature: true,           // ☗☖を置き換えるか？
     pepper_date_format: "-",                  // アバターが変化するタイミング。毎日なら"YYYY-MM-DD"。固定でいいなら "-"。空にすると秒単位の時間になるので注意
   },

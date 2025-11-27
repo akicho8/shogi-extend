@@ -170,6 +170,7 @@ export default {
         max-width: 3rem
         white-space: nowrap
         overflow: hidden
+        line-height: 1.0 // shogi-player の方で 140% にしているがアバター画像をいれると違和感があるので 1.0 に戻す
 
   //////////////////////////////////////////////////////////////////////////////// 名前の大きさ
   .CustomShogiPlayer
@@ -182,4 +183,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .MembershipLocationPlayerInfoTime
       border: 1px dashed change_color($primary, $alpha: 0.5)
+    .MembershipLocationMarkTexture
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>
