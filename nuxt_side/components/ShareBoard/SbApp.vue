@@ -1,6 +1,8 @@
 <template lang="pug">
 client-only
   .SbApp(:style="component_style" :class="component_class")
+    div(v-if="component_css" is="style" v-text="component_css")
+
     | {{$debug.trace('SbApp', 'render')}}
     DebugBox.is-hidden-mobile(v-if="development_p && false")
       p sp_human_side: {{sp_human_side}}
@@ -81,11 +83,11 @@ import { mod_order_main                    } from "./mod_order/mod_order_main.js
 import { mod_migrate                       } from "./mod_migrate/mod_migrate.js"
 import { mod_battle_session                } from "./mod_battle_session.js"
 import { mod_chore                         } from "./mod_chore.js"
-import { mod_guardian                      } from "./mod_guardian.js"
+import { mod_avatar                      } from "./mod_avatar/mod_avatar.js"
 import { mod_handle_name                   } from "./mod_handle_name.js"
 import { mod_urls                          } from "./mod_urls.js"
 import { mod_share_dto                    } from "./mod_share_dto.js"
-import { mod_edit_mode                     } from "./mod_edit_mode.js"
+import { mod_edit_mode                     } from "./mod_edit/mod_edit_mode.js"
 import { mod_kifu_read                      } from "./mod_kifu_read.js"
 import { mod_shogi_player                            } from "./mod_shogi_player.js"
 import { mod_warning                            } from "./mod_warning.js"
@@ -197,7 +199,7 @@ export default {
     mod_chore,
     mod_kifu_mail,
     mod_battle_save,
-    mod_guardian,
+    mod_avatar,
     mod_handle_name,
     mod_member_info_modal,
     mod_urls,
@@ -371,6 +373,13 @@ export default {
       hv[this.appearance_theme_key] = true
       hv.__SYSTEM_TEST_RUNNING__    = this.__SYSTEM_TEST_RUNNING__
       return hv
+    },
+
+    // いちばん外側に設定するCSS
+    component_css() {
+      return [
+        this.ms_pentagon_replace_css,
+      ].join(" ").replace(/\s+/g, " ")
     },
   },
 }

@@ -213,7 +213,7 @@
       .panel-heading
         | 絵文字
       .panel-block.is-block
-        template(v-for="(e, i) in SB.guardian_list")
+        template(v-for="(e, i) in SB.AvatarChars")
           span.mx-1(v-xemoji) {{i}}:{{e}}
 </template>
 

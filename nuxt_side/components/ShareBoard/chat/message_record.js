@@ -24,7 +24,7 @@ export class MessageRecord {
     this.message_scope_key  = params.message_scope_key ?? "ms_public"
     this.from_connection_id = params.from_connection_id                    // null なら bot 等
     this.from_user_name     = params.from_user_name                        // null なら名前を表示しなくなる
-    this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null は守護獣
+    this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null はアバター
     this.primary_emoji      = params.primary_emoji                         // 優先する絵文字
     this.performed_at       = params.performed_at ?? TimeUtil.current_ms() // unique_key 生成用だけに利用
     this.force_talk         = params.force_talk                            // 必ず発音するか？

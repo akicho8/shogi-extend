@@ -59,14 +59,6 @@ export const mod_clock_decorator = {
       return av
     },
 
-    // shogi-player に渡す名前
-    sp_player_name_for(location) {
-      if (location.key === this.current_location.key) {
-        return this.current_turn_user_name
-      } else {
-        return this.next_turn_user_name
-      }
-    },
   },
   computed: {
     // return {
@@ -78,7 +70,7 @@ export const mod_clock_decorator = {
         return {
           ...a,
           [e.key]: {
-            name: this.sp_player_name_for(e),
+            name: this.location_to_user_name(e),
             ...this.cc_player_info(e),
           },
         }

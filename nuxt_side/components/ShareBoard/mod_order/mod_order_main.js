@@ -172,6 +172,15 @@ export const mod_order_main = {
         return `${next_step}手後`
       }
     },
+
+    // location 側のユーザー名を得る
+    location_to_user_name(location) {
+      if (location.key === this.current_location.key) {
+        return this.current_turn_user_name
+      } else {
+        return this.next_turn_user_name
+      }
+    },
   },
 
   computed: {

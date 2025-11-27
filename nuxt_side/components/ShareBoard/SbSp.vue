@@ -126,12 +126,9 @@ export default {
 
 .SbSp
   +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
+  +setvar(sp_location_mark_inactive_size, 1.0)          // 手番でない方の☗の大きさ
 
   +padding_lr(unset)
-
-  .footer_buttons
-    .button
-      margin-bottom: 0
 
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
@@ -174,55 +171,15 @@ export default {
         white-space: nowrap
         overflow: hidden
 
-  //////////////////////////////////////////////////////////////////////////////// アバター表示有無
-  // .CustomShogiPlayer
-  //   // 横配置ではアバターを最大化する
-  //   +IF_HORIZONTAL
-  //     .MembershipLocationPlayerInfoName
-  //       .sb_membershp_player_avatar
-  //         width: 100%
-  //   // 縦配置では表示領域がないので非表示とする
-  //   +IF_VERTICAL
-  //     .MembershipLocationPlayerInfoName
-  //       .sb_membershp_player_avatar
-  //         display: none
-
   //////////////////////////////////////////////////////////////////////////////// 名前の大きさ
   .CustomShogiPlayer
     .MembershipLocationPlayerInfoName
       font-size: $size-7
 
-  //////////////////////////////////////////////////////////////////////////////// スペース調整
-  // .CustomShogiPlayer
-  //   .MembershipLocationPlayerInfo // flex
-  //     padding: 0
-  //     line-height: unset
-  //     gap: 0em
-  //     .MembershipLocationPlayerInfoName // 名前の中に画像があるため flex で縦に流す
-  //       display: flex
-  //       align-items: center
-  //       justify-content: center
-  //       flex-direction: column
-  //       .sb_membership_player_name
-  //         padding: 0.25rem
-  //     .MembershipLocationPlayerInfoTime
-  //       // ここも flex にする
-  //       // padding: 0.5rem
-  //       // line-height: 1.0
-
-  //////////////////////////////////////////////////////////////////////////////// スペース調整
+.SbApp.debug_mode_p
   .CustomShogiPlayer
-    .is_black
-      .MembershipLocationMarkTexture
-        background-image: url(https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f436.svg)
-
-.STAGE-development .SbSp .CustomShogiPlayer
-  .MembershipLocationPlayerInfoName
-    border: 1px dashed change_color($primary, $alpha: 0.5)
-  .MembershipLocationPlayerInfoTime
-    border: 1px dashed change_color($primary, $alpha: 0.5)
-    // .sb_membershp_player_avatar
-    //   border: 1px dashed change_color($primary, $alpha: 0.5)
-    // .sb_membership_player_name
-    //   border: 1px dashed change_color($primary, $alpha: 0.5)
+    .MembershipLocationPlayerInfoName
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .MembershipLocationPlayerInfoTime
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

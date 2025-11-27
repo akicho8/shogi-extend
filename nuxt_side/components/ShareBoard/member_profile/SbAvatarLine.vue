@@ -7,7 +7,7 @@
     //  (1) 置き換え
     //  (2) 優先絵文字
     //  (3) 自分プロフィール画像
-    //  (4) 守護獣画像
+    //  (4) アバター画像
     template(v-if="replace_icon")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
     template(v-else-if="info.primary_emoji")
@@ -15,7 +15,7 @@
     template(v-else-if="info.from_avatar_path")
       img.avatar_img.flex_item(:src="info.from_avatar_path")
     template(v-else)
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="avatar_char")
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
@@ -38,7 +38,7 @@ export default {
     xprofile_show_p: { type: Boolean, default: true  },
   },
   computed: {
-    default_guardian()   { return this.SB.guardian_from_str(this.info.from_user_name)          },
+    avatar_char()   { return this.SB.name_to_avatar_char(this.info.from_user_name)          },
     xprofile_decorator() { return this.SB.xprofile_decorator_by_name(this.info.from_user_name) },
   },
 }
