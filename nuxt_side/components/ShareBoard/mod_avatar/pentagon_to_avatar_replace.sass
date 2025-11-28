@@ -1,0 +1,28 @@
+// プロフィール画像のときだけ表示を丸くするには？
+//   border-radius のパラメータをCSS変数にしてプロフィール画像なら 100% にして絵文字なら 0 % にする
+
+@import "../sass/support.sass"
+@import "shogi-player/components/support.sass"
+
+.SbApp
+  &.pentagon_to_avatar_mode_on
+    .SbShogiPlayer
+      .MembershipLocationMark
+        // background-color: blue
+        // width: unset           // 元は升目の同じ大きさなので縦幅だけを無効化し
+        // aspect-ratio: 1        // 比率を1:1にすることで縦も自動的に横と同じになる
+        .MembershipLocationMarkTexture
+          width: 100%             // そのため内側は最大化すればよい
+          height: 100%
+          background-size: cover  // cover で完全に生める。contain だと元画像が長方形の場合に隙間ができてしまう
+          border-radius: 3px
+      .is_black
+        .MembershipLocationMarkTexture
+          background-image: var(--sb_black_avatar_background_image)
+          background-size:  var(--sb_black_avatar_background_size)
+          border-radius:    var(--sb_black_avatar_border_radius)
+      .is_white
+        .MembershipLocationMarkTexture
+          background-image: var(--sb_white_avatar_background_image)
+          background-size:  var(--sb_white_avatar_background_size)
+          border-radius:    var(--sb_white_avatar_border_radius)

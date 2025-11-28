@@ -359,6 +359,7 @@ export default {
         "--sb_board_width": this.sb_board_width,
         "--sb_grid_stroke": this.sb_grid_stroke,
         ...this.appearance_theme_info.to_css_vars,
+        ...this.pentagon_to_avatar_css_vars,
       }
     },
 
@@ -366,6 +367,7 @@ export default {
     component_root_css_class() {
       const hv = {}
       hv.debug_mode_p               = this.debug_mode_p
+      hv.pentagon_to_avatar_mode_on = this.pentagon_to_avatar_mode_on
       hv.order_enable_p             = this.order_enable_p
       hv.current_turn_self_p        = this.current_turn_self_p
       hv.edit_mode_p                = this.edit_mode_p
@@ -378,7 +380,7 @@ export default {
     // いちばん外側に設定するCSS
     component_css() {
       return [
-        this.ms_pentagon_replace_css,
+        // this.pentagon_to_avatar_css_vars,
       ].join(" ").replace(/\s+/g, " ")
     },
   },
