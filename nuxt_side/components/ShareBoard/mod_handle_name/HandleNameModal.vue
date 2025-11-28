@@ -5,14 +5,14 @@
       | ハンドルネーム変更
   .modal-card-body
     b-field
-      b-input(v-model.trim="new_name" ref="main_input_tag")
+      b-input(v-model.trim="new_name" ref="handle_name_input_tag")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.save_handle(@click="save_handle" type="is-primary") これにする
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import { HandleNameNormalizer } from "@/components/models/handle_name/handle_name_normalizer.js"
 
 export default {
@@ -53,14 +53,14 @@ export default {
       this.$emit("close")
     },
     input_focus() {
-      this.desktop_focus_to(this.$refs.main_input_tag)
+      this.desktop_focus_to(this.$refs.handle_name_input_tag)
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
+@import "../sass/support.sass"
 .HandleNameModal
   +modal_width(320px)
   .modal-card-body
