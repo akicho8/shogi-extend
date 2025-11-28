@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .SbApp(:style="component_style" :class="component_class")
+  .SbApp(:style="component_css_vars" :class="component_root_css_class")
     div(v-if="component_css" is="style" v-text="component_css")
 
     | {{$debug.trace('SbApp', 'render')}}
@@ -53,7 +53,7 @@ client-only
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
         .columns.is-centered.is-desktop.is-variable.is-0
-          SbSp(ref="SbSp")
+          SbShogiPlayer(ref="SbShogiPlayer")
           SbMemberList
           SbActionLog(ref="SbActionLog")
         SbDebug(v-if="debug_mode_p")
@@ -89,7 +89,7 @@ import { mod_urls                          } from "./mod_urls.js"
 import { mod_share_dto                    } from "./mod_share_dto.js"
 import { mod_edit_mode                     } from "./mod_edit/mod_edit_mode.js"
 import { mod_kifu_read                      } from "./mod_kifu_read.js"
-import { mod_shogi_player                            } from "./mod_shogi_player.js"
+import { mod_shogi_player                            } from "./mod_shogi_player/mod_shogi_player.js"
 import { mod_warning                            } from "./mod_warning.js"
 import { mod_perpetual                     } from "./perpetual/mod_perpetual.js"
 import { mod_think_mark                } from "./think_mark/mod_think_mark.js"
@@ -354,16 +354,16 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
-    component_style() {
+    component_css_vars() {
       return {
         "--sb_board_width": this.sb_board_width,
         "--sb_grid_stroke": this.sb_grid_stroke,
-        ...this.appearance_theme_info.to_style,
+        ...this.appearance_theme_info.to_css_vars,
       }
     },
 
     // いちばん外側に設定するタグのclassでグローバル的なものを指定する
-    component_class() {
+    component_root_css_class() {
       const hv = {}
       hv.debug_mode_p               = this.debug_mode_p
       hv.order_enable_p             = this.order_enable_p

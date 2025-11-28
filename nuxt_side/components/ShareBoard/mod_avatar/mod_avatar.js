@@ -60,7 +60,7 @@ export const mod_avatar = {
     __ms_pentagon_css_of(location, attrs) {
       if (attrs.type == "is_avatar_selfie") {
         return `
-               .SbApp .SbSp .is_${location.key} {
+               .SbApp .SbShogiPlayer .is_${location.key} {
                  .MembershipLocationMark {
                    /* width: unset; */           /* 元は升目の同じ大きさなので縦幅だけを無効化し */
                    /* aspect-ratio: 1; */         /* 比率を1:1にすることで縦も自動的に横と同じになる */
@@ -77,7 +77,7 @@ export const mod_avatar = {
       }
       if (attrs.type == "is_avatar_animal") {
         return `
-               .SbApp .SbSp .is_${location.key} {
+               .SbApp .SbShogiPlayer .is_${location.key} {
                  .MembershipLocationMark {
                    .MembershipLocationMarkTexture {
                      background-image: url(${attrs.url});

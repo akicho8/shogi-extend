@@ -1,18 +1,18 @@
 <template lang="pug">
-.SbSp.MainColumn.column(:class="main_column_class")
+.SbShogiPlayer.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer(
     v-bind="sp_bind"
     v-on="sp_hook"
     :sp_viewpoint.sync="SB.viewpoint"
   )
-  SbSpEditSupport
+  SbEditModeToolBelt
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbSp",
+  name: "SbShogiPlayer",
   mixins: [support_child],
   computed: {
     // .column に指定するクラス
@@ -121,10 +121,10 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
+@import "../sass/support.sass"
 @import "shogi-player/components/support.sass"
 
-.SbSp
+.SbShogiPlayer
   +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
   +setvar(sp_location_mark_inactive_size, 1.0)          // 手番でない方の☗の大きさ
 

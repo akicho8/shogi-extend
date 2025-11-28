@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbSpEditSupport.footer_buttons(v-if="SB.edit_mode_p")
+.SbEditModeToolBelt.footer_buttons(v-if="SB.edit_mode_p")
   .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
     b-button(@click="SB.king_formation_auto_set(true)") 詰将棋検討用玉配置
     b-button(@click="SB.king_formation_auto_set(false)") 玉回収
@@ -33,7 +33,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 
-.SbSpEditSupport
+.SbEditModeToolBelt
   .button
     margin-bottom: 0
 </style>

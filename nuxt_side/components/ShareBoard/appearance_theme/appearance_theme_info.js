@@ -12,7 +12,7 @@ export class AppearanceThemeInfo extends ApplicationMemoryRecord {
     ]
   }
 
-  get to_style() {
+  get to_css_vars() {
     return {
     }
   }

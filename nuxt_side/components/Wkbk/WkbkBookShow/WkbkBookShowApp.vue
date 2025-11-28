@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .WkbkBookShowApp(:style="component_style" :class="component_class")
+  .WkbkBookShowApp(:style="component_css_vars" :class="component_class")
     DebugBox(v-if="development_p")
       p appearance_theme_key: {{appearance_theme_key}}
       p re_total_sec: {{re_total_sec}}
@@ -162,11 +162,11 @@ export default {
   // }
 
     // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
-    component_style() {
+    component_css_vars() {
       if (this.pc_standby_ok >= 1) {
         return {
           // "--sb_board_width": this.sb_board_width,
-          ...this.appearance_theme_info.to_style,
+          ...this.appearance_theme_info.to_css_vars,
         }
       }
     },

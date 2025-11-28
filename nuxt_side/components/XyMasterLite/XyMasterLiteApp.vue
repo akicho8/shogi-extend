@@ -1,5 +1,5 @@
 <template lang="pug">
-.XyMasterLiteApp(:class="[mode, 'is_input_mode_tap']" :style="component_style")
+.XyMasterLiteApp(:class="[mode, 'is_input_mode_tap']" :style="component_css_vars")
   MainSection
     .container
       .columns

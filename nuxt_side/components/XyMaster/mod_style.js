@@ -14,7 +14,7 @@ export const mod_style = {
     },
   },
   computed: {
-    component_style() {
+    component_css_vars() {
       return {
         "--touch_board_width": this.touch_board_width,
         "--xy_grid_stroke":    this.xy_grid_stroke,

@@ -1,5 +1,5 @@
 <template lang="pug">
-.XyMasterApp(:class="[mode, rule_info.input_mode]" :style="component_style")
+.XyMasterApp(:class="[mode, rule_info.input_mode]" :style="component_css_vars")
   XyMasterSidebar
   XyMasterNavbar
   MainSection
