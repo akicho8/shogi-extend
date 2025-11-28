@@ -74,11 +74,6 @@ export default {
 //         margin-top: 0.75rem
 
 .WkbkTopContent
-  .user_avatar
-    img
-      max-height: none
-      height: 18px
-      width:  18px
   .card-image
     // 個数
     .position_on_image
