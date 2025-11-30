@@ -81,6 +81,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.cc_play_pause_resume_shortcut_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.keyboard_single_key_equal(e, "a"),
+        call: c => c.avatar_input_modal_open_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && e.code === "KeyV" && c.keyboard_shift_p(e),
         call: c => c.kifu_read_from_clipboard(),
       },

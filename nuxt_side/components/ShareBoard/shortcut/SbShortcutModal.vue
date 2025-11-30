@@ -3,7 +3,9 @@
   .sc_main_title
     | ショートカット
   .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
-    .column.is-half-desktop.is-half-tablet
+    //- https://bulma.io/documentation/columns/responsiveness/
+    //- .is-one-third-widescreen
+    .column.is-half-tablet.is-half-desktop
       .sc_sub_title 基本
       .sc_table
         .sc_item
@@ -82,6 +84,10 @@
           .sc_label 手合割
           .sc_buttons
             b-tag(type="is-primary") i
+        .sc_item
+          .sc_label アバター変更
+          .sc_buttons
+            b-tag(type="is-primary") a
 
     .column.is-half-desktop.is-half-tablet
       .sc_sub_title 思考印

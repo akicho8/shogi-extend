@@ -17,7 +17,7 @@
       .panel-heading
         | ハンドルネーム関連
       a.panel-block(href="?ng_word_check_p=true") 「NGワードチェック」有効化
-      a.panel-block(@click="SB.handle_name_modal_handle") 入力
+      a.panel-block(@click="SB.handle_name_modal_open_handle") 入力
       a.panel-block(@click="SB.handle_name_alert") 変更禁止警告
       a.panel-block(@click="SB.handle_name_clear") 空にする
   .column.is-3
@@ -40,6 +40,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugAvatar
   SbDebugRoom
   SbDebugXprofile
   SbDebugHonpu
@@ -213,7 +214,7 @@
       .panel-heading
         | 絵文字
       .panel-block.is-block
-        template(v-for="(e, i) in SB.AvatarChars")
+        template(v-for="(e, i) in SB.AvatarSupport.AvailableChars")
           span.mx-1(v-xemoji) {{i}}:{{e}}
 </template>
 

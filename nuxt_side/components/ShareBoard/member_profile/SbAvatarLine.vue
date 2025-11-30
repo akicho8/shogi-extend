@@ -12,6 +12,8 @@
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
     template(v-else-if="info.primary_emoji")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="info.primary_emoji")
+    template(v-else-if="info.user_selected_avatar")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="info.user_selected_avatar")
     template(v-else-if="info.from_avatar_path")
       img.avatar_img.flex_item(:src="info.from_avatar_path")
     template(v-else)
@@ -38,7 +40,7 @@ export default {
     xprofile_show_p: { type: Boolean, default: true  },
   },
   computed: {
-    avatar_char()        { return this.SB.name_to_avatar_char(this.info.from_user_name)        },
+    avatar_char()        { return this.SB.AvatarSupport.char_from_str(this.info.from_user_name)        },
     xprofile_decorator() { return this.SB.xprofile_decorator_by_name(this.info.from_user_name) },
   },
 }

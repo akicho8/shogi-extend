@@ -69,8 +69,11 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_handle")
-          b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="SB.title_edit_handle")
+          b-menu-item.is_active_unset(icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_open_handle")
+          b-menu-item.is_active_unset(icon="cat"            label="アバター設定"         @click="SB.avatar_input_modal_open_handle")
+          b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"         @click="SB.title_edit_handle")
+
+
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
           //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="SB.general_help_modal_open_handle")

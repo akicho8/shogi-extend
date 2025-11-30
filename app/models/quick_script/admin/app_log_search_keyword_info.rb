@@ -57,6 +57,7 @@ module QuickScript
             "cc_behavior_silent_pause",
             "棋譜メール",
             "思考印導線",
+            "アバター設定",
           ],
         },
         {

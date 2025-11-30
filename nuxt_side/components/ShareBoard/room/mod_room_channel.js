@@ -190,6 +190,7 @@ export const mod_room_channel = {
         ua_icon_key:        this.ua_icon_key,        // 端末の種類を表すアイコン文字列
         ac_events_hash:     this.ac_events_hash,     // イベント数(デバッグ用)
         debug_mode_p:       this.debug_mode_p,
+        user_selected_avatar:        this.user_selected_avatar,
       }
       if (this.g_current_user) {
         params.session_user_id  = this.g_current_user.id

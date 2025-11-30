@@ -51,6 +51,11 @@ export const mod_order_main = {
       this.order_enable_p = false
     },
 
+    // 自分だけを順番設定に入れた状態にする
+    order_self_only_auto_setup() {
+      this.os_setup_by_names([this.user_name])
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 順番設定を解除する

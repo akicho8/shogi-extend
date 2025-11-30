@@ -24,7 +24,6 @@ export const AppConfig = {
 
   avatar: {
     profile_image_first_use: true,            // プロフィール画像を優先的に使うか？
-    pentagon_replace_feature: true,           // ☗☖を置き換えるか？
     pepper_date_format: "-",                  // アバターが変化するタイミング。毎日なら"YYYY-MM-DD"。固定でいいなら "-"。空にすると秒単位の時間になるので注意
   },
 }

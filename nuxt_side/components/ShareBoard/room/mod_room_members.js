@@ -28,6 +28,7 @@ export const mod_room_members = {
           from_session_counter: 0,          //
           from_connection_id: index,        // 送信者識別子
           from_user_name:     name,         // 名前
+          user_selected_avatar:        "",
           performed_at:       0,            // 実行日時(ms)
           active_level:       0,            // 先輩度(高い方が信憑性のある情報)
           alive_notice_count: 0,            // 通知した回数
@@ -45,6 +46,7 @@ export const mod_room_members = {
           if (this.selfie_image_path) {
             params.from_avatar_path = this.selfie_image_path
           }
+          params.user_selected_avatar = this.user_selected_avatar
         }
         this.__member_add(params)
       })

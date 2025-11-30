@@ -12,6 +12,8 @@
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { GX } from "@/components/models/gx.js"
+import { parse as TwitterEmojiParser } from "@twemoji/parser"
+import TwemojiApi from "@twemoji/api"
 
 export class CommandInfo extends ApplicationMemoryRecord {
   static get define() {
@@ -76,6 +78,21 @@ export class CommandInfo extends ApplicationMemoryRecord {
             return
           }
           context.pc_data_reset()
+        },
+      },
+      {
+        desc: "アバターの設定",
+        key: "avatar",
+        example: "/avatar 🍣",
+        command_fn: (context, args) => {
+          const str = args[0]
+          if (str) {
+            if (context.user_selected_avatar_safe_set(str)) {
+              return `"${context.user_selected_avatar}"を設定しました`
+            }
+          } else {
+            return context.user_selected_avatar
+          }
         },
       },
       {

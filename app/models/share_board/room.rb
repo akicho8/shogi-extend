@@ -60,7 +60,8 @@ module ShareBoard
             :primary_emoji      => data[:primary_emoji],
             :performed_at       => data[:performed_at],
             :force_talk         => data[:force_talk],
-            :client_token        => data[:client_token],
+            :user_selected_avatar        => data[:user_selected_avatar],
+            :client_token       => data[:client_token],
           })
       end
     end

@@ -367,12 +367,13 @@ export default {
     component_root_css_class() {
       const hv = {}
       hv.debug_mode_p               = this.debug_mode_p
-      hv.pentagon_to_avatar_mode_on = this.pentagon_to_avatar_mode_on
       hv.order_enable_p             = this.order_enable_p
       hv.current_turn_self_p        = this.current_turn_self_p
       hv.edit_mode_p                = this.edit_mode_p
       hv.play_mode_p                = this.play_mode_p
-      hv[this.appearance_theme_key] = true
+      hv.pentagon_to_avatar_finally_on = this.pentagon_to_avatar_finally_on
+      hv[this.appearance_theme_info.key] = true
+      hv[this.pentagon_appearance_info.key] = true
       hv.__SYSTEM_TEST_RUNNING__    = this.__SYSTEM_TEST_RUNNING__
       return hv
     },
