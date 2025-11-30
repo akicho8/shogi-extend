@@ -5,7 +5,7 @@
       | 自動マッチング
     p(v-if="SB.current_xmatch_rule_key && SB.xmatch_rest_seconds >= 1")
       | {{SB.xmatch_rest_seconds}}
-    a(@click="SB.handle_name_modal_handle" v-if="!SB.current_xmatch_rule_key && $GX.present_p(SB.user_name)")
+    a(@click="SB.handle_name_modal_open_handle" v-if="!SB.current_xmatch_rule_key && $GX.present_p(SB.user_name)")
       b-icon(icon="pencil-outline" size="is-small")
       span.ml-1 {{SB.user_name}}
   .modal-card-body

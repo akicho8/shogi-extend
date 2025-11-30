@@ -5,7 +5,7 @@ import _ from "lodash"
 export const mod_handle_name = {
   methods: {
     // ハンドルネーム入力
-    handle_name_modal_handle() {
+    handle_name_modal_open_handle() {
       if (this.ac_room) {
         this.handle_name_alert()
         return
@@ -23,13 +23,14 @@ export const mod_handle_name = {
       this.talk("入室後は名前を変更できません")
       // this.toast_danger("入室後はハンドルネームを変更できません。1️⃣ の「入退室」からいったん退室し、新しいハンドルネームで入り直そう。")
       this.dialog_confirm({
-        title: "警告",
-        message: `
-            <div class="content">
-              <p>入室後は名前を変更できないので<b>いったん退室し、新しい名前で入り直して</b>ください。退室はメニューの一番上です。</p>
-              <p>また、${this.my_call_name}がすでに対局者だった場合は、入り直したあとホスト担当に<b>新しい名前で再度順番設定</b>をしてもらう必要があります。</p>
-              <p>といった感じで名前自体が識別子のため途中で名前を変えると面倒なことになります。</p>
-            </div>`,
+        title: "入室後は名前を変更できません",
+        message: [
+          `<div class="content">`,
+          /**/ `<p>変更するにはいったん<b>退室し、新しい名前で入り直し</b>てください</p>`,
+          /**/ `<p>また、${this.my_call_name}がすでに対局者だった場合は、続いてホスト担当に<b>新しい名前で再度順番設定</b>をしてもらう必要があります。</p>`,
+          /**/ `<p>(名前自体が識別子のため途中で名前を変えると面倒なことになります)</p>`,
+          `</div>`,
+        ].join(""),
         // type: "is-warning",
         onConfirm: () => this.sfx_play("o"),
         onCancel: () => this.sfx_play("x"),
