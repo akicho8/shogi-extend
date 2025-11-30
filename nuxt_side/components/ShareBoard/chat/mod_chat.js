@@ -146,7 +146,7 @@ export const mod_chat = {
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {
-      // 常に表示するんなら
+      // 常に表示するなら
       if (false) {
         return true
       }

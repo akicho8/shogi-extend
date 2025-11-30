@@ -51,8 +51,8 @@ export const mod_warning = {
       if (message == null) {
         if (this.inconsistency_order_only) {
           message = [
-            `対局するんなら対局時計を押そう`,
-            `検討するんなら駒を動かせるように順番設定を解除しよう`,
+            `対局するなら対局時計を押そう`,
+            `検討するなら駒を動かせるように順番設定を解除しよう`,
           ]
         }
       }

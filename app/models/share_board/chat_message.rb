@@ -59,7 +59,7 @@ module ShareBoard
 
     normalizes :content, with: -> e { column_value_db_truncate(:content, e) } # 長すぎるメッセージを途中で切る
 
-    # 仮にソートするんなら performed_at を参照すること
+    # 仮にソートするなら performed_at を参照すること
     # default_scope { order(:performed_at) }
 
     before_validation do

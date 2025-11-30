@@ -7675,7 +7675,7 @@
   init_sfen: position sfen 9/8k/7p1/7P1/5P3/9/9/9/9 b B 1
   time_limit_sec: 10
   difficulty: 1
-  title: 玉の斜めの駒が前進するんなら先に角
+  title: 玉の斜めの駒が前進するなら先に角
   description: |-
     歩成 同玉 のあとでは角を打っても効果がない。
     相手の駒が一歩前に出ることで玉が見える場合は角を先に打つ。

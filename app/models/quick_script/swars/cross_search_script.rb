@@ -105,7 +105,7 @@ module QuickScript
             :dynamic_part => -> {
               {
                 :default => params[:x_user_keys].presence,
-                :help_message => "複数指定可 (ここで一人だけ指定するんなら通常の棋譜検索を使った方がいい)",
+                :help_message => "複数指定可 (ここで一人だけ指定するなら通常の棋譜検索を使った方がいい)",
               }
             },
           },
