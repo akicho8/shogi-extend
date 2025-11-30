@@ -5,9 +5,12 @@
       | アバター設定
   .modal-card-body
     //- https://buefy.org/documentation/field
-    b-field.mb-2(v-bind="validate_message")
+    b-field.is-marginless(v-bind="validate_message")
       //- https://buefy.org/documentation/input
       b-input.new_user_selected_avatar_input_tag(v-model.trim="new_user_selected_avatar" ref="new_user_selected_avatar_input_tag")
+    .avatar_cloud
+      template(v-for="e in SB.clund_avatars")
+        XemojiWrap(component="a" :key="e" :str="e" @click="show_case_click_handle(e)")
     .preview_container(v-if="avatar_preview_image_url")
       img(:src="avatar_preview_image_url")
   .modal-card-foot
@@ -38,6 +41,12 @@ export default {
       this.sfx_click()
       this.SB.avatar_input_modal_validate_and_save(this.new_user_selected_avatar)
     },
+    show_case_click_handle(avatar_char) {
+      if (this.new_user_selected_avatar !== avatar_char) {
+        this.sfx_click()
+        this.new_user_selected_avatar = avatar_char
+      }
+    },
   },
   computed: {
     validate_message() {
@@ -53,20 +62,35 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .AvatarInputModal
-  +modal_width(320px)
+  +modal_width(480px)
   .modal-card-body
     padding: 1.5rem
+
+    display: flex
+    flex-direction: column
+    gap: 0.75rem
+
+  .avatar_cloud
+    display: flex
+    flex-wrap: wrap
+    gap: 0.2rem
+    img
+      display: block
+      width: 20px
+      height: 20px
+
   .preview_container
     display: flex
     flex-direction: column
     img
+      display: block
       max-height: 128px
       object-fit: contain // 比率維持
 
 .STAGE-development
   .AvatarInputModal
-    .preview_container
+    .avatar_cloud, .preview_container, img
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    img
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .avatar_cloud_inner
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>

@@ -66,15 +66,11 @@ export const mod_clock_decorator = {
     //   white: { name: "後手", time: this.clock_box.single_clocks[1].main_sec_mmss },
     // }
     sp_player_info() {
-      return this.Location.values.reduce((a, e) => {
-        return {
-          ...a,
-          [e.key]: {
-            name: this.location_to_user_name(e),
-            ...this.cc_player_info(e),
-          },
-        }
-      }, {})
+      const hv = {}
+      this.Location.values.forEach(e => {
+        hv[e.key] = { name: this.location_to_user_name(e), ...this.cc_player_info(e) }
+      })
+      return hv
     },
   },
 }

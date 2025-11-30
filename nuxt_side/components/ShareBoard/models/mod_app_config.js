@@ -25,6 +25,7 @@ export const AppConfig = {
   avatar: {
     profile_image_first_use: true,            // プロフィール画像を優先的に使うか？
     pepper_date_format: "-",                  // アバターが変化するタイミング。毎日なら"YYYY-MM-DD"。固定でいいなら "-"。空にすると秒単位の時間になるので注意
+    avatar_history_take: 10,                  // アバターを履歴に残す件数
   },
 }
 

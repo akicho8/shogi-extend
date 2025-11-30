@@ -36,17 +36,23 @@ export const AvatarSupport = {
   },
 
   // 正確な表示文字数を得る
-  chars_count(str) {
+  strict_chars_count(str) {
     const segmenter = new Intl.Segmenter("ja", { granularity: "grapheme" })
     return [...segmenter.segment(str)].length
   },
 
-  // 正常でも何か入っているので注意な
+  // 正確に文字単位にする
+  strict_chars(str) {
+    const segmenter = new Intl.Segmenter("ja", { granularity: "grapheme" })
+    return [...segmenter.segment(str)].map(e => e.segment)
+  },
+
+  // 正常でも何か入っているので注意
   validate_message(str) {
     if (GX.blank_p(str)) {
       return {
         type: "is-primary",
-        message: "空のままでも良いです (自動で決まります)",
+        message: "空のままでも良いです (自動で決めます)",
       }
     }
     if (!this.record_find(str)) {
@@ -55,7 +61,7 @@ export const AvatarSupport = {
         message: "絵文字を入力しよう",
       }
     }
-    if (this.chars_count(str) > 1) {
+    if (this.strict_chars_count(str) > 1) {
       return {
         type: "is-danger",
         message: `ひとつだけ入力しよう`,

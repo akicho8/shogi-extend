@@ -30,6 +30,7 @@ export const avatar_input_modal = {
     },
     avatar_input_modal_open() {
       if (this.avatar_input_modal_instance == null) {
+        this.toast_primary("アバターを入力するか選択しよう")
         this.avatar_input_modal_instance = this.modal_card_open({
           component: AvatarInputModal,
           onCancel: () => this.avatar_input_modal_close(),
@@ -48,32 +49,29 @@ export const avatar_input_modal = {
     // str に絵文字が含まれるなら、最初に現れる絵文字に対応する SVG URL を返す
     // それが取れなかった場合は現在の (SVG またはプロフ画像の) URL を返す
     avatar_preview_image_url(str) {
-      let url = null
-      if (url == null) {
-        if (str) {
-          const record = this.avatar_char_to_avatar_record(str)
-          if (record) {
-            url = record.url
-          }
-        }
+      let record = null
+      record ??= this.avatar_char_to_avatar_record(str)
+      record ??= this.__name_to_selfie(this.user_name)
+      record ??= this.__name_to_animal(this.user_name)
+      if (record) {
+        return record.url
       }
-      if (url == null) {
-        const record = this.name_to_avatar_record(this.user_name)
-        if (record) {
-          url = record.url
-        }
-      }
-      return url
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
     avatar_input_modal_validate_and_save(str) {
+      GX.assert_kind_of_string(str)
+      if (this.user_selected_avatar === str) {
+        this.toast_primary(`変更はありません`)
+        this.avatar_input_modal_close()
+        return
+      }
       if (str === "") {
         this.app_log({subject: "アバター設定", body: ["消去", this.user_selected_avatar]})
         this.user_selected_avatar_clear()
         this.toast_primary(`空に設定しました`)
-        this.avatar_input_modal_close_handle()
+        this.avatar_input_modal_close()
         return
       }
       const info = this.AvatarSupport.validate_message(str)
@@ -85,7 +83,7 @@ export const avatar_input_modal = {
       this.user_selected_avatar_safe_set(str)
       this.toast_primary(`設定しました`)
       this.app_log({subject: "アバター設定", body: ["許可", this.user_selected_avatar]})
-      this.avatar_input_modal_close_handle()
+      this.avatar_input_modal_close()
     },
   },
 }

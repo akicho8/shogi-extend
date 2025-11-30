@@ -16,6 +16,7 @@ import { parse as TwitterEmojiParser } from "@twemoji/parser"
 
 import { AvatarSupport } from "./avatar_support.js"
 import { avatar_input_modal } from "./avatar_input_modal.js"
+import { mod_avatar_history } from "./mod_avatar_history.js"
 import { PentagonAppearanceInfo } from "./pentagon_appearance_info.js"
 
 import AvatarInputModal from "./AvatarInputModal.vue"
@@ -23,6 +24,7 @@ import AvatarInputModal from "./AvatarInputModal.vue"
 export const mod_avatar = {
   mixins: [
     avatar_input_modal,
+    mod_avatar_history,
   ],
   methods: {
     // 文字列に絵文字があればそれを自分のアバターに設定する
@@ -42,8 +44,9 @@ export const mod_avatar = {
     // str をアバターとして設定する
     user_selected_avatar_update_and_sync(str) {
       GX.assert_kind_of_string(str)
-      GX.assert(AvatarSupport.chars_count(str) <= 1, "AvatarSupport.chars_count(str) <= 1")
+      GX.assert(AvatarSupport.strict_chars_count(str) <= 1, "AvatarSupport.strict_chars_count(str) <= 1")
       this.user_selected_avatar = str
+      this.avatar_history_update()
       this.member_bc_restart()  // みんなに配る
     },
 

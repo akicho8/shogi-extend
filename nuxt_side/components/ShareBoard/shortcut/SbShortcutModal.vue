@@ -85,7 +85,7 @@
           .sc_buttons
             b-tag(type="is-primary") i
         .sc_item
-          .sc_label アバター変更
+          .sc_label アバター設定
           .sc_buttons
             b-tag(type="is-primary") a
 
