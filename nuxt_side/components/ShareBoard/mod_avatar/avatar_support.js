@@ -11,19 +11,16 @@ import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { parse as TwitterEmojiParser } from "@twemoji/parser"
 import { AppConfig } from "../models/mod_app_config.js"
-import { AvailableChars } from "./available_chars.js"
-import { SystemReservedChars } from "./system_reserved_chars.js"
+import { ShowcaseDefaultString } from "./showcase_default_string.js"
+import { system_reserved_chars } from "./system_reserved_string.js"
 
 export const AvatarSupport = {
-  AvailableChars,
-  SystemReservedChars,
-
   // str から絵文字1文字に変換する
   // メモ化したくなるが絶対すな
   char_from_str(str) {
     const pepper = dayjs().format(AppConfig.avatar.pepper_date_format)
     const hash_number = GX.str_to_hash_number([pepper, str].join("-"))
-    return GX.ary_cycle_at(AvailableChars, hash_number)
+    return GX.ary_cycle_at(this.showcase_default_chars, hash_number)
   },
 
   // 文字列のなかから最初の1件の絵文字情報を得る
@@ -65,7 +62,7 @@ export const AvatarSupport = {
   available_char_p(str) {
     const char = this.char_find(str)
     if (char != null) {
-      return !SystemReservedChars.includes(char)
+      return !this.SystemReservedChars.includes(char)
     }
   },
 
@@ -101,3 +98,6 @@ export const AvatarSupport = {
     }
   },
 }
+
+AvatarSupport.showcase_default_chars = AvatarSupport.strict_chars(ShowcaseDefaultString)
+AvatarSupport.SystemReservedChars  = AvatarSupport.strict_chars(system_reserved_chars)

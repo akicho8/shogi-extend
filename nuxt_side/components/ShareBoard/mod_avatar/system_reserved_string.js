@@ -1,7 +1,7 @@
 // https://jp.piliapp.com/twitter-symbols/
-export const SystemReservedChars = [
-  "🤖",
-]
+export const system_reserved_chars = [
+  "🤖💀😪",
+].join("")
 
 // ↓消すな。日本語が大量にないと nkf がこのファイルをバイナリと見なしてしまい、テキスト置換の対象から除外してしまう。
 

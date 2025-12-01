@@ -31,12 +31,12 @@ mod = Module.new do
 
   ################################################################################ 履歴機能
 
-  def avatar_cloud_first_emoji_click
-    first(".AvatarInputModal .avatar_cloud a").click
+  def avatar_showcase_first_emoji_click
+    first(".AvatarInputModal .avatar_showcase a").click
   end
 
-  def assert_exist_in_avatar_cloud(emoji)
-    assert_selector(".AvatarInputModal .avatar_cloud img[alt='#{emoji}']", count: 1)
+  def assert_exist_in_avatar_showcase(emoji)
+    assert_selector(".AvatarInputModal .avatar_showcase img[alt='#{emoji}']", count: 1)
   end
 
   ################################################################################

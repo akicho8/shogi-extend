@@ -16,7 +16,7 @@ export const mod_avatar_history = {
   },
   computed: {
     clund_avatars() {
-      return _.uniq([].concat(this.avatar_history_ary, this.AvatarSupport.AvailableChars))
+      return _.uniq([].concat(this.avatar_history_ary, this.AvatarSupport.showcase_default_chars))
     },
   },
 }

@@ -8,7 +8,7 @@
     b-field.is-marginless(v-bind="validate_message")
       //- https://buefy.org/documentation/input
       b-input.new_user_selected_avatar_input_tag(v-model.trim="new_user_selected_avatar" ref="new_user_selected_avatar_input_tag")
-    .avatar_cloud
+    .avatar_showcase
       template(v-for="e in SB.clund_avatars")
         XemojiWrap(component="a" :key="e" :str="e" @click="show_case_click_handle(e)")
     .preview_container(v-if="avatar_preview_image_url")
@@ -70,7 +70,7 @@ export default {
     flex-direction: column
     gap: 0.75rem
 
-  .avatar_cloud
+  .avatar_showcase
     display: flex
     flex-wrap: wrap
     gap: 0.2rem
@@ -89,8 +89,6 @@ export default {
 
 .STAGE-development
   .AvatarInputModal
-    .avatar_cloud, .preview_container, img
+    .avatar_showcase, .preview_container, img
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .avatar_cloud_inner
-      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>

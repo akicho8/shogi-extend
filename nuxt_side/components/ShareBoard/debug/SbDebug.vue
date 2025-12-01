@@ -214,7 +214,7 @@
       .panel-heading
         | 絵文字
       .panel-block.is-block
-        template(v-for="(e, i) in SB.AvatarSupport.AvailableChars")
+        template(v-for="(e, i) in SB.AvatarSupport.showcase_default_chars")
           span.mx-1(v-xemoji) {{i}}:{{e}}
 </template>
 

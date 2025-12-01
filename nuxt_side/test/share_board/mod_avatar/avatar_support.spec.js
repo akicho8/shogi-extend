@@ -13,4 +13,8 @@ describe("AvatarSupport", () => {
 
     expect(AvatarSupport.record_find("")).toEqual(undefined)
   })
+  test("available_char_p", () => {
+    expect(AvatarSupport.available_char_p("❤️")).toEqual(true)
+    expect(AvatarSupport.available_char_p("🤖")).toEqual(false)
+  })
 })
