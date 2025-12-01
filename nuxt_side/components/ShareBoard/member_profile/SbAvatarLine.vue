@@ -8,16 +8,16 @@
     //  (2) 優先絵文字
     //  (3) 自分プロフィール画像
     //  (4) アバター画像
-    template(v-if="replace_icon")
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
+    template(v-if="system_icon")
+      XemojiWrap.flex_item.is-flex(:str="system_icon")
     template(v-else-if="info.primary_emoji")
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="info.primary_emoji")
+      XemojiWrap.flex_item.is-flex(:str="info.primary_emoji")
     template(v-else-if="info.user_selected_avatar")
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="info.user_selected_avatar")
+      XemojiWrap.flex_item.is-flex(:str="info.user_selected_avatar")
     template(v-else-if="info.from_avatar_path")
-      img.avatar_img.flex_item(:src="info.from_avatar_path")
+      img.selfie_image.flex_item(:src="info.from_avatar_path")
     template(v-else)
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="avatar_char")
+      XemojiWrap.flex_item.is-flex(:str="avatar_char")
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
@@ -36,7 +36,7 @@ export default {
   mixins: [support_child],
   props: {
     info:            { type: Object, required: true  },
-    replace_icon:    { type: String, required: false },
+    system_icon:    { type: String, required: false },
     xprofile_show_p: { type: Boolean, default: true  },
   },
   computed: {
@@ -68,12 +68,12 @@ export default {
     align-items: center
     gap: 0.25rem
 
-  .avatar_img, .xemoji
+  .selfie_image, .xemoji
     width: 24px
     height: 24px
 
-  .avatar_img
-    display: block           // inlineだと余計な隙間が生まれるため念のためblockにしておく
+  .selfie_image
+    display: inline-block    // 横並びの画像は inline-block にする
     border-radius: 100%      // 丸める
 
 .SbApp.debug_mode_p

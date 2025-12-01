@@ -1,7 +1,7 @@
 <template lang="pug">
 SbAvatarLine.SbMemberOne.is-clickable(
   :info="info"
-  :replace_icon="replace_icon(info)"
+  :system_icon="system_icon(info)"
   :key="info.from_connection_id"
   :class="SB.member_info_class(info)"
   @click="row_click_handle(info)"
@@ -47,7 +47,7 @@ export default {
     time_format(info) {
       return dayjs(info.performed_at).format("HH:mm:ss")
     },
-    replace_icon(info) {
+    system_icon(info) {
       if (this.SB.member_is_heartbeat_lost(info)) {
         return "😴"
       }
