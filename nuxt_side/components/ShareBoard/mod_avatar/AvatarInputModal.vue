@@ -11,8 +11,7 @@
     .avatar_showcase
       template(v-for="e in SB.clund_avatars")
         XemojiWrap(component="a" :key="e" :str="e" @click="show_case_click_handle(e)")
-    .preview_container(v-if="avatar_preview_image_url")
-      img(:src="avatar_preview_image_url")
+    img.preview_image(:src="avatar_preview_image_url" v-if="avatar_preview_image_url")
   .modal-card-foot
     b-button.avatar_input_modal_close_handle.has-text-weight-normal(@click="SB.avatar_input_modal_close_handle" icon-left="chevron-left")
     b-button.avatar_input_modal_submit_handle(@click="avatar_input_modal_submit_handle" type="is-primary") 確定
@@ -73,22 +72,19 @@ export default {
   .avatar_showcase
     display: flex
     flex-wrap: wrap
-    gap: 0.2rem
+    gap: 0.25rem
     img
       display: block
       width: 20px
       height: 20px
 
-  .preview_container
-    display: flex
-    flex-direction: column
-    img
-      display: block
-      max-height: 128px
-      object-fit: contain // 比率維持
+  .preview_image
+    display: block
+    max-height: 128px
+    object-fit: contain // 比率維持
 
 .STAGE-development
   .AvatarInputModal
-    .avatar_showcase, .preview_container, img
+    .avatar_showcase, .preview_image
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

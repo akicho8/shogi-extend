@@ -10,15 +10,15 @@ mod = Module.new do
   end
 
   def avatar_input(str)
-    find(".new_user_selected_avatar_input_tag").find(:fillable_field).set(str)
+    find(".AvatarInputModal .new_user_selected_avatar_input_tag").find(:fillable_field).set(str)
   end
 
   def assert_avatar_input(str)
-    within(".new_user_selected_avatar_input_tag") { assert_selector(:fillable_field, with: str) }
+    within(".AvatarInputModal .new_user_selected_avatar_input_tag") { assert_selector(:fillable_field, with: str) }
   end
 
   def assert_avatar_preview(emoji)
-    assert_selector(".preview_container img[alt='#{emoji}']")
+    assert_selector(".AvatarInputModal .preview_image[alt='#{emoji}']")
   end
 
   def avatar_input_modal_submit_handle
