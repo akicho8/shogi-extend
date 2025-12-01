@@ -12,9 +12,11 @@ import dayjs from "dayjs"
 import { parse as TwitterEmojiParser } from "@twemoji/parser"
 import { AppConfig } from "../models/mod_app_config.js"
 import { AvailableChars } from "./available_chars.js"
+import { SystemReservedChars } from "./system_reserved_chars.js"
 
 export const AvatarSupport = {
   AvailableChars,
+  SystemReservedChars,
 
   // str から絵文字1文字に変換する
   // メモ化したくなるが絶対すな
@@ -24,7 +26,7 @@ export const AvatarSupport = {
     return GX.ary_cycle_at(AvailableChars, hash_number)
   },
 
-  // 文字列のなかから最初1件の絵文字情報を得る
+  // 文字列のなかから最初の1件の絵文字情報を得る
   record_find(str) {
     return this.record_find_all(str)[0]
   },
@@ -34,6 +36,16 @@ export const AvatarSupport = {
     GX.assert_kind_of_string(str)
     return TwitterEmojiParser(str)
   },
+
+  // 文字列のなかから最初の1件の絵文字を得る
+  char_find(str) {
+    const record = this.record_find(str)
+    if (record) {
+      return record.text
+    }
+  },
+
+  ////////////////////////////////////////////////////////////////////////////////
 
   // 正確な表示文字数を得る
   strict_chars_count(str) {
@@ -45,6 +57,16 @@ export const AvatarSupport = {
   strict_chars(str) {
     const segmenter = new Intl.Segmenter("ja", { granularity: "grapheme" })
     return [...segmenter.segment(str)].map(e => e.segment)
+  },
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // 絵文字として有効か？
+  available_char_p(str) {
+    const char = this.char_find(str)
+    if (char != null) {
+      return !SystemReservedChars.includes(char)
+    }
   },
 
   // 正常でも何か入っているので注意
@@ -59,6 +81,12 @@ export const AvatarSupport = {
       return {
         type: "is-danger",
         message: "絵文字を入力しよう",
+      }
+    }
+    if (!this.available_char_p(str)) {
+      return {
+        type: "is-danger",
+        message: "それは使えません",
       }
     }
     if (this.strict_chars_count(str) > 1) {

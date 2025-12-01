@@ -215,6 +215,11 @@ if true
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
 
+    def sidebar_menu_item_click(text)
+      sidebar_open
+      menu_item_click(text)
+    end
+
     # サブメニューは左右にスペースがない
     def menu_item_sub_menu_click(text)
       first(:xpath, "//*[text()='#{text}']").click

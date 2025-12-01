@@ -17,8 +17,8 @@ mod = Module.new do
     within(".new_user_selected_avatar_input_tag") { assert_selector(:fillable_field, with: str) }
   end
 
-  def assert_avatar_preview_url(url)
-    assert_selector(".preview_container img") { |e| e[:src] == url }
+  def assert_avatar_preview(emoji)
+    assert_selector(".preview_container img[alt='#{emoji}']")
   end
 
   def avatar_input_modal_submit_handle
@@ -28,6 +28,18 @@ mod = Module.new do
   def avatar_input_modal_close_handle
     find(".avatar_input_modal_close_handle").click
   end
+
+  ################################################################################ 履歴機能
+
+  def avatar_cloud_first_emoji_click
+    first(".AvatarInputModal .avatar_cloud a").click
+  end
+
+  def assert_exist_in_avatar_cloud(emoji)
+    assert_selector(".AvatarInputModal .avatar_cloud img[alt='#{emoji}']", count: 1)
+  end
+
+  ################################################################################
 end
 
 RSpec.configure do |config|

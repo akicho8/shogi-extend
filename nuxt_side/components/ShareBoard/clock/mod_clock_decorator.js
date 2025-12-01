@@ -9,8 +9,8 @@ export const mod_clock_decorator = {
       }
       const e = this.clock_box.single_clocks[location.code]
       return {
-        time: this.cc_player_time_html(e),
-        class: this.__cc_player_container_class(e),
+        "time": this.__cc_player_time_html(e),
+        "class": this.__cc_player_container_class(e),
       }
     },
 

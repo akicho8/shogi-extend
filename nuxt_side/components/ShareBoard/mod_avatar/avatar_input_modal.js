@@ -9,6 +9,9 @@ export const avatar_input_modal = {
       avatar_input_modal_instance: null,
     }
   },
+  mounted() {
+    this.__avatar_hard_validation_process()
+  },
   beforeDestroy() {
     this.avatar_input_modal_close()
   },
@@ -84,6 +87,20 @@ export const avatar_input_modal = {
       this.toast_primary(`設定しました`)
       this.app_log({subject: "アバター設定", body: ["許可", this.user_selected_avatar]})
       this.avatar_input_modal_close()
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 予約絵文字の利用時には消去し修正を促す
+    __avatar_hard_validation_process() {
+      if (this.avatar_hard_validation) {
+        if (GX.present_p(this.user_selected_avatar)) {
+          if (!this.AvatarSupport.available_char_p(this.user_selected_avatar)) {
+            this.user_selected_avatar = ""
+            this.avatar_input_modal_open_handle()
+          }
+        }
+      }
     },
   },
 }
