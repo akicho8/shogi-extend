@@ -70,7 +70,7 @@ export const avatar_input_modal = {
       if (str === "") {
         this.app_log({subject: "アバター設定", body: ["消去", this.user_selected_avatar]})
         this.user_selected_avatar_clear()
-        this.toast_primary(`空に設定しました`)
+        this.toast_primary(`消しました`)
         this.avatar_input_modal_close()
         return
       }

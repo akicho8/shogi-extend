@@ -10,11 +10,11 @@ export const mod_clock_decorator = {
       const e = this.clock_box.single_clocks[location.code]
       return {
         time: this.cc_player_time_html(e),
-        class: this.cc_player_container_class(e),
+        class: this.__cc_player_container_class(e),
       }
     },
 
-    cc_player_time_html(e) {
+    __cc_player_time_html(e) {
       const av = []
       if (e.initial_main_sec >= 1 || e.every_plus >= 1) {
         av.push(`<div class="second main_sec">${e.main_sec_mmss}</div>`)
@@ -28,7 +28,7 @@ export const mod_clock_decorator = {
       return av.join("")
     },
 
-    cc_player_container_class(e) {
+    __cc_player_container_class(e) {
       const av = [...e.dom_class]
       if (e.main_sec === 0) {
         if (e.initial_read_sec >= 1) {
@@ -57,20 +57,6 @@ export const mod_clock_decorator = {
         }
       }
       return av
-    },
-
-  },
-  computed: {
-    // return {
-    //   black: { name: "先手", time: this.clock_box.single_clocks[0].main_sec_mmss },
-    //   white: { name: "後手", time: this.clock_box.single_clocks[1].main_sec_mmss },
-    // }
-    sp_player_info() {
-      const hv = {}
-      this.Location.values.forEach(e => {
-        hv[e.key] = { name: this.location_to_user_name(e), ...this.cc_player_info(e) }
-      })
-      return hv
     },
   },
 }

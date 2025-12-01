@@ -123,6 +123,14 @@ export const mod_shogi_player = {
       this.current_sfen = params.sfen
       this.current_turn = params.turn
     },
+
+    __location_to_user_name_with_pentagon(location) {
+      const name = this.location_to_user_name(location)
+      if (name) {
+        const prefix = this.player_name_prefix_pentagon_enabled_p ? location.name : ""
+        return [prefix, name].join(" ")
+      }
+    },
   },
   computed: {
     play_mode_p() { return this.sp_mode === "play" },
@@ -179,6 +187,26 @@ export const mod_shogi_player = {
       }
       // それ以外全部禁止
       return "none"
+    },
+
+    // return {
+    //   black: { name: "先手", time: this.clock_box.single_clocks[0].main_sec_mmss },
+    //   white: { name: "後手", time: this.clock_box.single_clocks[1].main_sec_mmss },
+    // }
+    sp_player_info() {
+      const hv = {}
+      this.Location.values.forEach(e => {
+        hv[e.key] = { name: this.__location_to_user_name_with_pentagon(e), ...this.cc_player_info(e) }
+      })
+      return hv
+    },
+
+    player_name_prefix_pentagon_enabled_p() {
+      if (this.pentagon_to_avatar_finally_on) {
+        if (this.AppConfig.player_name_prefix_pentagon_feature) {
+          return true
+        }
+      }
     },
   },
 }
