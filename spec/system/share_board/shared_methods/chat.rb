@@ -86,10 +86,14 @@ module SharedMethods
   end
 
   # どこまでスクロールしているかを返す
+  # これ絵文字(img)をSbAvatarLineの中で表示しなければ (scrollTop + clientHeight) == scrollHeight になるのだが、
+  # 絵文字(img)があると、それが影響して 1px ずれたりする
+  # したがって比率で調べる
   def chat_scroll_ratio
     scrollTop = Capybara.execute_script(%(return document.querySelector(".SbMessageBox").scrollTop))
+    clientHeight = Capybara.execute_script(%(return document.querySelector(".SbMessageBox").clientHeight))
     scrollHeight = Capybara.execute_script(%(return document.querySelector(".SbMessageBox").scrollHeight))
-    scrollTop.fdiv(scrollHeight).round(1)
+    (scrollTop + clientHeight).fdiv(scrollHeight)
   end
 
   # 発言を count 件用意する

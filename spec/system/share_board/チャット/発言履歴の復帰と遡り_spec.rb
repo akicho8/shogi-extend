@@ -18,7 +18,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     chat_modal_open do
       assert_message_received_o("(content:99)")                           # 50..99 は有り
       assert_message_received_x("(content:49)")                           #  0..49 は無し
-      assert { chat_scroll_ratio == 0.9 }                                 # 一番下までスクロールしている
+      assert { chat_scroll_ratio == 1.0 }                                 # 一番下までスクロールしている
       assert_mh_page_index_in_modal(1)                                    # APIへのアクセスは1回のみ
       assert_ml_count_in_modal(50)                                        # いまは50件ある
     end
