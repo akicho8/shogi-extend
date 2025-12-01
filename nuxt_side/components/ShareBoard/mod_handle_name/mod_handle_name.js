@@ -63,7 +63,9 @@ export const mod_handle_name = {
       const message = this.handle_name_invalid_message(user_name)
       if (message) {
         this.toast_warn(message)
-        this.app_log({emoji: ":名前違反:", subject: "共有将棋盤 名前違反", body: {user_name: user_name, message: message}})
+        if (user_name !== "") {
+          this.app_log({emoji: ":名前違反:", subject: "共有将棋盤 名前違反", body: {user_name: user_name, message: message}})
+        }
         return true
       }
       return false
