@@ -10,7 +10,9 @@ export const avatar_input_modal = {
     }
   },
   mounted() {
-    this.__avatar_hard_validation_process()
+    if (this.system_reserved_avatar_then_clear) {
+      this.__avatar_hard_validation_process()
+    }
   },
   beforeDestroy() {
     this.avatar_input_modal_close()
@@ -91,14 +93,12 @@ export const avatar_input_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // 予約絵文字の利用時には消去し修正を促す
+    // 予約絵文字の利用時には起動時に消去する
     __avatar_hard_validation_process() {
-      if (this.avatar_hard_validation) {
-        if (GX.present_p(this.user_selected_avatar)) {
-          if (!this.AvatarSupport.available_char_p(this.user_selected_avatar)) {
-            this.user_selected_avatar = ""
-            this.avatar_input_modal_open_handle()
-          }
+      if (GX.present_p(this.user_selected_avatar)) {
+        if (!this.AvatarSupport.available_char_p(this.user_selected_avatar)) {
+          this.user_selected_avatar = ""
+          // this.avatar_input_modal_open()
         }
       }
     },

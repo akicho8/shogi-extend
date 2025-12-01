@@ -10,6 +10,8 @@
         a.panel-block(href="?room_key=dev_room&user_name=a&autoexec=order_self_only_auto_setup,avatar_input_modal_open_handle") 自分だけを順番設定に入れた状態で起動する (すぐに切り替わるのを確認できる)
         a.panel-block(@click="SB.user_selected_avatar_clear") 空にする (履歴はそのまま)
         a.panel-block(@click="SB.avatar_history_init") 履歴を空にする
+        a.panel-block(href="?user_selected_avatar=%F0%9F%A4%96") 予約絵文字を指定して起動する
+        a.panel-block(@click="SB.__avatar_hard_validation_process") 予約絵文字の利用時には起動時に消去する
     .column.is-4
       .panel.assert_var
         .panel-heading
