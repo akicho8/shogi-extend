@@ -17,8 +17,8 @@ mod = Module.new do
     within(".AvatarInputModal .new_user_selected_avatar_input_tag") { assert_selector(:fillable_field, with: str) }
   end
 
-  def assert_avatar_preview(emoji)
-    assert_selector(".AvatarInputModal .preview_image[alt='#{emoji}']")
+  def assert_avatar_preview_url(url)
+    assert_selector(".AvatarInputModal .preview_image[src='#{url}']")
   end
 
   def avatar_input_modal_submit_handle

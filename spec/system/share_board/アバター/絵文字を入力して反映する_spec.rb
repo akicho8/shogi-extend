@@ -13,7 +13,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_avatar_input_modal_exist
     assert_avatar_input ""
     avatar_input "1️⃣"
-    assert_avatar_preview "1️⃣"
+
+    assert_avatar_preview_url "https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/svg/31-20e3.svg"
     avatar_input_modal_submit_handle
 
     assert_var :user_selected_avatar, "1️⃣"

@@ -62,7 +62,7 @@ RSpec.describe "棋譜投稿", type: :system do
   # #   end
   # # end
   #
-  # # click_on("棋譜入力") 相当
+  # # click_on("棋譜の読み込み") 相当
   # def text_input_click
   #   find(".input_method_tabs .tabs li:nth-child(1)").click
   # end
