@@ -173,9 +173,9 @@ export default {
         line-height: 1.0 // shogi-player の方で 140% にしているがアバター画像をいれると違和感があるので 1.0 に戻す
 
   //////////////////////////////////////////////////////////////////////////////// 名前の大きさ
-  .CustomShogiPlayer
-    .MembershipLocationPlayerInfoName
-      font-size: $size-7
+  // .CustomShogiPlayer
+  //   .MembershipLocationPlayerInfoName
+  //     font-size: $size-7
 
 .SbApp.debug_mode_p
   .CustomShogiPlayer
