@@ -8,8 +8,12 @@ describe("KifuVo", () => {
     viewpoint: "black",
   })
 
-  it("piyo_url",  () => { object.piyo_url })
-  it("kento_url", () => { object.kento_url })
+  it("piyo_url",  () => {
+    expect(object.piyo_url).toEqual("piyoshogi://?num=0&url=https%3A%2F%2Fexample.com%2F&viewpoint=black")
+  })
+  it("kento_url", () => {
+    expect(object.kento_url).toEqual("https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201&viewpoint=black")
+  })
   it("sfen_and_turn", () => {
     expect(object.sfen_and_turn).toEqual({sfen: "position sfen startpos", turn: 0})
   })

@@ -23,6 +23,10 @@ export class KifuVo {
     }
   }
 
+  get kento_url() {
+    return KentoSfenLinkCreator.url_for(this.attributes)
+  }
+
   get sfen_and_turn() {
     return { sfen: this.attributes.sfen, turn: this.attributes.turn }
   }
