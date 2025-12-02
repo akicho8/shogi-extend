@@ -35,12 +35,12 @@
         b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
         .realtime_notice.is-size-7(v-html="realtime_notice.message")
 
-      .shuffle_buttons.mt-4
-        b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
-        b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
-        b-button.furigoma_handle(size="is-small" @click="furigoma_handle") 振り駒
-        b-button.swap_handle(v-if="SB.debug_mode_p" size="is-small" @click="swap_handle") 先後入替
-        b-button.board_preset_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
+      .support_buttons.mt-4(v-if="support_buttons_show_p")
+        b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle" v-if="shuffule_all_button_show_p") 全体ｼｬｯﾌﾙ
+        b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle" v-if="team_each_shuffle_button_show_p") ﾁｰﾑ内ｼｬｯﾌﾙ
+        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" v-if="furigoma_button_show_p") 振り駒
+        b-button.swap_handle(size="is-small" @click="swap_handle" v-if="swap_handle_button_show_p") 先後入替
+        //- b-button.board_preset_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
 
       hr.my-4
 
@@ -315,6 +315,20 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
+    furigoma_button_show_p()          { return this.SB.order_draft.order_flow.team_member_counts.every(e => (e >= 1))                        }, // 振り駒ボタンを表示する？
+    shuffule_all_button_show_p()      { return this.SB.order_draft.order_flow.main_user_count >= 3                                           }, // 全体シャッフルボタン表示する？
+    swap_handle_button_show_p()       { return this.SB.order_draft.order_flow.team_member_counts.some(e => (e >= 1)) && this.SB.debug_mode_p }, // どちらかのチームに1人以上いる？
+    team_each_shuffle_button_show_p() { return this.SB.order_draft.order_flow.team_member_counts.some(e => (e >= 2))                         }, // どちらかのチームに2人以上いる？
+
+    support_buttons_show_p() {
+      return [
+        this.furigoma_button_show_p,
+        this.shuffule_all_button_show_p,
+        this.swap_handle_button_show_p,
+        this.team_each_shuffle_button_show_p,
+      ].some(e => e)
+    },
+
     self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
     apply_button_type() {
@@ -393,7 +407,7 @@ export default {
     align-items: center
     justify-content: center
 
-  .shuffle_buttons
+  .support_buttons
     display: flex
     align-items: center
     justify-content: center
@@ -418,6 +432,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .TeamsContainer
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .shuffle_buttons
+    .support_buttons
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
