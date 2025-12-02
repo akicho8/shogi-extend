@@ -53,12 +53,12 @@ export const mod_illegal = {
     // 初心者モードの反則チェックありだけど反則できないときに反則したときの処理
     // ここは何もしなければ将棋ウォーズのようになる
     ev_illegal_illegal_accident(attrs) {
-      this.illegal_activation(attrs.name)
+      this.illegal_activation(attrs)
     },
-    illegal_activation(illegal_name) {
-      this.illegal_show(illegal_name)         // 当事者には最速で知らせたいのでブロードキャスト前にする
-      this.illegal_share(illegal_name)        // 共有する
-      this.ac_log({subject: "反則ブロック", body: {"種類": illegal_name, "局面": this.current_url}})
+    illegal_activation(attrs) {
+      this.illegal_show(attrs.name)         // 当事者には最速で知らせたいのでブロードキャスト前にする
+      this.illegal_share(attrs.name)        // 共有する
+      this.ac_log({subject: "反則ブロック", body: {"種類": attrs.name, "局面": this.current_url}})
     },
     illegal_share(illegal_name) {
       this.ac_room_perform("illegal_share", {illegal_name: illegal_name}) // --> app/channels/share_board/room_channel.rb

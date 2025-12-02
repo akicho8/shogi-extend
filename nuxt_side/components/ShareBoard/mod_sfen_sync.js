@@ -37,7 +37,7 @@ export const mod_sfen_sync = {
           if (this.foul_mode_info.perpetual_check_p) {
             illegal_names.push("千日手")                          // ["駒ワープ", "王手放置", "千日手"]
           } else {
-            this.illegal_activation("千日手")                     // 通知のみする
+            this.illegal_activation({name: "千日手"})                     // 通知のみする
           }
         }
       }
