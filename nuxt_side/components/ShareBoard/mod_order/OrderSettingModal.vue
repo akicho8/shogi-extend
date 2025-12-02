@@ -94,6 +94,7 @@ import { GX } from "@/components/models/gx.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import _ from "lodash"
 import { support_child } from "../support_child.js"
+import FoulModeBlockWarnModal from "./FoulModeBlockWarnModal.vue"
 
 export default {
   name: "OrderSettingModal",
@@ -297,36 +298,13 @@ export default {
         this.foul_mode_block_warn_modal_open()
       }
     },
-
     foul_mode_block_warn_modal_open() {
-      const message = [
-        `<div class="content">`,
-          `<p>「反則できない」は接待用の特殊モードです。</p>`,
-          `<p>すでに将棋のルールを正しく理解し、真摯な姿勢で将棋に取り組む${this.SB.my_call_name}には必要ないでしょう。</p>`,
-        `</div>`,
-      ].join("")
-      this.sfx_play("se_notification")
-      // this.SB.sb_talk(message)
-      this.foul_mode_block_warn_modal_close()
-      this.foul_mode_block_warn_modal_instance = this.dialog_confirm({
-        title: `${this.SB.my_call_name}へ`,
-        // type: "is-danger",
-        message: message,
-        confirmText: "もちろん必要ない",
-        cancelText: "接待する",
-        focusOn: "confirm",
-        canCancel: ["button"],
-        onConfirm: () => {
-          this.sfx_play("o")
-          this.toast_primary("さすがです")
-          this.SB.order_draft.foul_mode_key = "lose"
-        },
-        onCancel: () => {
-          this.sfx_play("x")
-        },
-      })
+      if (this.foul_mode_block_warn_modal_instance == null) {
+        this.foul_mode_block_warn_modal_instance = this.modal_card_open({
+          component: FoulModeBlockWarnModal,
+        })
+      }
     },
-
     foul_mode_block_warn_modal_close() {
       if (this.foul_mode_block_warn_modal_instance) {
         this.foul_mode_block_warn_modal_instance.close()
