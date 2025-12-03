@@ -25,6 +25,7 @@ export const mod_export = {
         turn: this.current_turn,
         title: this.current_title,
         ...this.player_names,
+        success_message: this.kifu_copy_success_message,
       })
       if (success) {
         this.sidebar_close()
@@ -65,6 +66,17 @@ export const mod_export = {
         window.location.href = this.kifu_download_url(e)
         this.al_share_puts("棋譜ダウンロード")
       }
+    },
+  },
+  computed: {
+    kifu_copy_success_message() {
+      if (this.honpu_return_button_active_p) {
+        return "変化した棋譜をコピーしました (本譜が必要ならヘッダーの本譜を開こう)"
+      }
+      if (this.honpu_open_button_show_p) {
+        return "本譜をコピーしました"
+      }
+      return "コピーしました"
     },
   },
 }

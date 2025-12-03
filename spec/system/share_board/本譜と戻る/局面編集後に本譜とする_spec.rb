@@ -1,4 +1,4 @@
-require "#{__dir__}/helper"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do

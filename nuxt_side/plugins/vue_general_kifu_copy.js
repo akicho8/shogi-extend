@@ -25,7 +25,7 @@ export const vue_general_kifu_copy = {
       }
 
       // 1, 2回目
-      return this.clipboard_copy(simple_cache.read(key))
+      return this.clipboard_copy(simple_cache.read(key), options)
     },
     __general_kifu_copy_axios(options = {}) {
       // this.clog("APIアクセス発生")
