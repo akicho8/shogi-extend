@@ -226,7 +226,7 @@ export const mod_sfen_sync = {
     illegal_then_give_up(params) {
       if (this.received_from_self(params)) {
         if (GX.present_p(params.illegal_names)) {
-          this.auto_resign_then_give_up()
+          this.timeout_then_resign()
         }
       }
     },

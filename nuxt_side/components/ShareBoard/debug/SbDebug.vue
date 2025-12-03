@@ -40,6 +40,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugGiveUp
   SbDebugAvatar
   SbDebugRoom
   SbDebugXprofile
@@ -63,20 +64,6 @@
   SbDebugClock
   SbDebugDashboard
 
-  .column.is-2
-    .panel
-      .panel-heading
-        | 投了
-      a.panel-block(@click="SB.give_up_modal_open_handle") 投了確認ボタン
-      a.panel-block(@click="SB.give_up_direct_run_with_valid") 投了ボタン(バリデーションあり)
-      a.panel-block(@click="SB.give_up_direct_run") 投了実処理
-  .column.is-2
-    .panel
-      .panel-heading
-        | 保存
-      a.panel-block(@click="SB.battle_save_run") 対局保存
-      .panel-block {{SB.__battle_memberships("black")}}
-      .panel-block {{SB.__battle_memberships("white")}}
 
   SbDebugPerpetual
   SbDebugBasic

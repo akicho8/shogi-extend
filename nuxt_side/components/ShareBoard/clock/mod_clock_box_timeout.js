@@ -1,7 +1,7 @@
 import TimeoutModal from "./TimeoutModal.vue"
 import { GX } from "@/components/models/gx.js"
 
-const CC_TIMEOUT_BC_DELAY    = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミューレートをする用)
+const CC_TIMEOUT_BC_DELAY    = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミュレートをする用)
 const CC_TIMEOUT_JUDGE_DELAY = 10 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する
 
 export const mod_clock_box_timeout = {
@@ -35,7 +35,7 @@ export const mod_clock_box_timeout = {
     // 当事者は自分で起動してBC
     cc_timeout_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
-      this.auto_resign_then_give_up()           // 自動投了なら投了する
+      this.timeout_then_resign()           // 自動投了なら投了する
       this.cc_timeout_modal_open("self_notify") // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.CC_TIMEOUT_BC_DELAY}秒後にBC`)
       GX.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {

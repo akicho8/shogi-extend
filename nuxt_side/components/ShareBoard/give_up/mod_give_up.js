@@ -1,46 +1,30 @@
-// 投了関連
+// |-----------------------+----------------------------------------|
+// | methods               | description                            |
+// |-----------------------+----------------------------------------|
+// | give_up_submit_handle | 最後の「投了する」ボタンを押した       |
+// | timeout_then_resign   | 時間切れかつ自動投了モードなら投了する |
+// |-----------------------+----------------------------------------|
 
-import GiveUpModal from "./GiveUpModal.vue"
+import { give_up_modal } from "./give_up_modal.js"
 import { GX } from "@/components/models/gx.js"
 
 export const mod_give_up = {
-  data() {
-    return {
-      give_up_modal_instance: null,
-    }
-  },
-
-  beforeDestroy() {
-    this.give_up_modal_close()
-  },
+  mixins: [give_up_modal],
 
   methods: {
-    // 投了確認モーダルを開く
-    give_up_modal_open_handle() {
+    // 最後の「投了する」ボタンを押した
+    give_up_submit_handle() {
       this.sfx_click()
-      this.give_up_modal_open()
-    },
-
-    // 投了確認モーダルを開く
-    give_up_modal_open() {
       this.give_up_modal_close()
-      this.give_up_modal_instance = this.modal_card_open({
-        component: GiveUpModal,
-        onCancel: () => this.give_up_modal_close(),
-      })
-    },
-
-    // 投了確認モーダルを閉じる
-    give_up_modal_close() {
-      if (this.give_up_modal_instance) {
-        this.give_up_modal_instance.close()
-        this.give_up_modal_instance = null
-        this.debug_alert("GiveUpModal close")
+      if (!this.give_up_modal_open_button_show_p) {
+        this.toast_danger("投了確認モーダルを出している間に投了できる条件が無効になりました")
+        return
       }
+      this.give_up_direct_run_with_valid()
     },
 
     // 自分が生きていて時間切れしたとき自動投了モードなら投了する
-    auto_resign_then_give_up() {
+    timeout_then_resign() {
       if (this.auto_resign_info.key === "is_auto_resign_on") {
         this.give_up_direct_run_with_valid()
       }
@@ -48,8 +32,8 @@ export const mod_give_up = {
 
     // 最終投了ボタンを押したときの処理
     give_up_direct_run_with_valid() {
-      if (!this.give_up_button_show_p) {
-        this.toast_danger("投了確認を出している間に投了できなくなりました")
+      if (!this.give_up_modal_open_button_show_p) {
+        this.toast_danger("投了確認している最中に投了できなくなりました")
         return
       }
       this.give_up_direct_run()
@@ -124,7 +108,7 @@ export const mod_give_up = {
     // 投了ボタン表示条件
     // ・対局メンバーに含まれる ← やめ
     // ・対局メンバーに含まれる かつ 時計が PLAY 状態 ← こっちにした
-    give_up_button_show_p() {
+    give_up_modal_open_button_show_p() {
       return this.i_am_member_p && this.cc_play_p
     },
 
