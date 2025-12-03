@@ -315,6 +315,8 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
+    ////////////////////////////////////////////////////////////////////////////////
+
     furigoma_button_show_p()          { return this.SB.order_draft.order_flow.team_member_counts.every(e => (e >= 1))                        }, // 振り駒ボタンを表示する？
     shuffule_all_button_show_p()      { return this.SB.order_draft.order_flow.main_user_count >= 3                                           }, // 全体シャッフルボタン表示する？
     swap_handle_button_show_p()       { return this.SB.order_draft.order_flow.team_member_counts.some(e => (e >= 1)) && this.SB.debug_mode_p }, // どちらかのチームに1人以上いる？
@@ -328,6 +330,8 @@ export default {
         this.team_each_shuffle_button_show_p,
       ].some(e => e)
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
