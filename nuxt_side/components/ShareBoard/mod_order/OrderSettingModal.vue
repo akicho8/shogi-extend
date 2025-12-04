@@ -346,19 +346,15 @@ export default {
       if (hv == null) {
         const location = this.SB.order_draft.order_flow.team_empty_location
         if (location) {
+          let aside_note = ""
           if (this.self_vs_self_mode_p) {
             const elem = this.SB.order_draft.order_flow.flat_uniq_users_sole
-            hv = {
-              icon_code: "alert-circle-outline",
-              icon_type: "is-danger",
-              message: `次は${location.human_color_name}チームを決めよう (この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`,
-            }
-          } else {
-            hv = {
-              icon_code: "alert-circle-outline",
-              icon_type: "is-danger",
-              message: `次は${location.human_color_name}チームを決めよう`,
-            }
+            aside_note = `(この状態でも${this.SB.user_call_name(elem.user_name)}同士で対局可)`
+          }
+          hv = {
+            icon_code: "alert-circle-outline",
+            icon_type: "is-danger",
+            message: GX.str_strip(`次は${location.human_color_name}チームを決めよう ${aside_note}`),
           }
         }
       }
