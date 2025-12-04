@@ -9,7 +9,6 @@
           | 参加者{{SB.order_draft.order_flow.main_user_count}}人
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
-    b-button.operation_toggle_handle(@click="operation_toggle_handle" size="is-small" v-if="SB.debug_mode_p") ｱﾙｺﾞﾘｽﾞﾑ変更
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -24,11 +23,8 @@
       //- pre {{JSON.stringify(SB.order_draft.os_change.to_h)}}
 
       .TeamsContainer.is-unselectable
-        template(v-if="SB.order_draft.order_flow.order_operation.operation_name === 'V1Operation'")
-          OrderTeamOne.is_team_both(:items.sync="SB.order_draft.order_flow.order_operation.users"   label="対局")
-        template(v-if="SB.order_draft.order_flow.order_operation.operation_name === 'V2Operation'")
-          OrderTeamOne.is_team_black(:items.sync="SB.order_draft.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
-          OrderTeamOne.is_team_white(:items.sync="SB.order_draft.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
+        OrderTeamOne.is_team_black(:items.sync="SB.order_draft.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
+        OrderTeamOne.is_team_white(:items.sync="SB.order_draft.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
         OrderTeamOne.is_team_watcher(:items.sync="SB.order_draft.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
 
       .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
@@ -265,11 +261,6 @@ export default {
       this.toast_primary(model.hint_messages.join(""), {duration_sec: 7})
     },
 
-    operation_toggle_handle() {
-      this.sfx_click()
-      this.SB.order_draft.order_flow.operation_toggle()
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     quiz_maker_handle() {
@@ -372,19 +363,11 @@ export default {
         }
       }
       if (hv == null) {
-        if (this.SB.order_draft.order_flow.order_operation.operation_name === "V2Operation") {
-          const b_vs_w = this.SB.order_draft.order_flow.team_member_counts.join(" vs ")
-          hv = {
-            icon_code: "check-bold",
-            icon_type: "is-success",
-            message: `${b_vs_w} で対局できます`,
-          }
-        } else {
-          hv = {
-            icon_code: "check-bold",
-            icon_type: "is-success",
-            message: "対局できます",
-          }
+        const b_vs_w = this.SB.order_draft.order_flow.team_member_counts.join(" vs ")
+        hv = {
+          icon_code: "check-bold",
+          icon_type: "is-success",
+          message: `${b_vs_w} で対局できます`,
         }
       }
       return hv

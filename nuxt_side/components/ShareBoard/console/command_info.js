@@ -155,9 +155,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
             context.room_create()
           }
           context.os_setup_by_names(["alice"])
-          context.order_flow.operation_change("to_v1_operation")
           // if (!context.order_enable_p) {
-          //   context.order_flow.operation_change("to_v1_operation")
           //   context.order_switch_share({order_enable_p: true})
           // }
           // if (GX.blank_p(context.clock_box)) {

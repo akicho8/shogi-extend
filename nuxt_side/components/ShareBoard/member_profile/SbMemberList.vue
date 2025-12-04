@@ -5,35 +5,30 @@
       | メンバー
     .SbAvatarLinesWrap
       template(v-if="SB.order_enable_p")
-        template(v-if="SB.order_flow.operation_name === 'V1Operation'")
-          // 従来の分けない方法
-          .SbAvatarLines
-            SbMemberOne(v-for="info in SB.visible_member_infos" :info="info" :key="info.from_connection_id")
-        template(v-if="SB.order_flow.operation_name === 'V2Operation'")
-          template(v-if="true")
-            // member_infos の中身を余さず表示する方法
-            // ・名前が重複していても表示する
-            .TeamBlock(v-for="location in SB.Location.values" :class="location.key")
+        template(v-if="true")
+          // member_infos の中身を余さず表示する方法
+          // ・名前が重複していても表示する
+          .TeamBlock(v-for="location in SB.Location.values" :class="location.key")
+            .TeamName
+              HexagonMark(:location_key="location.key")
+            .SbAvatarLines
+              SbMemberOne(v-for="info in SB.visible_member_groups[location.key]" :info="info" :key="info.from_connection_id")
+          .TeamBlock.watcher(v-if="$GX.present_p(SB.visible_member_groups['watcher'])")
+            .TeamName.is-invisible
+              b-tag(rounded) 観戦
+            .SbAvatarLines
+              SbMemberOne(v-for="info in SB.visible_member_groups['watcher']" :info="info" :key="info.from_connection_id")
+        template(v-if="false")
+          // simple_teams を元に表示する方法
+          // ・名前が重複している場合に1つしか表示されないのでやめ
+          template(v-for="(user_names, i) in SB.order_flow.simple_teams")
+            .TeamBlock
               .TeamName
-                HexagonMark(:location_key="location.key")
+                b-tag(rounded) {{SB.Location.fetch(i).name}}
               .SbAvatarLines
-                SbMemberOne(v-for="info in SB.visible_member_groups[location.key]" :info="info" :key="info.from_connection_id")
-            .TeamBlock.watcher(v-if="$GX.present_p(SB.visible_member_groups['watcher'])")
-              .TeamName.is-invisible
-                b-tag(rounded) 観戦
-              .SbAvatarLines
-                SbMemberOne(v-for="info in SB.visible_member_groups['watcher']" :info="info" :key="info.from_connection_id")
-          template(v-if="false")
-            // simple_teams を元に表示する方法
-            // ・名前が重複している場合に1つしか表示されないのでやめ
-            template(v-for="(user_names, i) in SB.order_flow.simple_teams")
-              .TeamBlock
-                .TeamName
-                  b-tag(rounded) {{SB.Location.fetch(i).name}}
-                .SbAvatarLines
-                  template(v-for="user_name in user_names")
-                    template(v-if="SB.room_user_names_hash[user_name]")
-                      SbMemberOne(:info="SB.room_user_names_hash[user_name]")
+                template(v-for="user_name in user_names")
+                  template(v-if="SB.room_user_names_hash[user_name]")
+                    SbMemberOne(:info="SB.room_user_names_hash[user_name]")
       template(v-else)
         .SbAvatarLines
           SbMemberOne(v-for="info in SB.visible_member_infos" :info="info" :key="info.from_connection_id")

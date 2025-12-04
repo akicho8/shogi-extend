@@ -1,9 +1,7 @@
 // 順番管理
 // ・観戦者はこのクラスだけが持つ
-// ・V1Operation, V2Operation を切り替える
 // ・切り替えても観戦者には何も影響がない
 
-import { V1Operation } from "./v1_operation.js"
 import { V2Operation } from "./v2_operation.js"
 import { Item } from "./item.js"
 import { GX } from "@/components/models/gx.js"
@@ -52,7 +50,6 @@ export class OrderFlow {
   teams_each_shuffle()                      { this.order_operation.teams_each_shuffle()                             }
   swap_run()                                { this.order_operation.swap_run()                                       }
   user_name_reject(user_name)               { this.order_operation.user_name_reject(user_name)                      } // 順番設定から除外する
-  get operation_name()                          { return this.order_operation.operation_name                                }
   cache_clear()                             { this.order_operation.cache_clear()                                    }
   get simple_teams()                        { return this.order_operation.simple_teams                              }
   turn_to_item(turn, change_per, scolor)    { return this.order_operation.turn_to_item(turn, change_per, scolor)    }
@@ -89,20 +86,12 @@ export class OrderFlow {
     }
   }
 
-  operation_change(method) {
-    GX.assert(this.order_operation[method], "this.order_operation[method]")
-    this.order_operation = this.order_operation[method]
-  }
-
   // 観戦者は含まないでよい
   get attributes() {
     return this.order_operation.attributes
   }
   set attributes(v) {
-    // this.watch_users = v.watch_users
-    // const klass = GX.str_constantize(v.operation_name)
-    const klass = this.operation_class_hash[v.operation_name]
-    const order_operation = new klass()
+    const order_operation = new V2Operation()
     order_operation.attributes = v
     this.order_operation = order_operation
   }
@@ -132,7 +121,7 @@ export class OrderFlow {
     const list0 = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join("")
     const list1 = this.real_order_users(1, 1).map(e => e ? e.to_s : "?").join("")
     const wlist = this.watch_users.map(e => e.to_s).join(",")
-    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.operation_name})`
+    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [替:${this.swap_enable_p ? 'o' : 'x'}]`
   }
 
   // 順番設定モーダル内で使うデータの準備
@@ -183,21 +172,6 @@ export class OrderFlow {
     const items = user_names.map(e => Item.create(e))
     this.users_allocate([])
     this.watch_users = items
-  }
-
-  operation_toggle() {
-    if (this.order_operation.operation_name === "V1Operation") {
-      this.operation_change("to_v2_operation")
-    } else {
-      this.operation_change("to_v1_operation")
-    }
-  }
-
-  get operation_class_hash() {
-    return {
-      V1Operation: V1Operation,
-      V2Operation: V2Operation,
-    }
   }
 
   get all_user_count() { return this.main_user_count + this.watch_users.length }

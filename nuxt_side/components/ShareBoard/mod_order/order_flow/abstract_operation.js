@@ -1,4 +1,4 @@
-// V1Operation, V2Operation の共通部分
+// V2Operation の共通部分
 
 import { GX } from "@/components/models/gx.js"
 const MD5 = require("md5.js")
@@ -27,15 +27,8 @@ export class AbstractOperation {
     return this.memo[key]
   }
 
-  // もしこれが呼ばれた場合 nuxt.config.js の babel: { presets({ isServer }, [preset, options]) { options.loose = true },} が原因
-  get operation_name() {
-    // ビルド時に名前が代わるため this.constructor.name とは書けない
-    alert("operation_name is not implemented")
-  }
-
   get attributes() {
     return {
-      operation_name: this.operation_name,
     }
   }
 
@@ -85,7 +78,7 @@ export class AbstractOperation {
   // 差分確認用のハッシュ
   get hash() {
     const users_str = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join(",")
-    const all = [this.operation_name, users_str].join(":")
+    const all = [users_str].join(":")
     return new MD5().update(all).digest("hex")
   }
 

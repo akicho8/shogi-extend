@@ -6,8 +6,6 @@
         .button(@click="order_flow.sample_set()") 面子セット
         .button(@click="order_flow.auto_users_set(['a', 'b', 'c', 'd', 'e'])") 初回相当
         .button(@click="order_flow.clear()") クリア
-        .button(@click="order_flow.operation_change('to_v1_operation')") 1列
-        .button(@click="order_flow.operation_change('to_v2_operation')") 2列
         //- .button(@click="order_flow.order_operation.demo_set()") デモ
         .button(@click="order_flow.shuffle_all()") シャッフル
         .button(@click="order_flow.furigoma_core(Math.random() < 0.5)") 振り駒
@@ -27,11 +25,7 @@
       //-   b-input(type="number" v-model.number="change_per" :min="1" max="5")
       //- b-field(label="開始" custom-class="is-small")
       //-   b-input(type="number" v-model.number="start_color" :min="0" max="1")
-    .column(v-if="order_flow.order_operation.operation_name === 'V1Operation'")
-      .TeamContainer
-        OrderTeamOne2(:items.sync="order_flow.order_operation.users" label="一列")
-        OrderTeamOne2(:items.sync="order_flow.watch_users" label="観戦")
-    .column(v-if="order_flow.order_operation.operation_name === 'V2Operation'")
+    .column
       .TeamContainer
         OrderTeamOne2(:items.sync="order_flow.order_operation.teams[0]"  label="☗" ref="OrderTeamOne2")
         OrderTeamOne2(:items.sync="order_flow.watch_users" label="観戦")

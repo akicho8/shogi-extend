@@ -9,10 +9,10 @@ export class V1Strategy {
     GX.assert(scolor != null, "scolor != null")
     GX.assert(change_per >= 1, "change_per >= 1")
 
-    this.size = size          // ユーザーはN人いる
-    this.turn = turn          // N手目
-    this.change_per = change_per      // N手毎
-    this.scolor = scolor      // 開始 0 or 1
+    this.size       = size       // ユーザーはN人いる
+    this.turn       = turn       // N手目
+    this.change_per = change_per // N手毎
+    this.scolor     = scolor     // 開始 0 or 1
   }
 
   // チームのインデックスを返す

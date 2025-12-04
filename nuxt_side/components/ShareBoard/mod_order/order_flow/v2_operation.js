@@ -1,7 +1,6 @@
 import { V1Strategy } from "./v1_strategy.js"
 import { V2Strategy } from "./v2_strategy.js"
 import { AbstractOperation } from "./abstract_operation.js"
-import { V1Operation } from "./v1_operation.js"
 import { Item } from "./item.js"
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
@@ -12,10 +11,6 @@ export class V2Operation extends AbstractOperation {
   constructor(teams = [[], []]) {
     super()
     this.teams = teams
-  }
-
-  get operation_name() {
-    return "V2Operation"
   }
 
   // 全体シャッフル
@@ -77,16 +72,6 @@ export class V2Operation extends AbstractOperation {
   current_team_by_turn(...args) {
     const strategy = this.strategy_create(...args)
     return strategy.team_index
-  }
-
-  get to_v1_operation() {
-    const operation_object = new V1Operation()
-    operation_object.users_allocate(this.black_start_order_uniq_users)
-    return operation_object
-  }
-
-  get to_v2_operation() {
-    return this
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +161,6 @@ export class V2Operation extends AbstractOperation {
   // {
   //   "watch_users": [],
   //   "order_operation": {
-  //     "operation_name": "V2Operation",
   //     "teams": [
   //       [
   //         "a",
