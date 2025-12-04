@@ -5,7 +5,7 @@ b-navbar-item.SbHonpuButton.has-text-weight-bold(
   )
   .field.is-grouped
     p.control
-      a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.toryo_button_color")
+      a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.honpu_button_color")
         | 本譜
         //- b-icon(icon="note")
     p.control
