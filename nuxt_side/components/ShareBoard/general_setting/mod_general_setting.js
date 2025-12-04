@@ -8,7 +8,6 @@ import { TalkVolumeScaleInfo   } from "../models/talk_volume_scale_info.js"
 import { CommonVolumeScaleInfo } from "../models/common_volume_scale_info.js"
 
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
-import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
 import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
@@ -58,9 +57,6 @@ export const mod_general_setting = {
 
     CtrlModeInfo()            { return CtrlModeInfo                                              },
     ctrl_mode_info()          { return this.CtrlModeInfo.fetch(this.ctrl_mode_key)               },
-
-    QuickSyncInfo()           { return QuickSyncInfo                                             },
-    quick_sync_info()         { return this.QuickSyncInfo.fetch(this.quick_sync_key)             },
 
     YomiageModeInfo()         { return YomiageModeInfo                                           },
     yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },

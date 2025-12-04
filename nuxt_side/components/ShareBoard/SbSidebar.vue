@@ -38,8 +38,6 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           //- モーダル版
           b-menu-item.is_active_unset.turn_change_to_zero_modal_open_handle(icon="page-first"  label="初期配置に戻す"   @click="SB.turn_change_to_zero_modal_open_handle" :class="SB.bold_if(SB.current_turn >= 1)" v-if="SB.debug_mode_p")
           b-menu-item.is_active_unset.turn_change_to_previous_modal_open_handle(icon="undo"    label="1手戻す (待った)" @click="SB.turn_change_to_previous_modal_open_handle" v-if="SB.debug_mode_p")
-          //- 手動同期(非推奨)
-          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送" @click="SB.force_sync_modal_handle" v-if="SB.quick_sync_info.sidebar_function_show || SB.debug_mode_p")
 
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="SB.board_preset_modal_open_handle")

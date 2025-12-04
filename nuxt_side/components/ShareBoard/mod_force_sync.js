@@ -1,5 +1,4 @@
 import { GX } from "@/components/models/gx.js"
-import ForceSyncModal from "./ForceSyncModal.vue"
 import _ from "lodash"
 
 // const CONFIRM_METHOD = false
@@ -7,22 +6,6 @@ import _ from "lodash"
 export const mod_force_sync = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
-
-    force_sync_modal_handle() {
-      if (this.room_is_empty_p()) { return }
-      this.sidebar_close()
-      this.sfx_click()
-      this.modal_card_open({
-        component: ForceSyncModal,
-      })
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    force_sync_direct() {
-      this.ac_log({subject: "局面操作", body: `直接${this.current_turn}手目`})
-      this.force_sync(`${this.my_call_name}が局面を共有しました`)
-    },
 
     // turn = 0
     force_sync_turn_zero_handle() {
@@ -75,9 +58,7 @@ export const mod_force_sync = {
     ////////////////////////////////////////////////////////////////////////////////
 
     quick_sync(...args) {
-      if (this.quick_sync_info.key === "is_quick_sync_on") {
-        this.force_sync(...args)
-      }
+      this.force_sync(...args)
     },
 
     force_sync(message = "", options = {}) {

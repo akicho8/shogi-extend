@@ -1,36 +1,6 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  it "操作履歴から過去の局面に戻る" do
-    def case1(user_name)
-      visit_room({
-          :user_name         => user_name,
-          :FIXED_MEMBER      => "a,b",
-          :FIXED_ORDER       => "a,b",
-          :quick_sync_key    => :is_quick_sync_off, # 手動同期にしておく
-          :room_after_create => :cc_auto_start_10m,
-        })
-    end
-    window_a { case1(:a) }
-    window_b { case1(:b) }
-    window_a do
-      piece_move_o("77", "76", "☗7六歩")
-      assert_turn(1)
-    end
-    window_b do
-      piece_move_o("33", "34", "☖3四歩")
-      assert_turn(2)
-    end
-    window_a do
-      action_log_row_of(1).click # 初手(76歩)の行をクリックしてモーダル起動
-      apply_button               # N手目まで戻る実行
-      assert_turn(1)             # 1手目に戻った
-    end
-    window_b do
-      assert_turn(2)        # 戻るのはa側だけなのでb側は2手目のまま
-    end
-  end
-
   it "操作履歴モーダル内の補助機能" do
     visit_room(user_name: :a)
     piece_move_o("77", "76", "☗7六歩")              # 初手を指す
