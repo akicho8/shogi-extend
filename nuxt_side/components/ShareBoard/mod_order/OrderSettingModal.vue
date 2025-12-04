@@ -240,7 +240,7 @@ export default {
         return
       }
       this.SB.order_draft_publish("順番設定を反映しました")
-      this.$GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
+      GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
     // バリデーションなしで確定する
