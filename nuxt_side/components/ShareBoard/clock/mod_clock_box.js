@@ -370,23 +370,6 @@ export const mod_clock_box = {
         await this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から指そう`)
         this.think_mark_invite_trigger()
       }
-      if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
-        if (this.received_from_self(params)) {
-          this.$buefy.snackbar.open({
-            message: `これは${this.user_call_name(this.current_turn_user_name)}同士の対局です。意図していない場合は順番設定から対局者を指定しよう。`,
-            // type: "is-primary is-light",
-            position: "is-top",
-            actionText: "OK",
-            indefinite: true,
-            // onAction: () => {
-            //   this.$buefy.toast.open({
-            //     message: "Action pressed",
-            //     queue: false,
-            //   });
-            // },
-          })
-        }
-      }
     },
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
