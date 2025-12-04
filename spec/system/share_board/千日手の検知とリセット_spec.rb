@@ -70,13 +70,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "千日手は判定が特殊だけど最後は二歩と同じ扱いになるので千日手のときも自動投了になる" do
     visit_room({
-        :user_name         => "a",
-        :FIXED_MEMBER      => "a",
-        :FIXED_ORDER       => "a",
-        :FIXED_ORDER_OPERATION => "to_v1_operation",
-        :room_after_create => :cc_auto_start_10m,
-        :auto_resign_key   => :is_auto_resign_on,
-        :RS_FEATURE         => false,
+        :user_name             => "a",
+        :FIXED_MEMBER          => "a",
+        :FIXED_ORDER           => "a",
+        :self_vs_self_enable_p => true,
+        :room_after_create     => :cc_auto_start_10m,
+        :auto_resign_key       => :is_auto_resign_on,
+        :RS_FEATURE            => false,
       })
     perpetual_trigger
     assert_selector(".IllegalModal", text: "千日手で☖の勝ち")
