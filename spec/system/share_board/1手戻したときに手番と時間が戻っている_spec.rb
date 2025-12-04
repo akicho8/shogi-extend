@@ -24,13 +24,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       sleep(1)                                       # bは1秒考えていた
     end
     window_a do
-      turn_minus_one
+      turn_minus_one                                 # 1手戻す
       assert_turn(0)                                 # 0手目に戻せてる
-
-      sidebar_open
-      menu_item_click("局面の転送")                 # モーダルを開く
-      find(:button, text: "転送する", exact_text: true).click   # 反映する
-
       assert_clock_active_black                      # 時計は先手に切り替わっている
     end
     window_b do
