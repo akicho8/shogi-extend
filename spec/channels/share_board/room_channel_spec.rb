@@ -260,8 +260,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     it "works" do
       data = data_factory
       expect {
-        subscription.give_up_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "give_up_share_broadcasted", bc_params: data)
+        subscription.resign_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "resign_share_broadcasted", bc_params: data)
     end
   end
 

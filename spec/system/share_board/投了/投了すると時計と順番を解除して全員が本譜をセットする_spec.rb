@@ -15,7 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1(:b)   }
     window_a do
       clock_start
-      give_up_run
+      resign_run
       assert_order_off_and_clock_stop # 順番がOFFになり、時計はSTOPになる
       assert_honpu_open_on         # 本譜のリンクがある
     end

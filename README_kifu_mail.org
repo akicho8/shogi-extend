@@ -10,6 +10,6 @@ app/mailers/kifu_mailer.rb
 app/models/kifu_mail_adapter.rb
 app/models/kifu_parser.rb
 app/models/short_url.rb
-nuxt_side/components/ShareBoard/give_up/app_kifu_mail.js
+nuxt_side/components/ShareBoard/mod_resign/app_kifu_mail.js
 spec/mailers/previews/kifu_preview.rb
 spec/models/kifu_mail_adapter_spec.rb

@@ -146,9 +146,9 @@ module ShareBoard
       ShareBoard::ResponderSomethingSayJob.perform_later(data.merge(room_key: room_key))
     end
 
-    def give_up_share(data)
+    def resign_share(data)
       track(data, subject: "投了発動", body: data["content"], emoji: ":投了:")
-      broadcast(:give_up_share_broadcasted, data)
+      broadcast(:resign_share_broadcasted, data)
     end
 
     def ping_command(data)

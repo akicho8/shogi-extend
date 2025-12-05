@@ -9,8 +9,8 @@ RSpec.describe Api::CpuBattlesController, type: :controller do
     post :create, params: { start_trigger: true }
     assert { response.status == 204 }
   end
-  it "i_give_up" do
-    post :create, params: { i_give_up: true }
+  it "resign_trigger" do
+    post :create, params: { resign_trigger: true }
     assert { response.status == 200 }
   end
   it "candidate_sfen" do

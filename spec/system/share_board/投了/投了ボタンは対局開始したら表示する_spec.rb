@@ -8,6 +8,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER       => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
-    assert_give_up_button
+    assert_resign_button
   end
 end

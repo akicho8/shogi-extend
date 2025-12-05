@@ -151,9 +151,9 @@ import { mod_clock_decorator               } from "./clock/mod_clock_decorator.j
 import { mod_persistent_cc_params          } from "./clock/mod_persistent_cc_params.js"
 import { mod_clock_box_modal                    } from "./clock/mod_clock_box_modal.js"
 
-import { mod_give_up                       } from "./give_up/mod_give_up.js"
-import { mod_kifu_mail                     } from "./give_up/mod_kifu_mail.js"
-import { mod_battle_save                   } from "./give_up/mod_battle_save.js"
+import { mod_resign                       } from "./mod_resign/mod_resign.js"
+import { mod_kifu_mail                     } from "./mod_resign/mod_kifu_mail.js"
+import { mod_battle_archive                   } from "./mod_resign/mod_battle_archive.js"
 
 import { mod_honpu_core                         } from "./honpu/mod_honpu_core.js"
 import { mod_honpu_share                   } from "./honpu/mod_honpu_share.js"
@@ -198,7 +198,7 @@ export default {
     mod_battle_session,
     mod_chore,
     mod_kifu_mail,
-    mod_battle_save,
+    mod_battle_archive,
     mod_avatar,
     mod_handle_name,
     mod_member_info_modal,
@@ -243,7 +243,7 @@ export default {
     mod_board_preset,
     mod_back_to,
     mod_shortcut,
-    mod_give_up,
+    mod_resign,
     mod_honpu_core,
     mod_honpu_share,
     mod_xprofile,

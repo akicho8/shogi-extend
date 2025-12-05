@@ -1,14 +1,14 @@
 <template lang="pug">
-.SbDebugGiveUp.column.is-12
+.SbDebugResign.column.is-12
   .columns.is-multiline
     .column.is-4
       .panel
         .panel-heading
           | 投了
-        a.panel-block(href="?self_vs_self_enable_p=false&room_restore_feature_p=false&room_key=dev_room&user_name=a&FIXED_MEMBER=a,b&FIXED_ORDER=a,b&room_after_create=cc_auto_start_10m,give_up_modal_open_handle") 投了モーダルを開く (URL固定)
-        a.panel-block(@click="SB.give_up_modal_open_handle") 投了モーダルを開く
-        a.panel-block(@click="SB.give_up_direct_run_with_valid") 投了ボタン(バリデーションあり)
-        a.panel-block(@click="SB.give_up_direct_run") 投了実処理
+        a.panel-block(href="?self_vs_self_enable_p=false&room_restore_feature_p=false&room_key=dev_room&user_name=a&FIXED_MEMBER=a,b&FIXED_ORDER=a,b&room_after_create=cc_auto_start_10m,resign_confirm_modal_open_handle") 投了モーダルを開く (URL固定)
+        a.panel-block(@click="SB.resign_confirm_modal_open_handle") 投了モーダルを開く
+        a.panel-block(@click="SB.resign_direct_run_with_valid") 投了ボタン(バリデーションあり)
+        a.panel-block(@click="SB.resign_direct_run") 投了実処理
         a.panel-block(@click="SB.battle_save_by_win_location('black')") ☗側を勝ちとする (DB → 全員)
         a.panel-block(@click="SB.battle_save_by_win_location('white')") ☖勝を勝ちとする (DB → 全員)
     .column.is-4
@@ -24,13 +24,13 @@ import _ from "lodash"
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbDebugGiveUp",
+  name: "SbDebugResign",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbDebugGiveUp
+.SbDebugResign
   __css_keep__: 0
 </style>

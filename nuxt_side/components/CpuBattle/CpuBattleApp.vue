@@ -22,7 +22,7 @@
       b-navbar-item.has-text-weight-bold.start_handle(tag="div" @click="start_handle" v-if="mode === 'standby'")
         .button.is-primary.is-light 対局開始
 
-      b-navbar-item.has-text-weight-bold(tag="div" @click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'")
+      b-navbar-item.has-text-weight-bold(tag="div" @click="resign_handle" :loading="resign_processing" v-if="mode === 'playing'")
         .button.is-primary.is-light 投了
 
   MainSection.is_mobile_padding_zero
@@ -134,7 +134,7 @@ export default {
     return {
       // -------------------------------------------------------------------------------- dynamic
       mode: null,                                   // 現在の状態
-      give_up_processing: null,                     // 投了処理中(連打防止用)
+      resign_processing: null,                     // 投了処理中(連打防止用)
       judge_group: this.config.judge_group,         // 勝敗
       candidate_processing: null,                   // 形勢判断中
 
@@ -169,7 +169,7 @@ export default {
 
     this.sp_body_set()
 
-    this.give_up_processing = false
+    this.resign_processing = false
     this.candidate_processing = false
   },
 
@@ -284,7 +284,7 @@ export default {
       this.chart_reset()
 
       // 投了を押せる状態にする
-      this.give_up_processing = false
+      this.resign_processing = false
 
       // 形勢判断してない状態にする
       this.candidate_processing = false
@@ -346,12 +346,12 @@ export default {
       // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(10000))
     },
 
-    give_up_handle() {
-      if (this.give_up_processing) {
+    resign_handle() {
+      if (this.resign_processing) {
         return
       }
-      this.give_up_processing = true
-      this.post_apply({i_give_up: true})
+      this.resign_processing = true
+      this.post_apply({resign_trigger: true})
     },
 
     candidate_handle() {
@@ -413,7 +413,7 @@ export default {
 
         if (e["judge_key"]) {
           this.view_mode_set()
-          this.give_up_processing = false
+          this.resign_processing = false
           this.judge_group = e["judge_group"]
           this.judge_dialog_display(e)
         }

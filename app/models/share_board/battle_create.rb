@@ -9,7 +9,7 @@ module ShareBoard
       @params = params
     end
 
-    # nuxt_side/components/ShareBoard/give_up/mod_battle_save.js
+    # nuxt_side/components/ShareBoard/mod_resign/mod_battle_archive.js
     def call
       begin
         if @params[:fake_error]

@@ -130,7 +130,7 @@ export const mod_chat_ai_trigger_rule = {
       }
     },
 
-    ai_say_case_give_up(params) {
+    ai_say_case_resign(params) {
       if (this.received_from_self(params)) {
         if (this.ai_say_turn_gteq(NESSEN_BATTLE_TURN_GTEQ)) {
           this.ai_say_for(15, "見応えのある対局だったと褒める", params)

@@ -12,13 +12,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "2vs1なので警告が出る" do
     case1 "a,b,c"
-    give_up_modal_open_handle
-    assert_selector(".give_up_warn_message")
+    resign_confirm_modal_open_handle
+    assert_selector(".resign_warn_message")
   end
 
   it "1vs1なので警告が出ない" do
     case1 "a,b"
-    give_up_modal_open_handle
-    assert_no_selector(".give_up_warn_message")
+    resign_confirm_modal_open_handle
+    assert_no_selector(".resign_warn_message")
   end
 end

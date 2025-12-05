@@ -5,11 +5,11 @@ const SELF_VS_SELF_THEN_SKIP             = false // 自分vs自分のときは�
 const SELF_VS_SELF_THEN_MEMBER_ZERO_SAVE = true  // 自分vs自分のときは対局者なしで保存する？
 const SELF_VS_SELF_THEN_FORCE_LOSE       = true  // 自分vs自分のときは必ず自分は負けとして保存する？
 
-export const mod_battle_save = {
+export const mod_battle_archive = {
   methods: {
     // 棋譜保存。投了時に呼ぶ。
     battle_save_run() {
-      this.battle_save_by_win_location(this.give_up_win_location_key)
+      this.battle_save_by_win_location(this.resign_win_location_key)
     },
 
     // 棋譜保存。win_location_key 側を勝ちとする

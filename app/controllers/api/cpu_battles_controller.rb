@@ -43,7 +43,7 @@ module Api
         return
       end
 
-      if params[:i_give_up]
+      if params[:resign_trigger]
         final_decision(judge_key: :lose, message: "負けました")
         return
       end

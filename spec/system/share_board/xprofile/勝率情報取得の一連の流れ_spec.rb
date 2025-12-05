@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { case1(:a) }
     window_b { case1(:b) }
     window_b do
-      give_up_run                        # b は手番ではないがヘッダーの「投了」ボタンを押す
+      resign_run                        # b は手番ではないがヘッダーの「投了」ボタンを押す
       assert_var("a.win_count", 1) # b が負けたので a にバッジ付与している (member_match_record_broadcast, xprofile_share_broadcasted)
       assert_var("b.win_count", 0)
     end

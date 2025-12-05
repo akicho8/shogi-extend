@@ -28,9 +28,9 @@ http://localhost:4000/share-board/dev_room/dashboard
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/README.org
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/SbApp.vue
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/debug/SbDebug.vue
-~/src/shogi-extend/nuxt_side/components/ShareBoard/give_up/mod_give_up.js
+~/src/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_resign.js
 ~/src/shogi-extend/db/migrate/20230326000000_create_share_board.rb
 ~/src/shogi-extend/workbench/share_board/
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/dashboard/
-~/src/shogi-extend/nuxt_side/components/ShareBoard/give_up/mod_battle_save.js
+~/src/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_battle_archive.js
 ~/src/shogi-extend/nuxt_side/pages/share-board/_room_key/

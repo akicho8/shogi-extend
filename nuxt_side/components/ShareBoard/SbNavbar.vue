@@ -14,10 +14,10 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           span.mx-1
             | \#{{SB.current_turn}}
 
-    template(v-if="SB.give_up_modal_open_button_show_p")
+    template(v-if="SB.resign_confirm_modal_open_button_show_p")
       b-navbar-item.has-text-weight-bold(tag="div")
         .buttons
-          a.button.give_up_modal_open_handle(@click="SB.give_up_modal_open_handle" :class="SB.appearance_theme_info.toryo_button_color")
+          a.button.resign_confirm_modal_open_handle(@click="SB.resign_confirm_modal_open_handle" :class="SB.appearance_theme_info.toryo_button_color")
             | 投了
 
   template(slot="start")
