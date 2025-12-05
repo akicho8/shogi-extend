@@ -5,7 +5,6 @@ import { OrderFlow } from "./order_flow/order_flow.js"
 import { order_modal    } from "./order_modal.js"
 import { mod_order_turn   } from "./mod_order_turn.js"
 import { mod_order_option } from "./mod_order_option.js"
-import { mod_order_ui } from "./mod_order_ui.js"
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
@@ -15,7 +14,6 @@ export const mod_order_main = {
     order_modal,
     mod_order_turn,
     mod_order_option,
-    mod_order_ui,
   ],
   data() {
     return {
