@@ -62,7 +62,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       end
     end
 
-    it "block: できない" do
+    it "block: ブロック" do
       window_a { case1(:a, :block) }
       window_b { case1(:b, :block) }
       window_a { double_pawn! }
@@ -105,7 +105,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         })
     end
 
-    it "「反則したら負け」モードでも感想戦中は「反則できない」相当になっている" do
+    it "「反則したら負け」モードでも感想戦中は「反則ブロック」相当になっている" do
       window_a { case1(:a, :lose) }
       window_b { case1(:b, :lose) }
       window_a { double_pawn! }

@@ -5,7 +5,7 @@
       | 警告
   .modal-card-body
     .content
-      p 反則できないは接待用のモードです。
+      p 反則ブロックは接待用のモードです。
       p すでに将棋のルールを理解し、向上心をもって取り組む{{SB.my_call_name}}には必要ないでしょう。
   .modal-card-foot
     b-button.submit_handle(@click="submit_handle" type="is-warning") 接待する
