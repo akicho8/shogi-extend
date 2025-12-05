@@ -15,7 +15,6 @@ export const mod_order_new = {
         order_flow:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
 
         foul_mode_key:                null, // 反則をどうするか
-        auto_resign_key:              null, // 投了のタイミング
         think_mark_receive_scope_key: null, // 思考印のスコープ
         change_per:                   null, // N手毎交代
 
@@ -73,7 +72,6 @@ export const mod_order_new = {
       GX.assert_kind_of_integer(from.change_per)
 
       to.foul_mode_key                = from.foul_mode_key
-      to.auto_resign_key              = from.auto_resign_key
       to.think_mark_receive_scope_key = from.think_mark_receive_scope_key
       to.change_per                   = from.change_per
     },

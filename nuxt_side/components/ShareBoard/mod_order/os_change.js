@@ -32,7 +32,6 @@ export class OsChange {
       this.context.order_flow.hash,
       [
         this.context.foul_mode_key,
-        this.context.auto_resign_key,
         this.context.think_mark_receive_scope_key,
         this.context.change_per,
       ]

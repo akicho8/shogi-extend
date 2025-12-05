@@ -6,7 +6,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name         => user_name,
         :FIXED_MEMBER      => "a,b",
         :FIXED_ORDER       => "a,b",
-        :auto_resign_key   => :is_auto_resign_on,
         :room_after_create => :cc_auto_start_10m,
       })
     give_up_modal_open_handle   # 投了モーダルを表示した状態にする

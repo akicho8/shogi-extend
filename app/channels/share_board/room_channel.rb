@@ -118,7 +118,7 @@ module ShareBoard
       user_names = []
       # user_names = data["order_flow"]["order_operation"].collect { |e| e["user_name"] }.join(" → ")
       # user_names = data["order_flow"]["order_operation"] # 動的にかわる
-      config = ["foul_mode_key", "auto_resign_key"].collect { |e| data[e] }.join(" ")
+      config = ["foul_mode_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
       track(data, subject: "順番設定", body: message, emoji: ":順番設定:")
       broadcast(:order_draft_publish_broadcasted, data)

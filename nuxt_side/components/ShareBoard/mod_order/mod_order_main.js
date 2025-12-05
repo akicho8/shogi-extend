@@ -196,7 +196,6 @@ export const mod_order_main = {
         order_enable_p:    this.order_enable_p,
         order_flow:        this.order_flow ? this.order_flow.attributes : null,
         foul_mode_key: this.foul_mode_key,
-        auto_resign_key: this.auto_resign_key,
         think_mark_receive_scope_key: this.think_mark_receive_scope_key,
         change_per:            this.change_per,
         __nil_check_skip_keys__: "order_flow", // 最初の状態で ordered_members は null なので nil チェックにひっかかる

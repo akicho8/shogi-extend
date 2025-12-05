@@ -8,17 +8,7 @@
         | 接続切れで
       | {{snapshot_clock.current.location.flip.name}}の勝ち
   .modal-card-body
-    template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
-      p 終局です
-    template(v-else)
-      template(v-if="timeout_info.key === 'audo_judge'")
-        p {{user_call_name(SB.current_turn_user_name)}}は接続切れのまま時間切れになりました
-      template(v-else)
-        p ですが時計はまだ動いているので<b>手番の人はこのまま次の手を指せば</b>対局を続行できます
-        template(v-if="!snapshot_clock.current.time_recovery_mode_p")
-          p しかし現在の時計の設定では<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため回復しません
-          p もし続行する場合は時計を再設定しよう
-        //- p 続行しない場合は左上から投了しましょう
+    p 終局です
   .modal-card-foot
     b-button.ok_handle(@click="ok_handle" type="is-primary") 閉じる
 </template>

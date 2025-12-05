@@ -75,7 +75,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER           => "a",
         :self_vs_self_enable_p => true,
         :room_after_create     => :cc_auto_start_10m,
-        :auto_resign_key       => :is_auto_resign_on,
         :RS_FEATURE            => false,
       })
     perpetual_trigger

@@ -25,9 +25,7 @@ export const mod_give_up = {
 
     // 自分が生きていて時間切れしたとき自動投了モードなら投了する
     timeout_then_resign() {
-      if (this.auto_resign_info.key === "is_auto_resign_on") {
-        this.give_up_direct_run_with_valid()
-      }
+      this.give_up_direct_run_with_valid()
     },
 
     // 最終投了ボタンを押したときの処理

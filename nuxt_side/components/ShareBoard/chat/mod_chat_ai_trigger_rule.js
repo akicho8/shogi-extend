@@ -94,12 +94,12 @@ export const mod_chat_ai_trigger_rule = {
       if (this.received_from_self(params)) {
         if (GX.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
-            // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
-            if (this.auto_resign_info.key === "is_auto_resign_off") {
-              if (this.ai_say_turn_gteq(1)) {
-                this.ai_say_for(15, "反則した人を励ます", params)
-              }
-            }
+            // // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
+            // if (this.auto_resign_info.key === "is_auto_resign_off") {
+            //   if (this.ai_say_turn_gteq(1)) {
+            //     this.ai_say_for(15, "反則した人を励ます", params)
+            //   }
+            // }
           }
         }
       }
@@ -121,11 +121,11 @@ export const mod_chat_ai_trigger_rule = {
         }
         if (cc_behavior_info.key === "cc_behavior_timeout") {
           // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
-          if (this.auto_resign_info.key === "is_auto_resign_off") {
-            if (this.ai_say_turn_gteq(1)) {
-              this.ai_say_for(15, "時間切れで負けた人を励ます", params)
-            }
-          }
+          // if (this.auto_resign_info.key === "is_auto_resign_off") {
+          //   if (this.ai_say_turn_gteq(1)) {
+          //     this.ai_say_for(15, "時間切れで負けた人を励ます", params)
+          //   }
+          // }
         }
       }
     },

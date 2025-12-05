@@ -1,4 +1,0 @@
-http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_MEMBER=a,b&FIXED_ORDER=a,b&room_after_create=cc_auto_start_10m
-~/src/shogi-extend/nuxt_side/components/ShareBoard/give_up/mod_give_up.js
-~/src/shogi-extend/nuxt_side/components/ShareBoard/clock/TimeoutModal.vue
-~/src/shogi-extend/nuxt_side/components/ShareBoard/illegal/IllegalModal.vue
