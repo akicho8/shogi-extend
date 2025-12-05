@@ -62,21 +62,12 @@ export const mod_order_main = {
       this.ac_room_perform("order_switch_share", params) // --> app/channels/share_board/room_channel.rb
     },
     order_switch_share_broadcasted(params) {
-      if (this.received_from_self(params)) {
-        this.tl_alert("order_switch_share 自分→自分")
-      } else {
-        this.tl_alert("order_switch_share 自分→他者")
-      }
       this.order_enable_p = params.order_enable_p
       this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
       this.order_off_then_cc_stop()                      // 順番設定OFFになったら時計を停止する
-      // this.think_mark_auto_set()                     // 順番設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
-
-      if (params.message) {
-        const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
-        this.toast_primary(message, {toast: true, talk: true, ...params})
-      }
       if (GX.present_p(params.message)) {
+        const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
+        this.toast_primary(message, params)
         this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
       this.ac_log({subject: "順設受信", body: `順番${this.order_enable_p ? "ON" : "OFF"}を受信`})
