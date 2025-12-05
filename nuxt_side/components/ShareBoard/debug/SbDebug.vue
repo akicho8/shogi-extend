@@ -127,7 +127,7 @@
       .panel-heading
         | 反則指摘
       a.panel-block(@click="SB.ev_illegal_illegal_accident({name: '二歩'})") 自分
-      a.panel-block(@click="SB.illegal_modal_handle(['駒ワープ', '王手放置'])") 全体
+      a.panel-block(@click="SB.illegal_modal_open_handle(['駒ワープ', '王手放置'])") 全体
 
   .column.is-2
     .panel

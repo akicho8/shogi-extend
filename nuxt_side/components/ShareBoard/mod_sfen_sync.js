@@ -85,7 +85,7 @@ export const mod_sfen_sync = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターがアバターになってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_sync_params,
         }
-        this.illegal_modal_handle(params.illegal_names)
+        this.illegal_modal_open_handle(params.illegal_names)
         this.think_mark_all_clear()                         // マークを消す
         this.al_add(params)
         this.honpu_branch_setup(params)
@@ -153,7 +153,7 @@ export const mod_sfen_sync = {
         this.from_user_name_valid(params)               // 指し手制限をしていないとき別の人が指したかチェックする
 
         this.illegal_then_resign(params)               // 自分が反則した場合は投了する
-        this.illegal_modal_handle(params.illegal_names) // 反則があれば表示する
+        this.illegal_modal_open_handle(params.illegal_names) // 反則があれば表示する
         this.illegal_logging(params)                    // 反則の状態を記録する
         this.ai_say_case_illegal(params)                // 反則した人を励ます
 

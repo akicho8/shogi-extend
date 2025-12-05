@@ -7,7 +7,6 @@ import { KomaotoVolumeScaleInfo      } from "../models/komaoto_volume_scale_info
 import { TalkVolumeScaleInfo   } from "../models/talk_volume_scale_info.js"
 import { CommonVolumeScaleInfo } from "../models/common_volume_scale_info.js"
 
-import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
 import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
@@ -54,9 +53,6 @@ export const mod_general_setting = {
 
     SettingRootInfo()     { return SettingRootInfo                                       },
     setting_root_info()   { return this.SettingRootInfo.fetch(this.setting_category_key) },
-
-    CtrlModeInfo()            { return CtrlModeInfo                                              },
-    ctrl_mode_info()          { return this.CtrlModeInfo.fetch(this.ctrl_mode_key)               },
 
     YomiageModeInfo()         { return YomiageModeInfo                                           },
     yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },
