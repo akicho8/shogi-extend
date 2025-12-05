@@ -42,10 +42,6 @@ module SharedMethods
   end
 
   def room_setup(room_key, user_name, params = {})
-    params = {
-      :shuffle_first => false,     # テストにランダム要素が含まれると混乱するため初期値では入室順に順序が決まるようにする
-    }.merge(params)
-
     visit_app(params)
     room_menu_open_and_input(room_key, user_name)
   end

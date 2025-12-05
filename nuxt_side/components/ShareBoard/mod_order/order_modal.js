@@ -66,7 +66,7 @@ export const order_modal = {
       this.order_draft.os_change = new OsChange(this.order_draft)
 
       // 残りの観戦者をセットする(対局者は自動的に除く・始めての場合は全員入れてシャッフルする)
-      this.order_draft.order_flow.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
+      this.order_draft.order_flow.auto_users_set(this.room_user_names)
     },
     os_options_copy_a_to_b(from, to) {
       GX.assert_kind_of_integer(from.change_per)

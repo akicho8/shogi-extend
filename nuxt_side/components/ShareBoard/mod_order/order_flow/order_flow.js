@@ -125,18 +125,11 @@ export class OrderFlow {
   }
 
   // 順番設定モーダル内で使うデータの準備
-  // 空のときだけアロケートしてシャッフルを行う
-  auto_users_set(user_names, options = {}) {
-    options = {
-      with_shuffle: true,
-      ...options,
-    }
+  // 空のときだけアロケートする
+  auto_users_set(user_names) {
     if (this.empty_p) {
       // 空なら全員対局者にする
       this.user_names_allocate(user_names)
-      if (options.with_shuffle) {
-        this.shuffle_all()       // モーダルを最初に開いたときシャッフル済みにしておく(重要)
-      }
     } else {
       // 空でなければ対局者以外を観戦者にする
       this.no_entry_user_only_watch_users_set(user_names)
