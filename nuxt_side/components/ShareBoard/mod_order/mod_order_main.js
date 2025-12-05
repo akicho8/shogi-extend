@@ -2,7 +2,7 @@
 
 import { OrderFlow } from "./order_flow/order_flow.js"
 
-import { mod_order_new    } from "./mod_order_new.js"
+import { order_setting_modal    } from "./order_setting_modal.js"
 import { mod_order_turn   } from "./mod_order_turn.js"
 import { mod_order_option } from "./mod_order_option.js"
 import { mod_order_ui } from "./mod_order_ui.js"
@@ -12,7 +12,7 @@ import { GX } from "@/components/models/gx.js"
 
 export const mod_order_main = {
   mixins: [
-    mod_order_new,
+    order_setting_modal,
     mod_order_turn,
     mod_order_option,
     mod_order_ui,

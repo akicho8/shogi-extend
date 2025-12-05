@@ -5,7 +5,7 @@ import { OrderFlow } from "./order_flow/order_flow.js"
 import OrderSettingModal from "./OrderSettingModal.vue"
 import { GX } from "@/components/models/gx.js"
 
-export const mod_order_new = {
+export const order_setting_modal = {
   data() {
     return {
       // ローカルのモーダルで使うテンポラリ変数
