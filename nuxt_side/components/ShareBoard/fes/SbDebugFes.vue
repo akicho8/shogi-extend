@@ -10,7 +10,7 @@
       a.panel-block(@click="SB.quiz_maker_handle()") お題メーカー
       a.panel-block(@click="SB.quiz_share(SB.Quiz.create({subject: 's', items: ['a', 'b']}))") お題配布
       a.panel-block(@click="SB.quiz_delete()") お題の削除
-      a.panel-block(@click="SB.os_modal_open_handle()") 順番設定
+      a.panel-block(@click="SB.order_modal_open_handle()") 順番設定
       a.panel-block(@click="SB.voted_result_to_order_apply()") 結果を反映する
   .column.is-3
     .panel

@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER  => "a",
       })
 
-    os_modal_open
+    order_modal_open
     os_switch_toggle
     os_submit_button_click
     assert_text "各チームに最低1人入れてください"

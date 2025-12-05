@@ -79,7 +79,7 @@
     template(v-if="SB.order_enable_p")
       b-button.apply_button(@click="apply_handle" :type="apply_button_type") 確定
       template(v-if="SB.debug_mode_p")
-        b-button.os_modal_force_submit_button(@click="os_modal_force_submit_handle") 確定(force)
+        b-button.order_modal_force_submit_button(@click="order_modal_force_submit_handle") 確定(force)
 </template>
 
 <script>
@@ -91,7 +91,7 @@ import { support_child } from "../support_child.js"
 import FoulModeBlockWarnModal from "./FoulModeBlockWarnModal.vue"
 
 export default {
-  name: "OrderSettingModal",
+  name: "OrderModal",
   mixins: [support_child],
   provide() {
     return {
@@ -124,17 +124,17 @@ export default {
     },
 
     close_handle() {
-      if (this.SB.os_modal_close_if_not_save_p) {
-        this.SB.os_modal_close_confirm({
+      if (this.SB.order_modal_close_if_not_save_p) {
+        this.SB.order_modal_close_confirm({
           onConfirm: () => {
             this.sfx_click()
-            this.SB.os_modal_close()
+            this.SB.order_modal_close()
           },
         })
         return
       }
       this.sfx_click()
-      this.SB.os_modal_close()
+      this.SB.order_modal_close()
     },
 
     // 全体ｼｬｯﾌﾙ
@@ -234,7 +234,7 @@ export default {
       this.sfx_click()
       if (!this.SB.order_draft.os_change.has_changes_to_save_p) {
         this.toast_primary(`変更はありません`)
-        this.SB.os_modal_close()
+        this.SB.order_modal_close()
         return
       }
       this.SB.order_draft_publish("順番設定を反映しました")
@@ -242,7 +242,7 @@ export default {
     },
 
     // バリデーションなしで確定する
-    os_modal_force_submit_handle() {
+    order_modal_force_submit_handle() {
       this.os_before_apply()
       if (this.invalid_options()) { return }
       this.SB.order_draft_publish("バリデーションなしで順番設定を確定しました")
@@ -263,7 +263,7 @@ export default {
 
     quiz_maker_handle() {
       this.sfx_click()
-      this.SB.os_modal_close()
+      this.SB.order_modal_close()
       this.SB.quiz_maker_handle()
       this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
     },
@@ -372,7 +372,7 @@ export default {
 
 <style lang="sass">
 @import "../sass/support.sass"
-.OrderSettingModal
+.OrderModal
   +modal_width(480px)
   // +modal_width_auto
 
@@ -406,7 +406,7 @@ export default {
       color: $grey
 
 .STAGE-development
-  .OrderSettingModal
+  .OrderModal
     .modal-card-body
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .start_message

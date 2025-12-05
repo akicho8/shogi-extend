@@ -29,7 +29,7 @@ import { GX } from "@/components/models/gx.js"
 export default {
   name: "OrderTeamOne",
   mixins: [support_child],
-  inject: ["TheOSM"],           // OrderSettingModal
+  inject: ["TheOSM"],           // OrderModal
   props: {
     label: { type: String, required: true, },
     items: { type: Array,  required: true, },

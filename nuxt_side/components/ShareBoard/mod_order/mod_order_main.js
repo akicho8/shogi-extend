@@ -2,7 +2,7 @@
 
 import { OrderFlow } from "./order_flow/order_flow.js"
 
-import { order_setting_modal    } from "./order_setting_modal.js"
+import { order_modal    } from "./order_modal.js"
 import { mod_order_turn   } from "./mod_order_turn.js"
 import { mod_order_option } from "./mod_order_option.js"
 import { mod_order_ui } from "./mod_order_ui.js"
@@ -12,7 +12,7 @@ import { GX } from "@/components/models/gx.js"
 
 export const mod_order_main = {
   mixins: [
-    order_setting_modal,
+    order_modal,
     mod_order_turn,
     mod_order_option,
     mod_order_ui,
@@ -241,7 +241,7 @@ export const mod_order_main = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
-    os_modal_close_if_not_save_p() { return this.order_enable_p && this.order_draft.os_change.has_changes_to_save_p },
+    order_modal_close_if_not_save_p() { return this.order_enable_p && this.order_draft.os_change.has_changes_to_save_p },
 
     // 最終的に左側に表示する並びになっているメンバーリスト
     // 順番設定されているときは対局者を優先的に上に表示する

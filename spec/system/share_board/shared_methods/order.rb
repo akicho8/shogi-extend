@@ -5,21 +5,21 @@ module SharedMethods
     assert_clock(:stop)
   end
 
-  def os_modal_open_handle
-    find(".os_modal_open_handle").click
+  def order_modal_open_handle
+    find(".order_modal_open_handle").click
   end
 
-  def os_modal_open
+  def order_modal_open
     # assert_room_created
     sidebar_open
-    os_modal_open_handle
+    order_modal_open_handle
   end
 
-  def os_modal_close
-    find(".OrderSettingModal .close_handle_for_capybara").click
+  def order_modal_close
+    find(".OrderModal .close_handle_for_capybara").click
   end
 
-  def os_modal_close_force
+  def order_modal_close_force
     find("button", text: "確定せずに閉じる", exact_text: true).click
   end
 
@@ -29,17 +29,17 @@ module SharedMethods
   end
 
   def order_set_on
-    os_modal_open
+    order_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     os_submit_button_click                 # 明示的に適用する
-    os_modal_close
+    order_modal_close
     assert_action_text("順番 ON")
   end
 
   def order_set_off
-    os_modal_open
+    order_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    os_modal_close
+    order_modal_close
     assert_action_text("順番 OFF")
   end
 
@@ -51,8 +51,8 @@ module SharedMethods
     first(".apply_button").click
   end
 
-  def os_modal_force_submit
-    first(".os_modal_force_submit_button").click
+  def order_modal_force_submit
+    first(".order_modal_force_submit_button").click
   end
 
   # from_klass の上から row_index 番目のメンバーを観戦に移動する

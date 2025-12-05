@@ -98,18 +98,18 @@
 ** 順番設定済みのテスト
 
    3人
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c&room_after_create=order_modal_open_handle
 
    4人
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle
 
 ** 振り駒
 
    # 常に反転 x 2回 なので 歩5枚
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=2
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=2
 
    # 常に反転 x 3回 なので と金5枚
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=3
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle&furigoma_random_key=force_true&shakashaka_count=3
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
@@ -176,7 +176,7 @@
 
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle
 
 ** 自分は a で部屋に abcd がいて順番が abcd で a が棋譜をサーバーに記録する
 
@@ -184,7 +184,7 @@
 
 ** 順番設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&FIXED_MEMBER=ありす,きゃろる&FIXED_ORDER=ありす,ぼぶ,きゃろる&room_after_create=os_modal_open_handle
+   http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&FIXED_MEMBER=ありす,きゃろる&FIXED_ORDER=ありす,ぼぶ,きゃろる&room_after_create=order_modal_open_handle
 
 ** 順番設定と対局時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 

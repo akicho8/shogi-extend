@@ -105,7 +105,7 @@
       a.panel-block(@click="SB.app_force_reload_notify_modal_open") リロード確認
       a.panel-block(@click="SB.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="SB.run_or_room_out_confirm()") 退室確認
-      a.panel-block(@click="SB.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
+      a.panel-block(@click="SB.order_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="SB.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="SB.cc_next_message") 順番設定後に時計設置を促す
       a.panel-block(@click="SB.tn_bell_call") 牛

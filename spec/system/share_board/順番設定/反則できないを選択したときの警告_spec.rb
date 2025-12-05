@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER => "a,b",
         :FIXED_ORDER  => "a,b",
       })
-    os_modal_open
+    order_modal_open
     find(".is_foul_mode_block").click                      # 反則「ブロック」を選択する
     assert_selector(".FoulModeBlockWarnModal")             # 警告モーダルを表示する
     yield

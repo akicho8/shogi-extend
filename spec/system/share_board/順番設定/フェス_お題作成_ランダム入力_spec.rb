@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         })
     end
     window_a do
-      os_modal_open
+      order_modal_open
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
 

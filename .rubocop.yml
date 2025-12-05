@@ -5,7 +5,7 @@ AllCops:
   Exclude:
     - "nuxt_side/**/*"
     - "nuxt_side_small/**/*"
-    - "share_board_order_setting_modal_ui_mock_experiment/**/*"
+    - "share_board_order_modal_ui_mock_experiment/**/*"
 
 # ↓これが理想だけど強制的に [1,2,] が [1,2] になってしまうため役に立たない
 #

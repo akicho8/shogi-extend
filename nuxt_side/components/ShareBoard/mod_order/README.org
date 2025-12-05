@@ -1,4 +1,4 @@
-http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&change_per=2&FIXED_ORDER=a,b,c,d&room_after_create=os_modal_open_handle&auto_close_p=true
+http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&change_per=2&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle&auto_close_p=true
 http://localhost:4000/experiment/OrderUiTest
 
 FIXED_MEMBER=ありす,ぼぶ,きゃろる,でーぶ,ふらんく

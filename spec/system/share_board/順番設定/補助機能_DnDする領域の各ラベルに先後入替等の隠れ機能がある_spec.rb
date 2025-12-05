@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER => "a,b,c,d",
         :FIXED_ORDER  => "a,b,c,d",
       })
-    os_modal_open
+    order_modal_open
     assert_order_team_one "ac", "bd"
 
     find(".is_team_black .OrderTeamOneTitle").click

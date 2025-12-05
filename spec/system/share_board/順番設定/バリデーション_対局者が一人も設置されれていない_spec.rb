@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER  => "a",
       })
 
-    os_modal_open
+    order_modal_open
     os_switch_toggle
 
     drag_to_watch(:is_team_black, 0) # a を観戦に移動

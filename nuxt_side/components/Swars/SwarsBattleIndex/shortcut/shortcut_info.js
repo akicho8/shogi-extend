@@ -57,7 +57,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       // },
       // {
       //   _if: (c, e) => c.keyboard_single_key_equal(e, "o"),
-      //   call: (c, e) => c.os_modal_open_handle(),
+      //   call: (c, e) => c.order_modal_open_handle(),
       // },
       // {
       //   _if: (c, e) => c.keyboard_single_key_equal(e, "c"),

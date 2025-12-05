@@ -14,7 +14,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1("b") }
     window_c { case1("c") }
     window_a do
-      os_modal_open                                           # 「順番設定」モーダルを開く
+      order_modal_open                                           # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
       within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入
@@ -39,7 +39,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_a do
       sidebar_open
-      os_modal_open_handle
+      order_modal_open_handle
       find(:button, text: "結果を反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
       assert_order_team_one "", "ab", sort: true # 順番に反映した。a も b も右側である "(quiz_right)" を選択したため偏っている
       assert_order_dnd_watcher "c"               # c は投票しなかったので観戦者になっている

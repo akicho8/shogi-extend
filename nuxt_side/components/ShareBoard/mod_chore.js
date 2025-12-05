@@ -88,7 +88,7 @@ export const mod_chore = {
     all_modal_close() {
       this.gate_modal_close()
       this.cc_modal_close()
-      this.os_modal_close()
+      this.order_modal_close()
     },
   },
 

@@ -9,11 +9,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
 
     assert_var("本順序", "12345678")
-    os_modal_open
+    order_modal_open
     find(:button, text: button_name, exact_text: true).click
     assert_text("1さんが#{button_name}しました")
     os_submit_button_click
-    os_modal_close
+    order_modal_close
     assert_no_var("本順序", "12345678")
   end
 

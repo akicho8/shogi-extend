@@ -2,10 +2,10 @@
 
 import { OsChange } from "./os_change.js"
 import { OrderFlow } from "./order_flow/order_flow.js"
-import OrderSettingModal from "./OrderSettingModal.vue"
+import OrderModal from "./OrderModal.vue"
 import { GX } from "@/components/models/gx.js"
 
-export const order_setting_modal = {
+export const order_modal = {
   data() {
     return {
       // ローカルのモーダルで使うテンポラリ変数
@@ -25,37 +25,37 @@ export const order_setting_modal = {
   },
 
   beforeDestroy() {
-    this.os_modal_close()
+    this.order_modal_close()
   },
 
   methods: {
-    os_modal_open_handle() {
-      if (this.os_modal_instance == null) {
+    order_modal_open_handle() {
+      if (this.order_modal_instance == null) {
         if (this.room_is_empty_p()) { return }
 
         this.sidebar_close()
         this.sfx_click()
 
-        this.os_modal_init()
+        this.order_modal_init()
 
-        GX.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
+        GX.assert(this.order_modal_instance == null, "this.order_modal_instance == null")
         // this.gate_modal_close()
-        this.os_modal_instance = this.modal_card_open({
-          component: OrderSettingModal,
+        this.order_modal_instance = this.modal_card_open({
+          component: OrderModal,
           props: { },
           canCancel: [],
           // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
           onCancel: () => {
             GX.assert(false, "must not happen")
             this.sfx_click()
-            this.os_modal_close()
+            this.order_modal_close()
           },
         })
       }
     },
 
     // 順番設定モーダル内で使うデータの準備
-    os_modal_init() {
+    order_modal_init() {
       // 現在の順番設定をコピーする
       this.order_draft.order_flow = this.order_flow.deep_clone()
 
@@ -78,16 +78,16 @@ export const order_setting_modal = {
 
     // 順番設定モーダルを閉じる
     // 別のところから強制的に閉じたいとき用
-    os_modal_close() {
-      if (this.os_modal_instance) {
-        this.os_modal_instance.close()
-        this.os_modal_instance = null
-        this.debug_alert("OrderSettingModal close")
+    order_modal_close() {
+      if (this.order_modal_instance) {
+        this.order_modal_instance.close()
+        this.order_modal_instance = null
+        this.debug_alert("OrderModal close")
       }
     },
 
     // 閉じる
-    os_modal_close_confirm(params = {}) {
+    order_modal_close_confirm(params = {}) {
       this.sfx_click()
       this.sb_talk("変更を適用せずに閉じようとしています")
       this.dialog_confirm({
@@ -131,14 +131,14 @@ export const order_setting_modal = {
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // 新しくなった order_flow を order_draft.order_flow に反映する
-      if (this.os_modal_update_ok) {
-        this.os_modal_init()
+      if (this.order_modal_update_ok) {
+        this.order_modal_init()
       }
 
       // 自分を含めて閉じる
       if (this.auto_close_p) {
-        if (this.os_modal_update_ok) {
-          this.os_modal_close()
+        if (this.order_modal_update_ok) {
+          this.order_modal_close()
         }
       }
 
@@ -153,12 +153,12 @@ export const order_setting_modal = {
     // 特定の人を除外するショートカット
     os_member_delete(user_name) {
       this.clog(this.order_flow.flat_uniq_users)
-      this.os_modal_init()                                                         // order_draft を準備する
+      this.order_modal_init()                                                         // order_draft を準備する
       this.order_draft.order_flow.user_name_reject(user_name)                            // order_draft から次の人を除外する
       this.order_draft_publish(`順番設定から${this.user_call_name(user_name)}を外しました`) // order_draft を配って更新する
     },
   },
   computed: {
-    os_modal_update_ok() { return this.order_draft.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
+    order_modal_update_ok() { return this.order_draft.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
   },
 }

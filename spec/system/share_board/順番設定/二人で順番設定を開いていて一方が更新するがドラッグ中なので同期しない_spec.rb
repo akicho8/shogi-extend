@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER => "a,b",
         :FIXED_ORDER  => "a,b",
       })
-    os_modal_open
+    order_modal_open
     os_switch_toggle
   end
 

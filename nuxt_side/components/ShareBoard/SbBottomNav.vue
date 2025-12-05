@@ -2,7 +2,7 @@
 .SbBottomNav(v-if="SB.debug_mode_p && !__SYSTEM_TEST_RUNNING__")
   .buttons_container
     a.button.is-marginless.is-small.is-primary.gate_modal_open_handle(@click="SB.gate_modal_open_handle") 入退室
-    a.button.is-marginless.is-small.is-primary.os_modal_open_handle(@click="SB.os_modal_open_handle") 順番設定
+    a.button.is-marginless.is-small.is-primary.order_modal_open_handle(@click="SB.order_modal_open_handle") 順番設定
     a.button.is-marginless.is-small.is-primary.cc_modal_open_handle(@click="SB.cc_modal_open_handle") 対局時計
 </template>
 

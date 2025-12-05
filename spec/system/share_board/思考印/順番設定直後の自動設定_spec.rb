@@ -18,9 +18,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 順番設定を適用する
     window_a do
-      os_modal_open
-      os_modal_force_submit
-      os_modal_close
+      order_modal_open
+      order_modal_force_submit
+      order_modal_close
     end
 
     window_a { assert_var :think_mark_mode_p, false }
