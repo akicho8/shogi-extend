@@ -114,6 +114,10 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("SHOGIEXTEND")).toEqual(false)
   })
 
+  test("文字を連続してNGワードを突破しようとしてもダメ", () => {
+    expect(HandleNameValidator.valid_p("おおちちんんちちんん")).toEqual(false)
+  })
+
   // test("prefixが含まれるのはダメ", () => {
   //   expect(HandleNameValidator.valid_p("まじめに")).toEqual(false)
   // })

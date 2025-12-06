@@ -66,9 +66,8 @@ export class HandleNameValidator {
       }
     }
 
-    const name = this.normalized_name
     if (message == null) {
-      if (GX.blank_p(name)) {
+      if (GX.blank_p(this.normalized_name)) {
         message = `${this.options.name}を入力しよう`
       }
     }
@@ -76,16 +75,16 @@ export class HandleNameValidator {
     if (this.options.ng_word_check_p) {
       // 絵文字とか使うな
       if (message == null) {
-        if (!name.match(RegexpSet.HANDLE_NAME_SAFE_CHAR)) {
+        if (!this.normalized_name.match(RegexpSet.HANDLE_NAME_SAFE_CHAR)) {
           message = `${this.options.name}に使用できない文字が含まれているようです (絵文字や記号は使用できません)`
         }
       }
 
       // 1文字にするな
       if (message == null) {
-        if (name.length === 1) {
+        if (this.normalized_name.length === 1) {
           // 「漢字を除いた文字列」を作成
-          const without_kanji = name.replace(/[一-龥]/g, "")
+          const without_kanji = this.normalized_name.replace(/[一-龥]/g, "")
           // 「漢字を除いたときに1文字だけ」ならNG（例：'あ' や 'A' はNG）
           const is_single_non_kanji = without_kanji.length === 1
           if (is_single_non_kanji) {
@@ -97,35 +96,35 @@ export class HandleNameValidator {
       // 全部数字は名前じゃない
       if (message == null) {
         // 全体が「半角数字」で構成されているものはダメ
-        if (name.match(RegexpSet.COMMON_NUMBER)) {
+        if (this.normalized_name.match(RegexpSet.COMMON_NUMBER)) {
           message = `それは${this.options.name}ではなく数字です`
         }
       }
 
       // 段級位を書くな
       if (message == null) {
-        if (name.match(RegexpSet.COMMON_GRADE)) {
+        if (this.normalized_name.match(RegexpSet.COMMON_GRADE)) {
           message = `${this.options.name}に段級位を含めないでください`
         }
       }
 
       // 自分に敬称をつけんな
       if (message == null) {
-        if (name.match(/(ちゃん|君|くん|さん|様|さま|殿|氏|先生)$/)) {
+        if (this.normalized_name.match(/(ちゃん|君|くん|さん|様|さま|殿|氏|先生)$/)) {
           message = `自分に敬称をつけるのはやめよう`
         }
       }
 
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
-        if (name.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i"))) {
+        if (this.target_strs.some(it => it.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i")))) {
           message = `呼ばれて恥ずかしくない${this.options.name}にしよう`
         }
       }
 
       // へんな用語を入れるやつを弾く
       if (message == null) {
-        if (name.match(new RegExp(HandleNameNgWordUserList.join("|"), "i"))) {
+        if (this.target_strs.some(it => it.match(new RegExp(HandleNameNgWordUserList.join("|"), "i")))) {
           message = `もっと素敵な${this.options.name}にしよう`
         }
       }
@@ -145,5 +144,16 @@ export class HandleNameValidator {
     let str = moji.toString()
     str = str.replace(/ +/g, "")    // 半角スペース → (削除) ※ \s を使うと \n まで消えてしまってエラーにできない
     return str
+  }
+
+  // 連続する文字を一つにする
+  // "あああいいい" => "あい"
+  // これで "おおちちんんちちんん" を入れてくるやつにマッチできる
+  get collapsed_string() {
+    return this.normalized_name.replace(/(.)\1*/g, "$1")
+  }
+
+  get target_strs() {
+    return [this.normalized_name, this.collapsed_string]
   }
 }
