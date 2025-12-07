@@ -44,7 +44,7 @@ export const mod_action_log = {
     al_test() {
       const i = this.action_logs.length
       this.al_add({
-        lmi: {
+        simple_hand_attributes: {
           kif_without_from:    "☗00歩",
           next_turn_offset:    i,
           player_location_key: "black",

@@ -11,11 +11,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   def notice_exist
-    assert_var(:latest_illegal_name, "二歩")
+    assert_var(:latest_illegal_hv, "二歩")
   end
 
   def notice_none
-    assert_var(:latest_illegal_name, "")
+    assert_var(:latest_illegal_hv, "")
   end
 
   def modal_exist

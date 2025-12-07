@@ -45,6 +45,7 @@ export default {
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
       hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
+      hv.sp_checkmate_feature        = true // 詰み判定する
 
       // スマホでのUI確認用
       if (false) {

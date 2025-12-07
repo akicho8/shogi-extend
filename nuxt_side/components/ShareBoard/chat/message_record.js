@@ -39,7 +39,7 @@ export class MessageRecord {
   // 発言したときに toast にぶっこむ
   get toast_params() {
     return {
-      container: ".ShogiPlayer .MainBoard",
+      container: this.sb_main_shogi_board_selector_for_toast,
       position: "is-top",
       message: this.toast_message,
       type: this.toast_type,

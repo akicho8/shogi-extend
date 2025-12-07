@@ -85,8 +85,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
           "rs_seq_id"     => 1,
           "next_user_name"    => "bob",
           "elapsed_sec"       => 1,
-          "illegal_names"     => ["二歩", "千日手"],
-          "lmi" => {
+          "illegal_hv_list"     => ["二歩", "千日手"],
+          "simple_hand_attributes" => {
             "kif_without_from"    => "☗7六歩",
             "next_turn_offset"    => 1,
             "player_location_key" => "black",

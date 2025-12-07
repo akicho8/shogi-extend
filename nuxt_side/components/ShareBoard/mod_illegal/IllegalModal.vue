@@ -6,7 +6,7 @@
   .modal-card-body
     p 終局です
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" type="is-primary") 閉じる
+    b-button.illegal_modal_close_handle(@click="SB.illegal_modal_close_handle" type="is-primary") 閉じる
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   name: "IllegalModal",
   mixins: [support_child],
   props: {
-    illegal_names: { type: Array,  required: true, },
+    illegal_hv_list: { type: Array, required: true, },
   },
   data() {
     return {
@@ -26,16 +26,9 @@ export default {
   created() {
     this.current_location = this.SB.current_location
   },
-  methods: {
-    close_handle() {
-      this.sfx_click()
-      this.SB.illegal_modal_close()
-      this.$emit("close")
-    },
-  },
   computed: {
     reason() {
-      return this.illegal_names.join("と")
+      return this.illegal_hv_list.map(e => e.illegal_info.name).join("と")
     },
   },
 }
@@ -44,9 +37,9 @@ export default {
 <style lang="sass">
 .IllegalModal
   +modal_max_width(25rem)
-  .modal-card-body
-    p:not(:first-child)
-      margin-top: 0.75rem
+  // .modal-card-body
+  //   p:not(:first-child)
+  //     margin-top: 0.75rem
   .modal-card-foot
     justify-content: flex-end
 </style>

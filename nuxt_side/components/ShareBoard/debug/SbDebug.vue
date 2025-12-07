@@ -40,6 +40,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugIllegal
   SbDebugResign
   SbDebugAvatar
   SbDebugRoom
@@ -63,7 +64,6 @@
 
   SbDebugClock
   SbDebugDashboard
-
 
   SbDebugPerpetual
   SbDebugBasic
@@ -121,13 +121,6 @@
       a.panel-block(@click="SB.viewpoint = 'black'") ☗視点
       a.panel-block(@click="SB.viewpoint = 'white'") ☖視点
       .panel-block 現在の視点 {{SB.viewpoint}}
-
-  .column.is-2
-    .panel
-      .panel-heading
-        | 反則指摘
-      a.panel-block(@click="SB.ev_illegal_illegal_accident({name: '二歩'})") 自分
-      a.panel-block(@click="SB.illegal_modal_open_handle(['駒ワープ', '王手放置'])") 全体
 
   .column.is-2
     .panel

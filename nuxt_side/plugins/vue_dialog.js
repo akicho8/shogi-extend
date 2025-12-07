@@ -47,11 +47,7 @@ export const vue_dialog = {
 
     async toast_primitive(message, params = {}) {
       params = {
-        toast: true,
-        talk: true,
-        position: "is-bottom",
-        type: "is-primary",
-        queue: false,
+        ...this.toast_primitive_default_params,
         ...params,
       }
       if (message) {
@@ -197,6 +193,17 @@ export const vue_dialog = {
         onConfirm: () => this.sfx_click(),
         ...params,
       })
+    },
+  },
+  computed: {
+    toast_primitive_default_params() {
+      return {
+        toast: true,
+        talk: true,
+        position: "is-bottom",
+        type: "is-primary",
+        queue: false,
+      }
     },
   },
 }

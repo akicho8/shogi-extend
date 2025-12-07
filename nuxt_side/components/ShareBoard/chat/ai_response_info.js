@@ -77,9 +77,9 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
       {
         key: "反則した人を励ます",
         command_fn: (context, params) => {
-          const illegal_names = params.illegal_names.join("と")
+          const illegal_hv_list = params.illegal_hv_list.map(e => e.illegal_info.name).join("と")
           const name = context.user_call_name(params.from_user_name)
-          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を励ましてな。`
+          return `反則の${illegal_hv_list}をしてしまい落ち込んでいる${name}を励ましてな。`
         },
       },
       {

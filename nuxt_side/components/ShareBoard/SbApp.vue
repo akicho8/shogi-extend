@@ -79,6 +79,7 @@ import { mod_action_log_share              } from "./action_log/mod_action_log_s
 
 import { mod_turn_notify                   } from "./mod_turn_notify.js"
 import { mod_otasuke                       } from "./mod_otasuke.js"
+import { mod_toast                         } from "./mod_toast.js"
 import { mod_order_main                    } from "./mod_order/mod_order_main.js"
 import { mod_migrate                       } from "./mod_migrate/mod_migrate.js"
 import { mod_battle_session                } from "./mod_battle_session.js"
@@ -117,7 +118,7 @@ import { mod_resend                        } from "./resend/mod_resend.js"
 import { mod_look_away                        } from "./look_away/mod_look_away.js"
 import { mod_force_sync                    } from "./mod_force_sync.js"
 import { mod_turn_change                   } from "./turn_change/mod_turn_change.js"
-import { mod_illegal                       } from "./illegal/mod_illegal.js"
+import { mod_illegal                       } from "./mod_illegal/mod_illegal.js"
 import { mod_board_preset                 } from "./board_preset/mod_board_preset.js"
 import { mod_back_to                       } from "./mod_back_to.js"
 import { mod_shortcut                      } from "./shortcut/mod_shortcut.js"
@@ -192,6 +193,7 @@ export default {
     mod_persistent_cc_params,
     mod_turn_notify,
     mod_otasuke,
+    mod_toast,
     mod_order_main,
     mod_migrate,
     mod_member_list,

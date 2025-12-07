@@ -15,7 +15,7 @@ export class ActionLogRecord {
     Object.freeze(this)
   }
 
-  get dispay_time() {
+  get display_time() {
     return TimeUtil.format_hhmmss(this.performed_at)
   }
 

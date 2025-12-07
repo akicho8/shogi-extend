@@ -284,21 +284,21 @@ module ShareBoard
     end
 
     def sfen_sync_track_body(data)
-      lmi = data["lmi"]
-      player_location = LocationInfo.fetch(lmi["player_location_key"])
-      next_turn_offset = lmi["next_turn_offset"]
+      simple_hand_attributes = data["simple_hand_attributes"]
+      player_location = LocationInfo.fetch(simple_hand_attributes["player_location_key"])
+      next_turn_offset = simple_hand_attributes["next_turn_offset"]
 
       s = []
       s << "#{next_turn_offset}手目"
       s << player_location.mark
-      s << lmi["kif_without_from"].inspect
+      s << simple_hand_attributes["kif_without_from"].inspect
       if v = data["next_user_name"]
         s << "→ #{v.inspect}"
       end
       if v = data["elapsed_sec"]
         s << "(#{-v}秒)"
       end
-      if v = data["illegal_names"].presence
+      if v = data["illegal_hv_list"].presence
         s << "反則:#{v}"
       end
       s.join(" ")

@@ -2,7 +2,6 @@ import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
 const SELF_VS_SELF_THEN_SKIP             = false // 自分vs自分のときは保存しない？
-const SELF_VS_SELF_THEN_MEMBER_ZERO_SAVE = true  // 自分vs自分のときは対局者なしで保存する？
 const SELF_VS_SELF_THEN_FORCE_LOSE       = true  // 自分vs自分のときは必ず自分は負けとして保存する？
 
 export const mod_battle_archive = {

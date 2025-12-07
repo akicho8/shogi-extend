@@ -15,29 +15,28 @@ export const mod_sfen_sync = {
 
     // あとで再送するかもしれないのでいったん送るパラメータを作って保持しておく
     sfen_sync_params_set(e) {
-      const lmi = e.last_move_info
-
-      this.tl_add("SP", lmi.to_kif_without_from, lmi)
+      this.tl_add("SP", e.last_move_info.to_kif_without_from, e.last_move_info)
       GX.assert(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
         GX.assert(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        GX.assert(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
+        GX.assert(e.last_move_info.next_turn_offset === this.current_sfen_turn_max, "e.last_move_info.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.rs_failed_count = 0    // 着手したので再送回数を0にしておく
 
-      // 反則名リストを作る
-      const illegal_names = lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
+      // 反則名リストを作る /Users/ikeda/src/shogi-player/components/mod_illegal.js
+      const illegal_hv_list = [...e.illegal_hv_list]
 
       // 千日手
       if (true) {
         this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
         // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する
         if (this.perpetual_cop.available_p(e.snapshot_hash)) {    // 千日手か？
+          const illegal_hv = this.illegal_create_perpetual_check(e)
           if (this.foul_mode_info.perpetual_check_p) {
-            illegal_names.push("千日手")                          // ["駒ワープ", "王手放置", "千日手"]
+            illegal_hv_list.push(illegal_hv)
           } else {
-            this.illegal_activation({name: "千日手"})                     // 通知のみする
+            this.illegal_activation(illegal_hv)
           }
         }
       }
@@ -46,24 +45,23 @@ export const mod_sfen_sync = {
       this.sfen_sync_params = {
         sfen: e.sfen,
         turn: e.turn,
-        lmi: {
-          kif_without_from:    lmi.to_kif_without_from,                   // "☗7六歩"
-          next_turn_offset:    lmi.next_turn_offset,                      // 1
-          player_location_key: lmi.player_location.key,                   // "black"
-          yomiage:             lmi.to_yomiage,                            // "ななろくふ"
-          effect_key:          lmi.effect_key,                            // 効果音キー
-        },
-        illegal_names: illegal_names, // ["駒ワープ", "王手放置", "千日手"]
+        checkmate_stat: e.checkmate_stat,
+        illegal_hv_list: illegal_hv_list,
         clock_box_params: this.ac_room_perform_params_wrap(this.clock_box_share_params_factory("cc_behavior_silent")), // 指し手と合わせて時計の情報も送る
       }
+      this.sfen_sync_params.simple_hand_attributes = this.simple_hand_attributes_from(e.last_move_info)
 
-      const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
+      // if (this.development_p) {
+      //   JSON.stringify(this.sfen_sync_params)
+      // }
+
+      const next_user_name = this.turn_to_user_name(e.last_move_info.next_turn_offset) // alice, bob がいて初手を指したら bob
       if (next_user_name) {
         this.sfen_sync_params["next_user_name"] = next_user_name
       } else {
         if (SELF_VS_SELF_MODE) {
           // 次に指す人がいない場合に前の人を入れておけば一応自分vs自分ができる
-          const next_user_name = this.turn_to_user_name(lmi.next_turn_offset - 1)
+          const next_user_name = this.turn_to_user_name(e.last_move_info.next_turn_offset - 1)
           this.toast_primary(`次に指す人がいないため変わりに${this.user_call_name(next_user_name)}が指そう`)
           this.sfen_sync_params["next_user_name"] = next_user_name
         }
@@ -76,6 +74,16 @@ export const mod_sfen_sync = {
       this.sequence_code_embed()
     },
 
+    simple_hand_attributes_from(last_move_info) {
+      return {
+        kif_without_from:    last_move_info.to_kif_without_from, // "☗7六歩"
+        next_turn_offset:    last_move_info.next_turn_offset,    // 1
+        player_location_key: last_move_info.player_location.key, // "black"
+        yomiage:             last_move_info.to_yomiage,          // "ななろくふ"
+        effect_key:          last_move_info.effect_key,          // 効果音キー
+      }
+    },
+
     // 指し手の配信
     sfen_sync() {
       if (this.ac_room == null) {
@@ -85,7 +93,7 @@ export const mod_sfen_sync = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターがアバターになってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_sync_params,
         }
-        this.illegal_modal_open_handle(params.illegal_names)
+        this.illegal_modal_open_handle(params.illegal_hv_list)
         this.think_mark_all_clear()                         // マークを消す
         this.al_add(params)
         this.honpu_branch_setup(params)
@@ -145,7 +153,7 @@ export const mod_sfen_sync = {
         if (this.user_name === params.next_user_name) {
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
-            const location = this.current_sfen_info.location_by_offset(params.lmi.next_turn_offset)
+            const location = this.current_sfen_info.location_by_offset(params.simple_hand_attributes.next_turn_offset)
             this.viewpoint = location.key
           }
         }
@@ -153,9 +161,11 @@ export const mod_sfen_sync = {
         this.from_user_name_valid(params)               // 指し手制限をしていないとき別の人が指したかチェックする
 
         this.illegal_then_resign(params)               // 自分が反則した場合は投了する
-        this.illegal_modal_open_handle(params.illegal_names) // 反則があれば表示する
+        this.illegal_modal_open_handle(params.illegal_hv_list) // 反則があれば表示する
         this.illegal_logging(params)                    // 反則の状態を記録する
         this.ai_say_case_illegal(params)                // 反則した人を励ます
+
+        this.checkmate_then_resign(params)              //  詰みなら次の手番の人は投了する
 
         this.from_user_toast(params)                    // 誰が操作したかを表示する
         this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
@@ -169,7 +179,7 @@ export const mod_sfen_sync = {
     },
     from_user_name_valid(params) {
       if (this.development_p) {
-        const name = this.turn_to_user_name(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
+        const name = this.turn_to_user_name(params.simple_hand_attributes.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
         if (name) {
           if (params.from_user_name !== name) {
             this.tl_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
@@ -186,16 +196,16 @@ export const mod_sfen_sync = {
       // ・「alice ▲76歩」は常に表示する (反則のときも)
       // ・検討中にサイレント更新されると困る
       // , position: "is-top", type: "is-dark"
-      // this.toast_primary(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
+      // this.toast_primary(`${params.from_user_name} ${params.simple_hand_attributes.kif_without_from}`, options)
       // }
     },
 
     async sfen_syncd_after_notice(params) {
       this.next_turn_message = null
-      if (GX.blank_p(params.illegal_names)) {                // 反則がなかった場合
+      if (GX.blank_p(params.illegal_hv_list)) {                // 反則がなかった場合
         if (this.yomiagable_p) {
           await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
-          await this.sb_talk(params.lmi.yomiage)                         // 「7 6 ふ」
+          await this.sb_talk(params.simple_hand_attributes.yomiage)                         // 「7 6 ふ」
         }
         this.next_turn_call(params) // 「次は〜」
       }
@@ -225,7 +235,7 @@ export const mod_sfen_sync = {
     // 自分が反則した場合に自動投了が有効なら投了する
     illegal_then_resign(params) {
       if (this.received_from_self(params)) {
-        if (GX.present_p(params.illegal_names)) {
+        if (GX.present_p(params.illegal_hv_list)) {
           this.timeout_then_resign()
         }
       }
@@ -234,13 +244,32 @@ export const mod_sfen_sync = {
     // 反則の状態を記録する
     illegal_logging(params) {
       if (this.received_from_self(params)) {
-        if (GX.present_p(params.illegal_names)) {
+        if (GX.present_p(params.illegal_hv_list)) {
           if (this.cc_play_p) {
-            this.ac_log({subject: "反則負け", body: {"種類": params.illegal_names, "局面": this.current_url}})
+            this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
           }
         }
       }
     },
+
+    // 勝利
+    // 詰みであればこれから指す人に投了させる
+    checkmate_then_resign(params) {
+      if (this.debug_mode_p) {
+        const fixed_ms = params.checkmate_stat.elapsed_ms.toFixed(2)
+        this.toast_danger(`${fixed_ms} ms`, {position: "is-top-left"})
+      }
+      if (GX.blank_p(params.illegal_hv_list)) {
+        if (params.checkmate_stat.yes_or_no === "yes") {
+          if (params.next_user_name) {
+            if (this.user_name === params.next_user_name) {
+              this.timeout_then_resign()
+            }
+          }
+        }
+      }
+    },
+
   },
   computed: {
     // どの状態のときに読み上げるか？
