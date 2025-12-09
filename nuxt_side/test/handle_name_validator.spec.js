@@ -116,6 +116,7 @@ describe("HandleNameValidator", () => {
 
   test("文字を連続してNGワードを突破しようとしてもダメ", () => {
     expect(HandleNameValidator.valid_p("おおちちんんちちんん")).toEqual(false)
+    expect(HandleNameValidator.valid_p("mannko")).toEqual(false)
   })
 
   // test("prefixが含まれるのはダメ", () => {
