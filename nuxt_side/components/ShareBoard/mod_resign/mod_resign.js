@@ -1,9 +1,9 @@
-// |-----------------------+----------------------------------------|
-// | methods               | description                            |
-// |-----------------------+----------------------------------------|
-// | resign_submit_handle | 最後の「投了する」ボタンを押した       |
-// | timeout_then_resign   | 時間切れかつ自動投了モードなら投了する |
-// |-----------------------+----------------------------------------|
+// |----------------------+----------------------------------|
+// | methods              | description                      |
+// |----------------------+----------------------------------|
+// | resign_submit_handle | 最後の「投了する」ボタンを押した |
+// | resign_call          | 投了する                         |
+// |----------------------+----------------------------------|
 
 import { resign_confirm_modal } from "./resign_confirm_modal.js"
 import { GX } from "@/components/models/gx.js"
@@ -16,7 +16,7 @@ export const mod_resign = {
     resign_submit_handle() {
       this.sfx_click()
       this.resign_confirm_modal_close()
-      if (!this.resign_confirm_modal_open_button_show_p) {
+      if (!this.resign_can_p) {
         this.toast_danger("投了確認モーダルを出している間に投了できる条件が無効になりました")
         return
       }
@@ -24,13 +24,13 @@ export const mod_resign = {
     },
 
     // 自分が生きていて時間切れしたとき自動投了モードなら投了する
-    timeout_then_resign() {
+    resign_call() {
       this.resign_direct_run_with_valid()
     },
 
     // 最終投了ボタンを押したときの処理
     resign_direct_run_with_valid() {
-      if (!this.resign_confirm_modal_open_button_show_p) {
+      if (!this.resign_can_p) {
         this.toast_danger("投了確認している最中に投了できなくなりました")
         return
       }
@@ -113,7 +113,7 @@ export const mod_resign = {
     // 投了ボタン表示条件
     // ・対局メンバーに含まれる ← やめ
     // ・対局メンバーに含まれる かつ 時計が PLAY 状態 ← こっちにした
-    resign_confirm_modal_open_button_show_p() {
+    resign_can_p() {
       return this.i_am_member_p && this.cc_play_p
     },
 

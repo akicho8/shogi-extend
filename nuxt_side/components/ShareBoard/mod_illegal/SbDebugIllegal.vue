@@ -20,6 +20,7 @@
         .panel-heading
           | [assert_var]
         .panel-block latest_illegal_hv:{{SB.latest_illegal_hv}}
+        .panel-block(v-if="SB.latest_illegal_hv") latest_illegal_name:{{SB.latest_illegal_hv.illegal_info.name}}
 </template>
 
 <script>

@@ -1,39 +1,6 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  def sfen
-    "position sfen 8+r/8B/7PK/9/9/9/9/9/9 b P 1"
-  end
-
-  def double_pawn!
-    stand_click(:black, :P)
-    place_click("22")
-  end
-
-  def notice_exist
-    assert_var(:latest_illegal_hv, "二歩")
-  end
-
-  def notice_none
-    assert_var(:latest_illegal_hv, "")
-  end
-
-  def modal_exist
-    assert_selector(".IllegalModal", text: "二歩で☖の勝ち")
-  end
-
-  def modal_none
-    assert_no_selector(".IllegalModal")
-  end
-
-  def action_log_exist
-    assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
-  end
-
-  def action_log_none
-    assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
-  end
-
   describe "対局中" do
     def case1(user_name, foul_mode_key)
       visit_room({

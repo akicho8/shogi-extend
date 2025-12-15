@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
+import { SfenSyncParamsWrapper } from "@/components/models/sfen_sync_params_wrapper.js"
 
 const SELF_VS_SELF_MODE = false
 
@@ -48,8 +49,8 @@ export const mod_sfen_sync = {
         checkmate_stat: e.checkmate_stat,
         illegal_hv_list: illegal_hv_list,
         clock_box_params: this.ac_room_perform_params_wrap(this.clock_box_share_params_factory("cc_behavior_silent")), // 指し手と合わせて時計の情報も送る
+        simple_hand_attributes: this.simple_hand_attributes_from(e.last_move_info),
       }
-      this.sfen_sync_params.simple_hand_attributes = this.simple_hand_attributes_from(e.last_move_info)
 
       // if (this.development_p) {
       //   JSON.stringify(this.sfen_sync_params)
@@ -150,7 +151,7 @@ export const mod_sfen_sync = {
         // 時計が0になった時点で即座にBCするので問題ない
         this.cc_timeout_judge_delay_stop()
 
-        if (this.user_name === params.next_user_name) {
+        if (this.next_is_self(params)) {
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
             const location = this.current_sfen_info.location_by_offset(params.simple_hand_attributes.next_turn_offset)
@@ -158,16 +159,12 @@ export const mod_sfen_sync = {
           }
         }
 
-        this.from_user_name_valid(params)               // 指し手制限をしていないとき別の人が指したかチェックする
-
         this.illegal_then_resign(params)               // 自分が反則した場合は投了する
         this.illegal_modal_open_handle(params.illegal_hv_list) // 反則があれば表示する
-        this.illegal_logging(params)                    // 反則の状態を記録する
         this.ai_say_case_illegal(params)                // 反則した人を励ます
 
         this.checkmate_then_resign(params)              //  詰みなら次の手番の人は投了する
 
-        this.from_user_toast(params)                    // 誰が操作したかを表示する
         this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
         this.rs_receive_success_send(params)            // 受信OKを指し手に通知する
         this.think_mark_all_clear()                         // マークを消す
@@ -177,44 +174,22 @@ export const mod_sfen_sync = {
       this.al_add(params)
       this.honpu_branch_setup(params)
     },
-    from_user_name_valid(params) {
-      if (this.development_p) {
-        const name = this.turn_to_user_name(params.simple_hand_attributes.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
-        if (name) {
-          if (params.from_user_name !== name) {
-            this.tl_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
-          }
-        }
-      }
-    },
-    from_user_toast(params) {
-      const options = {
-        talk: false,
-        // position: "is-top",
-      }
-      // if (this.order_enable_p) {
-      // ・「alice ▲76歩」は常に表示する (反則のときも)
-      // ・検討中にサイレント更新されると困る
-      // , position: "is-top", type: "is-dark"
-      // this.toast_primary(`${params.from_user_name} ${params.simple_hand_attributes.kif_without_from}`, options)
-      // }
-    },
 
     async sfen_syncd_after_notice(params) {
       this.next_turn_message = null
-      if (GX.blank_p(params.illegal_hv_list)) {                // 反則がなかった場合
+      if (this.next_step_p(params)) {                                    // 反則がなかった場合
         if (this.yomiagable_p) {
           await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
-          await this.sb_talk(params.simple_hand_attributes.yomiage)                         // 「7 6 ふ」
+          await this.sb_talk(params.simple_hand_attributes.yomiage)      // 「7 6 ふ」
         }
-        this.next_turn_call(params) // 「次は〜」
+        this.next_turn_call(params)                                      // 「次は〜」
       }
     },
 
     next_turn_call(params) {
       if (params.next_user_name) {                       // 順番設定しているときだけ入っている
         if (this.tn_bell_call_p) {
-          if (this.user_name === params.next_user_name) {
+          if (this.next_is_self(params)) {
             this.tn_bell_call()
           }
         }
@@ -235,19 +210,11 @@ export const mod_sfen_sync = {
     // 自分が反則した場合に自動投了が有効なら投了する
     illegal_then_resign(params) {
       if (this.received_from_self(params)) {
-        if (GX.present_p(params.illegal_hv_list)) {
-          this.timeout_then_resign()
-        }
-      }
-    },
-
-    // 反則の状態を記録する
-    illegal_logging(params) {
-      if (this.received_from_self(params)) {
-        if (GX.present_p(params.illegal_hv_list)) {
+        if (this.illegal_exist_p(params)) {
           if (this.cc_play_p) {
             this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
           }
+          this.resign_call()
         }
       }
     },
@@ -255,21 +222,25 @@ export const mod_sfen_sync = {
     // 勝利
     // 詰みであればこれから指す人に投了させる
     checkmate_then_resign(params) {
-      if (this.debug_mode_p) {
+      if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         const fixed_ms = params.checkmate_stat.elapsed_ms.toFixed(2)
-        this.toast_danger(`${fixed_ms} ms`, {position: "is-top-left"})
+        this.toast_danger(`${params.checkmate_stat.yes_or_no} (${fixed_ms} ms)`, {position: "is-top-left"})
       }
-      if (GX.blank_p(params.illegal_hv_list)) {
-        if (params.checkmate_stat.yes_or_no === "yes") {
-          if (params.next_user_name) {
-            if (this.user_name === params.next_user_name) {
-              this.timeout_then_resign()
-            }
+      if (this.illegal_none_p(params)) {
+        if (this.checkmate_exist_p(params)) {
+          if (this.next_is_self(params)) {
+            this.resign_call()
           }
         }
       }
     },
 
+    illegal_none_p(params)    { return GX.blank_p(params.illegal_hv_list)                           },
+    illegal_exist_p(params)   { return GX.present_p(params.illegal_hv_list)                         },
+    checkmate_none_p(params)  { return params.checkmate_stat.yes_or_no !== "yes"                    },
+    checkmate_exist_p(params) { return params.checkmate_stat.yes_or_no === "yes"                    },
+    next_step_p(params)       { return this.illegal_none_p(params) && this.checkmate_none_p(params) },
+    next_is_self(params)      { return this.user_name === params.next_user_name                     },
   },
   computed: {
     // どの状態のときに読み上げるか？

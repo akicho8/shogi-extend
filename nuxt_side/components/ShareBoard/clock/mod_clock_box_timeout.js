@@ -35,7 +35,7 @@ export const mod_clock_box_timeout = {
     // 当事者は自分で起動してBC
     cc_timeout_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
-      this.timeout_then_resign()           // 自動投了なら投了する
+      this.resign_call()           // 投了する
       this.cc_timeout_modal_open("self_notify") // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.CC_TIMEOUT_BC_DELAY}秒後にBC`)
       GX.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {
