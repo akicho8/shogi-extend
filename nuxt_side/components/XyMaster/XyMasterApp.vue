@@ -374,8 +374,7 @@ export default {
       const p = this.next_place
 
       if (this.kb_mode_p) {
-        const soldier = Soldier.random()
-        soldier.place = Place.fetch([p.x, p.y])
+        const soldier = Soldier.random().clone_with({place: Place.fetch([p.x, p.y])})
         this.sfen_clear()
         this.sp_object().api_place_on(soldier)
       }
