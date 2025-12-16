@@ -4,7 +4,7 @@ import { FurigomaPawn } from "./furigoma_pawn.js"
 export class FurigomaPack {
   static call(...args) {
     const object = new this(...args)
-    object.shaka_and_shaka()
+    object.repeatedly_toss()
     return object
   }
 
@@ -12,7 +12,7 @@ export class FurigomaPack {
     this.options = {
       size: 5,                     // 「歩」の枚数
       furigoma_random_key: null,   // force_true: 必ず反転, force_false: 必ず反転しない, null: ランダム
-      shakashaka_count: null,      // しゃかしゃかする回数 0 なら「歩5枚」
+      toss_count: null,      // しゃかしゃかする回数 0 なら「歩5枚」
       ...options,
     }
     if (!(this.options.size >= 1 && GX.odd_p(this.options.size))) {
@@ -23,12 +23,12 @@ export class FurigomaPack {
   }
 
   // 指定回数だけシャッフルする
-  shaka_and_shaka() {
-    GX.n_times(this.shakashaka_count, () => this.shaka())
+  repeatedly_toss() {
+    GX.n_times(this.toss_count, () => this.toss())
   }
 
-  shaka() {
-    this.values.forEach(e => e.shaka())
+  toss() {
+    this.values.forEach(e => e.toss())
     this.count += 1
   }
 
@@ -57,8 +57,8 @@ export class FurigomaPack {
     return this.values.map(e => e.name).join("")
   }
 
-  get shakashaka_count() {
-    const v = this.options.shakashaka_count
+  get toss_count() {
+    const v = this.options.toss_count
     if (v != null) {
       return parseInt(v)
     }

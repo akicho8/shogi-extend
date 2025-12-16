@@ -158,7 +158,7 @@ export default {
       if (this.swap_invalid("振り駒")) { return }
       const furigoma_pack = FurigomaPack.call({
         furigoma_random_key: this.$route.query.furigoma_random_key,
-        shakashaka_count: this.$route.query.shakashaka_count,
+        toss_count: this.$route.query.toss_count,
       })
       this.sfx_click()
       this.SB.order_draft.order_flow.furigoma_core(furigoma_pack.swap_p)

@@ -1,16 +1,15 @@
 require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  def case1(shakashaka_count)
+  def case1(toss_count)
     visit_room({
         :user_name           => "a",
         :FIXED_MEMBER        => "a,b,c,d",
         :FIXED_ORDER         => "a,b,c,d",
         :furigoma_random_key => "force_true",     # 毎回反転させる
-        :shakashaka_count    => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
+        :toss_count    => toss_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
       })
     order_modal_open
-    os_switch_toggle
     find(".furigoma_handle").click
   end
 
