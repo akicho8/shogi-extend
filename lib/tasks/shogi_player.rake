@@ -19,8 +19,8 @@ namespace :shogi_player do
     end
 
     desc "安定版"
-    task :main do
-      install_shogi_player("github:akicho8/shogi-player#main")
+    task :master do
+      install_shogi_player("github:akicho8/shogi-player#master")
     end
 
     desc "パッケージ版"
