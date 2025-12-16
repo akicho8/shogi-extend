@@ -49,7 +49,7 @@ export const mod_illegal = {
       this.sfx_play("x")
       await this.sb_toast_danger(illegal_hv.illegal_info.name, {position: "is-bottom"})
       if (this.order_clock_both_ok) {
-        this.sb_toast_danger(`本来であれば${this.user_call_name(params.from_user_name)}の負けです`, {position: "is-bottom"})
+        this.sb_toast_danger(`将棋のルールであればこの時点で${this.user_call_name(params.from_user_name)}の負けです`, {position: "is-bottom"})
       }
     },
 
