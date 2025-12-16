@@ -29,7 +29,7 @@
     "@nuxtjs/style-resources": "^1.2.2",
     "@rails/actioncable": "^8.0.200",
     "@twemoji/api": "^16.0.0",
-    "beetleshine": "^0.0.29",
+    "beetleshine": "^0.0.31",
     "big.js": "^6.2.2",
     "chart.js": "2.9.4",
     "chartjs-plugin-datalabels": "1.0.0",
