@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
-import { SfenSyncParamsWrapper } from "@/components/models/sfen_sync_params_wrapper.js"
+import { SfenSyncParamsWrapper } from "./models/sfen_sync_params_wrapper.js"
 
 const SELF_VS_SELF_MODE = false
 

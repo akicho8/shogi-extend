@@ -21,6 +21,9 @@
           template(v-for="e in e.illegal_hv_list")
             b-tag.flex_item(type="is-danger" size="is-small") {{e.illegal_info.name}}
 
+          template(v-if="e.checkmate_stat && e.checkmate_stat.yes_or_no === 'yes'")
+            b-tag.flex_item(type="is-danger" size="is-small") 詰み
+
           .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
 
           .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{e.display_time}}
