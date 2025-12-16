@@ -224,7 +224,7 @@ export const mod_sfen_sync = {
     checkmate_then_resign(params) {
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         const fixed_ms = params.checkmate_stat.elapsed_ms.toFixed(2)
-        this.toast_danger(`${params.checkmate_stat.yes_or_no} (${fixed_ms} ms)`, {position: "is-top-left"})
+        this.toast_primary(`${params.checkmate_stat.yes_or_no ?? ""} (${fixed_ms} ms)`, {position: "is-top-left", talk: false})
       }
       if (this.illegal_none_p(params)) {
         if (this.checkmate_exist_p(params)) {
