@@ -374,7 +374,8 @@ export default {
       const p = this.next_place
 
       if (this.kb_mode_p) {
-        const soldier = Soldier.random().clone_with({place: Place.fetch([p.x, p.y])})
+        const place = Place.fetch([p.x, p.y])
+        const soldier = Soldier.random({place: place})
         this.sfen_clear()
         this.sp_object().api_place_on(soldier)
       }
@@ -400,6 +401,7 @@ export default {
       return p
     },
 
+    // FIXME: Place.random で取れる
     random_xy() {
       return {
         x: this.place_random(),
