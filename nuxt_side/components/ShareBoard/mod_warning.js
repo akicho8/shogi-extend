@@ -34,8 +34,6 @@ export const mod_warning = {
     },
   },
   computed: {
-    cc_start_even_though_order_is_not_enabled_p() { return this.ac_room && !this.order_enable_p }, // 順番設定を有効にしてないのに時計を開始しようとしている？
-
     // 不整合状態
     inconsistency_order_only() { return this.ac_room && this.order_enable_p  && !this.cc_play_p                          }, // 入室中に順番だけが有効になっている？
     inconsistency_clock_only() { return this.ac_room && !this.order_enable_p &&  this.cc_play_p                          }, // 入室中に時計だけが有効になっている？

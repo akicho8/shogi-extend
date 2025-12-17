@@ -232,6 +232,13 @@ export const mod_order_main = {
     // 変更したけど保存せずにモーダルを閉じようとしている？
     order_modal_close_if_not_save_p() { return this.order_enable_p && this.order_draft.os_change.has_changes_to_save_p },
 
+    // 順番設定している人数
+    order_flat_uniq_users_count() {
+      if (this.order_enable_p) {
+        return this.order_flow.flat_uniq_users.length
+      }
+    },
+
     // 最終的に左側に表示する並びになっているメンバーリスト
     // 順番設定されているときは対局者を優先的に上に表示する
     visible_member_infos() {
@@ -250,6 +257,11 @@ export const mod_order_main = {
         return GX.ary_find_all(this.member_infos, e => this.user_name_to_initial_turn(e.from_user_name))
       }
     },
+
+    // 対局者数
+    // vs_member_infos_count() {
+    //   return (this.vs_member_infos ?? []).length
+    // },
 
     // 対局に参加しているメンバーの名前一覧(順不同)
     vs_member_names() {
