@@ -82,7 +82,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
           "sfen"              => "(sfen)",
           "turn_offset"       => 1,
           # "last_location_key" => "white",
-          "rs_seq_id"     => 1,
+          "resend_sequence_id"     => 1,
           "next_user_name"    => "bob",
           "elapsed_sec"       => 1,
           "illegal_hv_list"     => ["二歩", "千日手"],
@@ -106,8 +106,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     it "works" do
       data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
       expect {
-        subscription.rs_receive_success(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "rs_receive_success_broadcasted", bc_params: data)
+        subscription.resend_receive_success(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "resend_receive_success_broadcasted", bc_params: data)
     end
   end
 
@@ -116,8 +116,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("rs_failed_count" => 1)
-      subscription.rs_failed_notify(data)
+      data = data_factory("resend_failed_count" => 1)
+      subscription.resend_failed_logging(data)
       assert { AppLog.last.subject.include?("指手不達") }
     end
   end

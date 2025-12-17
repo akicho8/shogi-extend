@@ -73,8 +73,8 @@
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=b               |
   | ng_word_check_p             | false ならバリデーションを飛ばす                        |                                                                                  |
-  | RS_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=a&RS_SUCCESS_DELAY=-1 |
-  | RS_RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
+  | RESEND_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=a&RESEND_SUCCESS_DELAY=-1 |
+  | RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                  |
   | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                  |
   | clock_box.initial_extra_min | 考慮時間(分)                                            |                                                                                  |
@@ -113,15 +113,15 @@
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=3
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&RESEND_DELAY=0&RESEND_SUCCESS_DELAY=3
 
 ** 再送モーダル発動確認するには？
 
-   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&RS_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&RESEND_SUCCESS_DELAY=-1
 
 ** 再送モーダルが出ているときに順番設定されたら再送モーダルが消されるテスト用
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&FIXED_ORDER=a,b,c,d&RS_RESEND_DELAY=0&RS_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&FIXED_ORDER=a,b,c,d&RESEND_DELAY=0&RESEND_SUCCESS_DELAY=-1
 
 ** 時計設定済みで入退室には？
 
@@ -137,8 +137,8 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
-   http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_ORDER=a,b&RS_RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER=a,b&RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
+   http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_ORDER=a,b&RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
 
 ** 観戦者だけでチャット (a が対局者で b, c が観戦で、自分が b)
 

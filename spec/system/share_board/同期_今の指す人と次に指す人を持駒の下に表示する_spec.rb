@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room({
         :user_name       => :a,
         :FIXED_ORDER     => "a,b,c",
-        :RS_RESEND_DELAY => -1,
+        :RESEND_DELAY => -1,
         :room_after_create => :cc_auto_start_10m,
       })
     assert_sp_player_names :a, :b # 今:a 次:b

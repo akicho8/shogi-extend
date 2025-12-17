@@ -23,7 +23,7 @@ export const mod_sfen_sync = {
         GX.assert(e.last_move_info.next_turn_offset === this.current_sfen_turn_max, "e.last_move_info.next_turn_offset === this.current_sfen_turn_max")
       }
 
-      this.rs_failed_count = 0    // 着手したので再送回数を0にしておく
+      this.resend_init()
 
       // 反則名リストを作る /Users/ikeda/src/shogi-player/components/mod_illegal.js
       const illegal_hv_list = [...e.illegal_hv_list]
@@ -87,6 +87,8 @@ export const mod_sfen_sync = {
 
     // 指し手の配信
     sfen_sync() {
+      GX.assert_present(this.sfen_sync_params, "this.sfen_sync_params")
+
       if (this.ac_room == null) {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
@@ -100,18 +102,16 @@ export const mod_sfen_sync = {
         this.honpu_branch_setup(params)
         return
       }
-
-      this.rs_send_success_p = false // 数ms後に相手から応答があると true になる
       const params = {
         ...this.sfen_sync_params,
-        rs_failed_count: this.rs_failed_count, // 1以上:再送回数
+        resend_failed_count: this.resend_failed_count, // 1以上:再送回数
       }
-      if (this.rs_failed_count >= 1) {
-        params.label = `再送${this.rs_failed_count}`
+      if (this.resend_failed_count >= 1) {
+        params.label = `再送${this.resend_failed_count}`
         params.label_type = "is-warning"
       }
       this.ac_room_perform("sfen_sync", params) // --> app/channels/share_board/room_channel.rb
-      this.rs_sfen_sync_after_hook()  // もちろん ac_room が有効でないときは呼ばない
+      this.resend_start()  // もちろん ac_room が有効でないときは呼ばない
     },
 
     // 指し手を受信
@@ -151,7 +151,7 @@ export const mod_sfen_sync = {
         // 時計が0になった時点で即座にBCするので問題ない
         this.cc_timeout_judge_delay_stop()
 
-        if (this.next_is_self(params)) {
+        if (this.next_is_self_p(params)) {
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
             const location = this.current_sfen_info.location_by_offset(params.simple_hand_attributes.next_turn_offset)
@@ -166,7 +166,7 @@ export const mod_sfen_sync = {
         this.checkmate_then_resign(params)              //  詰みなら次の手番の人は投了する
 
         this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
-        this.rs_receive_success_send(params)            // 受信OKを指し手に通知する
+        this.resend_receive_success_send(params)            // 受信OKを指し手に通知する
         this.think_mark_all_clear()                         // マークを消す
       }
 
@@ -189,7 +189,7 @@ export const mod_sfen_sync = {
     next_turn_call(params) {
       if (params.next_user_name) {                       // 順番設定しているときだけ入っている
         if (this.tn_bell_call_p) {
-          if (this.next_is_self(params)) {
+          if (this.next_is_self_p(params)) {
             this.tn_bell_call()
           }
         }
@@ -228,7 +228,7 @@ export const mod_sfen_sync = {
       }
       if (this.illegal_none_p(params)) {
         if (this.checkmate_exist_p(params)) {
-          if (this.next_is_self(params)) {
+          if (this.next_is_self_p(params)) {
             this.resign_call()
           }
         }
@@ -240,7 +240,7 @@ export const mod_sfen_sync = {
     checkmate_none_p(params)  { return params.checkmate_stat.yes_or_no !== "yes"                    },
     checkmate_exist_p(params) { return params.checkmate_stat.yes_or_no === "yes"                    },
     next_step_p(params)       { return this.illegal_none_p(params) && this.checkmate_none_p(params) },
-    next_is_self(params)      { return this.user_name === params.next_user_name                     },
+    next_is_self_p(params)      { return this.user_name === params.next_user_name                     },
   },
   computed: {
     // どの状態のときに読み上げるか？

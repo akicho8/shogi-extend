@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
           :FIXED_MEMBER      => "a,b,c",
           :FIXED_ORDER       => "a,b,c",
           :room_after_create => :cc_auto_start_10m,
-          :RS_FEATURE        => false,
+          :RESEND_FEATURE        => false,
         })
     end
     window_a { case1(:a) }

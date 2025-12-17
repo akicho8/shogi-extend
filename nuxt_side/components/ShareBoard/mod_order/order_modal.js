@@ -143,7 +143,7 @@ export const order_modal = {
       }
 
       // 再送モーダルが出ている人はどうしてよいか迷っているため自動で閉じる
-      this.rs_modal_with_timer_close()
+      this.resend_done()
 
       if (params.message) {
         this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`)

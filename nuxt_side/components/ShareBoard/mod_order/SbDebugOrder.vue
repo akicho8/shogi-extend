@@ -42,7 +42,7 @@
         | 本順序:{{SB.order_flow.real_order_users_to_s(SB.change_per, SB.start_color)}}
       .panel-block(v-if="SB.order_draft.order_flow")
         | 仮順序:{{SB.order_draft.order_flow.real_order_users_to_s(SB.change_per, SB.start_color)}}
-      .panel-block rs_resend_delay_id:{{SB.rs_resend_delay_id}}
+      .panel-block resend_observer_id:{{SB.resend_observer_id}}
   .column.is-4
     .panel
       .panel-heading

@@ -29,9 +29,6 @@ client-only
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
         p pause_or_play_p: {{clock_box.pause_or_play_p}}
-      p rs_send_success_p={{rs_send_success_p}}
-      p rs_failed_count={{rs_failed_count}}
-      p rs_seq_ids={{rs_seq_ids}}
       p $route.query: {{$route.query}}
       //- p room_key: {{JSON.stringify(room_key)}}
       //- p user_name: {{JSON.stringify(user_name)}}

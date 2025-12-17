@@ -50,17 +50,17 @@ module ShareBoard
       broadcast(:sfen_sync_broadcasted, data)
     end
 
-    def rs_receive_success(data)
+    def resend_receive_success(data)
       if data["debug_mode_p"]
         track(data, subject: "指手受信", body: "OK → #{data['to_user_name'].inspect}", emoji: ":OK:")
       end
-      broadcast(:rs_receive_success_broadcasted, data)
+      broadcast(:resend_receive_success_broadcasted, data)
     end
 
-    def rs_failed_notify(data)
-      rs_failed_count = data["rs_failed_count"]
-      track(data, subject: "指手不達", body: "#{rs_failed_count}回目", emoji: ":指手不達:")
-      # raise SfenNotReachError, "指手不達(#{rs_failed_count}回目) : #{data}"
+    def resend_failed_logging(data)
+      resend_failed_count = data["resend_failed_count"]
+      track(data, subject: "指手不達", body: "#{resend_failed_count}回目", emoji: ":指手不達:")
+      # raise SfenNotReachError, "指手不達(#{resend_failed_count}回目) : #{data}"
     end
 
     ################################################################################

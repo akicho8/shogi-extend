@@ -12,7 +12,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name              => user_name,
         :FIXED_MEMBER           => "a,b",
         :FIXED_ORDER            => "a,b",
-        :RS_RESEND_DELAY        => -1,
+        :RESEND_DELAY        => -1,
         :CC_TIMEOUT_JUDGE_DELAY => @CC_TIMEOUT_JUDGE_DELAY,
         :CC_TIMEOUT_BC_DELAY    => @CC_TIMEOUT_BC_DELAY,
         **clock_box_params([0, @initial_read_sec, 0, 0]),

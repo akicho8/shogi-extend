@@ -62,7 +62,7 @@
           b-button.pause_button(title="一時停止" @click="SB.cbm_pause_handle" icon-left="pause" type="is-primary")
         template(v-if="SB.clock_box.pause_p")
           b-button.stop_button(title="停止" @click="SB.cbm_stop_handle" icon-left="stop")
-          b-button.resume_button(title="再開" @click="SB.cbm_resume_handle" icon-left="play-pause" type="is-primary")
+          b-button.resume_button(title="再開" @click="SB.cbm_resume_handle" icon-left="play-pause" type="is-primary") 再開
 </template>
 
 <script>

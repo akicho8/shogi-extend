@@ -1,3 +1,5 @@
+import { GX } from "@/components/models/gx.js"
+
 export const mod_action_log_share = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// 共有版
@@ -23,12 +25,22 @@ export const mod_action_log_share = {
       }
       this.ac_room_perform("al_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    al_share_broadcasted(params) {
+    async al_share_broadcasted(params) {
       this.al_add(params)
-      if (params.message) {
-        this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`)
-      }
       this.ac_log({subject: "履歴追加", body: `「${params.label}」を受信`})
+      {
+        const toast_options = {
+          type: params.label_type ?? "is-primary",
+        }
+        if (params.message) {
+          await this.sb_toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`, toast_options)
+        }
+        if (params.full_message) {
+          for (const e of GX.ary_wrap(params.full_message)) {
+            await this.sb_toast_primary(e, toast_options)
+          }
+        }
+      }
     },
   },
 }
