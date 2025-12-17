@@ -86,15 +86,16 @@ export const mod_clock_box_modal = {
 
     cbm_play_handle() {
       {
-        const invalid_message = this.cbm_play_before_validaton
-        if (invalid_message) {
+        const str = this.cc_play_validate_message
+        if (str) {
           this.sfx_play("x")
-          this.toast_danger(invalid_message)
-          if (this.__SYSTEM_TEST_RUNNING__) {
-            // skip
-          } else {
-            return
-          }
+          this.toast_danger(str)
+          return
+          // if (this.__SYSTEM_TEST_RUNNING__) {
+          //   // skip
+          // } else {
+          //   return
+          // }
         }
       }
 
@@ -181,18 +182,17 @@ export const mod_clock_box_modal = {
       return info
     },
 
-    cbm_play_before_validaton() {
-      if (this.cc_order_off_p) {
-        return "先に順番設定をしよう"
+    cc_play_validate_message() {
+      if (this.ac_room) {
+        if (!this.order_enable_p) {
+          return "先に順番設定をしよう"
+        }
+        if (this.order_flat_uniq_users_count === 0) {
+          return "先に順番設定で対局者を指定しよう"
+        }
       }
-      if (this.cc_order_users_none_p) {
-        return "先に順番設定で対局者を指定してください"
-      }
-      
-      // "対局者が揃っていないので再度順番設定をしてください"
     },
-
-    cc_order_off_p() { return this.ac_room && !this.order_enable_p }, // 順番設定を有効にしてないのに時計を開始しようとしている？
-    cc_order_users_none_p() { return this.ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // 順番設定で誰も設定されていない
+    // cc_order_off_p() { return this.ac_room && !this.order_enable_p }, // 順番設定を有効にしてないのに時計を開始しようとしている？
+    // cc_order_users_none_p() { return this.ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // 順番設定で誰も設定されていない
   },
 }
