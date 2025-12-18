@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
     sidebar_open

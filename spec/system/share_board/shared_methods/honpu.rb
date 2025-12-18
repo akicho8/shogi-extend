@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   def assert_honpu_open_on
     assert_selector(".SbNavbar .honpu_open_button", wait: 10)
   end

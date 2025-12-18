@@ -133,7 +133,7 @@ module ModulableCrud
     end
   end
 
-  concern :NewEditSbSupportMethods do
+  concern :NewEditSharedMethods do
     def create_or_update
       current_record.assign_attributes(current_record_params)
       save_and_redirect
@@ -288,7 +288,7 @@ module ModulableCrud
       include Base
       include IndexMethods
       include ShowMethods
-      include NewEditSbSupportMethods
+      include NewEditSharedMethods
       include NewMethods
       include EditMethods
       include DestroyMethods

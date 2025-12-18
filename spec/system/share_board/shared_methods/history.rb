@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   # 完全一致のテキストがあること
   def assert_action_text(text)
     within(".SbActionLog") do

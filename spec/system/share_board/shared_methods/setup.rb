@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   def setup_share_board
     sfen_info = SfenInfo["相全駒手番△"]
     eval_code %(ShareBoard.setup(force: true); ShareBoard::Room.mock(room_key: 'test_room', sfen: "#{sfen_info.sfen}"))

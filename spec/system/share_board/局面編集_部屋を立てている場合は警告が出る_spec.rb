@@ -1,4 +1,4 @@
-require "#{__dir__}/sb_support_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "部屋を立てていない場合は普通に局面編集に入れる" do

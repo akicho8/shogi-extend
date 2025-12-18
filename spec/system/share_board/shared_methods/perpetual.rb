@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   def black_king_move_up;   piece_move_o("59", "58", "☗5八玉"); end # 1手目
   def white_king_move_up;   piece_move_o("51", "52", "☖5二玉"); end # 2手目
   def black_king_move_down; piece_move_o("58", "59", "☗5八玉"); end # 3手目

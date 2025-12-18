@@ -1,4 +1,4 @@
-require "#{__dir__}/sb_support_methods"
+require "#{__dir__}/shared_methods"
 
 # このテストは 盤面操作禁止と警告_spec.rb があるのでいらない。
 RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do

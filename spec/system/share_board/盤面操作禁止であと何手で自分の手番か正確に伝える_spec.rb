@@ -1,4 +1,4 @@
-require "#{__dir__}/sb_support_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   # |----+----|

@@ -1,4 +1,4 @@
-require "#{__dir__}/sb_support_methods"
+require "#{__dir__}/shared_methods"
 
 # このテストは ordered_members が nil のまま共有されるのをスキップするのを保証するので消してはいけない
 RSpec.describe __FILE__, type: :system, share_board_spec: true do

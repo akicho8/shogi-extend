@@ -1,4 +1,4 @@
-require "#{__dir__}/../sb_support_methods"
+require "#{__dir__}/../shared_methods"
 
-module SbSupportMethods
+module SharedMethods
 end

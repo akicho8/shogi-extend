@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   def assert_var(key, value, **options)
     assert_selector(".assert_var .panel-block", text: "#{key}:#{value}", exact_text: true, **options)
   end

@@ -1,0 +1,2 @@
+module SharedMethods
+end

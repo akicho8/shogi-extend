@@ -1,4 +1,4 @@
-module SbSupportMethods
+module SharedMethods
   include ShogiPlayerMethods
 
   # turn 手目

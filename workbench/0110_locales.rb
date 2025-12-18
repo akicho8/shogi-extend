@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-# require "battle_model_sb_support_methods"
+# require "battle_model_shared_methods"
 # require "colosseum/battle"
 # require "colosseum/chat_message"
 # require "colosseum/custom_preset_info"

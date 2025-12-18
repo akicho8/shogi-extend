@@ -1,4 +1,4 @@
-require "#{__dir__}/sb_support_methods"
+require "#{__dir__}/shared_methods"
 
 # 順番設定を適用する引数で起動したため os_setup 内の sp_viewpoint_switch_to_my_location だけで視点が反映される
 # order_copy_from_bc 内のテストにはなっていない

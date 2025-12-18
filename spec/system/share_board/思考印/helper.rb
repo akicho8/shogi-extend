@@ -1,6 +1,6 @@
-require "#{__dir__}/../sb_support_methods"
+require "#{__dir__}/../shared_methods"
 
-module SbSupportMethods
+module SharedMethods
   def think_mark_toggle_button_click
     find(".think_mark_toggle_button_click_handle").click
   end
