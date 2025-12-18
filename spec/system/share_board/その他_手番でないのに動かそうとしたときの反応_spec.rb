@@ -18,14 +18,14 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
     case2
     window_b do
       place_click("77")
-      assert_text("(今はaさんの手番です。みんなで盤をつついて検討する場合は順番設定を解除しよう)")
+      assert_text("(今はaさんの手番です。みんなで盤をつついて検討する場合は順番設定を切ろう)")
     end
   end
   it "時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
     case2
     window_c do
       place_click("77")
-      assert_text("(今はaさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は順番設定を解除しよう)")
+      assert_text("(今はaさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は順番設定を切ろう)")
     end
   end
   it "時計ON順番設定ONは対局中と思われる" do
