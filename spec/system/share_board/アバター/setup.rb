@@ -1,4 +1,4 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/../sb_support_methods"
 
 mod = Module.new do
   def assert_avatar_input_modal_exist

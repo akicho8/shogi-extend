@@ -1,4 +1,4 @@
-module BattleControllerSharedMethods
+module BattleControllerSbSupportMethods
   extend ActiveSupport::Concern
 
   include ShogiErrorRescueMethods

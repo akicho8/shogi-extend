@@ -1,4 +1,4 @@
-module SharedMethods
+module SbSupportMethods
   # 順番OFF 時計STOP
   def assert_order_off_and_clock_stop
     assert_order_off

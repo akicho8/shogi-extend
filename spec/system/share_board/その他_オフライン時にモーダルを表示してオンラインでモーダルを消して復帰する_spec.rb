@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/sb_support_methods"
 
 # このテストは実際のオフラインのテストとしては不十分だが、
 # オフライン時にモーダルを表示してオンライン時にモーダルが消えるテストにはなっている

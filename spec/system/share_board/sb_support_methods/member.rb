@@ -1,4 +1,4 @@
-module SharedMethods
+module SbSupportMethods
   # メンバーの状態
   def assert_member_status(user_name, klass, options = {})
     assert_selector(".SbMemberList .#{klass} .user_name", { text: user_name, exact_text: true }.merge(options))

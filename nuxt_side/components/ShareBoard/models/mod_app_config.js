@@ -1,5 +1,5 @@
 // システムテスト時の初期値
-// ../../../../spec/system/share_board/shared_methods/setup.rb
+// ../../../../spec/system/share_board/sb_support_methods/setup.rb
 
 export const AppConfig = {
   ALIVE_NOTIFY_INTERVAL: 30,                  // N秒ごとに存在を通知する

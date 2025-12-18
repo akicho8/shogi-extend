@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/sb_support_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "順番設定をしたのに時計で対局開始せずに盤に触った (あるある)" do

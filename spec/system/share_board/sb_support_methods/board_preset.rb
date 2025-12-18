@@ -1,4 +1,4 @@
-module SharedMethods
+module SbSupportMethods
   def board_preset_select_from_menu(preset_key)
     board_preset_select(preset_key)
     board_preset_apply

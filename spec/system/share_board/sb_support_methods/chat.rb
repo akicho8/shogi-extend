@@ -1,4 +1,4 @@
-module SharedMethods
+module SbSupportMethods
   def chat_modal_open(&block)
     find(".chat_modal_open_handle").click
     if block_given?

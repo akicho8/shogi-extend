@@ -1,4 +1,4 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/../sb_support_methods"
 
 RSpec.xdescribe "対局時計で初期配置に戻さずに対局開始しようとしている場合の確認モーダル", type: :system, share_board_spec: true do
   def case1

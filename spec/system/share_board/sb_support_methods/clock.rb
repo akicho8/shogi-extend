@@ -1,4 +1,4 @@
-module SharedMethods
+module SbSupportMethods
   # ".ClockBoxForm td:nth-child(2) .initial_main_min input" → ☗ 持ち時間(分)
   # ".ClockBoxForm td:nth-child(3) .initial_main_min input" → ☖ 持ち時間(分)
   def cc_white_black_to_nth_child(location_key)

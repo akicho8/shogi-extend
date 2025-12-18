@@ -42,7 +42,7 @@ module Swars
   class BattlesController < ApplicationController
     include ModulableCrud::All
     include BattleControllerBaseMethods
-    include BattleControllerSharedMethods
+    include BattleControllerSbSupportMethods
 
     include ScopeMod
     include IndexMod

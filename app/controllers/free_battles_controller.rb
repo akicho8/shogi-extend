@@ -38,7 +38,7 @@
 class FreeBattlesController < ApplicationController
   include ModulableCrud::All
   include BattleControllerBaseMethods
-  include BattleControllerSharedMethods
+  include BattleControllerSbSupportMethods
   include AdapterMethods
 
   private

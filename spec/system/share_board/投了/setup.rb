@@ -1,4 +1,4 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/../sb_support_methods"
 
 mod = Module.new do
   # 「投了」を押してモーダルを表示する

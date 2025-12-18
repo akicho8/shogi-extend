@@ -1,4 +1,4 @@
-require "#{__dir__}/../shared_methods"
+require "#{__dir__}/../sb_support_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   CC_INPUT_DEBOUNCE_DELAY = 0.5 # mod_clock_box.js の定数と合わせる
