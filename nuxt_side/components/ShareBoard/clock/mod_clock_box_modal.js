@@ -85,17 +85,12 @@ export const mod_clock_box_modal = {
     },
 
     cbm_play_handle() {
-      {
+      if (true) {
         const str = this.cc_play_validate_message
         if (str) {
           this.sfx_play("x")
           this.toast_danger(str)
           return
-          // if (this.__SYSTEM_TEST_RUNNING__) {
-          //   // skip
-          // } else {
-          //   return
-          // }
         }
       }
 
