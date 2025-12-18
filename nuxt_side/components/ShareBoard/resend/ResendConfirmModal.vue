@@ -7,7 +7,7 @@
     | {{SB.user_call_name(SB.resend_next_user_name)}}の反応がないので再送してください
     ul.has-text-grey.is-size-7.mt-2
       template(v-if="true")
-        li {{SB.user_call_name(SB.resend_next_user_name)}}がいなくなっている場合は順番設定から外してください
+        li {{SB.user_call_name(SB.resend_next_user_name)}}が抜けている場合は対局を中断後、順番設定から外して、対局時計を再開してください
       template(v-if="SB.debug_mode_p")
         li 再送{{SB.resend_adjusted_delay_sec}}秒後に再度確認します
     template(v-if="development_p && false")
@@ -34,8 +34,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .ResendConfirmModal
-  // +modal_max_width(480px)
-  +modal_width_auto
+  +modal_max_width(400px)
 
 .STAGE-development
   .ResendConfirmModal

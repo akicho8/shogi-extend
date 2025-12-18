@@ -14,7 +14,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_text("bさんの反応がないので再送してください") # しかしbが応答しない
     find(".resend_confirm_break_handle").click           # 「対局を中断する」をクリックする
     assert_action_text("対局中断")                       # 履歴にログが出ている
-    assert_text("再開してください")                      # 時計を再開すればよいと伝えている
+    assert_text "bさんが抜けた場合は順番設定から外して再開してください"
     assert_clock(:pause)                                 # 時計が一時停止している
   end
 end
