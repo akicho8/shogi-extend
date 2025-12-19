@@ -85,7 +85,7 @@ export const mod_resign = {
 
     async honpu_announce() {
       await GX.sleep(this.__SYSTEM_TEST_RUNNING__ ? 0 : 0)
-      await this.toast_primary("💡 棋譜は上の本譜ボタンからコピーできるよ", {talk: false, duration_sec: 5})
+      await this.sb_toast_primary("棋譜は上の本譜ボタンからコピーできるよ", {talk: false, duration_sec: 8})
     },
 
     // 投了時に自分のチームは勝ったのか？
