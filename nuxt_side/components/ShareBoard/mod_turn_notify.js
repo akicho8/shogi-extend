@@ -27,17 +27,17 @@ export const mod_turn_notify = {
     },
 
     // this.change_per                                         // => 2
-    // params.simple_hand_attributes.next_turn_offset                             // => 1
+    // params.last_move_info_attrs.next_turn_offset                             // => 1
     // params.from_user_name                                   // => alice
     // params.next_user_name                                   // => bob
-    // this.turn_to_user_name(params.simple_hand_attributes.next_turn_offset - 2) // => dave
-    // this.turn_to_user_name(params.simple_hand_attributes.next_turn_offset - 1) // => alice
-    // this.turn_to_user_name(params.simple_hand_attributes.next_turn_offset - 0) // => bob
+    // this.turn_to_user_name(params.last_move_info_attrs.next_turn_offset - 2) // => dave
+    // this.turn_to_user_name(params.last_move_info_attrs.next_turn_offset - 1) // => alice
+    // this.turn_to_user_name(params.last_move_info_attrs.next_turn_offset - 0) // => bob
     // this.order_flow.order_operation.teams[0].length             // => 2
     // this.order_flow.order_operation.teams[1].length             // => 2
     __tn_message_prefix(params) {
       GX.assert(this.order_flow, "this.order_flow")
-      const turn = params.simple_hand_attributes.next_turn_offset
+      const turn = params.last_move_info_attrs.next_turn_offset
       const location = this.turn_to_location(turn)                        // 渡ってきたこれから指す側のチームを求めて
       if (this.order_flow.order_operation.teams[location.code].length >= 2) { // そのチーム内にメンバーが2人以上いる場合は
         const user_name = this.turn_to_user_name(turn - 2)                // 2手前の名前を求めて

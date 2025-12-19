@@ -5,9 +5,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_app
     perpetual_trigger
     assert_action_text("千日手")              # 履歴に「千日手」のテキストが出ている
-    assert_selector(".IllegalModal")          # モーダルが存在する
-    illegal_modal_close
-    assert_no_selector(".IllegalModal")       # モーダルが閉じた
+    assert_selector(".IllegalLoseModal")          # モーダルが存在する
+    illegal_lose_modal_close
+    assert_no_selector(".IllegalLoseModal")       # モーダルが閉じた
   end
 
   it "スライダーで2手目から1手目に戻しただけで千日手情報をリセットする" do
@@ -54,17 +54,17 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     it "「したら負け」なので発動する" do
       visit_app(foul_mode_key: "lose")
       perpetual_trigger
-      assert_selector(".IllegalModal")
+      assert_selector(".IllegalLoseModal")
     end
     it "発動しない" do
       visit_app(foul_mode_key: "block")
       perpetual_trigger
-      assert_no_selector(".IllegalModal")
+      assert_no_selector(".IllegalLoseModal")
     end
     it "発動しない" do
       visit_app(foul_mode_key: "ignore")
       perpetual_trigger
-      assert_no_selector(".IllegalModal")
+      assert_no_selector(".IllegalLoseModal")
     end
   end
 
@@ -78,8 +78,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :RESEND_FEATURE            => false,
       })
     perpetual_trigger
-    assert_selector(".IllegalModal", text: "千日手で☖の勝ち")
-    illegal_modal_close
+    assert_selector(".IllegalLoseModal", text: "千日手で☖の勝ち")
+    illegal_lose_modal_close
     assert_order_off  # 自動投了が有効だったため順番設定がOFFになっている
   end
 end

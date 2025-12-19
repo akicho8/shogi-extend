@@ -86,7 +86,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
           "next_user_name"    => "bob",
           "elapsed_sec"       => 1,
           "illegal_hv_list"     => ["二歩", "千日手"],
-          "simple_hand_attributes" => {
+          "last_move_info_attrs" => {
             "kif_without_from"    => "☗7六歩",
             "next_turn_offset"    => 1,
             "player_location_key" => "black",
@@ -323,15 +323,15 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "illegal_share" do
+  describe "illegal_block_modal_start" do
     before do
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("illegal_share" => "二歩")
+      data = data_factory("illegal_block_modal_start" => "二歩")
       expect {
-        subscription.illegal_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "illegal_share_broadcasted", bc_params: data)
+        subscription.illegal_block_modal_start(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "illegal_block_modal_start_broadcasted", bc_params: data)
     end
   end
 

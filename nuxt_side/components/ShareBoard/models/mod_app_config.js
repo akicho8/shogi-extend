@@ -35,6 +35,10 @@ export const AppConfig = {
 
   // ☗☖をアバターに置き換えた場合には駒台の上のプレイヤー名の前に☗☖入れるか？
   player_name_prefix_pentagon_feature: false,
+
+  illegal_block: {
+    lifted_piece_cancel: false, // 反則ブロック時に持った駒を離すか？
+  },
 }
 
 if (process.env.NODE_ENV === "development") {

@@ -19,8 +19,16 @@
       .panel.assert_var
         .panel-heading
           | [assert_var]
-        .panel-block latest_illegal_hv:{{SB.latest_illegal_hv}}
-        .panel-block(v-if="SB.latest_illegal_hv") latest_illegal_name:{{SB.latest_illegal_hv.illegal_info.name}}
+        .panel-block illegal_params:{{SB.illegal_params}}
+        template(v-if="SB.illegal_params")
+          .panel-block latest_illegal_hv:{{SB.latest_illegal_hv}}
+          .panel-block latest_illegal_name:{{SB.latest_illegal_name}}
+          .panel-block latest_illegal_location.key:{{SB.latest_illegal_location.key}}
+          .panel-block latest_illegal_it_is_my_team:{{SB.latest_illegal_it_is_my_team}}
+          .panel-block latest_illegal_it_is_op_team:{{SB.latest_illegal_it_is_op_team}}
+          .panel-block latest_illegal_i_am_trigger:{{SB.latest_illegal_i_am_trigger}}
+          .panel-block latest_illegal_user_name:{{SB.latest_illegal_user_name}}
+          .panel-block latest_illegal_common_message:{{SB.latest_illegal_common_message}}
 </template>
 
 <script>

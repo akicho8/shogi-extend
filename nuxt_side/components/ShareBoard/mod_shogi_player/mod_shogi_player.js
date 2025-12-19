@@ -94,7 +94,7 @@ export const mod_shogi_player = {
       return func(this.$refs.SbShogiPlayer.$refs.main_sp.sp_object())
     },
 
-    // 持駒を元に戻す(デバッグ用)
+    // 持駒を元に戻す
     sp_lifted_piece_cancel() {
       return this.sp_call(e => e.api_lifted_piece_cancel())
     },

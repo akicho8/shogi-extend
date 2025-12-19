@@ -15,15 +15,15 @@ mod = Module.new do
   end
 
   def notice_none
-    assert_var(:latest_illegal_hv, "")
+    assert_var(:illegal_params, "")
   end
 
   def modal_exist
-    assert_selector(".IllegalModal", text: "二歩で☖の勝ち")
+    assert_selector(".IllegalLoseModal", text: "二歩で☖の勝ち")
   end
 
   def modal_none
-    assert_no_selector(".IllegalModal")
+    assert_no_selector(".IllegalLoseModal")
   end
 
   def action_log_exist

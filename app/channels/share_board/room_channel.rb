@@ -175,8 +175,12 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
-    def illegal_share(data)
-      broadcast(:illegal_share_broadcasted, data)
+    def illegal_block_modal_start(data)
+      broadcast(:illegal_block_modal_start_broadcasted, data)
+    end
+
+    def illegal_block_yes_no(data)
+      broadcast(:illegal_block_yes_no_broadcasted, data)
     end
 
     ################################################################################
@@ -284,14 +288,14 @@ module ShareBoard
     end
 
     def sfen_sync_track_body(data)
-      simple_hand_attributes = data["simple_hand_attributes"]
-      player_location = LocationInfo.fetch(simple_hand_attributes["player_location_key"])
-      next_turn_offset = simple_hand_attributes["next_turn_offset"]
+      last_move_info_attrs = data["last_move_info_attrs"]
+      player_location = LocationInfo.fetch(last_move_info_attrs["player_location_key"])
+      next_turn_offset = last_move_info_attrs["next_turn_offset"]
 
       s = []
       s << "#{next_turn_offset}手目"
       s << player_location.mark
-      s << simple_hand_attributes["kif_without_from"].inspect
+      s << last_move_info_attrs["kif_without_from"].inspect
       if v = data["next_user_name"]
         s << "→ #{v.inspect}"
       end

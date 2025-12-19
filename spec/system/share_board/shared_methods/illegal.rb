@@ -1,5 +1,5 @@
 module SharedMethods
-  def illegal_modal_close
-    find(".illegal_modal_close_handle").click
+  def illegal_lose_modal_close
+    find(".illegal_lose_modal_close_handle").click
   end
 end

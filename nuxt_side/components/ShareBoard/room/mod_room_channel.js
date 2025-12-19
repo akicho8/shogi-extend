@@ -170,9 +170,14 @@ export const mod_room_channel = {
 
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
-      if (this.ac_room) {
-        this.ac_room.perform(action, this.ac_room_perform_params_wrap(params)) // --> app/channels/share_board/room_channel.rb
+      params = this.ac_room_perform_params_wrap(params)
+      if (this.ac_room == null) {
+        if (params.__standalone_mode__) {
+          this[`${action}_broadcasted`](params)
+        }
+        return
       }
+      this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
     },
     ac_room_perform_params_wrap(params) {
       return {

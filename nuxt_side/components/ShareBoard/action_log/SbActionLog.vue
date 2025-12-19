@@ -14,9 +14,9 @@
             template(v-else)
               .flex_item {{e.label}}
 
-          template(v-if="e.simple_hand_attributes")
-            .flex_item {{e.simple_hand_attributes.next_turn_offset}}
-            .flex_item {{e.simple_hand_attributes.kif_without_from}}
+          template(v-if="e.last_move_info_attrs")
+            .flex_item {{e.last_move_info_attrs.next_turn_offset}}
+            .flex_item {{e.last_move_info_attrs.kif_without_from}}
 
           template(v-for="e in e.illegal_hv_list")
             b-tag.flex_item(type="is-danger" size="is-small") {{e.illegal_info.name}}
