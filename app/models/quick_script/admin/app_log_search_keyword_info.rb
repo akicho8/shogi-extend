@@ -66,12 +66,12 @@ module QuickScript
           param_key: :query,
           keywords: ["RecordNotUnique", "Deadlocked"],
         },
-        {
-          key: "ログレベル",
-          css_klass: "is-info is-light",
-          param_key: :log_level_keys,
-          keywords: LogLevelInfo.keys.reverse,
-        },
+        # {
+        #   key: "ログレベル",
+        #   css_klass: "is-info is-light",
+        #   param_key: :log_level_keys,
+        #   keywords: LogLevelInfo.keys.reverse,
+        # },
       ]
     end
   end
