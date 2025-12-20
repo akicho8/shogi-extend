@@ -125,7 +125,7 @@ export const mod_illegal = {
       } else if (this.latest_illegal_it_is_my_team) {
         return `${this.my_call_name}は反則していませんが仲間なので投了できます。潔く投了しますか？`
       } else if (this.latest_illegal_it_is_op_team) {
-        return `${this.my_call_name}はこの相手の反則を取り消す権限があります。どうしますか？`
+        return `${this.my_call_name}は反則を取り消すことができます。どうしますか？`
       } else {
         return `${this.my_call_name}は観戦者なので何もできません`
       }

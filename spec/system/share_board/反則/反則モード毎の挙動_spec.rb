@@ -19,12 +19,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_none
-        modal_exist
+        lose_modal_exist
+        block_modal_none
         action_log_exist
       end
       window_b do
         notice_none
-        modal_exist
+        lose_modal_exist
+        block_modal_none
         action_log_exist
       end
     end
@@ -35,12 +37,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_exist
-        modal_none
+        lose_modal_none
+        block_modal_exist
         action_log_exist
       end
       window_b do
         notice_exist
-        modal_none
+        lose_modal_none
+        block_modal_exist
         action_log_exist
       end
     end
@@ -51,12 +55,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_none
-        modal_none
+        lose_modal_none
+        block_modal_exist
         action_log_none
       end
       window_b do
         notice_none
-        modal_none
+        lose_modal_none
+        block_modal_exist
         action_log_none
       end
     end
@@ -78,12 +84,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_exist
-        modal_none
+        lose_modal_none
         action_log_exist
       end
       window_b do
         notice_exist
-        modal_none
+        lose_modal_none
         action_log_exist
       end
     end

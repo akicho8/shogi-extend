@@ -18,12 +18,20 @@ mod = Module.new do
     assert_var(:illegal_params, "")
   end
 
-  def modal_exist
+  def lose_modal_exist
     assert_selector(".IllegalLoseModal", text: "二歩で☖の勝ち")
   end
 
-  def modal_none
+  def lose_modal_none
     assert_no_selector(".IllegalLoseModal")
+  end
+
+  def block_modal_exist
+    assert_selector(".IllegalBlockModal", text: "二歩")
+  end
+
+  def block_modal_none
+    assert_no_selector(".IllegalBlockModal")
   end
 
   def action_log_exist

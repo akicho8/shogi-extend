@@ -58,7 +58,7 @@ export const illegal_block_modal = {
       GX.assert_present(this.illegal_params)
       const params = {
         ...this.illegal_params,
-        __standalone_mode__: true,
+        yes_or_no_by: this.user_name,
         yes_or_no: yes_or_no,
       }
       this.ac_room_perform("illegal_block_yes_no", params) // --> app/channels/share_board/room_channel.rb
@@ -70,10 +70,8 @@ export const illegal_block_modal = {
       this.illegal_block_modal_close()
 
       // 状況表示
-      if (params.yes_or_no === "yes") {
-        this.sb_toast_primary(`${this.user_call_name(params.from_user_name)}が投了しました`)
-      } else {
-        this.sb_toast_primary(`${this.user_call_name(params.from_user_name)}が反則をなかったことにしました`)
+      if (params.yes_or_no === "no") {
+        this.sb_toast_primary(`${this.user_call_name(params.yes_or_no_by)}が反則をなかったことにしました`)
       }
 
       // 全員の局面を反則局面に変更する
