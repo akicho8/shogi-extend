@@ -20,12 +20,21 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
     end
 
-    it "モーダル内文言" do
+    it "モーダルの内容" do
       case2
+
+      window_a { assert_clock(:pause) }
+      window_b { assert_clock(:pause) }
+      window_c { assert_clock(:pause) }
+
       window_a { block_modal_exist }
       window_b { block_modal_exist }
       window_c { block_modal_exist }
+
+      # 共通文言
       window_a { assert_text "本来であればこの時点でaさんの負けです" }
+
+      # 個別
       window_a { assert_text "潔く投了しますか？" }
       window_b { assert_text "bさんは反則を取り消すことができます。どうしますか？" }
       window_c { assert_text "cさんは反則していませんが仲間なので投了できます。潔く投了しますか？" }
@@ -39,6 +48,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
         find(".illegal_block_modal_submit_handle_yes").click
         assert_action "a", "投了"
+        assert_clock(:stop)
       end
     end
 
@@ -50,6 +60,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
         find(".illegal_block_modal_submit_handle_no").click
         assert_text "bさんが反則をなかったことにしました"
+        assert_clock(:play)
       end
     end
 
@@ -61,6 +72,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
         find(".illegal_block_modal_submit_handle_yes").click
         assert_action "a", "投了"
+        assert_clock(:stop)
       end
     end
   end

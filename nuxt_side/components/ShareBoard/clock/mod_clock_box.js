@@ -215,11 +215,24 @@ export const mod_clock_box = {
       }
     },
 
+    //////////////////////////////////////////////////////////////////////////////// resume
+
     cc_resume_handle() {
-      this.clock_box.resume_handle()
+      if (this.cc_pause_p) {
+        this.clock_box.resume_handle()
+      }
     },
+    // cc_silent_resume_share() {
+    //   if (this.cc_pause_p) {
+    //     this.cc_resume_handle()
+    //     this.clock_box_share("cc_behavior_silent_resume")
+    //   }
+    // },
+
+    //////////////////////////////////////////////////////////////////////////////// pause
+
     cc_pause_handle() {
-      if (this.clock_box.pause_or_play_p) {
+      if (this.cc_play_p) {
         this.clock_box.pause_handle()
       }
     },
@@ -229,11 +242,21 @@ export const mod_clock_box = {
         this.clock_box_share("cc_behavior_silent_pause")
       }
     },
+
+    //////////////////////////////////////////////////////////////////////////////// stop
+
     cc_stop_handle() {
-      if (this.clock_box.pause_or_play_p) {
+      if (this.cc_pause_or_play_p) {
         this.clock_box.stop_handle()
       }
     },
+    cc_stop_share_handle() {
+      if (this.cc_pause_or_play_p) {
+        this.cc_stop_handle()
+        this.clock_box_share("cc_behavior_silent_stop")
+      }
+    },
+
     // 順番OFFであれば時計を停止する
     order_off_then_cc_stop() {
       if (!this.order_enable_p) {
@@ -242,16 +265,11 @@ export const mod_clock_box = {
         }
       }
     },
-    // 対局時計が動いている場合は停止する
-    cc_stop_share_handle() {
-      if (this.cc_play_p) {
-        this.cc_stop_handle()
-        this.clock_box_share("cc_behavior_silent_stop")
-      }
-    },
+
+    //////////////////////////////////////////////////////////////////////////////// play
+
     cc_play_handle() {
-      if (this.clock_box.pause_or_play_p) {
-      } else {
+      if (this.cc_stop_p) {
         this.clock_box.play_handle()
       }
     },
@@ -467,7 +485,11 @@ export const mod_clock_box = {
     CcRuleInfo()     { return CcRuleInfo     },
     CcBehaviorInfo() { return CcBehaviorInfo },
 
-    cc_play_p() { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
+    // 時計の状態
+    cc_stop_p()          { return this.clock_box?.stop_p          },
+    cc_play_p()          { return this.clock_box?.play_p          },
+    cc_pause_or_play_p() { return this.clock_box?.pause_or_play_p },
+    cc_pause_p()         { return this.clock_box?.pause_p         },
 
     cc_common_p()  { return this.cc_params.length === 1 }, // 共通設定か？
     cc_unique_p()  { return this.cc_params.length === 2 }, // 個別設定か？

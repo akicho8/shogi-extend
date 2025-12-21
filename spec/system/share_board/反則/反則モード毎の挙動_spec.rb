@@ -18,13 +18,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_b { case1(:b, :lose) }
       window_a { double_pawn! }
       window_a do
-        notice_none
+        notice_exist
         lose_modal_exist
         block_modal_none
         action_log_exist
       end
       window_b do
-        notice_none
+        notice_exist
         lose_modal_exist
         block_modal_none
         action_log_exist
@@ -56,13 +56,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a do
         notice_none
         lose_modal_none
-        block_modal_exist
+        block_modal_none
         action_log_none
       end
       window_b do
         notice_none
         lose_modal_none
-        block_modal_exist
+        block_modal_none
         action_log_none
       end
     end
@@ -78,18 +78,20 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         })
     end
 
-    it "「反則したら負け」モードでも感想戦中は「反則ブロック」相当になっている" do
+    it "「反則したら負け」モードでも感想戦中は「反則ブロック」相当になっている (ただしモーダルは出さない)" do
       window_a { case1(:a, :lose) }
       window_b { case1(:b, :lose) }
       window_a { double_pawn! }
       window_a do
         notice_exist
         lose_modal_none
+        block_modal_none
         action_log_exist
       end
       window_b do
         notice_exist
         lose_modal_none
+        block_modal_none
         action_log_exist
       end
     end

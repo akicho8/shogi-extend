@@ -108,10 +108,9 @@ export const mod_resign = {
 
   computed: {
     // 投了ボタン表示条件
-    // ・対局メンバーに含まれる ← やめ
-    // ・対局メンバーに含まれる かつ 時計が PLAY 状態 ← こっちにした
+    // 反則ブロックモーダルを出しているとき時計は PAUSE なので PAUSE を含めること
     resign_can_p() {
-      return this.i_am_member_p && this.cc_play_p
+      return this.i_am_member_p && this.cc_pause_or_play_p
     },
 
     // 投了ボタンを押した瞬間の勝った側を返す

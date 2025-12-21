@@ -69,18 +69,19 @@ export const illegal_block_modal = {
       // まだモーダルを読んでいる人がいるため閉じる
       this.illegal_block_modal_close()
 
-      // 状況表示
       if (params.yes_or_no === "no") {
+        // 時計が pause 状態になっているので「なかったことにする」のであれば再開する
+        this.cc_resume_handle()
+
+        // 状況表示
         this.sb_toast_primary(`${this.user_call_name(params.yes_or_no_by)}が反則をなかったことにしました`)
       }
 
-      // 全員の局面を反則局面に変更する
       if (params.yes_or_no === "yes") {
+        // 全員の局面を反則局面に変更する
         this.current_sfen_set(params)
-      }
 
-      // 最後に YES を押した人だけが投了する
-      if (params.yes_or_no === "yes") {
+        // 最後に YES を押した人だけが投了する
         if (this.received_from_self(params)) {
           this.resign_call()
         }

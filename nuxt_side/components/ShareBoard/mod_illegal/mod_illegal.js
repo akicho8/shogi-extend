@@ -47,6 +47,7 @@ export const mod_illegal = {
 
       this.sfx_stop_all()
       this.sfx_play("lose")
+      this.cc_silent_pause_share()
       this.talk(this.latest_illegal_talk_body)
       this.illegal_block_modal_open()
     },
