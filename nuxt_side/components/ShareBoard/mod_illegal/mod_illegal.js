@@ -135,8 +135,8 @@ export const mod_illegal = {
     latest_illegal_talk_body() {
       return [
         this.latest_illegal_name,
-        this.latest_illegal_common_message,
-        this.latest_illegal_individual_message,
+        // this.latest_illegal_common_message,
+        // this.latest_illegal_individual_message,
       ].join("。")
     },
   },
