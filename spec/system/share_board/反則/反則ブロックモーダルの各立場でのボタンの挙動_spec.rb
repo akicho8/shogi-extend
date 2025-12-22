@@ -33,46 +33,54 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
       # 共通文言
       window_a { assert_text "本来であればこの時点でaさんの反則負けです" }
+      window_a { assert_text "潔く投了しますか？" }
 
       # 個別
-      window_a { assert_text "潔く投了しますか？" }
       window_b { assert_text "bさんは「待ったする」で反則をなかったことにできます" }
       window_c { assert_text "cさんは仲間なので投了も待ったもできます" }
     end
 
-    it "当事者の立場" do
-      case2
-      window_a do
-        find(".illegal_block_modal_submit_handle_block").click
-        assert_text "自分でなかったことにはできません"
-
-        find(".illegal_block_modal_submit_handle_resign").click
-        assert_action "a", "投了"
-        assert_clock(:stop)
+    describe "当事者の立場" do
+      it "待ったする" do
+        case2
+        window_a do
+          assert_block_success
+          assert_text "aさんが自ら待ったして反則を揉み消しました"
+        end
+      end
+      it "投了する" do
+        case2
+        window_a do
+          assert_resign_success
+        end
       end
     end
 
     it "対戦者の立場" do
       case2
       window_b do
-        find(".illegal_block_modal_submit_handle_resign").click
+        assert_resign_ng
         assert_text "bさんは対戦相手なので投了できません"
 
-        find(".illegal_block_modal_submit_handle_block").click
-        assert_text "bさんが反則を揉み消しました"
-        assert_clock(:play)
+        assert_block_success
+        assert_text "bさんがお情けで反則をなかったことにしました"
       end
     end
 
-    it "仲間の立場" do
-      case2
-      window_c do
-        find(".illegal_block_modal_submit_handle_block").click
-        assert_text "cさんは仲間なのでなかったことにはできません"
+    describe "仲間の立場" do
+      it "待ったする" do
+        case2
+        window_c do
+          assert_block_success
+          assert_text "cさんが待ったして仲間の反則を揉み消しました"
+        end
+      end
 
-        find(".illegal_block_modal_submit_handle_resign").click
-        assert_action "a", "投了"
-        assert_clock(:stop)
+      it "投了する" do
+        case2
+        window_c do
+          assert_resign_success
+        end
       end
     end
   end
@@ -95,13 +103,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_c { case1(:c) }
       window_a { double_pawn! }
       window_c do
-        assert_text "cさんは観戦者なので何もできません"
+        assert_text "cさんは観戦者ですが「待ったする」で反則をなかったことにできます"
 
-        find(".illegal_block_modal_submit_handle_block").click
-        assert_text "cさんは観戦者なので触らんといてください"
+        assert_resign_ng
+        assert_text "cさんは観戦者なので投了できません"
 
-        find(".illegal_block_modal_submit_handle_resign").click
-        assert_text "cさんは観戦者なので触らんといてください"
+        assert_block_success
+        assert_text "cさんが反則をなかったことにしました"
       end
     end
   end

@@ -41,6 +41,35 @@ mod = Module.new do
   def action_log_none
     assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
   end
+
+  ################################################################################
+
+  def assert_resign_success
+    find(".illegal_block_modal_submit_handle_resign").click
+    assert_action "a", "投了"
+    assert_clock(:stop)
+    block_modal_none
+  end
+
+  def assert_resign_ng
+    find(".illegal_block_modal_submit_handle_resign").click
+    assert_clock(:pause)
+    block_modal_exist
+  end
+
+  def assert_block_success
+    find(".illegal_block_modal_submit_handle_block").click
+    assert_clock(:play)
+    block_modal_none
+  end
+
+  def assert_block_ng
+    find(".illegal_block_modal_submit_handle_block").click
+    assert_clock(:pause)
+    block_modal_exist
+  end
+
+  ################################################################################
 end
 
 RSpec.configure do |config|

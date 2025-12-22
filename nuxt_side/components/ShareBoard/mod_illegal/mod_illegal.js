@@ -120,31 +120,10 @@ export const mod_illegal = {
     // --------------------------------------------------------------------------------
 
     illegal_block_modal_submit_validate_message(i_selected) {
-      // 誰でもなかったことにできるか？
-      if (this.AppConfig.illegal_block.anyone_block_can_p) {
-        if (i_selected === "do_block") {
-          return
-        }
-      }
-
-      if (this.latest_illegal_i_am_trigger) {
-        if (i_selected === "do_block") {
-          return `自分でなかったことにはできません`
-        }
-      } else if (this.latest_illegal_it_is_my_team) {
-        if (i_selected === "do_block") {
-          return `${this.my_call_name}は仲間なのでなかったことにはできません`
-        }
-      } else if (this.latest_illegal_it_is_op_team) {
-        if (i_selected === "do_resign") {
-          return `${this.my_call_name}は対戦相手なので投了できません`
-        }
-      } else {
-        if (i_selected === "do_block") {
-          return `${this.my_call_name}は観戦者なのでなかったことにはできません`
-        }
-        if (i_selected === "do_resign") {
-          return `${this.my_call_name}は観戦者なので投了できません`
+      if (i_selected === "do_resign") {
+        const fn = this.illegal_user_info.resign_click_message
+        if (fn) {
+          return fn(this)
         }
       }
     },
@@ -179,26 +158,6 @@ export const mod_illegal = {
         return "watcher"
       }
     },
-
-    // illegal_block_modal_block_button_label() {
-    //   if (true) {
-    //     if (this.latest_illegal_it_is_my_team) {
-    //       return `待ったする`
-    //     } else {
-    //       return `待ったを許す`
-    //     }
-    //   } else {
-    //     if (this.latest_illegal_i_am_trigger) {
-    //       return `待ったする`
-    //     } else if (this.latest_illegal_it_is_my_team) {
-    //       return `待ったする`
-    //     } else if (this.latest_illegal_it_is_op_team) {
-    //       return `待ったを許す`
-    //     } else {
-    //       return `待ったを許す`
-    //     }
-    //   }
-    // },
 
     // // エラー文言を予測する
     // illegal_block_modal_submit_validate_message_block()  { return this.illegal_block_modal_submit_validate_message("block")  },

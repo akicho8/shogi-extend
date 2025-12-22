@@ -39,7 +39,7 @@ export const AppConfig = {
   // 反則ブロック
   illegal_block: {
     lifted_piece_cancel: false, // 反則ブロック時に持った駒を離すか？
-    anyone_block_can_p: true,   // 誰でも「なかったことにする」ことができるか？
+    // anyone_block_can_p: true,   // 誰でも「なかったことにする」ことができるか？
   },
 }
 
