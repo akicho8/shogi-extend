@@ -9,14 +9,14 @@ export class IllegalUserInfo extends ApplicationMemoryRecord {
         name: "当事者",
         modal_body_message: null,
         resign_click_message: null,
-        blocked_message: (context, params) => `${context.user_call_name(params.i_selected_by)}が自ら待ったして反則を揉み消しました`,
+        blocked_message: (context, params) => `${context.user_call_name(params.i_selected_by)}が自分の反則を揉み消しました`,
       },
       {
         key: "my_team",
         name: "仲間",
         modal_body_message: (context)      => `${context.my_call_name}は仲間なので投了も待ったもできます`,
         resign_click_message: null,
-        blocked_message: (context, params) => `${context.user_call_name(params.i_selected_by)}が待ったして仲間の反則を揉み消しました`,
+        blocked_message: (context, params) => `${context.user_call_name(params.i_selected_by)}が仲間の反則を揉み消しました`,
       },
       {
         key: "op_team",

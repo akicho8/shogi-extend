@@ -45,7 +45,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_a do
           assert_block_success
-          assert_text "aさんが自ら待ったして反則を揉み消しました"
+          assert_text "aさんが自分の反則を揉み消しました"
         end
       end
       it "投了する" do
@@ -72,7 +72,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_c do
           assert_block_success
-          assert_text "cさんが待ったして仲間の反則を揉み消しました"
+          assert_text "cさんが仲間の反則を揉み消しました"
         end
       end
 

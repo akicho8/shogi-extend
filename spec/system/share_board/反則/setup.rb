@@ -49,6 +49,7 @@ mod = Module.new do
     assert_action "a", "投了"
     assert_clock(:stop)
     block_modal_none
+    assert_turn(1)              # 反則手を反映した局面に進んでいる
   end
 
   def assert_resign_ng
@@ -61,6 +62,7 @@ mod = Module.new do
     find(".illegal_block_modal_submit_handle_block").click
     assert_clock(:play)
     block_modal_none
+    assert_turn(0)              # 反則前の局面
   end
 
   def assert_block_ng
