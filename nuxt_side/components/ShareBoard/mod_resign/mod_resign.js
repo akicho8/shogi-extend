@@ -116,13 +116,15 @@ export const mod_resign = {
     // 投了ボタンを押した瞬間の勝った側を返す
     resign_win_location_key() {
       const params = {}
+
       if (this.AppConfig.TORYO_THEN_CURRENT_LOCATION_IS_LOSE) {
         // 方法1: 投了ボタンが押されたときの手番のチームを負けとする
         // 誰が投了したかに関係なく、投了時点の手番のチームが負けで、その相手が勝ちとする
         // これは二歩したとき手番が相手に移動しているため、そこで投了すると逆になってしまうので却下
         return this.current_location.flip.key
-      } else {
-        GX.assert(this.my_location, "観戦者が投了した (普通の遷移ではここに来ない)")
+      }
+
+      if (this.my_location) {
         // 方法2: 投了ボタンを押した人を負けとする
         // デメリットとしては代わりに押してあげることができない
         return this.my_location.flip.key // 自分が投了したので相手色の勝ち

@@ -7,7 +7,7 @@ export class ParamBase extends ApplicationMemoryRecord {
   //
   //   data() {
   //     return {
-  //       ...FooInfo.null_value_data_hash,
+  //       ...IllegalUserInfo.null_value_data_hash,
   //     }
   //   },
   //

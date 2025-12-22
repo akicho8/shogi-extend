@@ -36,8 +36,10 @@ export const AppConfig = {
   // ☗☖をアバターに置き換えた場合には駒台の上のプレイヤー名の前に☗☖入れるか？
   player_name_prefix_pentagon_feature: false,
 
+  // 反則ブロック
   illegal_block: {
     lifted_piece_cancel: false, // 反則ブロック時に持った駒を離すか？
+    anyone_block_can_p: true,   // 誰でも「なかったことにする」ことができるか？
   },
 }
 

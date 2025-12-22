@@ -17,7 +17,7 @@ export const illegal_lose_modal = {
 
     illegal_lose_modal_open(params) {
       if (GX.present_p(params.illegal_hv_list)) {
-        this.illegal_params = params
+        this.illegal_params_set(params)
         this.sfx_stop_all()
         this.sfx_play("lose")
         this.illegal_lose_modal_close()

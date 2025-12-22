@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card
+.modal-card(v-if="SB.illegal_params")
   .modal-card-head
     .modal-card-title
       | {{SB.latest_illegal_name}}で{{SB.latest_illegal_location.flip.name}}の勝ち

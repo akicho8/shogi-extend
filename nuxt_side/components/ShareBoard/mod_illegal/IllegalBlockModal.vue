@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card
+.modal-card(v-if="SB.illegal_params")
   .modal-card-head
     .modal-card-title
       | {{SB.latest_illegal_name}}
@@ -14,10 +14,17 @@
       sp_layout="horizontal"
     )
 
-    .resign_message(v-if="SB.latest_illegal_common_message" v-text="SB.latest_illegal_common_message")
-    .resign_message(v-if="SB.latest_illegal_individual_message" v-text="SB.latest_illegal_individual_message")
+    .resign_message
+      | 本来であればこの時点で{{SB.user_call_name(SB.latest_illegal_user_name)}}の反則負けです
+    .resign_message
+      | 潔く投了しますか？
+    .box.is-shadowless.has-background-light(v-if="SB.illegal_user_info.modal_body_message" v-text="SB.illegal_user_info.modal_body_message(SB)")
 
-    .panel(v-if="SB.debug_mode_p")
+    //- template(v-if="SB.debug_mode_p")
+    //-   .box.is-shadowless.has-background-light(v-for="e in SB.IllegalUserInfo.values" v-if="e.modal_body_message")
+    //-     | {{e.modal_body_message(SB)}}
+
+    .panel(v-if="SB.debug_mode_p && false")
       .panel-heading variables
       .panel-block latest_illegal_name:{{SB.latest_illegal_name}}
       .panel-block latest_illegal_location.key:{{SB.latest_illegal_location.key}}
@@ -25,11 +32,14 @@
       .panel-block latest_illegal_it_is_op_team:{{SB.latest_illegal_it_is_op_team}}
       .panel-block latest_illegal_i_am_trigger:{{SB.latest_illegal_i_am_trigger}}
       .panel-block latest_illegal_user_name:{{SB.latest_illegal_user_name}}
-      .panel-block latest_illegal_common_message:{{SB.latest_illegal_common_message}}
+      //- .panel-block latest_illegal_common_message:{{SB.latest_illegal_common_message}}
 
   .modal-card-foot
-    b-button.illegal_block_modal_submit_handle_no(@click="SB.illegal_block_modal_submit_handle('no')") なかったことにする
-    b-button.illegal_block_modal_submit_handle_yes(@click="SB.illegal_block_modal_submit_handle('yes')" type="is-danger") 投了する
+    // ここはやっぱり当事者だけのボタンにする
+    //- b-button.illegal_block_modal_submit_handle_resign(v-if="SB.latest_illegal_resign_button_show_p" @click="SB.illegal_block_modal_submit_handle('do_resign')" type="is-danger") 投了する
+    //- b-button.illegal_block_modal_submit_handle_block(@click="SB.illegal_block_modal_submit_handle('do_block')") {{SB.illegal_block_modal_block_button_label}}
+    b-button.illegal_block_modal_submit_handle_block(@click="SB.illegal_block_modal_submit_handle('do_block')") 待ったする
+    b-button.illegal_block_modal_submit_handle_resign(@click="SB.illegal_block_modal_submit_handle('do_resign')" type="is-danger") 投了する
 </template>
 
 <script>
@@ -43,7 +53,7 @@ export default {
 
 <style lang="sass">
 .IllegalBlockModal
-  +modal_max_width(640px)
+  +modal_max_width(512px)
   .modal-card-body
     display: flex
     align-items: center
@@ -52,4 +62,6 @@ export default {
     gap: 1rem
     .CustomShogiPlayer
       width: 400px
+  // .modal-card-foot
+  //   flex-direction: row-reverse
 </style>

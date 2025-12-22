@@ -13,6 +13,11 @@ export const mod_battle_archive = {
 
     // 棋譜保存。win_location_key 側を勝ちとする
     async battle_save_by_win_location(win_location_key) {
+      if (win_location_key == null) {
+        this.toast_danger("勝者不明")
+        return
+      }
+
       GX.assert(win_location_key)
       if (SELF_VS_SELF_THEN_SKIP) {
         if (this.self_vs_self_p) {

@@ -179,8 +179,8 @@ module ShareBoard
       broadcast(:illegal_block_modal_start_broadcasted, data)
     end
 
-    def illegal_block_yes_no(data)
-      broadcast(:illegal_block_yes_no_broadcasted, data)
+    def illegal_block_selected_share(data)
+      broadcast(:illegal_block_selected_share_broadcasted, data)
     end
 
     ################################################################################

@@ -36,9 +36,9 @@ export const illegal_block_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    async illegal_block_modal_submit_handle(yes_or_no) {
+    async illegal_block_modal_submit_handle(i_selected) {
       if (true) {
-        const message = this.illegal_block_modal_submit_validate_message(yes_or_no)
+        const message = this.illegal_block_modal_submit_validate_message(i_selected)
         if (message) {
           this.sfx_play("x")
           for (const e of GX.ary_wrap(message)) {
@@ -50,34 +50,39 @@ export const illegal_block_modal = {
 
       this.sfx_click()
       this.illegal_block_modal_close()
-      this.illegal_logging({yes_or_no: yes_or_no})
-      this.illegal_block_yes_no(yes_or_no)
+      this.illegal_block_selected_share(i_selected)
     },
 
-    illegal_block_yes_no(yes_or_no) {
+    illegal_block_selected_share(i_selected) {
       GX.assert_present(this.illegal_params)
+      this.illegal_logging({i_selected: i_selected})
       const params = {
-        ...this.illegal_params,
-        yes_or_no_by: this.user_name,
-        yes_or_no: yes_or_no,
+        ...this.illegal_params, // デバッグしやすいように入れておく
+        i_selected_by: this.user_name,
+        i_selected: i_selected,
       }
-      this.ac_room_perform("illegal_block_yes_no", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("illegal_block_selected_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    illegal_block_yes_no_broadcasted(params) {
-      // this.al_add({...params, label: params.yes_or_no})
+    illegal_block_selected_share_broadcasted(params) {
+      // 途中から入ってきた人は this.illegal_params を持っていないため関わらないようにする
+      if (this.illegal_params == null) {
+        return
+      }
+
+      // this.al_add({...params, label: params.i_selected})
 
       // まだモーダルを読んでいる人がいるため閉じる
       this.illegal_block_modal_close()
 
-      if (params.yes_or_no === "no") {
+      if (params.i_selected === "do_block") {
         // 時計が pause 状態になっているので「なかったことにする」のであれば再開する
         this.cc_resume_handle()
 
         // 状況表示
-        this.sb_toast_primary(`${this.user_call_name(params.yes_or_no_by)}が反則をなかったことにしました`)
+        this.sb_toast_primary(this.illegal_user_info.blocked_message(this, params))
       }
 
-      if (params.yes_or_no === "yes") {
+      if (params.i_selected === "do_resign") {
         // 全員の局面を反則局面に変更する
         this.current_sfen_set(params)
 
@@ -86,6 +91,8 @@ export const illegal_block_modal = {
           this.resign_call()
         }
       }
+
+      this.illegal_params_reset()
     },
 
     ////////////////////////////////////////////////////////////////////////////////

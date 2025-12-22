@@ -145,6 +145,9 @@ export const mod_sfen_sync = {
       }
 
       if (true) {
+        this.resend_receive_success_send(params)            // 受信OKを指し手に通知する
+        this.think_mark_all_clear()                         // マークを消す
+
         // 指したので時間切れ発動予約をキャンセルする
         // alice が残り1秒で指すが、bob 側の時計は0秒になっていた場合にこれが必要になる
         // これがないと alice は時間切れになっていないと言うが、bob側は3秒後に発動してしまって時間切れだと言って食い違いが発生する
@@ -160,15 +163,11 @@ export const mod_sfen_sync = {
           }
         }
 
-        this.illegal_then_resign(params)               // 自分が反則した場合は投了する
-        this.illegal_lose_modal_open(params)          // 反則があれば表示する
-        this.ai_say_case_illegal(params)                // 反則した人を励ます
+        this.illegal_process(params)               // 反則関連
 
         this.checkmate_then_resign(params)              //  詰みなら次の手番の人は投了する
 
         this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
-        this.resend_receive_success_send(params)            // 受信OKを指し手に通知する
-        this.think_mark_all_clear()                         // マークを消す
       }
 
       this.ai_say_case_turn(params)
@@ -206,18 +205,6 @@ export const mod_sfen_sync = {
     // ブロードキャストは相手側だけで実行する
     fast_sound_effect_func(params) {
       this.beat_call("short")
-    },
-
-    // 自分が反則した場合に自動投了が有効なら投了する
-    illegal_then_resign(params) {
-      if (this.received_from_self(params)) {
-        if (this.illegal_exist_p(params)) {
-          if (this.cc_play_p) {
-            this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
-          }
-          this.resign_call()
-        }
-      }
     },
 
     // 勝利

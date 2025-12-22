@@ -2,6 +2,7 @@ import { GX } from "@/components/models/gx.js"
 import { illegal_lose_modal } from "./illegal_lose_modal.js"
 import { illegal_block_modal } from "./illegal_block_modal.js"
 import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
+import { IllegalUserInfo } from "./illegal_user_info.js"
 
 export const mod_illegal = {
   mixins: [
@@ -14,6 +15,38 @@ export const mod_illegal = {
     }
   },
   methods: {
+    illegal_params_reset() {
+      // this.illegal_lose_modal_close()
+      // this.illegal_block_modal_close()
+      this.illegal_params_set(null)
+    },
+
+    illegal_params_set(params) {
+      this.illegal_params = params
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 反則 = したら負け
+
+    // 指したとき。反則してなくても呼ばれる。
+    illegal_process(params) {
+      this.illegal_block_modal_close()     // 反則ブロックモーダルがあれば閉じる
+      this.illegal_then_resign(params)     // 自分が反則した場合は投了する
+      this.illegal_lose_modal_open(params) // 反則があれば表示する
+      this.ai_say_case_illegal(params)     // 反則した人を励ます
+    },
+
+    // 自分が指して反則だった場合に対局中であれば投了する
+    illegal_then_resign(params) {
+      if (this.received_from_self(params)) {
+        if (this.illegal_exist_p(params)) {
+          if (this.cc_play_p) {
+            this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
+          }
+          this.resign_call()
+        }
+      }
+    },
+
     //////////////////////////////////////////////////////////////////////////////// 反則 = ブロック
 
     // 初心者モードの反則チェックありだけど反則ブロックときに反則したときの処理
@@ -35,7 +68,7 @@ export const mod_illegal = {
       this.ac_room_perform("illegal_block_modal_start", params) // --> app/channels/share_board/room_channel.rb
     },
     illegal_block_modal_start_broadcasted(params) {
-      this.illegal_params = params
+      this.illegal_params_set(params)
       this.al_add(params)
       this.illegal_logging()
 
@@ -86,21 +119,33 @@ export const mod_illegal = {
 
     // --------------------------------------------------------------------------------
 
-    illegal_block_modal_submit_validate_message(yes_or_no) {
+    illegal_block_modal_submit_validate_message(i_selected) {
+      // 誰でもなかったことにできるか？
+      if (this.AppConfig.illegal_block.anyone_block_can_p) {
+        if (i_selected === "do_block") {
+          return
+        }
+      }
+
       if (this.latest_illegal_i_am_trigger) {
-        if (yes_or_no === "no") {
+        if (i_selected === "do_block") {
           return `自分でなかったことにはできません`
         }
       } else if (this.latest_illegal_it_is_my_team) {
-        if (yes_or_no === "no") {
+        if (i_selected === "do_block") {
           return `${this.my_call_name}は仲間なのでなかったことにはできません`
         }
       } else if (this.latest_illegal_it_is_op_team) {
-        if (yes_or_no === "yes") {
+        if (i_selected === "do_resign") {
           return `${this.my_call_name}は対戦相手なので投了できません`
         }
       } else {
-        return `${this.my_call_name}は観戦者なので触らんといてください`
+        if (i_selected === "do_block") {
+          return `${this.my_call_name}は観戦者なのでなかったことにはできません`
+        }
+        if (i_selected === "do_resign") {
+          return `${this.my_call_name}は観戦者なので投了できません`
+        }
       }
     },
   },
@@ -108,29 +153,56 @@ export const mod_illegal = {
   computed: {
     IllegalInfo() { return IllegalInfo },
 
+    IllegalUserInfo()  { return IllegalUserInfo                                           },
+    illegal_user_info() { return IllegalUserInfo.fetch(this.latest_illegal_user_group_key) },
+
     illegal_app_state_human() { return this.order_clock_both_ok ? "対局中" : "検討中" },
 
-    latest_illegal_hv()             { return this.illegal_params.illegal_hv_list[0]                                            }, // 1つ目の反則情報
-    latest_illegal_name()           { return this.latest_illegal_hv.illegal_info.name                                                }, // 反則名
-    latest_illegal_location()       { return this.Location.fetch(this.latest_illegal_hv.last_move_info.to.attributes.location.key)   }, // 反則した▲△
-    latest_illegal_it_is_my_team()  { return this.i_am_member_p && this.latest_illegal_location.key === this.my_location.key         }, // 自分は対局者かつ反則した側か？
-    latest_illegal_it_is_op_team()  { return this.i_am_member_p && this.latest_illegal_location.key !== this.my_location.key         }, // 自分は対局者かつ反則してない側か？
-    latest_illegal_i_am_trigger()   { return this.received_from_self(this.illegal_params)                                      }, // 反則の発生源か？
-    latest_illegal_user_name()      { return this.illegal_params.from_user_name                                                }, // 反則者の名前
-    latest_illegal_common_message() { return `本来であればこの時点で${this.user_call_name(this.latest_illegal_user_name)}の負けです` }, // モーダルに表示する共通の文言
+    latest_illegal_hv()                   { return this.illegal_params.illegal_hv_list[0]                                                       }, // 1つ目の反則情報
+    latest_illegal_name()                 { return this.latest_illegal_hv.illegal_info.name                                                     }, // 反則名
+    latest_illegal_location()             { return this.Location.fetch(this.latest_illegal_hv.last_move_info.to.attributes.location.key)        }, // 反則した▲△
+    latest_illegal_it_is_my_team()        { return this.i_am_member_p && this.latest_illegal_location.key === this.my_location.key              }, // 自分は対局者かつ反則した側か？
+    latest_illegal_it_is_op_team()        { return this.i_am_member_p && this.latest_illegal_location.key !== this.my_location.key              }, // 自分は対局者かつ反則してない側か？
+    latest_illegal_i_am_trigger()         { return this.received_from_self(this.illegal_params)                                                 }, // 反則の発生源か？
+    latest_illegal_user_name()            { return this.illegal_params.from_user_name                                                           }, // 反則者の名前
+    // latest_illegal_common_message()       { return `本来であればこの時点で${this.user_call_name(this.latest_illegal_user_name)}の反則負けです`  }, // モーダルに表示する共通の文言
+    // latest_illegal_resign_button_show_p() { return this.latest_illegal_it_is_my_team                                                            }, // 投了ボタン表示条件
 
-    // モーダルに表示する個別の文言
-    latest_illegal_individual_message() {
+    latest_illegal_user_group_key() {
       if (this.latest_illegal_i_am_trigger) {
-        return "潔く投了しますか？"
+        return "self"
       } else if (this.latest_illegal_it_is_my_team) {
-        return `${this.my_call_name}は反則していませんが仲間なので投了できます。潔く投了しますか？`
+        return "my_team"
       } else if (this.latest_illegal_it_is_op_team) {
-        return `${this.my_call_name}は反則を取り消すことができます。どうしますか？`
+        return "op_team"
       } else {
-        return `${this.my_call_name}は観戦者なので何もできません`
+        return "watcher"
       }
     },
+
+    // illegal_block_modal_block_button_label() {
+    //   if (true) {
+    //     if (this.latest_illegal_it_is_my_team) {
+    //       return `待ったする`
+    //     } else {
+    //       return `待ったを許す`
+    //     }
+    //   } else {
+    //     if (this.latest_illegal_i_am_trigger) {
+    //       return `待ったする`
+    //     } else if (this.latest_illegal_it_is_my_team) {
+    //       return `待ったする`
+    //     } else if (this.latest_illegal_it_is_op_team) {
+    //       return `待ったを許す`
+    //     } else {
+    //       return `待ったを許す`
+    //     }
+    //   }
+    // },
+
+    // // エラー文言を予測する
+    // illegal_block_modal_submit_validate_message_block()  { return this.illegal_block_modal_submit_validate_message("block")  },
+    // illegal_block_modal_submit_validate_message_resign() { return this.illegal_block_modal_submit_validate_message("resign") },
 
     // しゃべる内容
     latest_illegal_talk_body() {
@@ -140,5 +212,6 @@ export const mod_illegal = {
         // this.latest_illegal_individual_message,
       ].join("。")
     },
+
   },
 }
