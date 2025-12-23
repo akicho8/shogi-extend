@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     def case1(user_name)
       visit_room({
           :body              => sfen,
-          :foul_mode_key     => "block",
+          :foul_mode_key => "takeback",
           :user_name         => user_name,
           :FIXED_MEMBER      => "a,b,c",
           :FIXED_ORDER       => "a,b,c",
@@ -89,7 +89,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     def case1(user_name)
       visit_room({
           :body              => sfen,
-          :foul_mode_key     => "block",
+          :foul_mode_key => "takeback",
           :user_name         => user_name,
           :FIXED_MEMBER      => "a,b,c",
           :FIXED_ORDER       => "a,b",

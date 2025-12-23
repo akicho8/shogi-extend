@@ -1,13 +1,13 @@
 import { GX } from "@/components/models/gx.js"
 import { illegal_lose_modal } from "./illegal_lose_modal.js"
-import { illegal_block_modal } from "./illegal_block_modal.js"
+import { illegal_takeback_modal } from "./illegal_takeback_modal.js"
 import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
 import { IllegalUserInfo } from "./illegal_user_info.js"
 
 export const mod_illegal = {
   mixins: [
     illegal_lose_modal,
-    illegal_block_modal,
+    illegal_takeback_modal,
   ],
   data() {
     return {
@@ -17,7 +17,7 @@ export const mod_illegal = {
   methods: {
     illegal_params_reset() {
       // this.illegal_lose_modal_close()
-      // this.illegal_block_modal_close()
+      // this.illegal_takeback_modal_close()
       this.illegal_params_set(null)
     },
 
@@ -29,7 +29,7 @@ export const mod_illegal = {
 
     // 指したとき。反則してなくても呼ばれる。
     illegal_process(params) {
-      this.illegal_block_modal_close()     // 反則ブロックモーダルがあれば閉じる
+      this.illegal_takeback_modal_close()     // 反則ブロックモーダルがあれば閉じる
       this.illegal_then_resign(params)     // 自分が反則した場合は投了する
       this.illegal_lose_modal_open(params) // 反則があれば表示する
       this.ai_say_case_illegal(params)     // 反則した人を励ます
@@ -52,9 +52,9 @@ export const mod_illegal = {
     // 初心者モードの反則チェックありだけど反則ブロックときに反則したときの処理
     // ここは何もしなければ将棋ウォーズのようになる
     ev_illegal_illegal_accident(illegal_hv) {
-      this.illegal_block_modal_start(illegal_hv)
+      this.illegal_takeback_modal_start(illegal_hv)
     },
-    illegal_block_modal_start(illegal_hv) {
+    illegal_takeback_modal_start(illegal_hv) {
       // 指したときと同じ構造にしておくと、指したときと al_add の表示が同じにできる
       // → これ al_add の時点で変換すればいいだけではないか？
       // → ActionCable を経由すると last_move_info のメソッドが呼べなくなるためここで変換するしかない
@@ -65,9 +65,9 @@ export const mod_illegal = {
         last_move_info_attrs: this.last_move_info_attrs_from(illegal_hv.last_move_info),
         // location_key, this.current_location.key,
       }
-      this.ac_room_perform("illegal_block_modal_start", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("illegal_takeback_modal_start", params) // --> app/channels/share_board/room_channel.rb
     },
-    illegal_block_modal_start_broadcasted(params) {
+    illegal_takeback_modal_start_broadcasted(params) {
       this.illegal_params_set(params)
       this.al_add(params)
       this.illegal_logging()
@@ -82,7 +82,7 @@ export const mod_illegal = {
       this.sfx_play("lose")
       this.cc_silent_pause_share()
       this.talk(this.latest_illegal_talk_body)
-      this.illegal_block_modal_open()
+      this.illegal_takeback_modal_open()
     },
 
     // -------------------------------------------------------------------------------- 千日手用
@@ -119,7 +119,7 @@ export const mod_illegal = {
 
     // --------------------------------------------------------------------------------
 
-    illegal_block_modal_submit_validate_message(i_selected) {
+    illegal_takeback_modal_submit_validate_message(i_selected) {
       if (i_selected === "do_resign") {
         const fn = this.illegal_user_info.resign_click_message
         if (fn) {
@@ -160,8 +160,8 @@ export const mod_illegal = {
     },
 
     // // エラー文言を予測する
-    // illegal_block_modal_submit_validate_message_block()  { return this.illegal_block_modal_submit_validate_message("block")  },
-    // illegal_block_modal_submit_validate_message_resign() { return this.illegal_block_modal_submit_validate_message("resign") },
+    // illegal_takeback_modal_submit_validate_message_takeback()  { return this.illegal_takeback_modal_submit_validate_message("takeback")  },
+    // illegal_takeback_modal_submit_validate_message_resign() { return this.illegal_takeback_modal_submit_validate_message("resign") },
 
     // しゃべる内容
     latest_illegal_talk_body() {

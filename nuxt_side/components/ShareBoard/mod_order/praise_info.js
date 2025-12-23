@@ -1,0 +1,37 @@
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
+
+export class PraiseInfo extends ApplicationMemoryRecord {
+  static get define() {
+    return [
+      { message: "周囲から模範と見なされる存在である" },
+      { message: "向上心と矜恃を拠り所として研鑽に励む" },
+
+      { message: "姿勢そのものが周囲のお手本となっている" },
+      { message: "高い志と自負を胸に日々研鑽を重ねている" },
+
+      { message: "多くの人に良い影響を与える存在である" },
+      { message: "向上心と矜恃を支えに成長を続けている" },
+
+      { message: "在り方自体が周囲の規範となっている" },
+      { message: "誇りを持って地道な研鑽を積み重ねている" },
+
+      { message: "周囲の目標となるような存在である" },
+      { message: "向上心を原動力に矜恃を保ち続けている" },
+
+      { message: "立ち居振る舞いが模範とされている" },
+      { message: "矜恃を失わず研鑽に打ち込んでいる" },
+
+      { message: "自然と手本として意識される存在である" },
+      { message: "高い向上心をもって研鑽を続けている" },
+
+      { message: "周囲から一目置かれる存在である" },
+      { message: "矜恃と向上心を両輪に努力している" },
+
+      { message: "姿勢が人の指針となっている" },
+      { message: "誇りを拠り所に研鑽を怠らない" },
+
+      { message: "周囲に良い背中を見せている存在である" },
+      { message: "向上心と矜恃を失わず鍛錬を重ねている" },
+    ]
+  }
+}

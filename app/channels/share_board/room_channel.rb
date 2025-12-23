@@ -175,12 +175,12 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
-    def illegal_block_modal_start(data)
-      broadcast(:illegal_block_modal_start_broadcasted, data)
+    def illegal_takeback_modal_start(data)
+      broadcast(:illegal_takeback_modal_start_broadcasted, data)
     end
 
-    def illegal_block_selected_share(data)
-      broadcast(:illegal_block_selected_share_broadcasted, data)
+    def illegal_takeback_selected_share(data)
+      broadcast(:illegal_takeback_selected_share_broadcasted, data)
     end
 
     ################################################################################

@@ -323,15 +323,15 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "illegal_block_modal_start" do
+  describe "illegal_takeback_modal_start" do
     before do
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("illegal_block_modal_start" => "二歩")
+      data = data_factory("illegal_takeback_modal_start" => "二歩")
       expect {
-        subscription.illegal_block_modal_start(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "illegal_block_modal_start_broadcasted", bc_params: data)
+        subscription.illegal_takeback_modal_start(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "illegal_takeback_modal_start_broadcasted", bc_params: data)
     end
   end
 

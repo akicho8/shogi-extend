@@ -36,23 +36,23 @@
 
   .modal-card-foot
     // ここはやっぱり当事者だけのボタンにする
-    //- b-button.illegal_block_modal_submit_handle_resign(v-if="SB.latest_illegal_resign_button_show_p" @click="SB.illegal_block_modal_submit_handle('do_resign')" type="is-danger") 投了する
-    //- b-button.illegal_block_modal_submit_handle_block(@click="SB.illegal_block_modal_submit_handle('do_block')") {{SB.illegal_block_modal_block_button_label}}
-    b-button.illegal_block_modal_submit_handle_block(@click="SB.illegal_block_modal_submit_handle('do_block')") 待ったする
-    b-button.illegal_block_modal_submit_handle_resign(@click="SB.illegal_block_modal_submit_handle('do_resign')" type="is-danger") 投了する
+    //- b-button.illegal_takeback_modal_submit_handle_resign(v-if="SB.latest_illegal_resign_button_show_p" @click="SB.illegal_takeback_modal_submit_handle('do_resign')" type="is-danger") 投了する
+    //- b-button.illegal_takeback_modal_submit_handle_block(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") {{SB.illegal_takeback_modal_block_button_label}}
+    b-button.illegal_takeback_modal_submit_handle_block(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") 待ったする
+    b-button.illegal_takeback_modal_submit_handle_resign(@click="SB.illegal_takeback_modal_submit_handle('do_resign')" type="is-danger") 投了する
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "IllegalBlockModal",
+  name: "IllegalTakebackModal",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.IllegalBlockModal
+.IllegalTakebackModal
   +modal_max_width(512px)
   .modal-card-body
     display: flex

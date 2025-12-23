@@ -1,34 +1,34 @@
 // 反則ブロック
 
-import IllegalBlockModal from "./IllegalBlockModal.vue"
+import IllegalTakebackModal from "./IllegalTakebackModal.vue"
 import { GX } from "@/components/models/gx.js"
 
-export const illegal_block_modal = {
+export const illegal_takeback_modal = {
   data() {
     return {
-      illegal_block_modal_instance: null,
+      illegal_takeback_modal_instance: null,
     }
   },
   beforeDestroy() {
-    this.illegal_block_modal_close()
+    this.illegal_takeback_modal_close()
   },
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    illegal_block_modal_open() {
-      this.illegal_block_modal_close()
-      this.illegal_block_modal_instance = this.modal_card_open({
-        component: IllegalBlockModal,
+    illegal_takeback_modal_open() {
+      this.illegal_takeback_modal_close()
+      this.illegal_takeback_modal_instance = this.modal_card_open({
+        component: IllegalTakebackModal,
         canCancel: [],
         onCancel: () => { throw new Error("must not happen") },
       })
     },
 
-    illegal_block_modal_close() {
-      if (this.illegal_block_modal_instance) {
-        this.illegal_block_modal_instance.close()
-        this.illegal_block_modal_instance = null
-        if (this.AppConfig.illegal_block.lifted_piece_cancel) {
+    illegal_takeback_modal_close() {
+      if (this.illegal_takeback_modal_instance) {
+        this.illegal_takeback_modal_instance.close()
+        this.illegal_takeback_modal_instance = null
+        if (this.AppConfig.illegal_takeback.lifted_piece_cancel) {
           this.sp_lifted_piece_cancel()
         }
       }
@@ -36,9 +36,9 @@ export const illegal_block_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    async illegal_block_modal_submit_handle(i_selected) {
+    async illegal_takeback_modal_submit_handle(i_selected) {
       if (true) {
-        const message = this.illegal_block_modal_submit_validate_message(i_selected)
+        const message = this.illegal_takeback_modal_submit_validate_message(i_selected)
         if (message) {
           this.sfx_play("x")
           for (const e of GX.ary_wrap(message)) {
@@ -49,11 +49,11 @@ export const illegal_block_modal = {
       }
 
       this.sfx_click()
-      this.illegal_block_modal_close()
-      this.illegal_block_selected_share(i_selected)
+      this.illegal_takeback_modal_close()
+      this.illegal_takeback_selected_share(i_selected)
     },
 
-    illegal_block_selected_share(i_selected) {
+    illegal_takeback_selected_share(i_selected) {
       GX.assert_present(this.illegal_params)
       this.illegal_logging({i_selected: i_selected})
       const params = {
@@ -61,9 +61,9 @@ export const illegal_block_modal = {
         i_selected_by: this.user_name,
         i_selected: i_selected,
       }
-      this.ac_room_perform("illegal_block_selected_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("illegal_takeback_selected_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    illegal_block_selected_share_broadcasted(params) {
+    illegal_takeback_selected_share_broadcasted(params) {
       // 途中から入ってきた人は this.illegal_params を持っていないため関わらないようにする
       if (this.illegal_params == null) {
         return
@@ -72,9 +72,9 @@ export const illegal_block_modal = {
       // this.al_add({...params, label: params.i_selected})
 
       // まだモーダルを読んでいる人がいるため閉じる
-      this.illegal_block_modal_close()
+      this.illegal_takeback_modal_close()
 
-      if (params.i_selected === "do_block") {
+      if (params.i_selected === "do_takeback") {
         // 時計が pause 状態になっているので「なかったことにする」のであれば再開する
         this.cc_resume_handle()
 

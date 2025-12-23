@@ -88,7 +88,7 @@ import { GX } from "@/components/models/gx.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import _ from "lodash"
 import { support_child } from "../support_child.js"
-import FoulModeBlockWarnModal from "./FoulModeBlockWarnModal.vue"
+import ReformConductModal from "./ReformConductModal.vue"
 
 export default {
   name: "OrderModal",
@@ -101,11 +101,11 @@ export default {
   data() {
     return {
       option_block_show_p: this.SB.debug_mode_p,
-      foul_mode_block_warn_modal_instance: null,
+      reform_conduct_modal_instance: null,
     }
   },
   beforeDestroy() {
-    this.foul_mode_block_warn_modal_close()
+    this.reform_conduct_modal_close()
   },
 
   methods: {
@@ -283,21 +283,21 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     foul_mode_key_updated(foul_mode_key) {
-      if (foul_mode_key === this.SB.FoulModeInfo.fetch("block").key) {
-        this.foul_mode_block_warn_modal_open()
+      if (foul_mode_key === this.SB.FoulModeInfo.fetch("takeback").key) {
+        this.reform_conduct_modal_open()
       }
     },
-    foul_mode_block_warn_modal_open() {
-      if (this.foul_mode_block_warn_modal_instance == null) {
-        this.foul_mode_block_warn_modal_instance = this.modal_card_open({
-          component: FoulModeBlockWarnModal,
+    reform_conduct_modal_open() {
+      if (this.reform_conduct_modal_instance == null) {
+        this.reform_conduct_modal_instance = this.modal_card_open({
+          component: ReformConductModal,
         })
       }
     },
-    foul_mode_block_warn_modal_close() {
-      if (this.foul_mode_block_warn_modal_instance) {
-        this.foul_mode_block_warn_modal_instance.close()
-        this.foul_mode_block_warn_modal_instance = null
+    reform_conduct_modal_close() {
+      if (this.reform_conduct_modal_instance) {
+        this.reform_conduct_modal_instance.close()
+        this.reform_conduct_modal_instance = null
       }
     },
 

@@ -27,8 +27,8 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
         perpetual_check_p: true,
         environment: ["development", "staging", "production"],
       }, {
-        key: "block",
-        name: "ブロック",
+        key: "takeback",
+        name: "しても待ったできる",
         message: "棋力↓ 逆転の余地↓ 楽しさ↓ (接待用)",
         type: "is-warning",
         sp_illegal_validate: true,

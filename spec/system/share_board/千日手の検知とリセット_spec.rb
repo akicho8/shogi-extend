@@ -57,7 +57,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_selector(".IllegalLoseModal")
     end
     it "発動しない" do
-      visit_app(foul_mode_key: "block")
+      visit_app(foul_mode_key: "takeback")
       perpetual_trigger
       assert_no_selector(".IllegalLoseModal")
     end

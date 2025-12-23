@@ -39,7 +39,7 @@ export const mod_resign = {
     // 処理順序重要
     resign_direct_run() {
       this.resign_confirm_modal_close()   // 本人が時間切れは失礼と考えて投了モーダルを出して投了を押す瞬間に時間切れが先に発動した場合を想定してモーダルを強制的に閉じる
-      this.illegal_block_modal_close()    // 反則からの投了確認モーダルが出ている場合があるので消す
+      this.illegal_takeback_modal_close()    // 反則からの投了確認モーダルが出ている場合があるので消す
       this.resign_messsage_post() // 発言は何も影響ないので最初に行う
       this.battle_save_run()       // 順番設定がある状態で対局を保存する
       this.resign_share()         // 最後に順番設定を解除する

@@ -37,7 +37,7 @@ export const mod_sfen_sync = {
           if (this.foul_mode_info.perpetual_check_p) {
             illegal_hv_list.push(illegal_hv)
           } else {
-            this.illegal_block_modal_start(illegal_hv)
+            this.illegal_takeback_modal_start(illegal_hv)
           }
         }
       }

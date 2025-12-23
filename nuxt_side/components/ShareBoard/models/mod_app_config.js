@@ -37,7 +37,7 @@ export const AppConfig = {
   player_name_prefix_pentagon_feature: false,
 
   // 反則ブロック
-  illegal_block: {
+  illegal_takeback: {
     lifted_piece_cancel: false, // 反則ブロック時に持った駒を離すか？
     // anyone_block_can_p: true,   // 誰でも「なかったことにする」ことができるか？
   },
