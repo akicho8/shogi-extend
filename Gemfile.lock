@@ -532,7 +532,7 @@ GEM
       railties (>= 5.2)
     retriable (3.1.2)
     retryable (3.0.5)
-    rexml (3.4.1)
+    rexml (3.4.2)
     rmagick (6.1.4)
       observer (~> 0.1)
       pkg-config (~> 1.4)
