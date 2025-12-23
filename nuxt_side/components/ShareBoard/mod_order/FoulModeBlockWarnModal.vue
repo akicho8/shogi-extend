@@ -5,10 +5,10 @@
       | 警告
   .modal-card-body
     .content
-      p 反則ブロックは待ったできる接待用モードです
-      p すでに将棋のルールを理解し、向上心をもって取り組む{{SB.my_call_name}}には必要ないでしょう
+      p 反則ブロックは反則時に御法度の「待った」ができる接待用のモードです
+      p すでに将棋のルールを理解し、向上心と矜恃を拠り所として研鑽に励む{{SB.my_call_name}}には必要ないでしょう
   .modal-card-foot
-    b-button.submit_handle(@click="submit_handle" type="is-warning") 接待する
+    b-button.submit_handle(@click="submit_handle" type="is-warning") 接待する・される
     b-button.cancel_handle(@click="cancel_handle" type="is-primary") もちろん必要ない
 </template>
 
