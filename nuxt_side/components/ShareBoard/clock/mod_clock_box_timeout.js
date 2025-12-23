@@ -92,14 +92,7 @@ export const mod_clock_box_timeout = {
       this.cc_timeout_modal_close()
       this.cc_timeout_modal_instance = this.modal_card_open({
         component: TimeoutModal,
-        props: {
-          timeout_key: timeout_key,
-        },
-        canCancel: ["button", "escape"],
-        onCancel: () => {
-          this.sfx_click()
-          this.cc_timeout_modal_close()
-        },
+        props: { timeout_key: timeout_key },
       })
     },
 
