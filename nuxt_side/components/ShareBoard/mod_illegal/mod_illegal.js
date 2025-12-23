@@ -3,6 +3,7 @@ import { illegal_lose_modal } from "./illegal_lose_modal.js"
 import { illegal_takeback_modal } from "./illegal_takeback_modal.js"
 import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
 import { IllegalUserInfo } from "./illegal_user_info.js"
+import { IllegalSelectInfo } from "./illegal_select_info.js"
 
 export const mod_illegal = {
   mixins: [
@@ -70,11 +71,11 @@ export const mod_illegal = {
     illegal_takeback_modal_start_broadcasted(params) {
       this.illegal_params_set(params)
       this.al_add(params)
-      this.illegal_logging()
 
       if (!this.cc_play_p) {
         this.sfx_play("x")
-        this.sb_toast_danger(params.illegal_hv_list[0].illegal_info.name, {position: "is-bottom"})
+        this.sb_toast_danger(this.latest_illegal_name, {position: "is-bottom"})
+        this.illegal_logging("検討時の反則")
         return
       }
 
@@ -83,6 +84,7 @@ export const mod_illegal = {
       this.cc_silent_pause_share()
       this.talk(this.latest_illegal_talk_body)
       this.illegal_takeback_modal_open()
+      this.illegal_logging("反則ブロック発動")
     },
 
     // -------------------------------------------------------------------------------- 千日手用
@@ -99,28 +101,16 @@ export const mod_illegal = {
 
     // --------------------------------------------------------------------------------
 
-    illegal_logging(params = {}) {
-      if (this.illegal_params) {
-        const url = this.url_for({
-          ...this.current_url_params,
-          sfen: this.illegal_params.sfen,
-          turn: this.illegal_params.turn,
-        })
-        this.ac_log({
-          subject: "反則ブロック",
-          body: {
-            "状況": this.illegal_app_state_human,
-            "種類": this.illegal_params.illegal_hv_list[0].illegal_info.name,
-            "局面": url,
-            ...params,
-          }})
+    illegal_logging(subject) {
+      if (this.latest_illegal_i_am_trigger) {
+        this.ac_log({subject: subject, body: [this.latest_illegal_name, this.latest_illegal_url]})
       }
     },
 
     // --------------------------------------------------------------------------------
 
-    illegal_takeback_modal_submit_validate_message(i_selected) {
-      if (i_selected === "do_resign") {
+    illegal_takeback_modal_submit_validate_message(illegal_select_key) {
+      if (illegal_select_key === "do_resign") {
         const fn = this.illegal_user_info.resign_click_message
         if (fn) {
           return fn(this)
@@ -131,11 +121,13 @@ export const mod_illegal = {
 
   computed: {
     IllegalInfo() { return IllegalInfo },
+    IllegalSelectInfo() { return IllegalSelectInfo },
 
     IllegalUserInfo()  { return IllegalUserInfo                                           },
     illegal_user_info() { return IllegalUserInfo.fetch(this.latest_illegal_user_group_key) },
 
-    illegal_app_state_human() { return this.order_clock_both_ok ? "対局中" : "検討中" },
+
+    // illegal_app_state_human() { return this.order_clock_both_ok ? "対局中" : "検討中" },
 
     latest_illegal_hv()                   { return this.illegal_params.illegal_hv_list[0]                                                       }, // 1つ目の反則情報
     latest_illegal_name()                 { return this.latest_illegal_hv.illegal_info.name                                                     }, // 反則名
@@ -144,6 +136,17 @@ export const mod_illegal = {
     latest_illegal_it_is_op_team()        { return this.i_am_member_p && this.latest_illegal_location.key !== this.my_location.key              }, // 自分は対局者かつ反則してない側か？
     latest_illegal_i_am_trigger()         { return this.received_from_self(this.illegal_params)                                                 }, // 反則の発生源か？
     latest_illegal_user_name()            { return this.illegal_params.from_user_name                                                           }, // 反則者の名前
+
+    // 反則のあった局面を再現するURL
+    latest_illegal_url() {
+      return this.url_for({
+        ...this.current_url_params,
+        xbody: null,
+        body: this.illegal_params.sfen,
+        turn: this.illegal_params.turn,
+      })
+    },
+
     // latest_illegal_common_message()       { return `本来であればこの時点で${this.user_call_name(this.latest_illegal_user_name)}の反則負けです`  }, // モーダルに表示する共通の文言
     // latest_illegal_resign_button_show_p() { return this.latest_illegal_it_is_my_team                                                            }, // 投了ボタン表示条件
 

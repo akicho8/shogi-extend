@@ -36,9 +36,9 @@ export const illegal_takeback_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    async illegal_takeback_modal_submit_handle(i_selected) {
+    async illegal_takeback_modal_submit_handle(illegal_select_key) {
       if (true) {
-        const message = this.illegal_takeback_modal_submit_validate_message(i_selected)
+        const message = this.illegal_takeback_modal_submit_validate_message(illegal_select_key)
         if (message) {
           this.sfx_play("x")
           for (const e of GX.ary_wrap(message)) {
@@ -50,16 +50,19 @@ export const illegal_takeback_modal = {
 
       this.sfx_click()
       this.illegal_takeback_modal_close()
-      this.illegal_takeback_selected_share(i_selected)
+      this.illegal_takeback_selected_share(illegal_select_key)
     },
 
-    illegal_takeback_selected_share(i_selected) {
+    illegal_takeback_selected_share(illegal_select_key) {
       GX.assert_present(this.illegal_params)
-      this.illegal_logging({i_selected: i_selected})
+
+      const illegal_select_info = this.IllegalSelectInfo.fetch(illegal_select_key)
+      this.ac_log({subject: "反則ブロック選択", body: [this.latest_illegal_name, illegal_select_info.name]})
+
       const params = {
         ...this.illegal_params, // デバッグしやすいように入れておく
-        i_selected_by: this.user_name,
-        i_selected: i_selected,
+        selected_by: this.user_name,
+        illegal_select_key: illegal_select_key,
       }
       this.ac_room_perform("illegal_takeback_selected_share", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -69,28 +72,12 @@ export const illegal_takeback_modal = {
         return
       }
 
-      // this.al_add({...params, label: params.i_selected})
-
       // まだモーダルを読んでいる人がいるため閉じる
       this.illegal_takeback_modal_close()
 
-      if (params.i_selected === "do_takeback") {
-        // 時計が pause 状態になっているので「なかったことにする」のであれば再開する
-        this.cc_resume_handle()
-
-        // 状況表示
-        this.sb_toast_primary(this.illegal_user_info.blocked_message(this, params))
-      }
-
-      if (params.i_selected === "do_resign") {
-        // 全員の局面を反則局面に変更する
-        this.current_sfen_set(params)
-
-        // 最後に YES を押した人だけが投了する
-        if (this.received_from_self(params)) {
-          this.resign_call()
-        }
-      }
+      const illegal_select_info = this.IllegalSelectInfo.fetch(params.illegal_select_key)
+      this.al_add({...params, label: illegal_select_info.name, label_type: "is-danger"})
+      illegal_select_info.call(this, params)
 
       this.illegal_params_reset()
     },

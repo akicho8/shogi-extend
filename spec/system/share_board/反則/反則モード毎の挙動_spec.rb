@@ -31,9 +31,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       end
     end
 
-    it "block: ブロック" do
-      window_a { case1(:a, :block) }
-      window_b { case1(:b, :block) }
+    it "takeback: ブロック" do
+      window_a { case1(:a, :takeback) }
+      window_b { case1(:b, :takeback) }
       window_a { double_pawn! }
       window_a do
         notice_exist
