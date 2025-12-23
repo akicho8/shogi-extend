@@ -38,7 +38,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
       # 個別
       window_b { assert_text "bさんは「待ったする」で反則をなかったことにできます" }
-      window_c { assert_text "cさんは仲間なので投了も待ったもできます" }
+      window_c { assert_text "cさんは仲間なので待ったできます" }
     end
 
     describe "当事者の立場" do
@@ -46,7 +46,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_a { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "aさんが自分の反則を揉み消しました"
+          assert_text "aさんが自分の反則をなかったことにしました"
           assert_takeback_success
         }
         window_a { fn.call }
@@ -91,7 +91,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_c { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "cさんが仲間の反則を揉み消しました"
+          assert_text "cさんが仲間の反則をなかったことにしました"
           assert_takeback_success
         }
         window_a { fn.call }

@@ -5,7 +5,7 @@
       | 警告
   .modal-card-body
     .content
-      p これは反則をしても恥を捨てるならば「待った」ができる接待用のモードです
+      p これは反則をしても「待った」ができる接待用のモードです
       p すでに将棋のルールを理解し、{{message_variant}}{{SB.my_call_name}}には必要ないでしょう
   .modal-card-foot
     b-button.submit_handle(@click="submit_handle" type="is-warning") 接待する・される

@@ -9,14 +9,14 @@ export class IllegalUserInfo extends ApplicationMemoryRecord {
         name: "当事者",
         modal_body_message: null,
         resign_click_message: null,
-        takebacked_message: (context)   => `${context.my_call_name}が自分の反則を揉み消しました`,
+        takebacked_message: (context)   => `${context.my_call_name}が自分の反則をなかったことにしました`,
       },
       {
         key: "my_team",
         name: "仲間",
-        modal_body_message: (context)   => `${context.my_call_name}は仲間なので投了も待ったもできます`,
+        modal_body_message: (context)   => `${context.my_call_name}は仲間なので待ったできます`,
         resign_click_message: null,
-        takebacked_message: (context)   => `${context.my_call_name}が仲間の反則を揉み消しました`,
+        takebacked_message: (context)   => `${context.my_call_name}が仲間の反則をなかったことにしました`,
       },
       {
         key: "op_team",
