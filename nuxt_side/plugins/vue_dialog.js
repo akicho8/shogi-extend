@@ -139,18 +139,19 @@ export const vue_dialog = {
 
     //////////////////////////////////////////////////////////////////////////////// modal
 
+    // canCancel を ["outside", "escape"] にすると modal の instance を null に戻す処理を呼び忘れる事故が多発するため何も指定しないようにする
     modal_card_open(params) {
       GX.assert(GX.present_p(params.component), "GX.present_p(params.component)")
       GX.assert(GX.present_p(params.component.name), "GX.present_p(params.component.name)")
       return this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
+        width: "", // 名前は width だが実際には max-width に設定される
         customClass: `BasicModal ${params.component.name}`,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
         scroll: "keep",
         animation: "",
-        canCancel: ["outside", "escape"],
+        canCancel: [],          // 指定するな
         onCancel: () => this.sfx_click(),
         ...params,
       })
