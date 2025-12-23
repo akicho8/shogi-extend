@@ -45,7 +45,6 @@ mod = Module.new do
   ################################################################################
 
   def assert_resign_success
-    find(".illegal_takeback_modal_submit_handle_resign").click
     assert_action "a", "投了"
     assert_clock(:stop)
     block_modal_none
@@ -53,20 +52,18 @@ mod = Module.new do
   end
 
   def assert_resign_ng
-    find(".illegal_takeback_modal_submit_handle_resign").click
     assert_clock(:pause)
     block_modal_exist
   end
 
-  def assert_block_success
-    find(".illegal_takeback_modal_submit_handle_block").click
+  def assert_takeback_success
     assert_clock(:play)
     block_modal_none
     assert_turn(0)              # 反則前の局面
   end
 
   def assert_block_ng
-    find(".illegal_takeback_modal_submit_handle_block").click
+    find(".illegal_takeback_modal_submit_handle_takeback").click
     assert_clock(:pause)
     block_modal_exist
   end

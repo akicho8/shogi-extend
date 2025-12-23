@@ -37,8 +37,8 @@
   .modal-card-foot
     // ここはやっぱり当事者だけのボタンにする
     //- b-button.illegal_takeback_modal_submit_handle_resign(v-if="SB.latest_illegal_resign_button_show_p" @click="SB.illegal_takeback_modal_submit_handle('do_resign')" type="is-danger") 投了する
-    //- b-button.illegal_takeback_modal_submit_handle_block(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") {{SB.illegal_takeback_modal_block_button_label}}
-    b-button.illegal_takeback_modal_submit_handle_block(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") 待ったする
+    //- b-button.illegal_takeback_modal_submit_handle_takeback(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") {{SB.illegal_takeback_modal_block_button_label}}
+    b-button.illegal_takeback_modal_submit_handle_takeback(@click="SB.illegal_takeback_modal_submit_handle('do_takeback')") 待ったする
     b-button.illegal_takeback_modal_submit_handle_resign(@click="SB.illegal_takeback_modal_submit_handle('do_resign')" type="is-danger") 投了する
 </template>
 

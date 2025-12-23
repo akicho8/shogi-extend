@@ -61,8 +61,8 @@ export const illegal_takeback_modal = {
 
       const params = {
         ...this.illegal_params, // デバッグしやすいように入れておく
-        selected_by: this.user_name,
         illegal_select_key: illegal_select_key,
+        takebacked_message: this.illegal_user_info.takebacked_message(this), // 送った先では状況が変わるため送る側でメッセージを作る (重要)
       }
       this.ac_room_perform("illegal_takeback_selected_share", params) // --> app/channels/share_board/room_channel.rb
     },
