@@ -4,7 +4,7 @@
     .modal-card-title
       | {{SB.latest_illegal_name}}
   .modal-card-body
-    CustomShogiPlayer(
+    CustomShogiPlayer.CustomShogiPlayerInsideModal(
       sp_mode="view"
       :sp_body="SB.illegal_params.sfen"
       :sp_turn="SB.illegal_params.turn"
@@ -52,16 +52,20 @@ export default {
 </script>
 
 <style lang="sass">
+@import "../sass/support.sass"
 .IllegalTakebackModal
-  +modal_max_width(512px)
+  // +modal_max_width(512px)
   .modal-card-body
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
     gap: 1rem
-    .CustomShogiPlayer
-      width: 400px
-  // .modal-card-foot
-  //   flex-direction: row-reverse
+    // .CustomShogiPlayer
+    //   +foobarbaz
+    // max-width: 28rem
+    // +mobile
+    //   max-width: 18rem
+    // .modal-card-foot
+    //   flex-direction: row-reverse
 </style>

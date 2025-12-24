@@ -6,7 +6,7 @@
   .modal-card-body
     b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()")
       option(v-for="e in SB.BoardPresetInfo.values" :value="e.key" v-text="e.name")
-    CustomShogiPlayer(
+    CustomShogiPlayer.CustomShogiPlayerInsideModal(
       sp_mode="view"
       :sp_body="SB.board_preset_info.sfen"
       :sp_mobile_vertical="false"
@@ -45,9 +45,6 @@ export default {
 
     .button
       min-width: 8rem
-
-  .CustomShogiPlayer
-    width: 28rem
 
 .STAGE-development
   .BoardPresetModal
