@@ -38,7 +38,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "ignore",
         name: "関与しない",
-        message: "リアル対局と同じで、反則をしても対局は進む (非推奨)",
+        message: "リアル対局と同じで反則をしても対局は進む",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
