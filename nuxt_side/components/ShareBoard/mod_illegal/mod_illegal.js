@@ -147,7 +147,7 @@ export const mod_illegal = {
       })
     },
 
-    // latest_illegal_common_message()       { return `本来であればこの時点で${this.user_call_name(this.latest_illegal_user_name)}の反則負けです`  }, // モーダルに表示する共通の文言
+    // latest_illegal_common_message()       { return `本来であれば${this.user_call_name(this.latest_illegal_user_name)}の反則負けです`  }, // モーダルに表示する共通の文言
     // latest_illegal_resign_button_show_p() { return this.latest_illegal_it_is_my_team                                                            }, // 投了ボタン表示条件
 
     latest_illegal_user_group_key() {

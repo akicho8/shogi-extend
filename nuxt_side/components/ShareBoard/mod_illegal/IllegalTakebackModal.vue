@@ -15,10 +15,10 @@
     )
 
     .resign_message
-      | 本来であればこの時点で{{SB.user_call_name(SB.latest_illegal_user_name)}}の反則負けです
-    .resign_message
-      | 潔く投了しますか？
-    .box.is-shadowless.has-background-light(v-if="SB.illegal_user_info.modal_body_message" v-text="SB.illegal_user_info.modal_body_message(SB)")
+      p 本来であれば{{SB.user_call_name(SB.latest_illegal_user_name)}}の反則負けです
+      p 潔く投了しますか？
+
+    .box.is-shadowless.has-background-light.is-size-7(v-if="SB.illegal_user_info.modal_body_message" v-text="SB.illegal_user_info.modal_body_message(SB)")
 
     //- template(v-if="SB.debug_mode_p")
     //-   .box.is-shadowless.has-background-light(v-for="e in SB.IllegalUserInfo.values" v-if="e.modal_body_message")
@@ -68,4 +68,9 @@ export default {
     //   max-width: 18rem
     // .modal-card-foot
     //   flex-direction: row-reverse
+    .resign_message
+      display: flex
+      align-items: center
+      flex-direction: column
+      gap: 0.25rem
 </style>
