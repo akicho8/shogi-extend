@@ -34,7 +34,7 @@ export const mod_honpu_core = {
     honpu_branch_clear() {
       this.tl_add("HONPU", "ブランチ消去(al_restore の中で呼んでいる)")
       this.honpu_branch = null
-      this.perpetual_cop.reset() // これがないと元に戻して同じ手を指すと千日手になる
+      this.perpetual_cop.reset$() // これがないと元に戻して同じ手を指すと千日手になる
     },
 
     honpu_main_setup() {

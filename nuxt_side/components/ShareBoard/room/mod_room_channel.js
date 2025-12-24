@@ -92,7 +92,7 @@ export const mod_room_channel = {
       this.member_infos_init()
       this.member_info_init()
       this.active_level_init()
-      this.perpetual_cop.reset()
+      this.perpetual_cop.reset$()
       this.mh_room_entry()
       this.xprofile_entry()
 
@@ -156,7 +156,7 @@ export const mod_room_channel = {
         this.ac_unsubscribe("ac_room")
         this.tl_add("USER", "unsubscribe")
 
-        this.perpetual_cop.reset()
+        this.perpetual_cop.reset$()
         this.member_infos_leave()
         this.active_level_init()
         this.active_level_increment_timer.stop()

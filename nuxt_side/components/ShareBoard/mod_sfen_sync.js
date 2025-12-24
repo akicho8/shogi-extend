@@ -30,7 +30,7 @@ export const mod_sfen_sync = {
 
       // 千日手 → 引分とすべきところを反則負けとしているためいったん無効にする
       if (this.perpetual_feature) {
-        this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
+        this.perpetual_cop.increment$(e.snapshot_hash) // 同一局面になった回数をカウント
         // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する
         if (this.perpetual_cop.available_p(e.snapshot_hash)) {    // 千日手か？
           const illegal_hv = this.illegal_create_perpetual_check(e)

@@ -8,31 +8,32 @@ describe("PerpetualCop", () => {
       expect(_.isObject(object)).toEqual(true)
     })
   })
-  describe("InstanceMethods", () => {
-    test("reset", () => {
-      const object = PerpetualCop.create()
-      object.increment("foo")
-      object.reset()
-      expect(object.counts_hash).toEqual({})
-    })
-    test("available_p", () => {
-      const object = PerpetualCop.create()
-      object.increment("foo")
-      expect(object.count).toEqual(1)
-      expect(object.keys_count).toEqual(1)
-      object.increment("foo")
-      expect(object.count).toEqual(2)
-      expect(object.keys_count).toEqual(1)
-      object.increment("foo")
-      expect(object.available_p("foo")).toEqual(false)
-      object.increment("foo")
-      expect(object.available_p("foo")).toEqual(true)
-    })
-    test("inspect", () => {
-      const object = PerpetualCop.create()
-      object.increment("foo")
-      object.increment("foo")
-      expect(object.inspect).toEqual("trigger_on_n_times: 4, count: 2, keys_count: 1")
-    })
+
+  test("reset$", () => {
+    const object = PerpetualCop.create()
+    object.increment$("foo")
+    object.reset$()
+    expect(object.counts_hash).toEqual({})
+  })
+
+  test("available_p", () => {
+    const object = PerpetualCop.create()
+    object.increment$("foo")
+    expect(object.count).toEqual(1)
+    expect(object.keys_count).toEqual(1)
+    object.increment$("foo")
+    expect(object.count).toEqual(2)
+    expect(object.keys_count).toEqual(1)
+    object.increment$("foo")
+    expect(object.available_p("foo")).toEqual(false)
+    object.increment$("foo")
+    expect(object.available_p("foo")).toEqual(true)
+  })
+
+  test("inspect", () => {
+    const object = PerpetualCop.create()
+    object.increment$("foo")
+    object.increment$("foo")
+    expect(object.inspect).toEqual("trigger_on_n_times: 4, count: 2, keys_count: 1")
   })
 })

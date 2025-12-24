@@ -40,6 +40,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugPerpetual
   SbDebugResend
   SbDebugIllegal
   SbDebugResign
@@ -66,7 +67,6 @@
   SbDebugClock
   SbDebugDashboard
 
-  SbDebugPerpetual
   SbDebugBasic
   .column.is-12
     SbDebugFes

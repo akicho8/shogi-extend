@@ -14,15 +14,15 @@ export class PerpetualCop {
     this.count = 0           // increment 回数
   }
 
-  reset() {
+  reset$() {
     this.counts_hash = {}
     this.count = 0
   }
 
   // 同一局面になった回数をカウント
-  increment(key) {
+  increment$(key) {
     GX.assert(GX.present_p(key), "GX.present_p(key)")
-    Vue.set(this.counts_hash, key, (this.counts_hash[key] || 0) + 1)
+    Vue.set(this.counts_hash, key, (this.counts_hash[key] ?? 0) + 1)
     this.count += 1
   }
 

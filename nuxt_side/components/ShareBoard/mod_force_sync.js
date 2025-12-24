@@ -68,12 +68,12 @@ export const mod_force_sync = {
         notify_mode: "fs_notify_all",
         ...options,
       }
-      this.perpetual_cop.reset()
+      this.perpetual_cop.reset$()
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
       {
-        this.perpetual_cop.reset()
+        this.perpetual_cop.reset$()
         this.sfen_sync_dto_receive(params)       // これで current_location が更新される
       }
       if (this.clock_box) {
