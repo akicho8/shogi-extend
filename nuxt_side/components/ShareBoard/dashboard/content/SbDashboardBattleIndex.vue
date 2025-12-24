@@ -25,7 +25,7 @@ import QueryString from "query-string"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
-import { support_child } from "../support_child.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "SbDashboardBody",
@@ -52,10 +52,13 @@ export default {
       return row[location.key]
     },
     judge_key_of(row, location) {
+      if (row.win_location == null) {
+        return "is_draw"
+      }
       if (row.win_location.key === location.key) {
-        return 'is_win'
+        return "is_win"
       } else {
-        return 'is_lose'
+        return "is_lose"
       }
     },
   },
@@ -66,7 +69,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../../sass/support.sass"
 .SbDashboardBattleIndex
   .memberships_cell
     font-size: $size-7

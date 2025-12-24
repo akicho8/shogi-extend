@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "SbDashboard",
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../../sass/support.sass"
 .SbDashboard
   min-height: 100svh
   background-color: $white-ter
