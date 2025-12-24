@@ -28,7 +28,7 @@ module ShareBoard
     belongs_to :room, touch: true, counter_cache: true
     acts_as_list top_of_list: 0, scope: :room
 
-    custom_belongs_to :win_location, class_name: "Location", ar_model: Location, st_model: LocationInfo, default: :black
+    custom_belongs_to :win_location, class_name: "Location", ar_model: Location, st_model: LocationInfo, default: nil, optional: true
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle do
       def location_of(location_key)

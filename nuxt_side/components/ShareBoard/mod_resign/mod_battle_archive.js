@@ -1,8 +1,9 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-const SELF_VS_SELF_THEN_SKIP             = false // 自分vs自分のときは保存しない？
-const SELF_VS_SELF_THEN_FORCE_LOSE       = true  // 自分vs自分のときは必ず自分は負けとして保存する？
+const SELF_VS_SELF_THEN_SKIP        = false  // 自分vs自分のときは保存しない？
+const SELF_VS_SELF_THEN_FORCE_LOSE  = true   // 自分vs自分のときは必ず自分は負けとして保存する？
+const SELF_VS_SELF_THEN_MEMBER_ZERO = true   // 自分vs自分のときはメンバーが空とする
 
 export const mod_battle_archive = {
   methods: {
@@ -46,7 +47,7 @@ export const mod_battle_archive = {
       if (!this.order_enable_p) {
         return []
       }
-      if (SELF_VS_SELF_THEN_FORCE_LOSE) {
+      if (SELF_VS_SELF_THEN_MEMBER_ZERO) {
         if (this.self_vs_self_p) {
           return []
         }
@@ -56,7 +57,7 @@ export const mod_battle_archive = {
         return {
           user_name: name,
           location_key: location.key,
-          judge_key: this.__battle_memberships_judge_key(location, win_location_key), // FIXME: ここってサーバー側でやればよくね？
+          judge_key: this.__battle_memberships_judge_key(location, win_location_key),
         }
       })
     },

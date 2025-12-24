@@ -58,9 +58,15 @@ export const mod_resign = {
       this.ac_room_perform("resign_share", params) // --> app/channels/share_board/room_channel.rb
     },
     resign_share_broadcasted(params) {
-      this.al_add({...params, label: "投了", label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+      const label = params.win_location_key ? "投了" : "引き分け"
+      this.al_add({...params, label: label, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+
+      if (params.win_location_key == null) {
+        this.toast_primary("引き分けです")
+      }
+
       this.honpu_main_setup()                    // 本譜を作る。すでにあれば上書き
-      this.resign_confirm_modal_close()              // もし味方が投了しようとしていればモーダルを閉じる
+      this.resign_confirm_modal_close()          // もし味方が投了しようとしていればモーダルを閉じる
 
       // 投了を押した本人が時計と順番を解除する
       // この処理は resign_direct_run で行う手もあるが「投了」→「時計停止」→「順番OFF」の順で
@@ -72,7 +78,9 @@ export const mod_resign = {
       }
 
       // 励ます
-      this.ai_say_case_resign(params)
+      if (params.win_location_key) {
+        this.ai_say_case_resign(params)
+      }
 
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
@@ -86,6 +94,12 @@ export const mod_resign = {
     async honpu_announce() {
       await GX.sleep(this.__SYSTEM_TEST_RUNNING__ ? 0 : 0)
       await this.sb_toast_primary("棋譜は上の本譜ボタンからコピーできます", {talk: false, duration_sec: 8})
+    },
+
+    // 引分
+    draw_call() {
+      this.battle_save_by_win_location(null) // 順番設定がある状態で対局を保存する
+      this.resign_share(null)                // 最後に順番設定を解除する
     },
   },
 
