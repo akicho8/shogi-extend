@@ -9,6 +9,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     board_preset_arrow_button_click(:previous)
     assert_board_preset_selected("平手")
     board_preset_arrow_button_click(:previous)
-    assert_board_preset_selected("カスタム")
+    assert_board_preset_selected("石田流対決")
   end
 end
