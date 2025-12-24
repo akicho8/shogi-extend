@@ -23,7 +23,6 @@ export const mod_kifu_mail = {
 
       options = {
         silent: false,     // true: 何も表示しない
-        sb_judge_key: "none", // 勝ち負け (win, lose, none)
         ...options,
       }
       // そのまま KifuParser.new(params) できる形式にまとめる
@@ -32,7 +31,6 @@ export const mod_kifu_mail = {
         turn: this.current_turn,
         title: this.current_title,
         viewpoint: this.viewpoint,
-        sb_judge_key: options.sb_judge_key,
         ...this.player_names,
       }
       // そのまま KifuParser で作るURLとフロント側で作ったパラメータに差異がないか確認するためのもの

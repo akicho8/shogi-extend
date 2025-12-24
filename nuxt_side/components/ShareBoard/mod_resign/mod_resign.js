@@ -30,19 +30,19 @@ export const mod_resign = {
         this.toast_danger("投了確認している最中に投了できなくなりました")
         return
       }
-      this.resign_direct_run()
+      this.resign_direct_run(this.resign_win_location_key)
     },
 
     // そのまま実行
     // 投了メッセージをカスタマイズしたくなるが結局チャットでもみんな「負けました」としか言わないので固定で良い
     // 必要ないところをこだわって複雑にしてはいけない
     // 処理順序重要
-    resign_direct_run() {
-      this.resign_confirm_modal_close()   // 本人が時間切れは失礼と考えて投了モーダルを出して投了を押す瞬間に時間切れが先に発動した場合を想定してモーダルを強制的に閉じる
-      this.illegal_takeback_modal_close()    // 反則からの投了確認モーダルが出ている場合があるので消す
-      this.resign_messsage_post() // 発言は何も影響ないので最初に行う
-      this.battle_save_run()       // 順番設定がある状態で対局を保存する
-      this.resign_share()         // 最後に順番設定を解除する
+    resign_direct_run(win_location_key) {
+      this.resign_confirm_modal_close()                  // 本人が時間切れは失礼と考えて投了モーダルを出して投了を押す瞬間に時間切れが先に発動した場合を想定してモーダルを強制的に閉じる
+      this.illegal_takeback_modal_close()                // 反則からの投了確認モーダルが出ている場合があるので消す
+      this.resign_messsage_post()                        // 発言は何も影響ないので最初に行う
+      this.battle_save_by_win_location(win_location_key) // 順番設定がある状態で対局を保存する
+      this.resign_share(win_location_key)                // 最後に順番設定を解除する
     },
 
     resign_messsage_post() {
@@ -50,8 +50,11 @@ export const mod_resign = {
     },
 
     // 投了トリガーを配る
-    resign_share() {
-      const params = { win_location_key: this.resign_win_location_key }
+    resign_share(win_location_key) {
+      const params = {}
+      if (win_location_key) {
+        params["win_location_key"] = win_location_key
+      }
       this.ac_room_perform("resign_share", params) // --> app/channels/share_board/room_channel.rb
     },
     resign_share_broadcasted(params) {
@@ -74,7 +77,7 @@ export const mod_resign = {
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
       if (this.login_and_email_valid_p) {
-        this.kifu_mail_run({silent: true, sb_judge_key: this.resign_then_self_judge_key(params)})
+        this.kifu_mail_run({silent: true})
       }
 
       this.honpu_announce()
@@ -83,26 +86,6 @@ export const mod_resign = {
     async honpu_announce() {
       await GX.sleep(this.__SYSTEM_TEST_RUNNING__ ? 0 : 0)
       await this.sb_toast_primary("棋譜は上の本譜ボタンからコピーできます", {talk: false, duration_sec: 8})
-    },
-
-    // 投了時に自分のチームは勝ったのか？
-    // 返すキーは sb_judge_info.rb に合わせること
-    resign_then_self_judge_key(params) {
-      if (params.win_location_key) {                              // 勝ち負けが明確で
-        if (this.my_location) {                                   // 自分は対局者で
-          if (this.my_location.key === params.win_location_key) { // 勝った場合
-            return "win"
-          } else {
-            return "lose"
-          }
-        } else {
-          // params.win_location_key 側が勝ったことはわかるけど自分は観戦者だったので勝ち負けに関心はない
-          return "none"
-        }
-      } else {
-        // 観戦者が投了ボタンを押したため勝ち負け不明
-        return "none"
-      }
     },
   },
 

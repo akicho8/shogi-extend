@@ -11,14 +11,16 @@ export const mod_battle_archive = {
       this.battle_save_by_win_location(this.resign_win_location_key)
     },
 
-    // 棋譜保存。win_location_key 側を勝ちとする
+    // 棋譜保存
+    // win_location_key 側を勝ちとする
+    // win_location_key が null なら引分とする
     async battle_save_by_win_location(win_location_key) {
-      if (win_location_key == null) {
-        this.toast_danger("勝者不明")
-        return
-      }
-
-      GX.assert(win_location_key)
+      // if (win_location_key == null) {
+      //   this.toast_danger("勝者不明")
+      //   return
+      // }
+      //
+      // GX.assert(win_location_key)
       if (SELF_VS_SELF_THEN_SKIP) {
         if (this.self_vs_self_p) {
           this.debug_alert("自分vs自分のため棋譜保存しない")
@@ -62,12 +64,19 @@ export const mod_battle_archive = {
     // location 側の勝ち負けを返す
     // 自分vs自分の場合は必ず負けとする
     __battle_memberships_judge_key(location, win_location_key) {
+      if (win_location_key == null) {
+        return "draw"
+      }
       if (SELF_VS_SELF_THEN_FORCE_LOSE) {
         if (this.self_vs_self_p) {
           return "lose"
         }
       }
-      return location.key === win_location_key ? "win" : "lose"
+      if (location.key === win_location_key) {
+        return "win"
+      } else {
+        return "lose"
+      }
     }
   },
 }

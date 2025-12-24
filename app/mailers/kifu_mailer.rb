@@ -3,10 +3,9 @@ class KifuMailer < ApplicationMailer
   def basic_mail(params)
     adapter = KifuMailAdapter.new(params)
 
-    subject = [
-      EmojiInfo.fetch(adapter.main_icon),
-      subject_decorate(adapter.subject),
-    ].join
+    subject = []
+    subject << subject_decorate(adapter.subject)
+    subject = subject.join
 
     body = []
     body << adapter.body
