@@ -5,6 +5,6 @@ rm log/*.log >/dev/null
 sudo kill -9 $(sudo lsof -t -i:3000) >/dev/null 2>&1
 sudo kill -9 $(sudo lsof -t -i:4000) >/dev/null 2>&1
 while true; do
-    foreman s -f Procfile.cafe
-    # foreman s -f Procfile.home
+    # foreman s -f Procfile.cafe
+    foreman s -f Procfile.home
 done
