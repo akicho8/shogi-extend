@@ -28,7 +28,7 @@ export class BoardPresetInfo extends ApplicationMemoryRecord {
       { key: "矢倉対決",       can_apply: true, handicap_desc:    "+71", description: "ほぼ互角",                        sfen: "position sfen lns4nl/1r3bgk1/pppppgspp/5pp2/9/2PP5/PPSGPPPPP/1KGB3R1/LN4SNL b - 1", },
       { key: "石田流対決",     can_apply: true, handicap_desc:   "+143", description: "先手有利",                        sfen: "position sfen ln6l/1skgg4/1pppp1npb/p3spr1p/2P3p2/P1RPS3P/BPN1PPPP1/4GGKS1/L6NL b - 1", },
       // --------------------------------------------------------------------------------
-      { key: "カスタム",       can_apply: false, handicap_desc:     "?", description: "ここにない場合は右上メニューから<b>局面編集</b>で作ろう",  sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", },
+      // { key: "カスタム",       can_apply: false, handicap_desc:     "?", description: "ここにない場合は右上メニューから<b>局面編集</b>で作ろう",  sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", },
     ]
   }
 }
