@@ -93,7 +93,7 @@ export const mod_resign = {
 
     async honpu_announce() {
       await GX.sleep(this.__SYSTEM_TEST_RUNNING__ ? 0 : 0)
-      await this.sb_toast_primary("棋譜は上の本譜ボタンからコピーできます", {talk: false, duration_sec: 8})
+      await this.toast_primary("棋譜は上の本譜ボタンからコピーできます", {talk: false, duration_sec: 8})
     },
 
     // 引分

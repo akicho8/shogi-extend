@@ -33,11 +33,11 @@ export const mod_action_log_share = {
           type: params.label_type ?? "is-primary",
         }
         if (params.message) {
-          await this.sb_toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`, toast_options)
+          await this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`, toast_options)
         }
         if (params.full_message) {
           for (const e of GX.ary_wrap(params.full_message)) {
-            await this.sb_toast_primary(e, toast_options)
+            await this.toast_primary(e, toast_options)
           }
         }
       }

@@ -23,7 +23,7 @@ export const mod_warning = {
         this.sfx_play("se_tebanjanainoni_sawanna")
         this.ac_log({subject: "警告発動", body: message})
         for (const message of _.castArray(message)) { // クソ言語は forEach にすると await が使えない
-          await this.sb_toast_warn(message, { duration_sec: 5 })
+          await this.toast_warn(message, { duration_sec: 5 })
         }
       }
     },

@@ -22,6 +22,7 @@ export const mod_toast = {
         container: this.sb_main_shogi_board_selector_for_toast,
         ...params,
       }
+      throw new Error("must not happen")
       return this.toast_primitive(message, params)
     },
   },

@@ -74,7 +74,7 @@ export const mod_illegal = {
 
       if (!this.cc_play_p) {
         this.sfx_play("x")
-        this.sb_toast_danger(this.latest_illegal_name, {position: "is-bottom"})
+        this.toast_danger(this.latest_illegal_name, {position: "is-bottom"})
         this.illegal_logging("検討時の反則")
         return
       }

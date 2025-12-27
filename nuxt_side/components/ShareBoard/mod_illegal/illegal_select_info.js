@@ -26,7 +26,7 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
           context.al_add({...params, label: "対局再開", label_type: "is-primary"})
 
           // 状況表示
-          context.sb_toast_primary(params.takebacked_message)
+          context.toast_primary(params.takebacked_message)
         },
       },
     ]
