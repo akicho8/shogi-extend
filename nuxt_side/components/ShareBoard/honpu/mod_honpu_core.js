@@ -48,7 +48,8 @@ export const mod_honpu_core = {
       if (this.honpu_main) {
         if (this.honpu_branch == null) {
           this.honpu_branch = this.al_create(params)
-          this.al_share({label: "変化", label_type: "is-primary", single_mode_support: true})
+          // これを入れると全員分の履歴が作成されてしまう
+          // this.al_share({label: "変化", label_type: "is-primary", single_mode_support: true})
         }
       }
     },
