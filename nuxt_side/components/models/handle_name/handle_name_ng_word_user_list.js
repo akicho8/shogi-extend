@@ -21,6 +21,9 @@ export const HandleNameNgWordUserList = [
   "^[aあ\\d\\.]+$",
   "ごみ|くず|くそ",
 
+  // 捨てハン2
+  "段位者|級位者",
+
   // ひらがな
   "^あいう$",
   "^あいうえ$",
