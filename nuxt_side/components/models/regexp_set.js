@@ -27,6 +27,6 @@ export const RegexpSet = {
       "half_width_number",
       "full_width_kanji_number",
     ])
-    return new RegExp(`[初${numbers}]+(段|級|だん|きゅう)`)
+    return new RegExp(`(初|しょ|[${numbers}]+)(段|級|だん|きゅう)`)
   })(),
 }
