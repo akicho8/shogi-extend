@@ -1,124 +1,127 @@
 <template lang="pug">
-.SbShortcutModal.modal-card.box.has-text-left(@click="close_handle" style="width:auto")
-  .sc_main_title
-    | ショートカット
-  .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
-    //- https://bulma.io/documentation/columns/responsiveness/
-    //- .is-one-third-widescreen
-    .column.is-half-tablet.is-half-desktop
-      .sc_sub_title 基本
-      .sc_table
-        .sc_item
-          .sc_label 棋譜の張り付け
-          .sc_buttons
-            b-tag(type="is-primary") ⇧ v
-        .sc_item
-          .sc_label 棋譜の読み込み
-          .sc_buttons
-            b-tag(type="is-primary") ⇧ r
-        .sc_item
-          .sc_label 棋譜コピー (KIF)
-          .sc_buttons
-            b-tag(type="is-primary") c
-        .sc_item
-          .sc_label 局面コピー (BOD)
-          .sc_buttons
-            b-tag(type="is-primary") b
-        .sc_item
-          .sc_label 棋譜ダウンロード (KIF)
-          .sc_buttons
-            b-tag(type="is-primary") d
-        .sc_item
-          .sc_label 棋譜URLコピー
-          .sc_buttons
-            b-tag(type="is-primary") u
-        .sc_item
-          .sc_label 棋譜URLコピー (短縮)
-          .sc_buttons
-            b-tag(type="is-primary") s
-        .sc_item
-          .sc_label 局面編集 / 完了
-          .sc_buttons
-            b-tag(type="is-primary") ⇧ e
-        .sc_item
-          .sc_label 現局面を本譜とする
-          .sc_buttons
-            b-tag(type="is-primary") !
+.SbShortcutModal.modal-card.has-text-left(@click="SB.shortcut_modal_close_handle" style="width:auto")
+  .modal-card-head
+    .modal-card-title ショートカット
+  .modal-card-body
+    .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
+      //- https://bulma.io/documentation/columns/responsiveness/
+      //- .is-one-third-widescreen
+      .column.is-half-tablet.is-half-desktop
+        .sc_title 基本
+        .sc_table
+          .sc_item
+            .sc_label 棋譜の張り付け
+            .sc_buttons
+              b-tag(type="is-primary") ⇧ v
+          .sc_item
+            .sc_label 棋譜の読み込み
+            .sc_buttons
+              b-tag(type="is-primary") ⇧ r
+          .sc_item
+            .sc_label 棋譜コピー (KIF)
+            .sc_buttons
+              b-tag(type="is-primary") c
+          .sc_item
+            .sc_label 局面コピー (BOD)
+            .sc_buttons
+              b-tag(type="is-primary") b
+          .sc_item
+            .sc_label 棋譜ダウンロード (KIF)
+            .sc_buttons
+              b-tag(type="is-primary") d
+          .sc_item
+            .sc_label 棋譜URLコピー
+            .sc_buttons
+              b-tag(type="is-primary") u
+          .sc_item
+            .sc_label 棋譜URLコピー (短縮)
+            .sc_buttons
+              b-tag(type="is-primary") s
+          .sc_item
+            .sc_label 局面編集 / 完了
+            .sc_buttons
+              b-tag(type="is-primary") ⇧ e
+          .sc_item
+            .sc_label 現局面を本譜とする
+            .sc_buttons
+              b-tag(type="is-primary") !
 
-    .column.is-half-desktop.is-half-tablet
-      .sc_sub_title 対局
-      .sc_table
-        .sc_item
-          .sc_label 入退室
-          .sc_buttons
-            b-tag(type="is-primary") 1
-        .sc_item
-          .sc_label 順番設定
-          .sc_buttons
-            b-tag(type="is-primary") o
-            | or
-            b-tag(type="is-primary") 2
-        .sc_item
-          .sc_label 対局時計 起動
-          .sc_buttons
-            b-tag(type="is-primary") t
-            | or
-            b-tag(type="is-primary") 3
-        .sc_item
-          .sc_label 一時停止 / 再開
-          .sc_buttons
-            b-tag(type="is-primary") p
-        .sc_item
-          .sc_label チャットを開く / 閉じる
-          .sc_buttons
-            b-tag(type="is-primary") Enter
-        .sc_item
-          .sc_label 本譜に戻る
-          .sc_buttons
-            b-tag(type="is-primary") z
-        .sc_item
-          .sc_label 初期配置に戻す
-          .sc_buttons
-            b-tag(type="is-primary") 0
-        .sc_item
-          .sc_label 手合割
-          .sc_buttons
-            b-tag(type="is-primary") i
-        .sc_item
-          .sc_label アバター設定
-          .sc_buttons
-            b-tag(type="is-primary") a
+      .column.is-half-desktop.is-half-tablet
+        .sc_title 対局
+        .sc_table
+          .sc_item
+            .sc_label 入退室
+            .sc_buttons
+              b-tag(type="is-primary") 1
+          .sc_item
+            .sc_label 順番設定
+            .sc_buttons
+              b-tag(type="is-primary") o
+              | or
+              b-tag(type="is-primary") 2
+          .sc_item
+            .sc_label 対局時計 起動
+            .sc_buttons
+              b-tag(type="is-primary") t
+              | or
+              b-tag(type="is-primary") 3
+          .sc_item
+            .sc_label 一時停止 / 再開
+            .sc_buttons
+              b-tag(type="is-primary") p
+          .sc_item
+            .sc_label チャットを開く / 閉じる
+            .sc_buttons
+              b-tag(type="is-primary") Enter
+          .sc_item
+            .sc_label 本譜に戻る
+            .sc_buttons
+              b-tag(type="is-primary") z
+          .sc_item
+            .sc_label 初期配置に戻す
+            .sc_buttons
+              b-tag(type="is-primary") 0
+          .sc_item
+            .sc_label 手合割
+            .sc_buttons
+              b-tag(type="is-primary") i
+          .sc_item
+            .sc_label アバター設定
+            .sc_buttons
+              b-tag(type="is-primary") a
 
-    .column.is-half-desktop.is-half-tablet
-      .sc_sub_title 思考印
-      .sc_table
-        .sc_item
-          .sc_label 思考印を書く / 消す
-          .sc_buttons
-            b-tag(type="is-primary") 副ボタン
-        .sc_item
-          .sc_label 思考印モードのトグル
-          .sc_buttons
-            b-tag(type="is-primary") m
-    .column.is-half-desktop.is-half-tablet
-      .sc_sub_title その他
-      .sc_table
-        .sc_item
-          .sc_label サイドバーのトグル
-          .sc_buttons
-            b-tag(type="is-primary") /
-        .sc_item
-          .sc_label 設定
-          .sc_buttons
-            b-tag(type="is-primary") ,
-        .sc_item
-          .sc_label これを開く
-          .sc_buttons
-            b-tag(type="is-primary") ?
-        .sc_item(v-if="SB.debug_mode_p")
-          .sc_label ログ
-          .sc_buttons
-            b-tag(type="is-primary") \
+      .column.is-half-desktop.is-half-tablet
+        .sc_title 思考印
+        .sc_table
+          .sc_item
+            .sc_label 思考印を書く / 消す
+            .sc_buttons
+              b-tag(type="is-primary") 副ボタン
+          .sc_item
+            .sc_label 思考印モードのトグル
+            .sc_buttons
+              b-tag(type="is-primary") m
+      .column.is-half-desktop.is-half-tablet
+        .sc_title その他
+        .sc_table
+          .sc_item
+            .sc_label サイドバーのトグル
+            .sc_buttons
+              b-tag(type="is-primary") /
+          .sc_item
+            .sc_label 設定
+            .sc_buttons
+              b-tag(type="is-primary") ,
+          .sc_item
+            .sc_label これを開く
+            .sc_buttons
+              b-tag(type="is-primary") ?
+          .sc_item(v-if="SB.debug_mode_p")
+            .sc_label ログ
+            .sc_buttons
+              b-tag(type="is-primary") \
+  .modal-card-foot
+    b-button.shortcut_modal_close_handle(@click="SB.shortcut_modal_close_handle") 閉じる
 </template>
 
 <script>
@@ -127,11 +130,6 @@ import { support_child } from "../support_child.js"
 export default {
   name: "SbShortcutModal",
   mixins: [support_child],
-  methods: {
-    close_handle() {
-      this.SB.shortcut_modal_close_handle()
-    },
-  },
 }
 </script>
 
@@ -142,7 +140,7 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  padding: 1.5rem
+  padding: 1rem
   +mobile
     padding: 1rem
     .columns
@@ -154,16 +152,13 @@ export default {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  .sc_main_title
-    font-weight: bold
-
   .columns
-    margin-top: 0rem
+    overflow-y: scroll
     font-size: $size-7
     .column
-      .sc_sub_title
+      .sc_title
         font-weight: bold
-        margin-top: 0.5rem
+        margin-top: 0rem
         border-bottom: 1px solid $grey-lighter
         +mobile
           margin-top: 1.2rem
@@ -184,6 +179,11 @@ export default {
             gap: 0.25rem
             .tag
               font-weight: bold
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  .modal-card-foot
+    flex-direction: row-reverse
 
 .STAGE-development
   .SbShortcutModal
