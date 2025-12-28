@@ -1,11 +1,11 @@
 // https://jp.piliapp.com/twitter-symbols/
-// 没: 🦍🦧🐴🦇🐼🦩🦜🔞💩🦌🦄🐌🦂🥦🦆
+// 没: 🦍🦧🐴🦇🐼🦩🦜🔞💩🦌🦄🐌🦂🥦🦆🐝
 export const ShowcaseDefaultString = [
   "🍉🥕🍆🥝🍩🍓🍄🌻🌵🥑🌽🫚🍎",
   "🐶🐱🐹🐻🦁🐮🐷🐸🐵🐭🐰🐔🐦🐥🐣🦊🐗🦔🐲",
   "🐢🐍🦎",
   "🐓🦅🦉",
-  "🐝🪲",
+  "🪲",
   "🐡🐬🐠🪼",
 ].join("")
 
