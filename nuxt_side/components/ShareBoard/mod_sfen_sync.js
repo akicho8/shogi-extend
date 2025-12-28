@@ -99,8 +99,7 @@ export const mod_sfen_sync = {
         }
         this.illegal_lose_modal_open(params)
         this.think_mark_all_clear()                         // マークを消す
-        this.al_add(params)
-        this.honpu_branch_setup(params)
+        this.action_log_add_and_branch_setup(params)
         return
       }
       const params = {
@@ -171,8 +170,7 @@ export const mod_sfen_sync = {
       }
 
       this.ai_say_case_turn(params)
-      this.al_add(params)
-      this.honpu_branch_setup(params)
+      this.action_log_add_and_branch_setup(params)
     },
 
     async sfen_syncd_after_notice(params) {
@@ -221,6 +219,22 @@ export const mod_sfen_sync = {
           }
         }
       }
+    },
+
+    // 履歴追加からの(必要なら)ブランチ作成とすればいいのだけど、
+    // ブランチを作成する必要があるならそれは「変化」なので履歴追加の時点でラベルに「変化」を入れる
+    action_log_add_and_branch_setup(params) {
+      params = {...params}
+
+      if (this.honpu_branch_need_p) {
+        if (GX.blank_p(params.label)) {
+          params.label = "変化"
+          params.label_type = "is-primary"
+        }
+      }
+
+      this.al_add(params)
+      this.honpu_branch_setup(params) // ブランチが空の場合はブランチを作る
     },
 
     illegal_none_p(params)    { return GX.blank_p(params.illegal_hv_list)                           },

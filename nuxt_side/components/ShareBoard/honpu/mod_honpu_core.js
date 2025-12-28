@@ -45,12 +45,8 @@ export const mod_honpu_core = {
 
     honpu_branch_setup(params) {
       this.tl_add("HONPU", "ブランチを初回だけ設定する", params)
-      if (this.honpu_main) {
-        if (this.honpu_branch == null) {
-          this.honpu_branch = this.al_create(params)
-          // これを入れると全員分の履歴が作成されてしまう
-          // this.al_share({label: "変化", label_type: "is-primary", single_mode_support: true})
-        }
+      if (this.honpu_branch_need_p) {
+        this.honpu_branch = this.al_create(params)
       }
     },
 
@@ -118,6 +114,13 @@ export const mod_honpu_core = {
     honpu_branch_exist_p() {
       if (this.honpu_main && this.honpu_branch) {
         return this.honpu_main.sfen !== this.honpu_branch.sfen
+      }
+    },
+
+    // 変化が発生するか？
+    honpu_branch_need_p(params) {
+      if (this.honpu_main) {
+        return this.honpu_branch == null
       }
     },
   },
