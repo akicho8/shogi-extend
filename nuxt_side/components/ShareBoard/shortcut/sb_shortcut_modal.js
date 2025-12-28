@@ -37,6 +37,7 @@ export const sb_shortcut_modal = {
       this.shortcut_modal_close()
       this.shortcut_modal_instance = this.modal_card_open({
         component: SbShortcutModal,
+        canCancel: ["outside", "escape"],
         onCancel: () => {
           this.sfx_click()
           this.shortcut_modal_close()
