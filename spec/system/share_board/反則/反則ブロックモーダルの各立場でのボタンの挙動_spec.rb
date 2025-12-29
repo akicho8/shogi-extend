@@ -28,9 +28,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_b { assert_clock(:pause) }
       window_c { assert_clock(:pause) }
 
-      window_a { block_modal_exist }
-      window_b { block_modal_exist }
-      window_c { block_modal_exist }
+      window_a { takeback_modal_exist }
+      window_b { takeback_modal_exist }
+      window_c { takeback_modal_exist }
 
       # 共通文言
       window_a { assert_text "本来であればaさんの反則負けです" }

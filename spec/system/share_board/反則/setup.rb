@@ -26,11 +26,11 @@ mod = Module.new do
     assert_no_selector(".IllegalLoseModal")
   end
 
-  def block_modal_exist
+  def takeback_modal_exist
     assert_selector(".IllegalTakebackModal", text: "二歩")
   end
 
-  def block_modal_none
+  def takeback_modal_none
     assert_no_selector(".IllegalTakebackModal")
   end
 
@@ -47,28 +47,41 @@ mod = Module.new do
   def assert_resign_success
     assert_action "a", "投了"
     assert_clock(:stop)
-    block_modal_none
+    takeback_modal_none
     assert_turn(1)              # 反則手を反映した局面に進んでいる
   end
 
   def assert_resign_ng
     assert_clock(:pause)
-    block_modal_exist
+    takeback_modal_exist
   end
 
   def assert_takeback_success
     assert_clock(:play)
-    block_modal_none
+    takeback_modal_none
     assert_turn(0)              # 反則前の局面
   end
 
-  def assert_block_ng
+  def assert_takeback_ng
     find(".illegal_takeback_modal_submit_handle_takeback").click
     assert_clock(:pause)
-    block_modal_exist
+    takeback_modal_exist
   end
 
   ################################################################################
+
+  # SfenInfo.fetch("連続王手の千日手確認用") 用の発動手順
+  def perpetual_check_trigger
+    3.times do
+      piece_move_o("25", "24", "☗2四飛")
+      piece_move_o("14", "15", "☖1五玉")
+
+      piece_move_o("24", "25", "☗2五飛")
+      piece_move_o("15", "14", "☖1四玉")
+    end
+
+    piece_move("25", "24")                 # 4回目の同一局面の王手
+  end
 end
 
 RSpec.configure do |config|

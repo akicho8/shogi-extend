@@ -157,7 +157,10 @@ export const mod_sfen_sync = {
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
             const location = this.current_sfen_info.location_by_offset(params.last_move_info_attrs.next_turn_offset)
+            // if (this.debug_mode_p) {
+            // } else {
             this.viewpoint = location.key
+            // }
           }
         }
 
