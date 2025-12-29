@@ -9,6 +9,12 @@ describe("PerpetualCop", () => {
     })
   })
 
+  test("tentatively_check_p", () => {
+    const object = PerpetualCop.create()
+    expect(object.tentatively_check_p("foo")).toEqual(false)
+    expect(object.counts_hash).toEqual({})
+  })
+
   test("reset$", () => {
     const object = PerpetualCop.create()
     object.increment$("foo")

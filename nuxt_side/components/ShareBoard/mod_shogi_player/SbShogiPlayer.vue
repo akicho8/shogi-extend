@@ -45,7 +45,10 @@ export default {
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
       hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
-      hv.sp_checkmate_feature        = true // 詰み判定する
+
+      hv.sp_request_checkmate_stat        = true // 詰み判定する
+      hv.sp_request_snapshot_hash    = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める
+      hv.sp_request_op_king_check       = true // 操作モードで王手しているかどうかの結果をイベントに含める
 
       // スマホでのUI確認用
       if (false) {
@@ -152,7 +155,6 @@ export default {
       &.read_sec_10, &.extra_sec_10
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
-
 
   //////////////////////////////////////////////////////////////////////////////// 長すぎる名前を切る
   .CustomShogiPlayer

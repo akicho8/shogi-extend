@@ -87,7 +87,7 @@ export const mod_illegal = {
       this.illegal_logging("反則ブロック発動")
     },
 
-    // -------------------------------------------------------------------------------- 千日手用
+    // -------------------------------------------------------------------------------- 連続王手の千日手用
 
     // /Users/ikeda/src/shogi-player/components/mod_illegal.js と合わせること
     illegal_create_perpetual_check(e) {

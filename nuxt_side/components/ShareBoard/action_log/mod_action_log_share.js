@@ -31,6 +31,7 @@ export const mod_action_log_share = {
       {
         const toast_options = {
           type: params.label_type ?? "is-primary",
+          duration_sec: params.duration_sec,
         }
         if (params.message) {
           await this.toast_primary(`${this.user_call_name(params.from_user_name)}が${params.message}`, toast_options)

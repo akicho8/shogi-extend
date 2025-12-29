@@ -25,32 +25,31 @@ export const mod_sfen_sync = {
 
       this.resend_init()
 
-      // 反則名リストを作る /Users/ikeda/src/shogi-player/components/mod_illegal.js
+      // 反則情報リストを作る /Users/ikeda/src/shogi-player/components/mod_illegal.js
       const illegal_hv_list = [...e.illegal_hv_list]
-
-      // 千日手 → 引分とすべきところを反則負けとしているためいったん無効にする
-      if (this.perpetual_feature) {
-        this.perpetual_cop.increment$(e.snapshot_hash) // 同一局面になった回数をカウント
-        // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する
-        if (this.perpetual_cop.available_p(e.snapshot_hash)) {    // 千日手か？
-          const illegal_hv = this.illegal_create_perpetual_check(e)
-          if (this.foul_mode_info.perpetual_check_p) {
-            illegal_hv_list.push(illegal_hv)
-          } else {
-            this.illegal_takeback_modal_start(illegal_hv)
-          }
-        }
+      const illegal_hv = this.perpetual_check_detect(e)
+      if (illegal_hv) {
+        illegal_hv_list.push(illegal_hv)
       }
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_sync_params = {
         sfen: e.sfen,
         turn: e.turn,
-        checkmate_stat: e.checkmate_stat,
         illegal_hv_list: illegal_hv_list,
         clock_box_params: this.ac_room_perform_params_wrap(this.clock_box_share_params_factory("cc_behavior_silent")), // 指し手と合わせて時計の情報も送る
         last_move_info_attrs: this.last_move_info_attrs_from(e.last_move_info),
         // location_key, this.current_location.key,
+      }
+
+      if (e.snapshot_hash) {
+        this.sfen_sync_params["snapshot_hash"] = e.snapshot_hash
+      }
+      if (e.op_king_check) {
+        this.sfen_sync_params["op_king_check"] = e.op_king_check
+      }
+      if (e.checkmate_stat) {
+        this.sfen_sync_params["checkmate_stat"] = e.checkmate_stat
       }
 
       // if (this.development_p) {
@@ -175,7 +174,7 @@ export const mod_sfen_sync = {
 
     async sfen_syncd_after_notice(params) {
       this.next_turn_message = null
-      if (this.next_step_p(params)) {                                    // 反則がなかった場合
+      if (this.can_next_step_p(params)) {                                    // 反則がなかった場合
         if (this.yomiagable_p) {
           await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
           await this.sb_talk(params.last_move_info_attrs.yomiage)      // 「7 6 ふ」
@@ -209,11 +208,13 @@ export const mod_sfen_sync = {
     // 詰みであればこれから指す人に投了させる
     checkmate_then_resign(params) {
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
-        const fixed_ms = params.checkmate_stat.elapsed_ms.toFixed(2)
-        this.toast_primary(`${params.checkmate_stat.yes_or_no ?? ""} (${fixed_ms} ms)`, {position: "is-top-left", talk: false})
+        if (params.checkmate_stat) {
+          const fixed_ms = params.checkmate_stat.elapsed_ms.toFixed(2)
+          this.toast_primary(`${params.checkmate_stat.yes_or_no} (${fixed_ms} ms)`, {position: "is-top-left", talk: false})
+        }
       }
       if (this.illegal_none_p(params)) {
-        if (this.checkmate_exist_p(params)) {
+        if (this.knock_out_p(params)) {
           if (this.next_is_self_p(params)) {
             this.resign_call()
           }
@@ -239,9 +240,10 @@ export const mod_sfen_sync = {
 
     illegal_none_p(params)    { return GX.blank_p(params.illegal_hv_list)                           },
     illegal_exist_p(params)   { return GX.present_p(params.illegal_hv_list)                         },
-    checkmate_none_p(params)  { return params.checkmate_stat.yes_or_no !== "yes"                    },
-    checkmate_exist_p(params) { return params.checkmate_stat.yes_or_no === "yes"                    },
-    next_step_p(params)       { return this.illegal_none_p(params) && this.checkmate_none_p(params) },
+
+    knock_out_p(params)       { return params.checkmate_stat && params.checkmate_stat.yes_or_no === "yes" },
+
+    can_next_step_p(params)       { return this.illegal_none_p(params) && !this.knock_out_p(params) },
     next_is_self_p(params)    { return this.user_name === params.next_user_name                     },
   },
   computed: {

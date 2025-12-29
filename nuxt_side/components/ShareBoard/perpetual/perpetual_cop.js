@@ -19,6 +19,15 @@ export class PerpetualCop {
     this.count = 0
   }
 
+  // 仮に key を更新するとしたら千日手になるか？
+  tentatively_check_p(key) {
+    GX.assert(GX.present_p(key), "GX.present_p(key)")
+    const n = this.constructor.trigger_on_n_times
+    if (GX.present_p(n)) {
+      return ((this.counts_hash[key] ?? 0) + 1) >= n
+    }
+  }
+
   // 同一局面になった回数をカウント
   increment$(key) {
     GX.assert(GX.present_p(key), "GX.present_p(key)")
@@ -29,9 +38,9 @@ export class PerpetualCop {
   // 千日手か？
   available_p(key) {
     GX.assert(GX.present_p(key), "GX.present_p(key)")
-    const v = this.constructor.trigger_on_n_times
-    if (GX.present_p(v)) {
-      return this.counts_hash[key] >= v
+    const n = this.constructor.trigger_on_n_times
+    if (GX.present_p(n)) {
+      return this.counts_hash[key] >= n
     }
   }
 
