@@ -22,57 +22,57 @@
     template(v-if="SB.order_enable_p || development_p")
       //- pre {{JSON.stringify(SB.order_draft.os_change.to_h)}}
 
-      .TeamsContainer.is-unselectable
-        OrderTeamOne.is_team_black(:items.sync="SB.order_draft.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
-        OrderTeamOne.is_team_white(:items.sync="SB.order_draft.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
-        OrderTeamOne.is_team_watcher(:items.sync="SB.order_draft.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
+      //- https://buefy.org/documentation/tabs
+      b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="tab_change_handle" expanded)
+        template(v-for="e in SB.OrderTabInfo.values")
+          b-tab-item(:label="e.name" :header-class="e.key")
 
-      .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
-        b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
-        .realtime_notice.is-size-7(v-html="realtime_notice.message")
+      .tab_content.order_tab_main(v-if="SB.order_tab_info.key === 'order_tab_main'")
+        .TeamsContainer.is-unselectable
+          OrderTeamOne.is_team_black(:items.sync="SB.order_draft.order_flow.order_operation.teams[0]" label="☗" @label_click="swap_handle")
+          OrderTeamOne.is_team_white(:items.sync="SB.order_draft.order_flow.order_operation.teams[1]" label="☖" @label_click="swap_handle")
+          OrderTeamOne.is_team_watcher(:items.sync="SB.order_draft.order_flow.watch_users" label="観戦" @label_click="all_move_to_watcher_handle")
 
-      .support_buttons.mt-4(v-if="support_buttons_show_p")
-        b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle" v-if="shuffule_all_button_show_p") 全体ｼｬｯﾌﾙ
-        b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle" v-if="team_each_shuffle_button_show_p") ﾁｰﾑ内ｼｬｯﾌﾙ
-        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" v-if="furigoma_button_show_p") 振り駒
-        b-button.swap_handle(size="is-small" @click="swap_handle" v-if="swap_handle_button_show_p") 先後入替
-        //- b-button.board_preset_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
+        .realtime_notice_container.my-4.mx-1.is-unselectable.is_line_break_on(v-if="realtime_notice")
+          b-icon.mx-1(:icon="realtime_notice.icon_code" :type="realtime_notice.icon_type")
+          .realtime_notice.is-size-7(v-html="realtime_notice.message")
 
-      hr.my-4
+        .support_buttons.mt-4(v-if="support_buttons_show_p")
+          b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle" v-if="shuffule_all_button_show_p") 全体ｼｬｯﾌﾙ
+          b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle" v-if="team_each_shuffle_button_show_p") ﾁｰﾑ内ｼｬｯﾌﾙ
+          b-button.furigoma_handle(size="is-small" @click="furigoma_handle" v-if="furigoma_button_show_p") 振り駒
+          b-button.swap_handle(size="is-small" @click="swap_handle" v-if="swap_handle_button_show_p") 先後入替
+          //- b-button.board_preset_modal_open_handle(v-if="SB.debug_mode_p" size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
 
-      .has-text-centered.is-size-7.is-unselectable
-        | 投票でﾁｰﾑ分けするなら
-      .buttons.is-centered.mb-0.mt-2
-        b-button.mb-0(size="is-small" @click="quiz_maker_handle")
-          | お題ﾒｰｶｰ
-        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.quiz_received_p")
-          | 結果を反映する({{SB.quiz_voted_result.count}}/{{SB.room_user_names.length}})
-        b-button.mb-0(size="is-small" type="is-danger" @click="quiz_delete_handle" v-if="SB.quiz_received_p && SB.debug_mode_p")
-          | 削除
+      .tab_content.order_tab_fes(v-if="SB.order_tab_info.key === 'order_tab_fes'")
+        .has-text-centered.is-size-7.is-unselectable
+          | 投票でﾁｰﾑ分けするなら
+        .buttons.is-centered.mb-0.mt-2
+          b-button.mb-0(size="is-small" @click="quiz_maker_handle")
+            | お題ﾒｰｶｰ
+          b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.quiz_received_p")
+            | 結果を反映する({{SB.quiz_voted_result.count}}/{{SB.room_user_names.length}})
+          b-button.mb-0(size="is-small" type="is-danger" @click="quiz_delete_handle" v-if="SB.quiz_received_p && SB.debug_mode_p")
+            | 削除
 
-      .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.quiz_received_p && $GX.present_p(SB.vote_yet_user_names)")
-        | まだ投票してない人({{SB.vote_yet_user_names.length}}): {{SB.vote_yet_user_names.join(", ")}}
+        .has-text-centered.mb-0.mt-2.is-size-7.is_word_break_on(v-if="SB.quiz_received_p && $GX.present_p(SB.vote_yet_user_names)")
+          | まだ投票してない人({{SB.vote_yet_user_names.length}}): {{SB.vote_yet_user_names.join(", ")}}
 
-      hr.my-4
-
-      .buttons.is-centered.mb-0.mt-2(v-if="!option_block_show_p")
-        b-button.mb-0(size="is-small" @click="option_block_show_handle") オプション
-
-      .columns.is-multiline.other_setting.is-marginless.is-variable.is-0.has-background-white-ter.box(v-if="option_block_show_p")
-        .column.is-12(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
+      .tab_content.order_tab_rule(v-if="SB.order_tab_info.key === 'order_tab_rule'")
+        template(v-if="SB.debug_mode_p || SB.AppConfig.foul_mode_ui_show")
           SimpleRadioButton.foul_mode(:base="SB" custom-class="is-small" element_size="is-small" model_name="FoulModeInfo" :sync_value.sync="SB.order_draft.foul_mode_key" @user_input="foul_mode_key_updated")
-        .column.is-12
-          SimpleRadioButton.change_per(
-            :base="SB"
-            custom-class="is-small"
-            element_size="is-small"
-            model_name="ChangePerInfo"
-            :sync_value="SB.order_draft.change_per"
-            @update:sync_value="v => SB.order_draft.change_per = _.max([1, $GX.to_i(v)])"
-            )
-          //- | {{SB.order_draft.change_per}}
-        .column.is-12
-          SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.order_draft.think_mark_receive_scope_key")
+
+        SimpleRadioButton.change_per(
+          :base="SB"
+          custom-class="is-small"
+          element_size="is-small"
+          model_name="ChangePerInfo"
+          :sync_value="SB.order_draft.change_per"
+          @update:sync_value="v => SB.order_draft.change_per = _.max([1, $GX.to_i(v)])"
+          )
+        //- | {{SB.order_draft.change_per}}
+
+        SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.order_draft.think_mark_receive_scope_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -100,15 +100,24 @@ export default {
   },
   data() {
     return {
-      option_block_show_p: this.SB.debug_mode_p,
       reform_conduct_modal_instance: null,
+      tab_index: this.SB.order_tab_info.code,
     }
   },
   beforeDestroy() {
     this.reform_conduct_modal_close()
   },
 
+  watch: {
+    tab_index(v) { this.SB.order_tab_key = this.SB.OrderTabInfo.fetch(v).key },
+  },
+
   methods: {
+    tab_change_handle(index) {
+      this.sfx_click()
+      this.SB.sb_talk(this.SB.OrderTabInfo.fetch(index).name)
+    },
+
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     main_switch_handle(v) {
@@ -248,11 +257,6 @@ export default {
       this.SB.order_draft_publish("バリデーションなしで順番設定を確定しました")
     },
 
-    option_block_show_handle() {
-      this.sfx_click()
-      this.option_block_show_p = true
-    },
-
     hint_handle(model) {
       this.sfx_stop_all()
       this.sfx_click()
@@ -272,6 +276,7 @@ export default {
       this.sfx_click()
       this.SB.voted_result_to_order_apply()
       this.SB.al_share({label: "結果反映", message: "投票の結果でチーム分けしました"})
+      this.tab_index = this.SB.OrderTabInfo.fetch("order_tab_main").code
     },
 
     quiz_delete_handle() {
@@ -405,6 +410,25 @@ export default {
       scale: 0.75
       color: $grey
 
+  .modal-card-body
+    padding: 1rem
+    .b-tabs, .tab-content
+      padding: 0
+    .b-tabs
+      margin-top: 0
+      margin-bottom: 0
+    .tab_content
+      margin-top: 1rem
+      &.order_tab_rule
+        padding: 0 0.75rem
+
+        .field
+          margin: 0
+
+        display: flex
+        flex-direction: column
+        gap: 1rem
+
 .STAGE-development
   .OrderModal
     .modal-card-body
@@ -415,4 +439,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .support_buttons
       border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .tab_content
+    //   border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

@@ -1,9 +1,12 @@
 // 順番設定モーダル用
 
-import { OsChange } from "./os_change.js"
-import { OrderFlow } from "./order_flow/order_flow.js"
-import OrderModal from "./OrderModal.vue"
 import { GX } from "@/components/models/gx.js"
+
+import OrderModal from "./OrderModal.vue"
+
+import { OrderTabInfo } from "./order_tab_info.js"
+import { OsChange     } from "./os_change.js"
+import { OrderFlow    } from "./order_flow/order_flow.js"
 
 export const order_modal = {
   data() {
@@ -160,5 +163,12 @@ export const order_modal = {
   },
   computed: {
     order_modal_update_ok() { return this.order_draft.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    OrderTabInfo()   { return OrderTabInfo                                },
+    order_tab_info() { return this.OrderTabInfo.fetch(this.order_tab_key) },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
 }
