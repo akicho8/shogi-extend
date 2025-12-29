@@ -13,7 +13,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class FoulModeInfo extends ApplicationMemoryRecord {
   static field_label = "反則"
   static message = null
-  static hint_messages = ["反則は「二歩」「王手放置」「駒ワープ」「死に駒」のみが対象です。千日手は「したら負け」のときだけ指摘します。"]
+  static hint_messages = null
 
   static get define() {
     return [
