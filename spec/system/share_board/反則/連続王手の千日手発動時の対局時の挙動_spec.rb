@@ -24,7 +24,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       case1("takeback")
       perpetual_check_trigger
       assert_no_selector(".IllegalTakebackModal") # 出るべきだが出ていない
-      assert_text "本来であれば連続王手の千日手でaさんの反則負けです"
+      assert_text "本来であれば「連続王手の千日手」でaさんの反則負けです"
       assert_text "次から指し手を変えてください"
     end
   end

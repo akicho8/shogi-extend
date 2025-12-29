@@ -16,6 +16,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       order_modal_open                                           # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
+      find(".tabs .order_tab_fes").click
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
       within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入
       within(".quiz_left")    { find(:fillable_field).set("(quiz_left)")   } # 選択肢1
@@ -41,6 +42,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       sidebar_open
       order_modal_open_handle
       find(:button, text: "結果を反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
+      assert_selector(".tabs .order_tab_main.is-active") # 順番タブに切り替わっている
       assert_order_team_one "", "ab", sort: true # 順番に反映した。a も b も右側である "(quiz_right)" を選択したため偏っている
       assert_order_dnd_watcher "c"               # c は投票しなかったので観戦者になっている
     end
