@@ -14,19 +14,42 @@ export const mod_perpetual = {
       if (this.perpetual_cop.tentatively_check_p(key)) {
         if (e.op_king_check) {
           const illegal_hv = this.illegal_create_perpetual_check(e)
-          if (this.foul_mode_info.perpetual_check_mode === "immediately_lose") {
-            // 反則したら負けのとき
-            return illegal_hv
-          }
-          if (this.foul_mode_info.perpetual_check_mode === "show_warning") {
-            // 反則しても待ったできるとき
-            this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", full_message: this.perpetual_check_warn_message, duration_sec: 10})
+          if (this.cc_play_p) {
+            // 対局中
+            if (this.foul_mode_info.perpetual_check_mode === "immediately_lose") {
+              // 反則したら負けのとき
+              return illegal_hv
+            }
+            if (this.foul_mode_info.perpetual_check_mode === "show_warning") {
+              // 反則しても待ったできるとき
+              this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", full_message: this.perpetual_check_warn_message, duration_sec: 10, single_mode_support: true})
 
-            // TODO: 本当ならここのロジックを sp から呼べるように fn をわたして sp 側で判定処理させる
+              // TODO: 本当ならここのロジックを sp から呼べるように fn をわたして sp 側で判定処理させる
+            }
+          } else {
+            // 検討中
+            this.sfx_play("x")
+            this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", single_mode_support: true})
           }
-          if (this.foul_mode_info.perpetual_check_mode === "ignore") {
-            // 関与しない
+
+        } else {
+          // 千日手
+
+          if (this.cc_play_p) {
+            // 対局中
+            if (this.foul_mode_info.perpetual_check_mode === "immediately_lose") {
+              // 引き分けとする
+            }
+            if (this.foul_mode_info.perpetual_check_mode === "show_warning") {
+              // 反則しても待ったできるとき
+              this.al_share({label: "千日手", label_type: "is-danger", full_message: "本来であれば引き分けです", duration_sec: 10, single_mode_support: true})
+            }
+          } else {
+            // 検討中
+            this.sfx_play("x")
+            this.al_share({label: "千日手", label_type: "is-danger", single_mode_support: true})
           }
+
         }
       }
       this.perpetual_cop.increment$(key)
