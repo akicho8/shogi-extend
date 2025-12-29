@@ -37,12 +37,8 @@ export const mod_perpetual = {
 
           if (this.cc_play_p) {
             // 対局中
-            if (this.foul_mode_info.perpetual_check_mode === "immediately_lose") {
-              // 引き分けとする
-            }
-            if (this.foul_mode_info.perpetual_check_mode === "show_warning") {
-              // 反則しても待ったできるとき
-              this.al_share({label: "千日手", label_type: "is-danger", full_message: "本来であれば引き分けです", duration_sec: 10, single_mode_support: true})
+            if (this.foul_mode_info.perpetual_mode === "show_warning") {
+              this.al_share({label: "千日手", label_type: "is-danger", full_message: this.perpetual_warn_message, duration_sec: 10, single_mode_support: true})
             }
           } else {
             // 検討中
@@ -59,8 +55,14 @@ export const mod_perpetual = {
   computed: {
     perpetual_check_warn_message() {
       return [
-        `本来であれば連続王手の千日手で${this.my_call_name}の反則負けです`,
+        `本来であれば「連続王手の千日手」で${this.my_call_name}の反則負けです`,
         `次から指し手を変えてください`,
+      ]
+    },
+    perpetual_warn_message() {
+      return [
+        `本来であれば「千日手」で引き分けです`,
+        `どちらかが指し手を変えてください`,
       ]
     },
   },

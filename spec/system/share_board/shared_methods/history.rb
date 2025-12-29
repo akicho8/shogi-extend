@@ -6,6 +6,13 @@ module SharedMethods
     end
   end
 
+  # 完全一致のテキストがないこと
+  def assert_no_action_text(text)
+    within(".SbActionLog") do
+      assert_no_selector(:element, text: text, exact_text: true)
+    end
+  end
+
   # 履歴の上から index 目の行
   def action_log_row_of(index)
     find(".SbActionLog .SbAvatarLine:nth-child(#{index.next})")

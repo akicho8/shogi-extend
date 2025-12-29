@@ -25,6 +25,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
         sp_illegal_validate: true,
         sp_illegal_cancel: false,
         perpetual_check_mode: "immediately_lose",
+        perpetual_mode: "show_warning",
         environment: ["development", "staging", "production"],
       }, {
         key: "takeback",
@@ -34,6 +35,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
         perpetual_check_mode: "show_warning",
+        perpetual_mode: "show_warning",
         environment: ["development", "staging", "production"],
       }, {
         key: "ignore",
@@ -43,6 +45,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
         perpetual_check_mode: "ignore",
+        perpetual_mode: "ignore",
         environment: ["development", "staging", "production"],
       },
     ]
