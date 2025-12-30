@@ -24,9 +24,14 @@ module QuickScript
             func: -> { AppLog.subject_like("警告発動").where(created_at: 24.hours.ago..).count },
           },
           {
-            name: "[共有] 反則",
-            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "反則" }),
-            func: -> { AppLog.subject_like("反則").where(created_at: 24.hours.ago..).count },
+            name: "[共有] 反則負け",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "反則負け" }),
+            func: -> { AppLog.subject_like("反則負け").where(created_at: 24.hours.ago..).count },
+          },
+          {
+            name: "[共有] 反則ブロック",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "反則ブロック" }),
+            func: -> { AppLog.subject_like("反則ブロック").where(created_at: 24.hours.ago..).count },
           },
           {
             name: "[共有] 名前違反",
