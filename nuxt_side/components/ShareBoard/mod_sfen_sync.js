@@ -178,6 +178,11 @@ export const mod_sfen_sync = {
     async sfen_synced_after_notice(params) {
       this.next_turn_message = null
       if (this.can_next_step_p(params)) {                                    // 反則がなかった場合
+        if (this.debug_mode_p) {
+          if (params.op_king_check) {
+            await this.toast_primary("王手")
+          }
+        }
         if (this.yomiagable_p) {
           await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
           await this.sb_talk(params.last_move_info_attrs.yomiage)      // 「7 6 ふ」
