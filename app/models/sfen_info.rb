@@ -5,5 +5,6 @@ class SfenInfo
     { key: "反則確認用",             turn: 0,   sfen: "position sfen 7k1/5Gb2/7SL/8K/6s1P/9/9/9/8L b GNP 1", },
     { key: "最初から王手",           turn: 0,   sfen: "position sfen 7k1/5Gb2/8L/8K/6s1P/9/9/9/8L b GNP 1", },
     { key: "連続王手の千日手確認用", turn: 0,   sfen: "position sfen 9/9/8l/8k/6KR1/8p/9/9/9 b - 1", },
+    { key: "頭金で一手詰確認用",     turn: 0,   sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G 1", },
   ]
 end
