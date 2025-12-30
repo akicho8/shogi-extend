@@ -24,7 +24,7 @@
           template(v-if="$GX.present_p(e.illegal_hv_list)")
             template(v-for="e in e.illegal_hv_list")
               b-tag.flex_item(type="is-danger" size="is-small") {{e.illegal_info.name}}
-          template(v-else-if="e.checkmate_stat && e.checkmate_stat.yes_or_no === 'yes'")
+          template(v-else-if="SB.knock_out_p(e)")
             b-tag.flex_item(type="is-danger" size="is-small") 詰み
           template(v-else-if="e.op_king_check")
             b-tag.flex_item(type="is-danger" size="is-small") 王手
