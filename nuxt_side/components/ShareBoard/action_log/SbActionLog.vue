@@ -26,7 +26,7 @@
               b-tag.flex_item(type="is-danger" size="is-small") {{e.illegal_info.name}}
           template(v-else-if="SB.knock_out_p(e)")
             b-tag.flex_item(type="is-danger" size="is-small") 詰み
-          template(v-else-if="e.op_king_check")
+          template(v-else-if="e.op_king_check && !SB.cc_play_p")
             b-tag.flex_item(type="is-danger" size="is-small") 王手
 
           .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
