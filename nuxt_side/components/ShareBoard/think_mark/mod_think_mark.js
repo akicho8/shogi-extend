@@ -20,7 +20,7 @@ export const mod_think_mark = {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     // ここでは直接操作せずにコマンドを作り (自分であっても) サーバーを介してから反映する
     ev_action_click_for_think_mark(ev_params, event) {
-      if (this.i_can_mark_send_p(event)) {
+      if (this.i_can_mark_send_p(event)) { // このチェックをしなかったら駒を持つと同時に印を書ける
         this.think_mark_share(ev_params)
       }
     },
