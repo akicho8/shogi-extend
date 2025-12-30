@@ -34,6 +34,7 @@ export const mod_sfen_sync = {
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_sync_params = {
+        __standalone_mode__: true,
         sfen: e.sfen,
         turn: e.turn,
         illegal_hv_list: illegal_hv_list,
@@ -88,19 +89,6 @@ export const mod_sfen_sync = {
     // 指し手の配信
     sfen_sync() {
       GX.assert_present(this.sfen_sync_params, "this.sfen_sync_params")
-
-      if (this.ac_room == null) {
-        // 自分しかいないため即履歴とする
-        // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
-        const params = {
-          ...this.ac_room_perform_default_params(), // これがなくても動くがアバターがアバターになってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
-          ...this.sfen_sync_params,
-        }
-        this.illegal_lose_modal_open(params)
-        this.think_mark_all_clear()                         // マークを消す
-        this.action_log_add_and_branch_setup(params)
-        return
-      }
       const params = {
         ...this.sfen_sync_params,
         resend_failed_count: this.resend_failed_count, // 1以上:再送回数
