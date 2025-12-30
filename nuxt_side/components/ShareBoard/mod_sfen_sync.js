@@ -168,14 +168,14 @@ export const mod_sfen_sync = {
 
         this.checkmate_then_resign(params)              //  詰みなら次の手番の人は投了する
 
-        this.sfen_syncd_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
+        this.sfen_synced_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
       }
 
       this.ai_say_case_turn(params)
       this.action_log_add_and_branch_setup(params)
     },
 
-    async sfen_syncd_after_notice(params) {
+    async sfen_synced_after_notice(params) {
       this.next_turn_message = null
       if (this.can_next_step_p(params)) {                                    // 反則がなかった場合
         if (this.yomiagable_p) {
