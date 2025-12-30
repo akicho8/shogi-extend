@@ -131,7 +131,7 @@ export default {
 .SbShogiPlayer
   +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
   +setvar(sp_location_mark_inactive_size, 1.0)          // 手番でない方の☗の大きさ
-  +setvar(sp_board_horizontal_gap, 0.1)                 // 横配置の場合に隙間をいれる
+  +setvar(sp_board_horizontal_gap, 0.05)                // 横配置の場合に隙間をいれる
 
   +padding_lr(unset)
 

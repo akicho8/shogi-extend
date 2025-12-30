@@ -7,22 +7,47 @@
 .SbApp
   &.pentagon_to_avatar_finally_on
     .SbShogiPlayer
-      .MembershipLocationMark
-        // background-color: blue
-        // width: unset           // 元は升目の同じ大きさなので縦幅だけを無効化し
-        // aspect-ratio: 1        // 比率を1:1にすることで縦も自動的に横と同じになる
-        .MembershipLocationMarkTexture
-          width: 100%             // そのため内側は最大化すればよい
-          height: 100%
-          background-size: cover  // cover で完全に生める。contain だと元画像が長方形の場合に隙間ができてしまう
-          border-radius: 3px
-      .is_black
-        .MembershipLocationMarkTexture
-          background-image: var(--sb_black_avatar_background_image)
-          background-size:  var(--sb_black_avatar_background_size)
-          border-radius:    var(--sb_black_avatar_border_radius)
-      .is_white
-        .MembershipLocationMarkTexture
-          background-image: var(--sb_white_avatar_background_image)
-          background-size:  var(--sb_white_avatar_background_size)
-          border-radius:    var(--sb_white_avatar_border_radius)
+      .ShogiPlayer
+        // 共通の設定
+        .Membership
+          .MembershipLocationMark
+            // background-color: blue
+            // width: unset           // 元は升目の同じ大きさなので縦幅だけを無効化し
+            // aspect-ratio: 1        // 比率を1:1にすることで縦も自動的に横と同じになる
+            .MembershipLocationMarkTexture
+              width: 100%             // そのため内側は最大化すればよい
+              height: 100%
+              background-size: cover  // cover で完全に生める。contain だと元画像が長方形の場合に隙間ができてしまう
+          &.is_black
+            .MembershipLocationMarkTexture
+              background-image: var(--sb_black_avatar_background_image)
+              background-size:  var(--sb_black_avatar_background_size)
+          &.is_white
+            .MembershipLocationMarkTexture
+              background-image: var(--sb_white_avatar_background_image)
+              background-size:  var(--sb_white_avatar_background_size)
+
+        // 横配置では画像とバルーンを両方丸めているのに隙間がないのは変なので隙間を入れる
+        +IF_HORIZONTAL
+          .Membership
+            &.is_black
+              gap: calc(var(--sp_cell_h) * var(--sb_black_avatar_flex_gap))
+              .MembershipLocationMarkTexture
+                border-radius: var(--sb_black_avatar_border_radius)
+            &.is_white
+              gap: calc(var(--sp_cell_h) * var(--sb_white_avatar_flex_gap))
+              .MembershipLocationMarkTexture
+                border-radius: var(--sb_white_avatar_border_radius)
+
+        // 一方、縦配置では隙間を入れず画像も正方形にする
+        // (これらはデフォルトだが横配置の定義をした場合、上書きで打ち消す必要がある)
+        +IF_VERTICAL
+          .Membership
+            &.is_black
+              gap: unset
+              .MembershipLocationMarkTexture
+                border-radius: unset
+            &.is_white
+              gap: unset
+              .MembershipLocationMarkTexture
+                border-radius: unset
