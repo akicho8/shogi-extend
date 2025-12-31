@@ -20,7 +20,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       {
         key: "lose",
         name: "したら負け",
-        message: "棋力↑ 逆転の余地↑ 楽しさ↑ (推奨)",
+        message: "正統な将棋の規則です (推奨)",
         type: "is-primary",
         sp_illegal_validate: true,
         sp_illegal_cancel: false,
@@ -30,7 +30,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "takeback",
         name: "しても待ったできる",
-        message: "棋力↓ 逆転の余地↓ 楽しさ↓ (接待用)",
+        message: "接待または指導対局向け",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
@@ -40,7 +40,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "ignore",
         name: "関与しない",
-        message: "リアル対局と同じで反則をしても対局は進む",
+        message: "反則をしても対局が止まることはありません",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
