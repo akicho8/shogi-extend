@@ -18,7 +18,7 @@ export const resend_confirm_modal = {
     resend_confirm_break_handle() {
       this.sfx_click()
       this.resend_done()
-      this.cc_silent_pause_share()
+      this.cc_pause_silent_share()
       const full_message = [
         `${this.my_call_name}が時計を一時停止しました`,
       ]

@@ -26,7 +26,7 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
 
           // 「待った」を押した人だけ時計を再開する
           if (context.received_from_self(params)) {
-            context.cc_silent_resume_share()
+            context.cc_resume_silent_share()
           }
         },
       },

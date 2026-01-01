@@ -82,7 +82,7 @@ export const mod_illegal = {
 
       // 対局中
       if (this.received_from_self(params)) {
-        this.cc_silent_pause_share()
+        this.cc_pause_silent_share()
       }
       this.sfx_stop_all()
       this.sfx_play("lose")                    // チーン
