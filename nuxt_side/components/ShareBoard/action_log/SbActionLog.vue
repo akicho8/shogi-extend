@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbActionLog.SideColumn.column(:class="has_content_class(SB.action_logs)")
+.SbActionLog.SideColumn.column.is-size-7(:class="has_content_class(SB.action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title(v-if="SB.debug_mode_p")
       | 操作履歴
@@ -29,9 +29,9 @@
           template(v-else-if="e.op_king_check && !SB.cc_play_p")
             b-tag.flex_item(type="is-danger" size="is-small") 王手
 
-          .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
+          .flex_item(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
 
-          .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{e.display_time}}
+          .flex_item.time_format(v-if="e.performed_at && development_p") {{e.display_time}}
 </template>
 
 <script>
