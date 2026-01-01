@@ -61,7 +61,7 @@ export const mod_honpu_core = {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
       if (this.honpu_main && this.honpu_branch) {
         this.al_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
-        this.al_share({label: "本譜", label_type: "is-primary", single_mode_support: true})
+        this.al_share({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
   },

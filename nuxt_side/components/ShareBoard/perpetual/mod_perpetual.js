@@ -22,14 +22,14 @@ export const mod_perpetual = {
             }
             if (this.foul_mode_info.perpetual_check_mode === "show_warning") {
               // 反則しても待ったできるとき
-              this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", full_message: this.perpetual_check_warn_message, duration_sec: 10, single_mode_support: true})
+              this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", full_message: this.perpetual_check_warn_message, duration_sec: 10, __standalone_mode__: true})
 
               // TODO: 本当ならここのロジックを sp から呼べるように fn をわたして sp 側で判定処理させる
             }
           } else {
             // 検討中
             this.sfx_play("x")
-            this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", single_mode_support: true})
+            this.al_share({label: illegal_hv.illegal_info.name, label_type: "is-danger", __standalone_mode__: true})
           }
 
         } else {
@@ -38,12 +38,12 @@ export const mod_perpetual = {
           if (this.cc_play_p) {
             // 対局中
             if (this.foul_mode_info.perpetual_mode === "show_warning") {
-              this.al_share({label: "千日手", label_type: "is-danger", full_message: this.perpetual_warn_message, duration_sec: 10, single_mode_support: true})
+              this.al_share({label: "千日手", label_type: "is-danger", full_message: this.perpetual_warn_message, duration_sec: 10, __standalone_mode__: true})
             }
           } else {
             // 検討中
             this.sfx_play("x")
-            this.al_share({label: "千日手", label_type: "is-danger", single_mode_support: true})
+            this.al_share({label: "千日手", label_type: "is-danger", __standalone_mode__: true})
           }
 
         }
