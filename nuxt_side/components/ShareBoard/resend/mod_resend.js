@@ -8,6 +8,7 @@ const RESEND_DELAY             = 3    // 再送モーダル発動までN秒待�
 const RESEND_DELAY_MAX         = 8    // 再送モーダル発動まで最大N秒待つ
 const RESEND_TOAST_SEC         = 6    // 再送のtoastを何秒表示するか？
 const RESEND_SUCCESS_DELAY     = 0    // 受信OKするまでの秒数(本番では0にすること) 再送モーダル発動より長いと再送モーダルをcloseする
+const RESEND_TRY_MAX               = 3    // 最大何回再送するか？
 
 export const mod_resend = {
   mixins: [resend_confirm_modal],
@@ -135,6 +136,9 @@ export const mod_resend = {
     RESEND_FEATURE()       { return this.param_to_b("RESEND_FEATURE", RESEND_FEATURE) },
     RESEND_DELAY()         { return this.param_to_f("RESEND_DELAY", RESEND_DELAY) },
     RESEND_SUCCESS_DELAY() { return this.param_to_f("RESEND_SUCCESS_DELAY", RESEND_SUCCESS_DELAY) },
+    RESEND_TRY_MAX()       { return this.param_to_f("RESEND_TRY_MAX", RESEND_TRY_MAX) },
+
+    resend_suggest_p() { return this.resend_failed_count < this.RESEND_TRY_MAX }, // 再送させるか？
 
     // 再送モーダルを発動するまでの時間(秒)
     // RESEND_DELAY が 5 であれば 5, 6, 8, 11, 15 の順に増えていく
