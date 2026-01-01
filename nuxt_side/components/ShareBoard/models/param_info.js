@@ -84,6 +84,8 @@ export class ParamInfo extends ParamBase {
       { key: "think_mark_receive_scope_key", type: "string",  name: "印の受信スコープ",                       defaults: { development: null,                 production: "tmrs_watcher_only",                 }, permanent: true,  relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
       { key: "think_mark_list_str",          type: "string",  name: "印の初期値",                             defaults: { development: null,                 production: "",                                  }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
       { key: "think_mark_invite_feature_p",  type: "boolean", name: "観戦者に促すか？",                       defaults: { development: null,                 production: false,                               }, permanent: false, relation: null,                   alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
+
+      { key: "toast_key",         type: "string",  name: "順番設定のアクティブタブ",               defaults: { development: null, production: "is_toast_main_board_bottom", }, permanent: false,  relation: "ToastInfo",  alias: null,          input_attrs: null,                     desc: null, after_set: null,                 },
     ]
   }
 }

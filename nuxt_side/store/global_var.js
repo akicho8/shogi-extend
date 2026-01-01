@@ -7,6 +7,7 @@ export const state = () => ({
   g_var1: 0,
   g_talk_volume_scale: VolumeConfig.default_scale,
   g_common_volume_scale: VolumeConfig.default_scale,
+  g_toast_key: null,
 })
 
 export const getters = {
@@ -19,6 +20,9 @@ export const getters = {
   g_common_volume_scale(state) {
     return state.g_common_volume_scale
   },
+  g_toast_key(state) {
+    return state.g_toast_key
+  },
 }
 
 export const mutations = {
@@ -30,6 +34,9 @@ export const mutations = {
   },
   __g_common_volume_scale_set(state, payload) {
     state.g_common_volume_scale = payload
+  },
+  __g_toast_key_set(state, payload) {
+    state.g_toast_key = payload
   },
 }
 

@@ -142,8 +142,6 @@ export const mod_shogi_player = {
     current_sfen_and_turn() { return {sfen: this.current_sfen, turn: this.current_turn} }, // current_sfen_set に対応するゲッター
     sfen_sync_dto()         { return this.current_sfen_and_turn },
 
-    sb_main_shogi_board_selector_for_toast() { return ".SbShogiPlayer .CustomShogiPlayer .MainBoard" }, // 引けなかっくても toast はエラーにならないで外に表示する
-
     // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる
     //   return {
     //     sfen: this.current_sfen,

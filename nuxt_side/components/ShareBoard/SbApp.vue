@@ -76,7 +76,6 @@ import { mod_action_log_share              } from "./action_log/mod_action_log_s
 
 import { mod_turn_notify                   } from "./mod_turn_notify.js"
 import { mod_otasuke                       } from "./mod_otasuke.js"
-import { mod_toast                         } from "./mod_toast.js"
 import { mod_order_main                    } from "./mod_order/mod_order_main.js"
 import { mod_migrate                       } from "./mod_migrate/mod_migrate.js"
 import { mod_battle_session                } from "./mod_battle_session.js"
@@ -103,6 +102,7 @@ import { mod_sound_bug                     } from "./sound/mod_sound_bug.js"
 import { mod_sound_effect                  } from "./sound/mod_sound_effect.js"
 import { mod_sound_resume                  } from "./sound/mod_sound_resume.js"
 import { mod_general_setting               } from "./general_setting/mod_general_setting.js"
+import { mod_global_var               } from "./mod_global_var.js"
 import { mod_debug                         } from "./mod_debug.js"
 import { mod_help                          } from "./help/mod_help.js"
 import { mod_sidebar                       } from "./mod_sidebar.js"
@@ -190,7 +190,6 @@ export default {
     mod_persistent_cc_params,
     mod_turn_notify,
     mod_otasuke,
-    mod_toast,
     mod_order_main,
     mod_migrate,
     mod_member_list,
@@ -224,6 +223,7 @@ export default {
     mod_sound_bug,
     mod_sound_effect,
     mod_general_setting,
+    mod_global_var,
     mod_debug,
     mod_sound_resume,
     mod_help,

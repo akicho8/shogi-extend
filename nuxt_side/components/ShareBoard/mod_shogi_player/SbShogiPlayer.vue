@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbShogiPlayer.MainColumn.column(:class="main_column_class")
+.SbShogiPlayer.ToastMainBoard.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer(
     v-bind="sp_bind"
     v-on="sp_hook"

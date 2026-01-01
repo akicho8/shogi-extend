@@ -1,7 +1,12 @@
 import { GX } from "@/components/models/gx.js"
+import { ToastInfo } from "@/components/models/toast_info.js"
 
 export const vue_dialog = {
   methods: {
+    g_toast_key_reset() {
+      this.g_toast_key = null
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     dialog_ok(message, options = {}) {
@@ -46,10 +51,22 @@ export const vue_dialog = {
     },
 
     async toast_primitive(message, params = {}) {
+      params = {...params}      // hash_extract_self で破壊するため
+
+      let toast_info = this.toast_info
+      {
+        const h = GX.hash_extract_self(params, "toast_key")
+        if (h.toast_key) {
+          toast_info = this.ToastInfo.fetch(h.toast_key)
+        }
+      }
+
       params = {
-        ...this.toast_primitive_default_params,
+        ...this.ToastInfo.default_params,
+        ...toast_info.default_params,
         ...params,
       }
+
       if (message) {
         if (this.development_p) {
           this.clog(message)
@@ -197,14 +214,7 @@ export const vue_dialog = {
     },
   },
   computed: {
-    toast_primitive_default_params() {
-      return {
-        toast: true,
-        talk: true,
-        position: "is-bottom",
-        type: "is-primary",
-        queue: false,
-      }
-    },
+    ToastInfo() { return ToastInfo },
+    toast_info() { return ToastInfo.lookup_or_first(this.g_toast_key) },
   },
 }

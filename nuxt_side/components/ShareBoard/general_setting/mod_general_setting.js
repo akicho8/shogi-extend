@@ -19,14 +19,6 @@ import { SettingRootInfo  } from "./setting_root_info.js"
 
 export const mod_general_setting = {
   mixins: [general_setting_modal],
-  beforeDestroy() {
-    this.g_common_volume_scale_reset()
-    this.g_talk_volume_scale_reset()
-  },
-  watch: {
-    common_volume_scale(v)  { this.g_common_volume_scale = v },
-    talk_volume_scale(v)    { this.g_talk_volume_scale = v },
-  },
   methods: {
     // 初期値に戻すボタン
     general_setting_reset_handle() {

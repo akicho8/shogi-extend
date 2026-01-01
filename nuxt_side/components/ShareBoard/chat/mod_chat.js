@@ -100,7 +100,13 @@ export const mod_chat = {
       this.ml_push_record(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
         this.sfx_play("se_chat_message_receive")                           // 「パッ」
-        this.$buefy.toast.open(message_record.toast_params) // 表示
+
+        {
+          // https://buefy.org/documentation/toast
+          const toast_info = this.ToastInfo.fetch("is_toast_main_board_top")
+          this.$buefy.toast.open({...toast_info.default_params, ...message_record.toast_params, queue: false}) // 表示
+        }
+
         if (message_record.content_valid_p) {               // 荒らし判定されていなければ
           if (this.chat_talk_behavior_info.key === "is_chat_talk_behavior_on" || message_record.force_talk) {
             this.sb_talk(message_record.content)              // しゃべる
