@@ -21,12 +21,13 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
         key: "do_takeback",
         name: "待った",
         call: (context, params) => {
-          // 時計が pause 状態になっているので「なかったことにする」のであれば再開する
-          context.cc_resume_handle()
-          context.al_add({...params, label: "対局再開", label_type: "is-primary"})
-
-          // 状況表示
+          // 全員にメッセージを表示する
           context.toast_primary(params.takebacked_message)
+
+          // 「待った」を押した人だけ時計を再開する
+          if (context.received_from_self(params)) {
+            context.cc_silent_resume_share()
+          }
         },
       },
     ]
