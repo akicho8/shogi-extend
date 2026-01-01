@@ -19,6 +19,12 @@ export class ToastInfo extends ApplicationMemoryRecord {
         },
       },
       {
+        key: "is_toast_screen_bottom_left",
+        default_params: {
+          position: "is-bottom-left",
+        },
+      },
+      {
         key: "is_toast_main_board_top",
         default_params: {
           position: "is-top",

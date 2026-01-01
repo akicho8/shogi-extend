@@ -20,6 +20,7 @@ module SharedMethods
       :self_vs_self_enable_p  => false,             # 自分vs自分禁止 (順番設定で対戦相手がいない場合はバリデーションする)
       :think_mark_invite_feature_p => false,        # 観戦者に促すか？
       :system_reserved_avatar_then_clear => false,             # 起動時の絵文字検証
+      :toast_key => :is_toast_screen_bottom_left,   # toast の表示位置
     }
   end
 
