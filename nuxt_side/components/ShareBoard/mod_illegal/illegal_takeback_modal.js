@@ -60,7 +60,6 @@ export const illegal_takeback_modal = {
       this.ac_log({subject: "反則ブロック選択", body: [this.latest_illegal_name, illegal_select_info.name]})
 
       const params = {
-        ...this.illegal_params, // デバッグしやすいように入れておく
         illegal_select_key: illegal_select_key,
         takebacked_message: this.illegal_user_info.takebacked_message(this), // 送った先では状況が変わるため送る側でメッセージを作る (重要)
       }
