@@ -136,7 +136,7 @@ export const mod_resend = {
     RESEND_FEATURE()       { return this.param_to_b("RESEND_FEATURE", RESEND_FEATURE) },
     RESEND_DELAY()         { return this.param_to_f("RESEND_DELAY", RESEND_DELAY) },
     RESEND_SUCCESS_DELAY() { return this.param_to_f("RESEND_SUCCESS_DELAY", RESEND_SUCCESS_DELAY) },
-    RESEND_TRY_MAX()       { return this.param_to_f("RESEND_TRY_MAX", RESEND_TRY_MAX) },
+    RESEND_TRY_MAX()       { return this.param_to_i("RESEND_TRY_MAX", RESEND_TRY_MAX) },
 
     resend_suggest_p() { return this.resend_failed_count < this.RESEND_TRY_MAX }, // 再送させるか？
 
