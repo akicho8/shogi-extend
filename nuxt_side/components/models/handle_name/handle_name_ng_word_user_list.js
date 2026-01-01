@@ -8,6 +8,7 @@ export const HandleNameNgWordUserList = [
   "失礼",
   ".(しています|します|です|である)$",
   "時間",
+  "893|半ぐれ",
 
   // 捨てハン
   "test|てすと",

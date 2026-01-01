@@ -209,4 +209,12 @@ describe("HandleNameValidator", () => {
   test("[bugfix] 漢字複数にひらがな一つ", () => {
     expect(HandleNameValidator.valid_p("漢字の漢字")).toEqual(true)
   })
+
+  test("反社", () => {
+    expect(HandleNameValidator.valid_p("foo893")).toEqual(false)
+    expect(HandleNameValidator.valid_p("893foo")).toEqual(false)
+    expect(HandleNameValidator.valid_p("foo893foo")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ヤクザ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("半グレ")).toEqual(false)
+  })
 })
