@@ -1,7 +1,6 @@
 require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-
   describe "当事者と仲間と対戦者" do
     def case1(user_name)
       visit_room({

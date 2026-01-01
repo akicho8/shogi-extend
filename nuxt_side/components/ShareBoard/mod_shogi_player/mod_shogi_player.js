@@ -118,8 +118,10 @@ export const mod_shogi_player = {
 
     // sfen と turn をまとめて設定する
     current_sfen_set(params) {
+      GX.assert_present(params)
       GX.assert_kind_of_string(params.sfen)
       GX.assert_kind_of_integer(params.turn)
+
       this.current_sfen = params.sfen
       this.current_turn = params.turn
     },

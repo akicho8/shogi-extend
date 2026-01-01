@@ -222,12 +222,12 @@ export const mod_clock_box = {
         this.clock_box.resume_handle()
       }
     },
-    // cc_silent_resume_share() {
-    //   if (this.cc_pause_p) {
-    //     this.cc_resume_handle()
-    //     this.clock_box_share("cc_behavior_silent_resume")
-    //   }
-    // },
+    cc_silent_resume_share() {
+      if (this.cc_pause_p) {
+        this.cc_resume_handle()
+        this.clock_box_share("cc_behavior_silent_resume")
+      }
+    },
 
     //////////////////////////////////////////////////////////////////////////////// pause
 

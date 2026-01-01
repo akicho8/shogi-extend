@@ -36,7 +36,9 @@ export const illegal_takeback_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // モーダル内のどちらかのボタンを押したとき
     async illegal_takeback_modal_submit_handle(illegal_select_key) {
+      // バリデーションする場合
       if (true) {
         const message = this.illegal_takeback_modal_submit_validate_message(illegal_select_key)
         if (message) {
@@ -53,6 +55,8 @@ export const illegal_takeback_modal = {
       this.illegal_takeback_selected_share(illegal_select_key)
     },
 
+    // 全員に配る
+    // params には this.illegal_params を入れると情報がごちゃまぜになって履歴に入れたときおかしくなるので入れるな
     illegal_takeback_selected_share(illegal_select_key) {
       GX.assert_present(this.illegal_params)
 
@@ -74,10 +78,16 @@ export const illegal_takeback_modal = {
       // まだモーダルを読んでいる人がいるため閉じる
       this.illegal_takeback_modal_close()
 
+      // 選択した種類の詳細に変換する
       const illegal_select_info = this.IllegalSelectInfo.fetch(params.illegal_select_key)
+
+      // 履歴に入れる (オプション)
       this.al_add({...params, label: illegal_select_info.name, label_type: "is-danger"})
+
+      // それぞれの処理
       illegal_select_info.call(this, params)
 
+      // 何回も呼ばれないように illegal_params を null にしておく
       this.illegal_params_reset()
     },
 

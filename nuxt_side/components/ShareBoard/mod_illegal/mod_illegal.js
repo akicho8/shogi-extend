@@ -72,6 +72,7 @@ export const mod_illegal = {
       this.illegal_params_set(params)
       this.al_add(params)
 
+      // 検討中
       if (!this.cc_play_p) {
         this.sfx_play("x")
         this.toast_danger(this.latest_illegal_name, {position: "is-bottom"})
@@ -79,10 +80,13 @@ export const mod_illegal = {
         return
       }
 
+      // 対局中
+      if (this.received_from_self(params)) {
+        this.cc_silent_pause_share()
+      }
       this.sfx_stop_all()
-      this.sfx_play("lose")
-      this.cc_silent_pause_share()
-      this.talk(this.latest_illegal_talk_body)
+      this.sfx_play("lose")                    // チーン
+      this.talk(this.latest_illegal_talk_body) // 反則名をしゃべる
       this.illegal_takeback_modal_open()
       this.illegal_logging("反則ブロック発動")
     },
@@ -125,7 +129,6 @@ export const mod_illegal = {
 
     IllegalUserInfo()  { return IllegalUserInfo                                           },
     illegal_user_info() { return IllegalUserInfo.fetch(this.latest_illegal_user_group_key) },
-
 
     // illegal_app_state_human() { return this.order_clock_both_ok ? "対局中" : "検討中" },
 

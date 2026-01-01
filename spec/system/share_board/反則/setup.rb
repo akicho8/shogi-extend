@@ -57,6 +57,7 @@ mod = Module.new do
   end
 
   def assert_takeback_success
+    assert_action_text("時計再開")
     assert_clock(:play)
     takeback_modal_none
     assert_turn(0)              # 反則前の局面

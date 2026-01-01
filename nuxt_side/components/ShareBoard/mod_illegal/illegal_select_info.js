@@ -9,9 +9,9 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
         name: "投了する",
         call: (context, params) => {
           // 全員の局面を反則局面に変更する
-          context.current_sfen_set(params)
+          context.current_sfen_set(context.illegal_params)
 
-          // 最後に YES を押した人だけが投了する
+          // 「投了」を押した人だけが投了する
           if (context.received_from_self(params)) {
             context.resign_call()
           }
