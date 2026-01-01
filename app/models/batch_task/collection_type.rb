@@ -42,7 +42,9 @@ module BatchTask
           end
         end
       rescue => error
-        RorVsWild.record_error(error)
+        if defined? RorVsWild
+          RorVsWild.record_error(error)
+        end
       end
     end
   end

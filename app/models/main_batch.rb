@@ -21,7 +21,9 @@ class MainBatch
     AppLog.important(subject: "[バッチ処理][終了]")
     nil
   rescue => error
-    RorVsWild.record_error(error)
+    if defined? RorVsWild
+      RorVsWild.record_error(error)
+    end
     AppLog.important(error)
     raise error
   end
