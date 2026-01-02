@@ -22,7 +22,6 @@ export const mod_edit_mode = {
         canCancel: ["button"],
         focusOn: "cancel", // confirm or cancel
         type: "is-danger",
-        hasIcon: true,
         onConfirm: () => {
           this.sfx_click()
           this.al_share({label: "局面編集前"})
