@@ -1,4 +1,5 @@
 // 正規化した文字列に対して比較を行うため基本的に「全角ひらがな」「半角英数」を対象にする
+// ../../../test/handle_name_validator.spec.js
 export const HandleNameNgWordUserList = [
   // 手動
   "名前|はんどるねーむ|にっくねーむ",
@@ -9,6 +10,7 @@ export const HandleNameNgWordUserList = [
   ".(しています|します|です|である)$",
   "時間",
   "893|半ぐれ",
+  "ひっとら|ひとら",
 
   // 捨てハン
   "test|てすと",

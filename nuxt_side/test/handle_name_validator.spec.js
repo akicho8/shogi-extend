@@ -216,5 +216,7 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("foo893foo")).toEqual(false)
     expect(HandleNameValidator.valid_p("ヤクザ")).toEqual(false)
     expect(HandleNameValidator.valid_p("半グレ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ヒットラー")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ヒトラー")).toEqual(false)
   })
 })
