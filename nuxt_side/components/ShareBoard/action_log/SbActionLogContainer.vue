@@ -1,10 +1,6 @@
 <template lang="pug">
 .SbActionLogContainer.SideColumn.column.is-size-7(:class="has_content_class(SB.action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .mini_title(v-if="SB.debug_mode_p")
-      | 操作履歴
-      span.mini_title_desc
-        | タップで戻れる
     .SbAvatarLines
       template(v-for="(e, i) in SB.action_logs")
         SbActionLogLine(:e="e")
