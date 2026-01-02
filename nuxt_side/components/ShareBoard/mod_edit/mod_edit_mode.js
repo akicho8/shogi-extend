@@ -19,6 +19,7 @@ export const mod_edit_mode = {
           `</div>`,
         ].join(""),
         confirmText: `理解した上で編集する`,
+        canCancel: ["button"],
         focusOn: "cancel", // confirm or cancel
         type: "is-danger",
         hasIcon: true,
