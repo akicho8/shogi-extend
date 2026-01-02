@@ -1,7 +1,7 @@
 <template lang="pug">
 .SbActionLogContainer.SideColumn.column.is-size-7(:class="has_content_class(SB.action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .SbAvatarLines
+    .SbActionLogLines
       template(v-for="(e, i) in SB.action_logs")
         SbActionLogLine(:e="e")
 </template>
@@ -21,4 +21,8 @@ export default {
   +SideColumnScrollOn
   +touch
     height: 16rem
+  .SbActionLogLines
+    display: flex
+    flex-direction: column
+    gap: 1px // 上下の b-tag 同士が繋がってしまうのを避けるため必ず1pxあける
 </style>
