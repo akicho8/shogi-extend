@@ -7,7 +7,7 @@
     template(v-else)
       img.selfie_image.flex_item(:src="prefix_icon.value")
 
-    // 名前
+    // 名前 (履歴で表示する場合はここを1文字にした方がいいかもしれない)
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
 
     // バッジ
