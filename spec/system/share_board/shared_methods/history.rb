@@ -1,21 +1,21 @@
 module SharedMethods
   # 完全一致のテキストがあること
   def assert_action_text(text)
-    within(".SbActionLog") do
+    within(".SbActionLogContainer") do
       assert_selector(:element, text: text, exact_text: true)
     end
   end
 
   # 完全一致のテキストがないこと
   def assert_no_action_text(text)
-    within(".SbActionLog") do
+    within(".SbActionLogContainer") do
       assert_no_selector(:element, text: text, exact_text: true)
     end
   end
 
   # 履歴の上から index 目の行
   def action_log_row_of(index)
-    find(".SbActionLog .SbAvatarLine:nth-child(#{index.next})")
+    find(".SbActionLogContainer .SbAvatarLine:nth-child(#{index.next})")
   end
 
   # 履歴の index 番目は user が behavior した
@@ -28,7 +28,7 @@ module SharedMethods
 
   # 履歴の user が behavior した
   def assert_action(user, behavior)
-    within(".SbActionLog") do
+    within(".SbActionLogContainer") do
       assert_selector(:element, text: user,     exact_text: true)
       assert_selector(:element, text: behavior, exact_text: true)
     end

@@ -35,11 +35,11 @@ mod = Module.new do
   end
 
   def action_log_exist
-    assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_selector(".SbActionLogContainer .flex_item", text: "二歩", exact_text: true)
   end
 
   def action_log_none
-    assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_no_selector(".SbActionLogContainer .flex_item", text: "二歩", exact_text: true)
   end
 
   ################################################################################

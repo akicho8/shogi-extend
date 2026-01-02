@@ -52,7 +52,7 @@ client-only
         .columns.is-centered.is-desktop.is-variable.is-0
           SbShogiPlayer(ref="SbShogiPlayer")
           SbMemberList
-          SbActionLog(ref="SbActionLog")
+          SbActionLogContainer(ref="SbActionLogContainer")
         SbDebug(v-if="debug_mode_p")
 </template>
 

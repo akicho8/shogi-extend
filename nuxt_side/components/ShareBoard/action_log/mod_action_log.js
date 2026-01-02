@@ -58,7 +58,7 @@ export const mod_action_log = {
       })
     },
     al_scroll_to_bottom() {
-      const e = this.$refs.SbActionLog
+      const e = this.$refs.SbActionLogContainer
       if (e) {
         this.$nextTick(() => this.scroll_to_bottom(e.$refs.SideColumnScroll))
       }
