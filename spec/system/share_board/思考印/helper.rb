@@ -23,8 +23,4 @@ module SharedMethods
 
     assert { actual == expected }
   end
-
-  def king_vs_king_sfen
-    "position sfen 4k4/9/9/9/9/9/9/9/4K4 b RB2G2S2N2L9Prb2g2s2n2l9p 1"
-  end
 end

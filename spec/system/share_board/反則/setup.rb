@@ -6,8 +6,8 @@ mod = Module.new do
   end
 
   def double_pawn!
-    stand_click(:black, :P)
-    place_click("22")
+    stand_piece(:black, :P).click
+    place_click("22").click
   end
 
   def notice_exist

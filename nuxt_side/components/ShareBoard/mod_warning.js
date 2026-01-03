@@ -5,14 +5,9 @@ export const mod_warning = {
   methods: {
     // 手番が違うのに操作しようとした
     // order_clock_both_ok でないときは sp_human_side に none を設定するため、その状態のとき盤駒を触られるとこれが呼ばれる
-    async ev_illegal_click_but_self_is_not_turn() {
+    async ev_illegal_click_but_self_is_not_turn(event) {
       // 思考印モードの場合は無視する
-      if (this.think_mark_mode_p) {
-        return
-      }
-
-      // 観戦者なら思考印を常に有効とした場合に盤をつついたときは無視する
-      if (this.think_mark_watcher_then_always_enable_p) {
+      if (this.i_can_mark_send_p(event)) {
         return
       }
 

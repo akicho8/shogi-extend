@@ -8,14 +8,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "二歩" do
     case1("反則確認用")
-    stand_click(:black, :P)
+    stand_piece(:black, :P).click
     place_click("12")
     assert_var(:latest_illegal_name, "二歩")
   end
 
   it "打ち歩詰め" do
     case1("反則確認用")
-    stand_click(:black, :P)
+    stand_piece(:black, :P).click
     place_click("22")
     assert_var(:latest_illegal_name, "打ち歩詰め")
   end
@@ -28,7 +28,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "死に駒" do
     case1("反則確認用")
-    stand_click(:black, :N)
+    stand_piece(:black, :N).click
     place_click("11")
     assert_var(:latest_illegal_name, "死に駒")
   end

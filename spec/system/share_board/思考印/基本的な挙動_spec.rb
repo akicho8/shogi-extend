@@ -22,8 +22,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "持駒に印が出る" do
-    visit_app(think_mark_mode_p: true, body: king_vs_king_sfen)
-    stand_click(:black, :P)
+    visit_app(think_mark_mode_p: true, body: SfenInfo.fetch("盤上は玉のみで他持駒").sfen)
+    stand_piece(:black, :P).click
     assert_selector(".Membership.is_black .ThinkMark")
   end
 

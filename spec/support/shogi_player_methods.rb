@@ -31,15 +31,19 @@ module ShogiPlayerMethods
 
   # place_click("76") は find(".place_7_6").click 相当
   def place_click(place)
-    find(place_class(place)).click
+    place_element(place).click
+  end
+
+  def place_element(place)
+    find(place_class(place))
   end
 
   def place_class(place)
     [".place", place.chars].join("_")
   end
 
-  def stand_click(location, piece)
-    find(".Membership.is_#{location} .piece_#{piece}").click
+  def stand_piece(location, piece)
+    find(".Membership.is_#{location} .piece_#{piece}")
   end
 
   # place の位置の駒を持ち上げ中か？

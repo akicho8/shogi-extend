@@ -7,5 +7,6 @@ class SfenInfo
     { key: "連続王手の千日手確認用", turn: 0,   sfen: "position sfen 9/9/8l/8k/6KR1/8p/9/9/9 b - 1", },
     { key: "頭金で一手詰確認用",     turn: 0,   sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b GP 1", },
     { key: "頭歩で王手確認用",       turn: 0,   sfen: "position sfen 4k4/9/9/9/9/9/9/9/9 b P 1", },
+    { key: "盤上は玉のみで他持駒",   turn: 0,   sfen: "position sfen 4k4/9/9/9/9/9/9/9/4K4 b RB2G2S2N2L9Prb2g2s2n2l9p 1", },
   ]
 end
