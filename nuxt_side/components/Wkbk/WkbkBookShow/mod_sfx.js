@@ -1,4 +1,4 @@
-export const mod_sound_effect = {
+export const mod_sfx = {
   methods: {
     // 意図して持ち上げた
     ev_action_piece_lift() {

@@ -83,7 +83,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
       AppearanceUi.mt-5
       .box.mt-5
         b-field(label="音が出なくなったとき用")
-          b-button(@click="SB.sound_resume_all_with_rooster") 音復活
+          b-button(@click="SB.audio_unlock_all_with_rooster") 音復活
 
       .box.mt-5(v-if="SB.debug_mode_p")
         pre

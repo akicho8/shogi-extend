@@ -98,9 +98,7 @@ import { mod_xmatch                        } from "./auto_matching/mod_xmatch.js
 import { mod_member_bc                     } from "./mod_member_bc.js"
 import { mod_image_download                      } from "./mod_image_download.js"
 import { mod_app_update                        } from "./mod_app_update.js"
-import { mod_sound_bug                     } from "./sound/mod_sound_bug.js"
-import { mod_sound_effect                  } from "./sound/mod_sound_effect.js"
-import { mod_sound_resume                  } from "./sound/mod_sound_resume.js"
+import { mod_sfx                  } from "./mod_sfx/mod_sfx.js"
 import { mod_general_setting               } from "./general_setting/mod_general_setting.js"
 import { mod_global_var               } from "./mod_global_var.js"
 import { mod_debug                         } from "./mod_debug.js"
@@ -220,12 +218,10 @@ export default {
     mod_dashboard,
     mod_image_download,
     mod_app_update,
-    mod_sound_bug,
-    mod_sound_effect,
+    mod_sfx,
     mod_general_setting,
     mod_global_var,
     mod_debug,
-    mod_sound_resume,
     mod_help,
     mod_sidebar,
     mod_storage,

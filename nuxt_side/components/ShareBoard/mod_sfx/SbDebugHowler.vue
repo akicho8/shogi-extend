@@ -3,11 +3,11 @@
   .panel
     .panel-heading
       | 無音化不具合検証用
-    a.panel-block(@click="SB.sound_resume_modal_handle") 画面タップ催促表示確認
-    a.panel-block(@click="SB.sound_resume_modal_close") 画面タップ催促閉じる
+    a.panel-block(@click="SB.audio_unlock_modal_open") 画面タップ催促表示確認
+    a.panel-block(@click="SB.audio_unlock_modal_close") 画面タップ催促閉じる
     a.panel-block(@click="SB.sound_bug_start") ガヤ開始
     a.panel-block(@click="SB.sound_bug_stop") ガヤ停止
-    a.panel-block(v-if="SB.sb_counter") ガヤ回数 {{SB.sb_counter.counter}}
+    a.panel-block(v-if="SB.sound_bug_counter") ガヤ回数 {{SB.sound_bug_counter.counter}}
     a.panel-block(@click="Howler.mute(true)") mute(true)
     a.panel-block(@click="Howler.mute(false)") mute(false)
     a.panel-block(@click="Howler.volume(0)") volume(0)

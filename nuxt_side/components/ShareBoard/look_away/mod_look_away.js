@@ -22,7 +22,7 @@ export const mod_look_away = {
 
       if (active_p) {
         if (this.mobile_p) {
-          this.sound_resume_modal_handle()
+          this.audio_unlock_modal_open()
         }
       }
 

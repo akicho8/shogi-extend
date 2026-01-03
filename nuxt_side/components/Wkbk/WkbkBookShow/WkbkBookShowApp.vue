@@ -62,7 +62,7 @@ import { mod_kb_shortcut_modal } from "./mod_kb_shortcut_modal.js"
 import { mod_interval_counter  } from "./mod_interval_counter.js"
 import { mod_time_limit        } from "./mod_time_limit.js"
 import { mod_appearance_theme  } from "./appearance_theme/mod_appearance_theme.js"
-import { mod_sound_effect      } from "./mod_sound_effect.js"
+import { mod_sfx      } from "./mod_sfx.js"
 
 import _ from "lodash"
 
@@ -86,7 +86,7 @@ export default {
     mod_interval_counter,
     mod_time_limit,
     mod_appearance_theme,
-    mod_sound_effect,
+    mod_sfx,
   ],
 
   data() {

@@ -1,10 +1,10 @@
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { GX } from "@/components/models/gx.js"
 
-export const mod_sound_bug = {
+export const howler_bug_reproduce = {
   data() {
     return {
-      sb_counter: null,
+      sound_bug_counter: null,
     }
   },
   mounted() {
@@ -17,14 +17,14 @@ export const mod_sound_bug = {
   },
   methods: {
     sound_bug_start() {
-      if (this.sb_counter == null) {
-        this.sb_counter = new IntervalCounter(this.sound_bug_callback, {interval: 1})
+      if (this.sound_bug_counter == null) {
+        this.sound_bug_counter = new IntervalCounter(this.sound_bug_callback, {interval: 1})
       }
-      this.sb_counter.start()
+      this.sound_bug_counter.start()
     },
     sound_bug_stop() {
-      if (this.sb_counter) {
-        this.sb_counter.stop()
+      if (this.sound_bug_counter) {
+        this.sound_bug_counter.stop()
       }
     },
     sound_bug_callback(counter) {
