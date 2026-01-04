@@ -6,7 +6,7 @@ module SharedMethods
   end
 
   def click_try_at_76
-    place_click("76")
+    board_place("76").click
   end
 
   def assert_click_then_mark

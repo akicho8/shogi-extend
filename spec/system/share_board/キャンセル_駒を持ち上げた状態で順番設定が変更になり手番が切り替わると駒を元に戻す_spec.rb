@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { visit_room(user_name: :a, FIXED_ORDER: "a,b", room_after_create: :cc_auto_start_10m) }
     window_b { visit_room(user_name: :b, FIXED_ORDER: "a,b", room_after_create: :cc_auto_start_10m) }
     window_a do
-      place_click("77")          # a は77の駒を持つ
+      board_place("77").click          # a は77の駒を持つ
       lifted_from("77")          # 77の駒を持っていることを保証する
     end
     window_b do

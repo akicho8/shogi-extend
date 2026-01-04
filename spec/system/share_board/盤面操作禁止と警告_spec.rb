@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER => "a,b",
         :FIXED_ORDER => "a,b,c",
       })
-    place_click("11")
+    board_place("11").click
     assert_text "対局するなら対局時計を押そう"
     assert_text "検討するなら駒を動かせるように順番設定を切ろう"
   end
@@ -21,7 +21,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
-    place_click("11")
+    board_place("11").click
     assert_text "対局する場合は順番設定しよう"
   end
 
@@ -32,7 +32,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
-    place_click("11")
+    board_place("11").click
     assert_text "cさんは観戦者なので触らんといてください"
     assert_text "暇だったら盤を右クリックして検討しよう"
   end
@@ -44,7 +44,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
-    place_click("11")
+    board_place("11").click
     assert_text "今はaさんの手番です"
     assert_text "bさんは次です"
   end
@@ -58,7 +58,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER_SWAP => true, # これによって a は後手番になる。body: SfenGenerator.start_from(:white) で FIXED_ORDER_SWAP を使わない方法でもよい。
         :room_after_create => :cc_auto_start_10m,
       })
-    place_click("11")
+    board_place("11").click
     assert_text "順番設定で対局者の指定がないので誰も操作できません"
   end
 end

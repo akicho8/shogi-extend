@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       room_setup_by_user(:b)      # bも同じ入退室
     end
     window_b do
-      place_click("27")                 # bさんが手番を間違えて▲26歩しようとして27の歩を持ち上げた
+      board_place("27").click                 # bさんが手番を間違えて▲26歩しようとして27の歩を持ち上げた
     end
     window_a do
       piece_move_o("77", "76", "☗7六歩") # そのタイミングでaさんが▲76歩と指した

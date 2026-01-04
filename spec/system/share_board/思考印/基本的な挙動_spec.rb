@@ -44,8 +44,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "複数の箇所に印が出る" do
     visit_app(think_mark_mode_p: true)
-    place_click("77")
-    place_click("76")
+    board_place("77").click
+    board_place("76").click
     assert_selector(".place_7_7 .ThinkMark")
     assert_selector(".place_7_6 .ThinkMark")
   end

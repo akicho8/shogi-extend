@@ -11,14 +11,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :RESEND_FEATURE    => false,
       })
     stand_piece(:black, :P).click
-    place_click("52")
+    board_place("52").click
     assert_no_action_text "王手"
   end
 
   it "感想戦中は出る" do
     visit_app(body: SfenInfo.fetch("頭歩で王手確認用").sfen)
     stand_piece(:black, :P).click
-    place_click("52")
+    board_place("52").click
     assert_action_text "王手"
   end
 end

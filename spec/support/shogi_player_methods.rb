@@ -26,15 +26,10 @@ module ShogiPlayerMethods
 
   # from から to に移動する
   def piece_move(from, to)
-    [from, to].each { |e| place_click(e) }
+    [from, to].each { |e| board_place(e).click }
   end
 
-  # place_click("76") は find(".place_7_6").click 相当
-  def place_click(place)
-    place_element(place).click
-  end
-
-  def place_element(place)
+  def board_place(place)
     find(place_class(place))
   end
 

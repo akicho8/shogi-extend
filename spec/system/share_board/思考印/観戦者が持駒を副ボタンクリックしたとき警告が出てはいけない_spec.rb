@@ -21,7 +21,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_selector(".Membership.is_black .ThinkMark")       # 印が出る
       assert_no_text "cさんは観戦者なので触らんといてください" # そして警告は出ない
 
-      find(".place_7_6").right_click                           # 観戦者が盤を右クリックしたとき
+      board_place("76").right_click                            # 観戦者が盤を右クリックしたとき
       assert_selector(".place_7_6 .ThinkMark")                 # 印が出る
       assert_no_text "cさんは観戦者なので触らんといてください" # そして警告は出ない
     end

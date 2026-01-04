@@ -16,7 +16,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :change_per => 2,
         :room_after_create => :cc_auto_start_10m,
       })
-    place_click("11")
+    board_place("11").click
     assert_text "今はaさんの手番です"
     assert_text "cさんは4手後です"
   end

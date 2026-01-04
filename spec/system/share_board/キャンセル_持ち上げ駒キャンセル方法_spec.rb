@@ -10,8 +10,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
 
-    place_click("77")                     # 77を持って
-    place_click("87")                     # 87をクリック
+    board_place("77").click                     # 77を持って
+    board_place("87").click                     # 87をクリック
   end
 
   it "移動元をクリック" do
