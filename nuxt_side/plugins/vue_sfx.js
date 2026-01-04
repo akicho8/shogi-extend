@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 import { GX } from "@/components/models/gx.js"
-import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
+import { SfxPresetInfo } from "@/components/models/sfx_preset_info.js"
 import { VolumeConfig } from "@/components/models/volume_config.js"
 import _ from "lodash"
 import QueryString from "query-string"
@@ -29,7 +29,7 @@ export const vue_sfx = {
 
     sfx_play(key, options = {}) {
       if (key) {
-        const e = SoundPresetInfo.fetch(key)
+        const e = SfxPresetInfo.fetch(key)
         options = {
           src: e.source,
           volume: e.volume,
