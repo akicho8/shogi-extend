@@ -80,7 +80,7 @@ export const vue_sfx = {
         ...options,
       }
 
-      options.src ??= require("@/assets/silent.mp3")
+      options.src ??= require("@/assets/sfx/no_sound.mp3")
 
       if (options.volume_scale != null) {
         options.volume *= GX.map_range(options.volume_scale, 0, 20, 0.0, 2.0)
