@@ -66,8 +66,8 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       // ▼思考印をセルに付ける / 外す
 
       // 8BIT
-      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.1, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
-      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.1, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
+      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.08, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
+      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.08, source: require("@/assets/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
       // { key: "se_think_mark_at_cell_on",                                    volume: 0.30, source: require("@/assets/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),      },
 
       // Factoio 搬送ベルト風
