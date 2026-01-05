@@ -19,7 +19,7 @@ SbAvatarLine.SbActionLogLine.is-clickable(:info="e" tag="a" :key="e.unique_key" 
   template(v-else-if="SB.knock_out_p(e)")
     b-tag.flex_item(type="is-danger" size="is-small") 詰み
   template(v-else-if="e.op_king_check && !SB.cc_play_p")
-    b-tag.flex_item(type="is-danger" size="is-small") 王手
+    b-tag.flex_item(type="is-warning" size="is-small") 王手
 
   // 指すまでにかかった秒数
   .flex_item(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
