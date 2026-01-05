@@ -166,7 +166,7 @@ export const mod_sfen_sync = {
     async sfen_synced_after_notice(params) {
       this.next_turn_message = null
       if (this.can_next_step_p(params)) {                                    // 反則がなかった場合
-        if (this.debug_mode_p) {
+        if (!this.cc_play_p) {
           if (params.op_king_check) {
             await this.toast_primary("王手")
           }
@@ -211,6 +211,9 @@ export const mod_sfen_sync = {
       }
       if (this.illegal_none_p(params)) {
         if (this.knock_out_p(params)) {
+          if (!this.cc_play_p) {
+            this.toast_danger("詰み")
+          }
           if (this.next_is_self_p(params)) {
             this.resign_call()
           }
