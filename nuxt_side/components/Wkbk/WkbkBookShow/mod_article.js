@@ -1,12 +1,12 @@
 import { Location   } from "shogi-player/components/models/location.js"
-import { SfenParser } from 'shogi-player/components/models/sfen_parser.js'
+import { SfenTransformer } from 'shogi-player/components/models/sfen_transformer.js'
 
 export const mod_article = {
   methods: {
     // 盤上の駒の左右反転
     sfen_flop(sfen) {
       if (this.soldier_flop_info.key === "flop_on") {
-        sfen = SfenParser.sfen_flop(sfen)
+        sfen = SfenTransformer.flop(sfen)
       }
       return sfen
     },

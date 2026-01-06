@@ -202,7 +202,7 @@ module ShareBoardControllerMethods
 
   # 駒落ちを考慮した擬似ターン数
   def number_of_turns_in_consideration_of_the_frame_dropping
-    current_record.sfen_info.location.code + initial_turn
+    current_record.sfen_parsed.location.code + initial_turn
   end
 
   def sb_client_token

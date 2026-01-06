@@ -17,7 +17,7 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
   get transform_params() {
     GX.assert(GX.present_p(this.params.sfen), "GX.present_p(this.params.sfen)")
     return {
-      initpos: this.sfen_info.init_sfen_strip,
+      initpos: this.sfen_parsed.init_sfen_strip,
       moves: this.moves_space_to_dot_replaced_string,
     }
   }
@@ -26,12 +26,12 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
     return this.params.turn
   }
 
-  get sfen_info() {
+  get sfen_parsed() {
     return SfenParser.parse(this.params.sfen)
   }
 
   get moves_space_to_dot_replaced_string() {
-    const moves = this.sfen_info.attributes.moves
+    const moves = this.sfen_parsed.attributes.moves
     if (moves) {
       return moves.replace(/\s+/g, ".")
     }

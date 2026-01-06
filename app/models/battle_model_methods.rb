@@ -185,8 +185,8 @@ module BattleModelMethods
       @fast_parsed_info ||= parser_class.parse(kifu_body, { typical_error_case: :embed }.merge(fast_parser_options))
     end
 
-    def sfen_info
-      @sfen_info ||= Bioshogi::Sfen.parse(sfen_body)
+    def sfen_parsed
+      @sfen_parsed ||= Bioshogi::Sfen.parse(sfen_body)
     end
 
     def parser_class
