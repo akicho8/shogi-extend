@@ -215,7 +215,7 @@ export const mod_sfen_sync = {
             this.toast_danger("詰み")
           }
           if (this.next_is_self_p(params)) {
-            this.resign_call()
+            this.resign_call({checkmate: true})
           }
         }
       }

@@ -10,7 +10,7 @@
         | 自分本位の投了は仲間から反感を買う恐れがあります
   .modal-card-foot
     b-button.resign_confirm_modal_close_handle.has-text-weight-normal(@click="SB.resign_confirm_modal_close_handle" icon-left="chevron-left") 諦めない
-    b-button.resign_submit_handle(@click="SB.resign_submit_handle" type="is-danger") 投了する
+    b-button.resign_call_handle(@click="SB.resign_call_handle" type="is-danger") 投了する
 </template>
 
 <script>

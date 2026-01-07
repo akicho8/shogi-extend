@@ -147,7 +147,7 @@ module ShareBoard
     end
 
     def resign_share(data)
-      track(data, subject: "投了発動", body: data["content"], emoji: ":投了:")
+      track(data, subject: "投了発動", body: data.slice("win_location_key", "checkmate"), emoji: ":投了:")
       broadcast(:resign_share_broadcasted, data)
     end
 

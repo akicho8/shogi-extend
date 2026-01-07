@@ -1,48 +1,53 @@
 // |----------------------+----------------------------------|
 // | methods              | description                      |
 // |----------------------+----------------------------------|
-// | resign_submit_handle | 最後の「投了する」ボタンを押した |
+// | resign_call_handle | 最後の「投了する」ボタンを押した |
 // | resign_call          | 投了する                         |
 // |----------------------+----------------------------------|
 
 import { resign_confirm_modal } from "./resign_confirm_modal.js"
+import { ending_modal } from "./ending_modal.js"
 import { GX } from "@/components/models/gx.js"
 
 export const mod_resign = {
-  mixins: [resign_confirm_modal],
+  mixins: [
+    resign_confirm_modal,
+    ending_modal,
+  ],
 
   methods: {
     // 最後の「投了する」ボタンを押した
-    resign_submit_handle() {
+    resign_call_handle() {
       this.sfx_click()
       this.resign_confirm_modal_close()
-      this.resign_direct_run_with_valid()
-    },
-
-    // 自分が生きていて時間切れしたとき自動投了モードなら投了する
-    resign_call() {
-      this.resign_direct_run_with_valid()
+      this.resign_call()
     },
 
     // 最終投了ボタンを押したときの処理
-    resign_direct_run_with_valid() {
+    // 自分が生きていて時間切れしたとき自動投了モードなら投了する
+    // 投了メッセージをカスタマイズしたくなるが結局チャットでもみんな「負けました」としか言わないので固定で良い
+    // 必要ないところをこだわって複雑にしてはいけない
+    // 処理順序重要
+    resign_call(options = {}) {
+      options = {
+        win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
+        checkmate: false,                               // 詰みの状態だったか？
+        modal_show: true,                               // 結果のモーダルを表示するか？
+        ...options,
+      }
       if (!this.resign_can_p) {
         this.toast_danger("投了確認している最中に投了できなくなりました")
         return
       }
-      this.resign_direct_run(this.resign_win_location_key)
-    },
+      this.resign_confirm_modal_close()                          // 本人が時間切れは失礼と考えて投了モーダルを出して投了を押す瞬間に時間切れが先に発動した場合を想定してモーダルを強制的に閉じる
+      this.illegal_takeback_modal_close()                        // 反則からの投了確認モーダルが出ている場合があるので消す
 
-    // そのまま実行
-    // 投了メッセージをカスタマイズしたくなるが結局チャットでもみんな「負けました」としか言わないので固定で良い
-    // 必要ないところをこだわって複雑にしてはいけない
-    // 処理順序重要
-    resign_direct_run(win_location_key) {
-      this.resign_confirm_modal_close()                  // 本人が時間切れは失礼と考えて投了モーダルを出して投了を押す瞬間に時間切れが先に発動した場合を想定してモーダルを強制的に閉じる
-      this.illegal_takeback_modal_close()                // 反則からの投了確認モーダルが出ている場合があるので消す
-      this.resign_messsage_post()                        // 発言は何も影響ないので最初に行う
-      this.battle_save_by_win_location(win_location_key) // 順番設定がある状態で対局を保存する
-      this.resign_share(win_location_key)                // 最後に順番設定を解除する
+      if (options.win_location_key && !options.checkmate) {      // 詰ましたときに「負けました」と言われると詰ました方が負けたように感じるので詰みの場合は「負けました」は言わないようにする
+        this.resign_messsage_post()                              // 発言は何も影響ないので最初に行う
+      }
+
+      this.battle_save_by_win_location(options.win_location_key) // 順番設定がある状態で対局を保存する
+      this.resign_share(options)                                 // 最後に順番設定を解除する
     },
 
     resign_messsage_post() {
@@ -50,16 +55,18 @@ export const mod_resign = {
     },
 
     // 投了トリガーを配る
-    resign_share(win_location_key) {
-      const params = {}
-      if (win_location_key) {
-        params["win_location_key"] = win_location_key
+    resign_share(params = {}) {
+      params = {
+        __nil_check_skip_keys__: "win_location_key",
+        ...params,
       }
       this.ac_room_perform("resign_share", params) // --> app/channels/share_board/room_channel.rb
     },
     resign_share_broadcasted(params) {
-      const label = params.win_location_key ? "投了" : "引き分け"
-      this.al_add({...params, label: label, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+      {
+        const label = params.win_location_key ? "投了" : "引き分け"
+        this.al_add({...params, label: label, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+      }
 
       if (params.win_location_key == null) {
         this.toast_primary("引き分けです")
@@ -89,6 +96,10 @@ export const mod_resign = {
       }
 
       this.honpu_announce()
+
+      if (params.modal_show) {
+        this.ending_modal_open(params)
+      }
     },
 
     async honpu_announce() {
@@ -99,7 +110,7 @@ export const mod_resign = {
     // 引分
     draw_call() {
       this.battle_save_by_win_location(null) // 順番設定がある状態で対局を保存する
-      this.resign_share(null)                // 最後に順番設定を解除する
+      this.resign_share()                  // 最後に順番設定を解除する
     },
   },
 
@@ -112,8 +123,6 @@ export const mod_resign = {
 
     // 投了ボタンを押した瞬間の勝った側を返す
     resign_win_location_key() {
-      const params = {}
-
       if (this.AppConfig.TORYO_THEN_CURRENT_LOCATION_IS_LOSE) {
         // 方法1: 投了ボタンが押されたときの手番のチームを負けとする
         // 誰が投了したかに関係なく、投了時点の手番のチームが負けで、その相手が勝ちとする
