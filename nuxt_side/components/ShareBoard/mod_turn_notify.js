@@ -9,7 +9,6 @@ export const mod_turn_notify = {
   methods: {
     tn_bell_call() {
       this.tn_bell_count += 1
-      this.debug_alert("(通知効果音)")
       if (false) {
         this.sfx_play_random(["se_moo1", "se_moo2", "se_moo3"])
       } else {
