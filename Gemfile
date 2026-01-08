@@ -241,6 +241,6 @@ gem "maintenance_tasks"
 # gem "rorvswild"
 
 # ↓のエラー対策
-# /opt/rbenv/versions/3.4.2/lib/ruby/gems/3.4.0/gems/connection_pool-3.0.2/lib/connection_pool.rb:48:in 'initialize': wrong number of arguments (given 1, expected 0) (ArgumentError)
+# /opt/rbenv/versions/4.0.0/lib/ruby/gems/3.4.0/gems/connection_pool-3.0.2/lib/connection_pool.rb:48:in 'initialize': wrong number of arguments (given 1, expected 0) (ArgumentError)
 gem "connection_pool", "< 3.0.0"
 

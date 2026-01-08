@@ -16,6 +16,6 @@ export PATH=".bin:$PATH"
 # for logrtate
 export PATH="/usr/sbin:$PATH"
 
-# rbenv install 3.4.2 を通すために必要
+# rbenv install 4.0.0 を通すために必要
 # 拡張ライブラリのインストール時に失敗しそうなので念のため gcc 4.8.5 -> 11.2.1 を固定化する
 source scl_source enable devtoolset-11

@@ -53,7 +53,7 @@ Rails.application.configure do
 
   ################################################################################
 
-  # /usr/local/var/rbenv/versions/3.4.2/lib/ruby/gems/3.2.0/gems/spring-4.1.1/lib/spring/application.rb:100:in `block in preload': Spring reloads, and therefore needs the application to have reloading enabled.
+  # /usr/local/var/rbenv/versions/4.0.0/lib/ruby/gems/3.2.0/gems/spring-4.1.1/lib/spring/application.rb:100:in `block in preload': Spring reloads, and therefore needs the application to have reloading enabled.
   # Please, set config.cache_classes to false in config/environments/test.rb.
   config.cache_classes = false
 
