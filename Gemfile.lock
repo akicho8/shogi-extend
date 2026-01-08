@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: a35be2fb1a8d5c3cd37386d17534306356aa816c
+  revision: 0bc0f3d818c142da27252833604758e98333ab92
   branch: master
   specs:
     bioshogi (0.0.18)
@@ -668,7 +668,7 @@ GEM
       activesupport
       nkf
     temple (0.10.3)
-    thor (1.4.0)
+    thor (1.5.0)
     tilt (2.6.0)
     timecop (0.9.10)
     timeout (0.4.4)
