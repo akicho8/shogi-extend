@@ -25,7 +25,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  # config.assume_ssl = true
 
   # 【注意】force_ssl を有効にすると ActionCable で /maincable が 301 になるので有効にしてはいけない
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
@@ -120,7 +120,11 @@ Rails.application.configure do
   config.action_cable.mount_path = "/maincable"
   config.action_cable.worker_pool_size = 16
 
-  # for AppConfig
+  # ################################################################################ nginx + puma の場合
+  config.assume_ssl = true
+
+  # ################################################################################ AppConfig
+
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!(
       {
