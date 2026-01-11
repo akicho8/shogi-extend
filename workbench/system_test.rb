@@ -1,2 +1,2 @@
 require "#{__dir__}/setup"
-RspecState.running?             # => 
+RspecState.running?             # =>

@@ -3,7 +3,7 @@ require "#{__dir__}/setup"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   # 検討中での反則確認
   def case1(body_key)
-    visit_app({:body => SfenInfo.fetch(body_key).sfen})
+    visit_app({ :body => SfenInfo.fetch(body_key).sfen })
   end
 
   it "二歩" do

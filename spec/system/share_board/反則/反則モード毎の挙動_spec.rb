@@ -97,4 +97,3 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
   end
 end
-

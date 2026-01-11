@@ -109,8 +109,8 @@ module ShareBoard
           only: [:sfen, :position, :created_at],
           include: {
             win_location: { only: [:key] },
-            black: { only: [], include: {user: { only: [:name] }}},
-            white: { only: [], include: {user: { only: [:name] }}},
+            black: { only: [], include: { user: { only: [:name] } } },
+            white: { only: [], include: { user: { only: [:name] } } },
           }
         })
     end

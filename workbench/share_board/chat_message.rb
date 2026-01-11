@@ -4,7 +4,7 @@ exit
 
 ShareBoard.setup(force: true)
 
-ShareBoard::MessageScope.count  # => 
+ShareBoard::MessageScope.count  # =>
 
 session_user = User.create!
 
@@ -27,28 +27,28 @@ room.receive_and_bc({
                       # "action"=>"message_share",
                     })
 
-chat_message = user.chat_messages.create!(room: room, content: "a")  # => 
-chat_message = room.chat_messages.create!(user: user, content: "a")  # => 
+chat_message = user.chat_messages.create!(room: room, content: "a")  # =>
+chat_message = room.chat_messages.create!(user: user, content: "a")  # =>
 
-chat_message.user        # => 
-chat_message.room        # => 
+chat_message.user        # =>
+chat_message.room        # =>
 
 chat_message.session_user = session_user
 chat_message.save!
-chat_message.session_user   # => 
+chat_message.session_user   # =>
 
-room.chat_messages_count # => 
-user.chat_messages_count # => 
+room.chat_messages_count # =>
+user.chat_messages_count # =>
 
-room.chat_messages       # => 
-room.chat_users          # => 
+room.chat_messages       # =>
+room.chat_users          # =>
 
 chat_message.message_scope_key = :ms_private
 
 tp chat_message
 
 room.setup_for_test(count: 10, user: user)
-room.chat_messages.count        # => 
+room.chat_messages.count        # =>
 tp room.chat_messages
 
 # >> |-----+---------+---------+------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+---------------------------+---------------------------+-----------------+--------------------+---------------+------------+----------------------------------|

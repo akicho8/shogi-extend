@@ -7,11 +7,11 @@ tp ShareBoard::Battle
 tp ShareBoard::User
 user = ShareBoard::User["alice"]
 tp roomship = ShareBoard::Room["dev_room1"].roomships.find_by(user: user)
-roomship.win_count           # => 
+roomship.win_count           # =>
 
 battle = ShareBoard::Room["dev_room1"].battles.first
-battle.sfen # => 
-battle.turn # => 
+battle.sfen # =>
+battle.turn # =>
 
 # >> |----+-----------+---------+----------+-------------+----------+---------------------------+---------------------------|
 # >> | id | battle_id | user_id | judge_id | location_id | position | created_at                | updated_at                |

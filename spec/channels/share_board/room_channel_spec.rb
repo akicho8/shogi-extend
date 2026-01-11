@@ -344,7 +344,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       data = data_factory("reqeust_user_name" => "alice")
       expect {
         subscription.xprofile_load(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_load_broadcasted", bc_params: data.merge("users_match_record" => {"alice" => {win_count: 1, lose_count: 0}}))
+      }.to have_broadcasted_to(channel_key).with(bc_action: "xprofile_load_broadcasted", bc_params: data.merge("users_match_record" => { "alice" => { win_count: 1, lose_count: 0 } }))
     end
   end
 

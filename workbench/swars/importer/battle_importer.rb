@@ -25,7 +25,7 @@ require "./setup"
 # battle = battle_importer.battle
 # puts battle.kifu_body
 # tp battle.info
-# # 
+# #
 # Battle.where(id: Swars::User["K1254"].battles.ids).destroy_all     # => []
 key = Swars::BattleKey["Fukukouka-K1254-20251016_105543"]
 Swars::Battle[key]&.destroy!
