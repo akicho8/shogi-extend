@@ -16,4 +16,11 @@ RSpec.describe "読み上げ用テキスト正規化" do
   it "[BUGFIX] nil.remove でエラーにならない" do
     assert { Talk::YomiageNormalizer.normalize("http:/") == "" }
   end
+
+  it "☗☖▲△" do
+    assert { Talk::YomiageNormalizer.normalize("▲") == "くろ" }
+    assert { Talk::YomiageNormalizer.normalize("△") == "しろ" }
+    assert { Talk::YomiageNormalizer.normalize("☗") == "くろ" }
+    assert { Talk::YomiageNormalizer.normalize("☖") == "しろ" }
+  end
 end

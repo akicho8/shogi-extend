@@ -18,8 +18,8 @@ module Talk
 
     def to_s
       s = source_text
-      s = pictorial_chars_delete(s)
       s = word_replace(s)
+      s = pictorial_chars_delete(s)
       s = long_url_replace(s)
       s = rstrip_process(s)
       s = kusa_replace(s)
