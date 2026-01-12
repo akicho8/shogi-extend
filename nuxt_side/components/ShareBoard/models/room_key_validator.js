@@ -18,23 +18,23 @@ const Moji = require("moji")
 export class RoomKeyValidator {
   static MAX_LENGTH = 32
 
-  static create(source, options = {}) {
-    return new this(source, options)
+  static create(...args) {
+    return new this(...args)
   }
 
-  static valid_message(source, options = {}) {
-    return this.create(source, options).valid_message
+  static valid_message(...args) {
+    return this.create(...args).valid_message
   }
 
-  static valid_p(source, options = {}) {
-    return this.create(source, options).valid_p
+  static valid_p(...args) {
+    return this.create(...args).valid_p
   }
 
-  static invalid_p(source, options = {}) {
-    return this.create(source, options).invalid_p
+  static invalid_p(...args) {
+    return this.create(...args).invalid_p
   }
 
-  constructor(source, options) {
+  constructor(source, options = {}) {
     this.source = source
     this.options = {
       name: "合言葉",

@@ -4,9 +4,9 @@
     .modal-card-title 終局
   .modal-card-body
     .content
-      | {{SB.ending_message}}
+      | {{SB.ending_context.message}}
   .modal-card-foot
-    b-button.ending_modal_close_handle.has-text-weight-normal(@click="SB.ending_modal_close_handle" type="is-primary") OK
+    b-button.ending_modal_close_handle.has-text-weight-normal(@click="SB.ending_modal_close_handle" type="is-primary") 閉じる
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
   name: "EndingModal",
   mixins: [support_child],
   props: ["params"],
+  mounted() {
+    this.talk(SB.ending_context.message)
+  },
 }
 </script>
 
@@ -23,7 +26,8 @@ export default {
 @import "../sass/support.sass"
 
 .EndingModal
-  +modal_width(12rem)
+  +modal_width_auto
+  // +modal_width(12rem)
 
   .modal-card-body
     padding: 1.5rem

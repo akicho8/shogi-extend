@@ -219,7 +219,8 @@ export const mod_order_main = {
 
     i_am_member_p()          { return this.order_enable_p && !!this.order_lookup_from_name(this.user_name) }, // 自分はメンバーに含まれているか？
     i_am_watcher_p()         { return this.order_enable_p && !this.order_lookup_from_name(this.user_name)  }, // 自分は観戦者か？
-    my_location()               { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
+    my_location()            { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
+    my_location_key()        { return this.my_location?.key }, // 自分の色
 
     ////////////////////////////////////////////////////////////////////////////////
 

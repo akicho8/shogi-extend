@@ -43,7 +43,7 @@ export const mod_illegal = {
           if (this.cc_play_p) {
             this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
           }
-          this.resign_call()
+          this.resign_call({ending_route_key: "er_auto_illegal"})
         }
       }
     },

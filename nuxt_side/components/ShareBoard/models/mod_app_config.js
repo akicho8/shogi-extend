@@ -9,6 +9,8 @@ export const AppConfig = {
   WATCH_AND_URL_REPLACE: false,               // URLを常時置換するか？
 
   TORYO_THEN_CURRENT_LOCATION_IS_LOSE: false, // 誰が投了したかに関係なく現在の色のチームが負け(二歩の場合手番が進むため支障あり)
+  TALK_MAKEMASHITA_MESSAGE: false,                 // 「負けました」と発言する？
+  ENDING_MODAL_USE: false,                    // 最後のモーダルを表示する？
 
   CHAT_BLANK_MESSAGE_POST_THEN_CLOSE: true,   // チャットを空送信で閉じるか？
 
