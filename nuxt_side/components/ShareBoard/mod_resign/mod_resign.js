@@ -78,7 +78,7 @@ export const mod_resign = {
     resign_share_broadcasted(params) {
       this.ending_context = EndingContext.create({my_location_key: this.my_location_key, ...params})
 
-      this.al_add({...params, label: this.ending_context.route_name, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+      this.al_add({...params, label: this.ending_context.ending_route_info.name, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
 
       // if (params.win_location_key == null) {
       //   this.toast_primary("引き分けです")       // いまの仕様だと引き分けになることはない
@@ -126,10 +126,17 @@ export const mod_resign = {
     },
 
     ending_call() {
-      if (this.ending_context.toast_notify_p) {
-        this.toast_primary(this.ending_context.message)
+      if (this.ending_context.ending_route_info.x_sfx_key) {
+        this.sfx_stop_all()
+        this.sfx_play(this.ending_context.ending_route_info.x_sfx_key)
       }
-      if (this.ending_context.modal_notify_p) {
+      if (this.ending_context.t_message) {
+        this.toast_primary(this.ending_context.t_message, {talk: true})
+      }
+      if (this.ending_context.x_talk) {
+        this.talk(this.ending_context.x_talk)
+      }
+      if (this.ending_context.m_subject) {
         this.ending_modal_open()
       }
     },
@@ -143,6 +150,7 @@ export const mod_resign = {
           white: "c,d",
         },
         my_location: this.Location.black,
+        illegal_hv_list: [],
         ...params,
       }
       this.ending_context = EndingContext.create(params)

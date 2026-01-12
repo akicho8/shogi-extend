@@ -18,14 +18,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_b { case1(:b, :lose) }
       window_a { double_pawn! }
       window_a do
-        notice_exist
-        lose_modal_exist
+        notice_exist2
+        lose_modal_exist2
         takeback_modal_none
         action_log_exist
       end
       window_b do
-        notice_exist
-        lose_modal_exist
+        notice_exist2
+        lose_modal_exist2
         takeback_modal_none
         action_log_exist
       end

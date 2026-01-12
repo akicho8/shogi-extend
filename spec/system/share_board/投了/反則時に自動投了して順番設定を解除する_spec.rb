@@ -10,8 +10,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :RESEND_FEATURE         => false,
       })
     piece_move("88", "55") # 55角を指した瞬間にモーダルが出ているため piece_move_o でのチェックはできない
-    assert_selector(".IllegalLoseModal")
-    illegal_lose_modal_close
+    assert_selector(".EndingModal")
+    ending_modal_close_handle
     assert_order_off
   end
 end

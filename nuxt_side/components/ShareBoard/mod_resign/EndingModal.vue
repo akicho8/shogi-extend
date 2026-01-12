@@ -1,10 +1,10 @@
 <template lang="pug">
 .modal-card
   .modal-card-head
-    .modal-card-title 終局
+    .modal-card-title {{SB.ending_context.m_subject}}
   .modal-card-body
     .content
-      | {{SB.ending_context.message}}
+      | {{SB.ending_context.m_body}}
   .modal-card-foot
     b-button.ending_modal_close_handle.has-text-weight-normal(@click="SB.ending_modal_close_handle" type="is-primary") 閉じる
 </template>
@@ -16,9 +16,6 @@ export default {
   name: "EndingModal",
   mixins: [support_child],
   props: ["params"],
-  mounted() {
-    this.talk(SB.ending_context.message)
-  },
 }
 </script>
 

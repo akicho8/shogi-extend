@@ -14,6 +14,7 @@ export class EndingContext {
     this.ending_route_key = params.ending_route_key    // 投了にいたった理由
     this.win_location_key = params.win_location_key    // 勝った方
     this.teams_hash       = params.teams_hash ?? {}    // 対局者たち (だが未使用)
+    this.illegal_hv_list  = params.illegal_hv_list     // 反則たち
 
     // それぞれ違う
     this.my_location_key  = params.my_location_key      // 自分が所属するチーム
@@ -22,26 +23,25 @@ export class EndingContext {
     Object.freeze(this.teams_hash)
   }
 
-  // Delegates
-  get toast_notify_p() { return this.ending_route_info.toast_notify_p }
-  get modal_notify_p() { return this.ending_route_info.modal_notify_p }
-  get route_name()     { return this.ending_route_info.name           }
+  // // Delegates
+  // get toast_notify_p() { return this.ending_route_info.toast_notify_p }
+  // get modal_notify_p() { return this.ending_route_info.modal_notify_p }
+  // get route_name()     { return this.ending_route_info.name           }
 
   // get checkmate_p() {
   //   return this.ending_route_info.key === "er_auto_checkmate"
   // }
 
-  // 発言内容
-  // 勝者と敗者でメッセージを分けるのではなく SF6 やスプラのように勝者側のメッセージを全員に出す
-  get message() {
-    if (this.win_location) {
-      return `${this.route_name}で${this.win_location.name}の勝ちです`
-    } else {
-      return this.route_name
+  get illegal_names_str() {
+    if (GX.present_p(this.illegal_hv_list)) {
+      return this.illegal_hv_list.map(e => e.illegal_info.name).join("と")
     }
   }
 
-  // 一言でいうと
+  get t_message() { return this.ending_route_info.t_message?.(this) }
+  get m_subject() { return this.ending_route_info.m_subject?.(this) }
+  get m_body()    { return this.ending_route_info.m_body?.(this)    }
+  get x_talk()    { return this.ending_route_info.x_talk?.(this)    }
 
   // (未使用)
   get win_player_names() {

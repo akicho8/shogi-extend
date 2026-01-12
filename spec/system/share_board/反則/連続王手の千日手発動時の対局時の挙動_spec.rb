@@ -17,7 +17,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     it "「反則したら負け」のときは即負ける" do
       case1("lose")
       perpetual_check_trigger
-      assert_selector(".IllegalLoseModal")
+      assert_selector(".EndingModal")
+      assert_var(:ending_route_key, :er_auto_illegal)
     end
 
     it "「反則しても待ったできる」のときは本当なら IllegalTakebackModal が出るべきだが都合上警告だけになっている" do

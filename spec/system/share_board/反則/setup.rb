@@ -14,12 +14,20 @@ mod = Module.new do
     assert_var(:latest_illegal_name, "二歩")
   end
 
+  def notice_exist2
+    assert_var(:illegal_names_str, "二歩")
+  end
+
   def notice_none
     assert_var(:illegal_params, "")
   end
 
   def lose_modal_exist
     assert_selector(".IllegalLoseModal", text: "二歩で☖の勝ち")
+  end
+
+  def lose_modal_exist2
+    assert_selector(".EndingModal", text: "二歩")
   end
 
   def lose_modal_none
@@ -45,7 +53,7 @@ mod = Module.new do
   ################################################################################
 
   def assert_resign_success
-    assert_action "a", "投了"
+    assert_action "a", "反則からの投了"
     assert_clock(:stop)
     takeback_modal_none
     assert_turn(1)              # 反則手を反映した局面に進んでいる

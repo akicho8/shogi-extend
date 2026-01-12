@@ -30,9 +30,9 @@ export const mod_illegal = {
 
     // 指したとき。反則してなくても呼ばれる。
     illegal_process(params) {
-      this.illegal_takeback_modal_close()     // 反則ブロックモーダルがあれば閉じる
+      this.illegal_takeback_modal_close()     // 反則ブロックモーダルがあれば念のために閉じる
       this.illegal_then_resign(params)     // 自分が反則した場合は投了する
-      this.illegal_lose_modal_open(params) // 反則があれば表示する
+      // this.illegal_lose_modal_open(params) // 反則があれば表示する
       this.ai_say_case_illegal(params)     // 反則した人を励ます
     },
 
@@ -40,10 +40,12 @@ export const mod_illegal = {
     illegal_then_resign(params) {
       if (this.received_from_self(params)) {
         if (this.illegal_exist_p(params)) {
+          // 感想戦中は反則を埋め込まないモードなのでここにくることはない
           if (this.cc_play_p) {
             this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
           }
-          this.resign_call({ending_route_key: "er_auto_illegal"})
+          // win_location_key: this.current_location.flip.key,
+          this.resign_call({ending_route_key: "er_auto_illegal", illegal_hv_list: params.illegal_hv_list})
         }
       }
     },
