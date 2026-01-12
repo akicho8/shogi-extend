@@ -1,7 +1,7 @@
 import { XprofileDecorator } from "@/components/ShareBoard/xprofile/xprofile_decorator.js"
 
 describe("XprofileDecorator", () => {
-  it("works", () => {
+  test("works", () => {
     const object = new XprofileDecorator("alice", {win_count: 6, lose_count: 4})
     expect(object.win_count).toEqual(6)
     expect(object.exist_p).toEqual(true)

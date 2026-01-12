@@ -8,6 +8,7 @@ describe("V2Operation", () => {
     object.swap_run()
     expect(object.black_start_order_uniq_users.map(e => e.to_s)).toEqual(["b", "a", "d", "c"])
   })
+
   test("turn_to_item", () => {
     const f = turn => {
       const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
@@ -27,32 +28,39 @@ describe("V2Operation", () => {
     expect(f(10)).toEqual("b")
     expect(f(11)).toEqual("a")
   })
+
   test("user_name_reject", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     object.user_name_reject("c")
     expect(object.simple_teams).toEqual([["a"], ["b"]])
   })
+
   test("simple_teams", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.simple_teams).toEqual([["a", "c"], ["b"]])
   })
+
   test("real_order_users_to_s", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.real_order_users_to_s(1, 0)).toEqual("abcb")
   })
+
   test("shuffle_all", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     object.shuffle_all()
   })
+
   test("teams_each_shuffle", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     object.teams_each_shuffle()
   })
+
   test("team_member_count", () => {
     const object = new V2Operation([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.team_member_count(Location.fetch("black"))).toEqual(2)
     expect(object.team_member_count(Location.fetch("white"))).toEqual(1)
   })
+
   test("flat_uniq_users_sole", () => {
     const object = new V2Operation([[Item.create("a")], []])
     expect(object.flat_uniq_users_sole.user_name).toEqual("a")

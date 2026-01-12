@@ -1,7 +1,7 @@
 import _ from "lodash"
 
 describe("lodash", () => {
-  it("uniqBy", () => {
+  test("uniqBy", () => {
     const ary = [
       { name: "a", session_id: 1, },
       { name: "a", session_id: 1, },

@@ -2,7 +2,7 @@ import { PiyoSfenLinkCreator } from "@/components/models/piyo_sfen_link_creator.
 
 describe("PiyoSfenLinkCreator", () => {
   describe("ClassMethods", () => {
-    it("works", () => {
+    test("works", () => {
       expect(PiyoSfenLinkCreator.url_for({
         sfen: "position sfen startpos",
         turn: 0,

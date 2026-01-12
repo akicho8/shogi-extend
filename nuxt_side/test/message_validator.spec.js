@@ -8,9 +8,11 @@ describe("MessageValidator", () => {
     expect(MessageValidator.invalid_p("abcd".repeat(20))).toEqual(true)
     expect(MessageValidator.invalid_p("abcde".repeat(20))).toEqual(true)
   })
+
   test("6文字の繰り返しなので通る", () => {
     expect(MessageValidator.invalid_p("abcdef".repeat(20))).toEqual(false)
   })
+
   test("19文字連続なので通る", () => {
     expect(MessageValidator.invalid_p("a".repeat(19))).toEqual(false)
   })

@@ -1,5 +1,4 @@
 import { RoomKeyValidator } from "@/components/ShareBoard/models/room_key_validator.js"
-
 describe("RoomKeyValidator", () => {
   test("空文字はダメ", () => {
     expect(RoomKeyValidator.valid_p("")).toEqual(false)

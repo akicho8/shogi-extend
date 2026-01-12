@@ -1,13 +1,15 @@
 import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
 
 describe("PiyoShogiTypeCurrent", () => {
-  it("reset", () => {
+  test("reset", () => {
     PiyoShogiTypeCurrent.reset()
   })
-  it("reload", () => {
+
+  test("reload", () => {
     PiyoShogiTypeCurrent.reload()
   })
-  it("info", () => {
+
+  test("info", () => {
     expect(PiyoShogiTypeCurrent.info.key).toEqual("auto")
   })
 })
