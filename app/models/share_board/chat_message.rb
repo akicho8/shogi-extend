@@ -78,7 +78,7 @@ module ShareBoard
 
     # 配る
     def broadcast_to_all
-      data = as_json(JSON_TYPE1).merge("__nil_check_skip_keys__" => __nil_check_skip_keys__)
+      data = as_json(JSON_TYPE1).merge("__nullable_attributes__" => __nullable_attributes__)
       Broadcaster.new(room.key).call("message_share_broadcasted", data)
     end
 
@@ -121,7 +121,7 @@ module ShareBoard
 
     private
 
-    def __nil_check_skip_keys__
+    def __nullable_attributes__
       [
         "message_scope_key",
         "from_connection_id",

@@ -34,7 +34,7 @@ export const mod_honpu_share = {
   computed: {
     honpu_share_dto() {
       return {
-        __nil_check_skip_keys__: ["honpu_main", "honpu_branch"],
+        __nullable_attributes__: ["honpu_main", "honpu_branch"],
         honpu_main: this.honpu_main,
         honpu_branch: this.honpu_branch,
       }

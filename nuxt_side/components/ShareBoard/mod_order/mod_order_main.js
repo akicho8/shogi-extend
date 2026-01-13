@@ -187,7 +187,7 @@ export const mod_order_main = {
         foul_mode_key: this.foul_mode_key,
         think_mark_receive_scope_key: this.think_mark_receive_scope_key,
         change_per:            this.change_per,
-        __nil_check_skip_keys__: "order_flow", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
+        __nullable_attributes__: "order_flow", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
 

@@ -49,7 +49,7 @@ module Kiwi
 
     def broadcast(bc_action, bc_params)
       if v = bc_params.find_all { |k, v| v.nil? }.presence
-        v = v.to_h.except(*Array(bc_params["__nil_check_skip_keys__"]))
+        v = v.to_h.except(*Array(bc_params["__nullable_attributes__"]))
         if v.present?
           raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
         end

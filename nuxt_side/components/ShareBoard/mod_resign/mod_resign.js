@@ -70,7 +70,7 @@ export const mod_resign = {
     // 投了トリガーを配る
     resign_share(params = {}) {
       params = {
-        __nil_check_skip_keys__: ["win_location_key", "my_location_key"],
+        __nullable_attributes__: ["win_location_key", "my_location_key"],
         ...params,
       }
       this.ac_room_perform("resign_share", params) // --> app/channels/share_board/room_channel.rb
