@@ -99,11 +99,12 @@ group :development, :test do
 
   gem "capistrano"
   gem "capistrano-rails"        # capistrano + capistrano-bundler
-  # gem "capistrano-passenger"
   gem "capistrano-rbenv"
   gem "capistrano-yarn"
   gem "capistrano-rails-console"
   gem "capistrano-maintenance", require: false
+  gem "ed25519"
+  gem "bcrypt_pbkdf"
 
   gem "rails-controller-testing" # controller で assigns を使うため
 

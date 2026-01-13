@@ -135,6 +135,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.20)
+    bcrypt_pbkdf (1.1.2)
     benchmark (0.5.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
@@ -202,6 +203,7 @@ GEM
     diff-lcs (1.6.2)
     docile (1.4.1)
     drb (2.2.3)
+    ed25519 (1.4.0)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
     exception_notification (5.0.0)
@@ -353,7 +355,6 @@ GEM
       benchmark
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     minitest (6.0.1)
       prism (~> 1.5)
     minitest-power_assert (0.3.1)
@@ -381,9 +382,6 @@ GEM
     net-ssh (7.3.0)
     nio4r (2.7.5)
     nkf (0.2.0)
-    nokogiri (1.19.0)
-      mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
     nokogiri (1.19.0-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.0-aarch64-linux-musl)
@@ -716,7 +714,6 @@ PLATFORMS
   arm-linux-gnu
   arm-linux-musl
   arm64-darwin
-  ruby
   x86_64-darwin
   x86_64-linux-gnu
   x86_64-linux-musl
@@ -728,6 +725,7 @@ DEPENDENCIES
   annotate_models
   aws-sdk-polly
   bcrypt
+  bcrypt_pbkdf
   bioshogi!
   bootsnap
   brakeman
@@ -747,6 +745,7 @@ DEPENDENCIES
   devise-i18n
   devise-i18n-views
   diff-lcs
+  ed25519
   exception_notification
   factory_bot_rails
   faraday
