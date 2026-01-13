@@ -18,7 +18,6 @@
       .panel.assert_var
         .panel-heading
           | [assert_var]
-          ending_route_key
         template(v-if="SB.ending_context")
           .panel-block ending_route_key:{{SB.ending_context.ending_route_key}}
           .panel-block illegal_names_str:{{SB.ending_context.illegal_names_str}}
