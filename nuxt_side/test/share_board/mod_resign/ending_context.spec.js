@@ -5,7 +5,7 @@ describe("EndingContext", () => {
     const params = {
       my_location_key: "black",
       win_location_key: "black",
-      ending_route_key: "er_manual_normal",
+      ending_route_key: "er_user_normal_resign",
       teams_hash: { black: "a,b", white: "c,d" },
       illegal_hv_list: [],
     }

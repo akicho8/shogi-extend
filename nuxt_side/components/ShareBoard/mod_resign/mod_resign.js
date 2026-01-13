@@ -44,7 +44,7 @@ export const mod_resign = {
 
       // あとで以下を EndingContext に渡す
       const ending_context_default_params = {
-        ending_route_key: "er_manual_normal",                        // 投了にいたった理由
+        ending_route_key: "er_user_normal_resign",                        // 投了にいたった理由
         win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
         teams_hash: this.player_names_from_member,      // この時点のメンバー情報を持っておく (あとでやると順番設定がOFFになっているか気にかけないといけない)
       }
@@ -144,7 +144,7 @@ export const mod_resign = {
     ending_call_test(params = {}) {
       params = {
         win_location_key: "black",
-        ending_route_key: "er_manual_normal",
+        ending_route_key: "er_user_normal_resign",
         teams_hash: {
           black: "a,b",
           white: "c,d",
