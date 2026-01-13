@@ -148,7 +148,7 @@ import { mod_persistent_cc_params          } from "./clock/mod_persistent_cc_par
 import { mod_clock_box_modal                    } from "./clock/mod_clock_box_modal.js"
 
 import { mod_resign                       } from "./mod_resign/mod_resign.js"
-import { mod_kifu_mail                     } from "./mod_resign/mod_kifu_mail.js"
+import { mod_kifu_mailer                     } from "./mod_resign/mod_kifu_mailer.js"
 import { mod_battle_archive                   } from "./mod_resign/mod_battle_archive.js"
 
 import { mod_honpu_core                         } from "./honpu/mod_honpu_core.js"
@@ -193,7 +193,7 @@ export default {
     mod_member_list,
     mod_battle_session,
     mod_chore,
-    mod_kifu_mail,
+    mod_kifu_mailer,
     mod_battle_archive,
     mod_avatar,
     mod_handle_name,

@@ -4,7 +4,7 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-export const mod_kifu_mail = {
+export const mod_kifu_mailer = {
   methods: {
     // 「メール送信」ボタンが押されたとき
     kifu_mail_handle() {
