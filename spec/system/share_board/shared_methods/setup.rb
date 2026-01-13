@@ -12,15 +12,15 @@ module SharedMethods
   # 元々はなるべくデフォルトを production に合わせていたが、それだと初期条件を用意するのが遠回りになる
   def visit_base_default_options
     {
-      :room_restore_feature_p => false,             # 盤面を復元しない
-      :room_create_delay      => room_create_delay, # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
-      :ng_word_check_p        => false,             # ハンドルネームのチェックをしない
-      :room_url_copy_modal_p  => false,             # 部屋のリンクのコピーモーダルを出さない
-      :auto_close_p           => false,             # 入退室・順番・時計を自動的に閉じない
-      :self_vs_self_enable_p  => false,             # 自分vs自分禁止 (順番設定で対戦相手がいない場合はバリデーションする)
-      :think_mark_invite_feature_p => false,        # 観戦者に促すか？
-      :system_reserved_avatar_then_clear => false,             # 起動時の絵文字検証
-      :toast_key => :is_toast_screen_bottom_left,   # toast の表示位置
+      :room_restore_feature_p            => false,                        # 盤面を復元しない
+      :room_create_delay                 => room_create_delay,            # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
+      :ng_word_check_p                   => false,                        # ハンドルネームのチェックをしない
+      :room_url_copy_modal_p             => false,                        # 部屋のリンクのコピーモーダルを出さない
+      :auto_close_p                      => false,                        # 入退室・順番・時計を自動的に閉じない
+      :self_vs_self_enable_p             => false,                        # 自分vs自分禁止 (順番設定で対戦相手がいない場合はバリデーションする)
+      :think_mark_invite_feature_p       => false,                        # 観戦者に促すか？
+      :system_reserved_avatar_then_clear => false,                        # 起動時の絵文字検証
+      :toast_key                         => :is_toast_screen_bottom_left, # toast の表示位置
     }
   end
 

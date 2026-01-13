@@ -209,13 +209,24 @@ export const mod_sfen_sync = {
           this.toast_primary(`${params.checkmate_stat.yes_or_no} (${fixed_ms} ms)`, {position: "is-top-left", talk: false})
         }
       }
+
+      // 感想戦中は全員にひとこと通知する
       if (this.illegal_none_p(params)) {
         if (this.knock_out_p(params)) {
           if (!this.cc_play_p) {
             this.toast_danger("詰み")
           }
-          if (this.next_is_self_p(params)) {
-            this.resign_call({ending_route_key: "er_auto_checkmate"})
+        }
+      }
+
+      // 詰ました本人一人が勝ちを宣言するための投了処理を行う
+      // これであれば次の人の同名が複数人いても、複数人分の投了処理が呼ばれる心配はない
+      if (this.received_from_self(params)) {
+        if (this.illegal_none_p(params)) {
+          if (this.knock_out_p(params)) {
+            if (this.cc_play_p) {
+              this.resign_call({ending_route_key: "er_auto_checkmate", win_location_key: this.my_location_key})
+            }
           }
         }
       }
