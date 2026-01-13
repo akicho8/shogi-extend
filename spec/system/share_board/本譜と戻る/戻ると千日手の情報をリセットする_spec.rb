@@ -19,6 +19,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     case1                       # 同じ手の4度目
 
-    assert_no_selector(".IllegalLoseModal")  # 千日手のモーダルが発動していない
+    assert_no_selector(".EndingModal")  # 千日手のモーダルが発動していない
   end
 end

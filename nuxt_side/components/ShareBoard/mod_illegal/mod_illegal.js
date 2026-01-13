@@ -1,5 +1,4 @@
 import { GX } from "@/components/models/gx.js"
-import { illegal_lose_modal } from "./illegal_lose_modal.js"
 import { illegal_takeback_modal } from "./illegal_takeback_modal.js"
 import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
 import { IllegalUserInfo } from "./illegal_user_info.js"
@@ -7,7 +6,6 @@ import { IllegalSelectInfo } from "./illegal_select_info.js"
 
 export const mod_illegal = {
   mixins: [
-    illegal_lose_modal,
     illegal_takeback_modal,
   ],
   data() {
@@ -17,7 +15,6 @@ export const mod_illegal = {
   },
   methods: {
     illegal_params_reset() {
-      // this.illegal_lose_modal_close()
       // this.illegal_takeback_modal_close()
       this.illegal_params_set(null)
     },
@@ -32,7 +29,6 @@ export const mod_illegal = {
     illegal_process(params) {
       this.illegal_takeback_modal_close()     // 反則ブロックモーダルがあれば念のために閉じる
       this.illegal_then_resign(params)     // 自分が反則した場合は投了する
-      // this.illegal_lose_modal_open(params) // 反則があれば表示する
       this.ai_say_case_illegal(params)     // 反則した人を励ます
     },
 
@@ -134,13 +130,13 @@ export const mod_illegal = {
 
     // illegal_app_state_human() { return this.order_clock_both_ok ? "対局中" : "検討中" },
 
-    latest_illegal_hv()                   { return this.illegal_params.illegal_hv_list[0]                                                       }, // 1つ目の反則情報
-    latest_illegal_name()                 { return this.latest_illegal_hv.illegal_info.name                                                     }, // 反則名
-    latest_illegal_location()             { return this.Location.fetch(this.latest_illegal_hv.last_move_info.to.attributes.location.key)        }, // 反則した▲△
-    latest_illegal_it_is_my_team()        { return this.i_am_member_p && this.latest_illegal_location.key === this.my_location.key              }, // 自分は対局者かつ反則した側か？
-    latest_illegal_it_is_op_team()        { return this.i_am_member_p && this.latest_illegal_location.key !== this.my_location.key              }, // 自分は対局者かつ反則してない側か？
-    latest_illegal_i_am_trigger()         { return this.received_from_self(this.illegal_params)                                                 }, // 反則の発生源か？
-    latest_illegal_user_name()            { return this.illegal_params.from_user_name                                                           }, // 反則者の名前
+    latest_illegal_hv()            { return this.illegal_params.illegal_hv_list[0]                                                }, // 1つ目の反則情報
+    latest_illegal_name()          { return this.latest_illegal_hv.illegal_info.name                                              }, // 反則名
+    latest_illegal_location()      { return this.Location.fetch(this.latest_illegal_hv.last_move_info.to.attributes.location.key) }, // 反則した▲△
+    latest_illegal_it_is_my_team() { return this.i_am_member_p && this.latest_illegal_location.key === this.my_location.key       }, // 自分は対局者かつ反則した側か？
+    latest_illegal_it_is_op_team() { return this.i_am_member_p && this.latest_illegal_location.key !== this.my_location.key       }, // 自分は対局者かつ反則してない側か？
+    latest_illegal_i_am_trigger()  { return this.received_from_self(this.illegal_params)                                          }, // 反則の発生源か？
+    latest_illegal_user_name()     { return this.illegal_params.from_user_name                                                    }, // 反則者の名前
 
     // 反則のあった局面を再現するURL
     latest_illegal_url() {

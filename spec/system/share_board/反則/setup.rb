@@ -14,24 +14,8 @@ mod = Module.new do
     assert_var(:latest_illegal_name, "二歩")
   end
 
-  def notice_exist2
-    assert_var(:illegal_names_str, "二歩")
-  end
-
   def notice_none
     assert_var(:illegal_params, "")
-  end
-
-  def lose_modal_exist
-    assert_selector(".IllegalLoseModal", text: "二歩で☖の勝ち")
-  end
-
-  def lose_modal_exist2
-    assert_selector(".EndingModal", text: "二歩")
-  end
-
-  def lose_modal_none
-    assert_no_selector(".IllegalLoseModal")
   end
 
   def takeback_modal_exist

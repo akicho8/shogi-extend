@@ -18,14 +18,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_b { case1(:b, :lose) }
       window_a { double_pawn! }
       window_a do
-        notice_exist2
-        lose_modal_exist2
+        assert_ending_illegal("二歩")
+        assert_ending_modal_exist
         takeback_modal_none
         action_log_exist
       end
       window_b do
-        notice_exist2
-        lose_modal_exist2
+        assert_ending_illegal("二歩")
+        assert_ending_modal_exist
         takeback_modal_none
         action_log_exist
       end
@@ -37,13 +37,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_exist
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_exist
         action_log_exist
       end
       window_b do
         notice_exist
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_exist
         action_log_exist
       end
@@ -55,13 +55,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_none
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_none
         action_log_none
       end
       window_b do
         notice_none
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_none
         action_log_none
       end
@@ -84,13 +84,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { double_pawn! }
       window_a do
         notice_exist
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_none
         action_log_exist
       end
       window_b do
         notice_exist
-        lose_modal_none
+        assert_ending_modal_none
         takeback_modal_none
         action_log_exist
       end

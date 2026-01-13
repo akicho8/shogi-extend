@@ -31,4 +31,16 @@ module SharedMethods
   def ending_modal_close_handle
     find(".ending_modal_close_handle").click
   end
+
+  def assert_ending_illegal(name)
+    assert_var(:illegal_names_str, name)
+  end
+
+  def assert_ending_modal_exist
+    assert_selector(".EndingModal")
+  end
+
+  def assert_ending_modal_none
+    assert_no_selector(".EndingModal")
+  end
 end
