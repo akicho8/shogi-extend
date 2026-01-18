@@ -4,18 +4,19 @@ export const RegexpBuilder = {
   },
 
   build(types) {
-    return new RegExp(`^[${this.string(types)}]+$`)
+    // Unicodeフラグ 'u' を追加することで \p{...} が動作するようになる
+    return new RegExp(`^[${this.string(types)}]+$`, 'u')
   },
 
   // private
-
   __PART: {
-    half_width_alpha:             'a-zA-Z',               // 半角英字
-    half_width_number:            '0-9',                  // 半角数字
-    full_width_kanji:             '\u4E00-\u9FFF',        // 全角漢字
-    full_width_hiragana:          '\u3040-\u309F',        // 全角ひらがな
-    full_width_hyphen_wave:       'ー〜',                 // 全角カナの伸ばし棒 と カナでもひらがなでもない波線
-    full_width_kanji_number:      '一二三四五六七八九十', // 漢数字
-    half_width_hyphen_underscore: '_\\-',                 // Hyhen Underscore
+    half_width_alpha:             'a-zA-Z',
+    half_width_number:            '0-9',
+    full_width_kanji:             '\\p{Script=Han}',      // "々" を含む
+    full_width_hiragana:          '\\p{Script=Hiragana}',
+    // 記号類を個別に定義
+    full_width_hyphen_wave:       'ー〜',
+    full_width_kanji_number:      '一二三四五六七八九十',
+    half_width_hyphen_underscore: '_\\-',
   },
 }

@@ -220,4 +220,8 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("ヒットラー")).toEqual(false)
     expect(HandleNameValidator.valid_p("ヒトラー")).toEqual(false)
   })
+
+  test("「々」を含む名前を許可する", () => {
+    expect(HandleNameValidator.valid_p("佐々木")).toEqual(true)
+  })
 })
