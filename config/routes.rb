@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
+  get "up" => "rails/health#show", as: :rails_health_check
+  get "health" => HealthResponder
+
   scope "/admin" do
     mount MaintenanceTasks::Engine, at: "/maintenance_tasks"
   end
 
   root "tops#show"
-
-  get "health" => HealthResponder
 
   devise_for :xusers, {
     class_name: "::User",
