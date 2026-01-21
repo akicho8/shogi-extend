@@ -42,7 +42,7 @@
     "marked": "^15.0.7",
     "moji": "^0.5.1",
     "node-emoji": "1.11.0",
-    "nuxt": "2.18.1",
+    "nuxt": "4.2.2",
     "nuxt-basic-auth-module": "1.4.1",
     "nuxt-buefy": "0.4.29",
     "patch-package": "^8.0.0",
