@@ -40,19 +40,7 @@ if false
 end
 
 every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
-
-if @environment == "production"
-  # every("5 11 * * *") { command "ruby -e 'p 1 / 1'" }
-  # every("6 11 * * *") { command "ruby -e 'p 1 / 0'" }
-
-  every("30 4 * * *") do
-    # every("6 9 * * *") do
-    command [
-      %(mysqldump -u root --password= --comments --add-drop-table --quick --single-transaction shogi_web_production | gzip > /data/shogi_extend_production/backup/shogi_web_production_`date "+%Y%m%d%H%M%S"`.sql.gz),
-      %(ruby -r fileutils -e 'files = Dir["/data/shogi_extend_production/backup/*.gz"].sort; FileUtils.rm(files - files.last(3))'),
-    ].join(";")
-  end
-end
+every("30 4 * * *") { runner "Backup.call" }
 
 # if @environment == "production"
 #   every("15 1 31 12 *") do
