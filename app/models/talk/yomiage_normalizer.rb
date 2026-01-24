@@ -18,12 +18,12 @@ module Talk
 
     def to_s
       s = source_text
+      s = tag_strip(s)          # long_url_replace よりも先であること
       s = word_replace(s)
       s = pictorial_chars_delete(s)
-      s = long_url_replace(s)
+      s = long_url_replace(s)   # tag_strip より後であること
       s = rstrip_process(s)
       s = kusa_replace(s)
-      s = tag_strip(s)
       s = text_clean(s)
       s
     end
@@ -45,9 +45,9 @@ module Talk
     # "●http://www.xxx-yyy.com/●" -> "●example com●
     def long_url_replace(s)
       s.gsub(/(?:https?):[[:graph:]&&[:ascii:]]+/) { |url|
-        host = URI(url.strip).host || ""      # => "www.xxx-yyy.com"
-        host = host.remove(/^(?:www)\b/)      # => "xxx-yyy.com"
-        host.scan(/\w+/).join(" ")            # => "xxx yyy com"
+        host = URI(url.strip).host || ""          # => "www.xxx-yyy.com"
+        host = host.remove(/^(?:www)\b/)          # => "xxx-yyy.com"
+        host.scan(/\w+/).join(" ")                # => "xxx yyy com"
       }
     end
 

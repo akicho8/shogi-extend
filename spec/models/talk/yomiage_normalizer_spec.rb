@@ -17,6 +17,10 @@ RSpec.describe "読み上げ用テキスト正規化" do
     assert { Talk::YomiageNormalizer.normalize("http:/") == "" }
   end
 
+  it "[BUGFIX] URL にタグがついているときに例外を出さない" do
+    assert { Talk::YomiageNormalizer.normalize("http://www.example.com/foo<br>") == "example com" }
+  end
+
   it "☗☖▲△" do
     assert { Talk::YomiageNormalizer.normalize("▲") == "くろ" }
     assert { Talk::YomiageNormalizer.normalize("△") == "しろ" }
