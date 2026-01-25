@@ -21,7 +21,7 @@ b-table.QuickScriptViewValueAsTable(
       v-slot="{row}"
       :field="column_name"
       :label="column_name_decorator(column_name)"
-      :sortable="true"
+      :sortable="value.table_sortable"
       :numeric="numeric_hash[column_name]"
       )
       QuickScriptViewValue(:value="row[column_name]")

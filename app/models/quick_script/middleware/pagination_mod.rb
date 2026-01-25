@@ -28,6 +28,7 @@ module QuickScript
               :per_page     => current_per,
               :always_table => false,
               :header_hide  => false,
+              :table_sortable => true,
               **options,
             },
           }

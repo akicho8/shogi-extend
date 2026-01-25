@@ -93,7 +93,7 @@ module QuickScript
       end
 
       def call
-        simple_table(human_rows, always_table: true)
+        simple_table(human_rows, always_table: true, table_sortable: false)
       end
 
       def human_rows
