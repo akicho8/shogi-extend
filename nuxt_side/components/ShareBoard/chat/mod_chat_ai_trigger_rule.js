@@ -90,21 +90,6 @@ export const mod_chat_ai_trigger_rule = {
       }
     },
 
-    ai_say_case_illegal(params) {
-      if (this.received_from_self(params)) {
-        if (GX.present_p(params.illegal_hv_list)) {
-          if (this.cc_play_p) {
-            // // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
-            // if (this.auto_resign_info.key === "is_auto_resign_off") {
-            //   if (this.ai_say_turn_gteq(1)) {
-            //     this.ai_say_for(15, "反則した人を励ます", params)
-            //   }
-            // }
-          }
-        }
-      }
-    },
-
     ai_say_case_turn(params) {
       if (this.received_from_self(params)) {
         if (this.cc_play_p) {

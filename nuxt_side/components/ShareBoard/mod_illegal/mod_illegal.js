@@ -29,7 +29,6 @@ export const mod_illegal = {
     illegal_process(params) {
       this.illegal_takeback_modal_close()     // 反則ブロックモーダルがあれば念のために閉じる
       this.illegal_then_resign(params)     // 自分が反則した場合は投了する
-      this.ai_say_case_illegal(params)     // 反則した人を励ます
     },
 
     // 自分が指して反則だった場合に対局中であれば投了する
