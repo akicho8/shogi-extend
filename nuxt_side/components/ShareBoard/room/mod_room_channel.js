@@ -81,9 +81,10 @@ export const mod_room_channel = {
     // ~/src/shogi-extend/app/channels/share_board/room_channel.rb
     async room_create() {
       this.tl_p("--> room_create")
-      GX.assert(this.user_name, "this.user_name")
       GX.assert(this.room_key, "this.room_key")
+      GX.assert(this.user_name, "this.user_name")
       GX.assert(this.ac_room == null, "this.ac_room == null")
+      this.app_log({emoji: ":入室:", subject: "入室", body: [this.room_key, this.user_name]})
 
       await GX.sleep(this.room_create_delay)
 

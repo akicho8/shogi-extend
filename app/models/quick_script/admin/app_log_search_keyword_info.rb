@@ -43,6 +43,7 @@ module QuickScript
           param_key: :query,
           keywords: [
             "共有将棋盤",
+            "入室",
             "チャット",
             "警告発動",
             "名前違反",
