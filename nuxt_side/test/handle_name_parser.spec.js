@@ -43,6 +43,11 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("aliceちゃん")).toEqual("aliceちゃん") // 最後が "ん" の影響でスルーされているだけ
   })
 
+  test("くん", () => {
+    expect(HandleNameParser.call_name("aliceくん")).toEqual("aliceくん")
+    expect(HandleNameParser.call_name("alice君")).toEqual("alice君")
+  })
+
   test("もともとニックネームのような人に敬称をつけない", () => {
     expect(HandleNameParser.call_name("alicechan")).toEqual("alicechan")
     expect(HandleNameParser.call_name("alicekun")).toEqual("alicekun")
