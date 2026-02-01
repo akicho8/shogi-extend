@@ -1,2 +1,2 @@
-import { Beetleshine } from "beetleshine"
-export const GX = Beetleshine
+import { Beetleshine as GX } from "beetleshine"
+export { GX }
