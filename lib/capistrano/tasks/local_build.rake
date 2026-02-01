@@ -40,7 +40,7 @@ if ENV["REMOTE_BUILD"] != "1"
       # public/{assets,packs} をデプロイ先に転送
       within "#{tmpdir}/public" do
         roles(:web).each do |e|
-          execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete -e ssh assets packs #{e.user}@#{e.hostname}:#{release_path}/public"
+          execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete assets packs #{e.user}@#{e.hostname}:#{release_path}/public"
         end
       end
       execute :rm, "-fr #{tmpdir}"
