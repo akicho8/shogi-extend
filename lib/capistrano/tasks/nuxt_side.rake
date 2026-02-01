@@ -55,7 +55,7 @@ namespace :nuxt_side do
       on roles(:web) do |e|
         run_locally do
           within "nuxt_side" do
-            execute :rsync, %(-azh -e ssh .nuxt #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
+            execute :rsync, %(-azh .nuxt #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
           end
         end
         upload! "nuxt_side/.env.#{fetch(:stage)}", "#{release_path}/nuxt_side/"
@@ -73,7 +73,7 @@ namespace :nuxt_side do
       on roles(:web) do |e|
         run_locally do
           within "nuxt_side" do
-            execute :rsync, %(-azh -e ssh static #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
+            execute :rsync, %(-azh static #{e.user}@#{e.hostname}:#{release_path}/nuxt_side/)
           end
         end
       end

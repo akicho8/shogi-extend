@@ -10,7 +10,7 @@ namespace :material do
       roles(:web).each do |e|
         src_dir = "nuxt_side/static/material"
         dst_dir = "#{shared_path}/public/system"
-        execute :rsync, %(-azh --delete --exclude=".git" -e ssh #{src_dir} #{e.user}@#{e.hostname}:#{dst_dir})
+        execute :rsync, %(-azh --delete --exclude=".git" #{src_dir} #{e.user}@#{e.hostname}:#{dst_dir})
       end
     end
     on roles(:web) do

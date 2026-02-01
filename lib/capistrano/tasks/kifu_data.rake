@@ -9,7 +9,7 @@ namespace :kifu_data do
   task :deploy do
     run_locally do
       roles(:web).each do |e|
-        execute :rsync, %(-avz --delete --exclude=".git" -e ssh kifu_data #{e.user}@#{e.hostname}:#{release_path})
+        execute :rsync, %(-avz --delete --exclude=".git" kifu_data #{e.user}@#{e.hostname}:#{release_path})
       end
     end
   end
