@@ -101,7 +101,7 @@ export const mod_shogi_player = {
 
     // 駒箱調整
     sp_piece_box_piece_counts_adjust() {
-      return this.sp_call(e => e.xcontainer.piece_box_piece_counts_adjust())
+      return this.sp_call(e => e.xcontainer.piece_box_piece_counts_adjust$())
     },
 
     // 玉の自動配置
