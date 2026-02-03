@@ -26,7 +26,7 @@ export const mod_sfx = {
 
     // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす→やめ)
     se_piece_move() {
-      this.sfx_play("se_piece_put", {volume_scale: this.komaoto_volume_scale})
+      this.sfx_play("se_piece_put", {volume_local_user_scale: this.volume_piece_user_scale})
       this.beat_call("short")
     },
 

@@ -17,14 +17,14 @@ if (process.env.NODE_ENV === "development") {
 
 import { GX } from "@/components/models/gx.js"
 import { SfxPresetInfo } from "@/components/models/sfx_preset_info.js"
-import { VolumeConfig } from "@/components/models/volume_config.js"
+import { VolumeCop } from "@/components/models/volume_cop.js"
 import _ from "lodash"
 import QueryString from "query-string"
 
 export const vue_sfx = {
   methods: {
-    g_common_volume_scale_reset() {
-      this.g_common_volume_scale = VolumeConfig.default_scale
+    g_volume_common_user_scale_reset() {
+      this.g_volume_common_user_scale = VolumeCop.CONFIG.user_scale_default
     },
 
     sfx_play(key, options = {}) {
@@ -76,25 +76,32 @@ export const vue_sfx = {
     sfx_play_now(options) {
       options = {
         autoplay: true,
-        volume_scale: null,
+        volume_local_user_scale: null,
         ...options,
       }
 
       options.src ??= require("@/assets/sfx/no_sound.mp3")
 
-      if (options.volume_scale != null) {
-        options.volume *= GX.map_range(options.volume_scale, 0, 20, 0.0, 2.0)
-      }
-      options.volume *= GX.map_range(this.g_common_volume_scale, 0, 20, 0.0, 2.0)
+      let volume = options.volume
+      volume = VolumeCop.volume_convert(volume, options.volume_local_user_scale)
+      volume = VolumeCop.volume_convert(volume, this.g_volume_common_user_scale)
+      // this.sfx_log("sfx_play_now", options.src, options.volume)
 
       return new Promise((resolve, reject) => {
         const sound = new Howl({
           ...options,
+          volume: volume,
           onend: () => resolve(),
           onloaderror: (_, msg) => reject(msg),
           onplayerror: (_, msg) => reject(msg),
         })
       })
     },
+
+    // sfx_log(...args) {
+    //   if (process.env.NODE_ENV === "development") {
+    //     console.log("[sfx_log]", ...args)
+    //   }
+    // },
   },
 }

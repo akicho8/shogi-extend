@@ -1,9 +1,9 @@
-import { VolumeConfig } from "@/components/models/volume_config.js"
+import { VolumeCop } from "@/components/models/volume_cop.js"
 import { GX } from "@/components/models/gx.js"
 
 const MESSAGE_LENGTH_MAX = 140  // N文字を越えるとしゃべらない
 
-const HOWL_DEFAULT_OPTIONS = {
+const TALK_DEFAULT_OPTIONS = {
   volume: 0.5,  // 音量
   rate: 1.5,    // 速度
 }
@@ -13,14 +13,14 @@ export const vue_talk = {
   // コンポーネント毎の変数ができてしまう
   // data() {
   //   return {
-  //     g_talk_volume_scale: scale,
+  //     g_volume_talk_user_scale: scale,
   //   }
   // },
 
   methods: {
     // 音量スケールを元に戻す
-    g_talk_volume_scale_reset() {
-      this.g_talk_volume_scale = VolumeConfig.default_scale
+    g_volume_talk_user_scale_reset() {
+      this.g_volume_talk_user_scale = VolumeCop.CONFIG.user_scale_default
     },
 
     // しゃべる
@@ -40,7 +40,7 @@ export const vue_talk = {
         }
       }
       if (this.__SYSTEM_TEST_RUNNING__) {
-        return this.sfx_play_now({...options, rate: 2.0, volume: 0, volume_scale: 0})
+        return this.sfx_play_now({...options, rate: 2.0, volume: 0.0, volume_local_user_scale: 0})
       }
       const params = {
         source_text: message,
@@ -59,9 +59,9 @@ export const vue_talk = {
     // https://github.com/goldfire/howler.js#documentation
     __talk_core(e, options = {}) {
       return this.sfx_play_now({
-        ...HOWL_DEFAULT_OPTIONS,
+        ...TALK_DEFAULT_OPTIONS,
         src: e.browser_path,
-        volume_scale: this.g_talk_volume_scale,
+        volume_local_user_scale: this.g_volume_talk_user_scale,
         ...options,
       })
     },

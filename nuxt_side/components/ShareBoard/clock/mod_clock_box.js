@@ -202,7 +202,7 @@ export const mod_clock_box = {
       options = {
         type: "is-primary",
         rate: BYOYOMI_TALK_PITCH,
-        volume_scale: this.clock_volume_scale,
+        volume_local_user_scale: this.volume_clock_user_scale,
         ...options,
       }
       this.toast_primitive(s, options)

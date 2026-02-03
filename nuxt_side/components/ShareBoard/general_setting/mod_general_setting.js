@@ -2,10 +2,10 @@ import { general_setting_modal } from "./general_setting_modal.js"
 
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { ClockVolumeScaleInfo        } from "../models/ClockVolumeScaleInfo.js"
-import { KomaotoVolumeScaleInfo      } from "../models/komaoto_volume_scale_info.js"
-import { TalkVolumeScaleInfo   } from "../models/talk_volume_scale_info.js"
-import { CommonVolumeScaleInfo } from "../models/common_volume_scale_info.js"
+import { VolumeClockUserScaleInfo        } from "../models/volume_clock_user_scale_info.js"
+import { VolumePieceUserScaleInfo      } from "../models/volume_piece_user_scale_info.js"
+import { VolumeTalkUserScaleInfo   } from "../models/volume_talk_user_scale_info.js"
+import { VolumeCommonUserScaleInfo } from "../models/volume_common_user_scale_info.js"
 
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
 import { AiModeInfo           } from "../models/ai_mode_info.js"
@@ -38,10 +38,10 @@ export const mod_general_setting = {
     },
   },
   computed: {
-    CommonVolumeScaleInfo() { return CommonVolumeScaleInfo },
-    TalkVolumeScaleInfo()   { return TalkVolumeScaleInfo   },
-    ClockVolumeScaleInfo()  { return ClockVolumeScaleInfo  },
-    KomaotoVolumeScaleInfo()     { return KomaotoVolumeScaleInfo     },
+    VolumeCommonUserScaleInfo() { return VolumeCommonUserScaleInfo },
+    VolumeTalkUserScaleInfo()   { return VolumeTalkUserScaleInfo   },
+    VolumeClockUserScaleInfo()  { return VolumeClockUserScaleInfo  },
+    VolumePieceUserScaleInfo()     { return VolumePieceUserScaleInfo     },
 
     SettingRootInfo()     { return SettingRootInfo                                       },
     setting_root_info()   { return this.SettingRootInfo.fetch(this.setting_category_key) },

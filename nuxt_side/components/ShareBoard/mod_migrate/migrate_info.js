@@ -6,10 +6,10 @@ export class MigrateInfo extends ApplicationMemoryRecord {
       {
         version: 20251125185039,
         up: context => {
-          context.common_volume_scale  = 10
-          context.talk_volume_scale    = 10
-          context.clock_volume_scale   = 10
-          context.komaoto_volume_scale = 10
+          context.volume_common_user_scale  = 10
+          context.volume_talk_user_scale    = 10
+          context.volume_clock_user_scale   = 10
+          context.volume_piece_user_scale = 10
         },
       },
     ]

@@ -17,8 +17,13 @@
           b-button(@click="Howler.stop()") stop()
           b-button(@click="Howler.unload()") unload()
 
-      b Main Volume
-      b-numberinput(size="is-small" controls-position="compact" v-model="main_volume" :step="0.1" exponential)
+      .box
+        p talk
+        .buttons
+          b-button(@click="talk('こんにちは')") こんにちは
+
+      //- b Main Volume
+      //- b-numberinput(size="is-small" controls-position="compact" v-model="main_volume" :step="0.1" exponential)
 
       b-table.mt-4(
         :data="SfxPresetInfo.values"
@@ -43,14 +48,14 @@ export default {
   data() {
     return {
       volumes: SfxPresetInfo.values.reduce((a, e) => ({...a, [e.key]: e.volume}), {}),
-      main_volume: null,
+      // main_volume: null,
     }
   },
   beforeMount() {
-    this.main_volume = Howler.volume()
+    // this.main_volume = Howler.volume()
   },
   watch: {
-    main_volume(v) { Howler.volume(v) },
+    // main_volume(v) { Howler.volume(v) },
   },
   methods: {
     row_play(row) {
@@ -58,6 +63,9 @@ export default {
     },
     all_play() {
       SfxPresetInfo.values.forEach(e => this.row_play(e))
+    },
+    talk_test() {
+      this.talk("こんにちは")
     },
   },
   computed: {

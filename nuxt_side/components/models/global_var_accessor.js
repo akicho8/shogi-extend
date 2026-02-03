@@ -9,8 +9,8 @@ export const global_var_accessor = {
 
     ...mapMutations("global_var", [
       "__g_var1_set", // this.$store.commit("global_var/__g_var1_set", value) を this.__g_var1_set(value) と書けるようにする
-      "__g_talk_volume_scale_set",
-      "__g_common_volume_scale_set",
+      "__g_volume_talk_user_scale_set",
+      "__g_volume_common_user_scale_set",
       "__g_toast_key_set",
     ]),
   },
@@ -32,16 +32,16 @@ export const global_var_accessor = {
     //   set(value) { this.$store.commit("global_var/__g_var1_set", value) },
     // },
 
-    // attr_accessor :g_talk_volume_scale
-    g_talk_volume_scale: {
-      get()      { return this.$store.state.global_var.g_talk_volume_scale },
-      set(value) { this.__g_talk_volume_scale_set(value)                   },
+    // attr_accessor :g_volume_talk_user_scale
+    g_volume_talk_user_scale: {
+      get()      { return this.$store.state.global_var.g_volume_talk_user_scale },
+      set(value) { this.__g_volume_talk_user_scale_set(value)                   },
     },
 
-    // attr_accessor :g_common_volume_scale
-    g_common_volume_scale: {
-      get()      { return this.$store.state.global_var.g_common_volume_scale },
-      set(value) { this.__g_common_volume_scale_set(value)                   },
+    // attr_accessor :g_volume_common_user_scale
+    g_volume_common_user_scale: {
+      get()      { return this.$store.state.global_var.g_volume_common_user_scale },
+      set(value) { this.__g_volume_common_user_scale_set(value)                   },
     },
 
     // attr_accessor :g_toast_key
