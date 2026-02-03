@@ -8,6 +8,6 @@ module RspecState
   private
 
   def file_path
-    @file_path ||= Rails.root.join("__RSPEC_STATE_RUNNING__")
+    @file_path ||= Rails.root.join("__RSPEC_RUNNING__")
   end
 end

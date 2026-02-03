@@ -2,9 +2,12 @@ AppConfig.deep_merge!({
     :app_name                       => "SHOGI-EXTEND",
     :my_request_origin              => "http://localhost:4000",
 
-    :zip_dl_max_default             => 50, # 一括ダウンロードするときの件数(初期値)
-    :zip_dl_max_of_max              => 50, # 一括ダウンロードするときの件数(最大)
+    ################################################################################ swars
+    :zip_dl_max_default             => 50,   # 一括ダウンロードするときの件数(初期値)
+    :zip_dl_max_of_max              => 50,   # 一括ダウンロードするときの件数(最大)
+    :swars_show_crawl               => true, # swars/battles/:id のタイミングでクロールするか？
 
+    ################################################################################ share-board
     :share_board_api_version        => 119, # CLIENT_SIDE_API_VERSION
 
     ################################################################################ email
