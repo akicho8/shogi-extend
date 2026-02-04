@@ -100,13 +100,13 @@ export const mod_shogi_player = {
     },
 
     // 駒箱調整
-    sp_piece_box_piece_counts_adjust() {
-      return this.sp_call(e => e.xcontainer.piece_box_piece_counts_adjust$())
+    sp_piece_box_adjust() {
+      return this.sp_call(e => e.xcontainer.piece_box_adjust$())
     },
 
     // 玉の自動配置
     sp_king_formation_auto_set_on_off(v) {
-      return this.sp_call(e => e.xcontainer.king_formation_auto_set_on_off(v))
+      return this.sp_call(e => e.xcontainer.king_formation_auto_set_on_off$(v))
     },
 
     // 手数 → 色変換

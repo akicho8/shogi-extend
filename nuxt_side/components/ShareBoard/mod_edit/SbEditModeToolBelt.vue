@@ -1,8 +1,8 @@
 <template lang="pug">
 .SbEditModeToolBelt.footer_buttons(v-if="SB.edit_mode_p")
   .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-    b-button(@click="SB.king_formation_auto_set(true)") 詰将棋検討用玉配置
-    b-button(@click="SB.king_formation_auto_set(false)") 玉回収
+    b-button(@click="SB.king_formation_auto_set$(true)") 詰将棋検討用玉配置
+    b-button(@click="SB.king_formation_auto_set$(false)") 玉回収
 
   .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="SB.edit_mode_kifu_vo")
     PiyoShogiButton(:href="SB.edit_mode_kifu_vo.piyo_url")

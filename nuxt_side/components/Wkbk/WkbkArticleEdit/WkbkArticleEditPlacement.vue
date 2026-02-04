@@ -17,8 +17,8 @@ MainSection.WkbkArticleEditPlacement
             )
           .footer_buttons
             .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-              b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
-              b-button(@click="king_formation_auto_set(false)") 玉回収
+              b-button(@click="king_formation_auto_set$(true)") 詰将棋検討用玉配置
+              b-button(@click="king_formation_auto_set$(false)") 玉回収
 
             .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
               PiyoShogiButton(:href="current_kifu_vo.piyo_url")
@@ -27,17 +27,6 @@ MainSection.WkbkArticleEditPlacement
 
             .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
               b-button(@click="base.any_source_read_handle") 棋譜の読み込み
-
-            .buttons.mb-0.has-addons.is-centered.are-small.mt-3(v-if="development_p")
-              b-button(@click="$refs.main_sp.sp_object().xcontainer.square_shuffle$(3)") 3
-              b-button(@click="$refs.main_sp.sp_object().xcontainer.square_shuffle$(4)") 4
-              b-button(@click="$refs.main_sp.sp_object().xcontainer.square_shuffle$(5)") 5
-              b-button(@click="$refs.main_sp.sp_object().xcontainer.square_shuffle$(6)") 6
-              .ml-1
-              b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().xcontainer.rotate_xy$(-1, 0)")
-              b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().xcontainer.rotate_xy$(0, 1)")
-              b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().xcontainer.rotate_xy$(0, -1)")
-              b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().xcontainer.rotate_xy$(1, 0)")
 </template>
 
 <script>
@@ -53,15 +42,15 @@ export default {
   },
 
   mounted() {
-    this.base.piece_box_piece_counts_adjust$()
+    this.base.piece_box_adjust$()
   },
 
   methods: {
     // 玉配置/玉回収
-    king_formation_auto_set(v) {
+    king_formation_auto_set$(v) {
       this.sfx_click()
-      if (this.$refs.main_sp.sp_object().xcontainer.king_formation_auto_set_on_off(v)) {
-        this.base.piece_box_piece_counts_adjust$() // 玉が増える場合があるので駒箱を調整する
+      if (this.$refs.main_sp.sp_object().xcontainer.king_formation_auto_set_on_off$(v)) {
+        this.base.piece_box_adjust$() // 玉が増える場合があるので駒箱を調整する
       } else {
         if (v) {
           this.toast_warn("配置する場所がありません")

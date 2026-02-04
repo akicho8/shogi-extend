@@ -76,10 +76,10 @@ export const mod_edit_mode = {
     },
 
     // 玉配置/玉回収
-    king_formation_auto_set(v) {
+    king_formation_auto_set$(v) {
       this.sfx_click()
       if (this.sp_king_formation_auto_set_on_off(v)) {
-        this.sp_piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
+        this.sp_piece_box_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
         if (v) {
           this.toast_warn("配置する場所がありません")
