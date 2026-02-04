@@ -53,7 +53,8 @@ module Swars
 
       def battle_create!
         @battle ||= Retryable.retryable(retryable_options) do
-          Battle.create!(props.to_battle_attributes) do |e|
+          Battle.create_or_find_by!(key: key) do |e|
+            e.assign_attributes(props.to_battle_attributes)
             e.memberships.build(props.to_battle_membership_attributes)
           end
         end
