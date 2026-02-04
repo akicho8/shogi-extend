@@ -27,7 +27,7 @@ client-only
           )
 
       SwarsBattleShowTimeChart(
-        v-if="time_chart_params"
+        v-if="record.time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="current_turn"
         ref="SwarsBattleShowTimeChart"
@@ -74,7 +74,16 @@ client-only
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
       //-     | viewpoint: {{viewpoint}}
-      DebugPre(v-if="development_p") {{record}}
+
+      // 循環参照エラーになるため使えない
+      //- DebugPre(v-if="development_p") {{record}}
+      // おそらく
+      // time_chart_params.tcv_normal.labels
+      // time_chart_params.tcv_accretion.labels
+      // が同じ参照になっているからと思われる
+      // 面倒なのでもうこれ↓で確認すること
+      //- http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.json?basic_and_time_chart_fetch=true&viewpoint=black&__prepare_destroy__=1
+      //- http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401/?viewpoint=black&__prepare_destroy__=1
 </template>
 
 <script>
@@ -111,7 +120,6 @@ export default {
       short_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
-      time_chart_params: null, // 時間チャートのデータ
     }
   },
   provide() {
@@ -142,23 +150,16 @@ export default {
     // const record = await $axios.$get(`/w/${params.key}.json`, {params: {ogp_only: true, basic_fetch: true, ...query}})
 
     const params = {
-      basic_fetch: true,
+      basic_and_time_chart_fetch: true,
       // memberships の順序を [black, white] に固定する
       // これを入れないと viewpoint と対象者が設定されなかったとき処理で、勝った方が左になる
       // この挙動は下の表示で確認できる
       viewpoint: "black",
     }
-
-    // 重要なのはこっちなので待つ
-    return Promise.all([
-      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: params}).then(e => {
-        this.record = e
-        this.record_setup()
-      }),
-      this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: {time_chart_fetch: true}}).then(e => {
-        this.time_chart_params = e.time_chart_params
-      }),
-    ])
+    this.$axios.$get(`/w/${this.$route.params.key}.json`, {params: params}).then(e => {
+      this.record = e
+      this.record_setup()
+    })
   },
 
   mounted() {

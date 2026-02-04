@@ -9,6 +9,6 @@ export const mod_chart = {
     TimeChartZoomInfo()       { return TimeChartZoomInfo                                            },
     time_chart_zoom_info()    { return this.TimeChartZoomInfo.fetch(this.time_chart_zoom_key)       },
 
-    current_source()          { return this.time_chart_params[this.time_chart_variant_info.key]     },
+    current_source()          { return this.record.time_chart_params[this.time_chart_variant_info.key] },
   },
 }

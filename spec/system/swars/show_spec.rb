@@ -68,7 +68,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
     visit_to "/swars/battles/#{@key}"
     sidebar_open
     switch_to_window(window_opened_by { menu_item_click("本家") })
-    assert { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
+    assert { current_url == "https://shogiwars.heroz.jp/games/#{@key}" }
   end
 
   describe "タイムチャート" do
@@ -94,5 +94,10 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   it "開いたときスライダーにフォーカスしている" do
     visit_to "/swars/battles/#{@key}"
     assert_selector(".CustomShogiPlayer .b-slider-thumb", focused: true)
+  end
+
+  it "古くなって消えたレコードに再度直リンクでアクセスしたときでも再度クロールするので表示できる" do
+    visit_to "/swars/battles/#{@key}", __prepare_destroy__: true
+    assert_selector(".SwarsBattleShowApp")
   end
 end

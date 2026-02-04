@@ -3,16 +3,32 @@ module Swars
     concern :ShowMod do
       private
 
+      # local 確認用
+      # http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401/?viewpoint=black&__prepare_destroy__=1
+      # http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.json?basic_and_time_chart_fetch=true&viewpoint=black&__prepare_destroy__=1
+      #
+      # REMOTE_RUN=1 での確認用
+      # http://localhost:4000/swars/battles/shikacha-tampopochan-20250720_192850/?viewpoint=black&__prepare_destroy__=1
+      # http://localhost:3000/w/shikacha-tampopochan-20250720_192850.json?basic_and_time_chart_fetch=true&viewpoint=black&__prepare_destroy__=1
       def current_record
         @current_record ||= yield_self do
           if key = params[:id].presence
             key = BattleKey.create(key) # 不正なIDはここで例外になるので本家にアクセスはいかない
-            if AppConfig[:swars_show_crawl]
-              if !from_crawl_bot?
-                Importer::BattleImporter.new(key: key, BattleNotFound: params[:BattleNotFound]).call # すでにあるならskipしている
+            if Rails.env.local? && params[:__prepare_destroy__]
+              if e = Battle.find_by(key: key)
+                e.destroy!
               end
             end
-            Battle.find_by!(key: key)
+            record = Battle.find_by(key: key)
+            unless record
+              if AppConfig[:swars_show_crawl]
+                if !from_crawl_bot?
+                  Importer::BattleImporter.new(key: key, BattleNotFound: params[:BattleNotFound]).call # すでにあるならskipしている
+                end
+              end
+              record = Battle.find_by!(key: key)
+            end
+            record
           else
             Battle.new
           end

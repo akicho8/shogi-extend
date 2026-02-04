@@ -72,18 +72,17 @@ module BattleControllerSharedMethods
           render json: decorator.as_json
           return
         end
-      end
 
-      if request.format.json?
         if params[:basic_fetch]
           render json: js_record_for(current_record)
           return
         end
-      end
 
-      if request.format.json?
-        if params[:time_chart_fetch]
-          render json: { time_chart_params: current_record.time_chart_params }
+        if params[:basic_and_time_chart_fetch]
+          render json: {
+            **js_record_for(current_record),
+            time_chart_params: current_record.time_chart_params,
+          }
           return
         end
 

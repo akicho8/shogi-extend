@@ -1,6 +1,7 @@
 require "./setup"
 key = Swars::BattleKey["raminitk-nakkunnBoy-20240823_213402"]
 key = Swars::BattleKey["shogi_GPT-yukky1119-20250226_161410"]
+key = Swars::BattleKey["shogi_GPT-yukky1119-20250226_161410"]
 info = Swars::Agent::Record.new(remote_run: true, key: key).fetch
 pp info
 pa = Swars::Agent::PropsAdapter.new(info)
