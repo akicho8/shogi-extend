@@ -323,7 +323,6 @@ export default {
       +setvar(sp_board_aspect_ratio, 1.0)                                                        // 盤を正方形化
       +setvar(sp_star_size, calc(var(--xy_grid_star_size) / 100.0))                              // 星の大きさ
       +setvar(sp_star_color, hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%)))             // 星の色
-      +setvar(sp_star_z_index, -1)                                                               // 星を盤の裏に表示(重要)
 
   &.is_input_mode_tap
     +setvar(sp_board_piece_size, 0.766)                                                          // セル内の駒の大きさ
