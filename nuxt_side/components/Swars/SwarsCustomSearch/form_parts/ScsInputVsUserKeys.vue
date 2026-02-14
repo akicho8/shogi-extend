@@ -16,7 +16,7 @@ b-field.field_block.ScsInputVsUserKeys(custom-class="is-small")
     @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"
-    max-height="50vh"
+    max-height="50dvh"
     expanded
     attached
     :confirm-keys="[',', 'Tab', 'Enter', ' ']"

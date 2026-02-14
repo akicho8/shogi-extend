@@ -312,8 +312,8 @@ export default {
     background-color: hsla(0, 0%, 0%, 0.7)
     z-index: 2
 
-  .screen_container // 100vw x 100vh 相当の範囲
-    height: 100vh   // 初期値(JSで上書きする)
+  .screen_container // 100dvw x 100dvh 相当の範囲
+    height: 100dvh   // 初期値(JSで上書きする)
 
     //////////////////////////////////////////////////////////////////////////////// カーソルを消す
     &.mouse_cursor_hidden_p

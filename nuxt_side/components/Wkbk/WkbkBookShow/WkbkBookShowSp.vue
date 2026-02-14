@@ -186,7 +186,7 @@ export default {
   .CustomShogiPlayerWrap
     width: 100%
     +tablet
-      max-width: 68vmin
+      max-width: 68dvmin
       padding-top: unset
       padding-bottom: unset
 

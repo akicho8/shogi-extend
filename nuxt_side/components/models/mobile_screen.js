@@ -1,4 +1,4 @@
-// 100vh相当の範囲に実際に見えている範囲(innerHeight)を設定する
+// 100dvh相当の範囲に実際に見えている範囲(innerHeight)を設定する
 
 import { MyMobile } from "./my_mobile.js"
 

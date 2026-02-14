@@ -554,7 +554,7 @@ export default {
       +touch
         width: calc(var(--touch_board_width) * 100%)
       +desktop
-        width: calc(100vmin * 0.50)
+        width: calc(100dvmin * 0.50)
 
     .CustomShogiPlayer
       +setvar(sp_board_padding, 0)                                                               // 盤の隙間なし

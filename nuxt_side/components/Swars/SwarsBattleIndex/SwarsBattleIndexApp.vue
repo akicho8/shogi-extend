@@ -27,7 +27,7 @@
             b-autocomplete#query(
               open-on-focus
               spellcheck="false"
-              max-height="50vh"
+              max-height="50dvh"
               size="is-medium"
               v-model.trim="query"
               :data="search_input_complement_list"

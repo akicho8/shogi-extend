@@ -28,7 +28,7 @@ export default {
 <style lang="sass">
 .TrackLogModal
   // +modal_width(50rem)
-  // +modal_width(95vw)
+  // +modal_width(95dvw)
   .modal-card-body
     padding: 0rem
 </style>

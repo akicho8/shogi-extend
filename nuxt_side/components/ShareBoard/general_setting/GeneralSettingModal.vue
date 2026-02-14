@@ -60,7 +60,7 @@ export default {
 .GeneralSettingModal
   +modal_width(800px)
   +modal_height(700px)
-  +modal_height_if_mobile(60vh)
+  +modal_height_if_mobile(60dvh)
   +bulma_columns_vertical_minus_margin_clear
 
   // .modal-card

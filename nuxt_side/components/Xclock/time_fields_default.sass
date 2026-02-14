@@ -3,24 +3,24 @@
     .time_value
       // スマホ縦持ち
       @media (orientation: portrait)
-        font-size: 10vmin !important
+        font-size: 10dvmin !important
     // 1行表示
     &.display_lines-1
       .time_label
         display: none   // ラベル除去
       .time_value
-        font-size: 25vmin // 1行5文字
-        // font-size: calc(50vw / 4)
+        font-size: 25dvmin // 1行5文字
+        // font-size: calc(50dvw / 4)
       &.text_width-7
         .time_value
-          font-size: 20vmin // 1行7文字
+          font-size: 20dvmin // 1行7文字
     // 2行表示
     &.display_lines-2
       .time_value
-        font-size: 25vmin // 2行5文字
+        font-size: 25dvmin // 2行5文字
       &.text_width-7
         .time_value
-          font-size: 20vmin // 2行7文字
+          font-size: 20dvmin // 2行7文字
       .time_value
         margin-top: 0  // 2行表示では隙間がとれるので広めに開ける
       .field
@@ -31,7 +31,7 @@
       .time_label
         font-size: $size-7
       .time_value
-        font-size: 12vmin // 3行5,7文字
+        font-size: 12dvmin // 3行5,7文字
         margin-top: 0rem
       .field
         &:not(:first-child)

@@ -20,7 +20,7 @@ b-field.field_block.ScsInputTag(custom-class="is-small")
     @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"
-    max-height="50vh"
+    max-height="50dvh"
     group-field="name"
     group-options="values"
     expanded

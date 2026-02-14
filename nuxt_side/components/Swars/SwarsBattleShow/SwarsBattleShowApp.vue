@@ -417,13 +417,13 @@ export default {
     justify-content: center
     align-items: center
     flex-direction: column
-    // height: 100vh               // app_buttons_container を画面外にする
+    // height: 100dvh               // app_buttons_container を画面外にする
 
   .CustomShogiPlayer
     +tablet
-      max-width: calc(100vmin * 0.65)
+      max-width: calc(100dvmin * 0.65)
     +desktop
-      max-width: calc(100vmin * 0.75)
+      max-width: calc(100dvmin * 0.75)
 
   //////////////////////////////////////////////////////////////////////////////// ShogiPlayer の下のボタンたち
   .app_buttons_container

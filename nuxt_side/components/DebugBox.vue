@@ -35,7 +35,7 @@ name: "DebugBox",
   background-color: hsla(0, 0%, 0%, 0.7)
   padding: 1rem
   z-index: 100
-  max-width: 25vw
+  max-width: 25dvw
   overflow: auto
   white-space: nowrap
   border-radius: 0.5rem

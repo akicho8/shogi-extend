@@ -40,5 +40,5 @@ export default {
     +tablet
       padding-top: unset
       padding-bottom: unset
-      max-width: 60vmin
+      max-width: 60dvmin
 </style>

@@ -61,7 +61,7 @@ export default {
     //     border-radius: 4px
 
     // video
-    //   width: 100vw
+    //   width: 100dvw
     //   // width: 1024px
     //   // width: inherit
     //   // height: inherit

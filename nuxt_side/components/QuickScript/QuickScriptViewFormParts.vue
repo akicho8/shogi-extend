@@ -33,7 +33,7 @@
               :placeholder="form_part.placeholder"
               spellcheck="false"
               :data="QS.form_part_autocomplete_datalist(form_part)"
-              max-height="50vh"
+              max-height="50dvh"
               )
           template(v-else)
             b-input(
@@ -64,7 +64,7 @@
             @typing="text => QS.taginput_typing_handle(form_part, text)"
             @add="tag => QS.taginput_add_handle(form_part, tag)"
             @remove="tag => QS.taginput_remove_handle(form_part, tag)"
-            max-height="50vh"
+            max-height="50dvh"
             )
           //- template(v-else)
           //- b-taginput(

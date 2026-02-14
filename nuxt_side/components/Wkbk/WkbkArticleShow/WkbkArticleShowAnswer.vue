@@ -58,7 +58,7 @@ export default {
           margin: $wkbk_share_gap 0
           width: 100%
           +tablet
-            max-width: 66vmin
+            max-width: 66dvmin
             padding-top: unset
             padding-bottom: unset
 </style>

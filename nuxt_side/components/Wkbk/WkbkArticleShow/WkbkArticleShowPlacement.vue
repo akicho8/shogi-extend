@@ -102,7 +102,7 @@ export default {
 
       width: 100%
       +tablet
-        max-width: 54vmin
+        max-width: 54dvmin
       .footer_buttons
         .button
           margin-bottom: 0

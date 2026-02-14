@@ -119,7 +119,7 @@ export default {
       @supports(height: 100svh)
         height: 75svh
       @supports not(height: 100svh)
-        height: 75vh
+        height: 75dvh
     +tablet
       height: 30rem
     +desktop

@@ -139,9 +139,9 @@ export default {
   +desktop
     +padding_tb(unset)
     &.is_sb_mode_play
-      max-width: calc(var(--sb_board_width) * 1.0vmin)
+      max-width: calc(var(--sb_board_width) * 1.0dvmin)
     &.is_sb_mode_edit
-      max-width: calc(var(--sb_board_width) * 1.0vmin * 0.75)
+      max-width: calc(var(--sb_board_width) * 1.0dvmin * 0.75)
 
   //////////////////////////////////////////////////////////////////////////////// 残り時間の少なさを背景色で伝える
   .CustomShogiPlayer

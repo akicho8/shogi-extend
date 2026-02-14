@@ -122,7 +122,7 @@ export default {
   +setvar(balloon-bg-color, white)
   +setvar(balloon-fg-color, transparent)
 
-  min-height: 100vh
+  min-height: 100dvh
 
   a
     color: $white

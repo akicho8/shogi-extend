@@ -57,10 +57,10 @@ $modal-background-background-color: bulmaRgba($black, 0.4);
 // 幅を狭めたいときは明示的に指定する
 $modal-content-width: 100%;
 
-// モバイル時の 100vh から引く値
+// モバイル時の 100dvh から引く値
 // デフォルトの 160px では表示範囲が大きすぎて iPhone だとフッターがスクロールして出てきたりして下のボタン押せない
-// なので 80vh になるように調整する
-// $modal-content-spacing-mobile: 20vh;
+// なので 80dvh になるように調整する
+// $modal-content-spacing-mobile: 20dvh;
 // ここで指定しても .modal-card の max-height の設定が二箇所になったもう片方に負ける
 // 設計が理解不能なのでCSSで調整する
 

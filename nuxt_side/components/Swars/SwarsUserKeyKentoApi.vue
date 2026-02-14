@@ -66,7 +66,7 @@ export default {
 
 <style lang="sass">
 .SwarsUserKeyKentoApi
-  min-height: 100vh
+  min-height: 100dvh
 
   .MainSection.section
     &:first-of-type

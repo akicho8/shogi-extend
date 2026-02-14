@@ -47,7 +47,7 @@ export const order_modal = {
           component: OrderModal,
           props: { },
           canCancel: [],
-          // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
+          // fullScreen: true, // 左右に余白ができるのと 100dvh はスマホでおかしくなる
           onCancel: () => {
             GX.assert(false, "must not happen")
             this.sfx_click()
