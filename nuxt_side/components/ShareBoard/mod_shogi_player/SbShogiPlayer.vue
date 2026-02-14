@@ -2,7 +2,7 @@
 .SbShogiPlayer.ToastMainBoard.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer(
     v-bind="sp_bind"
-    v-on="sp_hook"
+    v-on="sp_component_events"
     :sp_viewpoint.sync="SB.viewpoint"
   )
   SbEditModeToolBelt
@@ -93,7 +93,7 @@ export default {
     },
 
     // 動作を受け取るやつら
-    sp_hook() {
+    sp_component_events() {
       const hv = {}
       hv["ev_play_mode_move"]              = this.SB.ev_play_mode_move
       hv["ev_edit_mode_short_sfen_change"] = this.SB.ev_edit_mode_short_sfen_change

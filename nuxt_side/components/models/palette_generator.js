@@ -7,7 +7,7 @@ export const PaletteGenerator = {
     params = {
       diff: 10,     // 1回で進む差
       count: 10,    // これで割った数だけ1度に進む
-      alpha: 0.5,   // 非透明度
+      alpha: 0.5,   // 不透明度
       ...params,
     }
     const e = params
@@ -26,7 +26,7 @@ export const PaletteGenerator = {
     params = {
       range: 180,   // hueの幅
       count: 10,    // これで割った数だけ1度に進む
-      alpha: 0.4,   // 非透明度
+      alpha: 0.4,   // 不透明度
       ...params,
     }
     const e = params
@@ -70,7 +70,7 @@ export const PaletteGenerator = {
 
   palette_type3(params = {}) {
     params = {
-      alpha: 0.5,   // 非透明度
+      alpha: 0.5,   // 不透明度
       ...params,
     }
     const e = params

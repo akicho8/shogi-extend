@@ -16,7 +16,7 @@ MainSection.WkbkBookShowSp
           CustomShogiPlayer(
             ref="main_sp"
             v-bind="sp_bind"
-            v-on="sp_hook"
+            v-on="sp_component_events"
             :sp_body="base.current_init_sfen"
             :sp_viewpoint="base.current_viewpoint"
             :sp_turn="-1"
@@ -113,7 +113,7 @@ export default {
     // },
 
     // 動作を受け取るやつら
-    sp_hook() {
+    sp_component_events() {
       const hv = {}
 
       hv.ev_action_piece_lift     = this.TheApp.ev_action_piece_lift     // 意図して持ち上げた
