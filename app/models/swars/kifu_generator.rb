@@ -11,7 +11,7 @@
 # Swars::KifuGenerator.furi_pattern                              # => [["+2878HI", 600], ["-8232HI", 600]]
 # Swars::KifuGenerator.furi_pattern(4)                           # => [["+2878HI", 600], ["-8232HI", 600], ["+5958OU", 600], ["-5152OU", 600]]
 #
-# ~/src/shogi-extend/workbench/swars/kifu_generator.rb
+# ~/src/shogi/shogi-extend/workbench/swars/kifu_generator.rb
 module Swars
   class KifuGenerator
     LOOP_HAND_LIST = ["+5958OU", "-5152OU", "+5859OU", "-5251OU"]                       # 王を上下に動かす

@@ -90,7 +90,7 @@ export const mod_illegal = {
 
     // -------------------------------------------------------------------------------- 連続王手の千日手用
 
-    // /Users/ikeda/src/shogi-player/components/mod_illegal.js と合わせること
+    // /Users/ikeda/src/shogi/shogi-player/components/mod_illegal.js と合わせること
     illegal_create_perpetual_check(e) {
       const illegal_hv = {
         illegal_info: IllegalInfo.fetch("illegal_perpetual_check"),

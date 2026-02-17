@@ -127,7 +127,7 @@ p <- config(p, displayModeBar = TRUE)
 if (interactive()) {
   p
 } else {
-  out_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/user-dist.html"
+  out_path <- "~/src/shogi/shogi-extend/nuxt_side/static/lab/swars/user-dist.html"
   saveWidget(p, out_path, selfcontained = TRUE)
   system(sprintf("open -a 'Google Chrome' %s", out_path))
 }

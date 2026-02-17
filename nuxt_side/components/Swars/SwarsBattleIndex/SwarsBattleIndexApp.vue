@@ -188,7 +188,7 @@ export default {
       info = this.SceneInfo.fetch(info)
       this.sfx_click()
       this.talk(info.name)
-      if (this.keyboard_meta_p(e)) {
+      if (this.KeyboardHelper.modifier_p(e)) {
         this.other_window_open(this.tab_switch_router_url({layout_key: "is_layout_board", scene_key: info.key}))
       } else {
         this.layout_key = "is_layout_board" // 強制的に「盤面」に切り替える
@@ -202,7 +202,7 @@ export default {
       info = this.LayoutInfo.fetch(info)
       this.sfx_click()
       this.talk(info.name)
-      if (this.keyboard_meta_p(e)) {
+      if (this.KeyboardHelper.modifier_p(e)) {
         this.other_window_open(this.tab_switch_router_url({layout_key: info.key}))
       } else {
         this.layout_key = info.key

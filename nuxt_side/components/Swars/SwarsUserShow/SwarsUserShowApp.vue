@@ -116,7 +116,7 @@ export default {
 
     // メタキーと一緒にクリックした場合のみ別タブで開く
     tab_item_click_handle(e) {
-      if (this.keyboard_meta_p(e)) {
+      if (this.KeyboardHelper.modifier_p(e)) {
         this.other_window_open(this.tab_switch_router_url)
       }
     },

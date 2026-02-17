@@ -1,4 +1,4 @@
-# ~/src/shogi-extend/nuxt_side/layouts/error.vue
+# ~/src/shogi/shogi-extend/nuxt_side/layouts/error.vue
 
 module Swars
   class BattlesController

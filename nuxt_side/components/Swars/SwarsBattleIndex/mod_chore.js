@@ -27,7 +27,7 @@ export const mod_chore = {
       if (this.xi && GX.present_p(this.xi.current_swars_user_key)) {
         this.sfx_click()
         const url = this.$router.resolve(func()).href
-        if (this.keyboard_meta_p(e)) {
+        if (this.KeyboardHelper.modifier_p(e)) {
           this.other_window_open(url)
         } else {
           this.$router.push(url)
@@ -60,7 +60,7 @@ export const mod_chore = {
       if (this.xi) {
         const row = this.xi.records[0]
         if (row) {
-          // const format = this.keyboard_meta_p(e) ? "ki2" : "kif"
+          // const format = this.KeyboardHelper.modifier_p(e) ? "ki2" : "kif"
           this.kifu_copy_handle(row, options)
           return true
         }

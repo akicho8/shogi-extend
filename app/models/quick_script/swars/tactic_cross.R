@@ -23,7 +23,7 @@ rank_order <- c(
 # 凡例（戦法の一覧）を取得 ------------------------------------------------------------
 
 message("凡例リスト読み込み: 開始")
-target_names_json <- system("cd ~/src/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'", intern = TRUE)
+target_names_json <- system("cd ~/src/shogi/shogi-extend && rails runner 'QuickScript::Swars::TacticCrossScript::LegendGenerator.generate'", intern = TRUE)
 target_names <- fromJSON(paste(target_names_json, collapse = ""))
 message("凡例リスト読み込み: 完了")
 # target_names <- c("居飛車", "振り飛車") # 初期表示する戦法
@@ -186,7 +186,7 @@ fig <- layout(
 if (interactive()) {
   fig
 } else {
-  output_file <- "~/src/shogi-extend/nuxt_side/static/lab/swars/tactic-cross.html"
+  output_file <- "~/src/shogi/shogi-extend/nuxt_side/static/lab/swars/tactic-cross.html"
   saveWidget(fig, output_file, selfcontained = TRUE)
   system(sprintf("open -a 'Google Chrome' %s", output_file))
 }

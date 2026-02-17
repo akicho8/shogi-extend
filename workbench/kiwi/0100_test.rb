@@ -28,7 +28,7 @@ lemon1.main_process
 lemon1.reload
 lemon1.status_key                  # => "成功"
 lemon1.browser_path                # => "/system/x-files/04/2a/32_20211003154247_1200x630_4s.gif"
-lemon1.real_path                   # => #<Pathname:/Users/ikeda/src/shogi-extend/public/system/x-files/04/2a/32_20211003154247_1200x630_4s.gif>
+lemon1.real_path                   # => #<Pathname:/Users/ikeda/src/shogi/shogi-extend/public/system/x-files/04/2a/32_20211003154247_1200x630_4s.gif>
 lemon1.thumbnail_browser_path.to_s # => ""
 lemon1.thumbnail_real_path.to_s    # => ""
 tp lemon1

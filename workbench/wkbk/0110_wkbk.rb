@@ -94,6 +94,6 @@ exit
 
 # article = Wkbk::Article.first
 # tp article.as_json(include: [:user, :moves_answers])
-# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- /Users/ikeda/src/shogi-extend/workbench/config/environment (LoadError)
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- /Users/ikeda/src/shogi/shogi-extend/workbench/config/environment (LoadError)
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require'
 # ~> 	from -:2:in `<main>'

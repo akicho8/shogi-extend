@@ -5,7 +5,7 @@ module QuickScript
       self.description = "足し算を行う"
       self.form_method = :get
 
-      # ~/src/shogi-extend/nuxt_side/components/QuickScript/QuickScriptView.vue
+      # ~/src/shogi/shogi-extend/nuxt_side/components/QuickScript/QuickScriptView.vue
       def form_parts
         super + [
           {

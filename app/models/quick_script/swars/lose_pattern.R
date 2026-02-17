@@ -122,7 +122,7 @@ p <- config(p, displayModeBar = TRUE)
 if (interactive()) {
   p
 } else {
-  full_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/lose-pattern.html"
+  full_path <- "~/src/shogi/shogi-extend/nuxt_side/static/lab/swars/lose-pattern.html"
   htmlwidgets::saveWidget(p, full_path, selfcontained = TRUE)
   system(sprintf("open -a 'Google Chrome' %s", full_path))
 }

@@ -1,4 +1,4 @@
-# ~/src/shogi-extend/nuxt_side/components/ShareBoard/room/mod_room_channel.js
+# ~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/room/mod_room_channel.js
 module ShareBoard
   class RoomChannel < ApplicationCable::Channel
     class SfenNotReachError < StandardError

@@ -11,7 +11,7 @@ export const mod_shortcut = {
     keydown_handle(e) {
       if (this.is_running_p || this.development_p) {
         this.clog(e)
-        if (this.focus_on_input_tag_p()) {
+        if (this.DomHelper.focus_on_input_tag_p()) {
           return
         }
         let processed = false
@@ -19,15 +19,15 @@ export const mod_shortcut = {
           this.kb_shortcut_modal_shortcut_handle()
           processed = true
         }
-        if (this.keyboard_single_key_equal(e, "x")) {
+        if (this.KeyboardHelper.pure_key_p(e, "x")) {
           this.kb_next_handle("mistake")
           processed = true
         }
-        if (this.keyboard_single_key_equal(e, "o") || e.code === "Enter") {
+        if (this.KeyboardHelper.pure_key_p(e, "o") || e.code === "Enter") {
           this.kb_next_handle("correct")
           processed = true
         }
-        if (this.keyboard_single_key_equal(e, "q") || e.code === "Escape") {
+        if (this.KeyboardHelper.pure_key_p(e, "q") || e.code === "Escape") {
           this.quit_handle()
           processed = true
         }
@@ -35,7 +35,7 @@ export const mod_shortcut = {
           this.previous_handle()
           processed = true
         }
-        if (this.keyboard_single_key_equal(e, "p") || e.code === "Space") {
+        if (this.KeyboardHelper.pure_key_p(e, "p") || e.code === "Space") {
           this.sidebar_toggle()
           processed = true
         }

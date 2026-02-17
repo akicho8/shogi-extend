@@ -123,7 +123,7 @@ combined <- layout(
 if (interactive()) {
   combined
 } else {
-  full_path <- "~/src/shogi-extend/nuxt_side/static/lab/swars/hourly-active-user.html"
+  full_path <- "~/src/shogi/shogi-extend/nuxt_side/static/lab/swars/hourly-active-user.html"
   saveWidget(combined, full_path, selfcontained = TRUE)
   system(sprintf("open -a 'Google Chrome' %s", full_path))
 }

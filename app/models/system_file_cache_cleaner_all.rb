@@ -11,7 +11,7 @@ class SystemFileCacheCleanerAll
     # これはしばらく touch でファイルを更新してから削除しないと Amazon 代がかかってしまう
     # なので数ヶ月後に execute: true にする
 
-    # ~/src/shogi-extend/public/system/talk
+    # ~/src/shogi/shogi-extend/public/system/talk
     SystemFileCacheCleanerOne.call({
         :subject          => "100日間使われていない発言mp3の削除",
         :target_dir       => Talk::Main.output_root_dir,
@@ -21,7 +21,7 @@ class SystemFileCacheCleanerAll
         :execute          => true,
       })
 
-    # ~/src/shogi-extend/public/system/x-files
+    # ~/src/shogi/shogi-extend/public/system/x-files
     SystemFileCacheCleanerOne.call({
         :subject          => "100日間使われていない盤面画像の削除",
         :target_dir       => MediaBuilder.output_root_dir,

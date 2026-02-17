@@ -1,3 +1,3 @@
-ここの json は ~/src/shogi-extend/workbench/ppl/json/main.rb で生成したものを手動修正したもの
+ここの json は ~/src/shogi/shogi-extend/workbench/ppl/json/main.rb で生成したものを手動修正したもの
 
 

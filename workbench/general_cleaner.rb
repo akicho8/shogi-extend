@@ -3,7 +3,7 @@ sql
 GeneralCleaner.new(verbose: true, subject: "subject").call
 # >>   TRANSACTION (0.3ms)  BEGIN /*application='ShogiWeb'*/
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'
-# >>   AppLog Create (2.2ms)  INSERT INTO `app_logs` (`level`, `emoji`, `subject`, `body`, `process_id`, `created_at`) VALUES ('trace', '', '', '[\"/Users/ikeda/src/shogi-extend/app/models/free_space.rb:22\", :call]', 42898, '2025-07-28 10:46:22') /*application='ShogiWeb'*/
+# >>   AppLog Create (2.2ms)  INSERT INTO `app_logs` (`level`, `emoji`, `subject`, `body`, `process_id`, `created_at`) VALUES ('trace', '', '', '[\"/Users/ikeda/src/shogi/shogi-extend/app/models/free_space.rb:22\", :call]', 42898, '2025-07-28 10:46:22') /*application='ShogiWeb'*/
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'
 # >>   TRANSACTION (1.1ms)  COMMIT /*application='ShogiWeb'*/
 # >>   ↳ app/models/app_log.rb:103:in 'AppLog.call'

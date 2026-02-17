@@ -1,16 +1,16 @@
 example_id                                                                          | status  | run_time        |
 ----------------------------------------------------------------------------------- | ------- | --------------- |
-~/src/shogi-extend/spec/controllers/share_boards_controller_spec.rb[1:9]                             | failed  | 0.28747 seconds |
-~/src/shogi-extend/spec/models/share_board/chat_ai/chat_ai_client_runner_spec.rb[1:1]                | failed  | 0.68223 seconds |
-~/src/shogi-extend/spec/models/share_board/chat_ai/chat_ai_client_spec.rb[1:1]                       | failed  | 0.51633 seconds |
-~/src/shogi-extend/spec/models/share_board/chat_ai/responder/responder_res_spec.rb[1:1]              | failed  | 0.50373 seconds |
-~/src/shogi-extend/spec/models/share_board/chat_ai/responder/responder_something_say_spec.rb[1:1]    | failed  | 0.4419 seconds  |
-~/src/shogi-extend/spec/models/share_board/chat_ai/responder/responder_something_say_spec.rb[1:2]    | failed  | 0.75533 seconds |
-~/src/shogi-extend/spec/models/share_board/room_spec.rb[1:2:2:1]                                     | failed  | 0.45759 seconds |
-~/src/shogi-extend/spec/models/share_board/room_spec.rb[1:2:2:2]                                     | failed  | 1.08 seconds    |
-~/src/shogi-extend/spec/models/swars/user/stat/matrix_stat_spec.rb[1:1:5]                            | failed  | 1.73 seconds    |
-~/src/shogi-extend/spec/system/share_board/その他_手番でないのに動かそうとしたときの反応_spec.rb[1:2]                      | failed  | 28.06 seconds   |
-~/src/shogi-extend/spec/system/share_board/チャット_ChatGPTが常駐している_spec.rb[1:1]                          | failed  | 41.81 seconds   |
-~/src/shogi-extend/spec/system/share_board/チャット_内部コマンド_その他_spec.rb[1:7]                              | failed  | 40.7 seconds    |
-~/src/shogi-extend/spec/system/share_board/チャット_指定の確率でAIが返答する_spec.rb[1:1]                           | failed  | 15.05 seconds   |
-~/src/shogi-extend/spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:2]                        | failed  | 37.77 seconds   |
+~/src/shogi/shogi-extend/spec/controllers/share_boards_controller_spec.rb[1:9]                             | failed  | 0.28747 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/chat_ai/chat_ai_client_runner_spec.rb[1:1]                | failed  | 0.68223 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/chat_ai/chat_ai_client_spec.rb[1:1]                       | failed  | 0.51633 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/chat_ai/responder/responder_res_spec.rb[1:1]              | failed  | 0.50373 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/chat_ai/responder/responder_something_say_spec.rb[1:1]    | failed  | 0.4419 seconds  |
+~/src/shogi/shogi-extend/spec/models/share_board/chat_ai/responder/responder_something_say_spec.rb[1:2]    | failed  | 0.75533 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/room_spec.rb[1:2:2:1]                                     | failed  | 0.45759 seconds |
+~/src/shogi/shogi-extend/spec/models/share_board/room_spec.rb[1:2:2:2]                                     | failed  | 1.08 seconds    |
+~/src/shogi/shogi-extend/spec/models/swars/user/stat/matrix_stat_spec.rb[1:1:5]                            | failed  | 1.73 seconds    |
+~/src/shogi/shogi-extend/spec/system/share_board/その他_手番でないのに動かそうとしたときの反応_spec.rb[1:2]                      | failed  | 28.06 seconds   |
+~/src/shogi/shogi-extend/spec/system/share_board/チャット_ChatGPTが常駐している_spec.rb[1:1]                          | failed  | 41.81 seconds   |
+~/src/shogi/shogi-extend/spec/system/share_board/チャット_内部コマンド_その他_spec.rb[1:7]                              | failed  | 40.7 seconds    |
+~/src/shogi/shogi-extend/spec/system/share_board/チャット_指定の確率でAIが返答する_spec.rb[1:1]                           | failed  | 15.05 seconds   |
+~/src/shogi/shogi-extend/spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:2]                        | failed  | 37.77 seconds   |

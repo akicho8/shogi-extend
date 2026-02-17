@@ -21,4 +21,4 @@ npm install github:akicho8/shogi-player#main
 
 npm install
 
-grep shogi-player.git ~/src/shogi-extend/nuxt_side/package-lock.json
+grep shogi-player.git ~/src/shogi/shogi-extend/nuxt_side/package-lock.json

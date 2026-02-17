@@ -68,8 +68,8 @@ Wkbk::KifuDataImport.new.call
 tp Wkbk.info
 
 # >> 雑に攻める
-# >> /Users/ikeda/src/shogi-extend/kifu_data/雑に攻める/07_1.kif
-# >> /Users/ikeda/src/shogi-extend/kifu_data/雑に攻める/07_2.kif
+# >> /Users/ikeda/src/shogi/shogi-extend/kifu_data/雑に攻める/07_1.kif
+# >> /Users/ikeda/src/shogi/shogi-extend/kifu_data/雑に攻める/07_2.kif
 # >> |-------------------+-------+--------|
 # >> | model             | count | 最終ID |
 # >> |-------------------+-------+--------|

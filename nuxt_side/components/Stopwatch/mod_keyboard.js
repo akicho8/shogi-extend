@@ -12,7 +12,7 @@ export const mod_keyboard = {
       if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) {
         return
       }
-      if (this.focus_on_input_tag_p()) {
+      if (this.DomHelper.focus_on_input_tag_p()) {
         return
       }
 

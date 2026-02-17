@@ -1,4 +1,4 @@
-~/src/shogi-extend/app/models/share_board/dashboard.rb
+~/src/shogi/shogi-extend/app/models/share_board/dashboard.rb
 
 http://localhost:4000/share-board/dashboard?room_key=dev_room
 http://localhost:4000/share-board/dashboard
@@ -11,26 +11,26 @@ http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b
 
 http://localhost:4000/share-board/dev_room/dashboard
 
-~/src/shogi-extend/app/models/share_board/battle.rb
-~/src/shogi-extend/workbench/share_board/battle.rb
+~/src/shogi/shogi-extend/app/models/share_board/battle.rb
+~/src/shogi/shogi-extend/workbench/share_board/battle.rb
 
-~/src/shogi-extend/app/models/share_board/room.rb
-~/src/shogi-extend/workbench/share_board/room.rb
+~/src/shogi/shogi-extend/app/models/share_board/room.rb
+~/src/shogi/shogi-extend/workbench/share_board/room.rb
 
-~/src/shogi-extend/app/models/share_board.rb
-~/src/shogi-extend/app/models/share_board/battle_create.rb
-~/src/shogi-extend/app/models/share_board/dashboard.rb
-~/src/shogi-extend/app/models/share_board/membership.rb
-~/src/shogi-extend/app/models/share_board/root.rb
-~/src/shogi-extend/app/models/share_board/user.rb
-~/src/shogi-extend/app/controllers/api/share_boards_controller.rb
-~/src/shogi-extend/config/routes.rb
-~/src/shogi-extend/nuxt_side/components/ShareBoard/README.org
-~/src/shogi-extend/nuxt_side/components/ShareBoard/SbApp.vue
-~/src/shogi-extend/nuxt_side/components/ShareBoard/debug/SbDebug.vue
-~/src/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_resign.js
-~/src/shogi-extend/db/migrate/20230326000000_create_share_board.rb
-~/src/shogi-extend/workbench/share_board/
-~/src/shogi-extend/nuxt_side/components/ShareBoard/dashboard/
-~/src/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_battle_archive.js
-~/src/shogi-extend/nuxt_side/pages/share-board/_room_key/
+~/src/shogi/shogi-extend/app/models/share_board.rb
+~/src/shogi/shogi-extend/app/models/share_board/battle_create.rb
+~/src/shogi/shogi-extend/app/models/share_board/dashboard.rb
+~/src/shogi/shogi-extend/app/models/share_board/membership.rb
+~/src/shogi/shogi-extend/app/models/share_board/root.rb
+~/src/shogi/shogi-extend/app/models/share_board/user.rb
+~/src/shogi/shogi-extend/app/controllers/api/share_boards_controller.rb
+~/src/shogi/shogi-extend/config/routes.rb
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/README.org
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/SbApp.vue
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/debug/SbDebug.vue
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_resign.js
+~/src/shogi/shogi-extend/db/migrate/20230326000000_create_share_board.rb
+~/src/shogi/shogi-extend/workbench/share_board/
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/dashboard/
+~/src/shogi/shogi-extend/nuxt_side/components/ShareBoard/mod_resign/mod_battle_archive.js
+~/src/shogi/shogi-extend/nuxt_side/pages/share-board/_room_key/

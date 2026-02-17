@@ -25,7 +25,7 @@ export const mod_sfen_sync = {
 
       this.resend_init()
 
-      // 反則情報リストを作る /Users/ikeda/src/shogi-player/components/mod_illegal.js
+      // 反則情報リストを作る /Users/ikeda/src/shogi/shogi-player/components/mod_illegal.js
       const illegal_hv_list = [...e.illegal_hv_list]
       const illegal_hv = this.perpetual_check_detect(e)
       if (illegal_hv) {

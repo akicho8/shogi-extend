@@ -15,7 +15,7 @@ module Swars
 
       def fetch(type, url)
         if params[:RaiseConnectionFailed]
-          # ~/src/shogi-extend/app/controllers/swars/exception_catch.rb
+          # ~/src/shogi/shogi-extend/app/controllers/swars/exception_catch.rb
           # agent.get("https://httpbin.org/status/504") # Faraday::ServerError を発生させる
           raise Faraday::ConnectionFailed, ""
         end

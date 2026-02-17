@@ -78,7 +78,7 @@ export const mod_room_channel = {
       // this.toast_primary("入室しました")
     },
 
-    // ~/src/shogi-extend/app/channels/share_board/room_channel.rb
+    // ~/src/shogi/shogi-extend/app/channels/share_board/room_channel.rb
     async room_create() {
       this.tl_p("--> room_create")
       GX.assert(this.room_key, "this.room_key")

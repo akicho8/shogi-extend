@@ -13,7 +13,7 @@ export const mod_keyboard_shortcut = {
         console.log(e, e.shiftKey, e.ctrlKey, e.altKey, e.metaKey, e.key, e.code)
       }
 
-      if (this.focus_on_input_tag_p()) {
+      if (this.DomHelper.focus_on_input_tag_p()) {
         return
       }
 

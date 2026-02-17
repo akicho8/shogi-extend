@@ -4,6 +4,10 @@ import { AppHelper } from "@/components/models/app_helper.js"
 import { SpUtil } from "@/components/models/sp_util.js"
 import { MyMobile } from "@/components/models/my_mobile.js"
 
+import { KeyboardHelper } from "shogi-player/components/models/keyboard_helper.js"
+import { DomHelper } from "shogi-player/components/models/dom_helper.js"
+import { DeviseHelper } from "shogi-player/components/models/devise_helper.js"
+
 import TwemojiApi from "@twemoji/api"
 import _ from "lodash"
 const util = require("util")
@@ -251,57 +255,6 @@ export const vue_support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // b-input(@keydown.native.enter="enter_handle")
-    //
-    // enter_handle(e) {
-    //   if (this.keyboard_enter_p(e)) {
-    //     this.send_handle()
-    //   }
-    // },
-    //
-    // keyCode: 13   <-- 送信を意識した
-    // keyCode: 229  <-- IMEで変換した
-    //
-    keyboard_enter_p(e) {
-      return e.keyCode === 13
-    },
-
-    keyboard_meta_p(e) {
-      return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey
-    },
-
-    keyboard_shift_p(e) {
-      return e.shiftKey
-    },
-
-    keyboard_meta_without_shift_p(e) {
-      return e.ctrlKey || e.altKey || e.metaKey
-    },
-
-    keyboard_single_key_equal(e, key) {
-      return !this.keyboard_meta_p(e) && e.key === key
-    },
-
-    keyboard_single_code_equal(e, code) {
-      return !this.keyboard_meta_p(e) && e.code === code
-    },
-
-    focus_on_input_tag_p() {
-      const dom = document.activeElement
-      return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 本来は pointerType === "mouse" だけでいいはずだが、iPad の Google Chrome と iPad の Safari でも pointerType === "mouse" になってしまう
-    // したがって maxTouchPoints でタッチ可能なデバイスならマウスではないとする
-    mouse_event_p(e) {
-      if (e) {
-        const is_touch_capable = navigator.maxTouchPoints > 0
-        return e.pointerType === "mouse" && !is_touch_capable
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
@@ -337,8 +290,11 @@ export const vue_support = {
 
   // FIXME: plugin にする
   computed: {
-    _()          { return _          },
-    util()       { return util       },
+    _()              { return _              },
+    util()           { return util           },
+    DomHelper()      { return DomHelper      },
+    DeviseHelper()   { return DeviseHelper   },
+    KeyboardHelper() { return KeyboardHelper },
 
     __SYSTEM_TEST_RUNNING__() { return this.param_to_b("__SYSTEM_TEST_RUNNING__") },
   },

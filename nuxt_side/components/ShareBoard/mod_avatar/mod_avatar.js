@@ -81,7 +81,7 @@ export const mod_avatar = {
           return {
             url: v,
             background_size: "cover",
-            border_radius: "3px", // /Users/ikeda/src/shogi-player/components/Membership/MembershipLocationPlayerInfo.vue(99) に合わせている
+            border_radius: "3px", // /Users/ikeda/src/shogi/shogi-player/components/Membership/MembershipLocationPlayerInfo.vue(99) に合わせている
             flex_gap: "0.05",     // sp_board_horizontal_gap と合わせること
           }
         }

@@ -37,7 +37,7 @@ export const mod_chat = {
     },
 
     chat_modal_open_handle(e = null) {
-      if (this.mouse_event_p(e)) {
+      if (this.DeviseHelper.mouse_click_event_p(e)) {
         this.toast_primary("ENTER キーで開こう")
       }
       this.sidebar_close()
@@ -46,7 +46,7 @@ export const mod_chat = {
     },
 
     chat_modal_close_handle(e = null) {
-      if (this.mouse_event_p(e)) {
+      if (this.DeviseHelper.mouse_click_event_p(e)) {
         this.toast_primary("ENTER キーで閉じよう")
       }
       this.sidebar_close()
@@ -125,10 +125,10 @@ export const mod_chat = {
 
     send_trigger_p(e) {
       if (this.send_trigger_info.key === "send_trigger_enter") {
-        return this.keyboard_enter_p(e)
+        return this.KeyboardHelper.pure_enter_p(e)
       }
       if (this.send_trigger_info.key === "send_trigger_meta_enter") {
-        return this.keyboard_enter_p(e) && this.keyboard_meta_p(e)
+        return this.KeyboardHelper.pure_enter_p(e) && this.KeyboardHelper.modifier_p(e)
       }
     },
 

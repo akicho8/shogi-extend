@@ -17,7 +17,7 @@ export const mod_shortcut = {
       if (this.$nuxt.isOffline) {
         return
       }
-      if (this.focus_on_input_tag_p()) {
+      if (this.DomHelper.focus_on_input_tag_p()) {
         return
       }
       const info = ShortcutInfo.values.find(o => o._if(this, e))

@@ -21,9 +21,9 @@ Timecop.freeze("2000-01-02") do
   tp RuleInfo[:rule100t].time_records(scope_key: "scope_today", entry_name_uniq_p: "false")
   tp RuleInfo[:rule100t].time_records(scope_key: "scope_today", entry_name_uniq_p: "true")
 end
-# ~> /Users/ikeda/src/shogi-extend/app/models/xy_master/time_record.rb:86:in `rule_key': undefined method `key' for nil:NilClass (NoMethodError)
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/xy_master/time_record.rb:143:in `ranking_remove'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/xy_master/time_record.rb:78:in `block in <class:TimeRecord>'
+# ~> /Users/ikeda/src/shogi/shogi-extend/app/models/xy_master/time_record.rb:86:in `rule_key': undefined method `key' for nil:NilClass (NoMethodError)
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/xy_master/time_record.rb:143:in `ranking_remove'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/xy_master/time_record.rb:78:in `block in <class:TimeRecord>'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:238:in `block in halting_and_conditional'

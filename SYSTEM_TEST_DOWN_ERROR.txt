@@ -29,7 +29,7 @@
 
     0: ExitFrame [pc: 0x10092fbd9]
 Security context: 0x32f9387408a1 <JSObject>
-    1: mergeOptions(aka mergeOptions) [0x32f991266c39] [/Users/ikeda/src/shogi-extend/nuxt_side/node_modules/vue/dist/vue.runtime.common.dev.js:~1508] [pc=0x19a6b5ff0d62](this=0x32f9a96404a9 <undefined>,0x32f916ce05d1 <Object map = 0x32f9b41cc2d1>,0x32f9d343a519 <Object map = 0x32f90efeac81>,0x32f9a96404a9 <undefined>)
+    1: mergeOptions(aka mergeOptions) [0x32f991266c39] [/Users/ikeda/src/shogi/shogi-extend/nuxt_side/node_modules/vue/dist/vue.runtime.common.dev.js:~1508] [pc=0x19a6b5ff0d62](this=0x32f9a96404a9 <undefined>,0x32f916ce05d1 <Object map = 0x32f9b41cc2d1>,0x32f9d343a519 <Object map = 0x32f90efeac81>,0x32f9a96404a9 <undefined>)
     2: resolveConstructorOptions(aka resol...
 
 FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory

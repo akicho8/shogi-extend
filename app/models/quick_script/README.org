@@ -1,12 +1,12 @@
-~/src/shogi-extend/nuxt_side/pages/lab
+~/src/shogi/shogi-extend/nuxt_side/pages/lab
 nuxt_side/components/QuickScript/QuickScriptView.vue
 http://localhost:4000/lab?a=1 は http://localhost:4000/lab/chore/index?a=1 にリダイレクトする
 http://localhost:4000/lab/prison?a=1 は http://localhost:4000/lab/chore/index?a=1 にリダイレクトする
 
 * 専用ページでの呼び出し例
 
-~/src/shogi-extend/nuxt_side/pages/swars/prison1.vue
-~/src/shogi-extend/nuxt_side/pages/swars/prison2.vue
+~/src/shogi/shogi-extend/nuxt_side/pages/swars/prison1.vue
+~/src/shogi/shogi-extend/nuxt_side/pages/swars/prison2.vue
 
 * __prefer_url_params__
 

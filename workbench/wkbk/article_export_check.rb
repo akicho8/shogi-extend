@@ -28,10 +28,10 @@ Wkbk.setup
 
 Wkbk::Article.export_all
 Wkbk::Article.import_all
-# ~> /Users/ikeda/src/shogi-extend/app/models/concerns/memory_record_bind.rb:51:in `rescue in fetch': Wkbk::Judge.fetch(:pending) (ArgumentError)
+# ~> /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/memory_record_bind.rb:51:in `rescue in fetch': Wkbk::Judge.fetch(:pending) (ArgumentError)
 # ~> keys: []
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/memory_record_bind.rb:44:in `fetch'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/xrecord_share_methods.rb:69:in `block (3 levels) in <module:Wkbk>'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/memory_record_bind.rb:44:in `fetch'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/xrecord_share_methods.rb:69:in `block (3 levels) in <module:Wkbk>'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:200:in `block (2 levels) in halting'
@@ -60,7 +60,7 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/has_one_association.rb:114:in `_create_record'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/association.rb:199:in `create!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/builder/singular_association.rb:37:in `create_wkbk_main_xrecord!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/user_methods.rb:180:in `block (3 levels) in <module:UserMethods>'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/user_methods.rb:180:in `block (3 levels) in <module:UserMethods>'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:238:in `block in halting_and_conditional'
@@ -95,13 +95,13 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/transactions.rb:318:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/suppressor.rb:48:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/persistence.rb:55:in `create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
 # ~> 	from -:30:in `<main>'
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/core.rb:211:in `find_by!': Couldn't find Wkbk::Judge (ActiveRecord::RecordNotFound)
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/memory_record_bind.rb:48:in `fetch'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/xrecord_share_methods.rb:69:in `block (3 levels) in <module:Wkbk>'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/memory_record_bind.rb:48:in `fetch'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/xrecord_share_methods.rb:69:in `block (3 levels) in <module:Wkbk>'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:200:in `block (2 levels) in halting'
@@ -130,7 +130,7 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/has_one_association.rb:114:in `_create_record'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/association.rb:199:in `create!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/associations/builder/singular_association.rb:37:in `create_wkbk_main_xrecord!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/user_methods.rb:180:in `block (3 levels) in <module:UserMethods>'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/user_methods.rb:180:in `block (3 levels) in <module:UserMethods>'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `instance_exec'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:428:in `block in make_lambda'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.0.3.2/lib/active_support/callbacks.rb:238:in `block in halting_and_conditional'
@@ -165,8 +165,8 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/transactions.rb:318:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/suppressor.rb:48:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/persistence.rb:55:in `create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
+# ~> 	from /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
 # ~> 	from -:30:in `<main>'
-# >> write: /Users/ikeda/src/shogi-extend/app/models/wkbk/articles.yml (0)
+# >> write: /Users/ikeda/src/shogi/shogi-extend/app/models/wkbk/articles.yml (0)

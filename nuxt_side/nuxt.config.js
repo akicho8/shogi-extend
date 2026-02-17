@@ -298,16 +298,16 @@ const config = {
     ],
 
     // Doc: https://buefy.github.io/#/documentation
-    // ~/src/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
+    // ~/src/shogi/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
     [
       "nuxt-buefy",
       {
-        // ~/src/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
+        // ~/src/shogi/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
         css: false,
         materialDesignIconsHRef: "//cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css",
         async: false, // デフォルトの true のままだとアイコンがチラつく
 
-        // ~/src/shogi-extend/nuxt_side/node_modules/buefy/src/utils/config.js
+        // ~/src/shogi/shogi-extend/nuxt_side/node_modules/buefy/src/utils/config.js
         defaultTooltipType: "is-dark",
         defaultTooltipDelay: 20,
       }
