@@ -23,10 +23,12 @@ RSpec.describe Talk::Main do
   end
 
   it "特定の文章のキャッシュを削除する" do
-    obj = Talk::Main.new(source_text: "こんにちは")
-    obj.to_browser_path
-    assert { obj.file_exist? }
-    obj.cache_delete
-    assert { !obj.file_exist? }
+    Timecop.return do
+      obj = Talk::Main.new(source_text: "こんにちは")
+      obj.to_browser_path
+      assert { obj.file_exist? }
+      obj.cache_delete
+      assert { !obj.file_exist? }
+    end
   end
 end
