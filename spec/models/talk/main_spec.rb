@@ -24,7 +24,7 @@ RSpec.describe Talk::Main do
 
   it "特定の文章のキャッシュを削除する" do
     Timecop.return do
-      obj = Talk::Main.new(source_text: "こんにちは")
+      obj = Talk::Main.new(source_text: SecureRandom.hex)
       obj.to_browser_path
       assert { obj.file_exist? }
       obj.cache_delete
