@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Talk::Main do
-  around do |e|
-    Timecop.return { e.run }
-  end
+  around { |e| Timecop.return { e.run } }
 
   it "生成してブラウザ用のURLパスを取得する" do
     obj = Talk::Main.new(source_text: "あ")
