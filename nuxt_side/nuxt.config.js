@@ -415,6 +415,7 @@ const config = {
     transpile: [
       "shogi-player", // これを入れないとクラス変数や "??" 構文が読み取れない
       "marked",       // https://github.com/markedjs/marked/issues/2265#issuecomment-1754764288
+      "colorjs.io",   // "??" をつかってやがるため必要。
     ],
 
     // オーディオファイルをロードするように Webpack の設定を拡張するには？
