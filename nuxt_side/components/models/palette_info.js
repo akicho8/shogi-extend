@@ -25,16 +25,4 @@ export class PaletteInfo extends ApplicationMemoryRecord {
   alpha(v) {
     return this.base_color.alpha(v).css()
   }
-
-  // hue(v) {
-  //   return this.base_color.hue(v).css()
-  // }
-
-  // get borderColor() {
-  //   return this.base_color.alpha(0.6).css()
-  // }
-  //
-  // get backgroundColor() {
-  //   return this.base_color.alpha(0.1).css()
-  // }
 }
