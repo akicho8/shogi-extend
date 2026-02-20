@@ -1,3 +1,18 @@
+################################################################################
+
+require "faraday"
+require "memory_record"
+require "table_format"
+
+################################################################################
+
+require "zeitwerk"
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/lib/capistrano/helpers")
+loader.setup
+
+################################################################################
+
 # Load DSL and set up stages
 require "capistrano/setup"
 
@@ -36,4 +51,4 @@ require "table_format"
 require "capistrano/maintenance"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
-Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
+Dir.glob("lib/capistrano/tasks/*.rake").each { |e| import e }

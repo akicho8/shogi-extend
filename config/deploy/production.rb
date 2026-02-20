@@ -29,7 +29,12 @@ before "deploy:check:linked_files", "deploy:database_yml_upload"
 # after "deploy:finished", :yarn_cache_clean
 
 # 起動確認
-set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
+set :verification_urls, [
+  "https://www.shogi-extend.com/",
+  "https://www.shogi-extend.com/up",
+  "https://www.shogi-extend.com/style-editor",
+  "https://www.shogi-extend.com/share-board",
+]
 
 # 起動するURL
 # set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://www.shogi-extend.com" + URI(e).request_uri }

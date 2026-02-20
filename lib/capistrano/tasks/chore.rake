@@ -1,3 +1,11 @@
+desc "デプロイ終了時に正常起動を確認する"
+task :url_verifier do
+  run_locally do
+    UrlVerifier.call(fetch(:verification_urls))
+  end
+end
+after "deploy:finished", "url_verifier"
+
 desc "ディスクの空き容量を増やす"
 task :disk_free do
   on roles(:all) do
@@ -117,32 +125,17 @@ namespace :deploy do
   # after :finished, "airbrake:deploy"
 end
 
-desc "間違わないようにバナー表示"
-before "deploy:starting", :starting_banner do
-  message = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}"
-  tp message
-  system %(say "#{message}")
-end
-
-desc "サーバー起動確認"
-after "deploy:finished", :hb do
-  Array(fetch(:my_heartbeat_urls)).each do |url|
-    puts url
-    puts `curl --silent -I #{url} | grep HTTP`.strip
-  end
-end
-
 desc "RAILS_CACHE_CLEAR=1 cap production deploy ならデプロイ後にキャッシュクリア"
-after "deploy:finished", :rails_cache_clear do
+task "rails_cache_clear" do
   on roles(:all) do
     if ENV["RAILS_CACHE_CLEAR"]
       execute %(cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner "Rails.cache.clear")
     end
   end
 end
+after "deploy:finished", :rails_cache_clear
 
 desc "デプロイ後に確認したいURLを全部開いておく(OPEN=true のときのみ)"
-after "deploy:finished", :open_urls
 task :open_urls do
   # Array(fetch(:open_urls)).reverse.each do |url|
   #   system("open #{url}")
@@ -151,13 +144,4 @@ task :open_urls do
     system "web -o -e #{fetch(:stage)}"
   end
 end
-
-desc "デプロイ失敗"
-task "deploy:failed" do
-  system %(say "デプロイに失敗しました")
-end
-
-desc "デプロイ成功"
-after "deploy:finished", :finished_banner do # finished にすると動かない
-  system %(say "デプロイに成功しました")
-end
+after "deploy:finished", :open_urls
