@@ -78,5 +78,8 @@ module ShogiWeb
     #
     # https://zenn.dev/hatsu0412/scraps/4b1db3dd725a86
     config.active_record.use_yaml_unsafe_load = true
+
+    # lib/capistrano 以下をオートロードの対象から外す
+    Rails.autoloaders.main.ignore(Rails.root.join("lib/capistrano"))
   end
 end
