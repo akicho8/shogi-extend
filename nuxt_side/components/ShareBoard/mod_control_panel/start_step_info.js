@@ -13,7 +13,7 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       {
         key: "order_modal_open_handle",
         name: "順番設定",
-        icon: "👫",
+        icon: "⚔️", // 👫 🆚
         todo_p: "step2_todo_p",
         done_p: "step2_done_p",
       },
