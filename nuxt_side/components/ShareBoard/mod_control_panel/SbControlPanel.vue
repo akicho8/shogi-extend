@@ -82,9 +82,9 @@ export default {
 @import "../sass/support.sass"
 
 .SbControlPanel
-  .NavbarItemSidebarClose
-    padding-left:  2.5rem ! important
-    padding-right: 2.5rem ! important
+  .button.NavbarItemSidebarClose // 無理矢理セレクターを深くすることで ! important をつけないでよくする
+    padding-left:  2.5rem
+    padding-right: 2.5rem
 
   .menu-list
     .icon
