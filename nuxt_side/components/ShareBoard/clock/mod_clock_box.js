@@ -382,11 +382,15 @@ export const mod_clock_box = {
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     async __cc_start_call(params) {
-      await this.toast_primary(this.__cc_receive_message(params))
+      await this.toast_primary(this.__cc_receive_message(params))        // 誰が設定したか伝える
+      await this.toast_primary(this.foul_mode_info.battle_start_message) // 反則モードについて伝える
+      if (this.many_vs_many_p) {                                         // 3人以上で対局しているなら
+        await this.toast_primary(`手番は${this.change_per}手ごとに交代します`) // 何手毎交代か伝える
+      }
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (this.current_turn_user_name) {
-        await this.toast_primary(`${this.user_call_name(this.current_turn_user_name)}から指そう`)
-        this.think_mark_invite_trigger()
+        await this.toast_primary(`それでは${this.user_call_name(this.current_turn_user_name)}から指してください`)
+        this.think_mark_invite_trigger()                                // 思考印案内だけど邪魔だと言うので OFF にしている
       }
     },
 
