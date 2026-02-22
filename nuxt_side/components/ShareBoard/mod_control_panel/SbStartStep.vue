@@ -6,7 +6,7 @@
       //- https://buefy.org/documentation/button
       b-button.is_active_unset(
         :key="e.key"
-        :class="[e.func, {todo_p: SB[e.todo_p], done_p: SB[e.done_p]}]"
+        :class="[e.key, {todo_p: SB[e.todo_p], done_p: SB[e.done_p]}]"
         :focused="SB[e.todo_p]"
         expanded
         @click="() => SB[e.key]()"
