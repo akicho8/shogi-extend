@@ -85,6 +85,8 @@ export default {
       // hv.fixedTop = true
 
       hv.spaced = false
+      hv["wrapper-class"] = "container is-fluid px-0"
+
       if (this.SB.edit_mode_p) {
         // hv.type = "is-dark"
       } else {
