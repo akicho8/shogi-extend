@@ -82,6 +82,10 @@ export default {
 @import "../sass/support.sass"
 
 .SbControlPanel
+  .NavbarItemSidebarClose
+    padding-left:  2.5rem ! important
+    padding-right: 2.5rem ! important
+
   .menu-list
     .icon
       color: $primary

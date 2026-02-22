@@ -131,6 +131,11 @@ export default {
 //             color: $grey
 
 .SbNavbar
+  .NavbarItemSidebarOpen
+    +tablet
+      padding-left:  2.5rem
+      padding-right: 2.5rem
+
   .otasuke_single_line
     +mobile
       font-size: $size-7
