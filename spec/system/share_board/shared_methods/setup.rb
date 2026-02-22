@@ -16,7 +16,7 @@ module SharedMethods
       :room_create_delay                 => room_create_delay,            # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
       :ng_word_check_p                   => false,                        # ハンドルネームのチェックをしない
       :room_url_copy_modal_p             => false,                        # 部屋のリンクのコピーモーダルを出さない
-      :auto_close_p                      => false,                        # 入退室・順番・時計を自動的に閉じない
+      :auto_close_p                      => false,                        # 部屋に入る・順番・時計を自動的に閉じない
       :self_vs_self_enable_p             => false,                        # 自分vs自分禁止 (順番設定で対戦相手がいない場合はバリデーションする)
       :think_mark_invite_feature_p       => false,                        # 観戦者に促すか？
       :system_reserved_avatar_then_clear => false,                        # 起動時の絵文字検証
@@ -58,7 +58,7 @@ module SharedMethods
 
   def room_menu_open_and_input(room_key, user_name)
     sidebar_open
-    gate_modal_open_handle                        # 「入退室」を自分でクリックする
+    gate_modal_open_handle                        # 「部屋に入る」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
@@ -71,7 +71,7 @@ module SharedMethods
 
   def room_setup_by_fillin_params
     sidebar_open
-    gate_modal_open_handle                  # 「入退室」を自分でクリックする
+    gate_modal_open_handle                  # 「部屋に入る」を自分でクリックする
     Capybara.within(".GateModal") do
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
       # find(".close_handle").click                 # 閉じる
@@ -80,7 +80,7 @@ module SharedMethods
   end
 
   def room_auto_enter_but_confirm(user_name)
-    assert_selector(".GateModal")               # 「入退室」のモーダルが自動的に表示されている
+    assert_selector(".GateModal")               # 「部屋に入る」のモーダルが自動的に表示されている
     Capybara.within(".GateModal") do
       find(".new_user_name input").set(user_name)  # ハンドルネームを入力する
       find(".gate_enter_handle").click          # 入室ボタンをクリックする
@@ -100,7 +100,7 @@ module SharedMethods
   # 退室
   def gate_leave_handle
     sidebar_open
-    gate_modal_open_handle        # 「入退室」を自分でクリックする
+    gate_modal_open_handle        # 「部屋に入る」を自分でクリックする
     first(".gate_leave_handle").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
   end

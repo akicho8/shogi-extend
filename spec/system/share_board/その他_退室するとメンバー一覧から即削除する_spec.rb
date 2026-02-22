@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       room_setup_by_user(:a) # aが部屋を作る
     end
     window_b do
-      room_setup_by_user(:b)   # bも同じ入退室
+      room_setup_by_user(:b)   # bも同じ部屋に入る
       assert_member_exist(:a)   # a がいる
       assert_member_exist(:b)     # b もいる
     end

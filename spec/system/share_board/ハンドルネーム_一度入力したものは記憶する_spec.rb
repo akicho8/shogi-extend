@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       begin
         visit_app
         sidebar_open
-        gate_modal_open_handle                               # 「入退室」を自分でクリックする
+        gate_modal_open_handle                               # 「部屋に入る」を自分でクリックする
         find(".new_room_key input").set(:test_room)  # 合言葉を入力する
         find(".new_user_name").find(:fillable_field, with: :a) # 以前入力したニックネームが復元されている
         find(".gate_enter_handle").click                   # 入室

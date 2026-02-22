@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_member_index(:a, 1)     # 一番上にaがいる
     end
     window_b do
-      room_setup_by_user(:b)           # b後輩が同じ入退室
+      room_setup_by_user(:b)           # b後輩が同じ部屋に入る
       assert_member_index(:b, 2)       # 最後に追加される
     end
     window_a do
