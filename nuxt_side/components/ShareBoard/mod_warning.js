@@ -45,7 +45,7 @@ export const mod_warning = {
         if (this.inconsistency_order_only) {
           message = [
             `対局するなら対局時計を押そう`,
-            `検討するなら駒を動かせるように順番設定を切ろう`,
+            `検討するなら順番設定を切ろう`,
           ]
         }
       }
