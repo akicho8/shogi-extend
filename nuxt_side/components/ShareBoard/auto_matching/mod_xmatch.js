@@ -180,7 +180,7 @@ export const mod_xmatch = {
       } else {
         this.xmatch_modal_close()
       }
-      await this.xmatch_setup4_join(params) // 入退室
+      await this.xmatch_setup4_join(params) // 部屋に入る
       this.xmatch_setup1_member(params)     // 順番設定
       this.xmatch_setup2_handicap(params)   // 手合割
       this.xmatch_setup3_clock(params)      // チェスクロック
