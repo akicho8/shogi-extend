@@ -123,7 +123,7 @@
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&FIXED_ORDER=a,b,c,d&RESEND_DELAY=0&RESEND_SUCCESS_DELAY=-1
 
-** 時計設定済みで入退室には？
+** 時計設定済みで部屋に入るには？
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_min=60&clock_box.every_plus=0&room_after_create=cc_auto_start
 
