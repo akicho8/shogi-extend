@@ -35,7 +35,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_message
     end
 
-    it "しても待ったできる" do
+    it "待ったできる" do
       case1(:takeback)
       assert_message
     end

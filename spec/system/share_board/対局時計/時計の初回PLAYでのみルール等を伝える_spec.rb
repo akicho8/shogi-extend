@@ -1,7 +1,7 @@
 require "#{__dir__}/../shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  it "works" do
+  it "3人で対局しているとき" do
     window_a { room_setup_by_user(:a) }
     window_b { room_setup_by_user(:b) }
     window_c { room_setup_by_user(:c) }
@@ -20,7 +20,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
   end
 
-  it "二人で対戦しているときに何手ごと交代かは伝えない" do
+  it "2人で対戦しているときに何手ごと交代かは伝えない" do
     window_a { room_setup_by_user(:a) }
     window_b { room_setup_by_user(:b) }
     window_b do
