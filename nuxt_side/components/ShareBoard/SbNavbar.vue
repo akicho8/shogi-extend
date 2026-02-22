@@ -73,13 +73,14 @@ export default {
   name: "SbNavbar",
   mixins: [support_child],
   computed: {
+    // https://buefy.org/documentation/navbar
     component_attrs() {
       const hv = {}
 
       // hv.centered = true
       // hv.shadow = true
-
       // hv.transparent = true
+
       hv.type = this.SB.appearance_theme_info.navbar_type
       // hv["fixed-top"] = true
       // hv.fixedTop = true

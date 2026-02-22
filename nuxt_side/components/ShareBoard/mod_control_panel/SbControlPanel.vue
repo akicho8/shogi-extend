@@ -1,6 +1,6 @@
 <template lang="pug">
 //- https://buefy.org/documentation/sidebar
-b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar_p")
+b-sidebar.is-unselectable.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
@@ -8,29 +8,9 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
         NavbarItemLogin(component="a")
         NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
     .mt-4
-      b-menu
-        .main_procedure
-          b-menu-list(label="対局手順")
-            .buttons.is-centered.mb-0
-              b-button.mb-0.is_active_unset.important.gate_modal_open_handle(rounded expanded :class="SB.bold_if(mi1_bold_p)" @click="SB.gate_modal_open_handle")
-                .number_with_label
-                  b-icon(icon="numeric-1-circle-outline")
-                  | 入退室
-                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi1_hand_p")
-                .check_mark(v-if="SB.bold_if(mi1_bold_p)") ✅
-              b-button.mb-0.is_active_unset.important.order_modal_open_handle(rounded expanded :class="SB.bold_if(mi2_bold_p)" @click="SB.order_modal_open_handle")
-                .number_with_label
-                  b-icon(icon="numeric-2-circle-outline")
-                  | 順番設定
-                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi2_hand_p")
-                .check_mark(v-if="SB.bold_if(mi2_bold_p)") ✅
-              b-button.mb-0.is_active_unset.important.cc_modal_open_handle(rounded expanded :class="SB.bold_if(mi3_bold_p)" @click="SB.cc_modal_open_handle")
-                .number_with_label
-                  b-icon(icon="numeric-3-circle-outline")
-                  | 対局時計
-                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi3_hand_p")
-                .check_mark(v-if="SB.bold_if(mi3_bold_p)") ✅
+      SbStartStep
 
+      b-menu
         b-menu-list(label="局面操作")
           //- 即実行
           b-menu-item.is_active_unset.force_sync_turn_zero_handle(icon="page-first" label="初期配置に戻す"   @click="SB.force_sync_turn_zero_handle" :class="SB.bold_if(SB.current_turn >= 1)" :disabled="SB.current_turn === 0")
@@ -61,7 +41,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="SB.kifu_read_modal_open_handle()")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_set_handle")
 
-        SbSidebarExport(:base="SB")
+        SbExport(:base="SB")
           b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_download_modal_handle")
           b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="SB.video_new_handle")
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
@@ -70,7 +50,6 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_open_handle")
           b-menu-item.is_active_unset(icon="cat"            label="アバター設定"         @click="SB.avatar_input_modal_open_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"         @click="SB.title_edit_handle")
-
 
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
           //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
@@ -82,7 +61,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sfx_click()" v-if="development_p")
       AppearanceUi.mt-5
       .box.mt-5
-        b-field(label="音が出なくなったとき用")
+        b-field(label="音が出なくなったら？")
           b-button(@click="SB.audio_unlock_all_with_rooster") 音復活
 
       .box.mt-5(v-if="SB.debug_mode_p")
@@ -91,30 +70,37 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbSidebar",
+  name: "SbControlPanel",
   mixins: [support_child],
-  computed: {
-    mi1_bold_p() { return this.SB.ac_room                                                                 },
-    mi1_hand_p() { return !this.SB.ac_room                                                                },
-    mi2_bold_p() { return this.SB.ac_room && this.SB.order_enable_p && this.SB.order_flow.valid_p     },
-    mi2_hand_p() { return this.SB.ac_room && (!this.SB.order_enable_p || !this.SB.order_flow.valid_p) },
-    mi3_bold_p() { return this.SB.clock_box                                            },
-    mi3_hand_p() { return !this.SB.clock_box                                           },
-  },
 }
 </script>
 
 <style lang="sass">
-@import "./sass/support.sass"
+@import "../sass/support.sass"
 
-.SbSidebar
+.SbControlPanel
+  .menu-list
+    .icon
+      color: $primary
+      margin-right: 0.5rem
+
   .sidebar-content
-    width: 20rem
+    min-width: 20rem
+    +mobile
+      width: 90%
+    +tablet
+      width: 80%
+    +desktop
+      width: 50%
+    +widescreen
+      width: 50%
+    +fullhd
+      width: 50%
 
-  .menu-label:not(:first-child), .SbSidebarExport
+  .menu-label:not(:first-child), .SbExport
     margin-top: 2em
 
   .user_account
@@ -122,31 +108,4 @@ export default {
       max-height: none
       height: 32px
       width: 32px
-
-  .menu-list
-    .icon
-      color: $primary
-      margin-right: 0.5rem
-
-  .important
-    font-size: $size-5
-
-  .main_procedure
-    .buttons
-      gap: 0.5rem               // ボタン同士の隙間
-      .button
-        padding: 0.5rem 1.25rem 0.5rem 0.75rem // ボタン内の隙間
-        // .button 内のアイコンは位置を微調整されているためリセットする
-        .icon
-          margin-right: 0
-          margin-left: 0
-          line-height: 1.0
-        > span // button 中身は span で囲まれている
-          display: flex
-          align-items: center
-          justify-content: space-between
-          flex-grow: 1          // 横幅最大化
-          .number_with_label
-            display: flex
-            gap: 0.4rem         // 番号とラベルの隙間
 </style>

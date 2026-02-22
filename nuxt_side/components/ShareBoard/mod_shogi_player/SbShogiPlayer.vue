@@ -1,7 +1,7 @@
 <template lang="pug">
 .SbShogiPlayer.ToastMainBoard.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer(
-    v-bind="sp_bind"
+    v-bind="sp_component_attributes"
     v-on="sp_component_events"
     :sp_viewpoint.sync="SB.viewpoint"
   )
@@ -23,10 +23,10 @@ export default {
     },
 
     // CustomShogiPlayer に全部渡す
-    sp_bind() {
+    sp_component_attributes() {
       const hv = {}
       hv.ref                         = "main_sp"
-      hv["class"]                    = this.SB.sp_class
+      hv["class"]                    = this.SB.sp_component_class
 
       // ここ以降 hv.sp_* = でないとおかしいので注意
       hv.sp_mode                     = this.SB.sp_mode
@@ -95,18 +95,19 @@ export default {
     // 動作を受け取るやつら
     sp_component_events() {
       const hv = {}
+
       hv["ev_play_mode_move"]              = this.SB.ev_play_mode_move
       hv["ev_edit_mode_short_sfen_change"] = this.SB.ev_edit_mode_short_sfen_change
       hv["ev_short_sfen_change"]           = this.SB.ev_short_sfen_change
       hv["ev_turn_offset_change"]          = v => this.SB.current_turn = v
       hv["ev_turn_offset_max_change"]      = v => this.SB.turn_offset_max = v
 
-      hv["ev_action_viewpoint_flip"]       = this.SB.ev_action_viewpoint_flip // 意図して☗☖をタップして反転させたとき
-      hv["ev_action_turn_change"]          = this.SB.ev_action_turn_change    // スライダーを動かしたとき
-      hv["ev_action_piece_lift"]           = this.SB.ev_action_piece_lift     // 意図して持ち上げた
-      hv["ev_action_piece_cancel"]         = this.SB.ev_action_piece_cancel   // 意図してキャンセルした
-      hv["ev_action_promote_select_open"]       = this.SB.ev_action_promote_select_open  // 成 or 不成 選択モードに入る
-      hv["ev_action_promote_select_close"]      = this.SB.ev_action_promote_select_close // 成 or 不成 選択モードから出る
+      hv["ev_action_viewpoint_flip"]       = this.SB.ev_action_viewpoint_flip       // 意図して☗☖をタップして反転させたとき
+      hv["ev_action_turn_change"]          = this.SB.ev_action_turn_change          // スライダーを動かしたとき
+      hv["ev_action_piece_lift"]           = this.SB.ev_action_piece_lift           // 意図して持ち上げた
+      hv["ev_action_piece_cancel"]         = this.SB.ev_action_piece_cancel         // 意図してキャンセルした
+      hv["ev_action_promote_select_open"]  = this.SB.ev_action_promote_select_open  // 成 or 不成 選択モードに入る
+      hv["ev_action_promote_select_close"] = this.SB.ev_action_promote_select_close // 成 or 不成 選択モードから出る
 
       // 手番 or 先後違い系
       hv["ev_illegal_click_but_self_is_not_turn"] = this.SB.ev_illegal_click_but_self_is_not_turn // 手番が違うのに操作しようとした

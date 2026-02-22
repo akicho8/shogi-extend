@@ -156,7 +156,7 @@ export const mod_shogi_player = {
     base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
     start_color()           { return this.base_location.code                  }, // 0:平手 1:駒落ち (超重要)
 
-    sp_class() {
+    sp_component_class() {
       const av = []
       // if (this.current_turn_self_p) {
       //   av.push("current_turn_self_p")
