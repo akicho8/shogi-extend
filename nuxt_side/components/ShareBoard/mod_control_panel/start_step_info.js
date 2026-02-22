@@ -6,20 +6,23 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       {
         key: "gate_modal_open_handle",
         name: "部屋に入る",
+        mobile_name: "入室",
         icon: "🛖",
         todo_p: "step1_todo_p",
         done_p: "step1_done_p",
       },
       {
         key: "order_modal_open_handle",
-        name: "順番設定",
+        name: "順番とルールを設定する",
+        mobile_name: "順番設定",
         icon: "⚔️", // 👫 🆚
         todo_p: "step2_todo_p",
         done_p: "step2_done_p",
       },
       {
         key: "cc_modal_open_handle",
-        name: "対局時計",
+        name: "時計を設定する",
+        mobile_name: "対局時計",
         icon: "⏱",
         todo_p: "step3_todo_p",
         done_p: "step3_done_p",

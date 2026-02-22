@@ -12,7 +12,8 @@
         @click="() => SB[e.key]()"
         )
         XemojiWrap(:str="e.icon")
-        .button_label {{e.name}}
+        .button_label.is-hidden-mobile {{e.name}}
+        .button_label.is-hidden-tablet {{e.mobile_name ?? e.name}}
         template(v-if="SB[e.done_p]")
           XemojiWrap.right_icon(str="✅")
 </template>
@@ -60,7 +61,7 @@ export default {
   .right_icon
     margin-left: auto       // 左の余白を吸いとって右端に配置する
 
-.STAGE-development-x
+.STAGE-development
   .SbStartStep
     .button_content
       border: 1px dashed change_color($primary, $alpha: 0.5)
