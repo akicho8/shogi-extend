@@ -40,7 +40,7 @@ export const params_controller = {
     GX.assert(this.ParamInfo, "this.ParamInfo")
     this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
-    this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
+    this.pc_restore_default_value_if_invalid_value() // 3. 不正な値をデフォルトに戻す
     this.pc_after_set_call()                         // 4. それぞれの後処理があれば呼ぶ
     this.pc_mounted()
     this.clog(`pc_standby_ok: ${this.pc_standby_ok}`)
@@ -136,7 +136,7 @@ export const params_controller = {
       this.pc_data_reset_records(records)
     },
 
-    // 無効な値なら初期値に戻す
+    // 無効な値ならデフォルトに戻す
     // これをしないと localStorage に保存してある過去の値で復帰しようとしてアプリが起動しなくなる
     pc_restore_default_value_if_invalid_value() {
       this.ParamInfo.values.forEach(e => {

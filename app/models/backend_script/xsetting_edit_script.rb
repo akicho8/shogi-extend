@@ -26,7 +26,7 @@ module BackendScript
       if elems.one?
         elems += [
           {
-            :label        => "初期値に戻す",
+            :label        => "デフォルトに戻す",
             :right_label  => "はい",
             :key          => :reset,
             :type         => :boolean,

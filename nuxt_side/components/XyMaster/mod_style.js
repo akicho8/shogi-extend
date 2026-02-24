@@ -1,6 +1,6 @@
 export const mod_style = {
   methods: {
-    // スタイルを初期値に戻す
+    // スタイルをデフォルトに戻す
     style_default_handle() {
       this.sfx_click()
 

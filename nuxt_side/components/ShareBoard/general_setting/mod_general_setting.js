@@ -20,7 +20,7 @@ import { SettingRootInfo  } from "./setting_root_info.js"
 export const mod_general_setting = {
   mixins: [general_setting_modal],
   methods: {
-    // 初期値に戻すボタン
+    // デフォルトに戻すボタン
     general_setting_reset_handle() {
       this.sfx_click()
       let count = 0
@@ -34,7 +34,7 @@ export const mod_general_setting = {
           }
         })
       })
-      this.toast_primary(`${count}件の設定を初期値に戻しました`)
+      this.toast_primary(`${count}件の設定をデフォルトに戻しました`)
     },
   },
   computed: {

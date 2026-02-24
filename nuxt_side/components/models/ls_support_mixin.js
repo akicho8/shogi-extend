@@ -111,7 +111,7 @@ export const ls_support_mixin = {
       hash ??= {}
       const d = this.ls_default[key]    // => {a: 1, b: 2} (default value)
       let v = null
-      if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときは初期値に戻す
+      if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときはデフォルトに戻す
         const s = hash[key]             // => {a: 0,     } (stored value)
         if (this.ls_config.HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
           v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
