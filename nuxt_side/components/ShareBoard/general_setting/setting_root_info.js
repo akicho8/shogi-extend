@@ -10,8 +10,8 @@ export class SettingRootInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "setting_tab_streamer", name: "音響忌避者向け", tab_model: SettingTabStreamer, show: true,  },
-      { key: "setting_tab_ui",       name: "UI",         tab_model: SettingTabUi,       show: true,  },
       { key: "setting_tab_volume",   name: "音量",       tab_model: SettingTabVolume,   show: true,  },
+      { key: "setting_tab_ui",       name: "UI",         tab_model: SettingTabUi,       show: true,  },
       { key: "setting_tab_other",    name: "その他",     tab_model: SettingTabOther,    show: true,  },
       // 非表示は一番最後にすること
       // なぜならタブインデックスがずれて異なる name をしゃべってしまう

@@ -7,7 +7,7 @@ export class YomiageModeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "is_yomiage_mode_on",  name: "する",   type: "is-primary", message: "対局時に「○○さん76歩」などと指し手を読み上げる", },
-      { key: "is_yomiage_mode_off", name: "しない", type: "is-warning", message: "静かにする (主に観戦者として実況したいとき用)", },
+      { key: "is_yomiage_mode_off", name: "しない", type: "is-warning", message: "静かにする (主に観戦者として実況したいとき用)",    },
     ]
   }
 }

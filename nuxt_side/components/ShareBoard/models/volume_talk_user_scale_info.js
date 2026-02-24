@@ -3,8 +3,8 @@ import { GX } from "@/components/models/gx.js"
 import { VolumeCop } from "@/components/models/volume_cop.js"
 
 export class VolumeTalkUserScaleInfo extends ApplicationMemoryRecord {
-  static field_label      = "音声"
-  static field_message    = "UXの意図を汲み取れる感性をお持ちであれば無音にしないはずだと信じている"
+  static field_label      = "UX音声"
+  static field_message    = "どうしても実況の妨げになるのであれば少し下げてください。無音は意図したユーザー体験に支障が出ます。"
   static input_type       = "slider"
   static min              = VolumeCop.CONFIG.user_scale_min
   static max              = VolumeCop.CONFIG.user_scale_max

@@ -4,7 +4,7 @@ import { VolumeCop } from "@/components/models/volume_cop.js"
 
 export class VolumePieceUserScaleInfo extends ApplicationMemoryRecord {
   static field_label   = "駒音"
-  static field_message = "UXの意図を汲み取れる感性をお持ちであれば無音にしないはずだと信じている"
+  static field_message = "将棋は静かに指すものなのでリアルでは無音が理想ですが、いつ指したか分かるようにデフォルトは抑えぎみに音を入れています。配信やゲーム感覚でやるならむしろ大きめにした方がよいでしょう。"
   static input_type    = "slider"
   static min           = VolumeCop.CONFIG.user_scale_min
   static max           = VolumeCop.CONFIG.user_scale_max

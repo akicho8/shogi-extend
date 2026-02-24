@@ -3,7 +3,7 @@
   .modal-card-head
     .modal-card-title
       | 設定
-    b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") 初期値に戻す
+    b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") デフォルトに戻す
   .modal-card-body
     //- https://buefy.org/documentation/tabs
     b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle" expanded)
@@ -18,7 +18,7 @@
       ul
         li
           span.has-text-danger ＊
-          | がついているものはブラウザに保存する
+          | がついているものはブラウザに保存します
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -58,9 +58,25 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .GeneralSettingModal
-  +modal_width(800px)
-  +modal_height(700px)
-  +modal_height_if_mobile(60dvh)
+  .animation-content
+    max-width: 60rem
+  +tablet
+    .animation-content
+      width: 90cqw
+  // +desktop
+  //   .animation-content
+  //     width: 80cqw
+  // +widescreen
+  //   .animation-content
+  //     width: 70cqw
+  // +fullhd
+  //   .animation-content
+  //     width: 60cqw
+
+  // +modal_max_width(50cqw)
+  // +modal_width(800px)
+  // +modal_height(700px)
+  // +modal_height_if_mobile(100dvh)
   +bulma_columns_vertical_minus_margin_clear
 
   // .modal-card
@@ -77,6 +93,11 @@ export default {
       margin-bottom: 0
     .tab_content
       margin-top: 1.25rem
+
+  .b-slider
+    margin-bottom: 0
+  .help
+    margin-top: 0.5rem
 
 .STAGE-development
   .GeneralSettingModal

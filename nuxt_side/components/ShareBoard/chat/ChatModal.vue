@@ -110,21 +110,24 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 
+// 大きさに関してのみの設定
 .ChatModal
-  +modal_width(32rem)
-
-  .modal-card
-    +mobile
-      // height: 29rem
-      @supports(height: 100svh)
-        height: 75svh
-      @supports not(height: 100svh)
-        height: 75dvh
+  &:not(.is-full-screen)
+    //////////////////////////////////////////////////////////////////////////////// 横
+    .animation-content
+      max-width: 40rem // これよりは小さくしない
     +tablet
-      height: 30rem
-    +desktop
-      height: 31rem
+      .animation-content
+        width: 90cqw
+    //////////////////////////////////////////////////////////////////////////////// 縦
+    .modal-card
+      +mobile
+        height: 75svh
+      +tablet
+        height: 36rem
 
+.ChatModal
+  .modal-card
     .modal-card-head
       .modal-card-title
         line-height: 1.0
