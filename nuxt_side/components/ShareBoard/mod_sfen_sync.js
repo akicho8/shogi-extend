@@ -188,7 +188,8 @@ export const mod_sfen_sync = {
         }
         if (this.tn_name_call_p) {
           this.next_turn_message = this.tn_message_build(params)
-          this.toast_primary(this.next_turn_message)
+          // 表示するとき「次は、」はダサいので句読点を削除する
+          this.toast_primary(this.next_turn_message, {toast_message_fn: s => s.replace(/、/g, "")})
         }
       }
     },
