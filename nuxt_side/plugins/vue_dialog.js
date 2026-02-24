@@ -71,7 +71,7 @@ export const vue_dialog = {
         if (this.development_p) {
           this.clog(message)
         }
-        const h = GX.hash_extract_self(params, "toast", "talk", "duration_sec")
+        const h = GX.hash_extract_self(params, "toast", "talk", "duration_sec", "toast_message_fn")
         if (h.duration_sec) {
           GX.assert_kind_of_numeric(h.duration_sec)
           GX.assert(h.duration_sec < 1000)
@@ -79,7 +79,11 @@ export const vue_dialog = {
           params.duration = h.duration_sec * 1000.0
         }
         if (h.toast) {
-          this.$buefy.toast.open({...params, message: message})
+          let str = message
+          if (h.toast_message_fn) {
+            str = h.toast_message_fn(str)
+          }
+          this.$buefy.toast.open({...params, message: str})
         }
         if (h.talk) {
           return this.talk(message, params) // volume, rate, onend は talk 用オプション
