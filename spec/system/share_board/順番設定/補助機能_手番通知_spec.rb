@@ -26,7 +26,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_member_status(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
       assert_member_status(:b, :is_battle_other_player)   # 2人目(b)は待機中
       piece_move_o("77", "76", "☗7六歩")              # aが1番目なので指せる
-      assert_var(:next_turn_message, "次は#{:b}さんの手番です")
+      assert_var(:next_turn_message, "次は、#{:b}さんの手番です")
     end
     window_b do
       assert_var(:tn_bell_count, 1)                      #  b さんだけに牛が知らせている
@@ -38,7 +38,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_b do
       piece_move_o("33", "34", "☖3四歩")              # 2番目の b は指せる
-      assert_var(:next_turn_message, "次は#{:a}さんの手番です")
+      assert_var(:next_turn_message, "次は、#{:a}さんの手番です")
       assert_var(:tn_bell_count, 1)                      # a の手番なので出ない(変化せず)
     end
   end

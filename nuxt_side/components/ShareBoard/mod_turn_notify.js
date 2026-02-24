@@ -41,10 +41,10 @@ export const mod_turn_notify = {
       if (this.order_flow.order_operation.teams[location.code].length >= 2) { // そのチーム内にメンバーが2人以上いる場合は
         const user_name = this.turn_to_user_name(turn - 2)                // 2手前の名前を求めて
         if (params.next_user_name === user_name) {                        // 再度同じ人が指す場合には
-          return "次も"
+          return "次も、"
         }
       }
-      return "次は"
+      return "次は、"
     },
   },
   computed: {
