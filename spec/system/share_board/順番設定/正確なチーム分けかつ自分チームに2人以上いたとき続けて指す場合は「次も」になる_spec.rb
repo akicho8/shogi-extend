@@ -17,19 +17,19 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1("b") }
     window_a do
       piece_move_o("59", "58", "☗5八玉")
-      assert_var(:next_turn_message, "次は、bさんの手番です")
+      assert_var(:next_turn_message, "次はbさんの手番です")
     end
     window_b do
       piece_move_o("51", "52", "☖5二玉")
-      assert_var(:next_turn_message, "次も、aさんの手番です")
+      assert_var(:next_turn_message, "次もaさんの手番です")
     end
     window_a do
       piece_move_o("58", "59", "☗5九玉")
-      assert_var(:next_turn_message, "次は、bさんの手番です")
+      assert_var(:next_turn_message, "次はbさんの手番です")
     end
     window_b do
       piece_move_o("52", "51", "☖5一玉")
-      assert_var(:next_turn_message, "次は、cさんの手番です")
+      assert_var(:next_turn_message, "次はcさんの手番です")
     end
   end
 end
