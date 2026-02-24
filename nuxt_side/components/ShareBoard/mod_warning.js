@@ -58,7 +58,7 @@ export const mod_warning = {
         if (this.i_am_watcher_p) {
           message = [
             `${this.my_call_name}は観戦者なので触らんといてください`,
-            `暇だったら盤を右クリックして検討しよう`,
+            `暇だったら盤を右クリックして観戦者同士で「次の一手」を予想し合おう`,
           ]
         }
       }

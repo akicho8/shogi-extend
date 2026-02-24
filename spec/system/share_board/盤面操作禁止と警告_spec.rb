@@ -34,7 +34,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     board_place("11").click
     assert_text "cさんは観戦者なので触らんといてください"
-    assert_text "暇だったら盤を右クリックして検討しよう"
+    assert_text "暇だったら盤を右クリックして観戦者同士で「次の一手」を予想し合おう"
   end
 
   it "自分は対局者だが手番ではないのに盤に触った (あるある)" do
