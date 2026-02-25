@@ -1,6 +1,6 @@
 <template lang="pug">
 //- https://buefy.org/documentation/sidebar
-b-sidebar.is-unselectable.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
+b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
