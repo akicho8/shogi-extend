@@ -49,7 +49,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       end
     end
 
-    it "ignore: 関与しない" do
+    it "ignore: 審判不在モード" do
       window_a { case1(:a, :ignore) }
       window_b { case1(:b, :ignore) }
       window_a { double_pawn! }

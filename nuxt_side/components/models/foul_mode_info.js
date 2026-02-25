@@ -41,8 +41,8 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
         environment: ["development", "staging", "production"],
       }, {
         key: "ignore",
-        name: "関与しない",
-        message: "反則をしても対局が止まることはありません",
+        name: "審判不在モード",
+        message: "システムによる反則のチェックを行いません。指し手の正当性を保証しないため、通常の対局には向きません。",
         battle_start_message: "反則には関与しません",
         type: "is-danger",
         sp_illegal_validate: false,

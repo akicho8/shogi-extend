@@ -40,7 +40,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_message
     end
 
-    it "関与しない" do
+    it "審判不在モード" do
       case1(:ignore)
       assert_no_action_text("千日手")
     end
