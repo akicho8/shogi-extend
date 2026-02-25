@@ -58,9 +58,9 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/assets/sfx/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),                                        },
       { key: "se_piece_lift",                name: "持ち上げる",               volume: 0.3,  source: require("@/assets/sfx/SND01_sine/tap_03.wav"),                                                            },
       // { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/sfx/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
-      { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/sfx/USF/ELEMENTS/Water/Drops/DROP_Designed_mono.wav"), },
+      { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.4,  source: require("@/assets/sfx/USF/ELEMENTS/Water/Drops/DROP_Designed_mono.wav"), },
       // { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/sfx/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/ShareBoard/models/param_info.js と合わせる
-      { key: "se_piece_put",                 name: "置く",                     volume: 0.4,  source: require("@/assets/sfx/audiostock/as1301271.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/ShareBoard/models/param_info.js と合わせる
+      { key: "se_piece_put",                 name: "置く",                     volume: 0.5,  source: require("@/assets/sfx/audiostock/as1301271.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/ShareBoard/models/param_info.js と合わせる
 
       // { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/sfx/USF/WEAPONS/Firearms/Fire_First_Person_Shooter_FPS/FIREARM_Shotgun_Model_02_Fire_Single_RR1_stereo.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/models/sfx_preset_info.js と合わせる
       // { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/sfx/USF/IMPACTS/Bricks/IMPACT_Brick_vs_Brick_RR1_mono.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/models/sfx_preset_info.js と合わせる
@@ -69,8 +69,8 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       // ▼思考印をセルに付ける / 外す
 
       // 8BIT
-      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.08, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
-      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.08, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
+      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
+      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
       // { key: "se_think_mark_at_cell_on",                                    volume: 0.30, source: require("@/assets/sfx/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),      },
 
       // Factoio 搬送ベルト風
