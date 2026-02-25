@@ -58,6 +58,14 @@ export default {
     display: inline-block   // ブロック要素、または inline-block にすることで高さを認識させる
     vertical-align: middle  // 位置を中央に寄せることで、親要素の高さ計算を安定させる
 
+  .button_label
+    flex-shrink: 1
+
+  .XemojiWrap
+    flex-shrink: 0
+    // .button_label
+    //   flex-shrink: 1
+
   .right_icon
     margin-left: auto       // 左の余白を吸いとって右端に配置する
 
