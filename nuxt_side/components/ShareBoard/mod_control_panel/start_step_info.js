@@ -13,7 +13,7 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       },
       {
         key: "order_modal_open_handle",
-        name: "順番とルールを設定する",
+        name: "順番を設定する",
         mobile_name: "順番設定",
         icon: "⚔️", // 👫 🆚
         todo_p: "step2_todo_p",

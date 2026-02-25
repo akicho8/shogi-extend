@@ -5,7 +5,7 @@
       | 警告
   .modal-card-body
     .content
-      p これは「待った」で反則をなかったことにできる接待用のモードです。
+      p これは「待った」で禁じ手を取り消せる接待用のモードです。
       p すでにルールを理解し、{{message_variant}}{{SB.my_call_name}}には必要ないでしょう。
   .modal-card-foot
     b-button.submit_handle(@click="submit_handle" type="is-warning") 接待する・される
