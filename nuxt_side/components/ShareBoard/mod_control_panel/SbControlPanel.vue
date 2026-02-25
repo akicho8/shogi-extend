@@ -98,9 +98,9 @@ export default {
     +tablet
       width: 80%
     +desktop
-      width: 50%
+      width: 70%
     +widescreen
-      width: 50%
+      width: 60%
     +fullhd
       width: 50%
 
