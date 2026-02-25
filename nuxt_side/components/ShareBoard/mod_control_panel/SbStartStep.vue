@@ -36,7 +36,7 @@ export default {
   .buttons
     margin-top: 0.75rem     // "対局手順" との隙間
     margin-bottom: 0
-    gap: 0.75rem            // ボタン同士の縦の隙間
+    gap: 0.5rem             // ボタン同士の縦の隙間
 
   .button
     font-weight: bold
@@ -50,26 +50,16 @@ export default {
     /* -- */
     display: flex           // さらにそのなかで flex にする
     align-items: center     // Y軸を中心にする
-    gap: 0.75rem            // 絵文字とラベルの隙間
+    gap: 0.75rem            // 左の絵文字とラベルの隙間
+    line-height: 1.0        // ボタン内の上下のパディングの二重調整を避けるためこちらは0にしておく
 
   .xemoji
-    height: 4rem
-    width: auto
-    display: inline-block   // ブロック要素、または inline-block にすることで高さを認識させる
-    vertical-align: middle  // 位置を中央に寄せることで、親要素の高さ計算を安定させる
-
-  .button_label
-    flex-shrink: 1
-
-  .XemojiWrap
-    flex-shrink: 0
-    // .button_label
-    //   flex-shrink: 1
+    display: block          // これを入れると縦が中央になる
 
   .right_icon
     margin-left: auto       // 左の余白を吸いとって右端に配置する
 
-.STAGE-development
+.STAGE-development-x
   .SbStartStep
     .button_content
       border: 1px dashed change_color($primary, $alpha: 0.5)
