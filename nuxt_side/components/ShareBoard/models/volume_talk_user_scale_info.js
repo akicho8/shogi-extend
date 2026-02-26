@@ -14,17 +14,7 @@ export class VolumeTalkUserScaleInfo extends ApplicationMemoryRecord {
   static input_handle_callback(context, value) {
     const app = context.base
     GX.assert(app != null, "app != null")
-    let message = null
-    if (GX.present_p(app.user_name)) {
-      message = `${app.user_call_name(app.user_name)}、こんにちは`
-    } else {
-      message = "こんにちは"
-    }
+    const message = `それでは${app.my_call_name}から指してください`
     app.$nextTick(() => app.toast_primary(message))
-  }
-
-  static get define() {
-    return [
-    ]
   }
 }
