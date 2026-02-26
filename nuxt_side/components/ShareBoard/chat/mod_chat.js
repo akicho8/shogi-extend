@@ -55,6 +55,7 @@ export const mod_chat = {
     },
 
     chat_modal_open() {
+      // https://buefy.org/documentation/modal
       this.chat_modal_close()
       this.chat_modal_instance = this.modal_card_open({
         component: ChatModal,
