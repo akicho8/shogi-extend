@@ -13,6 +13,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.chat_modal_shortcut_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Escape"),
+        call: c => c.think_mark_group_reject(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "/"),
         call: c => c.sidebar_toggle_handle(),
       },

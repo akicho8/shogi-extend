@@ -223,11 +223,17 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     before do
       subscribe(room_key: room_key)
     end
-    it "works" do
+    it "think_mark_share" do
       data = data_factory({})
       expect {
         subscription.think_mark_share(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_share_broadcasted", bc_params: data)
+    end
+    it "think_mark_group_reject" do
+      data = data_factory({})
+      expect {
+        subscription.think_mark_group_reject(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_group_reject_broadcasted", bc_params: data)
     end
   end
 

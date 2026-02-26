@@ -129,6 +129,11 @@ module ShareBoard
       broadcast(:think_mark_share_broadcasted, data)
     end
 
+    def think_mark_group_reject(data)
+      track(data, subject: "思考印グループ消去", body: data["mark_user_name"], emoji: ":思考印:")
+      broadcast(:think_mark_group_reject_broadcasted, data)
+    end
+
     def message_share(data)
       if data["message_scope_key"] == "ms_public"
         action = "チャット"

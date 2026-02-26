@@ -101,6 +101,10 @@
             .sc_label 思考印モードのトグル
             .sc_buttons
               b-tag(type="is-primary") m
+          .sc_item
+            .sc_label 思考印の全削除
+            .sc_buttons
+              b-tag(type="is-primary") Escape
       .column.is-half-desktop.is-half-tablet
         .sc_title その他
         .sc_table
