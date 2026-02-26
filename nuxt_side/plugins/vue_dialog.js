@@ -161,9 +161,11 @@ export const vue_dialog = {
     //////////////////////////////////////////////////////////////////////////////// modal
 
     // canCancel を ["outside", "escape"] にすると modal の instance を null に戻す処理を呼び忘れる事故が多発するため何も指定しないようにする
+    // ["escape"] とすれば Esc キーで閉じれるのだけど keydown じゃなくて keyup に反応するので反応の遅さがめちゃくちゃ気持ち悪いのもある
     modal_card_open(params) {
-      GX.assert(GX.present_p(params.component), "GX.present_p(params.component)")
-      GX.assert(GX.present_p(params.component.name), "GX.present_p(params.component.name)")
+      GX.assert_present(params.component)
+      GX.assert_present(params.component.name)
+      GX.assert_blank(params.canCancel)
       return this.$buefy.modal.open({
         width: "", // 名前は width だが実際には max-width に設定される
         customClass: `BasicModal ${params.component.name}`,

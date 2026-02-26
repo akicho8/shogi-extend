@@ -330,7 +330,6 @@ export default {
       params = {
         ...params,
         // 連打でスキップしてしまうことがあるため指定しない
-        // canCancel: ["outside", "escape"],
         animation: "",
         trapFocus: true,
       }
