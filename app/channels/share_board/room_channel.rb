@@ -124,14 +124,14 @@ module ShareBoard
       broadcast(:order_draft_publish_broadcasted, data)
     end
 
-    def think_mark_share(data)
+    def think_mark_toggle_action(data)
       track(data, subject: "思考印", body: data["think_mark_command"], emoji: ":思考印:")
-      broadcast(:think_mark_share_broadcasted, data)
+      broadcast(:think_mark_toggle_action_broadcasted, data)
     end
 
-    def think_mark_group_reject(data)
+    def think_mark_group_reject_action(data)
       track(data, subject: "思考印グループ消去", body: data["mark_user_name"], emoji: ":思考印:")
-      broadcast(:think_mark_group_reject_broadcasted, data)
+      broadcast(:think_mark_group_reject_action_broadcasted, data)
     end
 
     def message_share(data)

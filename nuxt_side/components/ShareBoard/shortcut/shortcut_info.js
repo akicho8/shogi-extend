@@ -14,7 +14,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Escape"),
-        call: c => c.think_mark_group_reject(),
+        call: c => c.think_mark_group_reject_action(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "/"),
