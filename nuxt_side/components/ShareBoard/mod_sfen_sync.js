@@ -43,8 +43,8 @@ export const mod_sfen_sync = {
         // location_key, this.current_location.key,
       }
 
-      if (e.snapshot_hash) {
-        this.sfen_sync_params["snapshot_hash"] = e.snapshot_hash
+      if (e.position_hash) {
+        this.sfen_sync_params["position_hash"] = e.position_hash
       }
       if (e.op_king_check) {
         this.sfen_sync_params["op_king_check"] = e.op_king_check

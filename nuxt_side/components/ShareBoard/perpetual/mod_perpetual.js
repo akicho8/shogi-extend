@@ -10,7 +10,7 @@ export const mod_perpetual = {
   methods: {
     // perpetual_cop を更新する前にチェックする
     perpetual_check_detect(e) {
-      const key = [e.op_king_check, e.snapshot_hash].join(",")
+      const key = [e.op_king_check, e.position_hash].join(",")
       if (this.perpetual_cop.tentatively_check_p(key)) {
         if (e.op_king_check) {
           const illegal_hv = this.illegal_create_perpetual_check(e)

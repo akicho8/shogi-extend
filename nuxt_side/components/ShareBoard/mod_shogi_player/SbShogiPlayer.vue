@@ -47,7 +47,7 @@ export default {
       hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
 
       hv.sp_request_checkmate_stat = true // 詰み判定する
-      hv.sp_request_snapshot_hash  = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める
+      hv.sp_request_position_hash  = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める
       hv.sp_request_op_king_check  = true // 操作モードで王手しているかどうかの結果をイベントに含める
 
       // スマホでのUI確認用
