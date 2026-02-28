@@ -43,7 +43,7 @@ export const mod_shogi_player = {
     // 「思考印消去」はこのタイミングがいちばんよかった
     // が、いったん元のままにしておく
     ev_short_sfen_change(sfen) {
-      // this.think_mark_all_clear() // 思考印消去
+      this.think_mark_all_clear() // 思考印消去
       this.short_sfen = sfen
       // if (this.development_p) {
       //   this.$buefy.toast.open("short_sfen")

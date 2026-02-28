@@ -1,8 +1,6 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-// const CONFIRM_METHOD = false
-
 export const mod_force_sync = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -14,6 +12,7 @@ export const mod_force_sync = {
     },
     force_sync_turn_zero() {
       this.current_turn = 0
+      this.think_mark_all_clear()              // 思考印消去
       this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
       this.force_sync(`${this.my_call_name}が初期配置に戻しました`)
     },
@@ -44,15 +43,15 @@ export const mod_force_sync = {
 
       this.current_sfen_set(e)
 
-      if (this.ac_room) {
-        let message = null
-        if (diff < 0) {
-          message = `"${this.my_call_name}が${-diff}手戻しました`
-        } else {
-          message = `"${this.my_call_name}が${diff}手進めました`
-        }
-        this.force_sync(message)
+      // if (this.ac_room) {
+      let message = null
+      if (diff < 0) {
+        message = `${this.my_call_name}が${-diff}手戻しました`
+      } else {
+        message = `${this.my_call_name}が${diff}手進めました`
       }
+      this.force_sync(message)
+      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -63,16 +62,18 @@ export const mod_force_sync = {
 
     force_sync(message = "", options = {}) {
       const params = {
+        __standalone_mode__: true,
         message: message,
         ...this.current_sfen_and_turn,
         notify_mode: "fs_notify_all",
         ...options,
       }
-      this.perpetual_cop.reset$()
+      // this.perpetual_cop.reset$()
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
       {
+        this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
         this.sfen_sync_dto_receive(params)       // これで current_location が更新される
       }
@@ -109,6 +110,19 @@ export const mod_force_sync = {
       }
 
       this.al_add({...params, label: `局面転送 #${params.turn}`})
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    sfen_sync_dto_receive(params) {
+      GX.assert(GX.present_p(params), "GX.present_p(params)")
+      GX.assert("sfen" in params, '"sfen" in params')
+      GX.assert("turn" in params, '"turn" in params')
+
+      this.current_sfen_set(params)
+
+      if (this.debug_mode_p) {
+        this.ac_log({subject: "局面受信", body: `${params.turn}手目の局面を受信`})
+      }
     },
   },
 }

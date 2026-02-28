@@ -218,19 +218,6 @@ export const mod_room_channel = {
       return !this.received_from_self(object)
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-    sfen_sync_dto_receive(params) {
-      GX.assert(GX.present_p(params), "GX.present_p(params)")
-      GX.assert("sfen" in params, '"sfen" in params')
-      GX.assert("turn" in params, '"turn" in params')
-
-      this.current_sfen_set(params)
-
-      if (this.debug_mode_p) {
-        this.ac_log({subject: "局面受信", body: `${params.turn}手目の局面を受信`})
-      }
-    },
-
     // this.ac_log({subject: "a", body: "b", emoji: "c", level: "critical"})
     ac_log(params = {}) {
       this.ac_room_perform("ac_log", params)
