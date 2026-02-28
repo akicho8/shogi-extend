@@ -1,7 +1,12 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
+import { mod_turn_change } from "./mod_turn_change.js"
 
 export const mod_force_sync = {
+  mixins: [
+    mod_turn_change,
+  ],
+
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
