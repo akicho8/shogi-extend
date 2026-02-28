@@ -22,11 +22,12 @@
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.apply_button(@click="apply_handle" type="is-primary") {{new_turn}}手目まで戻る
+    b-button.apply_button(@click="apply_handle" type="is-primary") {{turn_progress.will_message}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
+import { TurnProgress } from "./turn_progress.js"
 
 export default {
   name: "TurnChangeModal",
@@ -51,6 +52,11 @@ export default {
       this.sfx_click()
       this.SB.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
       this.SB.turn_change_modal_close()
+    },
+  },
+  computed: {
+    turn_progress() {
+      return TurnProgress.create({current: this.turn, to: this.new_turn})
     },
   },
 }

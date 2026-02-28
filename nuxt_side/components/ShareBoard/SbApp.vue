@@ -110,7 +110,7 @@ import { mod_color_theme           } from "./mod_color_theme.js"
 import { mod_sfen_sync             } from "./mod_sfen_sync.js"
 import { mod_resend                } from "./resend/mod_resend.js"
 import { mod_look_away             } from "./look_away/mod_look_away.js"
-import { mod_force_sync            } from "./turn_change/mod_force_sync.js"
+import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal               } from "./mod_illegal/mod_illegal.js"
 import { mod_board_preset          } from "./board_preset/mod_board_preset.js"
 import { mod_shortcut              } from "./shortcut/mod_shortcut.js"
@@ -228,7 +228,7 @@ export default {
     mod_sfen_sync,
     mod_resend,
     mod_look_away,
-    mod_force_sync,
+    mod_reflector,
     mod_illegal,
     mod_board_preset,
     mod_shortcut,

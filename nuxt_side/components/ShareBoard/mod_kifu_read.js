@@ -93,7 +93,7 @@ export const mod_kifu_read = {
         await GX.sleep(0.5)
         this.al_share({label: "棋譜読込後"})
         await GX.sleep(0.5)
-        this.quick_sync(`${this.my_call_name}が棋譜を読み込んで共有しました`)
+        this.reflector_call(`${this.my_call_name}が棋譜を読み込んで共有しました`)
       }
     },
   },

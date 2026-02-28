@@ -36,7 +36,7 @@ export const mod_sfx = {
     },
 
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている→やめ)
-    se_force_sync() {
+    se_reflector() {
       this.se_piece_move()
     },
 

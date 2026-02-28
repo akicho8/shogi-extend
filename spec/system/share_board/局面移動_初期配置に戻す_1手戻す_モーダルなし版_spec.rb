@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     setup_a_b_turn2
     window_a do
       sidebar_open
-      find(".force_sync_turn_zero_handle").click     # 「初期配置に戻す」を押す
+      find(".reflector_turn_zero_handle").click     # 「初期配置に戻す」を押す
       sidebar_close
       assert_turn(0)                                 # 0手に戻っている
     end
@@ -18,7 +18,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     setup_a_b_turn2
     window_a do
       sidebar_open
-      find(".force_sync_turn_previous_handle").click # 「1手戻す」を押す
+      find(".reflector_turn_previous_handle").click # 「1手戻す」を押す
       sidebar_close
       assert_turn(1)                                 # 1手目に戻っている
     end

@@ -35,9 +35,9 @@ module ShareBoard
       broadcast(:room_leave_share_broadcasted, data)
     end
 
-    def force_sync(data)
+    def reflector_action(data)
       track(data, subject: "局面転送", body: "[#{data["turn"]}手目][#{data["message"]}]")
-      broadcast(:force_sync_broadcasted, data)
+      broadcast(:reflector_action_broadcasted, data)
     end
 
     def honpu_share(data)

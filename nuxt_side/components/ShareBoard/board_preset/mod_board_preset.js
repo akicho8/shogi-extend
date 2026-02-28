@@ -34,7 +34,7 @@ export const mod_board_preset = {
       this.board_preset_modal_close()
       this.current_sfen_set({sfen: this.board_preset_info.sfen, turn: 0})
       this.ac_log({subject: "手合割反映", body: this.board_preset_info.name})
-      this.force_sync(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
+      this.reflector_call(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
     },
 
     // select UI や ←→ ボタンを押したとき

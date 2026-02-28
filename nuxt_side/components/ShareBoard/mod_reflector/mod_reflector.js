@@ -1,71 +1,49 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
-import { mod_turn_change } from "./mod_turn_change.js"
+import { turn_change } from "./turn_change.js"
+import { FooInfo } from "./foo_info.js"
+import { TurnProgress } from "./turn_progress.js"
 
-export const mod_force_sync = {
+export const mod_reflector = {
   mixins: [
-    mod_turn_change,
+    turn_change,
   ],
 
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
-    // turn = 0
-    force_sync_turn_zero_handle() {
-      this.sfx_click()
-      this.force_sync_turn_zero()
+    reflector_turn_zero_handle() {
+      this.reflector_turn_change({to: 0, sfx: true})
     },
-    force_sync_turn_zero() {
-      this.current_turn = 0
-      this.think_mark_all_clear()              // 思考印消去
-      this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
-      this.force_sync(`${this.my_call_name}が初期配置に戻しました`)
+    reflector_turn_zero() {
+      this.reflector_turn_change({to: 0})
+    },
+    reflector_turn_previous_handle() {
+      this.reflector_turn_change({by: -1, sfx: true})
+    },
+    reflector_turn_previous() {
+      this.reflector_turn_change({by: -1})
     },
 
-    // turn -= 1
-    force_sync_turn_previous_handle() {
-      this.sfx_click()
-      this.force_sync_turn_previous()
-    },
-    force_sync_turn_previous() {
-      if (this.current_turn >= 1) {
-        this.current_turn -= 1
+    reflector_turn_change(options = {}) {
+      const turn_progress = TurnProgress.create({current: this.current_turn, ...options})
+      if (options.sfx) {
+        this.sfx_click()
       }
-      this.ac_log({subject: "局面操作", body: "1手戻す"})
-      this.force_sync(`${this.my_call_name}が1手戻しました`)
-    },
-
-    // TurnChangeModal 用
-    new_turn_set_and_sync(e) {
-      if (false) {
-        if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
-          this.toast_primary("同じ局面です")
-          return
-        }
+      this.ac_log({subject: "局面操作", body: turn_progress.diff})
+      const message = `${this.my_call_name}が${turn_progress.message}`
+      const reflector_options = {
+        turn: turn_progress.new_value,
       }
-
-      const diff = e.turn - this.current_turn
-
-      this.current_sfen_set(e)
-
-      // if (this.ac_room) {
-      let message = null
-      if (diff < 0) {
-        message = `${this.my_call_name}が${-diff}手戻しました`
-      } else {
-        message = `${this.my_call_name}が${diff}手進めました`
-      }
-      this.force_sync(message)
-      // }
+      this.reflector_call(message, reflector_options)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    quick_sync(...args) {
-      this.force_sync(...args)
+    reflector_call(...args) {
+      this.reflector_action(...args)
     },
-
-    force_sync(message = "", options = {}) {
+    reflector_action(message = "", options = {}) {
       const params = {
         __standalone_mode__: true,
         message: message,
@@ -74,9 +52,9 @@ export const mod_force_sync = {
         ...options,
       }
       // this.perpetual_cop.reset$()
-      this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
-    force_sync_broadcasted(params) {
+    reflector_action_broadcasted(params) {
       {
         this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
@@ -102,11 +80,11 @@ export const mod_force_sync = {
       //   // 自分→他者
       if (params.message) {
         if (params.notify_mode === "fs_notify_all") { // 全員
-          this.se_force_sync()
+          this.se_reflector()
           this.toast_primary(params.message, {talk: false})
         } else if (params.notify_mode === "fs_notify_without_self") { // 自分を除く
           if (!this.received_from_self(params)) {
-            this.se_force_sync()
+            this.se_reflector()
             this.toast_primary(params.message, {talk: false}) // 大勢で検討しているときにうるさいのでしゃべらない
           }
         } else {
@@ -129,5 +107,9 @@ export const mod_force_sync = {
         this.ac_log({subject: "局面受信", body: `${params.turn}手目の局面を受信`})
       }
     },
+  },
+
+  computed: {
+    FooInfo() { return FooInfo },
   },
 }

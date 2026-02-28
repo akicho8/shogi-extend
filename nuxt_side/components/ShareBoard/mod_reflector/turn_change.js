@@ -3,7 +3,7 @@ import _ from "lodash"
 
 // const CONFIRM_METHOD = false
 
-export const mod_turn_change = {
+export const turn_change = {
   data() {
     return {
       turn_change_modal_instance: null,
@@ -31,7 +31,7 @@ export const mod_turn_change = {
         //     onCancel: () => this.turn_change_modal_close(),
         //     onConfirm: () => {
         //       this.sfx_click()
-        //       this.force_sync_turn_zero()
+        //       this.reflector_turn_zero()
         //     },
         //   })
         // } else {
@@ -73,7 +73,7 @@ export const mod_turn_change = {
         //     focusOn: "cancel",
         //     onConfirm: () => {
         //       this.sfx_click()
-        //       this.force_sync_turn_previous()
+        //       this.reflector_turn_previous()
         //     },
         //   })
         // } else {
@@ -88,6 +88,30 @@ export const mod_turn_change = {
         })
         // }
       }
+    },
+
+    // TurnChangeModal 用
+    new_turn_set_and_sync(e) {
+      if (false) {
+        if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
+          this.toast_primary("同じ局面です")
+          return
+        }
+      }
+
+      const diff = e.turn - this.current_turn
+
+      this.current_sfen_set(e)
+
+      // if (this.ac_room) {
+      let message = null
+      if (diff < 0) {
+        message = `${this.my_call_name}が${-diff}手戻しました`
+      } else {
+        message = `${this.my_call_name}が${diff}手進めました`
+      }
+      this.reflector_call(message)
+      // }
     },
   },
 }

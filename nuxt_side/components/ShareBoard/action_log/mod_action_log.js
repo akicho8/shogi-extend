@@ -106,7 +106,7 @@ export const mod_action_log = {
       this.honpu_branch_clear()
 
       if (this.ac_room) {
-        this.$nextTick(() => this.quick_sync(`${this.my_call_name}が${message}`))
+        this.$nextTick(() => this.reflector_call(`${this.my_call_name}が${message}`))
       }
     },
   },

@@ -103,7 +103,7 @@ export const mod_clock_box_modal = {
             this.cbm_play_core_handle()
           },
           onConfirm: () => {
-            this.force_sync_turn_zero()
+            this.reflector_turn_zero()
             this.cbm_play_core_handle()
           },
         })
