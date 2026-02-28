@@ -9,7 +9,7 @@ describe("TurnProgress", () => {
     expect(turn_progress.next_p).toEqual(false)
     expect(turn_progress.previous_p).toEqual(true)
     expect(turn_progress.same_p).toEqual(false)
-    expect(turn_progress.message).toEqual("2手戻しました")
+    expect(turn_progress.past_message).toEqual("2手戻しました")
   })
 
   test("相対的に上げる", () => {
@@ -20,7 +20,7 @@ describe("TurnProgress", () => {
     expect(turn_progress.next_p).toEqual(true)
     expect(turn_progress.previous_p).toEqual(false)
     expect(turn_progress.same_p).toEqual(false)
-    expect(turn_progress.message).toEqual("2手進めました")
+    expect(turn_progress.past_message).toEqual("2手進めました")
   })
 
   test("セットする", () => {
@@ -31,7 +31,7 @@ describe("TurnProgress", () => {
     expect(turn_progress.next_p).toEqual(false)
     expect(turn_progress.previous_p).toEqual(true)
     expect(turn_progress.same_p).toEqual(false)
-    expect(turn_progress.message).toEqual("3手目に移動しました")
+    expect(turn_progress.past_message).toEqual("3手目に移動しました")
   })
 
   test("マイナスにはならない", () => {
@@ -42,7 +42,7 @@ describe("TurnProgress", () => {
     expect(turn_progress.next_p).toEqual(false)
     expect(turn_progress.previous_p).toEqual(true)
     expect(turn_progress.same_p).toEqual(false)
-    expect(turn_progress.message).toEqual("初期配置に戻しました")
+    expect(turn_progress.past_message).toEqual("初期配置に戻しました")
   })
 
   test("変化しない", () => {
@@ -53,6 +53,6 @@ describe("TurnProgress", () => {
     expect(turn_progress.next_p).toEqual(false)
     expect(turn_progress.previous_p).toEqual(false)
     expect(turn_progress.same_p).toEqual(true)
-    expect(turn_progress.message).toEqual("0手進めました (手数変化なし)")
+    expect(turn_progress.past_message).toEqual("0手進めました (手数変化なし)")
   })
 })

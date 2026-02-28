@@ -72,7 +72,7 @@ export class TurnProgress {
     return str
   }
 
-  get message() {
+  get past_message() {
     let str = null
     if (false) {
     } else if (this.to != null) {
