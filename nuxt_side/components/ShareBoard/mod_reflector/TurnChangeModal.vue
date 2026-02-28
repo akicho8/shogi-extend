@@ -50,7 +50,7 @@ export default {
     },
     apply_handle() {
       this.sfx_click()
-      this.SB.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
+      this.SB.turn_change_call(turn_progress)
       this.SB.turn_change_modal_close()
     },
   },
