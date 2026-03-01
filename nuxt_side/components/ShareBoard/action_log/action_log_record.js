@@ -23,6 +23,10 @@ export class ActionLogRecord {
     return this.modal_title ?? "局面"
   }
 
+  // get sfen_and_turn() {
+  //   return { sfen: this.sfen, turn: this.turn }
+  // }
+
   // private
 
   unique_key_generate() {

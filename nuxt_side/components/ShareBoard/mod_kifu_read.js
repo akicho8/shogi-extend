@@ -76,24 +76,12 @@ export const mod_kifu_read = {
       this.bs_error_message_dialog(e)
       if (e.body) {
         this.sfx_click()
-        this.toast_primary("棋譜を読み込みました")
-        this.al_share({label: "棋譜読込前"})
-
-        // TODO: turn は 最大手数ではなく KENTO URL から推測したい default_sp_turn
+        this.kifu_read_modal_close()
         this.current_sfen_set({sfen: e.body, turn: e.turn_max})
         this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
         this.honpu_share()                // それを他の人に共有する
-
-        this.viewpoint = "black"
-        this.ac_log({subject: "棋譜読込", body: e.body})
-
-        this.kifu_read_modal_close()
-
-        // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-        await GX.sleep(0.5)
-        this.al_share({label: "棋譜読込後"})
-        await GX.sleep(0.5)
-        this.reflector_call(`${this.my_call_name}が棋譜を読み込んで共有しました`)
+        this.viewpoint = "black"          // 視点を黒に戻す
+        this.reflector_call({message: `棋譜を読み込みました`, label: "棋譜読込"})
       }
     },
   },

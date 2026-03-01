@@ -13,14 +13,12 @@ export const turn_change = {
   },
 
   methods: {
-    ////////////////////////////////////////////////////////////////////////////////
-
     turn_change_to_zero_modal_open_handle() {
-      this.turn_change_to_xxx_modal_open_handle(0)
+      this.turn_change_to_xxx_modal_open_handle(0) // TODO: to: 0 にしたい
     },
 
     turn_change_to_previous_modal_open_handle() {
-      this.turn_change_to_xxx_modal_open_handle(this.current_turn - 1)
+      this.turn_change_to_xxx_modal_open_handle(this.current_turn - 1) // TODO: by: -1 にしたい
     },
 
     turn_change_to_xxx_modal_open_handle(turn) {
@@ -38,6 +36,13 @@ export const turn_change = {
       }
     },
 
+    turn_change_modal_close_handle() {
+      if (this.$turn_change_modal_instance) {
+        this.sfx_click()
+        this.turn_change_modal_close()
+      }
+    },
+
     turn_change_modal_close() {
       if (this.$turn_change_modal_instance) {
         this.$turn_change_modal_instance.close()
@@ -46,10 +51,10 @@ export const turn_change = {
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-
-    turn_change_call(turn_progress) {
-      this.reflector_call(`${this.my_call_name}が${turn_progress.past_message}`)
+    turn_change_call_handle(turn) {
+      this.sfx_click()
+      this.turn_change_modal_close()
+      this.reflector_call({turn})
     },
   },
 }

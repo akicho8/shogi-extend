@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { turn_change } from "./turn_change.js"
-import { FooInfo } from "./foo_info.js"
+import { ReflectorNotifyScopeInfo } from "./reflector_notify_scope_info.js"
 import { TurnProgress } from "./turn_progress.js"
 
 export const mod_reflector = {
@@ -26,35 +26,62 @@ export const mod_reflector = {
     },
 
     reflector_turn_change(options = {}) {
-      const turn_progress = TurnProgress.create({current: this.current_turn, ...options})
       if (options.sfx) {
         this.sfx_click()
       }
-      this.ac_log({subject: "局面操作", body: turn_progress.diff})
-      const message = `${this.my_call_name}が${turn_progress.message}`
-      const reflector_options = {
-        turn: turn_progress.new_value,
-      }
-      this.reflector_call(message, reflector_options)
+      const turn_progress = TurnProgress.create({current: this.current_turn, ...options})
+      this.reflector_call({turn: turn_progress.new_value})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    reflector_call(...args) {
-      this.reflector_action(...args)
+    reflector_slider(turn) {
+      // https://twitter.com/Sushikuine_24/status/1522370383131062272
+      // turn は指定しなくてもいい
+      this.reflector_call({reflector_notify_scope_key: this.slider_reflector_notify_scope_key, turn: turn, talk: false})
     },
-    reflector_action(message = "", options = {}) {
-      const params = {
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    reflector_call(params = {}) {
+      this.reflector_action(params)
+    },
+    reflector_action(params = {}) {
+      GX.assert_kind_of_hash(params)
+      params = {
         __standalone_mode__: true,
-        message: message,
+        reflector_notify_scope_key: "rns_all",
+        talk: true,
         ...this.current_sfen_and_turn,
-        notify_mode: "fs_notify_all",
-        ...options,
+        ...params,
       }
-      // this.perpetual_cop.reset$()
       this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
     reflector_action_broadcasted(params) {
+      const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
+      const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
+      {
+        let message = null
+        if (params.message != null) {
+          message = params.message
+        }
+        if (message == null) {
+          message = turn_progress.past_message
+        }
+        if (message != null) {
+          if (this.ac_room) {
+            if (params.from_user_name) {
+              message = [this.user_call_name(params.from_user_name), "が", message].join("")
+            }
+          }
+        }
+        if (message != null) {
+          if (reflector_notify_scope_info.condition_fn(this, params)) {
+            this.se_reflector()
+            this.toast_primary(message, {talk: params.talk})
+          }
+        }
+      }
       {
         this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
@@ -63,36 +90,10 @@ export const mod_reflector = {
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }
-
-      // 他者は盤面変化に気付かないため音を出す？
-      // →自分も含めて音出した方が自分にも親切だった
-      // →やっぱやめ
-      // →自分で操作した場合、自分はわかっているので通知しない
-      // if (this.received_from_self(params)) {
-      //   // 自分→自分
-      // } else {
-      //   // 自分→他者
-      // }
-
-      // if (this.received_from_self(params)) {
-      //   // 自分→自分
-      // } else {
-      //   // 自分→他者
-      if (params.message) {
-        if (params.notify_mode === "fs_notify_all") { // 全員
-          this.se_reflector()
-          this.toast_primary(params.message, {talk: false})
-        } else if (params.notify_mode === "fs_notify_without_self") { // 自分を除く
-          if (!this.received_from_self(params)) {
-            this.se_reflector()
-            this.toast_primary(params.message, {talk: false}) // 大勢で検討しているときにうるさいのでしゃべらない
-          }
-        } else {
-          throw new Error("must not happen")
-        }
+      {
+        const label = params.label ?? `局面変更 #${turn_progress.new_value}`
+        this.al_add({...params, label})
       }
-
-      this.al_add({...params, label: `局面転送 #${params.turn}`})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -110,6 +111,6 @@ export const mod_reflector = {
   },
 
   computed: {
-    FooInfo() { return FooInfo },
+    ReflectorNotifyScopeInfo() { return ReflectorNotifyScopeInfo },
   },
 }

@@ -36,7 +36,7 @@ module ShareBoard
     end
 
     def reflector_action(data)
-      track(data, subject: "局面転送", body: "[#{data["turn"]}手目][#{data["message"]}]")
+      track(data, subject: "局面変更", body: "[#{data["turn"]}手目][#{data["message"]}]")
       broadcast(:reflector_action_broadcasted, data)
     end
 

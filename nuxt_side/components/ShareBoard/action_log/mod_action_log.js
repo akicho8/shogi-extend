@@ -76,37 +76,30 @@ export const mod_action_log = {
     },
 
     // 局面を復元する
-    al_restore(action_log) {
-      GX.assert('sfen' in action_log, "'sfen' in action_log")
-      GX.assert('turn' in action_log, "'turn' in action_log")
+    al_restore(attrs) {
+      GX.assert('sfen' in attrs, "'sfen' in attrs")
+      GX.assert('turn' in attrs, "'turn' in attrs")
 
       if (AL_SAME_SFEN_SKIP) {
-        if (this.current_sfen === action_log.sfen && this.current_turn === action_log.turn) {
+        if (this.current_sfen === attrs.sfen && this.current_turn === attrs.turn) {
           this.toast_primary("同じ局面です")
           return
         }
       }
 
-      let message = null
-      if (AL_TURN_ONLY_REVERT) {
-        if (this.current_sfen.startsWith(action_log.sfen)) {
-          // 戻る局面は現在の局面の過去の局面なのでSFENを元に戻さない (重要)
-          this.current_turn = action_log.turn
-          message = `${action_log.turn}手目に戻しました`
-        } else {
-          // 戻る局面は現在の局面とまったく異なるのでSFENごと変更する
-          this.current_sfen_set(action_log)
-          message = `局面を変更しました`
-        }
-      } else {
-        this.current_sfen_set(action_log)
-        message = "局面を戻しました"
-      }
-
       this.honpu_branch_clear()
 
-      if (this.ac_room) {
-        this.$nextTick(() => this.reflector_call(`${this.my_call_name}が${message}`))
+      {
+        let reflector_params = { sfen: attrs.sfen, turn: attrs.turn }
+        if (AL_TURN_ONLY_REVERT) {
+          if (this.current_sfen.startsWith(attrs.sfen)) {
+            // 戻る局面は現在の局面の過去の局面なのでSFENを元に戻さない (重要)
+            // こうすることで未来方向の棋譜を維持した状態にできる
+            // SFEN まで更新すると turn のところまでの SFEN になってしまう
+            reflector_params = { turn: attrs.turn }
+          }
+        }
+        this.reflector_call(reflector_params)
       }
     },
   },

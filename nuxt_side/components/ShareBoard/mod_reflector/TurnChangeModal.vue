@@ -21,8 +21,8 @@
       .message_body.has-text-grey(v-html="message")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.apply_button(@click="apply_handle" type="is-primary") {{turn_progress.will_message}}
+    b-button.turn_change_modal_close_handle.has-text-weight-normal(@click="SB.turn_change_modal_close_handle" icon-left="chevron-left")
+    b-button.turn_change_call_handle(@click="SB.turn_change_call_handle(new_turn)" type="is-primary") {{turn_progress.will_message}}
 </template>
 
 <script>
@@ -42,17 +42,6 @@ export default {
     return {
       new_turn: this.turn,
     }
-  },
-  methods: {
-    close_handle() {
-      this.sfx_click()
-      this.SB.turn_change_modal_close()
-    },
-    apply_handle() {
-      this.sfx_click()
-      this.SB.turn_change_call(turn_progress)
-      this.SB.turn_change_modal_close()
-    },
   },
   computed: {
     turn_progress() {

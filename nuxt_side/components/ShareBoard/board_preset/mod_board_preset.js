@@ -32,9 +32,7 @@ export const mod_board_preset = {
     board_preset_apply_handle() {
       this.sfx_click()
       this.board_preset_modal_close()
-      this.current_sfen_set({sfen: this.board_preset_info.sfen, turn: 0})
-      this.ac_log({subject: "手合割反映", body: this.board_preset_info.name})
-      this.reflector_call(`${this.my_call_name}が${this.board_preset_info.name}に変更しました`)
+      this.reflector_call({message: `手合割を${this.board_preset_info.name}に設定しました`, sfen: this.board_preset_info.sfen, turn: 0})
     },
 
     // select UI や ←→ ボタンを押したとき

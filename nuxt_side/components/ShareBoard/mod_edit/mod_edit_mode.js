@@ -69,10 +69,7 @@ export const mod_edit_mode = {
         this.honpu_share()             // それを他の人に共有する
       }
       this.sp_mode = "play"
-      this.al_share({label: "局面編集後"})
-      if (this.ac_room) {
-        this.$nextTick(() => this.reflector_call(`${this.my_call_name}が局面を編集しました`))
-      }
+      this.reflector_call({message: `局面を編集しました`, label: "局面編集"})
     },
 
     // 玉配置/玉回収

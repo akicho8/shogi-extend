@@ -69,27 +69,21 @@ export const mod_shogi_player = {
     },
 
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
-    ev_action_turn_change(v) {
+    // 瞬間なのでこのときの this.current_turn と turn は異なる
+    ev_action_turn_change(turn) {
       this.perpetual_cop.reset$()
       this.ev_action_turn_change_se()
-      this.ev_action_turn_change_lazy(v)
+      this.ev_action_turn_change_lazy(turn)
     },
 
     // ユーザーがコントローラやスライダーで操作し終わったら転送する
-    ev_action_turn_change_lazy: _.debounce(function(v) {
-      if (this.ac_room) {
-        // https://twitter.com/Sushikuine_24/status/1522370383131062272
-        this.$nextTick(() => this.reflector_call(`${this.my_call_name}が${v}手目に変更しました`, {notify_mode: "fs_notify_without_self"}))
-      }
+    // () => {} 形式で書くと動かないのは謎
+    // 遅延実行しているとはいえ元々 turn と this.current_turn は異なるため $nextTick する
+    ev_action_turn_change_lazy: _.debounce(function(turn) {
+      this.$nextTick(() => {
+        this.reflector_slider(turn)
+      })
     }, DEBOUNCE_DELAY),
-
-    // private
-
-    // url_replace() {
-    //   this.$router.replace({query: this.current_url_params})
-    // },
-
-    //////////////////////////////////////////////////////////////////////////////// 警告
 
     ////////////////////////////////////////////////////////////////////////////////
 
