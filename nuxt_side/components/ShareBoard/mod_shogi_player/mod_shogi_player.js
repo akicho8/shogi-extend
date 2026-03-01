@@ -1,4 +1,4 @@
-const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
+const SLIDER_DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
@@ -84,7 +84,7 @@ export const mod_shogi_player = {
       this.$nextTick(() => {
         this.reflector_slider(turn)
       })
-    }, DEBOUNCE_DELAY),
+    }, SLIDER_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 

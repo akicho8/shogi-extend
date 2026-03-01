@@ -37,8 +37,9 @@ export const mod_reflector = {
 
     reflector_slider(turn) {
       // https://twitter.com/Sushikuine_24/status/1522370383131062272
-      // turn は指定しなくてもいい
-      this.reflector_call({reflector_notify_scope_key: this.slider_reflector_notify_scope_key, turn: turn, talk: false})
+      // turn を指定した場合: 「|←」を押してすぐに1手目を指しても1秒後に0手目に戻ってしまう
+      // スライダーで指定した turn が重要なのではなくスライダーを動かした1秒後の状態が必要なだけなので turn は見なくてよい
+      this.reflector_call({reflector_notify_scope_key: this.slider_reflector_notify_scope_key, talk: false, sfen_turn_set_except_me: true})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -50,8 +51,9 @@ export const mod_reflector = {
       GX.assert_kind_of_hash(params)
       params = {
         __standalone_mode__: true,
-        reflector_notify_scope_key: "rns_all",
-        talk: true,
+        reflector_notify_scope_key: "rns_all", // 全員に通知する
+        talk: true,                            // しゃべる
+        sfen_turn_set_except_me: false,        // sfen, turn の更新: true→全員 false→自分自身に対してはしない
         ...this.current_sfen_and_turn,
         ...params,
       }
@@ -60,6 +62,7 @@ export const mod_reflector = {
     reflector_action_broadcasted(params) {
       const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
+      this.debug_alert(`REFLECT: #${params.turn}`)
       {
         let message = null
         if (params.message != null) {
@@ -85,7 +88,11 @@ export const mod_reflector = {
       {
         this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
-        this.sfen_sync_dto_receive(params)       // これで current_location が更新される
+        if (params.sfen_turn_set_except_me && this.received_from_self(params)) {
+          // skip
+        } else {
+          this.sfen_sync_dto_receive(params)       // これで current_location が更新される
+        }
       }
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
