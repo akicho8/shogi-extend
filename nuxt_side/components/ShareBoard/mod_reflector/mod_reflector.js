@@ -62,35 +62,14 @@ export const mod_reflector = {
     reflector_action_broadcasted(params) {
       const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
-      this.debug_alert(`REFLECT: #${params.turn}`)
-      {
-        let message = null
-        if (params.message != null) {
-          message = params.message
-        }
-        if (message == null) {
-          message = turn_progress.past_message
-        }
-        if (message != null) {
-          if (this.ac_room) {
-            if (params.from_user_name) {
-              message = [this.user_call_name(params.from_user_name), "が", message].join("")
-            }
-          }
-        }
-        if (message != null) {
-          if (reflector_notify_scope_info.condition_fn(this, params)) {
-            this.se_reflector()
-            this.toast_primary(message, {talk: params.talk})
-          }
-        }
-      }
+      this.reflector_action_broadcasted_message({params, turn_progress, reflector_notify_scope_info})
       {
         this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
         if (params.sfen_turn_set_except_me && this.received_from_self(params)) {
-          // skip
+          this.debug_alert(`REFLECT: #${params.turn} SKIP`)
         } else {
+          this.debug_alert(`REFLECT: #${params.turn} SET`)
           this.sfen_sync_dto_receive(params)       // これで current_location が更新される
         }
       }
@@ -98,8 +77,31 @@ export const mod_reflector = {
         this.clock_box.location_to(this.current_location)
       }
       {
-        const label = params.label ?? `局面変更 #${turn_progress.new_value}`
+        const label = params.label ?? turn_progress.label
         this.al_add({...params, label})
+      }
+    },
+
+    reflector_action_broadcasted_message({params, turn_progress, reflector_notify_scope_info}) {
+      let message = null
+      if (params.message != null) {
+        message = params.message
+      }
+      if (message == null) {
+        message = turn_progress.past_message
+      }
+      if (message != null) {
+        if (this.ac_room) {
+          if (params.from_user_name) {
+            message = [this.user_call_name(params.from_user_name), "が", message].join("")
+          }
+        }
+      }
+      if (message != null) {
+        if (reflector_notify_scope_info.condition_fn(this, params)) {
+          this.se_reflector()
+          this.toast_primary(message, {talk: params.talk})
+        }
       }
     },
 

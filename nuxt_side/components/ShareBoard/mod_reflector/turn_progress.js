@@ -90,4 +90,8 @@ export class TurnProgress {
     }
     return str
   }
+
+  get label() {
+    return `局面変更 #${this.new_value}`
+  }
 }
