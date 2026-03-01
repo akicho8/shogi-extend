@@ -57,7 +57,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
       data = data_factory("sfen" => "(sfen)", "turn" => 0, message: "(message)")
       expect {
         subscription.reflector_action(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "reflector_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "reflector_action_broadcasted", bc_params: data)
     end
   end
 
