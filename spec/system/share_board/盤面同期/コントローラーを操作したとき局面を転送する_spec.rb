@@ -1,8 +1,8 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name)
-    room_setup_by_user(user_name)
+    visit_room(:user_name => user_name)
   end
 
   it "works" do
