@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       find(".turn_change_to_zero_modal_open_handle").click     # 「初期配置に戻す」モーダルを開く
-      find(".apply_button").click                              # 「N手目まで戻る」
+      find(".turn_change_call_handle").click                              # 「N手目まで戻る」
       assert_turn(0)                                           # 0手に戻っている
     end
     window_b do
@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       find(".turn_change_to_previous_modal_open_handle").click # 「1手戻す」モーダルを開く
-      find(".apply_button").click                              # 「N手目まで戻る」
+      find(".turn_change_call_handle").click                              # 「N手目まで戻る」
       assert_turn(1)                                           # 1手目に戻っている
     end
     window_b do
@@ -37,7 +37,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         find(".button.next").click                             # 「>」で
         assert_text("局面 #1")                                 # 1手目に進める
       end
-      find(".apply_button").click                              # 「N手目まで戻る」
+      find(".turn_change_call_handle").click                              # 「N手目まで戻る」
       assert_turn(1)                                           # 0手目ではなく1手目に戻っている
     end
   end
