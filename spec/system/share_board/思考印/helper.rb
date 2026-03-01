@@ -23,4 +23,12 @@ module SharedMethods
 
     assert { actual == expected }
   end
+
+  def assert_mark_exist
+    assert_selector(".ThinkMark", wait: 1)
+  end
+
+  def assert_mark_none
+    assert_no_selector(".ThinkMark", wait: 1)
+  end
 end
