@@ -25,6 +25,7 @@
       .panel-heading
         | コンテキスト変更2
       a.panel-block(href="?room_key=dev_room&user_name=a&url_room_key_exist_behavior=modal_open") 合言葉ありURL時はモーダル表示で止める
+      a.panel-block(href="?slider_reflector_notify_scope_key=rns_all") スライダー操作後の反映は全員に行う
   .column.is-2
     .panel
       .panel-heading
