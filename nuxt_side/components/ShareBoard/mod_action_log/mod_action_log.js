@@ -10,8 +10,12 @@ import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import ActionLogModal from "./ActionLogModal.vue"
 import { ActionLogRecord } from "./action_log_record.js"
+import { mod_action_log_share      } from "./mod_action_log_share.js"
 
 export const mod_action_log = {
+  mixins: [
+    mod_action_log_share,
+  ],
   data() {
     return {
       action_logs: [],
