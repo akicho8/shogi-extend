@@ -1,5 +1,5 @@
 <template lang="pug">
-SbAvatarLine.SbActionLogLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="SB.al_click_handle(e)" :xprofile_show_p="false")
+SbAvatarLine.XhistoryItem.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="SB.time_machine_modal_open_handle(e)" :xprofile_show_p="false")
   // タグ的なもの
   template(v-if="e.label")
     template(v-if="e.label_type")
@@ -32,7 +32,7 @@ SbAvatarLine.SbActionLogLine.is-clickable(:info="e" tag="a" :key="e.unique_key" 
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbActionLogLine",
+  name: "XhistoryItem",
   mixins: [support_child],
   props: ["e"],
 }
@@ -40,6 +40,6 @@ export default {
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbActionLogLine
+.XhistoryItem
   __css_keep__: 0
 </style>

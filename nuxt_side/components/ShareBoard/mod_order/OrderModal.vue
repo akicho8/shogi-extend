@@ -150,14 +150,14 @@ export default {
     shuffle_all_handle() {
       this.sfx_click()
       this.SB.order_draft.order_flow.shuffle_all()
-      this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
+      this.SB.xhistory_action({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.sfx_click()
       this.SB.order_draft.order_flow.teams_each_shuffle()
-      this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
+      this.SB.xhistory_action({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
     // 振り駒
@@ -177,7 +177,7 @@ export default {
         who = this.user_call_name(item.user_name)
       }
       const message = `振り駒をした結果、${furigoma_pack.message}で${who}の先手になりました`
-      this.SB.al_share({label: furigoma_pack.piece_names, message: message})
+      this.SB.xhistory_action({label: furigoma_pack.piece_names, message: message})
     },
 
     // 先後入替
@@ -185,7 +185,7 @@ export default {
       if (this.swap_invalid("先後入替")) { return }
       this.sfx_click()
       this.SB.order_draft.order_flow.swap_run()
-      this.SB.al_share({label: "先後入替", message: "チームを入れ替えました"})
+      this.SB.xhistory_action({label: "先後入替", message: "チームを入れ替えました"})
     },
 
     // すべてのメンバーを観戦に移動する
@@ -269,20 +269,20 @@ export default {
       this.sfx_click()
       this.SB.order_modal_close()
       this.SB.quiz_maker_handle()
-      this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
+      this.SB.xhistory_action({label: "お題作成", message: "お題を作成しています"})
     },
 
     voted_result_to_order_apply_handle() {
       this.sfx_click()
       this.SB.voted_result_to_order_apply()
-      this.SB.al_share({label: "結果反映", message: "投票の結果でチーム分けしました"})
+      this.SB.xhistory_action({label: "結果反映", message: "投票の結果でチーム分けしました"})
       this.tab_index = this.SB.OrderTabInfo.fetch("order_tab_main").code
     },
 
     quiz_delete_handle() {
       this.sfx_click()
       this.SB.quiz_delete()
-      this.SB.al_share({label: "お題削除", message: "お題を削除しました"})
+      this.SB.xhistory_action({label: "お題削除", message: "お題を削除しました"})
     },
 
     ////////////////////////////////////////////////////////////////////////////////

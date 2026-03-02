@@ -5,7 +5,7 @@ export const mod_room_entry_leave = {
     // 入室時の通知
     async room_entry_call(params) {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
-      this.al_add({...params, label: "入室"})
+      this.xhistory_add({...params, label: "入室"})
       await this.sfx_play("se_room_entry")
       await this.toast_primary(`${this.user_call_name(params.from_user_name)}が入室しました`)
 
@@ -33,7 +33,7 @@ export const mod_room_entry_leave = {
         // room_leave_share を呼んだ直後に接続を切っているのでここには来ないのだが切断が遅すぎると呼ばれる可能性もあるため
         return
       }
-      this.al_add({...params, label: "退室"})
+      this.xhistory_add({...params, label: "退室"})
       this.toast_primary(`${this.user_call_name(params.from_user_name)}が退室しました`)
       this.member_reject(params)
     },

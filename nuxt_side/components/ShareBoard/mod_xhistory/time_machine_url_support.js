@@ -1,11 +1,11 @@
-// ActionLogModal 用の mixins
+// TimeMachineModal 用の mixins
 // Sb.vue のスコープのものとメソッド名が重複しているので注意
 
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { GX } from "@/components/models/gx.js"
 
-export const mod_urls = {
+export const time_machine_url_support = {
   methods: {
     // 棋譜コピー
     kifu_copy_handle() {
@@ -13,16 +13,16 @@ export const mod_urls = {
       this.general_kifu_copy(this.new_sfen, {
         to_format: "kif",
         turn: this.new_turn,
-        ...this.action_log.player_names_with_title,
+        ...this.xhistory_record.player_names_with_title,
       })
-      this.SB.al_share_puts("棋譜コピー")
+      this.SB.xhistory_puts("棋譜コピー")
     },
 
     // 棋譜URLコピー
     current_url_copy_handle() {
       this.sfx_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
-      this.SB.al_share_puts("棋譜URLコピー")
+      this.SB.xhistory_puts("棋譜URLコピー")
     },
 
     // 指定の棋譜への直リンURL
@@ -38,7 +38,7 @@ export const mod_urls = {
     kifu_show_handle(e) {
       this.sfx_click()
       this.window_popup(this.kifu_show_url(e))
-      this.SB.al_share_puts("棋譜表示")
+      this.SB.xhistory_puts("棋譜表示")
     },
 
     // 指定の棋譜のダウンロードURL
@@ -51,7 +51,7 @@ export const mod_urls = {
       if (typeof window !== 'undefined') {
         this.sfx_click()
         window.location.href = this.kifu_download_url(e)
-        this.SB.al_share_puts("棋譜ダウンロード")
+        this.SB.xhistory_puts("棋譜ダウンロード")
       }
     },
 
@@ -60,7 +60,7 @@ export const mod_urls = {
     },
   },
   computed: {
-    new_sfen()         { return this.action_log.sfen },
+    new_sfen()         { return this.xhistory_record.sfen },
     current_url()      { return this.url_merge({}) },
     current_kif_url()  { return this.url_merge({format: "kif"}) },
     json_debug_url()   { return this.url_merge({format: "json"}) },
@@ -72,7 +72,7 @@ export const mod_urls = {
         turn: this.new_turn,                        // プレビュー盤の手数
         viewpoint: this.viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
         ...this.SB.url_share_params,              // 共有するパラメータ
-        ...this.action_log.player_names_with_title, // 面子情報
+        ...this.xhistory_record.player_names_with_title, // 面子情報
       }
       return this.SB.pc_url_params_clean(params)
     },

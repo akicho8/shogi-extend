@@ -82,7 +82,7 @@ export const illegal_takeback_modal = {
       const illegal_select_info = this.IllegalSelectInfo.fetch(params.illegal_select_key)
 
       // 履歴に入れる (オプション)
-      this.al_add({...params, label: illegal_select_info.name, label_type: "is-danger"})
+      this.xhistory_add({...params, label: illegal_select_info.name, label_type: "is-danger"})
 
       // それぞれの処理
       illegal_select_info.call(this, params)

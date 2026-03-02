@@ -52,7 +52,7 @@ client-only
         .columns.is-centered.is-desktop.is-variable.is-0
           SbShogiPlayer(ref="SbShogiPlayer")
           SbMemberList
-          SbActionLogContainer(ref="SbActionLogContainer")
+          XhistoryContainer(ref="XhistoryContainer")
         SbDebug(v-if="debug_mode_p")
 </template>
 
@@ -71,7 +71,7 @@ import { support_parent            } from "./support_parent.js"
 
 import { mod_xtitle                } from "./mod_xtitle.js"
 
-import { mod_action_log            } from "./mod_action_log/mod_action_log.js"
+import { mod_xhistory            } from "./mod_xhistory/mod_xhistory.js"
 
 import { mod_turn_notify           } from "./mod_turn_notify.js"
 import { mod_otasuke               } from "./mod_otasuke.js"
@@ -172,7 +172,7 @@ export default {
     autoexec_methods,
     mod_xtitle,
 
-    mod_action_log,
+    mod_xhistory,
 
     mod_chat,
     mod_chat_message_list,

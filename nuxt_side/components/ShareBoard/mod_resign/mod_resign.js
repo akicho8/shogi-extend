@@ -78,7 +78,7 @@ export const mod_resign = {
     resign_share_broadcasted(params) {
       this.ending_context = EndingContext.create({my_location_key: this.my_location_key, ...params})
 
-      this.al_add({...params, label: this.ending_context.ending_route_info.name, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
+      this.xhistory_add({...params, label: this.ending_context.ending_route_info.name, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
 
       // if (params.win_location_key == null) {
       //   this.toast_primary("引き分けです")       // いまの仕様だと引き分けになることはない

@@ -32,7 +32,7 @@ export const mod_player_names = {
       })
     },
 
-    // ActionLog にまるごと保存し「棋譜コピー」や「棋譜リンク」のときに渡す内容
+    // XhistoryRecord にまるごと保存し「棋譜コピー」や「棋譜リンク」のときに渡す内容
     player_names_with_title() {
       return {
         title: this.current_title,

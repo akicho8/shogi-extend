@@ -20,12 +20,12 @@ export const mod_honpu_share = {
     },
     honpu_share_dto_receive(params) {
       if (params.honpu_main) {
-        this.honpu_main = this.al_create(params.honpu_main)
+        this.honpu_main = this.xhistory_create(params.honpu_main)
       } else {
         this.honpu_main = null
       }
       if (params.honpu_branch) {
-        this.honpu_branch = this.al_create(params.honpu_branch)
+        this.honpu_branch = this.xhistory_create(params.honpu_branch)
       } else {
         this.honpu_branch = null
       }

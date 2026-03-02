@@ -1,11 +1,11 @@
 import { GX } from "@/components/models/gx.js"
 
-export const mod_action_log_share = {
+export const mod_xhistory_action = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// 共有版
 
-    al_share_puts(label) {
-      this.al_share({
+    xhistory_puts(label) {
+      this.xhistory_action({
         label: label,
         message: `${label}しました`,
         sfen: this.current_sfen, // 発動する側の棋譜を持っている
@@ -13,11 +13,11 @@ export const mod_action_log_share = {
       })
     },
 
-    al_share(params) {
-      this.ac_room_perform("al_share", params) // --> app/channels/share_board/room_channel.rb
+    xhistory_action(params) {
+      this.ac_room_perform("xhistory_action", params) // --> app/channels/share_board/room_channel.rb
     },
-    async al_share_broadcasted(params) {
-      this.al_add(params)
+    async xhistory_action_broadcasted(params) {
+      this.xhistory_add(params)
       this.ac_log({subject: "履歴追加", body: `「${params.label}」を受信`})
       {
         const toast_options = {

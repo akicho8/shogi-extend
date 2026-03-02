@@ -2,9 +2,9 @@
 // |---------------------|
 
 import { GX } from "@/components/models/gx.js"
-import { TimeUtil } from "@/components/models/time_util.js"
+import { TimeHelper } from "@/components/models/time_helper.js"
 
-export class ActionLogRecord {
+export class XhistoryRecord {
   static create(params) {
     return new this(params)
   }
@@ -16,7 +16,7 @@ export class ActionLogRecord {
   }
 
   get display_time() {
-    return TimeUtil.format_hhmmss(this.performed_at)
+    return TimeHelper.format_hhmmss(this.performed_at)
   }
 
   get modal_title_or_default() {

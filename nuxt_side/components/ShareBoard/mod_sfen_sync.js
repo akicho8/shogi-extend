@@ -160,7 +160,7 @@ export const mod_sfen_sync = {
       }
 
       this.ai_say_case_turn(params)
-      this.action_log_add_and_branch_setup(params)
+      this.xhistory_record_add_and_branch_setup(params)
     },
 
     async sfen_synced_after_notice(params) {
@@ -235,7 +235,7 @@ export const mod_sfen_sync = {
 
     // 履歴追加からの(必要なら)ブランチ作成とすればいいのだけど、
     // ブランチを作成する必要があるならそれは「変化」なので履歴追加の時点でラベルに「変化」を入れる
-    action_log_add_and_branch_setup(params) {
+    xhistory_record_add_and_branch_setup(params) {
       params = {...params}
 
       if (this.honpu_branch_need_p) {
@@ -245,7 +245,7 @@ export const mod_sfen_sync = {
         }
       }
 
-      this.al_add(params)
+      this.xhistory_add(params)
       this.honpu_branch_setup(params) // ブランチが空の場合はブランチを作る
     },
 

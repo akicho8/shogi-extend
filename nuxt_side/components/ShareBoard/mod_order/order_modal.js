@@ -124,7 +124,7 @@ export const order_modal = {
         this.tl_alert("order_draft_publish 自分→他者")
       }
       if (GX.present_p(params.message)) {
-        this.al_add({...params, label: "順番更新"})
+        this.xhistory_add({...params, label: "順番更新"})
       }
 
       // order_draft.order_flow のパラメータを order_flow に反映する

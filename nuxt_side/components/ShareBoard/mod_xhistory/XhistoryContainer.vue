@@ -1,27 +1,27 @@
 <template lang="pug">
-.SbActionLogContainer.SideColumn.column.is-size-7(:class="has_content_class(SB.action_logs)")
+.XhistoryContainer.SideColumn.column.is-size-7(:class="has_content_class(SB.xhistory_records)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .SbActionLogLines
-      template(v-for="(e, i) in SB.action_logs")
-        SbActionLogLine(:e="e")
+    .XhistoryItems
+      template(v-for="(e, i) in SB.xhistory_records")
+        XhistoryItem(:e="e")
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbActionLogContainer",
+  name: "XhistoryContainer",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../sass/support.sass"
-.SbActionLogContainer.column
+.XhistoryContainer.column
   +SideColumnScrollOn
   +touch
     height: 16rem
-  .SbActionLogLines
+  .XhistoryItems
     display: flex
     flex-direction: column
     gap: 1px // 上下の b-tag 同士が繋がってしまうのを避けるため必ず1pxあける

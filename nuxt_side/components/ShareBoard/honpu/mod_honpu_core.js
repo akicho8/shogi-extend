@@ -32,36 +32,36 @@ export const mod_honpu_core = {
     },
 
     honpu_branch_clear() {
-      this.tl_add("HONPU", "ブランチ消去(al_restore の中で呼んでいる)")
+      this.tl_add("HONPU", "ブランチ消去(xhistory_restore の中で呼んでいる)")
       this.honpu_branch = null
       this.perpetual_cop.reset$() // これがないと元に戻して同じ手を指すと千日手になる
     },
 
     honpu_main_setup() {
       this.tl_add("HONPU", "本譜を準備する")
-      this.honpu_main = this.al_create({modal_title: "本譜"})
+      this.honpu_main = this.xhistory_create({modal_title: "本譜"})
       this.honpu_branch_clear()
     },
 
     honpu_branch_setup(params) {
       this.tl_add("HONPU", "ブランチを初回だけ設定する", params)
       if (this.honpu_branch_need_p) {
-        this.honpu_branch = this.al_create(params)
+        this.honpu_branch = this.xhistory_create(params)
       }
     },
 
     honpu_open_click_handle() {
       this.tl_add("HONPU", "本譜をクリックしたらダイアログを出す")
       if (this.honpu_main) {
-        this.al_click_handle(this.honpu_main)
+        this.time_machine_modal_open_handle(this.honpu_main)
       }
     },
 
     honpu_return_click_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
       if (this.honpu_main && this.honpu_branch) {
-        this.al_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
-        this.al_share({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
+        this.xhistory_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
+        this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
   },

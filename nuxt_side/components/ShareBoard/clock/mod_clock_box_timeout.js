@@ -51,7 +51,7 @@ export const mod_clock_box_timeout = {
         // 当事者側がすぐにBCしてきてすでにモーダルを表示しているため何もしないでおく
         this.tl_add("TIME_LIMIT", `他者側 なんと予約する前に当事者からBCされてモーダルを表示していた`)
       } else {
-        this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.CC_TIMEOUT_JUDGE_DELAY}秒待ち`})
+        this.xhistory_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.CC_TIMEOUT_JUDGE_DELAY}秒待ち`})
         this.tl_alert("審議中")
         this.cc_timeout_judge_delay_stop()
         this.cc_timeout_judge_delay_id = GX.delay_block(this.CC_TIMEOUT_JUDGE_DELAY, () => this.cc_timeout_modal_open("audo_judge"))

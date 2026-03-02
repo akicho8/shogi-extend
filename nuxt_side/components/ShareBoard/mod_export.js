@@ -46,7 +46,7 @@ export const mod_export = {
     // 指定の棋譜を表示
     kifu_show_handle(e) {
       this.window_popup(this.kifu_show_url(e))
-      this.al_share_puts("棋譜表示")
+      this.xhistory_puts("棋譜表示")
     },
 
     //////////////////////////////////////////////////////////////////////////////// download
@@ -64,7 +64,7 @@ export const mod_export = {
     kifu_download_handle(e) {
       if (typeof window !== 'undefined') {
         window.location.href = this.kifu_download_url(e)
-        this.al_share_puts("棋譜ダウンロード")
+        this.xhistory_puts("棋譜ダウンロード")
       }
     },
   },

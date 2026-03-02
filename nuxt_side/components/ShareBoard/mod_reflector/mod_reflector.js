@@ -78,7 +78,7 @@ export const mod_reflector = {
       }
       {
         const label = params.label ?? turn_progress.label
-        this.al_add({...params, label})
+        this.xhistory_add({...params, label})
       }
     },
 

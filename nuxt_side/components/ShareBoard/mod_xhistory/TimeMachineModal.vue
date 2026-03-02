@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{action_log.modal_title_or_default}} \#{{new_turn}}
+      | {{xhistory_record.modal_title_or_default}} \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -13,8 +13,8 @@
         sp_controller
         :sp_view_mode_piece_movable="false"
         :sp_viewpoint.sync="viewpoint"
-        :sp_turn="action_log.turn"
-        :sp_body="action_log.sfen"
+        :sp_turn="xhistory_record.turn"
+        :sp_body="xhistory_record.sfen"
         @ev_turn_offset_change="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
@@ -32,48 +32,37 @@
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
-    pre.mt-4(v-if="SB.debug_mode_p") {{$GX.pretty_inspect(action_log)}}
+    pre.mt-4(v-if="SB.debug_mode_p") {{$GX.pretty_inspect(xhistory_record)}}
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.apply_button(@click="apply_handle" type="is-primary") {{new_turn}}手目まで戻る
+    b-button.time_machine_modal_close_handle.has-text-weight-normal(@click="SB.time_machine_modal_close_handle" icon-left="chevron-left")
+    b-button.time_machine_modal_apply_handle(@click="SB.time_machine_modal_apply_handle" type="is-primary") {{new_turn}}手目まで戻る
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
-import { mod_urls } from "./mod_urls.js"
+import { time_machine_url_support } from "./time_machine_url_support.js"
 import { GX } from "@/components/models/gx.js"
 
 export default {
-  name: "ActionLogModal",
+  name: "TimeMachineModal",
   mixins: [
     support_child,
-    mod_urls,
+    time_machine_url_support,
   ],
   props: {
-    action_log: { type: Object, required: true, },
+    xhistory_record: { type: Object, required: true, },
   },
   data() {
     return {
-      new_turn: this.action_log.turn,
-      viewpoint: this.action_log.viewpoint,
+      new_turn: this.xhistory_record.turn,
+      viewpoint: this.xhistory_record.viewpoint,
     }
   },
   mounted() {
     GX.assert(this.viewpoint === "white" || this.viewpoint === "black")
-    GX.assert('sfen' in this.action_log, "'sfen' in this.action_log")
-    GX.assert('turn' in this.action_log, "'turn' in this.action_log")
-  },
-  methods: {
-    close_handle() {
-      this.sfx_click()
-      this.$emit("close")
-    },
-    apply_handle() {
-      this.sfx_click()
-      this.SB.al_restore({...this.action_log, turn: this.new_turn})
-      this.$emit("close")
-    },
+    GX.assert('sfen' in this.xhistory_record, "'sfen' in this.xhistory_record")
+    GX.assert('turn' in this.xhistory_record, "'turn' in this.xhistory_record")
   },
   computed: {
     current_format_type_info() {
@@ -85,7 +74,7 @@ export default {
 
 <style lang="sass">
 @import "../sass/support.sass"
-.ActionLogModal
+.TimeMachineModal
   +modal_width(512px)
 
   .modal-card-body
@@ -94,7 +83,7 @@ export default {
       margin-bottom: 0
 
 .STAGE-development
-  .ActionLogModal
+  .TimeMachineModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body

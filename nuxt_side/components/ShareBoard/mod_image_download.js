@@ -36,7 +36,7 @@ export const mod_image_download = {
 
     image_download_run() {
       window.location.href = this.image_download_preview_url({disposition: "attachment"})
-      this.al_share_puts("画像ダウンロード")
+      this.xhistory_puts("画像ダウンロード")
       this.image_download_success_count += 1
     },
   },

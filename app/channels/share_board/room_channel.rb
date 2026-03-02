@@ -175,9 +175,9 @@ module ShareBoard
       broadcast(:fake_error_broadcasted, data)
     end
 
-    def al_share(data)
+    def xhistory_action(data)
       track(data, subject: data["label"])
-      broadcast(:al_share_broadcasted, data)
+      broadcast(:xhistory_action_broadcasted, data)
     end
 
     def illegal_takeback_modal_start(data)

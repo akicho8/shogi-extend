@@ -53,8 +53,8 @@ export const mod_illegal = {
       this.illegal_takeback_modal_start(illegal_hv)
     },
     illegal_takeback_modal_start(illegal_hv) {
-      // 指したときと同じ構造にしておくと、指したときと al_add の表示が同じにできる
-      // → これ al_add の時点で変換すればいいだけではないか？
+      // 指したときと同じ構造にしておくと、指したときと xhistory_add の表示が同じにできる
+      // → これ xhistory_add の時点で変換すればいいだけではないか？
       // → ActionCable を経由すると last_move_info のメソッドが呼べなくなるためここで変換するしかない
       const params = {
         __standalone_mode__: true,
@@ -67,7 +67,7 @@ export const mod_illegal = {
     },
     illegal_takeback_modal_start_broadcasted(params) {
       this.illegal_params_set(params)
-      this.al_add(params)
+      this.xhistory_add(params)
 
       // 検討中
       if (!this.cc_play_p) {

@@ -68,7 +68,7 @@ export const mod_order_main = {
       if (GX.present_p(params.message)) {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
         this.toast_primary(message, params)
-        this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
+        this.xhistory_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
       this.ac_log({subject: "順設受信", body: `順番${this.order_enable_p ? "ON" : "OFF"}を受信`})
     },

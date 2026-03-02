@@ -24,7 +24,7 @@ export const mod_edit_mode = {
         type: "is-danger",
         onConfirm: () => {
           this.sfx_click()
-          this.al_share({label: "局面編集前"})
+          this.xhistory_action({label: "局面編集前"})
           this.sp_mode = "edit"
           this.edit_warn_modal_close()
         },

@@ -359,7 +359,7 @@ export const mod_clock_box = {
         this.clock_share_dto_receive(params)
       }
 
-      this.__cc_action_log_store(params)         // 履歴追加
+      this.__cc_xhistory_record_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
 
       if (cc_behavior_info.key === "cc_behavior_timeout") {
@@ -413,7 +413,7 @@ export const mod_clock_box = {
       }
     },
 
-    __cc_action_log_store(params) {
+    __cc_xhistory_record_store(params) {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       if (cc_behavior_info.history) {
         params = {
@@ -423,7 +423,7 @@ export const mod_clock_box = {
           clock_box_attributes: null, // 容量が大きいので空にしておく
           current_url: null, // 絶対に使わないので消しておく
         }
-        this.al_add(params)
+        this.xhistory_add(params)
       }
     },
 

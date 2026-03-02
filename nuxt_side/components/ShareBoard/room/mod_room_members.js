@@ -141,7 +141,7 @@ export const mod_room_members = {
       if (true) {
         const diff_names = GX.ary_minus(original_names, now_names)
         if (GX.present_p(diff_names)) {
-          diff_names.forEach(user_name => this.al_add({from_user_name: user_name, label: "💀"}))
+          diff_names.forEach(user_name => this.xhistory_add({from_user_name: user_name, label: "💀"}))
           const user_call_names = diff_names.map(e => this.user_call_name(e))
           const str = user_call_names.join("と")
           this.toast_primary(`${str}の霊圧が消えました`)

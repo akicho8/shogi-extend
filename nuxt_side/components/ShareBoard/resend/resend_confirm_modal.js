@@ -26,7 +26,7 @@ export const resend_confirm_modal = {
         const missing_user = this.user_call_name(this.resend_next_user_name)
         full_message.push(`${missing_user}が抜けた場合は順番設定から外して再開してください`)
       }
-      this.al_share({label: "対局中断", label_type: "is-danger", full_message: full_message})
+      this.xhistory_action({label: "対局中断", label_type: "is-danger", full_message: full_message})
     },
 
     // 「再送する」
