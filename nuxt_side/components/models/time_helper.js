@@ -21,7 +21,7 @@ dayjs.extend(relativeTime)
 
 import { GX } from "@/components/models/gx.js"
 
-export const TimeUtil = {
+export const TimeHelper = {
   create(...args) {
     return dayjs(...args)
   },

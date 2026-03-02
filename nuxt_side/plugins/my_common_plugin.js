@@ -3,7 +3,7 @@
 // またグローバルに、Nuxt インジェクション専用のこの関数内に Vue を接続しないでください
 // サーバーサイドでメモリリークが発生します。
 
-import { TimeUtil } from "@/components/models/time_util.js"
+import { TimeHelper } from "@/components/models/time_helper.js"
 import { DebugUtil } from "@/components/models/debug_util.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
@@ -15,7 +15,7 @@ import isMobile from "ismobilejs"
 // https://nuxtjs.org/ja/docs/directory-structure/plugins/#root-%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%81%AE%E6%8C%BF%E5%85%A5
 export default ({app}, inject) => {
   inject("GX", GX)
-  inject("time", TimeUtil)
+  inject("time", TimeHelper)
   inject("debug", DebugUtil)
   inject("KifuVo", KifuVo)
   inject("PiyoShogiTypeCurrent", PiyoShogiTypeCurrent)
