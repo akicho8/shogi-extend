@@ -62,7 +62,7 @@ export const mod_reflector = {
     reflector_action_broadcasted(params) {
       const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
-      this.reflector_action_broadcasted_message({params, turn_progress, reflector_notify_scope_info})
+      this.reflector_message_display({params, turn_progress, reflector_notify_scope_info})
       {
         this.think_mark_all_clear()              // 思考印消去
         this.perpetual_cop.reset$()
@@ -82,22 +82,14 @@ export const mod_reflector = {
       }
     },
 
-    reflector_action_broadcasted_message({params, turn_progress, reflector_notify_scope_info}) {
-      let message = null
-      if (params.message != null) {
-        message = params.message
-      }
-      if (message == null) {
-        message = turn_progress.past_message
-      }
+    reflector_message_display({params, turn_progress, reflector_notify_scope_info}) {
+      let message = params.message ?? turn_progress.past_message
       if (message != null) {
         if (this.ac_room) {
           if (params.from_user_name) {
             message = [this.user_call_name(params.from_user_name), "が", message].join("")
           }
         }
-      }
-      if (message != null) {
         if (reflector_notify_scope_info.condition_fn(this, params)) {
           this.se_reflector()
           this.toast_primary(message, {talk: params.talk})
