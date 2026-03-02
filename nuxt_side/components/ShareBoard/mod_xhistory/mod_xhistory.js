@@ -2,8 +2,6 @@
 // タップ局面変更
 
 const XHISTORY_RECORDS_MAX      = 200   // 履歴の最大長
-const XHISTORY_SAME_SFEN_SKIP   = false // 同じ局面なら何もしない？
-const XHISTORY_TURN_ONLY_REVERT = true  // 過去の履歴なら手数だけ戻す？
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"

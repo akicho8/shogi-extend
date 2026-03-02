@@ -36,7 +36,7 @@
 
   .modal-card-foot
     b-button.time_machine_modal_close_handle.has-text-weight-normal(@click="SB.time_machine_modal_close_handle" icon-left="chevron-left")
-    b-button.time_machine_modal_apply_handle(@click="SB.time_machine_modal_apply_handle" type="is-primary") {{new_turn}}手目まで戻る
+    b-button.time_machine_modal_apply_handle(@click="time_machine_modal_apply_handle" type="is-primary") {{new_turn}}手目まで戻る
 </template>
 
 <script>
@@ -63,6 +63,11 @@ export default {
     GX.assert(this.viewpoint === "white" || this.viewpoint === "black")
     GX.assert('sfen' in this.xhistory_record, "'sfen' in this.xhistory_record")
     GX.assert('turn' in this.xhistory_record, "'turn' in this.xhistory_record")
+  },
+  methods: {
+    time_machine_modal_apply_handle() {
+      this.SB.time_machine_modal_apply_handle({...this.xhistory_record, turn: this.new_turn})
+    },
   },
   computed: {
     current_format_type_info() {

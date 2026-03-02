@@ -32,7 +32,7 @@ export const mod_honpu_core = {
     },
 
     honpu_branch_clear() {
-      this.tl_add("HONPU", "ブランチ消去(xhistory_restore の中で呼んでいる)")
+      this.tl_add("HONPU", "ブランチ消去(time_machine_restore の中で呼んでいる)")
       this.honpu_branch = null
       this.perpetual_cop.reset$() // これがないと元に戻して同じ手を指すと千日手になる
     },
@@ -60,7 +60,7 @@ export const mod_honpu_core = {
     honpu_return_click_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
       if (this.honpu_main && this.honpu_branch) {
-        this.xhistory_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
+        this.time_machine_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
         this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
