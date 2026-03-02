@@ -28,12 +28,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_text("bさんの反応がないので再送してください")
 
       find(".resend_confirm_execute_handle").click # 再送する
-      assert_action_text("再送1")
+      assert_history_text("再送1")
       assert_text("再送1")
       assert_resend_failed_count(2)
 
       find(".resend_confirm_execute_handle").click # 再送する
-      assert_action_text("再送2")
+      assert_history_text("再送2")
       assert_resend_failed_count(3)
     end
   end

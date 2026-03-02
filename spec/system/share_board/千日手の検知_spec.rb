@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     it "反則モードに関係なく履歴に出すだけ" do
       visit_app
       perpetual_trigger
-      assert_action_text("千日手")              # 履歴に「千日手」のテキストが出ている
+      assert_history_text("千日手")              # 履歴に「千日手」のテキストが出ている
       assert_no_selector(".modal")              # モーダルはでない
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
 
     def assert_message
-      assert_action_text("千日手")
+      assert_history_text("千日手")
       assert_text("本来であれば「千日手」で引き分けです")
       assert_text("どちらかが指し手を変えてください")
     end
@@ -42,7 +42,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     it "審判不在モード" do
       case1(:ignore)
-      assert_no_action_text("千日手")
+      assert_no_history_text("千日手")
     end
   end
 end

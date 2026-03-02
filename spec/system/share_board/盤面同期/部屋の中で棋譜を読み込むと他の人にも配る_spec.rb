@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { assert_turn(1) }
     window_b { assert_turn(1) }
     window_b do
-      assert_action_index(0, :a, "棋譜読込")
+      assert_history_index_behavior(0, :a, "棋譜読込")
       assert_text "aさんが棋譜を読み込みました"
     end
   end

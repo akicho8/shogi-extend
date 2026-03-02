@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_room(user_name: :a)
     piece_move_o("77", "76", "☗7六歩")              # 初手を指す
     assert_turn(1)
-    action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
+    history_items_at(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
     # ウィンドウが開きまくるけど page はそのままなので
     #  window = current_window
@@ -14,26 +14,26 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     # とする必要はない
 
     find(".KifCopyButton").click           # 「コピー」
-    assert_action_text("棋譜コピー")
+    assert_history_text("棋譜コピー")
 
     return_to_current_window do
       find(".KentoButton").click             # 「KENTO」
     end
-    assert_action_text("KENTO起動")
+    assert_history_text("KENTO起動")
 
     return_to_current_window do
       find(".PiyoShogiButton").click         # 「ぴよ将棋」
     end
-    assert_action_text("ぴよ将棋起動")
+    assert_history_text("ぴよ将棋起動")
 
     find(".current_url_copy_handle").click # 「リンク」
-    assert_action_text("棋譜URLコピー")
+    assert_history_text("棋譜URLコピー")
 
     find(".kifu_download_handle").click    # 「ダウンロード」
-    assert_action_text("棋譜ダウンロード")
+    assert_history_text("棋譜ダウンロード")
 
     find(".kifu_show_handle").click        # 「棋譜表示」
-    assert_action_text("棋譜表示")
+    assert_history_text("棋譜表示")
   end
 
   it "操作履歴モーダル内で局面を調整する" do
@@ -41,13 +41,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     piece_move_o("77", "76", "☗7六歩")
     piece_move_o("33", "34", "☖3四歩")
     assert_turn(2)                                    # 現在2手目
-    action_log_row_of(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
-    Capybara.within(".ActionLogModal") do
+    history_items_at(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
+    Capybara.within(".TimeMachineModal") do
       assert_text("局面 #2")                          # 当然2手目になっている
       find(".button.previous").click                  # 「<」で1手目に進めると
       assert_text("局面 #1")                          # 1手目になっている
     end
-    find(".apply_button").click                       # 「N手目まで戻る」
+    find(".time_machine_modal_apply_handle").click    # 「N手目まで戻る」
     assert_turn(1)                                    # 1手目に変更されている
   end
 end

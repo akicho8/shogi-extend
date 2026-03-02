@@ -40,8 +40,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "操作履歴にも含んでいる" do
     visit_app(black: :a)
     piece_move_o("77", "76", "☗7六歩")
-    action_log_row_of(0).click
-    Capybara.within(".ActionLogModal") do
+    history_items_at(0).click
+    Capybara.within(".TimeMachineModal") do
       assert_text(%("black": "a")) # モーダル内のでデバッグプリントを見ている
     end
   end

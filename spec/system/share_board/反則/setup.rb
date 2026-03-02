@@ -26,18 +26,18 @@ mod = Module.new do
     assert_no_selector(".IllegalTakebackModal")
   end
 
-  def action_log_exist
-    assert_selector(".SbActionLogContainer .flex_item", text: "二歩", exact_text: true)
+  def xhistory_record_exist
+    assert_selector(".XhistoryContainer .flex_item", text: "二歩", exact_text: true)
   end
 
-  def action_log_none
-    assert_no_selector(".SbActionLogContainer .flex_item", text: "二歩", exact_text: true)
+  def xhistory_record_none
+    assert_no_selector(".XhistoryContainer .flex_item", text: "二歩", exact_text: true)
   end
 
   ################################################################################
 
   def assert_resign_success
-    assert_action "a", "反則からの投了"
+    assert_history "a", "反則からの投了"
     assert_clock(:stop)
     takeback_modal_none
     assert_turn(1)              # 反則手を反映した局面に進んでいる
@@ -49,7 +49,7 @@ mod = Module.new do
   end
 
   def assert_takeback_success
-    assert_action_text("時計再開")
+    assert_history_text("時計再開")
     assert_clock(:play)
     takeback_modal_none
     assert_turn(0)              # 反則前の局面

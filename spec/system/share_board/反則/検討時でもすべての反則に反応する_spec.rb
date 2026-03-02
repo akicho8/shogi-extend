@@ -61,7 +61,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "連続王手の千日手" do
     case1("連続王手の千日手確認用")
     perpetual_check_trigger
-    assert_action_text("連続王手の千日手") # 履歴には一応名前が出ている
+    assert_history_text("連続王手の千日手") # 履歴には一応名前が出ている
     assert_var(:illegal_params, "")        # 通常の反則と扱いが異なるため入っていない
     assert_ending_modal_none                        # 検討中なので負けモーダルは出ていない
   end

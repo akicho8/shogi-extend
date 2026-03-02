@@ -33,14 +33,14 @@ module SharedMethods
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     os_submit_button_click                 # 明示的に適用する
     order_modal_close
-    assert_action_text("順番 ON")
+    assert_history_text("順番 ON")
   end
 
   def order_set_off
     order_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     order_modal_close
-    assert_action_text("順番 OFF")
+    assert_history_text("順番 OFF")
   end
 
   def os_submit_button_click

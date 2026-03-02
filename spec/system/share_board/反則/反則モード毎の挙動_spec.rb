@@ -21,13 +21,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         assert_ending_illegal("二歩")
         assert_ending_modal_exist
         takeback_modal_none
-        action_log_exist
+        xhistory_record_exist
       end
       window_b do
         assert_ending_illegal("二歩")
         assert_ending_modal_exist
         takeback_modal_none
-        action_log_exist
+        xhistory_record_exist
       end
     end
 
@@ -39,13 +39,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         notice_exist
         assert_ending_modal_none
         takeback_modal_exist
-        action_log_exist
+        xhistory_record_exist
       end
       window_b do
         notice_exist
         assert_ending_modal_none
         takeback_modal_exist
-        action_log_exist
+        xhistory_record_exist
       end
     end
 
@@ -57,13 +57,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         notice_none
         assert_ending_modal_none
         takeback_modal_none
-        action_log_none
+        xhistory_record_none
       end
       window_b do
         notice_none
         assert_ending_modal_none
         takeback_modal_none
-        action_log_none
+        xhistory_record_none
       end
     end
   end
@@ -86,13 +86,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         notice_exist
         assert_ending_modal_none
         takeback_modal_none
-        action_log_exist
+        xhistory_record_exist
       end
       window_b do
         notice_exist
         assert_ending_modal_none
         takeback_modal_none
-        action_log_exist
+        xhistory_record_exist
       end
     end
   end
