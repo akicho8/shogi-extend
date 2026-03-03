@@ -10,6 +10,10 @@ export const mod_shogi_player = {
     }
   },
 
+  created() {
+    this.sp_slider_debounce_define()
+  },
+
   methods: {
     // 操作モードで指したときの処理
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
@@ -43,7 +47,6 @@ export const mod_shogi_player = {
     // 「思考印消去」はこのタイミングがいちばんよかった
     // が、いったん元のままにしておく
     ev_short_sfen_change(sfen) {
-      // this.think_mark_all_clear() // 思考印消去 ← ここに入れると引数の think_mark_list_str が反映できなくなる
       this.short_sfen = sfen
       // if (this.development_p) {
       //   this.$buefy.toast.open("short_sfen")
@@ -68,23 +71,39 @@ export const mod_shogi_player = {
       // }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
     // 瞬間なのでこのときの this.current_turn と turn は異なる
+    sp_slider_debounce_define() {
+      this.slider_debounce_leading  = _.debounce(() => { this.sp_slider_leading_callback()  }, SLIDER_DEBOUNCE_DELAY, { leading: true,  trailing: false })
+      this.slider_debounce_trailing = _.debounce(() => { this.sp_slider_trailing_callback() }, SLIDER_DEBOUNCE_DELAY, { leading: false, trailing: true  })
+    },
     ev_action_turn_change(turn) {
+      this.slider_debounce_leading()
+      this.slider_debounce_trailing()
+    },
+    sp_slider_leading_callback() {
+      this.debug_alert("sp_slider_leading_callback")
       this.perpetual_cop.reset$()
-      this.think_mark_all_clear() // ここに入れない場合1秒後に消されるが、なんか遅い感じがするのですぐに消す
       this.ev_action_turn_change_se()
-      this.ev_action_turn_change_lazy(turn)
+      this.think_mark_clear_all_action({sfx: false})
+    },
+    sp_slider_trailing_callback() {
+      this.debug_alert("sp_slider_trailing_callback")
+      this.reflector_slider_trailing()
     },
 
-    // ユーザーがコントローラやスライダーで操作し終わったら転送する
-    // () => {} 形式で書くと動かないのは謎
-    // 遅延実行しているとはいえ元々 turn と this.current_turn は異なるため $nextTick する
-    ev_action_turn_change_lazy: _.debounce(function(turn) {
-      this.$nextTick(() => {
-        this.reflector_slider(turn)
-      })
-    }, SLIDER_DEBOUNCE_DELAY),
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // // ユーザーがコントローラやスライダーで操作し終わったら転送する
+    // // () => {} 形式で書くと動かないのは謎
+    // // 遅延実行しているとはいえ元々 turn と this.current_turn は異なるため $nextTick する
+    // ev_action_turn_change_lazy: _.debounce(function(turn) {
+    //   this.$nextTick(() => {
+    //     this.reflector_slider_trailing(turn)
+    //   })
+    // }, SLIDER_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 
