@@ -14,17 +14,9 @@ export const mod_think_mark_toggle_action = {
 
     think_mark_toggle_action(ev_params) {
       const params = {
+        __standalone_mode__: true,
         think_mark_command: this.__think_mark_command_from(ev_params.mark_pos_key),
       }
-
-      if (this.ac_room == null) {
-        this.think_mark_toggle_action_broadcasted({
-          ...this.ac_room_perform_default_params(),
-          ...params,
-        })
-        return
-      }
-
       this.ac_room_perform("think_mark_toggle_action", params) // --> app/channels/share_board/room_channel.rb
     },
     think_mark_toggle_action_broadcasted(params) {

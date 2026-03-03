@@ -235,6 +235,12 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
         subscription.think_mark_group_reject_action(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_group_reject_action_broadcasted", bc_params: data)
     end
+    it "think_mark_clear_all_action" do
+      data = data_factory({})
+      expect {
+        subscription.think_mark_clear_all_action(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "think_mark_clear_all_action_broadcasted", bc_params: data)
+    end
   end
 
   describe "メッセージ" do
