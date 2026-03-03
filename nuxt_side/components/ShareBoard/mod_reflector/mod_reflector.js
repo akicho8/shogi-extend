@@ -13,24 +13,24 @@ export const mod_reflector = {
     ////////////////////////////////////////////////////////////////////////////////
 
     reflector_turn_zero_handle() {
-      this.reflector_turn_change({to: 0, sfx: true})
-    },
-    reflector_turn_zero() {
       this.reflector_turn_change({to: 0})
     },
+    // reflector_turn_zero() {
+    //   this.reflector_turn_change({to: 0})
+    // },
     reflector_turn_previous_handle() {
-      this.reflector_turn_change({by: -1, sfx: true})
-    },
-    reflector_turn_previous() {
       this.reflector_turn_change({by: -1})
     },
+    // reflector_turn_previous() {
+    //   this.reflector_turn_change({by: -1})
+    // },
 
     reflector_turn_change(options = {}) {
-      if (options.sfx) {
-        this.sfx_click()
-      }
+      // if (options.sfx) {
+      //   this.sfx_click()
+      // }
       const turn_progress = TurnProgress.create({current: this.current_turn, ...options})
-      this.reflector_call({turn: turn_progress.new_value})
+      this.reflector_call({turn: turn_progress.new_value, think_mark_clear_all: true})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,9 @@ export const mod_reflector = {
         __standalone_mode__: true,
         reflector_notify_scope_key: "rns_all", // 全員に通知する
         talk: true,                            // しゃべる
+        sfx: true,                             // 設定音を出す
         sfen_turn_set_except_me: false,        // sfen, turn の更新: true→全員 false→自分自身に対してはしない
+        think_mark_clear_all: false,           // このタイミングで思考印を消すか？
         ...this.current_sfen_and_turn,
         ...params,
       }
@@ -69,6 +71,9 @@ export const mod_reflector = {
       this.reflector_message_display({params, turn_progress, reflector_notify_scope_info})
       this.reflector_update_sfen_and_turn({params})
       this.reflector_label({params, turn_progress})
+      if (params.think_mark_clear_all) {
+        this.think_mark_clear_all()
+      }
     },
 
     reflector_message_display({params, turn_progress, reflector_notify_scope_info}) {
@@ -80,7 +85,6 @@ export const mod_reflector = {
           }
         }
         if (reflector_notify_scope_info.condition_fn(this, params)) {
-          this.se_reflector()
           this.toast_primary(message, {talk: params.talk})
         }
       }
@@ -93,12 +97,15 @@ export const mod_reflector = {
       }
 
       this.debug_alert(`REFLECT: #${params.turn} SET`)
+      if (params.sfx) {
+        this.se_reflector()
+      }
       this.sfen_sync_dto_receive(params)       // これで current_location が更新される
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }
 
-      this.perpetual_cop.reset$()
+      this.perpetual_cop.reset$() // ここでいいのか？？？
     },
 
     reflector_label({params, turn_progress}) {

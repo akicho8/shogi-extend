@@ -52,8 +52,8 @@ export const turn_change = {
     },
 
     turn_change_call_handle(turn) {
-      this.sfx_click()
       this.turn_change_modal_close()
+      this.think_mark_clear_all_action({sfx: false})
       this.reflector_call({turn})
     },
   },
