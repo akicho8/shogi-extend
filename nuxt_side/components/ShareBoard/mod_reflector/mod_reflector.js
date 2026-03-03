@@ -35,11 +35,15 @@ export const mod_reflector = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    reflector_slider(turn) {
+    reflector_slider_trailing() {
       // https://twitter.com/Sushikuine_24/status/1522370383131062272
       // turn を指定した場合: 「|←」を押してすぐに1手目を指しても1秒後に0手目に戻ってしまう
       // スライダーで指定した turn が重要なのではなくスライダーを動かした1秒後の状態が必要なだけなので turn は見なくてよい
-      this.reflector_call({reflector_notify_scope_key: this.slider_reflector_notify_scope_key, talk: false, sfen_turn_set_except_me: true})
+      this.reflector_call({
+        reflector_notify_scope_key: this.slider_reflector_notify_scope_key, // 通知は自分には行なわない
+        talk: false,                   // マサさんがやかましいというので静かにする
+        sfen_turn_set_except_me: true, // (自分側は更新済みなので)自分は更新するな
+      })
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -63,23 +67,8 @@ export const mod_reflector = {
       const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
       this.reflector_message_display({params, turn_progress, reflector_notify_scope_info})
-      {
-        this.think_mark_all_clear()              // 思考印消去
-        this.perpetual_cop.reset$()
-        if (params.sfen_turn_set_except_me && this.received_from_self(params)) {
-          this.debug_alert(`REFLECT: #${params.turn} SKIP`)
-        } else {
-          this.debug_alert(`REFLECT: #${params.turn} SET`)
-          this.sfen_sync_dto_receive(params)       // これで current_location が更新される
-        }
-      }
-      if (this.clock_box) {
-        this.clock_box.location_to(this.current_location)
-      }
-      {
-        const label = params.label ?? turn_progress.label
-        this.xhistory_add({...params, label})
-      }
+      this.reflector_update_sfen_and_turn({params})
+      this.reflector_label({params, turn_progress})
     },
 
     reflector_message_display({params, turn_progress, reflector_notify_scope_info}) {
@@ -95,6 +84,26 @@ export const mod_reflector = {
           this.toast_primary(message, {talk: params.talk})
         }
       }
+    },
+
+    reflector_update_sfen_and_turn({params}) {
+      if (params.sfen_turn_set_except_me && this.received_from_self(params)) {
+        this.debug_alert(`REFLECT: #${params.turn} SKIP`)
+        return
+      }
+
+      this.debug_alert(`REFLECT: #${params.turn} SET`)
+      this.sfen_sync_dto_receive(params)       // これで current_location が更新される
+      if (this.clock_box) {
+        this.clock_box.location_to(this.current_location)
+      }
+
+      this.perpetual_cop.reset$()
+    },
+
+    reflector_label({params, turn_progress}) {
+      const label = params.label ?? turn_progress.label
+      this.xhistory_add({...params, label})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
