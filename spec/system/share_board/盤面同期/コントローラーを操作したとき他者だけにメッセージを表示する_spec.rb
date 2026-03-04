@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { assert_no_text("aさんが初期配置に戻しました") } # aさんが操作したけどaさんに自分が操作したことはわかっているので表示しない
     window_b { assert_text("aさんが初期配置に戻しました") }    # bさんはいきなり盤面が変化したことに驚いているためその理由を伝えてあげる
     window_b { sp_controller_click(:last) }                    # 同様にbさんが操作した場合、
-    window_b { assert_no_text("bさんが1手目に移動しました") }  # 自分が操作したことはわかっているので表示しない
-    window_a { assert_text("bさんが1手目に移動しました") }     # aさんはいきなり盤面が変化したことに驚いているためその理由を伝えてあげる
+    window_b { assert_no_text("bさんが1手目に進めました") }    # 自分が操作したことはわかっているので表示しない
+    window_a { assert_text("bさんが1手目に進めました") }       # aさんはいきなり盤面が変化したことに驚いているためその理由を伝えてあげる
   end
 end
