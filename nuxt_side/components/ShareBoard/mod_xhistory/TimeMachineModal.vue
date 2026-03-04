@@ -36,13 +36,14 @@
 
   .modal-card-foot
     b-button.time_machine_modal_close_handle.has-text-weight-normal(@click="SB.time_machine_modal_close_handle" icon-left="chevron-left")
-    b-button.time_machine_modal_apply_handle(@click="time_machine_modal_apply_handle" type="is-primary") {{new_turn}}手目まで戻る
+    b-button.time_machine_modal_apply_handle(@click="time_machine_modal_apply_handle" type="is-primary") {{turn_progress.will_message}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 import { time_machine_url_support } from "./time_machine_url_support.js"
 import { GX } from "@/components/models/gx.js"
+import { TurnProgress } from "../mod_reflector/turn_progress.js"
 
 export default {
   name: "TimeMachineModal",
@@ -73,6 +74,8 @@ export default {
     current_format_type_info() {
       return this.SB.FormatTypeInfo.fetch("kif_utf8")
     },
+    // turn_progress() { return TurnProgress.create({current: this.xhistory_record.turn, to: this.new_turn}) },
+    turn_progress() { return TurnProgress.create({current: this.SB.current_turn, to: this.new_turn}) },
   },
 }
 </script>

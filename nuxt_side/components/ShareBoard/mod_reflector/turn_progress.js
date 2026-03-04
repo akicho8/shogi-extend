@@ -55,39 +55,43 @@ export class TurnProgress {
 
   get will_message() {
     let str = null
-    if (false) {
-    } else if (this.to != null) {
-      if (this.initial_position_p) {
-        str = `初期配置に戻る`
-      } else {
-        str = `${this.new_value}手目に移動する`
-      }
-    } else if (this.next_p) {
-      str = `${this.step}手進める`
-    } else if (this.previous_p) {
-      str = `${this.step}手戻る`
-    } else {
-      str = `${this.new_value}手目に戻る`
+
+    if (this.initial_position_p) {
+      str = `初期配置に戻る`
     }
+
+    if (str == null) {
+      if (this.to != null) {
+        if (this.next_p) {
+          str = `${this.new_value}手目に進む`
+        } else if (this.previous_p) {
+          str = `${this.new_value}手目に戻る`
+        } else {
+          str = `${this.new_value}手目に戻る`
+        }
+      }
+    }
+
+    if (str == null) {
+      if (this.by != null) {
+        if (this.next_p) {
+          str = `${this.step}手進む`
+        } else if (this.previous_p) {
+          str = `${this.step}手戻る`
+        } else {
+          str = `${this.step}手戻る`
+        }
+      }
+    }
+
     return str
   }
 
   get past_message() {
-    let str = null
-    if (false) {
-    } else if (this.to != null) {
-      if (this.initial_position_p) {
-        str = `初期配置に戻しました`
-      } else {
-        str = `${this.new_value}手目に移動しました`
-      }
-    } else if (this.next_p) {
-      str = `${this.step}手進めました`
-    } else if (this.previous_p) {
-      str = `${this.step}手戻しました`
-    } else {
-      str = `${this.step}手進めました (手数変化なし)`
-    }
+    let str = this.will_message
+    str = str.replace(/進む/, "進めました")
+    str = str.replace(/戻る/, "戻りました")
+    str = str.replace(/する/, "しました")
     return str
   }
 
