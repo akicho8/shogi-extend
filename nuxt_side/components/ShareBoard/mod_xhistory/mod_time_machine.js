@@ -1,4 +1,3 @@
-const XHISTORY_SAME_SFEN_SKIP   = false // 同じ局面なら何もしない？
 const XHISTORY_TURN_ONLY_REVERT = true  // 過去の履歴なら手数だけ戻す？
 
 import { GX } from "@/components/models/gx.js"
@@ -48,7 +47,6 @@ export const mod_time_machine = {
     },
 
     time_machine_modal_apply_handle(attrs) {
-      this.sfx_click()
       this.time_machine_modal_close()
       this.time_machine_restore(attrs)
     },
@@ -57,13 +55,6 @@ export const mod_time_machine = {
     time_machine_restore(attrs) {
       GX.assert('sfen' in attrs, "'sfen' in attrs")
       GX.assert('turn' in attrs, "'turn' in attrs")
-
-      if (XHISTORY_SAME_SFEN_SKIP) {
-        if (this.current_sfen === attrs.sfen && this.current_turn === attrs.turn) {
-          this.toast_primary("同じ局面です")
-          return
-        }
-      }
 
       this.honpu_branch_clear()
 

@@ -1,7 +1,7 @@
 // 履歴
 // タップ局面変更
 
-const XHISTORY_RECORDS_MAX      = 200   // 履歴の最大長
+const XHISTORY_RECORDS_MAX = 200 // 履歴の最大長
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
