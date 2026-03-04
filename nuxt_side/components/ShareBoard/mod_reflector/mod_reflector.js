@@ -10,6 +10,15 @@ export const mod_reflector = {
   ],
 
   methods: {
+    turn_progress_create(attrs) {
+      return TurnProgress.create({
+        old_sfen: this.current_sfen,
+        old_turn: this.current_turn,
+        new_sfen: this.current_sfen,
+        ...attrs,
+      })
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 「初期配置に戻す」
@@ -32,8 +41,8 @@ export const mod_reflector = {
       // if (options.sfx) {
       //   this.sfx_click()
       // }
-      const turn_progress = TurnProgress.create({current: this.current_turn, ...options})
-      this.reflector_call({turn: turn_progress.new_value, think_mark_clear_all: true})
+      const turn_progress = this.turn_progress_create(options)
+      this.reflector_call({turn: turn_progress.new_turn, think_mark_clear_all: true})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -68,10 +77,10 @@ export const mod_reflector = {
       this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
     reflector_action_broadcasted(params) {
-      const turn_progress = TurnProgress.create({current: this.current_turn, to: params.turn})
+      const turn_progress = this.turn_progress_create({new_sfen: params.sfen, to: params.turn})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
       this.reflector_notify({params, turn_progress, reflector_notify_scope_info})
-      this.reflector_set({params})
+      this.reflector_set({params, turn_progress})
       this.reflector_label({params, turn_progress})
       this.reflector_chore({params})
     },
@@ -88,7 +97,7 @@ export const mod_reflector = {
         }
       }
     },
-    reflector_set({params}) {
+    reflector_set({params, turn_progress}) {
       if (params.set_except_me && this.received_from_self(params)) {
         this.debug_alert(`REFLECT: #${params.turn} SKIP`)
         return
@@ -97,7 +106,7 @@ export const mod_reflector = {
       if (params.sfx) {
         this.se_reflector()
       }
-      this.sfen_sync_dto_receive(params)       // これで current_location が更新される
+      this.sfen_sync_dto_receive(turn_progress.to_sfen_and_turn)       // これで current_location が更新される
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }

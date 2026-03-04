@@ -4,6 +4,10 @@
     .modal-card-title
       | {{xhistory_record.modal_title_or_default}} \#{{new_turn}}
   .modal-card-body
+    //- pre
+    //-   | turn_progress.old_sfen={{turn_progress.old_sfen}}
+    //-   | turn_progress.new_sfen={{turn_progress.new_sfen}}
+    //-   | turn_progress.to_sfen_and_turn={{turn_progress.to_sfen_and_turn}}
     .sp_container
       CustomShogiPlayer(
         sp_mode="view"
@@ -14,7 +18,7 @@
         :sp_view_mode_piece_movable="false"
         :sp_viewpoint.sync="viewpoint"
         :sp_turn="xhistory_record.turn"
-        :sp_body="xhistory_record.sfen"
+        :sp_body="turn_progress.to_sfen_and_turn.sfen"
         @ev_turn_offset_change="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
@@ -74,8 +78,7 @@ export default {
     current_format_type_info() {
       return this.SB.FormatTypeInfo.fetch("kif_utf8")
     },
-    // turn_progress() { return TurnProgress.create({current: this.xhistory_record.turn, to: this.new_turn}) },
-    turn_progress() { return TurnProgress.create({current: this.SB.current_turn, to: this.new_turn}) },
+    turn_progress() { return this.SB.turn_progress_create({new_sfen: this.xhistory_record.sfen, to: this.new_turn}) },
   },
 }
 </script>

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{title ?? '局面'}} \#{{new_turn}}
+      | 局面 \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -17,8 +17,6 @@
         :sp_turn="turn"
         @ev_turn_offset_change="v => new_turn = v"
       )
-    template(v-if="message")
-      .message_body.has-text-grey(v-html="message")
 
   .modal-card-foot
     b-button.turn_change_modal_close_handle.has-text-weight-normal(@click="SB.turn_change_modal_close_handle" icon-left="chevron-left")
@@ -35,8 +33,6 @@ export default {
   props: {
     sfen: { type: String, required: true, },
     turn: { type: Number, required: true, },
-    title: { type: String, required: false, },
-    message: { type: String, required: false, },
   },
   data() {
     return {
@@ -44,9 +40,7 @@ export default {
     }
   },
   computed: {
-    turn_progress() {
-      return TurnProgress.create({current: this.turn, to: this.new_turn})
-    },
+    turn_progress() { return this.SB.turn_progress_create({new_sfen: this.sfen, to: this.new_turn}) },
   },
 }
 </script>
