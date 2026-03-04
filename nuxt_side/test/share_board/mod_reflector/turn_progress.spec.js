@@ -66,21 +66,21 @@ describe("TurnProgress", () => {
     expect(turn_progress.past_message).toEqual("0手戻しました")
   })
 
-  describe("#kakono_sfen_ka", () => {
+  describe("#descendant_sfen_p", () => {
     test("過去の棋譜", () => {
       const old_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d"
       const new_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f"
       const turn_progress = TurnProgress.create({old_sfen, old_turn: 2, new_sfen, to: 1})
-      expect(turn_progress.kakono_sfen_ka).toEqual(true)
-      expect(turn_progress.saisyuutekina_sfen).toEqual(old_sfen)
+      expect(turn_progress.descendant_sfen_p).toEqual(true)
+      expect(turn_progress.master_sfen).toEqual(old_sfen)
     })
 
     test("別の世界線の棋譜", () => {
       const old_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d"
       const new_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2f"
       const turn_progress = TurnProgress.create({old_sfen, old_turn: 2, new_sfen, to: 1})
-      expect(turn_progress.kakono_sfen_ka).toEqual(false)
-      expect(turn_progress.saisyuutekina_sfen).toEqual(new_sfen)
+      expect(turn_progress.descendant_sfen_p).toEqual(false)
+      expect(turn_progress.master_sfen).toEqual(new_sfen)
     })
   })
 })

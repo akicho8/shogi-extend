@@ -116,13 +116,13 @@ export class TurnProgress {
   // つまり次のような状態であれば真となる
   //   old_sfen: "a b c d e"
   //   new_sfen: "a b c"
-  get kakono_sfen_ka() {
+  get descendant_sfen_p() {
     return this.old_sfen.startsWith(this.new_sfen)
   }
 
   // 設定するSFEN
-  get saisyuutekina_sfen() {
-    if (this.kakono_sfen_ka) {
+  get master_sfen() {
+    if (this.descendant_sfen_p) {
       return this.old_sfen      // 過去の局面または同じであればそのままの未来を含む棋譜を返す
     } else {
       return this.new_sfen      // 異なる棋譜または変化しているのであれば新しい方を返す
@@ -131,7 +131,7 @@ export class TurnProgress {
 
   get to_sfen_and_turn() {
     return {
-      sfen: this.saisyuutekina_sfen,
+      sfen: this.master_sfen,
       turn: this.new_turn,
     }
   }
