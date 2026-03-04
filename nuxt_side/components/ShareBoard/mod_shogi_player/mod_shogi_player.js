@@ -80,13 +80,13 @@ export const mod_shogi_player = {
       this.slider_debounce_trailing = _.debounce(() => { this.sp_slider_trailing_callback() }, SLIDER_DEBOUNCE_DELAY, { leading: false, trailing: true  })
     },
     ev_action_turn_change(turn) {
+      this.ev_action_turn_change_se()
       this.slider_debounce_leading()
       this.slider_debounce_trailing()
     },
     sp_slider_leading_callback() {
       this.debug_alert("sp_slider_leading_callback")
       this.perpetual_cop.reset$()
-      this.ev_action_turn_change_se()
       this.think_mark_clear_all_action({sfx: false})
     },
     sp_slider_trailing_callback() {
