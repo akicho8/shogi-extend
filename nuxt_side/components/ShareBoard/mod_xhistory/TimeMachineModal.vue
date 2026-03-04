@@ -4,10 +4,6 @@
     .modal-card-title
       | {{xhistory_record.modal_title_or_default}} \#{{new_turn}}
   .modal-card-body
-    //- pre
-    //-   | turn_progress.old_sfen={{turn_progress.old_sfen}}
-    //-   | turn_progress.new_sfen={{turn_progress.new_sfen}}
-    //-   | turn_progress.to_sfen_and_turn={{turn_progress.to_sfen_and_turn}}
     .sp_container
       CustomShogiPlayer(
         sp_mode="view"
@@ -36,6 +32,7 @@
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
+    pre.mt-4(v-if="SB.debug_mode_p") {{turn_progress.to_debug_h}}
     pre.mt-4(v-if="SB.debug_mode_p") {{$GX.pretty_inspect(xhistory_record)}}
 
   .modal-card-foot
