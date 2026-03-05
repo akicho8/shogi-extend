@@ -58,7 +58,7 @@ export class HandleNameParser {
       return s
     }
 
-    if (s.match(/.(コ|ｺ|こ|子|ko|co)$/i)) {
+    if (s.match(/.(コ|ｺ|こ|子|美|み|ko|co)$/i)) {
       return `${s}ちゃん`
     }
 

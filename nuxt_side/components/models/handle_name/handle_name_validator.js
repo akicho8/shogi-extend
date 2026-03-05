@@ -110,8 +110,8 @@ export class HandleNameValidator {
 
       // 自分に敬称をつけんな
       if (message == null) {
-        if (this.normalized_name.match(/(さん|様|さま|殿|氏|先生)$/)) {
-          message = `自分に敬称をつけるのはやめよう`
+        if (this.normalized_name.match(/(ちゃん|君|さん|様|さま|殿|氏|先生)$/)) {
+          message = `自分に敬称をつけないでください`
         }
       }
 
