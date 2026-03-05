@@ -10,9 +10,9 @@ export const time_machine_url_support = {
     // 棋譜コピー
     kifu_copy_handle() {
       this.sfx_click()
-      this.general_kifu_copy(this.new_sfen, {
+      this.general_kifu_copy(this.master.sfen, {
         to_format: "kif",
-        turn: this.new_turn,
+        turn: this.master.turn,
         ...this.xhistory_record.player_names_with_title,
       })
       this.SB.xhistory_puts("棋譜コピー")
@@ -60,7 +60,6 @@ export const time_machine_url_support = {
     },
   },
   computed: {
-    new_sfen()         { return this.xhistory_record.sfen },
     current_url()      { return this.url_merge({}) },
     current_kif_url()  { return this.url_merge({format: "kif"}) },
     json_debug_url()   { return this.url_merge({format: "json"}) },
@@ -68,9 +67,9 @@ export const time_machine_url_support = {
 
     current_url_params() {
       const params = {
-        xbody: SafeSfen.encode(this.new_sfen),      // プレビュー盤のSFEN
-        turn: this.new_turn,                        // プレビュー盤の手数
-        viewpoint: this.viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
+        xbody: SafeSfen.encode(this.master.sfen),      // プレビュー盤のSFEN
+        turn: this.master.turn,                        // プレビュー盤の手数
+        viewpoint: this.mut_viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
         ...this.SB.url_share_params,              // 共有するパラメータ
         ...this.xhistory_record.player_names_with_title, // 面子情報
       }
@@ -80,9 +79,9 @@ export const time_machine_url_support = {
     current_kifu_vo() {
       return this.$KifuVo.create({
         kif_url: this.current_kif_url,
-        sfen: this.new_sfen,
-        turn: this.new_turn,
-        viewpoint: this.viewpoint,
+        sfen: this.master.sfen,
+        turn: this.master.turn,
+        viewpoint: this.mut_viewpoint,
       })
     },
   },

@@ -1,5 +1,6 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
+import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
 const SFEN_SEPARATE_SPACE = " "
 
@@ -72,58 +73,68 @@ export class TurnProgress {
   get will_message() {
     let str = null
     if (str == null) {
-      if (this.turn_zero_p) {
-        str = `初期配置に戻る`
+      if (this.sfen_another_p) {
+        str = `別の棋譜の${this.new_turn}手目に移動する`
       }
     }
     if (str == null) {
-      if (this.sfen_another_p) {
-        str = `別の世界線の${this.new_turn}手目に飛ぶ`
+      if (this.turn_zero_p) {
+        str = `初期配置に戻す`
       }
     }
+    // if (str == null) {
+    //   if (this.sfen_turn_max === this.new_turn) {
+    //     str = `最後に移動する`
+    //   }
+    // }
     if (false) {
       if (str == null) {
         if (this.sfen_go_back_p) {
-          str = `${this.new_turn}手目(過去)に飛ぶ` // old_sfen をマスターにしたからといって移動先が「過去」とは限らないため「過去」と表現すると混乱させてしまう
+          str = `${this.new_turn}手目(過去)に移動する` // old_sfen をマスターにしたからといって移動先が「過去」とは限らないため「過去」と表現すると混乱させてしまう
         }
       }
       if (str == null) {
         if (this.sfen_go_forward_p) {
-          str = `${this.new_turn}手目(未来)に飛ぶ` // new_sfen をマスターにしたからといって移動先が「未来」とは限らないため「未来」と表現すると混乱させてしまう
+          str = `${this.new_turn}手目(未来)に移動する` // new_sfen をマスターにしたからといって移動先が「未来」とは限らないため「未来」と表現すると混乱させてしまう
         }
       }
     }
     if (str == null) {
       if (this.to != null) {    // 絶対指定であれば
         if (this.turn_next_p) {
-          str = `${this.new_turn}手目に進む`
+          str = `${this.new_turn}手目に進める`
         }
         if (this.turn_previous_p) {
-          str = `${this.new_turn}手目に戻る`
+          str = `${this.new_turn}手目に戻す`
         }
       }
     }
     if (str == null) {
       if (this.by != null) {    // 相対指定であれば
         if (this.turn_next_p) {
-          str = `${this.turn_step}手進む`
+          str = `${this.turn_step}手進める`
         }
         if (this.turn_previous_p) {
-          str = `${this.turn_step}手戻る`
+          str = `${this.turn_step}手戻す`
         }
       }
     }
     if (str == null) {
-      str = `${this.new_turn}手目に飛ぶ`
+      str = `${this.new_turn}手目に戻す`
     }
+
+    if (this.message_prefix != null) {
+      str = [this.message_prefix, str].join("")
+    }
+
     return str
   }
 
   get past_message() {
     let str = this.will_message
-    str = str.replace(/進む/, "進めました")
-    str = str.replace(/戻る/, "戻しました")
-    str = str.replace(/飛ぶ/, "飛びました")
+    str = str.replace(/進める/, "進めました")
+    str = str.replace(/戻す/, "戻しました")
+    str = str.replace(/移動する/, "移動しました")
     return str
   }
 
@@ -211,9 +222,9 @@ export class TurnProgress {
       "手数セット相対値": this.by,
       "手数計算後": this.new_turn,
       "手数差分": this.turn_diff,
-      "手数進む?": this.turn_next_p,
-      "手数戻る?": this.turn_previous_p,
-      "手数維持?": this.turn_same_p,
+      "手数進める?": this.turn_next_p,
+      "手数戻す?": this.turn_previous_p,
+      "手数最大": this.sfen_turn_max,
     }
   }
 
@@ -229,5 +240,9 @@ export class TurnProgress {
       return false
     }
     return (b + SFEN_SEPARATE_SPACE).startsWith(a + SFEN_SEPARATE_SPACE)
+  }
+
+  get sfen_turn_max() {
+    return SfenParser.parse(this.master_sfen).moves.length
   }
 }

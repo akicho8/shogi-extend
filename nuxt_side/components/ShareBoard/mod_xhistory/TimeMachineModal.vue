@@ -2,20 +2,20 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{xhistory_record.modal_title_or_default}} \#{{new_turn}}
+      | {{xhistory_record.modal_title_or_default}} \#{{master.turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
         sp_mode="view"
         :sp_mobile_vertical="false"
         sp_layout="horizontal"
-        sp_slider
-        sp_controller
+        :sp_slider="sp_operation"
+        :sp_controller="sp_operation"
         :sp_view_mode_piece_movable="false"
-        :sp_viewpoint.sync="viewpoint"
+        :sp_viewpoint.sync="mut_viewpoint"
         :sp_turn="xhistory_record.turn"
         :sp_body="turn_progress.to_sfen_and_turn.sfen"
-        @ev_turn_offset_change="v => new_turn = v"
+        @ev_turn_offset_change="v => mut_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
       PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="SB.other_app_click_handle('ぴよ将棋')")
@@ -54,28 +54,39 @@ export default {
   ],
   props: {
     xhistory_record: { type: Object, required: true, },
+    turn_progress_params: { type: Object, required: true, },
+    sp_operation: { type: Boolean, default: true, },
   },
   data() {
     return {
-      new_turn: this.xhistory_record.turn,
-      viewpoint: this.xhistory_record.viewpoint,
+      mut_turn: this.xhistory_record.turn,
+      mut_viewpoint: this.xhistory_record.viewpoint,
     }
   },
   mounted() {
-    GX.assert(this.viewpoint === "white" || this.viewpoint === "black")
+    GX.assert(this.mut_viewpoint === "white" || this.mut_viewpoint === "black")
     GX.assert('sfen' in this.xhistory_record, "'sfen' in this.xhistory_record")
     GX.assert('turn' in this.xhistory_record, "'turn' in this.xhistory_record")
   },
   methods: {
     time_machine_modal_apply_handle() {
-      this.SB.time_machine_modal_apply_handle({...this.xhistory_record, turn: this.new_turn})
+      this.SB.time_machine_modal_apply_handle(this.master)
     },
   },
   computed: {
-    current_format_type_info() {
-      return this.SB.FormatTypeInfo.fetch("kif_utf8")
+    current_format_type_info() { return this.SB.FormatTypeInfo.fetch("kif_utf8") },
+
+    turn_progress() {
+      return this.SB.turn_progress_create({
+        ...this.turn_progress_params,
+        new_sfen: this.xhistory_record.sfen,
+        to: this.mut_turn,
+      })
     },
-    turn_progress() { return this.SB.turn_progress_create({new_sfen: this.xhistory_record.sfen, to: this.new_turn}) },
+
+    master() {
+      return this.turn_progress.to_sfen_and_turn
+    },
   },
 }
 </script>

@@ -63,7 +63,12 @@ describe("TurnProgress", () => {
     expect(turn_progress.turn_next_p).toEqual(false)
     expect(turn_progress.turn_previous_p).toEqual(false)
     expect(turn_progress.turn_same_p).toEqual(true)
-    expect(turn_progress.past_message).toEqual("5手目に飛びました")
+    expect(turn_progress.past_message).toEqual("5手目に戻しました")
+  })
+
+  test("message_prefix", () => {
+    const turn_progress = case1({to: 0, message_prefix: "(message_prefix)"})
+    expect(turn_progress.will_message).toEqual("(message_prefix)初期配置に戻す")
   })
 
   describe("#sfen_go_back_p", () => {

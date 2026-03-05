@@ -53,7 +53,7 @@ export const mod_honpu_core = {
     honpu_open_click_handle() {
       this.tl_add("HONPU", "本譜をクリックしたらダイアログを出す")
       if (this.honpu_main) {
-        this.time_machine_modal_open_handle(this.honpu_main)
+        this.time_machine_modal_open_handle_for_honpu(this.honpu_main)
       }
     },
 
