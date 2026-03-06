@@ -66,10 +66,12 @@ export const mod_reflector = {
       GX.assert_kind_of_hash(params)
       params = {
         __standalone_mode__: true,
+        __nullable_attributes__: ["message_prefix"],
         reflector_notify_scope_key: "rns_all", // 全員に通知する
         talk: true,                            // しゃべる
         sfx: true,                             // 設定音を出す
         set_except_me: false,                  // sfen, turn の更新: true→全員 false→自分自身に対してはしない
+        message_prefix: null,
         ...this.current_sfen_and_turn,
         think_mark_clear_all: false,           // ブロードキャストのタイミングで思考印を消すか？
         ...params,
@@ -77,7 +79,7 @@ export const mod_reflector = {
       this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
     reflector_action_broadcasted(params) {
-      const turn_progress = this.turn_progress_create({new_sfen: params.sfen, to: params.turn})
+      const turn_progress = this.turn_progress_create({new_sfen: params.sfen, to: params.turn, message_prefix: params.message_prefix})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
       this.reflector_notify({params, turn_progress, reflector_notify_scope_info})
       this.reflector_set({params, turn_progress})

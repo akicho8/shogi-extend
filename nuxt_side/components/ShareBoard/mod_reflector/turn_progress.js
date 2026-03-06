@@ -190,6 +190,14 @@ export class TurnProgress {
     }
   }
 
+  get to_reflection_call_params() {
+    return {
+      sfen: this.master_sfen,
+      turn: this.new_turn,
+      message_prefix: this.message_prefix,
+    }
+  }
+
   get description() {
     const av = []
     if (this.sfen_go_back_p) {
