@@ -110,6 +110,7 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("雑　魚")).toEqual(false)
     expect(HandleNameValidator.valid_p("雑 魚")).toEqual(false)
     expect(HandleNameValidator.valid_p("戦犯")).toEqual(false)
+    expect(HandleNameValidator.valid_p("初狩り")).toEqual(false)
     expect(HandleNameValidator.valid_p("shogi-extend")).toEqual(false)
     expect(HandleNameValidator.valid_p("SHOGIEXTEND")).toEqual(false)
   })

@@ -51,6 +51,7 @@ export const HandleNameNgWordUserList = [
   "雑魚",
   "無駄",
   "麻痺",
+  "初.*狩",
   "戦犯|せんぱん|初心者|しょしんしゃ|にふ|二歩|反則",
 
   // 汎用罵詈雑言系
