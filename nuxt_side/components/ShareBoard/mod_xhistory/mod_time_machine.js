@@ -13,24 +13,24 @@ export const mod_time_machine = {
   methods: {
     // 本譜用
     time_machine_modal_open_handle_for_honpu(xhistory_record) {
-      const turn_progress_params = {
+      const timeline_resolver_params = {
         old_sfen: xhistory_record.sfen,
         old_turn: xhistory_record.turn,
         message_prefix: "本譜の",
       }
       this.time_machine_modal_open_handle({
         xhistory_record,
-        turn_progress_params,
+        timeline_resolver_params,
       })
     },
 
     // 履歴用
     time_machine_modal_open_handle_for_history(xhistory_record) {
-      const turn_progress_params = {
+      const timeline_resolver_params = {
       }
       this.time_machine_modal_open_handle({
         xhistory_record,
-        turn_progress_params,
+        timeline_resolver_params,
       })
     },
 

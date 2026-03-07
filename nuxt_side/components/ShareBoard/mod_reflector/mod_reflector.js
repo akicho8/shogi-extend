@@ -2,7 +2,7 @@ import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { turn_change } from "./turn_change.js"
 import { ReflectorNotifyScopeInfo } from "./reflector_notify_scope_info.js"
-import { TurnProgress } from "./turn_progress.js"
+import { TimelineResolver } from "./timeline_resolver.js"
 
 export const mod_reflector = {
   mixins: [
@@ -10,8 +10,8 @@ export const mod_reflector = {
   ],
 
   methods: {
-    turn_progress_create(attrs) {
-      return TurnProgress.create({
+    timeline_resolver_create(attrs) {
+      return TimelineResolver.create({
         old_sfen: this.current_sfen,
         old_turn: this.current_turn,
         new_sfen: this.current_sfen,
@@ -41,8 +41,8 @@ export const mod_reflector = {
       // if (options.sfx) {
       //   this.sfx_click()
       // }
-      const turn_progress = this.turn_progress_create(options)
-      this.reflector_call({turn: turn_progress.new_turn, think_mark_clear_all: true})
+      const timeline_resolver = this.timeline_resolver_create(options)
+      this.reflector_call({turn: timeline_resolver.new_turn, think_mark_clear_all: true})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -79,15 +79,15 @@ export const mod_reflector = {
       this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
     reflector_action_broadcasted(params) {
-      const turn_progress = this.turn_progress_create({new_sfen: params.sfen, to: params.turn, message_prefix: params.message_prefix})
+      const timeline_resolver = this.timeline_resolver_create({new_sfen: params.sfen, to: params.turn, message_prefix: params.message_prefix})
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
-      this.reflector_notify({params, turn_progress, reflector_notify_scope_info})
-      this.reflector_set({params, turn_progress})
-      this.reflector_label({params, turn_progress})
+      this.reflector_notify({params, timeline_resolver, reflector_notify_scope_info})
+      this.reflector_set({params, timeline_resolver})
+      this.reflector_label({params, timeline_resolver})
       this.reflector_chore({params})
     },
-    reflector_notify({params, turn_progress, reflector_notify_scope_info}) {
-      let message = params.message ?? turn_progress.past_message
+    reflector_notify({params, timeline_resolver, reflector_notify_scope_info}) {
+      let message = params.message ?? timeline_resolver.past_message
       if (message != null) {
         if (this.ac_room) {
           if (params.from_user_name) {
@@ -99,7 +99,7 @@ export const mod_reflector = {
         }
       }
     },
-    reflector_set({params, turn_progress}) {
+    reflector_set({params, timeline_resolver}) {
       if (params.set_except_me && this.received_from_self(params)) {
         this.debug_alert(`REFLECT: #${params.turn} SKIP`)
         return
@@ -108,15 +108,15 @@ export const mod_reflector = {
       if (params.sfx) {
         this.se_reflector()
       }
-      this.sfen_sync_dto_receive(turn_progress.to_sfen_and_turn)       // これで current_location が更新される
+      this.sfen_sync_dto_receive(timeline_resolver.to_sfen_and_turn)       // これで current_location が更新される
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }
 
       this.perpetual_cop.reset$() // ここでいいのか？？？
     },
-    reflector_label({params, turn_progress}) {
-      const label = params.label ?? turn_progress.label
+    reflector_label({params, timeline_resolver}) {
+      const label = params.label ?? timeline_resolver.label
       this.xhistory_add({...params, label})
     },
     reflector_chore({params}) {

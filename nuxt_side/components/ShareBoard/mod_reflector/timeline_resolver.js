@@ -4,7 +4,7 @@ import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
 const SFEN_SEPARATE_SPACE = " "
 
-export class TurnProgress {
+export class TimelineResolver {
   static create(...args) {
     return new this(...args)
   }

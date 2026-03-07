@@ -20,12 +20,12 @@
 
   .modal-card-foot
     b-button.turn_change_modal_close_handle.has-text-weight-normal(@click="SB.turn_change_modal_close_handle" icon-left="chevron-left")
-    b-button.turn_change_call_handle(@click="SB.turn_change_call_handle(new_turn)" type="is-primary") {{turn_progress.will_message}}
+    b-button.turn_change_call_handle(@click="SB.turn_change_call_handle(new_turn)" type="is-primary") {{timeline_resolver.will_message}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
-import { TurnProgress } from "./turn_progress.js"
+import { TimelineResolver } from "./timeline_resolver.js"
 
 export default {
   name: "TurnChangeModal",
@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    turn_progress() { return this.SB.turn_progress_create({new_sfen: this.sfen, to: this.new_turn}) },
+    timeline_resolver() { return this.SB.timeline_resolver_create({new_sfen: this.sfen, to: this.new_turn}) },
   },
 }
 </script>

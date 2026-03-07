@@ -14,7 +14,7 @@
         :sp_view_mode_piece_movable="false"
         :sp_viewpoint.sync="mut_viewpoint"
         :sp_turn="xhistory_record.turn"
-        :sp_body="turn_progress.to_sfen_and_turn.sfen"
+        :sp_body="timeline_resolver.to_sfen_and_turn.sfen"
         @ev_turn_offset_change="v => mut_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
@@ -32,19 +32,19 @@
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
-    pre.mt-4(v-if="SB.debug_mode_p") {{turn_progress.to_debug_h}}
+    pre.mt-4(v-if="SB.debug_mode_p") {{timeline_resolver.to_debug_h}}
     pre.mt-4(v-if="SB.debug_mode_p") {{$GX.pretty_inspect(xhistory_record)}}
 
   .modal-card-foot
     b-button.time_machine_modal_close_handle.has-text-weight-normal(@click="SB.time_machine_modal_close_handle" icon-left="chevron-left")
-    b-button.time_machine_modal_apply_handle(@click="time_machine_modal_apply_handle" type="is-primary") {{turn_progress.will_message}}
+    b-button.time_machine_modal_apply_handle(@click="time_machine_modal_apply_handle" type="is-primary") {{timeline_resolver.will_message}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 import { time_machine_url_support } from "./time_machine_url_support.js"
 import { GX } from "@/components/models/gx.js"
-import { TurnProgress } from "../mod_reflector/turn_progress.js"
+import { TimelineResolver } from "../mod_reflector/timeline_resolver.js"
 
 export default {
   name: "TimeMachineModal",
@@ -54,7 +54,7 @@ export default {
   ],
   props: {
     xhistory_record: { type: Object, required: true, },
-    turn_progress_params: { type: Object, required: true, },
+    timeline_resolver_params: { type: Object, required: true, },
     sp_operation: { type: Boolean, default: true, },
   },
   data() {
@@ -70,22 +70,22 @@ export default {
   },
   methods: {
     time_machine_modal_apply_handle() {
-      this.SB.time_machine_modal_apply_handle(this.turn_progress.to_reflection_call_params)
+      this.SB.time_machine_modal_apply_handle(this.timeline_resolver.to_reflection_call_params)
     },
   },
   computed: {
     current_format_type_info() { return this.SB.FormatTypeInfo.fetch("kif_utf8") },
 
-    turn_progress() {
-      return this.SB.turn_progress_create({
-        ...this.turn_progress_params,
+    timeline_resolver() {
+      return this.SB.timeline_resolver_create({
+        ...this.timeline_resolver_params,
         new_sfen: this.xhistory_record.sfen,
         to: this.mut_turn,
       })
     },
 
     master() {
-      return this.turn_progress.to_sfen_and_turn
+      return this.timeline_resolver.to_sfen_and_turn
     },
   },
 }
