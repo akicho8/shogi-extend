@@ -36,9 +36,6 @@ export default {
 .CustomShogiPlayer
   width: 100%   // ←これいる？
 
-  &.is_mode_edit
-    +setvar(sp_board_color, hsla(149.57,38.12%,35.49%,0.53))
-
   +mobile
     +setvar(sp_grid_outer_color, hsla(0, 0%, 0%, 0.4)) // スマホだと少し薄すくる
     +setvar(sp_grid_inner_color, hsla(0, 0%, 0%, 0.3)) // スマホだと少し薄すくる
