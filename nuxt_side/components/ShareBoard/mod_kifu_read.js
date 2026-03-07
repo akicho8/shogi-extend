@@ -75,7 +75,6 @@ export const mod_kifu_read = {
       const e = await this.$axios.$post("/api/general/any_source_to.json", params)
       this.bs_error_message_dialog(e)
       if (e.body) {
-        this.sfx_click()
         this.kifu_read_modal_close()
         this.current_sfen_set({sfen: e.body, turn: e.turn_max})
         this.honpu_main_setup()           // 読み込んだ棋譜を本譜とする
