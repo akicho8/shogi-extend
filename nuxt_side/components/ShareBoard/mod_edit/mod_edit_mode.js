@@ -59,7 +59,7 @@ export const mod_edit_mode = {
     // 編集完了
     play_mode_set_handle() {
       this.sidebar_close()
-      this.sfx_click()
+      // this.sfx_click()
       // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
         this.current_sfen_set(this.edit_mode_kifu_vo.sfen_and_turn)
