@@ -50,6 +50,10 @@ export const mod_edit_mode = {
       }
       this.sidebar_close()
       this.sfx_click()
+      if (this.cc_play_p) {
+        this.toast_primary("対局中は編集できません")
+        return
+      }
       if (this.ac_room) {
         this.edit_warn_modal_open()
         return
