@@ -49,7 +49,7 @@ export const mod_form = {
       //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
       xaudio_list: [],
       xaudio_list_for_v_model: [], // b-upload の動作確認用
-      current_play_instance: null, // 最後に再生した Howl のインスタンス
+      $current_play_instance: null, // 最後に再生した Howl のインスタンス
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
       u_audio_file_a: null,
@@ -230,9 +230,9 @@ export const mod_form = {
     },
 
     current_play_instance_stop() {
-      if (this.current_play_instance) {
-        this.current_play_instance.stop()
-        this.current_play_instance = null
+      if (this.$current_play_instance) {
+        this.$current_play_instance.stop()
+        this.$current_play_instance = null
       }
     },
 

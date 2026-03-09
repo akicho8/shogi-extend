@@ -17,7 +17,7 @@
               b-dropdown-item(:value="e.key" @click="sfx_click()")
                 .media
                   .media-left(v-if="e.sample_source")
-                    KiwiLemonNewAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.current_play_instance = e")
+                    KiwiLemonNewAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.$current_play_instance = e")
                   .media-content
                     | {{e.name}}
                     .audio_desc(v-if="e.audio_part_a_duration")
@@ -47,7 +47,7 @@
   //- .box(v-if="base.xaudio_list.length >= 1")
   //-   .media.is-justify-content-space-between(v-for="(file, index) in base.xaudio_list" :key="index")
   //-     .media-left
-  //-       KiwiLemonNewAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
+  //-       KiwiLemonNewAudioPlay(:base="base" :src="file.url" @play="e => base.$current_play_instance = e" v-if="file.url")
   //-     .media-content
   //-       | {{file.attributes.name}}
   //-     .media-right
