@@ -209,7 +209,7 @@ export class TimelineResolver {
     }
   }
 
-  get to_reflection_call_params() {
+  get to_reflector_call_params() {
     return {
       sfen: this.master_sfen,
       turn: this.new_turn,

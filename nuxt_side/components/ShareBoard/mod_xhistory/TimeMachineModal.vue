@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     time_machine_modal_apply_handle() {
-      this.SB.time_machine_modal_apply_handle(this.timeline_resolver.to_reflection_call_params)
+      this.SB.time_machine_modal_apply_handle({...this.timeline_resolver.to_reflector_call_params, think_mark_clear_all: true})
     },
   },
   computed: {
