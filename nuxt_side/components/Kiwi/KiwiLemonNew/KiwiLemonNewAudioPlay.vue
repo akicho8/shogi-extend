@@ -19,7 +19,7 @@ export default {
     src:              { type: String,  required: false, default: null, },
     volume:           { type: Number,  required: false, default:  0.0, },
     play_duration:    { type: Number,  required: false, default: 27.5, },
-    fadeout_duration: { type: Number,  required: false, default:  2.5, },
+    fadeout_duration_sec: { type: Number,  required: false, default:  2.5, },
   },
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
               this.fadeout_id = this.$GX.delay_block(this.play_duration, () => {
                 // 面倒なことに現状のボリュームからではなく開始時のボリュームを指定しないといけない
                 // なので 1.0 ではなく this.volume を指定する
-                this.instance.fade(this.volume, 0, 1000 * this.fadeout_duration, this.current_id)
+                this.instance.fade(this.volume, 0, this.fadeout_duration_sec * 1000, this.current_id)
               })
             },
             onstop: () => this.auto_stop("stop"),
