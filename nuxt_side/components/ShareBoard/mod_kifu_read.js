@@ -31,7 +31,7 @@ export const mod_kifu_read = {
 
     // 棋譜の読み込みタップ時の処理
     kifu_read_modal_open_handle(source = "") {
-      if (this.$kifu_read_modal_instance === null) {
+      if (!this.$kifu_read_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         if (this.cc_play_p) {
@@ -43,7 +43,7 @@ export const mod_kifu_read = {
     },
 
     kifu_read_modal_open(source = "") {
-      if (this.$kifu_read_modal_instance === null) {
+      if (!this.$kifu_read_modal_instance) {
         this.$kifu_read_modal_instance = this.modal_card_open({
           component: KifuReadModal,
           props: {

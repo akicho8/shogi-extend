@@ -26,7 +26,7 @@ export const mod_chat = {
     ////////////////////////////////////////////////////////////////////////////////
 
     chat_modal_shortcut_handle() {
-      if (this.$chat_modal_instance == null) {
+      if (!this.$chat_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.chat_modal_open()

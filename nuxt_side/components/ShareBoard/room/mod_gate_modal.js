@@ -18,7 +18,7 @@ export const mod_gate_modal = {
   },
   methods: {
     gate_modal_open_handle() {
-      if (this.$gate_modal_instance == null) {
+      if (!this.$gate_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.gate_modal_open()
@@ -34,7 +34,7 @@ export const mod_gate_modal = {
     },
 
     gate_modal_open() {
-      if (this.$gate_modal_instance == null) {
+      if (!this.$gate_modal_instance) {
         this.new_room_key = this.room_key
         this.new_user_name = this.user_name
 

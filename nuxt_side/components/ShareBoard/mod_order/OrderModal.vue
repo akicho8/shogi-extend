@@ -293,7 +293,7 @@ export default {
       }
     },
     reform_conduct_modal_open() {
-      if (this.$reform_conduct_modal_instance == null) {
+      if (!this.$reform_conduct_modal_instance) {
         this.$reform_conduct_modal_instance = this.modal_card_open({
           component: ReformConductModal,
         })

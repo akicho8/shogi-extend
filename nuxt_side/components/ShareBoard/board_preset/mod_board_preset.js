@@ -47,7 +47,7 @@ export const mod_board_preset = {
     ////////////////////////////////////////////////////////////////////////////////
 
     board_preset_modal_open_handle() {
-      if (this.$board_preset_modal_instance == null) {
+      if (!this.$board_preset_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.board_preset_modal_open()
@@ -60,7 +60,7 @@ export const mod_board_preset = {
       }
     },
     board_preset_modal_open() {
-      if (this.$board_preset_modal_instance == null) {
+      if (!this.$board_preset_modal_instance) {
         this.$board_preset_modal_instance = this.modal_card_open({
           component: BoardPresetModal,
           onCancel: () => this.board_preset_modal_close(),

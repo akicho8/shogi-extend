@@ -22,7 +22,7 @@ export const turn_change = {
     },
 
     turn_change_to_xxx_modal_open_handle(turn) {
-      if (this.$turn_change_modal_instance == null) {
+      if (!this.$turn_change_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.$turn_change_modal_instance = this.modal_card_open({

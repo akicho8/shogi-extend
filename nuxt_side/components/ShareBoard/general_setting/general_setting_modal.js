@@ -13,7 +13,7 @@ export const general_setting_modal = {
 
   methods: {
     general_setting_modal_shortcut_handle() {
-      if (this.$general_setting_modal_instance == null) {
+      if (!this.$general_setting_modal_instance) {
         this.general_setting_modal_open_handle()
       } else {
         this.general_setting_modal_close_handle()

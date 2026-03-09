@@ -33,7 +33,7 @@ export const order_modal = {
 
   methods: {
     order_modal_open_handle() {
-      if (this.order_modal_instance == null) {
+      if (!this.order_modal_instance) {
         if (this.room_is_empty_p()) { return }
 
         this.sidebar_close()
@@ -41,7 +41,7 @@ export const order_modal = {
 
         this.order_modal_init()
 
-        GX.assert(this.order_modal_instance == null, "this.order_modal_instance == null")
+        GX.assert(!this.order_modal_instance, "!this.order_modal_instance")
         // this.gate_modal_close()
         this.order_modal_instance = this.modal_card_open({
           component: OrderModal,
