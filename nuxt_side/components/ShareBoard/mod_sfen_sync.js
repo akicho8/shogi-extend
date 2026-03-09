@@ -20,7 +20,7 @@ export const mod_sfen_sync = {
       GX.assert(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
         GX.assert(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        GX.assert(e.last_move_info.next_turn_offset === this.current_sfen_turn_max, "e.last_move_info.next_turn_offset === this.current_sfen_turn_max")
+        GX.assert(e.last_move_info.next_turn_offset === this.current_turn_max, "e.last_move_info.next_turn_offset === this.current_turn_max")
       }
 
       this.resend_init()

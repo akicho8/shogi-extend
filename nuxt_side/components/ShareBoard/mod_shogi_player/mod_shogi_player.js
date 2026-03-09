@@ -1,4 +1,4 @@
-const SLIDER_DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
+const SP_SLIDER_DEBOUNCE_DELAY_SEC = 1.0 // X秒後に反映
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
@@ -11,7 +11,10 @@ export const mod_shogi_player = {
   },
 
   created() {
-    this.sp_slider_debounce_define()
+    this.sp_slider_debounce_on()
+  },
+  beforeDestroy() {
+    this.sp_slider_debounce_off()
   },
 
   methods: {
@@ -75,35 +78,29 @@ export const mod_shogi_player = {
 
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
     // 瞬間なのでこのときの this.current_turn と turn は異なる
-    sp_slider_debounce_define() {
-      this.slider_debounce_leading  = _.debounce(() => { this.sp_slider_leading_callback()  }, SLIDER_DEBOUNCE_DELAY, { leading: true,  trailing: false })
-      this.slider_debounce_trailing = _.debounce(() => { this.sp_slider_trailing_callback() }, SLIDER_DEBOUNCE_DELAY, { leading: false, trailing: true  })
+    sp_slider_debounce_on() {
+      this.slider_debounce_leading  = _.debounce(() => { this.sp_slider_leading_task()  }, SP_SLIDER_DEBOUNCE_DELAY_SEC * 1000, { leading: true,  trailing: false })
+      this.slider_debounce_trailing = _.debounce(() => { this.sp_slider_trailing_task() }, SP_SLIDER_DEBOUNCE_DELAY_SEC * 1000, { leading: false, trailing: true  })
+    },
+    sp_slider_debounce_off() {
+      this.debug_alert("sp_slider_debounce_off")
+      this.slider_debounce_leading.cancel()
+      this.slider_debounce_trailing.cancel()
     },
     ev_action_turn_change(turn) {
       this.ev_action_turn_change_se()
       this.slider_debounce_leading()
       this.slider_debounce_trailing()
     },
-    sp_slider_leading_callback() {
-      this.debug_alert("sp_slider_leading_callback")
+    sp_slider_leading_task() {
+      this.debug_alert("sp_slider_leading_task")
       this.perpetual_cop.reset$()
       this.think_mark_clear_all_action({sfx: false})
     },
-    sp_slider_trailing_callback() {
-      this.debug_alert("sp_slider_trailing_callback")
+    sp_slider_trailing_task() {
+      this.debug_alert("sp_slider_trailing_task")
       this.reflector_slider_trailing()
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // // ユーザーがコントローラやスライダーで操作し終わったら転送する
-    // // () => {} 形式で書くと動かないのは謎
-    // // 遅延実行しているとはいえ元々 turn と this.current_turn は異なるため $nextTick する
-    // ev_action_turn_change_lazy: _.debounce(function(turn) {
-    //   this.$nextTick(() => {
-    //     this.reflector_slider_trailing(turn)
-    //   })
-    // }, SLIDER_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -168,7 +165,7 @@ export const mod_shogi_player = {
     //   }
     // },
     current_sfen_info()     { return this.sfen_parse(this.current_sfen)       }, // SFENのあらゆる情報
-    current_sfen_turn_max() { return this.current_sfen_info.turn_offset_max   }, // 最後の手数
+    current_turn_max() { return this.current_sfen_info.turn_offset_max   }, // 最後の手数
     next_location()         { return this.current_sfen_info.next_location     }, // 次の色
     current_location()      { return this.turn_to_location(this.current_turn) }, // 現在の色
     base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
