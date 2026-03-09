@@ -76,7 +76,7 @@ export const vue_dialog = {
           GX.assert_kind_of_numeric(h.duration_sec)
           GX.assert(h.duration_sec < 1000)
           GX.assert(params.duration == null)
-          params.duration = h.duration_sec * 1000.0
+          params.duration = h.duration_sec * 1000
         }
         if (h.toast) {
           let str = message

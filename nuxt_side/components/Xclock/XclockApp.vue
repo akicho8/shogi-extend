@@ -122,7 +122,7 @@ export default {
             if (index === single_clock.base.current_index) {
               this.say(`${sec - 1}`)
             }
-          }, 1000 * 0.75)
+          }, 0.75 * 1000)
         }
       },
     })

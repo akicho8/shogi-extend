@@ -81,7 +81,7 @@ export const vue_support = {
           message: message.toString(),
           position: "is-bottom",
           type: "is-danger",
-          duration: 1000 * 4,
+          duration: 4.0 * 1000,
           queue: false,
           ...options,
         })

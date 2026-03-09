@@ -306,7 +306,7 @@ export default {
       }
 
       // 挨拶
-      // setTimeout(() => this.talk(this.first_talk_body), 1000 * 0)
+      // setTimeout(() => this.talk(this.first_talk_body), 0 * 1000)
     },
 
     // 終了
