@@ -12,7 +12,7 @@ export const autoexec_methods = {
 
       const callback = () => {
         const str = this.$route.query[options.key]
-        if (str) {
+        if (str != null) {
           str.split(/[,\s]+/).forEach(e => {
             const func = this[e]
             GX.assert(func, `存在しないメソッドです : ${e}`)
@@ -23,7 +23,7 @@ export const autoexec_methods = {
 
       if (options.next_tick) {
         this.$nextTick(callback)
-      } else if (options.sleep) {
+      } else if (options.sleep != null) {
         setTimeout(callback, options.sleep * 1000)
       } else {
         callback()
