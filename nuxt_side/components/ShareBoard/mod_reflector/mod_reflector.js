@@ -37,11 +37,11 @@ export const mod_reflector = {
     //   this.reflector_turn_change({by: -1})
     // },
 
-    reflector_turn_change(options = {}) {
-      // if (options.sfx) {
+    reflector_turn_change(params = {}) {
+      // if (params.sfx) {
       //   this.sfx_click()
       // }
-      const timeline_resolver = this.timeline_resolver_create(options)
+      const timeline_resolver = this.timeline_resolver_create(params)
       this.reflector_call({turn: timeline_resolver.new_turn, think_mark_clear_all: true})
     },
 
@@ -66,20 +66,28 @@ export const mod_reflector = {
       GX.assert_kind_of_hash(params)
       params = {
         __standalone_mode__: true,
-        __nullable_attributes__: ["message_prefix"],
         reflector_notify_scope_key: "rns_all", // 全員に通知する
         talk: true,                            // しゃべる
         sfx: true,                             // 設定音を出す
         set_except_me: false,                  // sfen, turn の更新: true→全員 false→自分自身に対してはしない
-        message_prefix: null,
-        ...this.current_sfen_and_turn,
         think_mark_clear_all: false,           // ブロードキャストのタイミングで思考印を消すか？
+
+        // for timeline_resolver_create
+        ...this.current_sfen_and_turn,
+        message_prefix: "",
+        fast_forward: true,
+
         ...params,
       }
       this.ac_room_perform("reflector_action", params) // --> app/channels/share_board/room_channel.rb
     },
     reflector_action_broadcasted(params) {
-      const timeline_resolver = this.timeline_resolver_create({new_sfen: params.sfen, to: params.turn, message_prefix: params.message_prefix})
+      const timeline_resolver = this.timeline_resolver_create({
+        new_sfen: params.sfen,
+        to: params.turn,
+        message_prefix: params.message_prefix,
+        fast_forward: params.fast_forward,
+      })
       const reflector_notify_scope_info = ReflectorNotifyScopeInfo.fetch(params.reflector_notify_scope_key)
       this.reflector_notify({params, timeline_resolver, reflector_notify_scope_info})
       this.reflector_set({params, timeline_resolver})

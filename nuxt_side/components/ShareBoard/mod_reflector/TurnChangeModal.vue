@@ -40,7 +40,12 @@ export default {
     }
   },
   computed: {
-    timeline_resolver() { return this.SB.timeline_resolver_create({new_sfen: this.sfen, to: this.new_turn}) },
+    timeline_resolver() {
+      return this.SB.timeline_resolver_create({
+        new_sfen: this.sfen,
+        to: this.new_turn,
+      })
+    },
   },
 }
 </script>

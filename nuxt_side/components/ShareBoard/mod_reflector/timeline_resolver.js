@@ -1,3 +1,14 @@
+// |--------------+---------------------------------------------------------------------|
+// | 引数         | 意味                                                                |
+// |--------------+---------------------------------------------------------------------|
+// | old_sfen     | 古いというか現在の局面の棋譜                                        |
+// | old_turn     | 古いというか現在の局面の手数                                        |
+// | new_sfen     | 新しい棋譜                                                          |
+// | to           | 手数の絶対指定。この手数にする                                      |
+// | by           | 手数の相対指定。old_turn + by の手数にする                          |
+// | fast_forward | old_sfen と new_sfen が同じ流れの棋譜であれば繋っていると見なすか？ |
+// |--------------+---------------------------------------------------------------------|
+
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
@@ -10,6 +21,12 @@ export class TimelineResolver {
   }
 
   constructor(params = {}) {
+    params = {
+      fast_forward: true,
+      message_prefix: "",
+      ...params,
+    }
+
     // old
     {
       GX.assert_kind_of_string(params.old_sfen)
@@ -27,6 +44,8 @@ export class TimelineResolver {
       }
       GX.assert(params.to != null || params.by != null)
     }
+
+    GX.assert(params.fast_forward === true || params.fast_forward === false)
 
     Object.assign(this, params)
     Object.freeze(this)
@@ -123,9 +142,7 @@ export class TimelineResolver {
       str = `${this.new_turn}手目に戻す`
     }
 
-    if (this.message_prefix != null) {
-      str = [this.message_prefix, str].join("")
-    }
+    str = [this.message_prefix, str].join("")
 
     return str
   }
@@ -174,13 +191,15 @@ export class TimelineResolver {
   // 設定するSFEN
   // つまり(可能な限り)本線を返す
   get master_sfen() {
-    if (this.sfen_go_back_p) {
-      return this.old_sfen      // 過去の局面または同じであればそのままの未来を含む棋譜を返す
+    if (this.fast_forward) {
+      if (this.sfen_go_back_p) {
+        return this.old_sfen      // 過去の局面または同じであればそのままの未来を含む棋譜を返す
+      }
+      if (this.sfen_go_forward_p) {
+        return this.new_sfen      // 未来に進もうとしているなら大きい方を返す
+      }
     }
-    if (this.sfen_go_forward_p) {
-      return this.new_sfen      // 未来に進もうとしているなら大きい方を返す
-    }
-    return this.new_sfen        // 同じまたはまったく異なる場合は新しい方の棋譜を返す
+    return this.new_sfen        // 同じ、またはまったく異なる場合、または fast_forward でない場合は新しい方の棋譜を返す
   }
 
   get to_sfen_and_turn() {
@@ -195,6 +214,7 @@ export class TimelineResolver {
       sfen: this.master_sfen,
       turn: this.new_turn,
       message_prefix: this.message_prefix,
+      fast_forward: this.fast_forward,
     }
   }
 
@@ -233,6 +253,7 @@ export class TimelineResolver {
       "手数進める?": this.turn_next_p,
       "手数戻す?": this.turn_previous_p,
       "手数最大": this.sfen_turn_max,
+      "連続性考慮?": this.fast_forward,
     }
   }
 

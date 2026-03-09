@@ -66,11 +66,6 @@ describe("TimelineResolver", () => {
     expect(timeline_resolver.past_message).toEqual("5手目に戻しました")
   })
 
-  test("message_prefix", () => {
-    const timeline_resolver = case1({to: 0, message_prefix: "(message_prefix)"})
-    expect(timeline_resolver.will_message).toEqual("(message_prefix)初期配置に戻す")
-  })
-
   describe("#sfen_go_back_p", () => {
     test("過去の棋譜", () => {
       const old_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d"
@@ -87,5 +82,17 @@ describe("TimelineResolver", () => {
       expect(timeline_resolver.sfen_go_back_p).toEqual(false)
       expect(timeline_resolver.master_sfen).toEqual(new_sfen)
     })
+  })
+
+  test("message_prefix", () => {
+    const timeline_resolver = case1({to: 0, message_prefix: "(message_prefix)"})
+    expect(timeline_resolver.will_message).toEqual("(message_prefix)初期配置に戻す")
+  })
+
+  test("fast_forward が無効な場合、本線を考慮しなくなる", () => {
+    const old_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d"
+    const new_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f"
+    const timeline_resolver = TimelineResolver.create({old_sfen, old_turn: 2, new_sfen, to: 1, fast_forward: false})
+    expect(timeline_resolver.master_sfen).toEqual(new_sfen)
   })
 })

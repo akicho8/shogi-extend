@@ -14,9 +14,8 @@ export const mod_time_machine = {
     // 本譜用
     time_machine_modal_open_handle_for_honpu(xhistory_record) {
       const timeline_resolver_params = {
-        old_sfen: xhistory_record.sfen,
-        old_turn: xhistory_record.turn,
         message_prefix: "本譜の",
+        fast_forward: false,
       }
       this.time_machine_modal_open_handle({
         xhistory_record,
