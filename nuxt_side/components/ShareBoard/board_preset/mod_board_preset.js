@@ -7,7 +7,7 @@ import BoardPresetModal from "./BoardPresetModal.vue"
 export const mod_board_preset = {
   data() {
     return {
-      board_preset_modal_instance: null,
+      $board_preset_modal_instance: null,
     }
   },
   created() {
@@ -47,30 +47,30 @@ export const mod_board_preset = {
     ////////////////////////////////////////////////////////////////////////////////
 
     board_preset_modal_open_handle() {
-      if (this.board_preset_modal_instance == null) {
+      if (this.$board_preset_modal_instance == null) {
         this.sidebar_close()
         this.sfx_click()
         this.board_preset_modal_open()
       }
     },
     board_preset_modal_close_handle() {
-      if (this.board_preset_modal_instance) {
+      if (this.$board_preset_modal_instance) {
         this.sfx_click()
         this.board_preset_modal_close()
       }
     },
     board_preset_modal_open() {
-      if (this.board_preset_modal_instance == null) {
-        this.board_preset_modal_instance = this.modal_card_open({
+      if (this.$board_preset_modal_instance == null) {
+        this.$board_preset_modal_instance = this.modal_card_open({
           component: BoardPresetModal,
           onCancel: () => this.board_preset_modal_close(),
         })
       }
     },
     board_preset_modal_close() {
-      if (this.board_preset_modal_instance) {
-        this.board_preset_modal_instance.close()
-        this.board_preset_modal_instance = null
+      if (this.$board_preset_modal_instance) {
+        this.$board_preset_modal_instance.close()
+        this.$board_preset_modal_instance = null
       }
     },
 

@@ -13,7 +13,7 @@ export const mod_xmatch = {
     return {
       ac_lobby: null,                // subscriptions.create のインスタンス
       xmatch_rules_members: null,    // XmatchModal で表示していている内容
-      xmatch_modal_instance: null,   // XmatchModal のインスタンス
+      $xmatch_modal_instance: null,   // XmatchModal のインスタンス
       current_xmatch_rule_key: null, // 現在選択しているルール
       xmatch_interval_counter: new IntervalCounter(this.xmatch_interval_counter_callback),
     }
@@ -66,7 +66,7 @@ export const mod_xmatch = {
 
       // https://buefy.org/documentation/modal/
       this.xmatch_modal_close()
-      this.xmatch_modal_instance = this.modal_card_open({
+      this.$xmatch_modal_instance = this.modal_card_open({
         component: XmatchModal,
         onCancel: () => {
           this.sfx_click()
@@ -79,9 +79,9 @@ export const mod_xmatch = {
 
     // 自動マッチングモーダルを外部から閉じる
     xmatch_modal_close() {
-      if (this.xmatch_modal_instance) {
-        this.xmatch_modal_instance.close()
-        this.xmatch_modal_instance = null
+      if (this.$xmatch_modal_instance) {
+        this.$xmatch_modal_instance.close()
+        this.$xmatch_modal_instance = null
       }
     },
 

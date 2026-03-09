@@ -4,7 +4,7 @@ import EndingModal from "./EndingModal.vue"
 export const ending_modal = {
   data() {
     return {
-      ending_modal_instance: null,
+      $ending_modal_instance: null,
     }
   },
 
@@ -15,7 +15,7 @@ export const ending_modal = {
   methods: {
     ending_modal_open() {
       this.ending_modal_close()
-      this.ending_modal_instance = this.modal_card_open({
+      this.$ending_modal_instance = this.modal_card_open({
         component: EndingModal,
         onCancel: () => this.ending_modal_close(),
       })
@@ -27,9 +27,9 @@ export const ending_modal = {
     },
 
     ending_modal_close() {
-      if (this.ending_modal_instance) {
-        this.ending_modal_instance.close()
-        this.ending_modal_instance = null
+      if (this.$ending_modal_instance) {
+        this.$ending_modal_instance.close()
+        this.$ending_modal_instance = null
       }
     },
   },

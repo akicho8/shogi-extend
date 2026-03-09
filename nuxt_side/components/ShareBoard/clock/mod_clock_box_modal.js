@@ -7,7 +7,7 @@ import ClockBoxModal from "./ClockBoxModal.vue"
 export const mod_clock_box_modal = {
   data() {
     return {
-      cc_modal_instance: null,
+      $cc_modal_instance: null,
     }
   },
 
@@ -42,7 +42,7 @@ export const mod_clock_box_modal = {
     ////////////////////////////////////////////////////////////////////////////////
 
     cc_modal_open_handle() {
-      if (this.cc_modal_instance == null) {
+      if (this.$cc_modal_instance == null) {
         this.sidebar_close()
         this.sfx_click()
         this.cc_modal_open()
@@ -50,8 +50,8 @@ export const mod_clock_box_modal = {
     },
 
     cc_modal_open() {
-      if (this.cc_modal_instance == null) {
-        this.cc_modal_instance = this.modal_card_open({
+      if (this.$cc_modal_instance == null) {
+        this.$cc_modal_instance = this.modal_card_open({
           component: ClockBoxModal,
           onCancel: () => {
             this.sfx_click()
@@ -62,7 +62,7 @@ export const mod_clock_box_modal = {
     },
 
     cc_modal_close_handle() {
-      if (this.cc_modal_instance) {
+      if (this.$cc_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.cc_modal_close()
@@ -70,9 +70,9 @@ export const mod_clock_box_modal = {
     },
 
     cc_modal_close() {
-      if (this.cc_modal_instance) {
-        this.cc_modal_instance.close()
-        this.cc_modal_instance = null
+      if (this.$cc_modal_instance) {
+        this.$cc_modal_instance.close()
+        this.$cc_modal_instance = null
         this.debug_alert("ClockBoxModal close")
       }
     },

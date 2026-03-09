@@ -5,7 +5,7 @@ import ResendConfirmModal from "./ResendConfirmModal.vue"
 export const resend_confirm_modal = {
   data() {
     return {
-      resend_confirm_modal_instance: null,
+      $resend_confirm_modal_instance: null,
     }
   },
   beforeDestroy() {
@@ -42,16 +42,16 @@ export const resend_confirm_modal = {
       this.sfx_play("x")
       this.resend_failed_logging()
       this.resend_done()
-      this.resend_confirm_modal_instance = this.modal_card_open({
+      this.$resend_confirm_modal_instance = this.modal_card_open({
         component: ResendConfirmModal,
         canCancel: [],
       })
     },
 
     resend_confirm_modal_close() {
-      if (this.resend_confirm_modal_instance) {
-        this.resend_confirm_modal_instance.close()
-        this.resend_confirm_modal_instance = null
+      if (this.$resend_confirm_modal_instance) {
+        this.$resend_confirm_modal_instance.close()
+        this.$resend_confirm_modal_instance = null
       }
     },
 

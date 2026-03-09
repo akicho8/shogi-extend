@@ -10,7 +10,7 @@ export const mod_gate_modal = {
     return {
       new_room_key: null,       // 入力中の合言葉
       new_user_name: null,      // 入力中のハンドルネーム
-      gate_modal_instance: null,
+      $gate_modal_instance: null,
     }
   },
   beforeDestroy() {
@@ -18,7 +18,7 @@ export const mod_gate_modal = {
   },
   methods: {
     gate_modal_open_handle() {
-      if (this.gate_modal_instance == null) {
+      if (this.$gate_modal_instance == null) {
         this.sidebar_close()
         this.sfx_click()
         this.gate_modal_open()
@@ -26,7 +26,7 @@ export const mod_gate_modal = {
     },
 
     gate_modal_close_handle() {
-      if (this.gate_modal_instance) {
+      if (this.$gate_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
         this.gate_modal_close()
@@ -34,11 +34,11 @@ export const mod_gate_modal = {
     },
 
     gate_modal_open() {
-      if (this.gate_modal_instance == null) {
+      if (this.$gate_modal_instance == null) {
         this.new_room_key = this.room_key
         this.new_user_name = this.user_name
 
-        this.gate_modal_instance = this.modal_card_open({
+        this.$gate_modal_instance = this.modal_card_open({
           component: GateModal,
           onCancel: () => {
             this.sfx_click()
@@ -49,9 +49,9 @@ export const mod_gate_modal = {
     },
 
     gate_modal_close() {
-      if (this.gate_modal_instance) {
-        this.gate_modal_instance.close()
-        this.gate_modal_instance = null
+      if (this.$gate_modal_instance) {
+        this.$gate_modal_instance.close()
+        this.$gate_modal_instance = null
         this.debug_alert("GateModal close")
       }
     },

@@ -3,7 +3,7 @@ import GeneralSettingModal from "./GeneralSettingModal.vue"
 export const general_setting_modal = {
   data() {
     return {
-      general_setting_modal_instance: null,
+      $general_setting_modal_instance: null,
     }
   },
 
@@ -13,7 +13,7 @@ export const general_setting_modal = {
 
   methods: {
     general_setting_modal_shortcut_handle() {
-      if (this.general_setting_modal_instance == null) {
+      if (this.$general_setting_modal_instance == null) {
         this.general_setting_modal_open_handle()
       } else {
         this.general_setting_modal_close_handle()
@@ -35,7 +35,7 @@ export const general_setting_modal = {
 
     general_setting_modal_open() {
       this.general_setting_modal_close()
-      this.general_setting_modal_instance = this.modal_card_open({
+      this.$general_setting_modal_instance = this.modal_card_open({
         component: GeneralSettingModal,
         onCancel: () => {
           this.sfx_click()
@@ -45,9 +45,9 @@ export const general_setting_modal = {
     },
 
     general_setting_modal_close() {
-      if (this.general_setting_modal_instance) {
-        this.general_setting_modal_instance.close()
-        this.general_setting_modal_instance = null
+      if (this.$general_setting_modal_instance) {
+        this.$general_setting_modal_instance.close()
+        this.$general_setting_modal_instance = null
       }
     },
   },

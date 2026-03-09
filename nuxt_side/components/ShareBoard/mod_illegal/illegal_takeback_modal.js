@@ -6,7 +6,7 @@ import { GX } from "@/components/models/gx.js"
 export const illegal_takeback_modal = {
   data() {
     return {
-      illegal_takeback_modal_instance: null,
+      $illegal_takeback_modal_instance: null,
     }
   },
   beforeDestroy() {
@@ -17,7 +17,7 @@ export const illegal_takeback_modal = {
 
     illegal_takeback_modal_open() {
       this.illegal_takeback_modal_close()
-      this.illegal_takeback_modal_instance = this.modal_card_open({
+      this.$illegal_takeback_modal_instance = this.modal_card_open({
         component: IllegalTakebackModal,
         canCancel: [],
         onCancel: () => { throw new Error("must not happen") },
@@ -25,9 +25,9 @@ export const illegal_takeback_modal = {
     },
 
     illegal_takeback_modal_close() {
-      if (this.illegal_takeback_modal_instance) {
-        this.illegal_takeback_modal_instance.close()
-        this.illegal_takeback_modal_instance = null
+      if (this.$illegal_takeback_modal_instance) {
+        this.$illegal_takeback_modal_instance.close()
+        this.$illegal_takeback_modal_instance = null
         if (this.AppConfig.illegal_takeback.lifted_piece_cancel) {
           this.sp_lifted_piece_cancel()
         }

@@ -9,7 +9,7 @@ export const mod_room_recreate = {
   data() {
     return {
       room_recreate_now: false,
-      room_recreate_modal_instance: null,
+      $room_recreate_modal_instance: null,
     }
   },
   watch: {
@@ -44,15 +44,15 @@ export const mod_room_recreate = {
     ////////////////////////////////////////////////////////////////////////////////
 
     room_recreate_modal_open_handle() {
-      if (!this.room_recreate_modal_instance) {
+      if (!this.$room_recreate_modal_instance) {
         this.sfx_click()
         this.room_recreate_modal_open()
       }
     },
     room_recreate_modal_open() {
-      if (!this.room_recreate_modal_instance) {
+      if (!this.$room_recreate_modal_instance) {
         // https://buefy.org/documentation/modal
-        this.room_recreate_modal_instance = this.modal_card_open({
+        this.$room_recreate_modal_instance = this.modal_card_open({
           component: RoomRecreateModal,
           canCancel: [],
           // onCancel: () => {
@@ -63,15 +63,15 @@ export const mod_room_recreate = {
       }
     },
     room_recreate_modal_close_handle() {
-      if (this.room_recreate_modal_instance) {
+      if (this.$room_recreate_modal_instance) {
         this.sfx_click()
         this.room_recreate_modal_close()
       }
     },
     room_recreate_modal_close() {
-      if (this.room_recreate_modal_instance) {
-        this.room_recreate_modal_instance.close()
-        this.room_recreate_modal_instance = null
+      if (this.$room_recreate_modal_instance) {
+        this.$room_recreate_modal_instance.close()
+        this.$room_recreate_modal_instance = null
       }
     },
 

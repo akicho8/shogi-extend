@@ -18,7 +18,7 @@ client-only
       p watching_member_count: {{watching_member_count}}
       p order_enable_p: {{order_enable_p}}
 
-      p cc_timeout_modal_instance: {{!!cc_timeout_modal_instance}}
+      p $cc_timeout_modal_instance: {{!!$cc_timeout_modal_instance}}
       p cc_timeout_judge_delay_id: {{cc_timeout_judge_delay_id}}
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}

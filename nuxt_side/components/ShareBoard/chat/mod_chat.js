@@ -14,7 +14,7 @@ export const mod_chat = {
   data() {
     return {
       message_body: "",
-      chat_modal_instance: null,
+      $chat_modal_instance: null,
     }
   },
 
@@ -26,7 +26,7 @@ export const mod_chat = {
     ////////////////////////////////////////////////////////////////////////////////
 
     chat_modal_shortcut_handle() {
-      if (this.chat_modal_instance == null) {
+      if (this.$chat_modal_instance == null) {
         this.sidebar_close()
         this.sfx_click()
         this.chat_modal_open()
@@ -57,7 +57,7 @@ export const mod_chat = {
     chat_modal_open() {
       // https://buefy.org/documentation/modal
       this.chat_modal_close()
-      this.chat_modal_instance = this.modal_card_open({
+      this.$chat_modal_instance = this.modal_card_open({
         component: ChatModal,
         fullScreen: this.chat_content_scale_info.full_screen_p,
         onCancel: () => {
@@ -68,9 +68,9 @@ export const mod_chat = {
     },
 
     chat_modal_close() {
-      if (this.chat_modal_instance) {
-        this.chat_modal_instance.close()
-        this.chat_modal_instance = null
+      if (this.$chat_modal_instance) {
+        this.$chat_modal_instance.close()
+        this.$chat_modal_instance = null
       }
     },
 
