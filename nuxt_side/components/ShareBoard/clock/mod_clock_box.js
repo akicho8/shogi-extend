@@ -1,5 +1,4 @@
 const BYOYOMI_TALK_PITCH      = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
-const CC_INPUT_DEBOUNCE_DELAY = 0.5  // 時計の同期のために操作が終わったと判断する秒数
 const CC_KOREYORI_DELAY       = 1.0  // N秒の発声とかぶるためすこし間を空けてから発言する
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
@@ -8,7 +7,13 @@ import { CcBehaviorInfo     } from "./cc_behavior_info.js"
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
+import { clock_box_form } from "./clock_box_form.js"
+
 export const mod_clock_box = {
+  mixins: [
+    clock_box_form,
+  ],
+
   data() {
     return {
       clock_box: null,
@@ -308,18 +313,6 @@ export const mod_clock_box = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    // 時計設定時に時計の内容をほぼリアルタイムに同期する
-    // @input はクリックイベントのみに反応するので無限ループになることはない
-    cc_input_handle(v) {
-      this.cc_params_apply_without_save()  // リアルタイムに反映する
-      this.cc_input_handle_lazy(v)
-    },
-    cc_input_handle_lazy: _.debounce(function(v) {
-      this.clog(v)
-      this.cc_params_save()            // 何度も localStorage に保存すると遅いので操作後にする
-      this.clock_box_share("cc_behavior_input") // みんなへの同期も操作後にする
-    }, 1000 * CC_INPUT_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 
