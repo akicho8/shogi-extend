@@ -3,7 +3,7 @@ import SwShortcutModal from "./SwShortcutModal.vue"
 export const sw_shortcut_modal = {
   data() {
     return {
-      $$shortcut_modal_instance: null,
+      $shortcut_modal_instance: null,
     }
   },
 
@@ -13,7 +13,7 @@ export const sw_shortcut_modal = {
 
   methods: {
     shortcut_modal_toggle_handle() {
-      if (this.$$shortcut_modal_instance == null) {
+      if (!this.$shortcut_modal_instance) {
         this.shortcut_modal_open_handle()
       } else {
         this.shortcut_modal_close_handle()
@@ -35,7 +35,7 @@ export const sw_shortcut_modal = {
 
     shortcut_modal_open() {
       this.shortcut_modal_close()
-      this.$$shortcut_modal_instance = this.modal_card_open({
+      this.$shortcut_modal_instance = this.modal_card_open({
         component: SwShortcutModal,
         onCancel: () => {
           this.sfx_click()
@@ -45,9 +45,9 @@ export const sw_shortcut_modal = {
     },
 
     shortcut_modal_close() {
-      if (this.$$shortcut_modal_instance) {
-        this.$$shortcut_modal_instance.close()
-        this.$$shortcut_modal_instance = null
+      if (this.$shortcut_modal_instance) {
+        this.$shortcut_modal_instance.close()
+        this.$shortcut_modal_instance = null
       }
     },
   },
