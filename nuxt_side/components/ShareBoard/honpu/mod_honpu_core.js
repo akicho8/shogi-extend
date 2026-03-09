@@ -98,11 +98,11 @@ export const mod_honpu_core = {
     //   main:   a b c d e
     //   branch: a b c
     // この状態であれば true になる
-    honpu_branch_is_same_route_p() {
-      if (this.honpu_main && this.honpu_branch) {
-        return this.honpu_main.sfen.startsWith(this.honpu_branch.sfen)
-      }
-    },
+    // honpu_branch_is_same_route_p() {
+    //   if (this.honpu_main && this.honpu_branch) {
+    //     return this.honpu_main.sfen.startsWith(this.honpu_branch.sfen) // ← 判定がバグっている
+    //   }
+    // },
 
     // 本譜から外れた？ (未使用)
     // たとえば、
@@ -111,11 +111,11 @@ export const mod_honpu_core = {
     //   branch2: a b c d e f
     // この状態であれば true になる
     // つまり指したら外れたことになる
-    honpu_branch_exist_p() {
-      if (this.honpu_main && this.honpu_branch) {
-        return this.honpu_main.sfen !== this.honpu_branch.sfen
-      }
-    },
+    // honpu_branch_exist_p() {
+    //   if (this.honpu_main && this.honpu_branch) {
+    //     return this.honpu_main.sfen !== this.honpu_branch.sfen
+    //   }
+    // },
 
     // 変化が発生するか？
     honpu_branch_need_p(params) {

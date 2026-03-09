@@ -6,6 +6,11 @@ module SharedMethods
     assert_text("current_turn:#{turn}")
   end
 
+  # 棋譜はX手目まである
+  def assert_turn_max(turn)
+    assert_text("current_turn_max:#{turn}")
+  end
+
   # 駒移動できる
   def piece_move_o(from, to, human)
     piece_move(from, to)
