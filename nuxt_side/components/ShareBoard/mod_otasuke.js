@@ -50,7 +50,7 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length < 2) {
-          message = "次は部屋のリンクを仲間に伝えよう。リンクは「部屋に入る」の中にあるよ"
+          message = "次は部屋のリンクを仲間に伝えよう。リンクは「入退室」の中にあるよ"
           // icon = "play"
         }
       }

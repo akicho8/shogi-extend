@@ -27,7 +27,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_no_selector(".ChatModal")
   end
 
-  it "部屋に入る" do
+  it "入退室" do
     visit_app
     Capybara.current_session.active_element.send_keys("1")
     assert_selector(".GateModal")

@@ -50,7 +50,7 @@
         .sc_title 対局
         .sc_table
           .sc_item
-            .sc_label 部屋に入る
+            .sc_label 入退室
             .sc_buttons
               b-tag(type="is-primary") 1
           .sc_item

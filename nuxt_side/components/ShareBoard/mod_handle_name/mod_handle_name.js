@@ -21,13 +21,13 @@ export const mod_handle_name = {
       this.sidebar_close()
       this.sfx_click()
       this.talk("入室後は名前を変更できません")
-      // this.toast_danger("入室後はハンドルネームを変更できません。1️⃣ の「部屋に入る」からいったん退室し、新しいハンドルネームで入り直そう。")
+      // this.toast_danger("入室後はハンドルネームを変更できません。1️⃣ の「入退室」からいったん退室し、新しいハンドルネームで入り直そう。")
       this.dialog_confirm({
         title: "入室後は名前を変更できません",
         message: [
           `<div class="content">`,
           /**/ `<p>変更するにはいったん退室してから<b>新しい名前で入り直し</b>てください。</p>`,
-          /**/ `<p class="is-size-7">また${this.my_call_name}がすでに対局者だった場合は<b>新しい名前で再度順番を設定する</b>必要があります。</p>`,
+          /**/ `<p class="is-size-7">また${this.my_call_name}がすでに対局者だった場合は<b>新しい名前で再度順番を設定</b>必要があります。</p>`,
           /**/ `<p class="is-size-7">このように名前自体が識別子のため途中で名前を変えると面倒なことになります。</p>`,
           `</div>`,
         ].join(""),
