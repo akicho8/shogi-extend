@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       os_switch_toggle                                        # 有効スイッチをクリック
       find(".tabs .order_tab_fes").click
 
-      find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
+      find(:button, text: "お題メーカー", exact_text: true).click # お題メーカー起動
       # 未入力
       within(".quiz_subject") { assert_selector(:fillable_field, with: "") }
       within(".quiz_left")    { assert_selector(:fillable_field, with: "") }
