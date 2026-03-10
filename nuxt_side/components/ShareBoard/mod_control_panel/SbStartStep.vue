@@ -11,14 +11,15 @@
         expanded
         @click="() => SB[e.key]()"
         )
-        XemojiWrap(:str="e.icon")
+        template(v-if="!SB[e.done_p]")
+          i.mdi(:class="e.icon")
+        template(v-if="SB[e.done_p]")
+          i.mdi.mdi-checkbox-marked-circle
         template(v-if="true")
           .button_label {{e.name}}
         template(v-if="false")
           .button_label.is-hidden-mobile {{e.name}}
           .button_label.is-hidden-tablet {{e.mobile_name ?? e.name}}
-        template(v-if="SB[e.done_p]")
-          XemojiWrap.right_icon(str="✅")
 </template>
 
 <script>
@@ -37,16 +38,21 @@ export default {
     margin-bottom: 0
 
   .buttons
-    margin-top: 0.75rem     // "対局手順" との隙間
+    margin-top: 0.75rem     // "対局するには？" との隙間
     margin-bottom: 0
     gap: 0.5rem             // ボタン同士の縦の隙間
 
   .button
-    font-weight: bold
     margin-bottom: 0
     font-size: $size-3      // かなりでかくする
-    padding: 0.5rem 0.75rem // ボタン内の隙間
+    padding: 0.5rem 1.0rem  // ボタン内の隙間
     height: auto            // 高さは中身によって変動させる (超重要)
+    &.todo_p
+      font-weight: bold
+    &.done_p
+      font-weight: normal
+      i
+        color: $success
 
   .button > span            // ボタンの中身
     flex-grow: 1            // まず flex の子要素として横幅最大化する(重要)
@@ -56,8 +62,9 @@ export default {
     gap: 0.75rem            // 左の絵文字とラベルの隙間
     line-height: 1.0        // ボタン内の上下のパディングの二重調整を避けるためこちらは0にしておく
 
-  .xemoji
-    display: block          // これを入れると縦が中央になる
+  i
+    color: $danger          // 番号
+    font-size: 0.8em        // 番号は少し小さくする
 
   .right_icon
     margin-left: auto       // 左の余白を吸いとって右端に配置する
@@ -68,9 +75,7 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .button_label
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .xemoji
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .icon
+    i
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .button > span
       border: 1px dashed change_color($danger, $alpha: 0.5)

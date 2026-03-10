@@ -6,24 +6,21 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       {
         key: "gate_modal_open_handle",
         name: "入退室",
-        // mobile_name: "入室",
-        icon: "🛖",
+        icon: "mdi-numeric-1-circle-outline",
         todo_p: "step1_todo_p",
         done_p: "step1_done_p",
       },
       {
         key: "order_modal_open_handle",
         name: "順番設定",
-        // mobile_name: "順番設定",
-        icon: "👫", // ⚔️ 👫 🆚
+        icon: "mdi-numeric-2-circle-outline",
         todo_p: "step2_todo_p",
         done_p: "step2_done_p",
       },
       {
         key: "cc_modal_open_handle",
         name: "対局時計",
-        // mobile_name: "対局時計",
-        icon: "⏱",
+        icon: "mdi-numeric-3-circle-outline",
         todo_p: "step3_todo_p",
         done_p: "step3_done_p",
       },
