@@ -6,7 +6,7 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // 笑える系
-      { subject: "朝起きて最初にするのは？", left_value: "スマホチェック",           right_value: "二度寝",               },
+      { subject: "朝起きてまず",             left_value: "スマホチェック",           right_value: "二度寝",               },
       { subject: "おにぎりを握るなら？",     left_value: "三角",                     right_value: "俵型",                 },
 
       // スプラトゥーン
@@ -16,24 +16,24 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
       { subject: "自分を例えるなら？",             left_value: "キリギリス",               right_value: "アリ",                     },
       { subject: "まんざいするなら？",             left_value: "ボケ",                     right_value: "ツッコミ",                 },
       { subject: "どっちが好き？",                 left_value: "イカ",                     right_value: "タコ",                     },
-      { subject: "世界を救うのはどっち？",         left_value: "愛",                       right_value: "おカネ",                   },
+      { subject: "世界を救うのは？",               left_value: "愛",                       right_value: "金",                       },
       { subject: "食べたいのはどっち？",           left_value: "山の幸",                   right_value: "海の幸",                   },
       { subject: "欲しいのはどっち？",             left_value: "カンペキなカラダ",         right_value: "カンペキな頭脳",           },
       // { subject: "どっちを選ぶ？",                 left_value: "ポケモン赤",               right_value: "ポケモン緑",               },
       { subject: "どっち派？",                     left_value: "ガンガンいこうぜ",         right_value: "いのちだいじに",           },
-      { subject: "おにぎりの具といえば？",         left_value: "ツナマヨ",                 right_value: "紅しゃけ",                 },
-      { subject: "行くならどっち？",               left_value: "オシャレなパーティ",       right_value: "コスプレパーティ",         },
-      { subject: "どっち派？",                     left_value: "きのこの山",               right_value: "たけのこの里",             },
+      // { subject: "おにぎりの具といえば？",         left_value: "ツナマヨ",                 right_value: "紅しゃけ",                 },
+      // { subject: "行くならどっち？",               left_value: "オシャレなパーティ",       right_value: "コスプレパーティ",         },
+      // { subject: "どっち派？",                     left_value: "きのこの山",               right_value: "たけのこの里",             },
       { subject: "どっちを聴く？",                 left_value: "ロック",                   right_value: "ポップ",                   },
       { subject: "どっちがお好き？",               left_value: "マヨネーズ",               right_value: "ケチャップ",               },
-      { subject: "からあげにレモンかける？",       left_value: "かける",                   right_value: "かけない",                 },
-      { subject: "どっちを観る？",                 left_value: "アクション",               right_value: "コメディ",                 },
+      { subject: "からあげにレモン",               left_value: "かける",                   right_value: "かけない",                 },
+      { subject: "どっちを観る？",                 left_value: "アクション",               right_value: "ミステリー",               },
       { subject: "どっちを応援する？",             left_value: "王者",                     right_value: "挑戦者",                   },
       { subject: "どっちを選ぶ？",                 left_value: "花",                       right_value: "団子",                     },
       { subject: "どっちが好み？",                 left_value: "つぶあん",                 right_value: "こしあん",                 },
       { subject: "どっちになりたい？",             left_value: "騎士",                     right_value: "魔法使い",                 },
       { subject: "どっちが勝つ？",                 left_value: "ウサギ",                   right_value: "カメ",                     },
-      { subject: "酢豚にパイン入ってるのって",     left_value: "ナシ",                     right_value: "アリ",                     },
+      { subject: "酢豚にパインは",                 left_value: "ナシ",                     right_value: "アリ",                     },
       { subject: "どっちの世界を望む？",           left_value: "混沌",                     right_value: "秩序",                     },
 
       // ChatGPT
@@ -50,7 +50,7 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
       { subject: "犬を飼うなら？",                 left_value: "ゴールデンレトリバー",     right_value: "ボーダーコリー",           },
       { subject: "どっちがお好き？",               left_value: "和菓子",                   right_value: "洋菓子",                   },
       { subject: "アニメ見るなら？",               left_value: "青春もの",                 right_value: "ファンタジーもの",         },
-      { subject: "どっちがお好き？",               left_value: "文系",                     right_value: "理系",                     },
+      // { subject: "どっちがお好き？",               left_value: "文系",                     right_value: "理系",                     },
       { subject: "どっちがお好み？",               left_value: "もんじゃ焼き",             right_value: "お好み焼き",               },
       { subject: "どっちがお好み？",               left_value: "メロン",                   right_value: "スイカ",                   },
       { subject: "休日は？",                       left_value: "のんびり過ごす",           right_value: "アクティブに過ごす",       },
@@ -66,14 +66,16 @@ export class QuizTemplateInfo extends ApplicationMemoryRecord {
       // { subject: "どっちを読みたい？",             left_value: "松本清張",                 right_value: "横山秀夫",                 },
       { subject: "自転車乗るなら？",               left_value: "ロードバイク",             right_value: "クロスバイク",             },
 
-      { subject: "読書するなら？",                 left_value: "ミステリー小説",           right_value: "ノンフィクション小説",     },
+      { subject: "読書するなら？",                 left_value: "ミステリー",               right_value: "ノンフィクション",     },
       // { subject: "AIがこれ以上進化すると？",       left_value: "心配",                     right_value: "平気",                     },
       // { subject: "台風が来ると？",                 left_value: "嬉しくなる",               right_value: "心配になる",               },
 
       // 将棋編
       // { subject: "三間飛車のイメージは？",         left_value: "職人",                     right_value: "陰湿",                     },
       { subject: "将棋漫画といえば？",             left_value: "月下の棋士",               right_value: "ハチワンダイバー",         },
-      // { subject: "将棋の勉強をするなら？",         left_value: "詰将棋",                   right_value: "次の一手",                 },
+      { subject: "将棋の勉強するなら？",           left_value: "詰将棋",                   right_value: "次の一手",                 },
+      { subject: "将棋で大切なのは？",             left_value: "序盤",                     right_value: "終盤",                     },
+      { subject: "将棋に調子とかある？",           left_value: "ある",                     right_value: "ない",                     },
 
       // ゲーム
       // { subject: "スト2といえば？",                left_value: "リュウ",                   right_value: "春麗",                     },
