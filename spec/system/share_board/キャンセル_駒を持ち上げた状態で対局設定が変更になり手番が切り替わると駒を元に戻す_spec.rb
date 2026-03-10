@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       lifted_from("77")          # 77の駒を持っていることを保証する
     end
     window_b do
-      order_modal_open              # 「順番設定」モーダルを開く(すでに有効になっている)
+      order_modal_open              # 「対局設定」モーダルを開く(すでに有効になっている)
       find(".swap_handle").click # 先後入替
       os_submit_button_click     # 適用
       order_modal_close             # 閉じる

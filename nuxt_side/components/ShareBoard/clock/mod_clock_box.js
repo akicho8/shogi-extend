@@ -441,7 +441,7 @@ export const mod_clock_box = {
       return params.cc_behavior_key === "cc_behavior_start"
     },
 
-    // 順番設定で更新を押したあとで呼ぶ
+    // 対局設定で更新を押したあとで呼ぶ
     cc_next_message() {
       let message = null
       if (this.clock_box) {

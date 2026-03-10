@@ -7,7 +7,7 @@ SbAvatarLine.SbMemberOne.is-clickable(
   @click="row_click_handle(info)"
   )
 
-  // 順番設定しているときに表示する番号
+  // 対局設定しているときに表示する番号
   .flex_item.left_tag_or_icon(v-if="SB.debug_mode_p && SB.order_lookup(info)")
     | {{SB.user_name_to_display_turns(info.from_user_name)}}
 

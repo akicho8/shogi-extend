@@ -4,7 +4,7 @@
 // | quiz_delete                 | ホスト→クライアント お題を削除させる                |
 // | quiz_vote_modal_handle      | クライアントが投票する                               |
 // | quiz_voted_index_share           | クライアントが自分の投票の結果を配る                 |
-// | voted_result_to_order_apply | 順番設定画面でホスト側が投票結果を順番設定に適用する |
+// | voted_result_to_order_apply | 対局設定画面でホスト側が投票結果を対局設定に適用する |
 // |-----------------------------+------------------------------------------------------|
 
 // このスコープで this.master_quiz に依存してはいけない
@@ -82,7 +82,7 @@ export const mod_quiz_client = {
       this.quiz_voted_result = this.quiz_voted_result.merge({[params.from_user_name]: params.quiz_voted_index})
     },
 
-    // 順番設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を順番設定に適用する
+    // 対局設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を対局設定に適用する
     voted_result_to_order_apply() {
       GX.assert(GX.present_p(this.order_draft), "GX.present_p(this.order_draft)")
       GX.assert(GX.present_p(this.order_draft.order_flow), "GX.present_p(this.order_draft.order_flow)")

@@ -11,7 +11,7 @@
   .column.is-4
     .panel
       .panel-heading
-        | 順番設定 ({{SB.order_enable_p}})
+        | 対局設定 ({{SB.order_enable_p}})
       template(v-if="SB.order_flow")
         .panel-block {{SB.order_flow.inspect}}
   .column.is-4

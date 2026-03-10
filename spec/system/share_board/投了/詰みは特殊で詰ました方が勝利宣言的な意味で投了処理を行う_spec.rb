@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     stand_piece(:black, :G).click                                                           # ▲は金を持って
     board_place("52").click                                                                 # 頭金で詰ます
     assert_var(:ending_route_key, "er_auto_checkmate")                                      # エンディング = 詰みルート
-    assert_order_off                                                                        # 順番設定は即OFFになっている
+    assert_order_off                                                                        # 対局設定は即OFFになっている
     assert_history_text("詰み")                                                              # 履歴に出る
     assert_selector(".EndingModal")                                                         # モーダルも出る
     assert_selector(".EndingModal .modal-card-head", text: "詰み", exact_text: true)        # モーダルのタイトル

@@ -45,13 +45,13 @@ export const mod_warning = {
         if (this.inconsistency_order_only) {
           message = [
             `対局するなら対局時計を押そう`,
-            `検討するなら順番設定を切ろう`,
+            `検討するなら対局設定を切ろう`,
           ]
         }
       }
       if (message == null) {
         if (this.inconsistency_clock_only) {
-          message = `対局する場合は順番設定しよう` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
+          message = `対局する場合は対局設定しよう` // 本番でここにくることはないのだが同期の不整合でここに来てしまう場合がある
         }
       }
       if (message == null) {
@@ -64,7 +64,7 @@ export const mod_warning = {
       }
       if (message == null) {
         if (this.order_enable_p && this.current_turn_user_name == null) {
-          message = `順番設定で対局者の指定がないので誰も操作できません` // ここにこさせるのはむつかしい
+          message = `対局設定で対局者の指定がないので誰も操作できません` // ここにこさせるのはむつかしい
         }
       }
       if (message == null) {

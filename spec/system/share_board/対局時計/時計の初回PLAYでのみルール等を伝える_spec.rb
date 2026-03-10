@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { room_setup_by_user(:b) }
     window_c { room_setup_by_user(:c) }
     window_b do
-      order_set_on                                 # 順番設定ON
+      order_set_on                                 # 対局設定ON
       clock_start                                  # 対局時計 PLAY
     end
     window_a do
