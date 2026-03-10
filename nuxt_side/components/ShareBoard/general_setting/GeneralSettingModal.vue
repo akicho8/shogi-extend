@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 設定
+      | 個人設定
     b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") デフォルトに戻す
   .modal-card-body
     //- https://buefy.org/documentation/tabs
@@ -19,6 +19,8 @@
         li
           span.has-text-danger ＊
           | がついているものはブラウザに保存します
+        li
+          | ここでの設定はあなただけのものです (他者と共有しない)
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
