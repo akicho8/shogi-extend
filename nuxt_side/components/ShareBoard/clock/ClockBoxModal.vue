@@ -47,7 +47,8 @@
 
         template(v-if="SB.cc_soft_validator_info")
           .cc_soft_validator_container.mt-4.is-unselectable.is_line_break_on
-            b-icon.mx-1(:icon="SB.cc_soft_validator_info.icon_code" :type="SB.cc_soft_validator_info.icon_type")
+            // 本来アイコンは icon や icon-text で囲むのだがサイズを指定されて余計使いにくくなるため直接 i から使う
+            i.mdi.mx-1(:class="SB.cc_soft_validator_info.icon_class")
             .validate_message.is-size-7(v-html="SB.cc_soft_validator_info.message")
 
         pre.is-size-7(v-if="SB.debug_mode_p") {{SB.cc_params}}
