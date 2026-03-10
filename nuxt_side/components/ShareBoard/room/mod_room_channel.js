@@ -1,7 +1,7 @@
 // |-----------------------------------------------------+-----------------------------------------|
 // | Method                                              | 意味                                    |
 // |-----------------------------------------------------+-----------------------------------------|
-// | room_create_if_exist_room_key_in_url()              | URLに合言葉の指定があればそのまま入退室 |
+// | room_create_if_exist_room_key_in_url()              | URLに合言葉の指定があればそのまま入室 |
 // | room_create_from_modal(new_room_key, new_user_name) | モーダル内で入力したものを渡す          |
 // | room_create()                                       | 入室                                    |
 // | room_destroy()                                      | 退室                                    |
@@ -27,7 +27,7 @@ export const mod_room_channel = {
     this.room_destroy()
   },
   methods: {
-    // URLに合言葉の指定があればそのまま入退室
+    // URLに合言葉の指定があればそのまま入室
     async room_create_if_exist_room_key_in_url() {
       // URLに合言葉がない場合は何もしない
       if (!this.url_room_key_exist_p) {
@@ -50,7 +50,7 @@ export const mod_room_channel = {
         return
       }
 
-      // 合言葉と名前は問題ないので入退室
+      // 合言葉と名前は問題ないので入室
       await this.room_restore_call()
       this.room_create()
     },

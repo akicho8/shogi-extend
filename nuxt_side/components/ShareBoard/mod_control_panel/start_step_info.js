@@ -5,7 +5,7 @@ export class StartStepInfo extends ApplicationMemoryRecord {
     return [
       {
         key: "gate_modal_open_handle",
-        name: "入退室",
+        name: "入室",
         icon: "mdi-numeric-1-circle-outline",
         todo_p: "step1_todo_p",
         done_p: "step1_done_p",
