@@ -18,7 +18,9 @@ export const mod_xhistory_action = {
     },
     async xhistory_action_broadcasted(params) {
       this.xhistory_add(params)
-      this.ac_log({subject: "履歴追加", body: `「${params.label}」を受信`})
+      if (this.debug_mode_p) {
+        this.ac_log({subject: "履歴追加", body: `「${params.label}」を受信`})
+      }
       {
         const toast_options = {
           type: params.label_type ?? "is-primary",
