@@ -20,7 +20,7 @@ class EmojiInfo
     { key: ":OK:",           raw: "🆗", },
     { key: ":CHECK:",        raw: "✅", },
     { key: ":X:",            raw: "❌", },
-    { key: ":対局設定:",     raw: "🎎", },
+    { key: ":ルール設定:",     raw: "🎎", },
     { key: ":対局時計:",     raw: "⏱", },
     { key: ":成功:",         raw: "🟢", },
     { key: ":失敗:",         raw: "🔴", },

@@ -8,7 +8,7 @@
       template(v-if="SB.resend_suggest_p")
         | {{SB.user_call_name(SB.resend_next_user_name)}}の反応がないので再送してください
       template(v-else)
-        | {{SB.user_call_name(SB.resend_next_user_name)}}が抜けている場合は対局を中断後、対局設定から外して、対局時計を再開してください
+        | {{SB.user_call_name(SB.resend_next_user_name)}}が抜けている場合は対局を中断後、ルール設定から外して、対局時計を再開してください
     template(v-if="SB.debug_mode_p")
       b-button.resend_next_member_delete(size="is-small" @click="SB.resend_next_member_delete" type="is-danger")
         | {{SB.user_call_name(SB.resend_next_user_name)}}を順番から外す

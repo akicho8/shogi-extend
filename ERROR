@@ -16,16 +16,16 @@ rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:55
 rspec ./spec/system/share_board/同期_後から入室すると古参からさまざまな情報を受け取って同期する_spec.rb:31 # {:type=>:system, :share_board_spec=>true} 時計 works
 rspec ./spec/system/share_board/対局時計_基本_spec.rb:8 # 対局時計_基本 works
 rspec ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
-rspec ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb:19 # {:type=>:system, :share_board_spec=>true} 無効だと対局設定は解除されていない
-rspec ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb:24 # {:type=>:system, :share_board_spec=>true} 有効だと対局設定は解除されている
-rspec ./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb:21 # {:type=>:system, :share_board_spec=>true} 無効だと対局設定は解除されていない
-rspec ./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb:26 # {:type=>:system, :share_board_spec=>true} 有効だと対局設定は解除されている
-rspec ./spec/system/share_board/対局設定_シャッフル_spec.rb:16 # {:type=>:system, :share_board_spec=>true} 全体シャッフル
-rspec ./spec/system/share_board/対局設定_シャッフル_spec.rb:24 # {:type=>:system, :share_board_spec=>true} チーム内シャッフル
-rspec ./spec/system/share_board/対局設定_初めて対局設定をすると対局者になっている_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
-rspec ./spec/system/share_board/対局設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb:17 # {:type=>:system, :share_board_spec=>true} 無効
-rspec ./spec/system/share_board/対局設定_補助機能_手番通知_spec.rb:4 # 対局設定_補助機能_手番通知 works
-rspec ./spec/system/share_board/対局設定_補助機能_振り駒_spec.rb:22 # {:type=>:system, :share_board_spec=>true} 2回反転して元に戻る
-rspec ./spec/system/share_board/対局設定_補助機能_振り駒_spec.rb:27 # {:type=>:system, :share_board_spec=>true} 3回反転して逆になる
-rspec ./spec/system/share_board/対局設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb:4 # 対局設定_設定後は手番通知されるOFFにすると手番通知されない works
+rspec ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb:19 # {:type=>:system, :share_board_spec=>true} 無効だとルール設定は解除されていない
+rspec ./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb:24 # {:type=>:system, :share_board_spec=>true} 有効だとルール設定は解除されている
+rspec ./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb:21 # {:type=>:system, :share_board_spec=>true} 無効だとルール設定は解除されていない
+rspec ./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb:26 # {:type=>:system, :share_board_spec=>true} 有効だとルール設定は解除されている
+rspec ./spec/system/share_board/ルール設定_シャッフル_spec.rb:16 # {:type=>:system, :share_board_spec=>true} 全体シャッフル
+rspec ./spec/system/share_board/ルール設定_シャッフル_spec.rb:24 # {:type=>:system, :share_board_spec=>true} チーム内シャッフル
+rspec ./spec/system/share_board/ルール設定_初めてルール設定をすると対局者になっている_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/ルール設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb:17 # {:type=>:system, :share_board_spec=>true} 無効
+rspec ./spec/system/share_board/ルール設定_補助機能_手番通知_spec.rb:4 # ルール設定_補助機能_手番通知 works
+rspec ./spec/system/share_board/ルール設定_補助機能_振り駒_spec.rb:22 # {:type=>:system, :share_board_spec=>true} 2回反転して元に戻る
+rspec ./spec/system/share_board/ルール設定_補助機能_振り駒_spec.rb:27 # {:type=>:system, :share_board_spec=>true} 3回反転して逆になる
+rspec ./spec/system/share_board/ルール設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb:4 # ルール設定_設定後は手番通知されるOFFにすると手番通知されない works
 rspec ./spec/system/swars/show_spec.rb:37 # 詳細 表示・コピー・ダウンロード 棋譜コピー

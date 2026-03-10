@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-# 対局設定を適用する引数で起動したため os_setup 内の sp_viewpoint_switch_to_my_location だけで視点が反映される
+# ルール設定を適用する引数で起動したため os_setup 内の sp_viewpoint_switch_to_my_location だけで視点が反映される
 # order_copy_from_bc 内のテストにはなっていない
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(b_or_w, user_name)

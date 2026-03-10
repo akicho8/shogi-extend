@@ -95,7 +95,7 @@ export const mod_clock_box_modal = {
       }
 
       // // いったん初期配置に戻すか聞く
-      // // 二歩で対局が終わって、再度対局設定と時計を指定して再開するケースもあるため、これはない方がよい
+      // // 二歩で対局が終わって、再度ルール設定と時計を指定して再開するケースもあるため、これはない方がよい
       // if (this.current_turn >= 1 && this.AppConfig.CLOCK_START_CONFIRM) {
       //   this.cc_play_confirim({
       //     onCancel: () => {
@@ -128,7 +128,7 @@ export const mod_clock_box_modal = {
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
       // if (this.ac_room && this.order_enable_p) {
-      //   this.$GX.delay_block(2.5, () => this.toast_primary("続けて検討する場合は対局設定を切ろう"))
+      //   this.$GX.delay_block(2.5, () => this.toast_primary("続けて検討する場合はルール設定を切ろう"))
       // }
     },
     cbm_stop_handle() {
@@ -180,14 +180,14 @@ export const mod_clock_box_modal = {
     cc_play_validate_message() {
       if (this.ac_room) {
         if (!this.order_enable_p) {
-          return "先に対局設定をしよう"
+          return "先にルール設定をしよう"
         }
         if (this.order_flat_uniq_users_count === 0) {
-          return "先に対局設定で対局者を指定しよう"
+          return "先にルール設定で対局者を指定しよう"
         }
       }
     },
-    // cc_order_off_p() { return this.ac_room && !this.order_enable_p }, // 対局設定を有効にしてないのに時計を開始しようとしている？
-    // cc_order_users_none_p() { return this.ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // 対局設定で誰も設定されていない
+    // cc_order_off_p() { return this.ac_room && !this.order_enable_p }, // ルール設定を有効にしてないのに時計を開始しようとしている？
+    // cc_order_users_none_p() { return this.ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // ルール設定で誰も設定されていない
   },
 }

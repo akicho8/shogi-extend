@@ -201,7 +201,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "対局設定" do
+  describe "ルール設定" do
     before do
       subscribe(room_key: room_key)
     end

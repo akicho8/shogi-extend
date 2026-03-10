@@ -5,10 +5,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { room_setup_by_user(:a) }
     window_b { room_setup_by_user(:b) }
     window_b do
-      order_modal_open                                   # 「対局設定」モーダルを開く (まだ無効の状態)
+      order_modal_open                                   # 「ルール設定」モーダルを開く (まだ無効の状態)
     end
     window_a do
-      order_modal_open                                   # 「対局設定」モーダルを開く
+      order_modal_open                                   # 「ルール設定」モーダルを開く
       os_switch_toggle                                # 有効スイッチをクリック
       os_submit_button_click                          # 確定
       order_modal_close                                  # 閉じる (ヘッダーに置いている)

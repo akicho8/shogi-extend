@@ -68,7 +68,7 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main) {
-          message = "検討する場合は対局設定も解除しよう"
+          message = "検討する場合はルール設定も解除しよう"
           // icon = "play"
         }
       }
@@ -103,7 +103,7 @@ export const mod_otasuke = {
             "時間切れになっても続行できるよ",
             "チャットは観戦者だけに向けて発言できるよ",
             "履歴にはその時点までの棋譜が含まれているよ",
-            // "二歩が心配なときは対局設定で反則ブロックにしよう",
+            // "二歩が心配なときはルール設定で反則ブロックにしよう",
             "「投了」すると「本譜」が出現するよ",
           ]
           message = null
@@ -133,7 +133,7 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length >= 2) {
-          message = "対局設定待ち"
+          message = "ルール設定待ち"
           css_class = "otasuke_blink"
         }
       }
@@ -144,7 +144,7 @@ export const mod_otasuke = {
       // }
       // if (message == null) {
       //   if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main) {
-      //     message = "検討する場合は対局設定も解除しよう"
+      //     message = "検討する場合はルール設定も解除しよう"
       //     // icon = "play"
       //   }
       // }

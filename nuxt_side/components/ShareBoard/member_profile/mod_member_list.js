@@ -7,7 +7,7 @@ export const mod_member_list = {
     // SbMemberList の1行のクラスに使っている
     member_info_class(e) {
       return {
-        is_standby:                this.member_is_standby(e),                // 初期状態(対局設定をしていない)
+        is_standby:                this.member_is_standby(e),                // 初期状態(ルール設定をしていない)
         is_look_away:              this.member_is_look_away(e),             // よそ見中
         is_heartbeat_lost:         this.member_is_heartbeat_lost(e),            // 霊圧が消えかけ
         is_battle_current_player: this.member_is_battle_current_player(e), // 手番の人
@@ -16,7 +16,7 @@ export const mod_member_list = {
         is_self:                  this.member_is_self(e),                  // 自分
       }
     },
-    member_is_standby(e)                { return !this.order_enable_p                                                     }, // 初期状態(対局設定をしていない)
+    member_is_standby(e)                { return !this.order_enable_p                                                     }, // 初期状態(ルール設定をしていない)
     member_is_look_away(e)             { return this.MEMBER_IS_LOOK_AWAY || !e.window_active_p },
     member_is_battle_current_player(e) { return this.order_lookup(e) && this.current_turn_user_name === e.from_user_name }, // 手番の人
     member_is_battle_other_player(e)   { return this.order_lookup(e) && this.current_turn_user_name !== e.from_user_name }, // 手番待ちの人

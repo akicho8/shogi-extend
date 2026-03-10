@@ -110,7 +110,7 @@ module ShareBoard
 
     def order_switch_share(data)
       message = "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布"
-      track(data, subject: "対局設定", body: message, emoji: ":対局設定:")
+      track(data, subject: "ルール設定", body: message, emoji: ":ルール設定:")
       broadcast(:order_switch_share_broadcasted, data)
     end
 
@@ -120,7 +120,7 @@ module ShareBoard
       # user_names = data["order_flow"]["order_operation"] # 動的にかわる
       config = ["foul_mode_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
-      track(data, subject: "対局設定", body: message, emoji: ":対局設定:")
+      track(data, subject: "ルール設定", body: message, emoji: ":ルール設定:")
       broadcast(:order_draft_publish_broadcasted, data)
     end
 
