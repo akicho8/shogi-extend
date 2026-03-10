@@ -2,8 +2,8 @@ import { general_setting_modal } from "./general_setting_modal.js"
 
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { VolumeClockUserScaleInfo        } from "../models/volume_clock_user_scale_info.js"
-import { VolumePieceUserScaleInfo      } from "../models/volume_piece_user_scale_info.js"
+import { VolumeClockUserScaleInfo  } from "../models/volume_clock_user_scale_info.js"
+import { VolumePieceUserScaleInfo  } from "../models/volume_piece_user_scale_info.js"
 import { VolumeTalkUserScaleInfo   } from "../models/volume_talk_user_scale_info.js"
 import { VolumeCommonUserScaleInfo } from "../models/volume_common_user_scale_info.js"
 
@@ -12,13 +12,15 @@ import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
 import { VibrationModeInfo    } from "../models/vibration_mode_info.js"
 import { NextTurnCallInfo     } from "../models/next_turn_call_info.js"
-import { ChatTalkBehaviorInfo     } from "../models/chat_talk_behavior_info.js"
+import { ChatTalkBehaviorInfo } from "../models/chat_talk_behavior_info.js"
 import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
 import { LegalInfo            } from "../models/legal_info.js"
-import { SettingRootInfo  } from "./setting_root_info.js"
+import { SettingRootInfo      } from "./setting_root_info.js"
 
 export const mod_general_setting = {
-  mixins: [general_setting_modal],
+  mixins: [
+    general_setting_modal,
+  ],
   methods: {
     // デフォルトに戻すボタン
     general_setting_reset_handle() {
@@ -28,7 +30,8 @@ export const mod_general_setting = {
         info.tab_model.values.forEach(e => {
           const param_info = this.ParamInfo.fetch(e.key)
           const value = param_info.default_for(this)
-          if (this.$data[e.key] != value) {
+          if (this.$data[e.key] === value) {
+          } else {
             this.$data[e.key] = value
             count += 1
           }
@@ -38,37 +41,37 @@ export const mod_general_setting = {
     },
   },
   computed: {
-    VolumeCommonUserScaleInfo() { return VolumeCommonUserScaleInfo },
-    VolumeTalkUserScaleInfo()   { return VolumeTalkUserScaleInfo   },
-    VolumeClockUserScaleInfo()  { return VolumeClockUserScaleInfo  },
-    VolumePieceUserScaleInfo()     { return VolumePieceUserScaleInfo     },
+    VolumeCommonUserScaleInfo() { return VolumeCommonUserScaleInfo                                    },
+    VolumeTalkUserScaleInfo()   { return VolumeTalkUserScaleInfo                                      },
+    VolumeClockUserScaleInfo()  { return VolumeClockUserScaleInfo                                     },
+    VolumePieceUserScaleInfo()  { return VolumePieceUserScaleInfo                                     },
 
-    SettingRootInfo()     { return SettingRootInfo                                       },
-    setting_root_info()   { return this.SettingRootInfo.fetch(this.setting_category_key) },
+    SettingRootInfo()           { return SettingRootInfo                                              },
+    setting_root_info()         { return this.SettingRootInfo.fetch(this.setting_category_key)        },
 
-    YomiageModeInfo()         { return YomiageModeInfo                                           },
-    yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },
+    YomiageModeInfo()           { return YomiageModeInfo                                              },
+    yomiage_mode_info()         { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)            },
 
-    AiModeInfo()              { return AiModeInfo                                                },
-    ai_mode_info()            { return this.AiModeInfo.fetch(this.ai_mode_key)                   },
+    AiModeInfo()                { return AiModeInfo                                                   },
+    ai_mode_info()              { return this.AiModeInfo.fetch(this.ai_mode_key)                      },
 
-    ByoyomiModeInfo()         { return ByoyomiModeInfo                                           },
-    byoyomi_mode_info()       { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)         },
+    ByoyomiModeInfo()           { return ByoyomiModeInfo                                              },
+    byoyomi_mode_info()         { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)            },
 
-    VibrationModeInfo()       { return VibrationModeInfo                                         },
-    vibration_mode_info()     { return this.VibrationModeInfo.fetch(this.vibration_mode_key)     },
+    VibrationModeInfo()         { return VibrationModeInfo                                            },
+    vibration_mode_info()       { return this.VibrationModeInfo.fetch(this.vibration_mode_key)        },
 
-    NextTurnCallInfo()        { return NextTurnCallInfo                                          },
-    next_turn_call_info()     { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)      },
+    NextTurnCallInfo()          { return NextTurnCallInfo                                             },
+    next_turn_call_info()       { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)         },
 
-    ChatTalkBehaviorInfo()        { return ChatTalkBehaviorInfo                                          },
-    chat_talk_behavior_info()     { return this.ChatTalkBehaviorInfo.fetch(this.chat_talk_behavior_key)      },
+    ChatTalkBehaviorInfo()      { return ChatTalkBehaviorInfo                                         },
+    chat_talk_behavior_info()   { return this.ChatTalkBehaviorInfo.fetch(this.chat_talk_behavior_key) },
 
-    LiftCancelActionInfo()    { return LiftCancelActionInfo                                      },
-    lift_cancel_action_info() { return this.LiftCancelActionInfo.fetch(this.lift_cancel_action)  },
+    LiftCancelActionInfo()      { return LiftCancelActionInfo                                         },
+    lift_cancel_action_info()   { return this.LiftCancelActionInfo.fetch(this.lift_cancel_action)     },
 
-    LegalInfo()               { return LegalInfo                                                 },
-    legal_info()              { return this.LegalInfo.fetch(this.legal_key)                      },
-    legal_strict_p()          { return this.legal_info.key === "strict"                          },
+    LegalInfo()                 { return LegalInfo                                                    },
+    legal_info()                { return this.LegalInfo.fetch(this.legal_key)                         },
+    legal_strict_p()            { return this.legal_info.key === "strict"                             },
   },
 }
