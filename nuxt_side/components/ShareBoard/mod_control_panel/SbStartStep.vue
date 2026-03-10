@@ -12,8 +12,11 @@
         @click="() => SB[e.key]()"
         )
         XemojiWrap(:str="e.icon")
-        .button_label.is-hidden-mobile {{e.name}}
-        .button_label.is-hidden-tablet {{e.mobile_name ?? e.name}}
+        template(v-if="true")
+          .button_label {{e.name}}
+        template(v-if="false")
+          .button_label.is-hidden-mobile {{e.name}}
+          .button_label.is-hidden-tablet {{e.mobile_name ?? e.name}}
         template(v-if="SB[e.done_p]")
           XemojiWrap.right_icon(str="✅")
 </template>
