@@ -9,7 +9,7 @@
   .modal-card-body
     template(v-if="$GX.present_p(SB.received_quiz.subject)")
       .subject.has-text-centered
-        | {{SB.received_quiz.subject}}
+        | {{$string.hankaku_kana_format(SB.received_quiz.subject)}}
     template(v-if="$GX.present_p($GX.ary_compact_blank(SB.received_quiz.items))")
       .items
         template(v-for="(e, i) in SB.received_quiz.items")
@@ -18,7 +18,7 @@
             :class="vote_select_item_class(i)"
             v-if="$GX.present_p(e)"
             )
-            | {{e}}
+            | {{$string.hankaku_kana_format(e)}}
     template(v-else)
       .has-text-centered
         | 選択肢がありません

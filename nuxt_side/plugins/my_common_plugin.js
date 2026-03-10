@@ -4,11 +4,12 @@
 // サーバーサイドでメモリリークが発生します。
 
 import { TimeHelper } from "@/components/models/time_helper.js"
+import { StringHelper } from "@/components/models/string_helper.js"
 import { DebugUtil } from "@/components/models/debug_util.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
 import { GX } from "@/components/models/gx.js"
-import { marked } from 'marked'
+import { marked } from "marked"
 import isMobile from "ismobilejs"
 
 // $root とコンテキストの挿入
@@ -16,9 +17,10 @@ import isMobile from "ismobilejs"
 export default ({app}, inject) => {
   inject("GX", GX)
   inject("time", TimeHelper)
+  inject("string", StringHelper)
   inject("debug", DebugUtil)
   inject("KifuVo", KifuVo)
   inject("PiyoShogiTypeCurrent", PiyoShogiTypeCurrent)
-  inject('marked', marked)
+  inject("marked", marked)
   inject("user_agent_info", process.client ? isMobile(navigator) : isMobile({}))
 }

@@ -136,6 +136,7 @@ export class HandleNameValidator {
   // private
 
   get normalized_name() {
+    // https://github.com/niwaringo/moji
     let moji = Moji(this.source)
     moji = moji.convert("HK", "ZK") // 半角カナ     → 全角カナ
     moji = moji.convert("KK", "HG") // 全角カナ     → ひらがな
