@@ -18,9 +18,9 @@
       ul
         li
           span.has-text-danger ＊
-          | がついているものはブラウザに保存します
+          | がついているものはブラウザに保存する
         li
-          | ここでの設定はあなただけのものです (他者と共有しない)
+          | ここでの設定はあなただけのもの (他者と共有しない)
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
