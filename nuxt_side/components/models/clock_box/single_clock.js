@@ -19,6 +19,36 @@ export class SingleClock {
     return dayjs().startOf("year").set("seconds", v).format(format)
   }
 
+  static time_format_human(sec) {
+    GX.assert_kind_of_integer(sec)
+    const [h, rest] = GX.idivmod(sec, MIN_PER_HOUR * SEC_PER_MIN)
+    const [m, s] = GX.idivmod(rest, SEC_PER_MIN)
+    return [
+      [h, "時間"],
+      [m, "分"],
+      [s, "秒"]
+    ].reduce((acc, [val, unit]) => val > 0 ? acc + val + unit : acc, "")
+  }
+
+  static cc_battle_start_message(attrs) {
+    let acc = []
+    // acc += this.location.human_color_name
+    // acc += "で"
+    const av = [
+      { label: "持ち時間",  sec: attrs.initial_main_sec  },
+      { label: "秒読み",    sec: attrs.initial_read_sec  },
+      { label: "考慮時間",  sec: attrs.initial_extra_sec },
+      { label: "1手毎加算", sec: attrs.every_plus        },
+    ]
+    av.forEach(e => {
+      if (e["sec"] > 0) {
+        acc.push(e["label"] + this.time_format_human(e["sec"]))
+      }
+    })
+    // acc += "です"
+    return acc.join(" ")
+  }
+
   constructor(base, index) {
     this.base  = base
     this.index = index
@@ -190,6 +220,25 @@ export class SingleClock {
       a.push("1手毎加算秒")
     }
     return a.join("と")
+  }
+
+  get initial_values() {
+    return [ this.initial_main_sec, this.initial_read_sec, this.initial_extra_sec, this.every_plus ]
+  }
+
+  get initial_values_hash() {
+    const str = this.initial_values.join("|")
+    return GX.str_to_md5(str)
+  }
+
+  // "持ち時間X分"
+  get cc_battle_start_message() {
+    return this.constructor.cc_battle_start_message(this)
+  }
+
+  // "黒持ち時間X分"
+  get cc_battle_start_message2() {
+    return [this.location.human_color_name, ": ", this.cc_battle_start_message].join("")
   }
 
   get button_type() {

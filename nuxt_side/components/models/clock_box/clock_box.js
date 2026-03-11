@@ -2,6 +2,7 @@ import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
+import _ from "lodash"
 
 const HUMAN_STATUS_LABELS = {
   play:  "動作中",
@@ -307,6 +308,23 @@ export class ClockBox {
       v = "stop"
     }
     return v
+  }
+
+  get same_rule_p() {
+    const av = this.single_clocks.map(e => e.initial_values_hash)
+    return _.uniq(av).length === 1
+  }
+
+  get cc_battle_start_message() {
+    if (this.same_rule_p) {
+      const str = this.single_clocks[0].cc_battle_start_message
+      // return `両者ともに${str}です`
+      return `${str}`
+    } else {
+      const str = this.single_clocks.map(e => e.cc_battle_start_message2).join(", ")
+      // return `${str}です`
+      return `${str}`
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////// for serialize

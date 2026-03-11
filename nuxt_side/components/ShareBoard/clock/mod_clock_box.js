@@ -382,10 +382,13 @@ export const mod_clock_box = {
       const current_turn_user_name = this.current_turn_user_name
 
       await this.toast_primary(this.__cc_receive_message(params))        // 誰が設定したか伝える
-      await this.toast_primary(this.foul_mode_info.battle_start_message) // 反則モードについて伝える
+      if (this.clock_box) {
+        await this.toast_primary(this.clock_box.cc_battle_start_message) // 時間設定を伝える
+      }
       if (this.many_vs_many_p) {                                         // 3人以上で対局しているなら
         await this.toast_primary(`手番は${this.change_per}手ごとに交代します`) // 何手毎交代か伝える
       }
+      await this.toast_primary(this.foul_mode_info.battle_start_message) // 反則モードについて伝える
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (current_turn_user_name) {
         await this.toast_primary(`それでは${this.user_call_name(current_turn_user_name)}から指してください`)
