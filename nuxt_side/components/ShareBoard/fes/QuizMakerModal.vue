@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | お題メーカー
+      | お題作成
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.debug_mode_p")
         | (ID:{{SB.master_quiz.unique_code}})
     a.quiz_source_random_handle.is-unselectable(@click="quiz_source_random_handle")

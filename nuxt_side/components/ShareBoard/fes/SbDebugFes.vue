@@ -7,7 +7,7 @@
       a.panel-block(href="?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&autoexec=client_vote_sample") 確認用の環境に変更する
       a.panel-block(@click="SB.quiz_source_clear()") お題初期化
       a.panel-block(@click="SB.quiz_source_sample()") お題サンプル投入
-      a.panel-block(@click="SB.quiz_maker_handle()") お題メーカー
+      a.panel-block(@click="SB.quiz_maker_handle()") お題作成
       a.panel-block(@click="SB.quiz_share(SB.Quiz.create({subject: 's', items: ['a', 'b']}))") お題配布
       a.panel-block(@click="SB.quiz_delete()") お題の削除
       a.panel-block(@click="SB.order_modal_open_handle()") ルール設定

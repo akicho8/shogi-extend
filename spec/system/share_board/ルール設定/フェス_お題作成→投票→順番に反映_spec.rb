@@ -17,7 +17,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       order_modal_open                                           # 「ルール設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(".tabs .order_tab_fes").click
-      find(:button, text: "お題メーカー", exact_text: true).click # お題メーカー起動
+      find(:button, text: "お題作成", exact_text: true).click # お題作成起動
       within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入
       within(".quiz_left")    { find(:fillable_field).set("(quiz_left)")   } # 選択肢1
       within(".quiz_right")   { find(:fillable_field).set("(quiz_right)")   } # 選択肢2

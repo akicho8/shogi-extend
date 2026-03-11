@@ -49,7 +49,7 @@
           | 投票でチーム分けするなら
         .buttons.is-centered.mb-0.mt-2
           b-button.mb-0(size="is-small" @click="quiz_maker_handle")
-            | お題メーカー
+            | お題作成
           b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.quiz_received_p")
             | 結果を反映する({{SB.quiz_voted_result.count}}/{{SB.room_user_names.length}})
           b-button.mb-0(size="is-small" type="is-danger" @click="quiz_delete_handle" v-if="SB.quiz_received_p && SB.debug_mode_p")
@@ -342,7 +342,7 @@ export default {
           hv = {
             icon_code: "alert-circle-outline",
             icon_type: "is-danger",
-            message: "対局する人を☗と☖に放り込もう",
+            message: "対局者を☗と☖に放り込もう",
           }
         }
       }
