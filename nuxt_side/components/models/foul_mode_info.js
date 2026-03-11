@@ -20,7 +20,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       {
         key: "lose",
         name: "したら負け",
-        message: "正統なルールです (推奨)",
+        message: "正統な紳士ルール (推奨)",
         battle_start_message: "反則は即負けの紳士ルールです",
         type: "is-primary",
         sp_illegal_validate: true,
@@ -31,8 +31,8 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "takeback",
         name: "待ったできる",
-        message: "接待または指導対局向け",
-        battle_start_message: "待ったできる接待用ルールです",
+        message: "勝手に負けてもらっては困る相手と指す場合に用いる",
+        battle_start_message: "反則をしても待ったできる接待用ルールです",
         type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
@@ -42,8 +42,8 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "ignore",
         name: "審判不在モード",
-        message: "システムは反則のチェックを行いません。指し手の正当性を保証できないため、通常の対局には向きません。",
-        battle_start_message: "反則には関与しません",
+        message: "システムは反則のチェックを行わない。指し手の正当性を保証できないため、通常の対局には向かない。",
+        battle_start_message: "審判はいないので反則は各自で判断してください",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
