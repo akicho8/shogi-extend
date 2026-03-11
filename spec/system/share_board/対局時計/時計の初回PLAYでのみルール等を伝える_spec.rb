@@ -6,13 +6,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { room_setup_by_user(:b) }
     window_c { room_setup_by_user(:c) }
     window_b do
-      order_set_on                                 # ルール設定ON
-      clock_start                                  # 対局時計 PLAY
+      order_set_on                                   # ルール設定ON
+      clock_start                                    # 対局時計 PLAY
     end
     window_a do
-      assert_text("aから開始をaだけに通知") # 最初はaさんから開始
+      assert_text("aから開始をaだけに通知")          # 最初はaさんから開始
+      assert_text("秒読み30秒 考慮時間1分")          # 最初に時間を伝える
+      assert_text("手番は1手ごとに交代します")       # 3人以上で対局しているときだけ伝える
       assert_text("反則は即負けの紳士ルールです")
-      assert_text("手番は1手ごとに交代します")  # 3人以上で対局しているときだけ伝える
       assert_text("それではaさんから指してください")
     end
     window_b do
@@ -28,9 +29,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       clock_start
     end
     window_a do
+      assert_text("秒読み30秒 考慮時間1分")          # 最初に時間を伝える
+      assert_no_text("手番は1手ごとに交代します")    # 2人以上で対局しているのでこの通知は無い
       assert_text("反則は即負けの紳士ルールです")
-      assert_no_text("手番は1手ごとに交代します") # 2人以上で対局しているのでこの通知は無い
-      assert_text("それではaさんから指してください")
     end
   end
 end
