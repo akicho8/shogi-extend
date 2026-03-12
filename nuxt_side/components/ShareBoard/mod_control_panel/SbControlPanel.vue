@@ -47,20 +47,22 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
           b-menu-item.is_active_unset(__unuse__icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(__unuse__icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_open_handle")
-          b-menu-item.is_active_unset(__unuse__icon="cat"            label="アバター設定"         @click="SB.avatar_input_modal_open_handle")
-          b-menu-item.is_active_unset(__unuse__icon="pencil-outline" label="タイトル変更"         @click="SB.title_edit_handle")
+          b-menu-item.is_active_unset(__unuse__icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_open_handle"  v-if="SB.debug_mode_p")
+          b-menu-item.is_active_unset(__unuse__icon="cat"            label="アバター設定"         @click="SB.avatar_input_modal_open_handle" v-if="SB.debug_mode_p")
+          b-menu-item.is_active_unset(__unuse__icon="pencil-outline" label="タイトル変更"         @click="SB.title_edit_handle"              v-if="SB.debug_mode_p")
 
           b-menu-item.is_active_unset(__unuse__icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
           //- b-menu-item.is_active_unset(__unuse__icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
           b-menu-item.is_active_unset(__unuse__icon="help-circle-outline" label="使い方"                      @click="SB.general_help_modal_open_handle")
           b-menu-item.is_active_unset.is-hidden-mobile(__unuse__icon="keyboard-outline" label="ショートカット"                      @click="SB.shortcut_modal_open_handle")
-          b-menu-item.is_active_unset(__unuse__icon="cog-outline" label="個人設定"                    @click="SB.general_setting_modal_open_handle")
+          b-menu-item.is_active_unset(__unuse__icon="cog-outline" label="設定"                    @click="SB.general_setting_modal_open_handle")
           b-menu-item.is_active_unset(__unuse__icon="bug-outline" label="デバッグ用ログ"              @click="SB.tl_modal_open_handle" v-if="development_p")
           b-menu-item.is_active_unset(__unuse__icon="page-first" label="URLを開いたときの局面に戻す" @click="SB.reset_handle" :disabled="$GX.blank_p(SB.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(__unuse__icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sfx_click()" v-if="development_p")
+
       AppearanceUi.mt-5
-      .box.mt-5
+
+      .box.mt-5(v-if="SB.debug_mode_p")
         b-field(label="音が出なくなったら？")
           b-button(@click="SB.audio_unlock_all_with_rooster") 音復活
 

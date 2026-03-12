@@ -5,7 +5,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_app
 
     sidebar_open
-    menu_item_click("個人設定")           # モーダルを開く
+    menu_item_click("設定")           # モーダルを開く
     find(".setting_tab_ui").click         # 「その他」タブ
     find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
