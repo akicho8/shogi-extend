@@ -5,6 +5,7 @@
       | {{SB.latest_illegal_name}}
   .modal-card-body
     CustomShogiPlayer.CustomShogiPlayerInsideModal(
+      v-if="SB.debug_mode_p"
       sp_mode="view"
       :sp_body="SB.illegal_params.sfen"
       :sp_turn="SB.illegal_params.turn"
@@ -15,8 +16,8 @@
     )
 
     .resign_message
-      p 本来であれば{{SB.user_call_name(SB.latest_illegal_user_name)}}の反則負けです
-      p 潔く投了しますか？
+      p {{SB.user_call_name(SB.latest_illegal_user_name)}}の反則負けです
+      p いさぎよく投了しますか？
 
     .box.is-shadowless.has-background-light.is-size-7(v-if="SB.illegal_user_info.modal_body_message" v-text="SB.illegal_user_info.modal_body_message(SB)")
 

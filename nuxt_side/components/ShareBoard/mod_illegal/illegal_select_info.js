@@ -9,6 +9,7 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
         name: "投了する",
         call: (context, params) => {
           // 全員の局面を反則局面に変更する
+          // illegal_takeback_modal_start_broadcasted のところですでに反映しているためなくてもよい
           context.current_sfen_set(context.illegal_params)
 
           // 「投了」を押した人だけが投了する
@@ -23,6 +24,11 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
         call: (context, params) => {
           // 全員にメッセージを表示する
           context.toast_primary(params.takebacked_message)
+
+          // 全員が自分で1手戻す
+          if (context.current_turn > 0) {
+            context.current_turn -= 1
+          }
 
           // 「待った」を押した人だけ時計を再開する
           if (context.received_from_self(params)) {
