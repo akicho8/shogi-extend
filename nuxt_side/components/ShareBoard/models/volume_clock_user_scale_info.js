@@ -4,7 +4,7 @@ import { VolumeCop } from "@/components/models/volume_cop.js"
 
 export class VolumeClockUserScaleInfo extends ApplicationMemoryRecord {
   static field_label      = "秒読み"
-  static field_message    = "うっかりの切れ負けが多発するため無音にするのはおすすめしません。"
+  static field_message    = "切れ負けが多発するため無音にするのはおすすめしません。"
   static input_type       = "slider"
   static min              = VolumeCop.CONFIG.user_scale_min
   static max              = VolumeCop.CONFIG.user_scale_max

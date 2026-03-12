@@ -4,7 +4,7 @@ import { VolumeCop } from "@/components/models/volume_cop.js"
 
 export class VolumePieceUserScaleInfo extends ApplicationMemoryRecord {
   static field_label   = "駒音"
-  static field_message = "将棋は静かに指すべき派は下げましょう。配信やゲーム感覚でやるなら大きめにしましょう。"
+  static field_message = "静かに指すべき派は下げよう。格ゲー感覚でやるなら大きめにしよう。"
   static input_type    = "slider"
   static min           = VolumeCop.CONFIG.user_scale_min
   static max           = VolumeCop.CONFIG.user_scale_max
