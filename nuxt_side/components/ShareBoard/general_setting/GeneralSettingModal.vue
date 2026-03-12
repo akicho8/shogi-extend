@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 個人設定
+      | 設定
     b-button.is-marginless(size="is-small" @click="SB.general_setting_reset_handle") デフォルトに戻す
   .modal-card-body
     //- https://buefy.org/documentation/tabs
@@ -13,14 +13,14 @@
       .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_root_info.key")
         template(v-for="item in SB.setting_root_info.tab_model.values")
           .column(v-if="item.showable_p(SB)" :class="item.column_class || 'is-12-tablet'")
-            SimpleRadioButtonWrapper(:item="item")
-    .notification.is-warning.is-light.is-size-7.mt-3
-      ul
-        li
-          span.has-text-danger ＊
-          | がついているものはブラウザに保存する
-        li
-          | ここでの設定はあなただけのもの (他者と共有しない)
+            component(:is="item.component_name" :item="item")
+    //- .notification.is-warning.is-light.is-size-7.mt-3
+    //-   ul
+    //-     li
+    //-       span.has-text-danger ＊
+    //-       | がついているものはブラウザに保存する
+    //-     li
+    //-       | ここでの設定はあなただけのもの (他者と共有しない)
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
@@ -97,9 +97,17 @@ export default {
       margin-top: 1.25rem
 
   .b-slider
+    margin-top: 0.5rem
     margin-bottom: 0
   .help
     margin-top: 0.5rem
+
+  // .label
+  //   margin-bottom: 0
+
+  // .SimpleRadioButton:has(.b-slider) > .label
+  //   color: red
+  //   margin-bottom: 0
 
 .STAGE-development
   .GeneralSettingModal

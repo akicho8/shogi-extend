@@ -28,12 +28,14 @@ export const mod_general_setting = {
       let count = 0
       this.SettingRootInfo.values.forEach(info => {
         info.tab_model.values.forEach(e => {
-          const param_info = this.ParamInfo.fetch(e.key)
-          const value = param_info.default_for(this)
-          if (this.$data[e.key] === value) {
-          } else {
-            this.$data[e.key] = value
-            count += 1
+          if (e.resetable) {
+            const param_info = this.ParamInfo.fetch(e.key)
+            const value = param_info.default_for(this)
+            if (this.$data[e.key] === value) {
+            } else {
+              this.$data[e.key] = value
+              count += 1
+            }
           }
         })
       })

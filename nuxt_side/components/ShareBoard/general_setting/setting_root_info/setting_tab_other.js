@@ -3,10 +3,16 @@ import { SettingTabBase } from "./setting_tab_base.js"
 export class SettingTabOther extends SettingTabBase {
   static get define() {
     return [
-      { key: "ai_mode_key",             show: true, },
-      { key: "byoyomi_mode_key",        show: true, },
-      { key: "vibration_mode_key",      show: true, },
-      { key: "pentagon_appearance_key", show: true, },
+      { key: "ai_mode_key",             show: true, resetable: true, component_name: "SettingInput", },
+      { key: "byoyomi_mode_key",        show: true, resetable: true, component_name: "SettingInput", },
+
+      { show: true, resetable: false, component_name: "SettingButton", label: "アバター",       button_name: "設定", click_handle: "avatar_input_modal_open_handle", field_message: "自分の表示キャラクターを変更する", },
+      { show: true, resetable: false, component_name: "SettingButton", label: "ハンドルネーム", button_name: "変更", click_handle: "handle_name_modal_open_handle",  field_message: "入室後は変更できない", },
+
+      { key: "vibration_mode_key",      show: true, resetable: true, component_name: "SettingInput", },
+      { key: "pentagon_appearance_key", show: true, resetable: true, component_name: "SettingInput", },
+
+      { show: true, resetable: false, component_name: "SettingButton", label: "部屋名",         button_name: "変更", click_handle: "title_edit_handle",              field_message: "部屋名は棋譜の棋戦名などに使う", },
     ]
   }
 }
