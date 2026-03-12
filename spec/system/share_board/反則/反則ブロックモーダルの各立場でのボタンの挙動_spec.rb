@@ -32,8 +32,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_c { takeback_modal_exist }
 
       # 共通文言
-      window_a { assert_text "本来であればaさんの反則負けです" }
-      window_a { assert_text "潔く投了しますか？" }
+      window_a { assert_text "aさんの反則負けです" }
+      window_a { assert_text "いさぎよく投了しますか？" }
 
       # 個別
       window_b { assert_text "bさんは「待った」で反則をなかったことにできます" }
