@@ -4,31 +4,31 @@ export class XstatusInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       {
-        message: "感想戦中",
+        name: "感想戦中",
         if_cond: c => c.ac_room && !c.order_enable_p && !c.cc_play_p && c.honpu_main && c.uniq_member_infos.length >= 2,
       },
       {
-        message: "対戦相手待ち",
+        name: "対戦相手待ち",
         if_cond: c => c.ac_room && !c.order_enable_p && c.uniq_member_infos.length < 2,
       },
       {
-        message: "対局設定待ち",
+        name: "対局設定待ち",
         if_cond: c => c.ac_room && !c.order_enable_p && c.uniq_member_infos.length >= 2,
       },
       {
-        message: "時計設置待ち",
+        name: "時計設置待ち",
         if_cond: c => c.ac_room && c.order_enable_p && !c.clock_box,
       },
       {
-        message: "対局開始待ち",
+        name: "対局開始待ち",
         if_cond: c => c.ac_room && c.order_enable_p && c.clock_box && c.clock_box.current_status === "stop",
       },
       {
-        message: "対局開始",
+        name: "対局開始",
         if_cond: c => c.ac_room && c.order_enable_p && c.clock_box && c.clock_box.current_status === "play" && c.current_turn === 0,
       },
       {
-        message: "時計再開待ち",
+        name: "時計再開待ち",
         if_cond: c => c.ac_room && c.order_enable_p && c.clock_box && c.clock_box.current_status === "pause",
       },
     ]

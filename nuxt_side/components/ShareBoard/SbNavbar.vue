@@ -35,9 +35,9 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
-    template(v-if="SB.xstatus_message")
-      b-navbar-item.has-text-weight-bold.xstatus_message.is-hidden-mobile(tag="div")
-        | {{SB.xstatus_message}}
+    template(v-if="SB.xstatus_name")
+      b-navbar-item.has-text-weight-bold.xstatus_name.is-hidden-mobile(tag="div")
+        | {{SB.xstatus_name}}
 
   template(slot="end")
     SbHonpuButton
@@ -135,7 +135,7 @@ export default {
   // background-color: transparent
   // +is_backdrop_filter(10px)
 
-  .xstatus_message
+  .xstatus_name
     +mobile
       font-size: $size-7
 </style>
