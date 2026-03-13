@@ -140,17 +140,17 @@ export default {
     +mobile
       font-size: $size-7
 
-  .otasuke_blink
-    animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
+  // .otasuke_blink
+  //   animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
 
   // background-color: transparent
   // +is_backdrop_filter(10px)
 
-@keyframes otasuke_blink
-  0%
-    opacity: 1.0
-  50%
-    opacity: 0.6
-  100%
-    opacity: 1.0
+// @keyframes otasuke_blink
+//   0%
+//     opacity: 1.0
+//   50%
+//     opacity: 0.6
+//   100%
+//     opacity: 1.0
 </style>
