@@ -31,7 +31,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "takeback",
         name: "待ったできる",
-        message: "勝手に負けてもらっては困る相手と指す場合に用いる",
+        message: "勝手に負けてもらっちゃ困る相手と指す場合に用いる",
         battle_start_message: "反則をしても待ったできる接待用ルールです",
         type: "is-warning",
         sp_illegal_validate: true,
@@ -42,7 +42,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "ignore",
         name: "審判不在モード",
-        message: "システムは反則のチェックを行わない。指し手の正当性を保証できないため、通常の対局には向かない。",
+        message: "システムは反則のチェックを行わない。いくらでも禁じ手を指せる。指し手の正当性を保証できないため、通常の対局には向かない。リアル道場風。",
         battle_start_message: "審判はいないので反則は各自で判断してください",
         type: "is-danger",
         sp_illegal_validate: false,
