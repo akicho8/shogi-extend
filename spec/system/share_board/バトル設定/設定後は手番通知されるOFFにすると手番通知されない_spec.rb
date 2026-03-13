@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { room_setup_by_user(:b) }
     window_a do
       order_set_on                             # バトル設定ON
-      clock_start                              # 対戦開始
+      clock_start                              # 対局開始
       piece_move_o("77", "76", "☗7六歩")      # aが指す
     end
     window_b do

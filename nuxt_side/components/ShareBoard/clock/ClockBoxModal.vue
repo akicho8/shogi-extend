@@ -58,7 +58,7 @@
     template(v-if="SB.clock_box")
       .buttons
         template(v-if="SB.clock_box.stop_p")
-          b-button.play_button(title="対戦開始" @click="SB.cbm_play_handle" icon-left="play" type="is-primary") 対戦開始
+          b-button.play_button(title="対局開始" @click="SB.cbm_play_handle" icon-left="play" type="is-primary") 対局開始
         template(v-if="SB.clock_box.play_p")
           b-button.pause_button(title="一時停止" @click="SB.cbm_pause_handle" icon-left="pause" type="is-primary")
         template(v-if="SB.clock_box.pause_p")

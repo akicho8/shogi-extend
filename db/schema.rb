@@ -80,7 +80,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_23_000003) do
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.datetime "accessed_at", precision: nil, null: false
-    t.datetime "battled_at", precision: nil, null: false, comment: "対戦開始日時"
+    t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
     t.datetime "created_at", precision: nil, null: false
     t.integer "critical_turn"
     t.text "description", null: false
@@ -531,7 +531,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_23_000003) do
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.datetime "accessed_at", precision: nil, null: false
     t.integer "analysis_version", default: 0, null: false, comment: "戦法解析バージョン"
-    t.datetime "battled_at", precision: nil, null: false, comment: "対戦開始日時"
+    t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
     t.datetime "created_at", precision: nil, null: false
     t.integer "critical_turn"
     t.text "csa_seq", size: :medium, null: false, comment: "棋譜の断片"

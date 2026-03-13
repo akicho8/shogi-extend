@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :autoexec     => "honpu_main_setup",
       })
     assert_honpu_open_on        # 本譜がある
-    clock_start                 # 対戦開始
+    clock_start                 # 対局開始
     assert_honpu_open_off       # 本譜が消えた
   end
 end

@@ -12,7 +12,7 @@ class CreateSwars < ActiveRecord::Migration[5.1]
 
     create_table :swars_battles, force: true do |t|
       t.string :key,            null: false, index: { unique: true }, comment: "対局識別子"
-      t.datetime :battled_at,   null: false, index: true,           comment: "対戦開始日時"
+      t.datetime :battled_at,   null: false, index: true,           comment: "対局開始日時"
       t.string :rule_key,       null: false, index: true,           comment: "ルール"
       t.text :csa_seq,          null: false,                        comment: "棋譜の断片"
       t.string :final_key,      null: false, index: true,           comment: "結果詳細"

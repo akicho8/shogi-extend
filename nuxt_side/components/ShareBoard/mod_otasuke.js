@@ -157,14 +157,14 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "stop") {
-          message = "対戦開始待ち"
+          message = "対局開始待ち"
           css_class = "otasuke_blink"
           // icon = "play"
         }
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && this.clock_box && this.clock_box.current_status === "play" && this.current_turn === 0) {
-          message = "対戦開始"
+          message = "対局開始"
         }
       }
       if (message == null) {
