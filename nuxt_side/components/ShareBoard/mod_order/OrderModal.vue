@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | ルール設定
+      | 条件
 
       template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
