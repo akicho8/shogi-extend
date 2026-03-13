@@ -35,18 +35,14 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}
 
-    template(v-if="SB.otasuke_single_line")
-      b-navbar-item.has-text-weight-bold.otasuke_single_line.is-hidden-mobile(tag="div" :class="SB.otasuke_single_line.css_class")
-        | {{SB.otasuke_single_line.message}}
+    template(v-if="SB.xstatus_message")
+      b-navbar-item.has-text-weight-bold.xstatus_message.is-hidden-mobile(tag="div")
+        | {{SB.xstatus_message}}
 
   template(slot="end")
     SbHonpuButton
 
     SbThinkMarkToggleButton
-
-    template(v-if="SB.otasuke_button_show_p")
-      b-navbar-item.is-hidden-mobile.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="SB.otasuke_click_handle")
-        b-icon(:icon="SB.otasuke_button_icon")
 
     template(v-if="SB.tweet_button_show_p")
       b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="SB.tweet_modal_handle")
@@ -136,21 +132,10 @@ export default {
       padding-left:  2.5rem
       padding-right: 2.5rem
 
-  .otasuke_single_line
-    +mobile
-      font-size: $size-7
-
-  // .otasuke_blink
-  //   animation: otasuke_blink 1.0s ease-in-out 0s infinite alternate
-
   // background-color: transparent
   // +is_backdrop_filter(10px)
 
-// @keyframes otasuke_blink
-//   0%
-//     opacity: 1.0
-//   50%
-//     opacity: 0.6
-//   100%
-//     opacity: 1.0
+  .xstatus_message
+    +mobile
+      font-size: $size-7
 </style>

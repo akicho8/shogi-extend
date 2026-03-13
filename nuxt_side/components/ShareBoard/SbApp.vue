@@ -74,7 +74,7 @@ import { mod_xtitle                } from "./mod_xtitle.js"
 import { mod_xhistory            } from "./mod_xhistory/mod_xhistory.js"
 
 import { mod_turn_notify           } from "./mod_turn_notify.js"
-import { mod_otasuke               } from "./mod_otasuke.js"
+import { mod_xstatus               } from "./mod_xstatus/mod_xstatus.js"
 import { mod_order_main            } from "./mod_order/mod_order_main.js"
 import { mod_migrate               } from "./mod_migrate/mod_migrate.js"
 import { mod_battle_session        } from "./mod_battle_session.js"
@@ -182,7 +182,7 @@ export default {
     mod_console,
     mod_persistent_cc_params,
     mod_turn_notify,
-    mod_otasuke,
+    mod_xstatus,
     mod_order_main,
     mod_migrate,
     mod_member_list,
