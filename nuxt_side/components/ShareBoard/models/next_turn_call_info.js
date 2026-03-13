@@ -6,7 +6,7 @@ export class NextTurnCallInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_next_turn_call_on",  name: "する",   type: "is-primary", message: "3人以上で対局しているときに「次は○○さんの手番です」と伝える (配信等では視聴者の視点でも、より状況が分かりやすくなる)", },
+      { key: "is_next_turn_call_on",  name: "する",   type: "is-primary", message: "3人以上で対局しているときに「次は○○さんの手番です」と伝える (配信では視聴に状況が伝わりやすくなる)", },
       { key: "is_next_turn_call_off", name: "しない", type: "is-warning", message: "3人以上で対局していても手番を伝えない", },
     ]
   }
