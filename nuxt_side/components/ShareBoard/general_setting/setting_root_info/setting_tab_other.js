@@ -3,6 +3,7 @@ import { SettingTabBase } from "./setting_tab_base.js"
 export class SettingTabOther extends SettingTabBase {
   static get define() {
     return [
+      { show: true, resetable: false, component_name: "SettingButton", label: "スタイル", button_name: "設定", click_handle: "appearance_modal_open_handle", field_message: "", },
       { show: true, resetable: false, component_name: "SettingButton", label: "反則", button_name: "設定", click_handle: "illegal_setting_warn_message_handle", field_message: "↑反則の設定に辿りつけない人のための偽物のボタン", },
 
       { key: "ai_mode_key",             show: true, resetable: true, component_name: "SettingInput", },

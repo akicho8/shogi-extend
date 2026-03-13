@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class AppearanceThemeInfo extends ApplicationMemoryRecord {
-  static field_label = "モード"
+  static field_label = "配色"
   static field_message = ""
 
   static get define() {

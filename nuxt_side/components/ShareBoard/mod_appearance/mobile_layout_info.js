@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class MobileLayoutInfo extends ApplicationMemoryRecord {
-  static field_label = "スマホ用画面レイアウト"
+  static field_label = "レイアウト (スマホ)"
   static field_message = "持駒が見切れる人は<b>横長</b>にしよう"
 
   static get define() {

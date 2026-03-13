@@ -2,7 +2,12 @@ import { AppearanceThemeInfo } from "./appearance_theme_info.js"
 import { MobileLayoutInfo    } from "./mobile_layout_info.js"
 import { DesktopLayoutInfo   } from "./desktop_layout_info.js"
 
-export const mod_appearance_theme = {
+import { appearance_modal } from "./appearance_modal.js"
+
+export const mod_appearance = {
+  mixins: [
+    appearance_modal,
+  ],
   computed: {
     AppearanceThemeInfo()   { return AppearanceThemeInfo                                  },
     appearance_theme_info() { return AppearanceThemeInfo.fetch(this.appearance_theme_key) },

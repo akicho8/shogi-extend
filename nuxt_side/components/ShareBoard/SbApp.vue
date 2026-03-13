@@ -158,7 +158,7 @@ import { mod_xprofile_console      } from "./xprofile/mod_xprofile_console.js"
 
 import { mod_room_restore          } from "./room/mod_room_restore.js"
 
-import { mod_appearance_theme      } from "./appearance_theme/mod_appearance_theme.js"
+import { mod_appearance      } from "./mod_appearance/mod_appearance.js"
 
 import { mod_tweet                 } from "./tweet/mod_tweet.js"
 
@@ -222,7 +222,7 @@ export default {
     mod_export,
     mod_player_names,
     mod_color_theme,
-    mod_appearance_theme,
+    mod_appearance,
     mod_sfen_sync,
     mod_resend,
     mod_look_away,
