@@ -239,7 +239,7 @@ export const mod_room_channel = {
 
     ////////////////////////////////////////////////////////////////////////////////
     room_is_empty_p() {
-      if (GX.blank_p(this.ac_room)) {
+      if (this.ac_room == null) {
         this.sfx_click()
         this.toast_warn("まず部屋に入ろう")
         return true
