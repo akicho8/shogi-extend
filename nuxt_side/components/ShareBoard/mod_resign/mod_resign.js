@@ -46,7 +46,7 @@ export const mod_resign = {
       const ending_context_default_params = {
         ending_route_key: "er_user_normal_resign",                        // 投了にいたった理由
         win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
-        teams_hash: this.player_names_from_member,      // この時点のメンバー情報を持っておく (あとでやるとバトル設定がOFFになっているか気にかけないといけない)
+        teams_hash: this.player_names_from_member,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
       }
       options = { ...ending_context_default_params, ...options }
 
@@ -57,8 +57,8 @@ export const mod_resign = {
       //   this.resign_messsage_post()                              // 発言は何も影響ないので最初に行う
       // }
 
-      this.battle_save_by_win_location(options.win_location_key) // バトル設定がある状態で対局を保存する
-      this.resign_share(options)                                 // 最後にバトル設定を解除する
+      this.battle_save_by_win_location(options.win_location_key) // 対局設定がある状態で対局を保存する
+      this.resign_share(options)                                 // 最後に対局設定を解除する
     },
 
     // resign_messsage_post() {
@@ -91,7 +91,7 @@ export const mod_resign = {
 
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
-      // バトル設定OFFよりも前で行うこと
+      // 対局設定OFFよりも前で行うこと
       if (this.login_and_email_valid_p) {
         this.kifu_mail_run({silent: true})
       }
@@ -106,7 +106,7 @@ export const mod_resign = {
       // 投了を押した本人が時計と順番を解除する
       // この処理は resign_direct_run で行う手もあるが「投了」→「時計停止」→「順番OFF」の順で
       // 履歴に入れたいのでこっちの方がよい
-      // バトル設定は最後にOFFにすること
+      // 対局設定は最後にOFFにすること
       if (this.received_from_self(params)) {
         this.quiz_delete()            // 配送したお題の削除
         this.cc_stop_share_handle()   // 時計 STOP
@@ -121,8 +121,8 @@ export const mod_resign = {
 
     // 引分
     draw_call() {
-      this.battle_save_by_win_location(null)                // バトル設定がある状態で対局を保存する
-      this.resign_share({ending_route_key: "er_auto_draw"}) // 最後にバトル設定を解除する
+      this.battle_save_by_win_location(null)                // 対局設定がある状態で対局を保存する
+      this.resign_share({ending_route_key: "er_auto_draw"}) // 最後に対局設定を解除する
     },
 
     ending_call() {

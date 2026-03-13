@@ -1,4 +1,4 @@
-// バトル設定モーダル用
+// 対局設定モーダル用
 
 import { GX } from "@/components/models/gx.js"
 
@@ -13,7 +13,7 @@ export const order_modal = {
     return {
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
-      // order_draft はバトル設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
+      // order_draft は対局設定モーダル用という意味がわかりやすいようにしているだけで特別効果はない
       order_draft: {
         order_flow:                   null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
 
@@ -57,9 +57,9 @@ export const order_modal = {
       }
     },
 
-    // バトル設定モーダル内で使うデータの準備
+    // 対局設定モーダル内で使うデータの準備
     order_modal_init() {
-      // 現在のバトル設定をコピーする
+      // 現在の対局設定をコピーする
       this.order_draft.order_flow = this.order_flow.deep_clone()
 
       // オプション的なものもコピーする
@@ -79,7 +79,7 @@ export const order_modal = {
       to.change_per                   = from.change_per
     },
 
-    // バトル設定モーダルを閉じる
+    // 対局設定モーダルを閉じる
     // 別のところから強制的に閉じたいとき用
     order_modal_close() {
       if (this.order_modal_instance) {
@@ -105,9 +105,9 @@ export const order_modal = {
     },
 
     // 反映ボタンを押したときに呼ぶ
-    // 「バトル設定(仮)」の値を全体送信する
-    // 自分を含めて受信し「バトル設定」を更新する
-    // さらに「バトル設定(仮)」も更新する
+    // 「対局設定(仮)」の値を全体送信する
+    // 自分を含めて受信し「対局設定」を更新する
+    // さらに「対局設定(仮)」も更新する
     order_draft_publish(message) {
       GX.assert(this.order_draft.order_flow, "this.order_draft.order_flow")
       const params = {
@@ -130,9 +130,9 @@ export const order_modal = {
       // order_draft.order_flow のパラメータを order_flow に反映する
       this.order_copy_from_bc(params)
 
-      this.think_mark_auto_set() // バトル設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+      this.think_mark_auto_set() // 対局設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
-      // バトル設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
+      // 対局設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // 新しくなった order_flow を order_draft.order_flow に反映する
       if (this.order_modal_update_ok) {
         this.order_modal_init()
@@ -158,7 +158,7 @@ export const order_modal = {
       this.clog(this.order_flow.flat_uniq_users)
       this.order_modal_init()                                                         // order_draft を準備する
       this.order_draft.order_flow.user_name_reject(user_name)                            // order_draft から次の人を除外する
-      this.order_draft_publish(`バトル設定から${this.user_call_name(user_name)}を外しました`) // order_draft を配って更新する
+      this.order_draft_publish(`対局設定から${this.user_call_name(user_name)}を外しました`) // order_draft を配って更新する
     },
   },
   computed: {

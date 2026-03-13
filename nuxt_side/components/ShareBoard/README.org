@@ -69,7 +69,7 @@
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=a                     |
   | FIXED_MEMBER                | 部屋にいるメンバーの名前たち                            |                                                                                  |
-  | FIXED_ORDER                 | バトル設定した名前たち                                    |                                                                                  |
+  | FIXED_ORDER                 | 対局設定した名前たち                                    |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=b               |
   | ng_word_check_p             | false ならバリデーションを飛ばす                        |                                                                                  |
@@ -91,11 +91,11 @@
   http://localhost:4000/share-board?room_key=dev_room&user_name=a
   http://localhost:4000/share-board?room_key=dev_room&user_name=b
 
-** バトル設定済みで開始するには？
+** 対局設定済みで開始するには？
 
    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a
 
-** バトル設定済みのテスト
+** 対局設定済みのテスト
 
    3人
    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b,c&room_after_create=order_modal_open_handle
@@ -119,7 +119,7 @@
 
    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&RESEND_SUCCESS_DELAY=-1
 
-** 再送モーダルが出ているときにバトル設定されたら再送モーダルが消されるテスト用
+** 再送モーダルが出ているときに対局設定されたら再送モーダルが消されるテスト用
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&FIXED_ORDER=a,b,c,d&RESEND_DELAY=0&RESEND_SUCCESS_DELAY=-1
 
@@ -135,7 +135,7 @@
 
    http://localhost:4000/share-board?autoexec=xmatch_modal_handle
 
-** バトル設定あり・時計作動中・すぐ時間切れになる
+** 対局設定あり・時計作動中・すぐ時間切れになる
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER=a,b&RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
    http://localhost:4000/share-board?room_key=dev_room&user_name=b&FIXED_ORDER=a,b&RESEND_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_min=0&clock_box.every_plus=0&room_after_create=cc_auto_start
@@ -158,7 +158,7 @@
 
    http://localhost:4000/share-board?autoexec=cc_create,cc_modal_open_handle&clock_box.initial_main_min=0
 
-** バトル設定済み + 時計ON
+** 対局設定済み + 時計ON
 
    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b&autoexec=cc_create
 
@@ -166,7 +166,7 @@
 
    http://localhost:4000/share-board?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.7g7f&turn=1
 
-** バトル設定あり・時計作動中
+** 対局設定あり・時計作動中
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_ORDER=a,b&clock_box.initial_main_min=60&room_after_create=cc_auto_start
 
@@ -174,7 +174,7 @@
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e,f&FIXED_ORDER=b,d,a,c
 
-** 自分は a で部屋に abcdef いて順番が abcd でバトル設定を開く
+** 自分は a で部屋に abcdef いて順番が abcd で対局設定を開く
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d,e&FIXED_ORDER=a,b,c,d&room_after_create=order_modal_open_handle
 
@@ -182,11 +182,11 @@
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=a&FIXED_MEMBER=a,b,c,d&FIXED_ORDER=a,b,c,d&autoexec=battle_save_run
 
-** バトル設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
+** 対局設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&FIXED_MEMBER=ありす,きゃろる&FIXED_ORDER=ありす,ぼぶ,きゃろる&room_after_create=order_modal_open_handle
 
-** バトル設定と時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
+** 対局設定と時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 
     http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&room_after_create=cc_auto_start
 

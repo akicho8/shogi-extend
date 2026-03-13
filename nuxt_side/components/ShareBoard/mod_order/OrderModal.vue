@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | バトル設定
+      | 対局設定
 
       template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
@@ -246,7 +246,7 @@ export default {
         this.SB.order_modal_close()
         return
       }
-      this.SB.order_draft_publish("バトル設定を反映しました")
+      this.SB.order_draft_publish("対局設定を反映しました")
       GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
@@ -254,7 +254,7 @@ export default {
     order_modal_force_submit_handle() {
       this.os_before_apply()
       if (this.invalid_options()) { return }
-      this.SB.order_draft_publish("バリデーションなしでバトル設定を確定しました")
+      this.SB.order_draft_publish("バリデーションなしで対局設定を確定しました")
     },
 
     hint_handle(model) {

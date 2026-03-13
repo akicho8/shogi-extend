@@ -20,6 +20,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "ほぼ静的ページ" do
     visit_to("/share-board/help")
-    assert_text("バトル設定")
+    assert_text("対局設定")
   end
 end

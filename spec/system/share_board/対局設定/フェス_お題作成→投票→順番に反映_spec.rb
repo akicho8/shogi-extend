@@ -14,7 +14,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1("b") }
     window_c { case1("c") }
     window_a do
-      order_modal_open                                           # 「バトル設定」モーダルを開く
+      order_modal_open                                           # 「対局設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(".tabs .order_tab_fes").click
       find(:button, text: "お題作成", exact_text: true).click # お題作成起動

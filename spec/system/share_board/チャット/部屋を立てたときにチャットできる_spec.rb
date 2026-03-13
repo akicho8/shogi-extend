@@ -45,17 +45,17 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     window_b do
       chat_modal_close
-      order_set_off             # バトル設定を解除する
+      order_set_off             # 対局設定を解除する
     end
 
-    # bがバトル設定を解除したことで
+    # bが対局設定を解除したことで
     window_a do
       assert_message_received_o(message1)                      # b の送信を a は見えるようになった
-      assert_no_selector(".ChatModal .message_scope_dropdown") # バトル設定を解除したためスコープ選択は表示されていない
+      assert_no_selector(".ChatModal .message_scope_dropdown") # 対局設定を解除したためスコープ選択は表示されていない
     end
   end
 
-  it "バトル設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
+  it "対局設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
     visit_room(user_name: :a, FIXED_ORDER: :a)
     chat_modal_open
     assert_selector(".ChatModal .message_scope_dropdown")

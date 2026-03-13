@@ -23,7 +23,7 @@ module SharedMethods
     find("button", text: "確定せずに閉じる", exact_text: true).click
   end
 
-  # バトル設定と時計の右上の有効をトグルする
+  # 対局設定と時計の右上の有効をトグルする
   def os_switch_toggle
     Capybara.find(".modal .main_switch").click
   end
@@ -83,13 +83,13 @@ module SharedMethods
     assert { result == names }
   end
 
-  # バトル設定画面内の黒白チームの人たち
+  # 対局設定画面内の黒白チームの人たち
   def assert_order_team_one(black, white, options = {})
     __assert_order_dnd_team_one("is_team_black", black, options)
     __assert_order_dnd_team_one("is_team_white", white, options)
   end
 
-  # バトル設定画面内の観戦者の人たち
+  # 対局設定画面内の観戦者の人たち
   def assert_order_dnd_watcher(users, options = {})
     __assert_order_dnd_team_one("is_team_watcher", users, options)
   end

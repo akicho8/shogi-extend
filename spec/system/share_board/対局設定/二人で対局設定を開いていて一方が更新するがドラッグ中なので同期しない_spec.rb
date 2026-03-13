@@ -12,8 +12,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   xit "works" do
-    window_a { case1("a") }           # a がバトル設定を開いた
-    window_b { case1("b") }           # b がバトル設定を開いた
+    window_a { case1("a") }           # a が対局設定を開いた
+    window_b { case1("b") }           # b が対局設定を開いた
     window_b do
       # ここでドラッグ中にする
       # TODO: 方法がわからない

@@ -24,7 +24,7 @@ export const resend_confirm_modal = {
       ]
       if (this.resend_next_user_name) {
         const missing_user = this.user_call_name(this.resend_next_user_name)
-        full_message.push(`${missing_user}が抜けた場合はバトル設定から外して再開してください`)
+        full_message.push(`${missing_user}が抜けた場合は対局設定から外して再開してください`)
       }
       this.xhistory_action({label: "対局中断", label_type: "is-danger", full_message: full_message})
     },

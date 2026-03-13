@@ -12,7 +12,7 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       },
       {
         key: "order_modal_open_handle",
-        name: "バトル設定",
+        name: "対局設定",
         icon: "mdi-numeric-2-circle-outline",
         todo_p: "step2_todo_p",
         done_p: "step2_done_p",

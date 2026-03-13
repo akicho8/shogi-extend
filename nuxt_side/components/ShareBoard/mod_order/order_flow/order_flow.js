@@ -49,7 +49,7 @@ export class OrderFlow {
   shuffle_all()                             { this.order_operation.shuffle_all()                                    }
   teams_each_shuffle()                      { this.order_operation.teams_each_shuffle()                             }
   swap_run()                                { this.order_operation.swap_run()                                       }
-  user_name_reject(user_name)               { this.order_operation.user_name_reject(user_name)                      } // バトル設定から除外する
+  user_name_reject(user_name)               { this.order_operation.user_name_reject(user_name)                      } // 対局設定から除外する
   cache_clear()                             { this.order_operation.cache_clear()                                    }
   get simple_teams()                        { return this.order_operation.simple_teams                              }
   turn_to_item(turn, change_per, scolor)    { return this.order_operation.turn_to_item(turn, change_per, scolor)    }
@@ -124,7 +124,7 @@ export class OrderFlow {
     return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [替:${this.swap_enable_p ? 'o' : 'x'}]`
   }
 
-  // バトル設定モーダル内で使うデータの準備
+  // 対局設定モーダル内で使うデータの準備
   // 空のときだけアロケートする
   auto_users_set(user_names) {
     if (this.empty_p) {

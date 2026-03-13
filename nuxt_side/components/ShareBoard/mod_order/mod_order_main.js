@@ -1,4 +1,4 @@
-// 対局中に参照するバトル設定
+// 対局中に参照する対局設定
 
 import { OrderFlow } from "./order_flow/order_flow.js"
 
@@ -17,7 +17,7 @@ export const mod_order_main = {
   ],
   data() {
     return {
-      order_flow: OrderFlow.create(), // バトル設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
+      order_flow: OrderFlow.create(), // 対局設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
     }
   },
   mounted() {
@@ -47,14 +47,14 @@ export const mod_order_main = {
       this.order_enable_p = false
     },
 
-    // 自分だけをバトル設定に入れた状態にする
+    // 自分だけを対局設定に入れた状態にする
     order_self_only_auto_setup() {
       this.os_setup_by_names([this.user_name])
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // バトル設定を解除する
+    // 対局設定を解除する
     order_switch_off_share() {
       this.order_switch_share({order_enable_p: false, message: "", talk: false})
     },
@@ -63,10 +63,10 @@ export const mod_order_main = {
     },
     order_switch_share_broadcasted(params) {
       this.order_enable_p = params.order_enable_p
-      this.order_off_then_message_scope_key_set_public() // バトル設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
-      this.order_off_then_cc_stop()                      // バトル設定OFFになったら時計を停止する
+      this.order_off_then_message_scope_key_set_public() // 対局設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
+      this.order_off_then_cc_stop()                      // 対局設定OFFになったら時計を停止する
       if (GX.present_p(params.message)) {
-        const message = `${this.user_call_name(params.from_user_name)}がバトル設定を${params.message}にしました`
+        const message = `${this.user_call_name(params.from_user_name)}が対局設定を${params.message}にしました`
         this.toast_primary(message, params)
         this.xhistory_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
@@ -81,20 +81,20 @@ export const mod_order_main = {
       GX.assert("order_enable_p" in params, '"order_enable_p" in params')
       GX.assert("order_flow" in params, '"order_flow" in params')
 
-      this.tl_alert("バトル設定パラメータを先代から受信")
+      this.tl_alert("対局設定パラメータを先代から受信")
 
       this.order_enable_p = params.order_enable_p
-      this.order_off_then_message_scope_key_set_public() // バトル設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
-      this.order_off_then_cc_stop()                      // バトル設定OFFになったら時計を停止する
+      this.order_off_then_message_scope_key_set_public() // 対局設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
+      this.order_off_then_cc_stop()                      // 対局設定OFFになったら時計を停止する
       this.order_copy_from_bc(params)
     },
-    // 後から参加したとき、またはバトル設定を適用したときに呼ばれる
+    // 後から参加したとき、または対局設定を適用したときに呼ばれる
     order_copy_from_bc(params) {
       GX.assert(params.order_flow, "params.order_flow")
 
       this.order_flow        = OrderFlow.from_attributes(params.order_flow)
       this.sp_viewpoint_switch_to_my_location() // 自分の場所を調べて正面をその視点にする
-      // this.think_mark_auto_set()                     // バトル設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+      // this.think_mark_auto_set()                     // 対局設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
 
       this.os_options_copy_a_to_b(params, this)
 
@@ -176,7 +176,7 @@ export const mod_order_main = {
   },
 
   computed: {
-    FIXED_ORDER()       { return this.param_to_s("FIXED_ORDER")      }, // バトル設定の順番
+    FIXED_ORDER()       { return this.param_to_s("FIXED_ORDER")      }, // 対局設定の順番
     FIXED_ORDER_SWAP()  { return this.param_to_b("FIXED_ORDER_SWAP") }, // 先後を入れ替えるか？
 
     // あとから接続した人に伝える内容
@@ -191,7 +191,7 @@ export const mod_order_main = {
       }
     },
 
-    order_ok() { return this.order_enable_p && this.order_flow }, // バトル設定ONかつ、順番情報が入っている状態か？
+    order_ok() { return this.order_enable_p && this.order_flow }, // 対局設定ONかつ、順番情報が入っている状態か？
 
     self_vs_self_p() { return this.order_enable_p && this.order_flow.self_vs_self_p }, // 自分vs自分で対戦している？
     one_vs_one_p()   { return this.order_enable_p && this.order_flow.one_vs_one_p   }, // 1vs1で対戦している？
@@ -233,7 +233,7 @@ export const mod_order_main = {
     // 変更したけど保存せずにモーダルを閉じようとしている？
     order_modal_close_if_not_save_p() { return this.order_enable_p && this.order_draft.os_change.has_changes_to_save_p },
 
-    // バトル設定している人数
+    // 対局設定している人数
     order_flat_uniq_users_count() {
       if (this.order_enable_p) {
         return this.order_flow.flat_uniq_users.length
@@ -241,7 +241,7 @@ export const mod_order_main = {
     },
 
     // 最終的に左側に表示する並びになっているメンバーリスト
-    // バトル設定されているときは対局者を優先的に上に表示する
+    // 対局設定されているときは対局者を優先的に上に表示する
     visible_member_infos() {
       if (this.order_enable_p) {
         return _.sortBy(this.member_infos, e => {
@@ -282,10 +282,10 @@ export const mod_order_main = {
     },
 
     // 黒・白・観戦のグループでユーザー配列を返す
-    // バトル設定 ON のときのみ有効
+    // 対局設定 ON のときのみ有効
     // { black: [...], white: [...], other: [...] }
     visible_member_groups() {
-      GX.assert(this.order_enable_p, "チーム別のメンバー情報を取得するときはバトル設定が有効になっていること")
+      GX.assert(this.order_enable_p, "チーム別のメンバー情報を取得するときは対局設定が有効になっていること")
       return _.groupBy(this.visible_member_infos, e => {
         const location = this.user_name_to_initial_location(e.from_user_name)
         if (location) {

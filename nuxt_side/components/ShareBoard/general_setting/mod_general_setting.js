@@ -44,7 +44,7 @@ export const mod_general_setting = {
 
     illegal_setting_warn_message_handle() {
       this.sfx_click()
-      this.toast_primary(`反則に関する設定はバトル設定から行なってください`)
+      this.toast_primary(`反則に関する設定は対局設定から行なってください`)
     },
   },
   computed: {

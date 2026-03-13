@@ -14,21 +14,21 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
     window_b { case1(:b)   }
     window_c { case1(:c) }
   end
-  it "時計OFFバトル設定ONでは検討をしていると思われる" do
+  it "時計OFF対局設定ONでは検討をしていると思われる" do
     case2
     window_b do
       board_place("77").click
-      assert_text("(今はaさんの手番です。みんなで盤をつついて検討する場合はバトル設定を切ろう)")
+      assert_text("(今はaさんの手番です。みんなで盤をつついて検討する場合は対局設定を切ろう)")
     end
   end
-  it "時計OFFバトル設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
+  it "時計OFF対局設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
     case2
     window_c do
       board_place("77").click
-      assert_text("(今はaさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合はバトル設定を切ろう)")
+      assert_text("(今はaさんの手番です。それにあなたは観戦者なんで触らんといてください。みんなで盤をつついて検討する場合は対局設定を切ろう)")
     end
   end
-  it "時計ONバトル設定ONは対局中と思われる" do
+  it "時計ON対局設定ONは対局中と思われる" do
     case2
     window_b do
       clock_start
@@ -36,11 +36,11 @@ RSpec.xdescribe __FILE__, type: :system, share_board_spec: true do
       assert_text("(今はaさんの手番です)")
     end
   end
-  it "バトル設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
+  it "対局設定で誰も参加していない(ユーザーの操作ではバリデーションがあるためこうはならない)" do
     visit_room({
         :user_name    => "a",
         :FIXED_MEMBER => "a",
-        :FIXED_ORDER  => "a", # バトル設定で黒側に一人aがいる
+        :FIXED_ORDER  => "a", # 対局設定で黒側に一人aがいる
         :body         => SfenGenerator.start_from(:white), # 後手から始まる
       })
     piece_move_o("33", "34", "☖3四歩") # a が代走する

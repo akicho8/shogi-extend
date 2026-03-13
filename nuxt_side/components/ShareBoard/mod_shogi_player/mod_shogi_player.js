@@ -194,11 +194,11 @@ export const mod_shogi_player = {
       if (!this.think_mark_mode_p && this.ac_room == null) {
         return "both"
       }
-      // 思考印モードOFF バトル設定OFF 時計動いていない
+      // 思考印モードOFF 対局設定OFF 時計動いていない
       if (!this.think_mark_mode_p && this.order_clock_both_empty) {
         return "both"
       }
-      // 思考印モードOFF バトル設定ON 時計動いている 自分の手番
+      // 思考印モードOFF 対局設定ON 時計動いている 自分の手番
       if (!this.think_mark_mode_p && this.order_clock_both_ok && this.current_turn_self_p) {
         return "both"
       }
