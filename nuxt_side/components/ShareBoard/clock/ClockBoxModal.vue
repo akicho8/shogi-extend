@@ -3,7 +3,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
-      | 対局時計
+      | 時計
       span.has-text-grey.has-text-weight-normal.mx-1(v-if="SB.clock_box")
         span.clock_box_human_status.mx-1
           | {{SB.clock_box.human_status}}

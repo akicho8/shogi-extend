@@ -19,7 +19,7 @@ export const mod_share_dto = {
         xprofile_share_dto: this.xprofile_share_dto, // スコア情報
         sfen_sync_dto:  this.sfen_sync_dto,  // 棋譜と現在の局面(手数)
         order_share_dto: this.order_share_dto, // ルール設定
-        clock_share_dto: this.clock_share_dto, // 対局時計
+        clock_share_dto: this.clock_share_dto, // 時計
         honpu_share_dto: this.honpu_share_dto, // 本譜
       }
     },

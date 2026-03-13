@@ -60,7 +60,7 @@
               | or
               b-tag(type="is-primary") 2
           .sc_item
-            .sc_label 対局時計 起動
+            .sc_label 時計 起動
             .sc_buttons
               b-tag(type="is-primary") t
               | or

@@ -62,7 +62,7 @@ export const mod_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main == null) {
-          message = "対局時計をセットしてから対局しよう"
+          message = "時計をセットしてから対局しよう"
           // icon = "play"
         }
       }
@@ -82,7 +82,7 @@ export const mod_otasuke = {
 
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.clock_box) {
-          message = "次は対局時計を設置しよう"
+          message = "次は時計を設置しよう"
           // icon = "play"
         }
       }
@@ -139,7 +139,7 @@ export const mod_otasuke = {
       }
       // if (message == null) {
       //   if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_main == null) {
-      //     message = "対局時計設置待ち"
+      //     message = "時計設置待ち"
       //   }
       // }
       // if (message == null) {

@@ -158,7 +158,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
     end
   end
 
-  describe "対局時計の共有" do
+  describe "時計の共有" do
     before do
       subscribe(room_key: room_key)
     end

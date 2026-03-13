@@ -3,7 +3,7 @@
   .buttons_container
     a.button.is-marginless.is-small.is-primary.gate_modal_open_handle(@click="SB.gate_modal_open_handle") 入室
     a.button.is-marginless.is-small.is-primary.order_modal_open_handle(@click="SB.order_modal_open_handle") ルール設定
-    a.button.is-marginless.is-small.is-primary.cc_modal_open_handle(@click="SB.cc_modal_open_handle") 対局時計
+    a.button.is-marginless.is-small.is-primary.cc_modal_open_handle(@click="SB.cc_modal_open_handle") 時計
 </template>
 
 <script>

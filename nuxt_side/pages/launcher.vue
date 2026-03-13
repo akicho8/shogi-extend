@@ -49,7 +49,7 @@ export default {
         { title: "利用規約",                              to: { name: "about-terms"                     }, },
         { title: "プライバシー  ",                        to: { name: "about-privacy-policy"            }, },
         { title: "クレジット",                            to: { name: "about-credit"                    }, },
-        { title: "対局時計",                              to: { name: "vs-clock"                        }, },
+        { title: "時計",                              to: { name: "vs-clock"                        }, },
         { title: "ストップウォッチ",                      to: { name: "stopwatch"                       }, },
         { title: "符号の鬼",                              to: { name: "xy"                              }, },
         { title: "パーティクルテスト",                    to: { name: "experiment-particle_test",    }  },

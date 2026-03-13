@@ -197,7 +197,7 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/vs-clock" },
-      title: "対局時計",
+      title: "時計",
       attention_label: nil,
       og_image_key: "vs-clock",
       description: "大会などで時計が足りないときにどうぞ",

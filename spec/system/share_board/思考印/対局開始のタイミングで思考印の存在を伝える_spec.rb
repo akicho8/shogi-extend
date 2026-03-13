@@ -18,7 +18,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a { case1(:a) }
     window_b { case1(:b) }
     window_a do
-      clock_open                # 対局時計を開いて
+      clock_open                # 時計を開いて
       clock_play_button_click   # 開始
     end
     window_b do

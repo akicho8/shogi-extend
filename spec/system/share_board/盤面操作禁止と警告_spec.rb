@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_ORDER => "a,b,c",
       })
     board_place("11").click
-    assert_text "対局するなら対局時計を押そう"
+    assert_text "対局するなら時計を押そう"
     assert_text "検討するならルール設定を切ろう"
   end
 

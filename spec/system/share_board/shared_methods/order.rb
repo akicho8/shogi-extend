@@ -23,7 +23,7 @@ module SharedMethods
     find("button", text: "確定せずに閉じる", exact_text: true).click
   end
 
-  # ルール設定と対局時計の右上の有効をトグルする
+  # ルール設定と時計の右上の有効をトグルする
   def os_switch_toggle
     Capybara.find(".modal .main_switch").click
   end

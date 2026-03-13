@@ -33,7 +33,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_selector(".GateModal")
   end
 
-  it "対局時計" do
+  it "時計" do
     visit_app
     Capybara.current_session.active_element.send_keys("3")
     assert_selector(".ClockBoxModal")

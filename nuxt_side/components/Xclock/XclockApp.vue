@@ -138,7 +138,7 @@ export default {
     }
   },
   mounted() {
-    this.app_log("対局時計")
+    this.app_log("時計")
     if (this.development_p) {
     } else {
       // this.$refs.XclockAppFooter.$refs.preset_menu_pull_down.toggle()
@@ -193,7 +193,7 @@ export default {
       } else {
         this.full_screen.on()
         this.sfx_play("start")
-        this.app_log("対局時計●")
+        this.app_log("時計●")
         this.say(this.play_talk_message())
         this.clock_box.play_handle()
         this.behavior_notify("play")
@@ -285,7 +285,7 @@ export default {
       this.clock_box.rule_set_all(params)
     },
     behavior_notify(behavior) {
-      this.app_log({emoji: ":目覚まし時計:", subject: "対局時計単体", body: behavior})
+      this.app_log({emoji: ":目覚まし時計:", subject: "時計単体", body: behavior})
     },
   },
   computed: {

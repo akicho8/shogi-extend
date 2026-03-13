@@ -48,7 +48,7 @@ module SharedMethods
 
   def clock_open
     sidebar_open
-    cc_modal_open_handle             # 「対局時計」モーダルを開く
+    cc_modal_open_handle             # 「時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
     clock_switch_toggle          # 設置する
     assert_clock_on             # 時計が設置された
@@ -58,16 +58,16 @@ module SharedMethods
     find(".ClockBoxModal .close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
   end
 
-  # ルール設定済みの状態で対局時計を設置してPLAY押して閉じる
+  # ルール設定済みの状態で時計を設置してPLAY押して閉じる
   def clock_start
-    clock_open                            # 対局時計を開いて
+    clock_open                            # 時計を開いて
     clock_play_button_click               # 開始
     cc_modal_close
   end
 
-  # ルール設定をしよう状態で対局時計を設置してPLAY押して閉じる
+  # ルール設定をしよう状態で時計を設置してPLAY押して閉じる
   def clock_start_force
-    clock_open                                     # 対局時計を開いて
+    clock_open                                     # 時計を開いて
     clock_play_button_click                     # 開始
     cc_modal_close
   end

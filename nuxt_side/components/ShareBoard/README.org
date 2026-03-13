@@ -154,11 +154,11 @@
 
    http://localhost:4000/share-board?room_key=dev_room&MEMBER_IS_LOOK_AWAY=true
 
-** 対局時計をONにして起動する(あと持ち時間0)
+** 時計をONにして起動する(あと持ち時間0)
 
    http://localhost:4000/share-board?autoexec=cc_create,cc_modal_open_handle&clock_box.initial_main_min=0
 
-** ルール設定済み + 対局時計ON
+** ルール設定済み + 時計ON
 
    http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a,b&autoexec=cc_create
 
@@ -186,7 +186,7 @@
 
    http://localhost:4000/share-board?room_key=dev_room&user_name=ありす&FIXED_MEMBER=ありす,きゃろる&FIXED_ORDER=ありす,ぼぶ,きゃろる&room_after_create=order_modal_open_handle
 
-** ルール設定と対局時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
+** ルール設定と時計をセットした状態で開始する (自分vs自分なので余計なエラーなし)
 
     http://localhost:4000/share-board?room_key=a&user_name=a&FIXED_ORDER=a&room_after_create=cc_auto_start
 

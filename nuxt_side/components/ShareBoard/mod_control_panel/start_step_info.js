@@ -19,7 +19,7 @@ export class StartStepInfo extends ApplicationMemoryRecord {
       },
       {
         key: "cc_modal_open_handle",
-        name: "対局時計",
+        name: "時計",
         icon: "mdi-numeric-3-circle-outline",
         todo_p: "step3_todo_p",
         done_p: "step3_done_p",

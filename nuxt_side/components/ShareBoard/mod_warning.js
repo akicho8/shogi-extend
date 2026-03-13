@@ -44,7 +44,7 @@ export const mod_warning = {
       if (message == null) {
         if (this.inconsistency_order_only) {
           message = [
-            `対局するなら対局時計を押そう`,
+            `対局するなら時計を押そう`,
             `検討するならルール設定を切ろう`,
           ]
         }

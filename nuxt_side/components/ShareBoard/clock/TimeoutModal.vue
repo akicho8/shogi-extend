@@ -35,7 +35,7 @@ export default {
   },
   // mounted() {
   //   if (!this.clock_running_p) {
-  //     this.SB.tl_alert("対局時計は設定されていません")
+  //     this.SB.tl_alert("時計は設定されていません")
   //   }
   // },
   // watch: {

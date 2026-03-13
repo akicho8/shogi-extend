@@ -1,7 +1,7 @@
 <template lang="pug">
 .panel.ClockBoxInspector
   .panel-heading
-    | 対局時計 {{clock_box.human_status}}
+    | 時計 {{clock_box.human_status}}
   .panel-block
     .block
       .level.is-mobile

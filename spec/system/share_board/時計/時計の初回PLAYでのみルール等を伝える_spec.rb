@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_c { room_setup_by_user(:c) }
     window_b do
       order_set_on                                   # ルール設定ON
-      clock_start                                    # 対局時計 PLAY
+      clock_start                                    # 時計 PLAY
     end
     window_a do
       assert_text("aから開始をaだけに通知")          # 最初はaさんから開始

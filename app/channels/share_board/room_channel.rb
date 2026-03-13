@@ -95,7 +95,7 @@ module ShareBoard
         data["member_data"],
         data["current_url"],
       ].compact
-      track(data, subject: "対局時計", body: message, emoji: ":対局時計:", level: data["log_level"])
+      track(data, subject: "時計", body: message, emoji: ":時計:", level: data["log_level"])
       broadcast(:clock_box_share_broadcasted, data)
     end
 

@@ -2,7 +2,7 @@
 .SbDebugClock.column.is-2
   .panel
     .panel-heading
-      | 対局時計
+      | 時計
     a.panel-block.cc_read_koreyori(@click="SB.cc_read_koreyori(30)") [発声] 秒読みモード突入時
     a.panel-block.cc_extra_koreyori(@click="SB.cc_extra_koreyori(30)") [発声] 考慮時間モード突入時
     a.panel-block.cc_byoyomi(@click="SB.cc_byoyomi(5)") [発声] 5 (残り5秒)
