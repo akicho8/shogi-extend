@@ -115,6 +115,13 @@ export class HandleNameValidator {
         }
       }
 
+      // 文章を書くな
+      if (message == null) {
+        if (this.normalized_name.match(/.(しています|します|です|である)$/)) {
+          message = `それは${this.options.name}ではなく文章です`
+        }
+      }
+
       // 卑猥な用語を入れるやつを弾く
       if (message == null) {
         if (this.target_strs.some(it => it.match(new RegExp(HandleNameNgWordCommonList.join("|"), "i")))) {

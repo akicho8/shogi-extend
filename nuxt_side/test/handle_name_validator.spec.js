@@ -131,6 +131,7 @@ describe("HandleNameValidator", () => {
   test("文章を書いているのはダメ", () => {
     expect(HandleNameValidator.valid_p("よろしく。")).toEqual(false)
     expect(HandleNameValidator.valid_p("致します")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ありすです")).toEqual(false)
   })
 
   test("絵文字のみはダメ", () => {
