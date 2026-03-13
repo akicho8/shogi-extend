@@ -36,7 +36,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       window_a { assert_text "いさぎよく投了しますか？" }
 
       # 個別
-      window_b { assert_text "bさんは「待った」で反則をなかったことにできます" }
+      window_b { assert_text "bさんは「待った」で反則を取り消せます" }
       window_c { assert_text "cさんは仲間なので待ったできます" }
     end
 
@@ -45,7 +45,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_a { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "aさんが自分の反則をなかったことにしました"
+          assert_text "aさんが臆面もなく自分の反則を取り消しました"
           assert_takeback_success
         }
         window_a { fn.call }
@@ -67,7 +67,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_b { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "bさんがお情けで反則をなかったことにしました"
+          assert_text "bさんがお情けで反則を取り消しました"
           assert_takeback_success
         }
         window_a { fn.call }
@@ -90,7 +90,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_c { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "cさんが仲間の反則をなかったことにしました"
+          assert_text "cさんが仲間の反則を取り消しました"
           assert_takeback_success
         }
         window_a { fn.call }
@@ -130,7 +130,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     it "投了する" do
       case2
       window_c do
-        assert_text "cさんは観戦者ですが「待った」で反則をなかったことにできます"
+        assert_text "cさんは観戦者ですが「待った」で反則を取り消せます"
 
         find(".illegal_takeback_modal_submit_handle_resign").click
         assert_resign_ng
@@ -142,7 +142,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       case2
       window_c { find(".illegal_takeback_modal_submit_handle_takeback").click }
       fn = -> {
-        assert_text "cさんが反則をなかったことにしました"
+        assert_text "cさんが反則を取り消しました"
         assert_takeback_success
       }
       window_a { fn.call }

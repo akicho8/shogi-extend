@@ -3,6 +3,7 @@
   .modal-card-head
     .modal-card-title
       | {{SB.latest_illegal_name}}
+
   .modal-card-body
     CustomShogiPlayer.CustomShogiPlayerInsideModal(
       v-if="SB.debug_mode_p"
