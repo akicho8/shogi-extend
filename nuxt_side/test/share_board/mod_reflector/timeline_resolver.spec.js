@@ -73,6 +73,7 @@ describe("TimelineResolver", () => {
       const timeline_resolver = TimelineResolver.create({old_sfen, old_turn: 2, new_sfen, to: 1})
       expect(timeline_resolver.sfen_go_back_p).toEqual(true)
       expect(timeline_resolver.master_sfen).toEqual(old_sfen)
+      expect(timeline_resolver.will_message).toEqual("1手目に戻す")
     })
 
     test("別の世界線の棋譜", () => {
@@ -81,12 +82,15 @@ describe("TimelineResolver", () => {
       const timeline_resolver = TimelineResolver.create({old_sfen, old_turn: 2, new_sfen, to: 1})
       expect(timeline_resolver.sfen_go_back_p).toEqual(false)
       expect(timeline_resolver.master_sfen).toEqual(new_sfen)
+      expect(timeline_resolver.will_message).toEqual("別の棋譜の1手目に移動する")
     })
   })
 
-  test("message_prefix", () => {
-    const timeline_resolver = case1({to: 0, message_prefix: "(message_prefix)"})
-    expect(timeline_resolver.will_message).toEqual("(message_prefix)初期配置に戻す")
+  test("message_prefix オプションは「別の棋譜の」に勝つ", () => {
+    const old_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d"
+    const new_sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2f"
+    const timeline_resolver = TimelineResolver.create({old_sfen, old_turn: 2, new_sfen, to: 1, message_prefix: "(message_prefix)"})
+    expect(timeline_resolver.will_message).toEqual("(message_prefix)1手目に移動する")
   })
 
   test("fast_forward が無効な場合、本線を考慮しなくなる", () => {

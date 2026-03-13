@@ -23,7 +23,7 @@ export class TimelineResolver {
   constructor(params = {}) {
     params = {
       fast_forward: true,
-      message_prefix: "",
+      message_prefix: null,
       ...params,
     }
 
@@ -89,11 +89,19 @@ export class TimelineResolver {
     return this.new_turn === 0
   }
 
+  // this.message_prefix が有効であれば優先的にそれを使う
+  // その設定がないとき、別の棋譜のとき
+  get message_prefix_default() {
+    if (this.sfen_another_p) {
+      return "別の棋譜の"
+    }
+  }
+
   get will_message() {
     let str = null
     if (str == null) {
       if (this.sfen_another_p) {
-        str = `別の棋譜の${this.new_turn}手目に移動する`
+        str = `${this.new_turn}手目に移動する`
       }
     }
     if (str == null) {
@@ -106,18 +114,18 @@ export class TimelineResolver {
     //     str = `最後に移動する`
     //   }
     // }
-    if (false) {
-      if (str == null) {
-        if (this.sfen_go_back_p) {
-          str = `${this.new_turn}手目(過去)に移動する` // old_sfen をマスターにしたからといって移動先が「過去」とは限らないため「過去」と表現すると混乱させてしまう
-        }
-      }
-      if (str == null) {
-        if (this.sfen_go_forward_p) {
-          str = `${this.new_turn}手目(未来)に移動する` // new_sfen をマスターにしたからといって移動先が「未来」とは限らないため「未来」と表現すると混乱させてしまう
-        }
-      }
-    }
+    // if (false) {
+    //   if (str == null) {
+    //     if (this.sfen_go_back_p) {
+    //       str = `${this.new_turn}手目(過去)に移動する` // old_sfen をマスターにしたからといって移動先が「過去」とは限らないため「過去」と表現すると混乱させてしまう
+    //     }
+    //   }
+    //   if (str == null) {
+    //     if (this.sfen_go_forward_p) {
+    //       str = `${this.new_turn}手目(未来)に移動する` // new_sfen をマスターにしたからといって移動先が「未来」とは限らないため「未来」と表現すると混乱させてしまう
+    //     }
+    //   }
+    // }
     if (str == null) {
       if (this.to != null) {    // 絶対指定であれば
         if (this.turn_next_p) {
@@ -142,7 +150,7 @@ export class TimelineResolver {
       str = `${this.new_turn}手目に戻す`
     }
 
-    str = [this.message_prefix, str].join("")
+    str = [this.message_prefix ?? this.message_prefix_default, str].join("")
 
     return str
   }

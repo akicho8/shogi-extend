@@ -66,6 +66,8 @@ export const mod_reflector = {
       GX.assert_kind_of_hash(params)
       params = {
         __standalone_mode__: true,
+        __nullable_attributes__: ["message_prefix"],
+
         reflector_notify_scope_key: "rns_all", // 全員に通知する
         talk: true,                            // しゃべる
         sfx: true,                             // 設定音を出す
@@ -74,7 +76,7 @@ export const mod_reflector = {
 
         // for timeline_resolver_create
         ...this.current_sfen_and_turn,
-        message_prefix: "",
+        message_prefix: null,
         fast_forward: true,
 
         ...params,
