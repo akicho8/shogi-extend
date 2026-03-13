@@ -41,6 +41,11 @@ export const mod_general_setting = {
       })
       this.toast_primary(`${count}件の設定をデフォルトに戻しました`)
     },
+
+    illegal_setting_warn_message_handle() {
+      this.sfx_click()
+      this.toast_primary(`反則に関する設定はルール設定から行なってください`)
+    },
   },
   computed: {
     VolumeCommonUserScaleInfo() { return VolumeCommonUserScaleInfo                                    },
