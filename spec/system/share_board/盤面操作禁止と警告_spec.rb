@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  it "バトル設定をしたのに時計で対局開始せずに盤に触った (あるある)" do
+  it "バトル設定をしたのに時計で対戦開始せずに盤に触った (あるある)" do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a,b",

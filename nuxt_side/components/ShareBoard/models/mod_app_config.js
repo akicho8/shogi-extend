@@ -21,11 +21,11 @@ export const AppConfig = {
   STORAGE_KEY_SUFFIX_NEW: "/V1",              // localStorage のキーの新しいサフィックス 例: "/V1"
   STORAGE_KEY_SUFFIX_OLD: "",                 // localStorage のキーの古いサフィックス 例: "/V1"
 
-  // CLOCK_START_CONFIRM: false,                 // 途中の局面から対局開始した際に確認するか？
+  // CLOCK_START_CONFIRM: false,                 // 途中の局面から対戦開始した際に確認するか？
 
   foul_mode_ui_show: true,                    // 反則なしにできるようにする
 
-  think_mark_invite_watcher_count_skip: true, // 対局開始時には観戦者の数とかに関係なく思考印への導線ダイアログを表示する
+  think_mark_invite_watcher_count_skip: true, // 対戦開始時には観戦者の数とかに関係なく思考印への導線ダイアログを表示する
 
   avatar: {
     profile_image_first_use: true,            // プロフィール画像を優先的に使うか？

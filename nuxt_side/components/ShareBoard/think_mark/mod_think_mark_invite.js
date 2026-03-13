@@ -12,7 +12,7 @@ export const mod_think_mark_invite = {
   },
   methods: {
     // 思考印を使ってみないか促す
-    // 対局開始時呼ばれる
+    // 対戦開始時呼ばれる
     think_mark_invite_trigger() {
       if (this.think_mark_invite_feature_p) {
         if (this.i_am_watcher_p) {

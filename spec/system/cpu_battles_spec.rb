@@ -16,7 +16,7 @@ RSpec.describe "CPU対戦", type: :system do
     visit_to "/cpu-battle"
     first(:xpath, "//span[text()='平手']").click
     first(:xpath, "//span[text()='ルールわかってない']").click
-    find(".start_handle").click                  # 対局開始
+    find(".start_handle").click                  # 対戦開始
 
     # 1手目「79の銀を68に移動」
     first(".place_7_9").click

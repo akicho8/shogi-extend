@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_app(clock_speed: 60, autoexec: "cc_create,cc_modal_open_handle")
 
-    # 対局開始から一時停止で経過時間を表示する
+    # 対戦開始から一時停止で経過時間を表示する
 
     find(".play_button").click
     assert_selector(".clock_box_human_status", text: "動作中", exact_text: true)

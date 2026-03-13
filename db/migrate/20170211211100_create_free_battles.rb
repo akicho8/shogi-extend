@@ -45,7 +45,7 @@ class CreateFreeBattles < ActiveRecord::Migration[5.1]
       t.text :sfen_body,        null: false, limit: 65535,                                               comment: "SFEN形式"
       t.integer :turn_max,      null: false, index: true,                                                   comment: "手数"
       t.text :meta_info,        null: false,                                                                comment: "棋譜メタ情報"
-      t.datetime :battled_at,   null: false, index: true,                                                   comment: "対局開始日時"
+      t.datetime :battled_at,   null: false, index: true,                                                   comment: "対戦開始日時"
       t.string :use_key,        null: false, index: true
       t.datetime :accessed_at,  null: false, index: true, comment: "最終参照日時"
       t.belongs_to :user,       null: true, index: true

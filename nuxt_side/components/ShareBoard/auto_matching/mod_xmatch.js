@@ -290,7 +290,7 @@ export const mod_xmatch = {
 
     // 選択解除
     xmatch_rule_key_reset() {
-      this.current_xmatch_rule_key = null // 基本モーダル内で使うだけなので対局開始と同時に選択していない状態にしておく
+      this.current_xmatch_rule_key = null // 基本モーダル内で使うだけなので対戦開始と同時に選択していない状態にしておく
       this.xmatch_interval_counter.stop()
     },
 
