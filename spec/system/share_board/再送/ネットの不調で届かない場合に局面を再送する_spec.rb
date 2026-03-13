@@ -49,7 +49,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
   end
 
-  it "再送モーダル表示中にbが落ちたことに気づいてルール設定から除外して同期したタイミングでモーダルとタイマーを消す" do
+  it "再送モーダル表示中にbが落ちたことに気づいてバトル設定から除外して同期したタイミングでモーダルとタイマーを消す" do
     @RESEND_DELAY  = 0  # 0秒後に返信をチェックするのですぐにダイアログ表示
     @RESEND_SUCCESS_DELAY = -1 # 応答しない
     case1

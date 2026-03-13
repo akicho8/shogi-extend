@@ -131,7 +131,7 @@ export const mod_avatar = {
     pentagon_appearance_info() { return this.PentagonAppearanceInfo.fetch(this.pentagon_appearance_key) },
 
     // ☗☖をアバターに置き換えることが可能か？
-    // ・ルール設定している
+    // ・バトル設定している
     // ・対局者が1人以上いること (this.vs_member_infos.length >= 1) ← やめ
     // これをフラグにして class に定義することで css 側で記述できる
     pentagon_to_avatar_finally_on() {

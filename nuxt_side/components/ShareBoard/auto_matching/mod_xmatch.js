@@ -181,18 +181,18 @@ export const mod_xmatch = {
         this.xmatch_modal_close()
       }
       await this.xmatch_setup4_join(params) // 部屋に入る
-      this.xmatch_setup1_member(params)     // ルール設定
+      this.xmatch_setup1_member(params)     // バトル設定
       this.xmatch_setup2_handicap(params)   // 手合割
       this.xmatch_setup3_clock(params)      // チェスクロック
       this.xmatch_setup5_call(params)       // 「開始しよう」コール
       this.xmatch_setup6_title(params)      // タイトル変更
     },
 
-    // ルール設定
+    // バトル設定
     xmatch_setup1_member(params) {
       const names = params.members.map(e => e.from_user_name)
       this.os_setup_by_names(names)
-      this.tl_add("ルール設定", names, this.order_flow)
+      this.tl_add("バトル設定", names, this.order_flow)
     },
     // 手合割と視点設定
     xmatch_setup2_handicap(params) {

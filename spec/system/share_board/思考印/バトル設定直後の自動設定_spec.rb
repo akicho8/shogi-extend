@@ -10,13 +10,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
   end
 
-  it "ルール設定モーダルから明示的に共有したタイミングでのみ印モードが対局者はOFFで観戦者はONになる" do
+  it "バトル設定モーダルから明示的に共有したタイミングでのみ印モードが対局者はOFFで観戦者はONになる" do
     # 変化したか分からないため想定値の逆の値にしておく
     window_a { case1("a", "true")  }
     window_b { case1("b", "true")  }
     window_c { case1("c", "false") }
 
-    # ルール設定を適用する
+    # バトル設定を適用する
     window_a do
       order_modal_open
       order_modal_force_submit

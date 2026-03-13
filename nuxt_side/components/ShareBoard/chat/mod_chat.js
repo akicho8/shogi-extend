@@ -133,7 +133,7 @@ export const mod_chat = {
       }
     },
 
-    // ルール設定OFFになっていたら自動的にチャットの送信先スコープを「全体宛」に戻す
+    // バトル設定OFFになっていたら自動的にチャットの送信先スコープを「全体宛」に戻す
     order_off_then_message_scope_key_set_public() {
       if (!this.order_enable_p) {
         this.message_scope_key = "ms_public"
@@ -164,7 +164,7 @@ export const mod_chat = {
         return this.watching_member_count >= 1
       }
 
-      // 単にルール設定しているなら
+      // 単にバトル設定しているなら
       if (true) {
         return this.order_enable_p
       }

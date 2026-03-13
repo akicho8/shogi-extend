@@ -2,7 +2,7 @@ Top 20 slowest example groups:
   共有将棋盤
     18.76 seconds average (1650.61 seconds / 88 examples) ./spec/system/share_board/main_spec.rb:3
   {:type=>:system, :share_board_spec=>true}
-    14.34 seconds average (14.34 seconds / 1 example) ./spec/system/share_board/ルール設定のシャッフル_spec.rb:3
+    14.34 seconds average (14.34 seconds / 1 example) ./spec/system/share_board/バトル設定のシャッフル_spec.rb:3
   カスタム検索
     11.79 seconds average (23.58 seconds / 2 examples) ./spec/system/swars/custom_search_spec.rb:3
   動画詳細

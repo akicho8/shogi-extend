@@ -5,7 +5,7 @@
       | 部屋のリンクをコピーしますか？
   .modal-card-body
     p 対戦相手に伝えるとスムーズに誘導できます
-    p そのあとは<b>ルール設定</b>と<b>時計</b>で対局開始です
+    p そのあとは<b>バトル設定</b>と<b>時計</b>で対局開始です
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.apply_button(@click="apply_handle" type="is-primary") コピーする

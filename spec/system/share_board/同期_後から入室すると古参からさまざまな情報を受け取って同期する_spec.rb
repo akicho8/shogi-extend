@@ -15,7 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       end
     end
   end
-  describe "ルール設定" do
+  describe "バトル設定" do
     it "works" do
       window_a do
         visit_room(user_name: :a, FIXED_ORDER: "a,b")

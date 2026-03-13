@@ -39,12 +39,12 @@ export const mod_think_mark_support = {
         return true
       }
 
-      // ルール設定をしていない状態では誰でも受信できる
+      // バトル設定をしていない状態では誰でも受信できる
       if (!this.order_enable_p) {
         return true
       }
 
-      // ルール設定をしている状態では設定に従う
+      // バトル設定をしている状態では設定に従う
       if (this.order_enable_p) {
         if (this.think_mark_receive_scope_info._if(this, params)) {
           return true
@@ -83,7 +83,7 @@ export const mod_think_mark_support = {
       }
     },
 
-    // ルール設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
+    // バトル設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
     think_mark_auto_set() {
       const before_value = this.think_mark_mode_p
       // if (!this.think_mark_mode_global_p) {

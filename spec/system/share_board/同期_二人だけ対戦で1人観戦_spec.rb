@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { room_setup_by_user(:b)   }         # b も同じ部屋に入る
     window_c { room_setup_by_user(:c) }         # carolは観戦目的で入る
     window_a do
-      order_modal_open                                 # 「ルール設定」モーダルを開く
+      order_modal_open                                 # 「バトル設定」モーダルを開く
       os_switch_toggle                              # 有効スイッチをクリック
       drag_to_watch("is_team_black", 1)                 # 黒の[1]にいる c を観戦に移動する
       os_submit_button_click                        # 適用クリック

@@ -54,7 +54,7 @@
             .sc_buttons
               b-tag(type="is-primary") 1
           .sc_item
-            .sc_label ルール設定
+            .sc_label バトル設定
             .sc_buttons
               b-tag(type="is-primary") o
               | or

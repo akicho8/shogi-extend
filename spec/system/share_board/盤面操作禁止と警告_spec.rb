@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
-  it "ルール設定をしたのに時計で対局開始せずに盤に触った (あるある)" do
+  it "バトル設定をしたのに時計で対局開始せずに盤に触った (あるある)" do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a,b",
@@ -9,20 +9,20 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     board_place("11").click
     assert_text "対局するなら時計を押そう"
-    assert_text "検討するならルール設定を切ろう"
+    assert_text "検討するならバトル設定を切ろう"
   end
 
-  # 本番では「ルール設定」→「時計」の順で設定してもらうのでこうなることはないのだが、よそ見の影響でこの不整合状態になる場合がある
-  # 具体的にはルール設定したホストAがよそ見して、ルール設定をしていないBの方がホストになってしまった場合に、
-  # B から情報を貰った A は、ルール設定が OFF に戻ってしまう。
-  it "時計は動いているのにルール設定がOFFの状態で盤に触った" do
+  # 本番では「バトル設定」→「時計」の順で設定してもらうのでこうなることはないのだが、よそ見の影響でこの不整合状態になる場合がある
+  # 具体的にはバトル設定したホストAがよそ見して、バトル設定をしていないBの方がホストになってしまった場合に、
+  # B から情報を貰った A は、バトル設定が OFF に戻ってしまう。
+  it "時計は動いているのにバトル設定がOFFの状態で盤に触った" do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a,b",
         :room_after_create => :cc_auto_start_10m,
       })
     board_place("11").click
-    assert_text "対局する場合はルール設定しよう"
+    assert_text "対局する場合はバトル設定しよう"
   end
 
   it "自分は観戦者なのに盤に触った" do
@@ -49,8 +49,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_text "bさんは次です"
   end
 
-  # 本番のルール設定のUIではそれぞれのチームに最低1人入れないといけないのでこの警告がでることはない
-  it "「今は○○さんの手番です」と警告を出したいのだがルール設定の現在手番に該当する人が設定されていない" do
+  # 本番のバトル設定のUIではそれぞれのチームに最低1人入れないといけないのでこの警告がでることはない
+  it "「今は○○さんの手番です」と警告を出したいのだがバトル設定の現在手番に該当する人が設定されていない" do
     visit_room({
         :user_name => "a",
         :FIXED_MEMBER => "a",
@@ -59,6 +59,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :room_after_create => :cc_auto_start_10m,
       })
     board_place("11").click
-    assert_text "ルール設定で対局者の指定がないので誰も操作できません"
+    assert_text "バトル設定で対局者の指定がないので誰も操作できません"
   end
 end

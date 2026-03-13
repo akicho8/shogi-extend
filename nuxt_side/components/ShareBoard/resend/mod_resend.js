@@ -126,7 +126,7 @@ export const mod_resend = {
       }
     },
 
-    // 次の人をルール設定から除外する (デバッグ用)
+    // 次の人をバトル設定から除外する (デバッグ用)
     resend_next_member_delete() {
       this.os_member_delete(this.resend_next_user_name)
     },

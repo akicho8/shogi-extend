@@ -57,7 +57,7 @@ export const mod_player_names = {
     // | black  | alice,bob                  | ▲       |                                    |
     // | white  | carol,eve                  | △       |                                    |
     // | other  | justin                     | 観戦     |                                    |
-    // | member | alice,bob,carol,eve,justin | メンバー | ルール設定してないとすべてここに入る |
+    // | member | alice,bob,carol,eve,justin | メンバー | バトル設定してないとすべてここに入る |
     // |--------+----------------------------+----------+------------------------------------|
     player_names_from_member() {
       const av = {
@@ -73,10 +73,10 @@ export const mod_player_names = {
         let index = this.member_infos.length
         if (location) {
           key = location.key
-          index = this.name_to_turns_hash[name][0] // ルール設定から自分の番号(0..)を取得
+          index = this.name_to_turns_hash[name][0] // バトル設定から自分の番号(0..)を取得
         } else {
           if (this.order_enable_p) {
-            key = "other"       // ルール設定されているけど順番に含まれていないということは観戦している人
+            key = "other"       // バトル設定されているけど順番に含まれていないということは観戦している人
           } else {
             key = "member"
           }

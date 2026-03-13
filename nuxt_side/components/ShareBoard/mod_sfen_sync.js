@@ -180,7 +180,7 @@ export const mod_sfen_sync = {
     },
 
     next_turn_call(params) {
-      if (params.next_user_name) {                       // ルール設定しているときだけ入っている
+      if (params.next_user_name) {                       // バトル設定しているときだけ入っている
         if (this.tn_bell_call_p) {
           if (this.next_is_self_p(params)) {
             this.tn_bell_call()

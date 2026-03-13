@@ -79,7 +79,7 @@ export const mod_chat_message_list = {
 
     // 表示してもよいか？
     ml_show_p(record) {
-      if (!this.order_enable_p) {                      // そもそもルール設定をしてないなら見える
+      if (!this.order_enable_p) {                      // そもそもバトル設定をしてないなら見える
         return true
       }
       if (this.received_from_self(record)) {           // 自分が送信者なら状況に限らず見える

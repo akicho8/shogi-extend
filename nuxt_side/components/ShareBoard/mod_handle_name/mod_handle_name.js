@@ -16,7 +16,7 @@ export const mod_handle_name = {
       this.handle_name_modal_open()
     },
 
-    // 本当はルール設定してなければ問題ないけどややこしくなるので退室してもらう
+    // 本当はバトル設定してなければ問題ないけどややこしくなるので退室してもらう
     handle_name_alert() {
       this.sidebar_close()
       this.sfx_click()
