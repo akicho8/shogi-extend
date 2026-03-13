@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class SendTriggerInfo extends ApplicationMemoryRecord {
-  static field_label = "チャットの発言の送信方法"
+  static field_label = "メッセージ送信"
   static field_message = "チャットの発言をどのキーで送信できるようにするか？"
 
   static get define() {
