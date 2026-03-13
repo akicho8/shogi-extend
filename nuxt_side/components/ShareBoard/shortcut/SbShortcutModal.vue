@@ -85,10 +85,6 @@
             .sc_label 手合割
             .sc_buttons
               b-tag(type="is-primary") i
-          .sc_item
-            .sc_label アバター設定
-            .sc_buttons
-              b-tag(type="is-primary") a
 
       .column.is-half-desktop.is-half-tablet
         .sc_title 思考印
@@ -125,7 +121,7 @@
             .sc_buttons
               b-tag(type="is-primary") \
   .modal-card-foot
-    b-button.shortcut_modal_close_handle(@click="SB.shortcut_modal_close_handle") 閉じる
+    b-button.shortcut_modal_close_handle(@click="SB.shortcut_modal_close_handle" icon-left="chevron-left")
 </template>
 
 <script>
@@ -185,9 +181,6 @@ export default {
               font-weight: bold
 
   ////////////////////////////////////////////////////////////////////////////////
-
-  .modal-card-foot
-    flex-direction: row-reverse
 
 .STAGE-development
   .SbShortcutModal
