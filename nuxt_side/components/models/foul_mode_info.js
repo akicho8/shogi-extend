@@ -20,7 +20,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       {
         key: "lose",
         name: "したら負け",
-        message: "正統な紳士ルール (推奨)",
+        message: "紳士ルール (推奨)",
         battle_start_message: "反則は即負けの紳士ルールです",
         type: "is-primary",
         sp_illegal_validate: true,
