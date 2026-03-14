@@ -36,7 +36,7 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
   .box
     b-field(label="検討")
       .button_elements
-        b-button.kifu_copy_handle_kif_utf8(@click="SB.kifu_copy_handle('kif_utf8')") コピー
+        b-button.kifu_copy_handle_main(@click="SB.kifu_copy_handle('kif_utf8')") コピー
         b-button(tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
         b-button(tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
 
@@ -66,19 +66,19 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
         .button_elements
           template(v-for="e in SB.FormatTypeInfo.values")
             template(v-if="e.clipboard")
-              b-button(@click="SB.kifu_copy_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
+              b-button(@click="SB.kifu_copy_handle(e)" v-text="e.name_with_turn(SB.current_turn)" :class="['kifu_copy_handle', e.key]")
 
       b-field(custom-class="is-small" label="ダウンロード")
         .button_elements
           template(v-for="e in SB.FormatTypeInfo.values")
             template(v-if="e.show")
-              b-button(tag="a" :href="SB.kifu_download_url(e)" @click.prevent="SB.kifu_download_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
+              b-button(tag="a" :href="SB.kifu_download_url(e)" @click.prevent="SB.kifu_download_handle(e)" v-text="e.name_with_turn(SB.current_turn)" :class="['kifu_download_url', e.key]")
 
       b-field(custom-class="is-small" label="表示")
         .button_elements
           template(v-for="e in SB.FormatTypeInfo.values")
             template(v-if="e.show")
-              b-button(tag="a" :href="SB.kifu_show_url(e)" @click.prevent="SB.kifu_show_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
+              b-button(tag="a" :href="SB.kifu_show_url(e)" @click.prevent="SB.kifu_show_handle(e)" v-text="e.name_with_turn(SB.current_turn)" :class="['kifu_show_url', e.key]")
 
       b-field(custom-class="is-small" label="他")
         .button_elements

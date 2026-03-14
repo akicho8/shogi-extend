@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "未ログイン" do
     visit_app
     sidebar_open
-    menu_item_click("メール送信")
+    find(".kifu_mail_handle").click
     assert_text("ログインしてメールアドレスを適切に設定していると使えます")
   end
 
@@ -12,7 +12,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     login
     visit_app
     sidebar_open
-    menu_item_click("メール送信")
+    find(".kifu_mail_handle").click
     assert_text("shogi.extend@gmail.com 宛に送信しました")
   end
 end

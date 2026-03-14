@@ -9,7 +9,7 @@ module SharedMethods
 
   def room_recreate_apply
     sidebar_open
-    menu_item_click("再起動")     # モーダルを開く
+    find(".room_recreate_modal_open_handle").click
     apply_button  # 実行する
   end
 
@@ -19,7 +19,7 @@ module SharedMethods
 
   def kifu_read_run
     sidebar_open
-    menu_item_click("棋譜の読み込み")
+    find(".kifu_read_modal_open_handle").click
     find(".KifuReadModal textarea").set("68S", clear: :backspace)
     find(".KifuReadModal .submit_handle").click
   end

@@ -6,11 +6,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { visit_app(user_name: :b) }
     window_a do
       sidebar_open
-      menu_item_click("自動マッチング")                # モーダルを開く
+      find(".xmatch_modal_handle").click                # モーダルを開く
     end
     window_b do
       sidebar_open
-      menu_item_click("自動マッチング")                # モーダルを開く
+      find(".xmatch_modal_handle").click                # モーダルを開く
     end
     window_a do
       find(".rule_1vs1_05_00_00_5_pRvsB").click         # 飛vs角を選択
@@ -45,7 +45,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       visit_app(user_name: :a)
 
       sidebar_open
-      menu_item_click("自動マッチング")               # モーダルを開く
+      find(".xmatch_modal_handle").click               # モーダルを開く
       find(".rule_self_05_00_00_5").click             # 自分vs自分
       xmatch_modal_close
       assert_room_created
@@ -61,7 +61,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       visit_app(user_name: :a, xmatch_wait_max: @xmatch_wait_max)
 
       sidebar_open
-      menu_item_click("自動マッチング")          # モーダルを開く
+      find(".xmatch_modal_handle").click          # モーダルを開く
       find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
       sleep(@xmatch_wait_max)

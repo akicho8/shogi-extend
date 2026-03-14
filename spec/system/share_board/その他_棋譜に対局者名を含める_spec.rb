@@ -12,10 +12,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "部屋を立てていないときはURLから取得する" do
     visit_app(title: "(title)", black: "(a)")
     sidebar_open
-    menu_item_sub_menu_click("棋譜表示")
-    switch_to_window_by do
-      menu_item_click("KIF")
-    end
+    switch_to_window_by { find(".kifu_show_url.kif_utf8").click }
     assert_text "棋戦：(title)"
     assert_text "先手：(a)"
   end
@@ -26,10 +23,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_c { case1(:c) }
     window_a do
       sidebar_open
-      menu_item_sub_menu_click("棋譜表示")
-      switch_to_window_by do
-        menu_item_click("KIF")
-      end
+      switch_to_window_by { find(".kifu_show_url.kif_utf8").click }
       assert_text "棋戦：(title)"
       assert_text "先手：a"
       assert_text "後手：b"
@@ -60,10 +54,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :title => "(title)",
       })
     sidebar_open
-    menu_item_sub_menu_click("棋譜表示")
-    switch_to_window_by do
-      menu_item_click("KIF")
-    end
+    switch_to_window_by { find(".kifu_show_url.kif_utf8").click }
     assert_text "棋戦：(title)"
     assert_text "先手：b, a"
     assert_text "後手：d, c"

@@ -4,14 +4,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "モーダルで開く" do
     visit_to("/share-board")
     sidebar_open
-    menu_item_click("使い方")
+    find(".general_help_modal_open_handle").click
     find(".close_handle").click
   end
 
   it "モーダルからパーマリンクで飛ぶ" do
     visit_to("/share-board")
     sidebar_open
-    menu_item_click("使い方")
+    find(".general_help_modal_open_handle").click
     switch_to_window_by do
       find(:link, :class => "permalink").click       # 固定URLを別タブで開く
     end

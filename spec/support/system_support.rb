@@ -215,6 +215,10 @@ if true
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
 
+    def menu_button_click(text)
+      find(".button", text: text, exact_text: true).click
+    end
+
     def sidebar_menu_item_click(text)
       sidebar_open
       menu_item_click(text)

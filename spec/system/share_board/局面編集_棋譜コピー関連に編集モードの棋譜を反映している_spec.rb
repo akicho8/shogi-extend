@@ -4,7 +4,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_app
     sidebar_open
-    menu_item_click("局面編集")
+    find(".edit_mode_set_handle").click
     find(".CustomShogiPlayer .ToolBelt .dropdown:first-child").click    # 左から1つ目の dropdown をクリック
     menu_item_sub_menu_click("詰将棋")
 

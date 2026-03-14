@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     resign_run
     sidebar_open
-    menu_item_click("対局履歴")
+    find(".general_dashboard_modal_handle").click
     within(".modal") do
       assert_text(:a)
       assert_text(:b)

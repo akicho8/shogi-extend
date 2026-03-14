@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { visit_room(user_name: :b)   }
     window_a do
       sidebar_open
-      menu_item_click("局面編集")
+      find(".edit_mode_set_handle").click
       find(:button, "理解した上で編集する").click
       piece_move("77", "76")
       find(".button", text: "編集完了", exact_text: true).click

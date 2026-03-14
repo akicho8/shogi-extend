@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { room_setup_by_user(:b) }
     window_a do
       sidebar_open
-      menu_item_click("手合割")
+      find(".board_preset_modal_open_handle").click
       board_preset_select("香落ち")
       board_preset_apply
     end
