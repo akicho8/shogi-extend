@@ -90,15 +90,15 @@
         .sc_title 思考印
         .sc_table
           .sc_item
-            .sc_label 思考印を書く / 消す
+            .sc_label 書く / 消す
             .sc_buttons
               b-tag(type="is-primary") 副ボタン
           .sc_item
-            .sc_label 思考印モードのトグル
+            .sc_label モードのトグル
             .sc_buttons
               b-tag(type="is-primary") m
           .sc_item
-            .sc_label 思考印の一括消去
+            .sc_label 一括消去
             .sc_buttons
               b-tag(type="is-primary") Escape
       .column.is-half-desktop.is-half-tablet

@@ -30,7 +30,6 @@ export const mod_board_preset = {
 
     // 適用ボタンを押したとき
     board_preset_apply_handle() {
-      this.sfx_click()
       this.board_preset_modal_close()
       this.reflector_call({message: `手合割を${this.board_preset_info.name}に設定しました`, sfen: this.board_preset_info.sfen, turn: 0})
     },
