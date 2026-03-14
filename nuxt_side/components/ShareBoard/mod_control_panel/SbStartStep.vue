@@ -1,10 +1,10 @@
 <template lang="pug">
 .SbStartStep.box
-  b-field(label="対局するには？")
+  b-field(custom-class="is-small" label="対局するには？")
     .wide_button_group
       template(v-for="e in SB.start_steps")
         //- https://buefy.org/documentation/button
-        b-button.is_active_unset(
+        b-button(
           :key="e.key"
           :class="[e.key, {todo_p: SB[e.todo_p], done_p: SB[e.done_p]}]"
           :focused="SB[e.todo_p]"
