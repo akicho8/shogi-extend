@@ -4,7 +4,7 @@ RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
   it "開く" do
     visit_to "/swars/search"
     sidebar_open
-    find(".board_preset_modal_open_handle").click
+    menu_item_click("よくある質問 (FAQ)")
     assert_current_path "/swars/search/help", ignore_query: true
   end
 
