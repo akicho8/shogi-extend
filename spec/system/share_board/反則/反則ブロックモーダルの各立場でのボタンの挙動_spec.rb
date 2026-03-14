@@ -45,7 +45,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         case2
         window_a { find(".illegal_takeback_modal_submit_handle_takeback").click }
         fn = -> {
-          assert_text "aさんが臆面もなく自分の反則を取り消しました"
+          assert_text "aさんが自分の反則を取り消しました"
           assert_takeback_success
         }
         window_a { fn.call }
