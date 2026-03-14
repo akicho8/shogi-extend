@@ -42,9 +42,14 @@ export const mod_general_setting = {
       this.toast_primary(`${count}件の設定をデフォルトに戻しました`)
     },
 
-    illegal_setting_warn_message_handle() {
+    how_to_illegal_setting_message_handle() {
       this.sfx_click()
       this.toast_primary(`反則に関する設定は対局設定から行なってください`)
+    },
+
+    how_to_half_turn_message_handle() {
+      this.sfx_click()
+      this.toast_primary(`盤の反転は持駒の上の☗☖をクリックしてください`)
     },
   },
   computed: {
