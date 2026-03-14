@@ -30,7 +30,7 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .SbHelpModal
-  +modal_width(800px)
+  +modal_max_width(80rem)
   .modal-card-body
     padding: 0
 </style>
