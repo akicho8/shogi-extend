@@ -1,5 +1,4 @@
 <template lang="pug">
-// なぜだかわからない b-menu-list.SbExport とはできない
 .SbExport
   b-menu-list(label="EXPORT")
     slot
