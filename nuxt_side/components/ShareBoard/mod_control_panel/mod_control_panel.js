@@ -5,6 +5,13 @@ export const mod_control_panel = {
   mixins: [
     mod_sidebar,
   ],
+
+  data() {
+    return {
+      export_menu_show: false,
+    }
+  },
+
   computed: {
     step1_todo_p() { return !this.ac_room                                                           },
     step1_done_p() { return this.ac_room                                                            },

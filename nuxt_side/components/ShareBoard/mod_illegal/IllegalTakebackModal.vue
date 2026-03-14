@@ -64,7 +64,6 @@ export default {
     flex-direction: column
     gap: 1rem
     // .CustomShogiPlayer
-    //   +foobarbaz
     // max-width: 28rem
     // +mobile
     //   max-width: 18rem

@@ -1,75 +1,117 @@
 <template lang="pug">
 //- https://buefy.org/documentation/sidebar
 b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
-  .mx-4.my-4
-    .is-flex.is-justify-content-space-between.is-align-items-center
-      NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
-      template(v-if="!SB.ac_room || !SB.i_am_member_p")
-        NavbarItemLogin(component="a")
-        NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
-    .mt-4
-      SbStartStep
+  .header
+    NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
+    template(v-if="!SB.ac_room || !SB.i_am_member_p")
+      NavbarItemLogin(component="a")
+      NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
 
-      b-menu
-        b-menu-list(label="局面操作")
-          //- 即実行
-          b-menu-item.is_active_unset.reflector_turn_zero_handle(__unuse__icon="page-first" label="初期配置に戻す"   @click="SB.reflector_turn_zero_handle" :class="SB.bold_if(SB.current_turn >= 1)")
-          b-menu-item.is_active_unset.reflector_turn_previous_handle(__unuse__icon="undo"   label="1手戻す (待った)" @click="SB.reflector_turn_previous_handle")
-          //- モーダル版
-          b-menu-item.is_active_unset.turn_change_to_zero_modal_open_handle(__unuse__icon="page-first"  label="初期配置に戻す"   @click="SB.turn_change_to_zero_modal_open_handle" :class="SB.bold_if(SB.current_turn >= 1)" v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset.turn_change_to_previous_modal_open_handle(__unuse__icon="undo"    label="1手戻す (待った)" @click="SB.turn_change_to_previous_modal_open_handle" v-if="SB.debug_mode_p")
+  SbStartStep
 
-        b-menu-list(label="対局サポート")
-          b-menu-item.is_active_unset(__unuse__icon="scale-balance"          label="手合割"               @click="SB.board_preset_modal_open_handle")
-          b-menu-item.is_active_unset(__unuse__icon="link"                   label="部屋のリンクのコピー" @click="SB.room_url_copy_handle")
-          b-menu-item.is_active_unset(__unuse__icon="heart"                  label="自動マッチング"       @click="SB.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
-          b-menu-item.is_active_unset(__unuse__icon="restart"                label="再起動"               @click="SB.room_recreate_modal_open_handle" v-if="SB.debug_mode_p")
+  .box
+    b-field(label="局面操作")
+      //- template(#message)
+      //-   | 初期配置に戻せば同じ部屋で何度も対戦できます
+      .button_elements
+        //- 即実行
+        b-button.reflector_turn_zero_handle(@click="SB.reflector_turn_zero_handle" :class="SB.bold_if(SB.current_turn >= 1)" :focused="SB.current_turn >= 1") 初期配置に戻す
+        b-button.reflector_turn_previous_handle(@click="SB.reflector_turn_previous_handle") 1手戻す
+        //- モーダル版
+        template(v-if="SB.debug_mode_p")
+          b-button.turn_change_to_zero_modal_open_handle(@click="SB.turn_change_to_zero_modal_open_handle" :class="SB.bold_if(SB.current_turn >= 1)") 初期配置に戻す
+          b-button.turn_change_to_previous_modal_open_handle(@click="SB.turn_change_to_previous_modal_open_handle") 1手戻す
+    p.help
+      | 部屋を作り直さなくても初期配置に戻して何度でも対戦できます。戻さなければ途中の局面から対戦できます。
 
-        b-menu-list(label="検討")
-          b-menu-item.is_active_unset(__unuse__icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="SB.kifu_copy_handle('kif_utf8')")
-          b-menu-item.is_active_unset(__unuse__icon="duck"                   label="ぴよ将棋"         :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p")
-          b-menu-item.is_active_unset(__unuse__icon="alpha-k-box-outline"    label="KENTO"            :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')")
+  .box
+    b-field(label="対局サポート")
+      .button_elements
+        b-button.board_preset_modal_open_handle(@click="SB.board_preset_modal_open_handle") 手合割
+        b-button.room_url_copy_handle(@click="SB.room_url_copy_handle") 部屋のリンクのコピー
+        template(v-if="SB.debug_mode_p")
+          b-button.xmatch_modal_handle(@click="SB.xmatch_modal_handle") 自動マッチング
+          b-button.room_recreate_modal_open_handle(@click="SB.room_recreate_modal_open_handle") 通信不調
 
-        b-menu-list(label="棋譜再生用パーマリンク")
-          b-menu-item.is_active_unset(__unuse__icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="SB.current_short_url_copy_handle" )
-          b-menu-item.is_active_unset(__unuse__icon="link" label="棋譜URLコピー" :href="SB.current_url" @click.prevent="SB.current_url_copy_handle" )
+  .box
+    b-field(label="検討")
+      .button_elements
+        b-button.kifu_copy_handle_kif_utf8(@click="SB.kifu_copy_handle('kif_utf8')") コピー
+        b-button(tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
+        b-button(tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
 
-        b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
-          b-menu-item.is_active_unset(__unuse__icon="import"             label="棋譜の読み込み" @click="SB.kifu_read_modal_open_handle()")
-          b-menu-item.is_active_unset(__unuse__icon="pencil-box-outline" label="局面編集"       @click="SB.edit_mode_set_handle")
+  .box
+    b-field(label="棋譜再生用URLのコピー")
+      .button_elements
+        b-button.current_short_url_copy_handle(@click.prevent="SB.current_short_url_copy_handle" ) 短縮版
+        b-button.current_url_copy_handle(tag="a" :href="SB.current_url" @click.prevent="SB.current_url_copy_handle") 通常版
+    p.help
+      | 他者と棋譜を共有したい場合は、棋譜データではなく、短縮版URLをおすすめします
 
-        SbExport(:base="SB")
-          b-menu-item.is_active_unset(__unuse__icon="image" :label="`画像ダウンロード #${SB.current_turn}`" @click.native="SB.image_download_modal_handle")
-          b-menu-item.is_active_unset(__unuse__icon="movie" label="動画変換" @click.native="SB.video_new_handle")
-          b-menu-item.is_active_unset(__unuse__icon="mail" label="メール送信" @click.native="SB.kifu_mail_handle")
+  .box
+    b-field(label="インポート")
+      .button_elements
+        b-button.kifu_read_modal_open_handle(@click="SB.kifu_read_modal_open_handle('')") 棋譜の読み込み
+        b-button.edit_mode_set_handle(@click="SB.edit_mode_set_handle") 局面編集
+    //- p.help
+    //-   | 詰将棋・課題局面・変則手合割の作成
 
-        b-menu-list(label="その他")
-          b-menu-item.is_active_unset(__unuse__icon="cog-outline" label="設定"                    @click="SB.general_setting_modal_open_handle")
+  .box.export_box
+    b-field(label="エクスポート")
+      b-radio-button(size="is-small" v-model="SB.export_menu_show" :native-value="false" @input="sfx_click()") しない
+      b-radio-button(size="is-small" v-model="SB.export_menu_show" :native-value="true" @input="sfx_click()") する
 
-          b-menu-item.is_active_unset(__unuse__icon="home" label="対局履歴" @click="SB.general_dashboard_modal_handle" :disabled="!SB.ac_room")
-          b-menu-item.is_active_unset(__unuse__icon="trophy" tag="nuxt-link" label="対局履歴(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.ac_room" v-if="development_p")
-          b-menu-item.is_active_unset(__unuse__icon="trophy" label="対局履歴(hrefで別タブ)" :href="SB.dashboard_url" target="_blank" :disabled="!SB.ac_room" v-if="development_p")
+    template(v-if="SB.export_menu_show")
+      b-field(custom-class="is-small" label="コピー")
+        .button_elements
+          template(v-for="e in SB.FormatTypeInfo.values")
+            template(v-if="e.clipboard")
+              b-button(@click="SB.kifu_copy_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
 
-          b-menu-item.is_active_unset(__unuse__icon="account-edit"   label="ハンドルネーム変更"   @click="SB.handle_name_modal_open_handle"  v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset(__unuse__icon="cat"            label="アバター設定"         @click="SB.avatar_input_modal_open_handle" v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset(__unuse__icon="pencil-outline" label="タイトル変更"         @click="SB.title_edit_handle"              v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset(__unuse__icon="cat"            label="スタイル設定"         @click="SB.appearance_modal_open_handle"   v-if="SB.debug_mode_p")
+      b-field(custom-class="is-small" label="ダウンロード")
+        .button_elements
+          template(v-for="e in SB.FormatTypeInfo.values")
+            template(v-if="e.show")
+              b-button(tag="a" :href="SB.kifu_download_url(e)" @click.prevent="SB.kifu_download_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
 
-          b-menu-item.is_active_unset(__unuse__icon="twitter" label="ツイートする"              @click="SB.tweet_modal_handle")
-          //- b-menu-item.is_active_unset(__unuse__icon="link"    label="ツイートリンクのコピー"    @click="SB.current_url_copy_handle")
-          b-menu-item.is_active_unset(__unuse__icon="help-circle-outline" label="使い方"                      @click="SB.general_help_modal_open_handle")
-          b-menu-item.is_active_unset.is-hidden-mobile(__unuse__icon="keyboard-outline" label="ショートカット"                      @click="SB.shortcut_modal_open_handle")
-          b-menu-item.is_active_unset(__unuse__icon="bug-outline" label="デバッグ用ログ"              @click="SB.tl_modal_open_handle" v-if="development_p")
-          b-menu-item.is_active_unset(__unuse__icon="page-first" label="URLを開いたときの局面に戻す" @click="SB.reset_handle" :disabled="!SB.ac_room" v-if="development_p")
-          b-menu-item.is_active_unset(__unuse__icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sfx_click()" v-if="development_p")
+      b-field(custom-class="is-small" label="表示")
+        .button_elements
+          template(v-for="e in SB.FormatTypeInfo.values")
+            template(v-if="e.show")
+              b-button(tag="a" :href="SB.kifu_show_url(e)" @click.prevent="SB.kifu_show_handle(e)" v-text="e.name_with_turn(SB.current_turn)")
 
-      .box.mt-5(v-if="SB.debug_mode_p")
-        b-field(label="音が出なくなったら？")
-          b-button(@click="SB.audio_unlock_all_with_rooster") 音復活
+      b-field(custom-class="is-small" label="他")
+        .button_elements
+          b-button.image_download_modal_handle(@click="SB.image_download_modal_handle" v-text="`画像 #${SB.current_turn}`")
+          b-button.video_new_handle(@click="SB.video_new_handle") 動画変換
+          b-button.kifu_mail_handle(@click="SB.kifu_mail_handle") メール送信
 
-      .box.mt-5(v-if="SB.debug_mode_p")
-        pre
-          | {{SB.users_match_record_master}}
+  .box
+    b-field(label="その他")
+      .button_elements
+        b-button.general_setting_modal_open_handle(@click="SB.general_setting_modal_open_handle") 設定
+        b-button.general_dashboard_modal_handle(@click="SB.general_dashboard_modal_handle" :disabled="!SB.ac_room") 対局履歴
+        b-button.tweet_modal_handle(@click="SB.tweet_modal_handle") ツイート
+        b-button.general_help_modal_open_handle(@click="SB.general_help_modal_open_handle") 使い方
+        b-button.is-hidden-mobile.shortcut_modal_open_handle(@click="SB.shortcut_modal_open_handle") ショートカット
+
+  .box(v-if="SB.debug_mode_p")
+    b-field(label="開発用")
+      .button_elements
+        b-button(tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.ac_room" ) 対局履歴(nuxt-link)
+        b-button(tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.ac_room" ) 対局履歴(hrefで別タブ)
+        b-button.handle_name_modal_open_handle(@click="SB.handle_name_modal_open_handle"  ) ハンドルネーム変更
+        b-button.avatar_input_modal_open_handle(@click="SB.avatar_input_modal_open_handle" ) アバター設定
+        b-button.title_edit_handle(@click="SB.title_edit_handle"              ) タイトル変更
+        b-button.appearance_modal_open_handle(@click="SB.appearance_modal_open_handle"   ) スタイル設定
+        b-button.tl_modal_open_handle(@click="SB.tl_modal_open_handle" ) デバッグ用ログ
+        b-button.reset_handle(@click="SB.reset_handle" :disabled="!SB.ac_room" ) URLを開いたときの局面に戻す
+        b-button(tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}"  @click.native="sfx_click()") 手番検証
+        b-button.audio_unlock_all_with_rooster(@click="SB.audio_unlock_all_with_rooster") 音復活
+
+  .box(v-if="SB.debug_mode_p")
+    pre
+      | {{SB.users_match_record_master}}
 </template>
 
 <script>
@@ -89,11 +131,6 @@ export default {
     padding-left:  2.5rem ! important
     padding-right: 2.5rem ! important
 
-  .menu-list
-    .icon
-      color: $primary
-      margin-right: 0.5rem
-
   .sidebar-content
     min-width: 20rem
     +mobile
@@ -107,12 +144,33 @@ export default {
     +fullhd
       width: 50%
 
-  .menu-label:not(:first-child), .SbExport
-    margin-top: 2em
+  .sidebar-content
+    padding: 1rem
+    gap: 1rem
+
+  .header
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+  .box
+    margin: 0
+
+  .button_elements
+    display: flex
+    flex-wrap: wrap
+    gap: 0.5rem
 
   .user_account
     img
       max-height: none
       height: 32px
       width: 32px
+
+.STAGE-development
+  .SbControlPanel
+    .box
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .button_elements
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

@@ -1,25 +1,22 @@
 <template lang="pug">
 .SbStartStep.box
-  .title.is-6.mb-0 対局するには？
-  .buttons
-    template(v-for="e in SB.start_steps")
-      //- https://buefy.org/documentation/button
-      b-button.is_active_unset(
-        :key="e.key"
-        :class="[e.key, {todo_p: SB[e.todo_p], done_p: SB[e.done_p]}]"
-        :focused="SB[e.todo_p]"
-        expanded
-        @click="() => SB[e.key]()"
-        )
-        template(v-if="!SB[e.done_p]")
-          i.mdi(:class="e.icon")
-        template(v-if="SB[e.done_p]")
-          i.mdi.mdi-checkbox-marked-circle
-        template(v-if="true")
-          .button_label {{e.name}}
-        template(v-if="false")
-          .button_label.is-hidden-mobile {{e.name}}
-          .button_label.is-hidden-tablet {{e.mobile_name ?? e.name}}
+  b-field(label="対局するには？")
+    .wide_button_group
+      template(v-for="e in SB.start_steps")
+        //- https://buefy.org/documentation/button
+        b-button.is_active_unset(
+          :key="e.key"
+          :class="[e.key, {todo_p: SB[e.todo_p], done_p: SB[e.done_p]}]"
+          :focused="SB[e.todo_p]"
+          expanded
+          @click="() => SB[e.key]()"
+          )
+          template(v-if="!SB[e.done_p]")
+            i.mdi(:class="e.icon")
+          template(v-if="SB[e.done_p]")
+            i.mdi.mdi-checkbox-marked-circle
+          template(v-if="true")
+            .button_label {{e.name}}
 </template>
 
 <script>
@@ -34,12 +31,9 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .SbStartStep
-  .title
-    margin-bottom: 0
-
-  .buttons
-    margin-top: 0.75rem     // "対局するには？" との隙間
-    margin-bottom: 0
+  .wide_button_group
+    display: flex
+    flex-direction: column
     gap: 0.5rem             // ボタン同士の縦の隙間
 
   .button
