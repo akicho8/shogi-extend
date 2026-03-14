@@ -60,7 +60,7 @@ export const mod_honpu_core = {
     honpu_return_click_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
       if (this.honpu_main && this.honpu_branch) {
-        this.time_machine_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1})
+        this.time_machine_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1, fast_forward: false, message_prefix: "本譜の"})
         this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
