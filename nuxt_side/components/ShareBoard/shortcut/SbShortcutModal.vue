@@ -98,7 +98,7 @@
             .sc_buttons
               b-tag(type="is-primary") m
           .sc_item
-            .sc_label 思考印の全削除
+            .sc_label 思考印の一括消去
             .sc_buttons
               b-tag(type="is-primary") Escape
       .column.is-half-desktop.is-half-tablet
