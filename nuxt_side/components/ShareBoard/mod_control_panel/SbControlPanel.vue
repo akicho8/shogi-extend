@@ -53,13 +53,10 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
       .button_elements
         b-button.kifu_read_modal_open_handle(size="is-small" @click="SB.kifu_read_modal_open_handle('')") 棋譜の読み込み
         b-button.edit_mode_set_handle(size="is-small" @click="SB.edit_mode_set_handle") 局面編集
-    //- p.help
-    //-   | 詰将棋・課題局面・変則手合割の作成
 
   .box.export_box
     b-field(custom-class="is-small" label="エクスポート")
-      b-radio-button(size="is-small" v-model="SB.export_menu_show" :native-value="false" @input="sfx_click()") しない
-      b-radio-button(size="is-small" v-model="SB.export_menu_show" :native-value="true" @input="sfx_click()") する
+      b-switch.export_menu_show_toggle_handle(size="is-small" v-model="SB.export_menu_show" @input="v => sfx_play_toggle(v)") ON
 
     template(v-if="SB.export_menu_show")
       hr
