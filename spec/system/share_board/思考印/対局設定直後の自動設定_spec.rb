@@ -1,4 +1,4 @@
-require "#{__dir__}/helper"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def case1(user_name, think_mark_mode_p)
