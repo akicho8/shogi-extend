@@ -14,7 +14,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     find(".honpu_direct_return_handle").click        # 「戻る」ボタンを押すと、
     assert_turn(0)                            # 0手目に戻る
     assert_turn_max(0)                        # 2手目までの棋譜を破棄して完全に0手目までの棋譜に戻っている
-    assert_text("本譜の初期配置に戻しました") # 「本譜の」となるの重要
+    assert_text("分岐前に戻しました")         # 専用のメッセージになっている
     assert_history_text("本譜")
     assert_honpu_open_on                      # その時「本譜」ボタンはあり、
     assert_honpu_return_disabled              # 「戻る」ボタンは disabled に戻る
