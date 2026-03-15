@@ -15,10 +15,13 @@ import { HandleNameNormalizer } from "@/components/models/handle_name/handle_nam
 export const mod_room_channel = {
   data() {
     return {
-      ac_room: null,      // subscriptions.create のインスタンス
-      ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
+      cable_p: false, // subscriptions.create のインスタンス
       offline_check_show: false,
     }
+  },
+  created() {
+    this.ac_room = null
+    this.ac_events_hash = {}   // ACのイベントが発生した回数を記録(デバッグ用)
   },
   mounted() {
     this.room_create_if_exist_room_key_in_url()
@@ -59,6 +62,7 @@ export const mod_room_channel = {
 
     async room_create_from_modal(new_room_key, new_user_name) {
       GX.assert(this.ac_room == null)
+      GX.assert(!this.cable_p)
       GX.assert(new_user_name, "new_user_name")
       GX.assert(new_room_key, "new_room_key")
 
@@ -84,6 +88,7 @@ export const mod_room_channel = {
       GX.assert(this.room_key, "this.room_key")
       GX.assert(this.user_name, "this.user_name")
       GX.assert(this.ac_room == null, "this.ac_room == null")
+      GX.assert(!this.cable_p, "!this.cable_p")
       this.app_log({emoji: ":入室:", subject: "入室", body: [this.room_key, this.user_name]})
 
       await GX.sleep(this.room_create_delay)
@@ -135,6 +140,7 @@ export const mod_room_channel = {
           this.api_version_validate(e.bc_params.SERVER_SIDE_API_VERSION)
         },
       })
+      this.cable_p = true
       this.autoexec({key: "room_after_create"})
       this.tl_p("<-- room_create")
     },
@@ -155,6 +161,7 @@ export const mod_room_channel = {
 
         this.room_leave_share()
         this.ac_unsubscribe("ac_room")
+        this.cable_p = false
         this.tl_add("USER", "unsubscribe")
 
         this.perpetual_cop.reset$()
@@ -234,12 +241,12 @@ export const mod_room_channel = {
 
     ////////////////////////////////////////////////////////////////////////////////
     ac_events_hash_inc(key) {
-      this.$set(this.ac_events_hash, key, (this.ac_events_hash[key] || 0) + 1)
+      this.ac_events_hash[key] = (this.ac_events_hash[key] ?? 0) + 1
     },
 
     ////////////////////////////////////////////////////////////////////////////////
     room_is_empty_p() {
-      if (this.ac_room == null) {
+      if (!this.cable_p) {
         this.sfx_click()
         this.toast_warn("まず部屋に入ろう")
         return true
