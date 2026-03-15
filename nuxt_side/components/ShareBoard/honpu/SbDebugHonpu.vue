@@ -8,9 +8,9 @@
     .panel-block(v-if="SB.honpu_branch") ブランチ \#{{SB.honpu_branch.turn}} {{SB.honpu_branch.sfen}}
     //- .panel-block 直近の指し手は本譜をなぞっている？ {{SB.honpu_branch_is_same_route_p}}
     //- .panel-block 直近の指し手は本譜から外れた？ {{SB.honpu_branch_exist_p}}
-    a.panel-block.honpu_master_setup(@click="SB.honpu_master_setup") 作成
-    a.panel-block.honpu_modal_open_handle(@click="SB.honpu_modal_open_handle") 開く
-    a.panel-block.honpu_all_clear(@click="SB.honpu_all_clear") 削除
+    a.panel-block(@click="SB.honpu_master_setup") 作成
+    a.panel-block(@click="SB.honpu_modal_open_handle") 開く
+    a.panel-block(@click="SB.honpu_all_clear") 削除
 </template>
 
 <script>
