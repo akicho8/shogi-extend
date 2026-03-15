@@ -6,7 +6,6 @@ import AvatarInputModal from "./AvatarInputModal.vue"
 export const avatar_input_modal = {
   data() {
     return {
-      $avatar_input_modal_instance: null,
     }
   },
   mounted() {
@@ -21,31 +20,31 @@ export const avatar_input_modal = {
     ////////////////////////////////////////////////////////////////////////////////
 
     avatar_input_modal_open_handle() {
-      if (!this.$avatar_input_modal_instance) {
+      if (!this.avatar_input_modal_instance) {
         this.sfx_click()
         this.sidebar_close()
         this.avatar_input_modal_open()
       }
     },
     avatar_input_modal_close_handle() {
-      if (this.$avatar_input_modal_instance) {
+      if (this.avatar_input_modal_instance) {
         this.sfx_click()
         this.avatar_input_modal_close()
       }
     },
     avatar_input_modal_open() {
-      if (!this.$avatar_input_modal_instance) {
+      if (!this.avatar_input_modal_instance) {
         this.toast_primary("アバターを入力するか選択しよう")
-        this.$avatar_input_modal_instance = this.modal_card_open({
+        this.avatar_input_modal_instance = this.modal_card_open({
           component: AvatarInputModal,
           onCancel: () => this.avatar_input_modal_close(),
         })
       }
     },
     avatar_input_modal_close() {
-      if (this.$avatar_input_modal_instance) {
-        this.$avatar_input_modal_instance.close()
-        this.$avatar_input_modal_instance = null
+      if (this.avatar_input_modal_instance) {
+        this.avatar_input_modal_instance.close()
+        this.avatar_input_modal_instance = null
       }
     },
 

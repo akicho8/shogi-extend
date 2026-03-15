@@ -4,7 +4,6 @@ const share_board_think_mark_invite_png = require("@/assets/share_board/think_ma
 export const mod_think_mark_invite = {
   data() {
     return {
-      $think_mark_invite_modal_instance: null,
     }
   },
   beforeDestroy() {
@@ -83,13 +82,13 @@ export const mod_think_mark_invite = {
       }
       this.sfx_play("se_notification")
       this.__think_mark_invite_dialog_close()
-      this.$think_mark_invite_modal_instance = this.dialog_confirm(params)
+      this.think_mark_invite_modal_instance = this.dialog_confirm(params)
     },
 
     __think_mark_invite_dialog_close() {
-      if (this.$think_mark_invite_modal_instance) {
-        this.$think_mark_invite_modal_instance.close()
-        this.$think_mark_invite_modal_instance = null
+      if (this.think_mark_invite_modal_instance) {
+        this.think_mark_invite_modal_instance.close()
+        this.think_mark_invite_modal_instance = null
       }
     },
   },

@@ -4,7 +4,6 @@ import _ from "lodash"
 export const turn_change = {
   data() {
     return {
-      $turn_change_modal_instance: null,
     }
   },
 
@@ -22,10 +21,10 @@ export const turn_change = {
     },
 
     turn_change_to_xxx_modal_open_handle(turn) {
-      if (!this.$turn_change_modal_instance) {
+      if (!this.turn_change_modal_instance) {
         this.sidebar_close()
         this.sfx_click()
-        this.$turn_change_modal_instance = this.modal_card_open({
+        this.turn_change_modal_instance = this.modal_card_open({
           component: TurnChangeModal,
           onCancel: () => this.turn_change_modal_close(),
           props: {
@@ -37,16 +36,16 @@ export const turn_change = {
     },
 
     turn_change_modal_close_handle() {
-      if (this.$turn_change_modal_instance) {
+      if (this.turn_change_modal_instance) {
         this.sfx_click()
         this.turn_change_modal_close()
       }
     },
 
     turn_change_modal_close() {
-      if (this.$turn_change_modal_instance) {
-        this.$turn_change_modal_instance.close()
-        this.$turn_change_modal_instance = null
+      if (this.turn_change_modal_instance) {
+        this.turn_change_modal_instance.close()
+        this.turn_change_modal_instance = null
         this.debug_alert("TurnChangeModal close")
       }
     },

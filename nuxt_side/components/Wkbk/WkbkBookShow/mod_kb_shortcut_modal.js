@@ -8,7 +8,7 @@ export const mod_kb_shortcut_modal = {
   },
   methods: {
     kb_shortcut_modal_shortcut_handle() {
-      if (this.kb_shortcut_modal_active_p()) {
+      if (this.kb_shortcut_modal_instance) {
         this.kb_shortcut_modal_close()
       } else {
         this.kb_shortcut_modal_show()
@@ -17,8 +17,8 @@ export const mod_kb_shortcut_modal = {
     kb_shortcut_modal_show() {
       this.sfx_click()
       this.kb_shortcut_modal_close()
-      if (this.$kb_shortcut_modal) { alert("this.$kb_shortcut_modal") }
-      this.$kb_shortcut_modal = this.modal_card_open({
+      if (this.kb_shortcut_modal_instance) { alert("this.kb_shortcut_modal_instance") }
+      this.kb_shortcut_modal_instance = this.modal_card_open({
         component: WkbkBookShowKbShortcutModal,
         props: { base: this.base },
         onCancel: () => { this.kb_shortcut_modal_close() },
@@ -26,22 +26,19 @@ export const mod_kb_shortcut_modal = {
       this.kb_shortcut_modal_p = true
 
       // if (!this.sidebar_p) {
-      //   this.interval_counter_pause(this.$kb_shortcut_modal)
+      //   this.interval_counter_pause(this.kb_shortcut_modal_instance)
       // }
     },
     kb_shortcut_modal_close() {
-      if (this.$kb_shortcut_modal) {
+      if (this.kb_shortcut_modal_instance) {
         this.sfx_click()
-        this.$kb_shortcut_modal.close()
-        this.$kb_shortcut_modal = null
+        this.kb_shortcut_modal_instance.close()
+        this.kb_shortcut_modal_instance = null
         this.kb_shortcut_modal_p = false
         // if (!this.sidebar_p) {
-        //   this.interval_counter_pause(this.$kb_shortcut_modal)
+        //   this.interval_counter_pause(this.kb_shortcut_modal_instance)
         // }
       }
-    },
-    kb_shortcut_modal_active_p() {
-      return !!this.$kb_shortcut_modal
     },
   },
 }

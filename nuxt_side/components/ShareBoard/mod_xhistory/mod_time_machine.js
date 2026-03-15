@@ -4,7 +4,6 @@ import TimeMachineModal from "./TimeMachineModal.vue"
 export const mod_time_machine = {
   data() {
     return {
-      $time_machine_modal_instance: null,
     }
   },
   beforeDestroy() {
@@ -47,7 +46,7 @@ export const mod_time_machine = {
 
     time_machine_modal_open(params) {
       this.time_machine_modal_close()
-      this.$time_machine_modal_instance = this.modal_card_open({
+      this.time_machine_modal_instance = this.modal_card_open({
         component: TimeMachineModal,
         props: params,
         onCancel: () => {
@@ -58,9 +57,9 @@ export const mod_time_machine = {
     },
 
     time_machine_modal_close() {
-      if (this.$time_machine_modal_instance) {
-        this.$time_machine_modal_instance.close()
-        this.$time_machine_modal_instance = null
+      if (this.time_machine_modal_instance) {
+        this.time_machine_modal_instance.close()
+        this.time_machine_modal_instance = null
       }
     },
 

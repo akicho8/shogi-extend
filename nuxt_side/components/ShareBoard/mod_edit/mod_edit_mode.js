@@ -1,15 +1,14 @@
 export const mod_edit_mode = {
   data() {
     return {
-      $edit_warn_modal_instance: null, // 「共有中の局面編集は危険」モーダルが起動していれば情報が入っている
     }
   },
   methods: {
     edit_warn_modal_open() {
-      if (this.$edit_warn_modal_instance) {
+      if (this.edit_warn_modal_instance) {
         return
       }
-      this.$edit_warn_modal_instance = this.dialog_confirm({
+      this.edit_warn_modal_instance = this.dialog_confirm({
         title: "警告",
         message: [
           `<div class="content">`,
@@ -37,15 +36,15 @@ export const mod_edit_mode = {
       })
     },
     edit_warn_modal_close() {
-      if (this.$edit_warn_modal_instance) {
-        this.$edit_warn_modal_instance.close()
-        this.$edit_warn_modal_instance = null
+      if (this.edit_warn_modal_instance) {
+        this.edit_warn_modal_instance.close()
+        this.edit_warn_modal_instance = null
       }
     },
 
     // 編集モード
     edit_mode_set_handle() {
-      if (this.$edit_warn_modal_instance) {
+      if (this.edit_warn_modal_instance) {
         return
       }
       this.sidebar_close()

@@ -100,7 +100,6 @@ export default {
   },
   data() {
     return {
-      $reform_conduct_modal_instance: null,
       tab_index: this.SB.order_tab_info.code,
     }
   },
@@ -293,16 +292,16 @@ export default {
       }
     },
     reform_conduct_modal_open() {
-      if (!this.$reform_conduct_modal_instance) {
-        this.$reform_conduct_modal_instance = this.modal_card_open({
+      if (!this.reform_conduct_modal_instance) {
+        this.reform_conduct_modal_instance = this.modal_card_open({
           component: ReformConductModal,
         })
       }
     },
     reform_conduct_modal_close() {
-      if (this.$reform_conduct_modal_instance) {
-        this.$reform_conduct_modal_instance.close()
-        this.$reform_conduct_modal_instance = null
+      if (this.reform_conduct_modal_instance) {
+        this.reform_conduct_modal_instance.close()
+        this.reform_conduct_modal_instance = null
       }
     },
 
