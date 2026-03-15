@@ -15,7 +15,7 @@ import { HandleNameNormalizer } from "@/components/models/handle_name/handle_nam
 export const mod_room_channel = {
   data() {
     return {
-      ac_room: null,      // subscriptions.create のインスタンス
+      $ac_room: null,      // subscriptions.create のインスタンス
       ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
       offline_check_show: false,
     }
@@ -58,7 +58,7 @@ export const mod_room_channel = {
     ////////////////////////////////////////////////////////////////////////////////
 
     async room_create_from_modal(new_room_key, new_user_name) {
-      GX.assert(this.ac_room == null)
+      GX.assert(this.$ac_room == null)
       GX.assert(new_user_name, "new_user_name")
       GX.assert(new_room_key, "new_room_key")
 
@@ -68,7 +68,7 @@ export const mod_room_channel = {
       this.room_key = new_room_key
       this.user_name = new_user_name
 
-      // if (this.ac_room) {
+      // if (this.$ac_room) {
       //   this.toast_warn("すでに入室しています")
       //   return
       // }
@@ -83,7 +83,7 @@ export const mod_room_channel = {
       this.tl_p("--> room_create")
       GX.assert(this.room_key, "this.room_key")
       GX.assert(this.user_name, "this.user_name")
-      GX.assert(this.ac_room == null, "this.ac_room == null")
+      GX.assert(this.$ac_room == null, "this.$ac_room == null")
       this.app_log({emoji: ":入室:", subject: "入室", body: [this.room_key, this.user_name]})
 
       await GX.sleep(this.room_create_delay)
@@ -99,7 +99,7 @@ export const mod_room_channel = {
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_key}`)
-      this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_key: this.room_key}, {
+      this.$ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_key: this.room_key}, {
         initialized: e => {
           this.ac_events_hash_inc("initialized")
           this.tl_add("HOOK", "initialized", e)
@@ -140,7 +140,7 @@ export const mod_room_channel = {
     },
 
     room_destroy_handle() {
-      if (this.ac_room) {
+      if (this.$ac_room) {
         this.room_destroy()
         this.toast_primary("退室しました")
       }
@@ -148,13 +148,13 @@ export const mod_room_channel = {
 
     // 退室
     room_destroy() {
-      if (this.ac_room) {
+      if (this.$ac_room) {
         this.tl_p("room_destroy")
 
         this.mh_room_leave()
 
         this.room_leave_share()
-        this.ac_unsubscribe("ac_room")
+        this.ac_unsubscribe("$ac_room")
         this.tl_add("USER", "unsubscribe")
 
         this.perpetual_cop.reset$()
@@ -172,13 +172,13 @@ export const mod_room_channel = {
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       params = this.ac_room_perform_params_wrap(params)
-      if (this.ac_room == null) {
+      if (this.$ac_room == null) {
         if (params.__standalone_mode__) {
           this[`${action}_broadcasted`](params)
         }
         return
       }
-      this.ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
+      this.$ac_room.perform(action, params) // --> app/channels/share_board/room_channel.rb
     },
     ac_room_perform_params_wrap(params) {
       return {
@@ -239,7 +239,7 @@ export const mod_room_channel = {
 
     ////////////////////////////////////////////////////////////////////////////////
     room_is_empty_p() {
-      if (this.ac_room == null) {
+      if (this.$ac_room == null) {
         this.sfx_click()
         this.toast_warn("まず部屋に入ろう")
         return true

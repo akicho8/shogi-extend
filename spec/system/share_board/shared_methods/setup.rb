@@ -93,7 +93,7 @@ module SharedMethods
   end
 
   def assert_room_created
-    assert_var("ac_room", "true", wait: room_create_delay + Capybara.default_max_wait_time) # wait は room_create_delay より大きくすること
+    assert_var("$ac_room", "true", wait: room_create_delay + Capybara.default_max_wait_time) # wait は room_create_delay より大きくすること
   end
 
   def gate_modal_open_handle

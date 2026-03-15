@@ -151,7 +151,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
           if (GX.blank_p(context.user_name)) {
             context.user_name = "alice"
           }
-          if (GX.blank_p(context.ac_room)) {
+          if (GX.blank_p(context.$ac_room)) {
             context.room_create()
           }
           context.os_setup_by_names(["alice"])

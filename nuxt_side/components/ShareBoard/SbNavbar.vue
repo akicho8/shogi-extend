@@ -30,7 +30,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         b-tag(rounded)
           .has-text-primary {{SB.track_logs.length}}
 
-      b-navbar-item.is-hidden-mobile(tag="div" v-if="SB.ac_room && development_p")
+      b-navbar-item.is-hidden-mobile(tag="div" v-if="SB.$ac_room && development_p")
         b-icon(icon="account")
         b-tag(rounded)
           .has-text-primary {{SB.member_infos.length}}

@@ -127,7 +127,7 @@ export const mod_clock_box_modal = {
       this.sfx_click()
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
-      // if (this.ac_room && this.order_enable_p) {
+      // if (this.$ac_room && this.order_enable_p) {
       //   this.$GX.delay_block(2.5, () => this.toast_primary("続けて検討する場合は対局設定を切ろう"))
       // }
     },
@@ -178,7 +178,7 @@ export const mod_clock_box_modal = {
     },
 
     cc_play_validate_message() {
-      if (this.ac_room) {
+      if (this.$ac_room) {
         if (!this.order_enable_p) {
           return "先に対局設定をしよう"
         }
@@ -187,7 +187,7 @@ export const mod_clock_box_modal = {
         }
       }
     },
-    // cc_order_off_p() { return this.ac_room && !this.order_enable_p }, // 対局設定を有効にしてないのに時計を開始しようとしている？
-    // cc_order_users_none_p() { return this.ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // 対局設定で誰も設定されていない
+    // cc_order_off_p() { return this.$ac_room && !this.order_enable_p }, // 対局設定を有効にしてないのに時計を開始しようとしている？
+    // cc_order_users_none_p() { return this.$ac_room && this.order_enable_p && this.order_flat_uniq_users_count === 0 }, // 対局設定で誰も設定されていない
   },
 }
