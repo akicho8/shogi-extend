@@ -5,11 +5,9 @@ b-navbar-item.SbHonpuButton.has-text-weight-bold(
   )
   .field.is-grouped
     p.control
-      a.button.honpu_open_button(@click="SB.honpu_open_click_handle" :class="SB.appearance_theme_info.honpu_button_color")
-        | 本譜
-        //- b-icon(icon="note")
+      a.button.honpu_modal_open_handle(@click="SB.honpu_modal_open_handle" :class="SB.appearance_theme_info.honpu_button_color") 本譜
     p.control
-      a.button.honpu_return_button(@click="SB.honpu_return_click_handle" :class="SB.appearance_theme_info.undo_button_color" :disabled="!SB.honpu_return_button_active_p")
+      a.button.honpu_direct_return_handle(@click="SB.honpu_direct_return_handle" :class="SB.appearance_theme_info.undo_button_color" :disabled="!SB.honpu_return_button_active_p")
         b-icon(icon="undo")
 </template>
 

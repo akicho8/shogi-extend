@@ -5,7 +5,7 @@ import { GX } from "@/components/models/gx.js"
 export const mod_honpu_core = {
   data() {
     return {
-      honpu_main: null,   // 投了したときに履歴と同じ形式のデータを1つだけ保持する
+      honpu_master: null,   // 投了したときに履歴と同じ形式のデータを1つだけ保持する
       honpu_branch: null, // 新しい手を指した最初の履歴を持つ
     }
   },
@@ -20,14 +20,14 @@ export const mod_honpu_core = {
       this.tl_add("HONPU", "起動時に本譜登録する")
       if (!this.url_room_key_exist_p) {
         if (GX.present_p(this.$route.query.body) || GX.present_p(this.$route.query.xbody)) {
-          this.honpu_main_setup()
+          this.honpu_master_setup()
         }
       }
     },
 
     honpu_all_clear() {
       this.tl_add("HONPU", "全消去")
-      this.honpu_main = null
+      this.honpu_master = null
       this.honpu_branch_clear()
     },
 
@@ -37,9 +37,9 @@ export const mod_honpu_core = {
       this.perpetual_cop.reset$() // これがないと元に戻して同じ手を指すと千日手になる
     },
 
-    honpu_main_setup() {
+    honpu_master_setup() {
       this.tl_add("HONPU", "本譜を準備する")
-      this.honpu_main = this.xhistory_create({modal_title: "本譜"})
+      this.honpu_master = this.xhistory_create({modal_title: "本譜"})
       this.honpu_branch_clear()
     },
 
@@ -50,17 +50,23 @@ export const mod_honpu_core = {
       }
     },
 
-    honpu_open_click_handle() {
+    honpu_modal_open_handle() {
       this.tl_add("HONPU", "本譜をクリックしたらダイアログを出す")
-      if (this.honpu_main) {
-        this.time_machine_modal_open_handle_for_honpu(this.honpu_main)
+      if (this.honpu_master) {
+        this.time_machine_modal_open_handle_for_honpu(this.honpu_master)
       }
     },
 
-    honpu_return_click_handle() {
+    honpu_direct_return_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
-      if (this.honpu_main && this.honpu_branch) {
-        this.time_machine_restore({...this.honpu_main, turn: this.honpu_branch.turn - 1, fast_forward: false, message_prefix: "本譜の"})
+      if (this.honpu_master && this.honpu_branch) {
+        this.time_machine_restore({
+          ...this.honpu_master,
+          turn: this.honpu_branch.turn - 1,
+          fast_forward: false,
+          think_mark_clear_all: true,
+          message: "分岐前に戻しました",
+        })
         this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
@@ -72,17 +78,17 @@ export const mod_honpu_core = {
       if (this.honpu_button_show_share_condition) {
         // 本譜は常に表示する場合
         // スマホだとヘッダ内の表示が多すぎてずれる場合がある
-        return this.honpu_main
+        return this.honpu_master
 
         // 本譜に戻るがある場合は本譜は表示しない場合
-        // return this.honpu_main && this.honpu_branch == null
+        // return this.honpu_master && this.honpu_branch == null
       }
     },
 
     // 本譜に戻るボタンの表示条件
     honpu_return_button_active_p() {
       if (this.honpu_button_show_share_condition) {
-        return this.honpu_main && this.honpu_branch
+        return this.honpu_master && this.honpu_branch
       }
     },
 
@@ -99,8 +105,8 @@ export const mod_honpu_core = {
     //   branch: a b c
     // この状態であれば true になる
     // honpu_branch_is_same_route_p() {
-    //   if (this.honpu_main && this.honpu_branch) {
-    //     return this.honpu_main.sfen.startsWith(this.honpu_branch.sfen) // ← 判定がバグっている
+    //   if (this.honpu_master && this.honpu_branch) {
+    //     return this.honpu_master.sfen.startsWith(this.honpu_branch.sfen) // ← 判定がバグっている
     //   }
     // },
 
@@ -112,14 +118,14 @@ export const mod_honpu_core = {
     // この状態であれば true になる
     // つまり指したら外れたことになる
     // honpu_branch_exist_p() {
-    //   if (this.honpu_main && this.honpu_branch) {
-    //     return this.honpu_main.sfen !== this.honpu_branch.sfen
+    //   if (this.honpu_master && this.honpu_branch) {
+    //     return this.honpu_master.sfen !== this.honpu_branch.sfen
     //   }
     // },
 
     // 変化が発生するか？
     honpu_branch_need_p(params) {
-      if (this.honpu_main) {
+      if (this.honpu_master) {
         return this.honpu_branch == null
       }
     },

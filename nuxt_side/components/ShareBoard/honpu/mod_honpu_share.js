@@ -6,7 +6,7 @@ export const mod_honpu_share = {
   methods: {
     honpu_share() {
       this.tl_add("HONPU", "本譜の配布", this.honpu_share_dto)
-      if (this.honpu_main) {
+      if (this.honpu_master) {
         this.ac_room_perform("honpu_share", this.honpu_share_dto) // --> app/channels/share_board/room_channel.rb
       }
     },
@@ -19,10 +19,10 @@ export const mod_honpu_share = {
       }
     },
     honpu_share_dto_receive(params) {
-      if (params.honpu_main) {
-        this.honpu_main = this.xhistory_create(params.honpu_main)
+      if (params.honpu_master) {
+        this.honpu_master = this.xhistory_create(params.honpu_master)
       } else {
-        this.honpu_main = null
+        this.honpu_master = null
       }
       if (params.honpu_branch) {
         this.honpu_branch = this.xhistory_create(params.honpu_branch)
@@ -34,8 +34,8 @@ export const mod_honpu_share = {
   computed: {
     honpu_share_dto() {
       return {
-        __nullable_attributes__: ["honpu_main", "honpu_branch"],
-        honpu_main: this.honpu_main,
+        __nullable_attributes__: ["honpu_master", "honpu_branch"],
+        honpu_master: this.honpu_master,
         honpu_branch: this.honpu_branch,
       }
     },

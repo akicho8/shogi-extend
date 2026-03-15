@@ -99,6 +99,7 @@ export class TimelineResolver {
 
   get will_message() {
     let str = null
+
     if (str == null) {
       if (this.sfen_another_p) {
         str = `${this.new_turn}手目に移動する`
@@ -157,9 +158,9 @@ export class TimelineResolver {
 
   get past_message() {
     let str = this.will_message
-    str = str.replace(/進める/, "進めました")
+    str = str.replace(/進める/, "進めました") // 「局面を」が前につけて日本語として自然な文章にする
     str = str.replace(/戻す/, "戻しました")
-    str = str.replace(/移動する/, "移動しました")
+    str = str.replace(/移動する/, "移動しました") // FIXME: 「局面を」なら「移動させる」「移動させました」が自然な感じはする
     return str
   }
 

@@ -84,7 +84,7 @@ export const mod_resign = {
       //   this.toast_primary("引き分けです")       // いまの仕様だと引き分けになることはない
       // }
 
-      this.honpu_main_setup()                    // 本譜を作る。すでにあれば上書き
+      this.honpu_master_setup()                    // 本譜を作る。すでにあれば上書き
       this.resign_confirm_modal_close()          // もし味方が投了しようとしていればモーダルを閉じる
 
       this.ending_call()

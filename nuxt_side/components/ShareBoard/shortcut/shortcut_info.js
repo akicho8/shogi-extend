@@ -46,7 +46,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "z"),
-        call: c => c.honpu_return_click_handle(),
+        call: c => c.honpu_direct_return_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.KeyboardHelper.shift_p(e),
@@ -58,7 +58,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && e.key === "!",
-        call: c => c.honpu_main_setup(),
+        call: c => c.honpu_master_setup(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "c"),

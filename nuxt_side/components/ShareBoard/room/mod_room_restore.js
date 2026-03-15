@@ -21,7 +21,7 @@ export const mod_room_restore = {
             if (e.latest_battle) {
               this.tl_p("room_restore_call: sfen set")
               this.current_sfen_set(e.latest_battle)
-              this.honpu_main_setup()
+              this.honpu_master_setup()
             }
             this.tl_p("room_restore_call: title set")
             this.current_title = e.room_name
