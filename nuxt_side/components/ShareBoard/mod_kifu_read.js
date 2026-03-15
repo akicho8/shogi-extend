@@ -22,7 +22,7 @@ export const mod_kifu_read = {
 
     // 部屋を作っている場合はモーダルに読み込む
     kifu_read_modal_open_or_direct_handle(text) {
-      if (this.$ac_room == null) {
+      if (this.ac_room == null) {
         this.kifu_read_direct_handle(text)
       } else {
         this.kifu_read_modal_open_handle(text)

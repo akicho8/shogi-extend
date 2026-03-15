@@ -27,7 +27,7 @@ export const mod_room_recreate = {
   methods: {
     internet_on_trigger() {
       this.toast_primary("オンラインになりました")
-      if (this.$ac_room) {
+      if (this.ac_room) {
         this.room_recreate_handle()
       }
     },
@@ -36,7 +36,7 @@ export const mod_room_recreate = {
       if (this.clock_box) {
         this.clock_box.pause_handle()
       }
-      if (this.$ac_room) {
+      if (this.ac_room) {
         this.room_recreate_modal_open_handle()
       }
     },
@@ -82,10 +82,10 @@ export const mod_room_recreate = {
       this.room_recreate()
     },
 
-    // $ac_room.unsubscribe() をした直後に subscribe すると subscribe が無効になる
+    // ac_room.unsubscribe() をした直後に subscribe すると subscribe が無効になる
     // なので少し待ってから実行する
     async room_recreate() {
-      if (this.$ac_room && !this.room_recreate_now) {
+      if (this.ac_room && !this.room_recreate_now) {
         this.room_recreate_now = true
         this.toast_primary("復帰中です", {talk: false})
         this.room_destroy()

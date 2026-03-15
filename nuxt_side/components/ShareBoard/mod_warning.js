@@ -30,9 +30,9 @@ export const mod_warning = {
   },
   computed: {
     // 不整合状態
-    inconsistency_order_only() { return this.$ac_room && this.order_enable_p  && !this.cc_play_p                          }, // 入室中に順番だけが有効になっている？
-    inconsistency_clock_only() { return this.$ac_room && !this.order_enable_p &&  this.cc_play_p                          }, // 入室中に時計だけが有効になっている？
-    inconsistency_p()          { return this.$ac_room && (this.inconsistency_order_only || this.inconsistency_clock_only) }, // つまり不整合な状態か？
+    inconsistency_order_only() { return this.ac_room && this.order_enable_p  && !this.cc_play_p                          }, // 入室中に順番だけが有効になっている？
+    inconsistency_clock_only() { return this.ac_room && !this.order_enable_p &&  this.cc_play_p                          }, // 入室中に時計だけが有効になっている？
+    inconsistency_p()          { return this.ac_room && (this.inconsistency_order_only || this.inconsistency_clock_only) }, // つまり不整合な状態か？
 
     // 整合性取れている状態
     order_clock_both_ok()    { return this.order_enable_p && this.cc_play_p   },                 // 両方ON

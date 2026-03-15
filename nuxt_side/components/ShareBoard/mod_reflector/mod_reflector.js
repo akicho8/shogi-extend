@@ -99,7 +99,7 @@ export const mod_reflector = {
     reflector_notify({params, timeline_resolver, reflector_notify_scope_info}) {
       let message = params.message ?? timeline_resolver.past_message
       if (message != null) {
-        if (this.$ac_room) {
+        if (this.ac_room) {
           if (params.from_user_name) {
             message = [this.user_call_name(params.from_user_name), "が", message].join("")
           }

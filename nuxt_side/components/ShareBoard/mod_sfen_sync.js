@@ -98,7 +98,7 @@ export const mod_sfen_sync = {
         params.label_type = "is-warning"
       }
       this.ac_room_perform("sfen_sync", params) // --> app/channels/share_board/room_channel.rb
-      this.resend_start()  // もちろん $ac_room が有効でないときは呼ばない
+      this.resend_start()  // もちろん ac_room が有効でないときは呼ばない
     },
 
     // 指し手を受信

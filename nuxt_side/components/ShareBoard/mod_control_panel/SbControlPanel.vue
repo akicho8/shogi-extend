@@ -3,7 +3,7 @@
 b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
   .header
     NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
-    template(v-if="!SB.$ac_room || !SB.i_am_member_p")
+    template(v-if="!SB.ac_room || !SB.i_am_member_p")
       NavbarItemLogin(component="a")
       NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
 
@@ -92,21 +92,21 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
       .button_elements
         b-button.general_setting_modal_open_handle(size="is-small" @click="SB.general_setting_modal_open_handle") 設定
         b-button.general_help_modal_open_handle(size="is-small" @click="SB.general_help_modal_open_handle") 使い方
-        b-button.general_dashboard_modal_handle(size="is-small" @click="SB.general_dashboard_modal_handle" :disabled="!SB.$ac_room") 対局履歴
+        b-button.general_dashboard_modal_handle(size="is-small" @click="SB.general_dashboard_modal_handle" :disabled="!SB.ac_room") 対局履歴
         b-button.tweet_modal_handle(size="is-small" @click="SB.tweet_modal_handle") ツイート
         b-button.is-hidden-mobile.shortcut_modal_open_handle(size="is-small" @click="SB.shortcut_modal_open_handle") ショートカット
 
   .box(v-if="SB.debug_mode_p")
     b-field(custom-class="is-small" label="開発用")
       .button_elements
-        b-button(size="is-small" tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.$ac_room") 対局履歴(nuxt-link)
-        b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.$ac_room") 対局履歴(hrefで別タブ)
+        b-button(size="is-small" tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.ac_room") 対局履歴(nuxt-link)
+        b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.ac_room") 対局履歴(hrefで別タブ)
         b-button.handle_name_modal_open_handle(size="is-small" @click="SB.handle_name_modal_open_handle") ハンドルネーム変更
         b-button.avatar_input_modal_open_handle(size="is-small" @click="SB.avatar_input_modal_open_handle") アバター設定
         b-button.title_edit_handle(size="is-small" @click="SB.title_edit_handle") タイトル変更
         b-button.appearance_modal_open_handle(size="is-small" @click="SB.appearance_modal_open_handle") スタイル設定
         b-button.tl_modal_open_handle(size="is-small" @click="SB.tl_modal_open_handle") デバッグ用ログ
-        b-button.reset_handle(size="is-small" @click="SB.reset_handle" :disabled="!SB.$ac_room") URLを開いたときの局面に戻す
+        b-button.reset_handle(size="is-small" @click="SB.reset_handle" :disabled="!SB.ac_room") URLを開いたときの局面に戻す
         b-button(size="is-small" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" @click.native="sfx_click()") 手番検証
         b-button.audio_unlock_all_with_rooster(size="is-small" @click="SB.audio_unlock_all_with_rooster") 音復活
 

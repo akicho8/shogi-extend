@@ -58,7 +58,7 @@ export const mod_gate_modal = {
 
     gate_leave_handle() {
       this.sfx_click()
-      if (this.$ac_room == null) {
+      if (this.ac_room == null) {
         this.toast_warn("今は部屋の外です")
         return
       }

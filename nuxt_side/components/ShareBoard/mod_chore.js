@@ -96,7 +96,7 @@ export const mod_chore = {
     ViewpointInfo() { return ViewpointInfo },
     viewpoint_info() { return this.ViewpointInfo.fetch(this.viewpoint) },
 
-    exit_warning_p() { return this.$ac_room },                   // 退出時警告を出すか？
+    exit_warning_p() { return this.ac_room },                   // 退出時警告を出すか？
 
     // Home 表示条件
     // ・対局メンバーではない

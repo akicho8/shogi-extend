@@ -81,7 +81,7 @@ export const mod_room_members = {
     // 自分が存在することをみんなに伝える
     // 定期実行
     member_info_share() {
-      if (!this.$ac_room) {
+      if (!this.ac_room) {
         // alive_notice_count が変化しないようにするため
         return
       }
