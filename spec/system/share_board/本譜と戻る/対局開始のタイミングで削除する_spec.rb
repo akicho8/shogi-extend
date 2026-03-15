@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name    => :a,
         :FIXED_MEMBER => "a,b",
         :FIXED_ORDER  => "a,b",
-        :autoexec     => "honpu_main_setup",
+        :autoexec     => "honpu_master_setup",
       })
     assert_honpu_open_on        # 本譜がある
     clock_start                 # 対局開始

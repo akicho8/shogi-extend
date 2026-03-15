@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   def case2
-    find(".honpu_return_button").click
+    find(".honpu_direct_return_handle").click
   end
 
   it "works" do
