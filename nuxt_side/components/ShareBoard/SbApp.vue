@@ -2,50 +2,12 @@
 client-only
   .SbApp(:style="app_component_style" :class="app_component_class")
     div(is="style" v-text="app_component_raw_css" v-if="app_component_raw_css")
-
     | {{$debug.trace('SbApp', 'render')}}
-    DebugBox.is-hidden-mobile(v-if="development_p && false")
-      p sp_human_side: {{sp_human_side}}
-      p current_turn_self_p: {{current_turn_self_p}}
-      p current_turn_user_name: {{current_turn_user_name}}
-      p current_turn: {{current_turn}}
-      p viewpoint: {{viewpoint}}
-      p sp_player_info: {{JSON.stringify(sp_player_info)}}
-
-      p order_draft.os_dnd_count: {{order_draft.os_dnd_count}}
-      p appearance_theme_key: {{appearance_theme_key}}
-      p mobile_layout_key: {{mobile_layout_key}}
-      p watching_member_count: {{watching_member_count}}
-      p order_enable_p: {{order_enable_p}}
-
-      p $cc_timeout_modal_instance: {{!!$cc_timeout_modal_instance}}
-      p cc_timeout_judge_delay_id: {{cc_timeout_judge_delay_id}}
-
-      p current_xmatch_rule_key: {{current_xmatch_rule_key}}
-      p self_vs_self_p: {{self_vs_self_p}}
-
-      template(v-if="clock_box")
-        p rest: {{clock_box.current.rest}}
-        p next_location: {{next_location.key}}
-        p timer: {{clock_box.timer}}
-        p pause_or_play_p: {{clock_box.pause_or_play_p}}
-      p $route.query: {{$route.query}}
-      //- p room_key: {{JSON.stringify(room_key)}}
-      //- p user_name: {{JSON.stringify(user_name)}}
-      //- p 人数: {{JSON.stringify(member_infos.length)}}
-      //- p 手数: {{current_turn}} / {{turn_offset_max}}
-      //- p SFEN: {{current_sfen}}
-      //- p タイトル: {{current_title}}
-      //- p 視点: {{viewpoint}}
-      //- p モード: {{sp_mode}}
-      //- p 視点: {{viewpoint}}
-      //- p URL: {{current_url}}
-      //- p サイドバー {{sidebar_p}}
-
+    DebugBox.is-hidden-mobile(v-if="debug_mode_p")
+      p 部屋: {{cable_p}}
     SbControlPanel
     SbNavbar
     SbBottomNav
-
     MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
