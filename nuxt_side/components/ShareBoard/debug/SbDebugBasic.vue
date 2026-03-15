@@ -11,7 +11,7 @@
     .column
       .panel.assert_var
         .panel-heading [assert_var]
-        .panel-block ac_room:{{!!SB.ac_room}}
+        .panel-block cable_p:{{!!SB.cable_p}}
         .panel-block current_turn:{{SB.current_turn}}
         .panel-block current_turn_max:{{SB.current_turn_max}}
         .panel-block tn_bell_count:{{SB.tn_bell_count}}

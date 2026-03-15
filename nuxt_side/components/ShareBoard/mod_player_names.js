@@ -42,7 +42,7 @@ export const mod_player_names = {
 
     // black, white, other のキーを持ったハッシュ
     player_names() {
-      if (this.ac_room) {
+      if (this.cable_p) {
         return this.player_names_from_member
       } else {
         return this.player_names_from_query

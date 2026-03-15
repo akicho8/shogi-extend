@@ -6,7 +6,7 @@ export const mod_handle_name = {
   methods: {
     // ハンドルネーム入力
     handle_name_modal_open_handle() {
-      if (this.ac_room) {
+      if (this.cable_p) {
         this.handle_name_alert()
         return
       }

@@ -77,7 +77,7 @@ export const mod_chat_message_history = {
     // よそ見した時点で、不整合状態になる恐れがあり、そうすると会話が噛み合わなくなるので全部初期化した方がよい
     mh_reload() {
       this.tl_add("MH", "mh_reload")
-      if (this.ac_room) {
+      if (this.cable_p) {
         this.app_log({emoji: ":チャット履歴:", subject: "よそ見からの復帰", body: `復帰前履歴行数${this.ml_count}件`})
         this.mh_reset_all()       // よそ見した時点で不整合が起きている可能性があるので全リセット
         if (this.ml_root_el()) {  // すでにチャットモーダルを開いてメッセージが見える状態であれば
@@ -92,7 +92,7 @@ export const mod_chat_message_history = {
     mh_setup() {
       this.tl_add("MH", "mh_setup")
       if (this.mh_enable) {
-        if (this.ac_room) {
+        if (this.cable_p) {
           if (this.mh_page_index === 0) {
             this.mh_read()
           } else {
@@ -116,7 +116,7 @@ export const mod_chat_message_history = {
     mh_api_params() {
       GX.assert(GX.present_p(this.room_key), "GX.present_p(this.room_key)")
       GX.assert(GX.present_p(this.user_name), "GX.present_p(this.user_name)")
-      GX.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
+      GX.assert(cable_p, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
 
       // link: app/models/share_board/room/chat_message_loader.rb
       return {

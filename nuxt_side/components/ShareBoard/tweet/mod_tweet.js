@@ -37,7 +37,7 @@ export const mod_tweet = {
     // Tweetボタンを表示してもよいですか？
     // 部屋を作ってなくて操作モードのとき
     tweet_button_show_p() {
-      return !this.ac_room && this.play_mode_p
+      return !this.cable_p && this.play_mode_p
     },
   },
 }

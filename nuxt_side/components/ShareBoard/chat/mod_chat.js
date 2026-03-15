@@ -85,7 +85,7 @@ export const mod_chat = {
         message_scope_key: this.message_scope_info.key,
         ...params,
       }
-      if (this.ac_room == null) {
+      if (!this.cable_p) {
         this.message_share_broadcasted({
           ...this.ac_room_perform_default_params(),
           ...params,

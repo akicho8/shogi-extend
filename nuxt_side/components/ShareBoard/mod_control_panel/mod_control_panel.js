@@ -13,8 +13,8 @@ export const mod_control_panel = {
   },
 
   computed: {
-    step1_todo_p() { return !this.ac_room                                                           },
-    step1_done_p() { return this.ac_room                                                            },
+    step1_todo_p() { return !this.cable_p                                                           },
+    step1_done_p() { return this.cable_p                                                            },
 
     step2_todo_p() { return this.step1_done_p && (!this.order_enable_p || !this.order_flow.valid_p) },
     step2_done_p() { return this.step1_done_p && this.order_enable_p && this.order_flow.valid_p     },

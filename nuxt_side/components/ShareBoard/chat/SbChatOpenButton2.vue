@@ -2,7 +2,7 @@
 b-navbar-item.SbChatOpenButton2.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
   tag="a"
   @click="SB.chat_modal_open_handle"
-  v-if="SB.ac_room || true"
+  v-if="SB.cable_p || true"
   )
   b-icon.account_icon(icon="account")
   b-icon.message_icon(icon="chat-processing")
