@@ -116,7 +116,7 @@ export const mod_chat_message_history = {
     mh_api_params() {
       GX.assert(GX.present_p(this.room_key), "GX.present_p(this.room_key)")
       GX.assert(GX.present_p(this.user_name), "GX.present_p(this.user_name)")
-      GX.assert(cable_p, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
+      GX.assert(this.cable_p, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
 
       // link: app/models/share_board/room/chat_message_loader.rb
       return {

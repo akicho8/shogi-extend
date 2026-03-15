@@ -15,7 +15,7 @@ import { HandleNameNormalizer } from "@/components/models/handle_name/handle_nam
 export const mod_room_channel = {
   data() {
     return {
-      cable_p: false, // subscriptions.create のインスタンス
+      cable_p: false, // 部屋があるか？
       offline_check_show: false,
     }
   },
