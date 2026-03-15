@@ -56,9 +56,9 @@ b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
 
   .box.export_box
     b-field(custom-class="is-small" label="エクスポート")
-      b-switch.export_menu_show_toggle_handle(size="is-small" v-model="SB.export_menu_show" @input="v => sfx_play_toggle(v)") ON
+      b-switch.export_group_visible_toggle_handle(size="is-small" v-model="SB.export_group_visible_p" @input="v => sfx_play_toggle(v)") ON
 
-    template(v-if="SB.export_menu_show")
+    template(v-if="SB.export_group_visible_p")
       hr
 
       b-field(custom-class="is-small" label="コピー")

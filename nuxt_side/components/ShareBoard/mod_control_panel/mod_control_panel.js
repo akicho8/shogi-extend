@@ -8,7 +8,7 @@ export const mod_control_panel = {
 
   data() {
     return {
-      export_menu_show: false,
+      export_group_visible_p: false,
     }
   },
 
