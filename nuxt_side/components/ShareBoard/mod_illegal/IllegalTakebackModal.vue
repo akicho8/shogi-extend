@@ -5,7 +5,7 @@
       | {{SB.latest_illegal_name}}
 
   .modal-card-body
-    CustomShogiPlayer.CustomShogiPlayerInsideModal(
+    CustomShogiPlayer.ModalInsideCustomShogiPlayer(
       v-if="SB.debug_mode_p"
       sp_mode="view"
       :sp_body="SB.illegal_params.sfen"

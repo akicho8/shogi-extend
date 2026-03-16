@@ -4,9 +4,9 @@
     .modal-card-title 手合割
     .evaluation_value 評価値 {{SB.board_preset_info.handicap_desc}}
   .modal-card-body
-    b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()" @click.stop)
+    b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()" @click.native.stop)
       option(v-for="e in SB.BoardPresetInfo.values" :value="e.key" v-text="e.name")
-    CustomShogiPlayer.CustomShogiPlayerInsideModal(
+    CustomShogiPlayer.ModalInsideCustomShogiPlayer(
       sp_mode="view"
       :sp_body="SB.board_preset_info.sfen"
       :sp_mobile_vertical="false"
