@@ -4,7 +4,7 @@
     .modal-card-title 手合割
     .evaluation_value 評価値 {{SB.board_preset_info.handicap_desc}}
   .modal-card-body
-    b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()")
+    b-select.board_preset_key(v-model="SB.board_preset_key" @input="sfx_click()" @click.stop)
       option(v-for="e in SB.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     CustomShogiPlayer.CustomShogiPlayerInsideModal(
       sp_mode="view"
@@ -15,8 +15,8 @@
     )
     .description(v-html="SB.board_preset_info.description")
     .buttons.has-addons.is-centered.mb-0
-      b-button.mb-0.board_preset_step_handle.previous(@click="SB.board_preset_step_handle(-1)" icon-left="chevron-left")
-      b-button.mb-0.board_preset_step_handle.next(@click="SB.board_preset_step_handle(1)" icon-left="chevron-right")
+      b-button.mb-0.board_preset_step_handle.previous(@click.stop="SB.board_preset_step_handle(-1)" icon-left="chevron-left")
+      b-button.mb-0.board_preset_step_handle.next(@click.stop="SB.board_preset_step_handle(1)" icon-left="chevron-right")
   .modal-card-foot
     b-button.board_preset_modal_close_handle.has-text-weight-normal(@click="SB.board_preset_modal_close_handle" icon-left="chevron-left")
     b-button.board_preset_apply_handle(@click="SB.board_preset_apply_handle" type="is-primary") 適用
