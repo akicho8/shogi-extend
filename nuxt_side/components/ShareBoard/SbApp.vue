@@ -5,6 +5,7 @@ client-only
     | {{$debug.trace('SbApp', 'render')}}
     DebugBox.is-hidden-mobile(v-if="debug_mode_p")
       p 部屋: {{cable_p}}
+      p 横板: {{sidebar_p}}
     SbControlPanel
     SbNavbar
     SbBottomNav
