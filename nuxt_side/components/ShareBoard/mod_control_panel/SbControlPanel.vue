@@ -1,6 +1,5 @@
 <template lang="pug">
-//- https://buefy.org/documentation/sidebar
-b-sidebar.SbControlPanel(fullheight right overlay v-model="SB.sidebar_p")
+SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
   .header
     NavbarItemSidebarClose(@click="SB.sidebar_toggle_handle")
     template(v-if="!SB.cable_p || !SB.i_am_member_p")
@@ -132,30 +131,10 @@ export default {
     padding-left:  2.5rem ! important
     padding-right: 2.5rem ! important
 
-  .sidebar-content
-    min-width: 20rem
-    +mobile
-      width: 90%
-    +tablet
-      width: 80%
-    +desktop
-      width: 70%
-    +widescreen
-      width: 60%
-    +fullhd
-      width: 50%
-
-  .sidebar-content
-    padding: 1rem
-    gap: 1rem
-
   .header
     display: flex
     align-items: center
     justify-content: space-between
-
-  .box
-    margin: 0
 
   .button_elements
     display: flex
@@ -170,8 +149,6 @@ export default {
 
 .STAGE-development
   .SbControlPanel
-    .box
-      border: 1px dashed change_color($primary, $alpha: 0.5)
     .button_elements
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
