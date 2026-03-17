@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.SbNavbar(v-bind="component_attrs")
+MainNavbar.SbTopNav(v-bind="component_attrs")
   template(slot="brand")
     template(v-if="SB.home_display_p")
       b-navbar-item(@click.native="SB.exit_handle" v-if="SB.home_display_p")
@@ -66,7 +66,7 @@ import { support_child } from "./support_child.js"
 // import SbThinkMarkToggleButton from "./think_mark/SbThinkMarkToggleButton.vue"
 
 export default {
-  name: "SbNavbar",
+  name: "SbTopNav",
   mixins: [support_child],
   computed: {
     // https://buefy.org/documentation/navbar
@@ -120,13 +120,13 @@ export default {
 // .SbApp
 //   &.is_appearance_theme_b
 //     &.play_mode_p
-//       .SbNavbar
+//       .SbTopNav
 //         &.is-primary
 //           background-color: transparent
 //           .navbar-item, .navbar-link
 //             color: $grey
 
-.SbNavbar
+.SbTopNav
   .NavbarItemSidebarOpen
     +tablet
       padding-left:  2.5rem

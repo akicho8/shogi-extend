@@ -4,10 +4,10 @@ client-only
     div(is="style" v-text="app_component_raw_css" v-if="app_component_raw_css")
     | {{$debug.trace('SbApp', 'render')}}
     DebugBox.is-hidden-mobile(v-if="debug_mode_p")
-      p 部屋: {{cable_p}}
-      p 横板: {{sidebar_p}}
+      p 部屋状態: {{cable_p}}
+      p 横板状態: {{sidebar_p}}
     SbControlPanel
-    SbNavbar
+    SbTopNav
     SbBottomNav
     MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
       .container.is-fluid
