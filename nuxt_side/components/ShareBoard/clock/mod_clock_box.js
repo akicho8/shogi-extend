@@ -378,7 +378,11 @@ export const mod_clock_box = {
     },
     __cc_receive_message(params) {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
-      return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
+      let str = cc_behavior_info.receive_message
+      if (GX.present_p(params.from_user_name)) {
+        str = [this.user_call_name(params.from_user_name), "が", str]
+      }
+      return str
     },
     async __cc_start_call(params) {
       // a vs b で対局を開始したとして、
