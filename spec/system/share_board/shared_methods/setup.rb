@@ -68,6 +68,7 @@ module SharedMethods
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
       # find(".close_handle").click                 # 閉じる
     end
+    sidebar_close
     assert_text(user_name)                        # 入力したハンドルネームの人が参加している
     assert_room_created
   end
@@ -79,6 +80,7 @@ module SharedMethods
       find(".gate_enter_handle").click            # 入室ボタンをクリックする
       # find(".close_handle").click                 # 閉じる
     end
+    sidebar_close
     assert_room_created
   end
 
@@ -106,6 +108,7 @@ module SharedMethods
     gate_modal_open_handle        # 「入退室」を自分でクリックする
     first(".gate_leave_handle").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
+    sidebar_close
   end
 
   # a と b が同じ部屋で2手目まで進めた状態

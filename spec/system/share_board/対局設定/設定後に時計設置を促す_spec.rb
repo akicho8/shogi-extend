@@ -6,7 +6,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name    => "a",
         :FIXED_MEMBER => "a,b",
       })
-    order_modal_open
+    sidebar_open
+    order_modal_open_handle
     os_switch_toggle
     os_submit_button_click
     assert_text "次は時計を設置しよう"

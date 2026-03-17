@@ -18,7 +18,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 対局設定を適用する
     window_a do
-      order_modal_open
+      sidebar_open
+      order_modal_open_handle
       order_modal_force_submit
       order_modal_close
     end

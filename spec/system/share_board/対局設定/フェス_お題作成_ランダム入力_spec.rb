@@ -9,7 +9,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         })
     end
     window_a do
-      order_modal_open
+      sidebar_open
+      order_modal_open_handle
       os_switch_toggle                                        # 有効スイッチをクリック
       find(".tabs .order_tab_fes").click
 

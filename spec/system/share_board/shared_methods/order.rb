@@ -9,11 +9,11 @@ module SharedMethods
     find(".order_modal_open_handle").click
   end
 
-  def order_modal_open
-    # assert_room_created
-    sidebar_open
-    order_modal_open_handle
-  end
+  # def order_modal_open
+  #   # assert_room_created
+  #   sidebar_open
+  #   order_modal_open_handle
+  # end
 
   def order_modal_close
     find(".OrderModal .close_handle_for_capybara").click
@@ -29,17 +29,21 @@ module SharedMethods
   end
 
   def order_set_on
-    order_modal_open
+    sidebar_open
+    order_modal_open_handle
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     os_submit_button_click                 # 明示的に適用する
     order_modal_close
+    sidebar_close
     assert_history_text("順番 ON")
   end
 
   def order_set_off
-    order_modal_open
+    sidebar_open
+    order_modal_open_handle
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     order_modal_close
+    sidebar_close
     assert_history_text("順番 OFF")
   end
 

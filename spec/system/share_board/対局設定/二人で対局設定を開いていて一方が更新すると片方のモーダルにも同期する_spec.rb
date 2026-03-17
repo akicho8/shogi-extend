@@ -12,8 +12,14 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     window_a { case1(:a) }           # a が入室
     window_b { case1(:b) }           # b が入室
-    window_a { order_modal_open }       # a が対局設定を開いた
-    window_b { order_modal_open }       # b が対局設定を開いた
+    window_a {
+      sidebar_open
+      order_modal_open_handle               # a が対局設定を開いた
+    }
+    window_b {
+      sidebar_open
+      order_modal_open_handle                # b が対局設定を開いた
+    }
     window_a do
       find(".swap_handle").click     # a が先後反転した
       os_submit_button_click         # a が確定を押した

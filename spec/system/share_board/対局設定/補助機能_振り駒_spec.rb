@@ -9,7 +9,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :furigoma_random_key => "force_true",     # 毎回反転させる
         :toss_count    => toss_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
       })
-    order_modal_open
+    sidebar_open
+    order_modal_open_handle
     find(".furigoma_handle").click
   end
 

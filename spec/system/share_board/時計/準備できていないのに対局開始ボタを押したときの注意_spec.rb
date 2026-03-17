@@ -10,7 +10,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "対局設定ONにしたが対局者を指定せずに対局開始ボタンを押した場合" do
     room_setup_by_user(:a)
-    order_modal_open
+    sidebar_open
+    order_modal_open_handle
     os_switch_toggle
     order_modal_close
     order_modal_close_force
