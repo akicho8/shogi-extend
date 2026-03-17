@@ -159,7 +159,7 @@ gem "bioshogi", github: "akicho8/bioshogi", branch: "master"
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
-gem "nokogiri", ">= 1.18.4" # 「force_ruby_platform: true」を指定してない理由は nokogiri だけじゃないから。bigdecimal なども native build しないといけないので capistrano 側で全体適用している。
+gem "nokogiri", ">= 1.19.1" # 「force_ruby_platform: true」を指定してない理由は nokogiri だけじゃないから。bigdecimal なども native build しないといけないので capistrano 側で全体適用している。
 
 gem "faraday"                   # 主に「なんでも棋譜変換」用
 gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
