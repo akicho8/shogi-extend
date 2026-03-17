@@ -1,6 +1,6 @@
 server "shogi-flow.xyz", user: "deploy", roles: %w[app db web]
 
-set :rbenv_ruby, "3.4.8"
+set :rbenv_ruby, "4.0.2"
 
 set :keep_releases, 1
 
