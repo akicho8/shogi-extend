@@ -26,8 +26,8 @@ export const mod_edit_mode = {
         onConfirm: () => {
           this.sfx_click()
           this.xhistory_action({label: "局面編集前"})
-          this.sp_mode = "edit"
           this.edit_warn_modal_close()
+          this.sp_mode_set_edit()
         },
         onCancel: () => {
           this.sfx_click()
@@ -56,6 +56,10 @@ export const mod_edit_mode = {
         this.edit_warn_modal_open()
         return
       }
+      this.sp_mode_set_edit()
+    },
+
+    sp_mode_set_edit() {
       this.sidebar_close()
       this.edit_mode_sfen = null // 編集モードで動かしたらこれに入る
       this.sp_mode = "edit"
