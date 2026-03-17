@@ -229,6 +229,7 @@ export const mod_clock_box = {
     },
     cc_resume_silent_share() {
       if (this.cc_pause_p) {
+        this.sidebar_close()
         this.cc_resume_handle()
         this.clock_box_share("cc_behavior_resume_silent")
       }
@@ -320,6 +321,7 @@ export const mod_clock_box = {
     clock_box_share_params_factory(cc_behavior_key, params = {}) {
       const cc_behavior_info = CcBehaviorInfo.fetch(cc_behavior_key)
       params = {
+        __standalone_mode__: true,
         cc_behavior_key: cc_behavior_info.key,
         cc_behavior_name: cc_behavior_info.name,
         talk: true,
@@ -352,6 +354,10 @@ export const mod_clock_box = {
         this.clock_share_dto_receive(params)
       }
 
+      if (cc_behavior_info.sidebar_close_run) {
+        this.sidebar_close()
+      }
+
       this.__cc_xhistory_record_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
 
@@ -375,8 +381,6 @@ export const mod_clock_box = {
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     async __cc_start_call(params) {
-      this.sidebar_close()
-
       // a vs b で対局を開始したとして、
       // toast_primary の連続実行でしている最中に a が初手を指すると
       // 「それではaさんから指してください」が「それではbさんから指してください」に変わってしまうので
