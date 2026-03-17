@@ -375,6 +375,8 @@ export const mod_clock_box = {
       return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     async __cc_start_call(params) {
+      this.sidebar_close()
+
       // a vs b で対局を開始したとして、
       // toast_primary の連続実行でしている最中に a が初手を指すると
       // 「それではaさんから指してください」が「それではbさんから指してください」に変わってしまうので
