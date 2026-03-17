@@ -47,7 +47,6 @@ export const mod_edit_mode = {
       if (this.edit_warn_modal_instance) {
         return
       }
-      // this.sidebar_close()
       this.sfx_click()
       if (this.cc_play_p) {
         this.toast_primary("対局中は編集できません")
@@ -57,6 +56,7 @@ export const mod_edit_mode = {
         this.edit_warn_modal_open()
         return
       }
+      this.sidebar_close()
       this.edit_mode_sfen = null // 編集モードで動かしたらこれに入る
       this.sp_mode = "edit"
     },
