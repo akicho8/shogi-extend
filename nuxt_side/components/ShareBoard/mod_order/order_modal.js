@@ -36,7 +36,7 @@ export const order_modal = {
       if (!this.order_modal_instance) {
         if (this.room_is_empty_p()) { return }
 
-        this.sidebar_close()
+        // this.sidebar_close()
         this.sfx_click()
 
         this.order_modal_init()

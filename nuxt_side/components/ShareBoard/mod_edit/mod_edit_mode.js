@@ -47,7 +47,7 @@ export const mod_edit_mode = {
       if (this.edit_warn_modal_instance) {
         return
       }
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       if (this.cc_play_p) {
         this.toast_primary("対局中は編集できません")
@@ -63,7 +63,7 @@ export const mod_edit_mode = {
 
     // 編集完了
     play_mode_set_handle() {
-      this.sidebar_close()
+      // this.sidebar_close()
       // this.sfx_click()
       // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
@@ -94,7 +94,7 @@ export const mod_edit_mode = {
     // 編集モードの棋譜をコピーする
     edit_mode_kifu_copy_handle() {
       if (this.edit_mode_sfen) {
-        this.sidebar_close()
+        // this.sidebar_close()
         this.sfx_click()
         this.general_kifu_copy(this.edit_mode_sfen, {
           to_format: this.FormatTypeInfo.fetch("kif_utf8").format_key,

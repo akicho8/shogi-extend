@@ -26,7 +26,7 @@ export const mod_chat = {
 
     chat_modal_shortcut_handle() {
       if (!this.chat_modal_instance) {
-        this.sidebar_close()
+        // this.sidebar_close()
         this.sfx_click()
         this.chat_modal_open()
         return true
@@ -39,7 +39,7 @@ export const mod_chat = {
       if (this.DeviseHelper.mouse_click_event_p(e)) {
         this.toast_primary("ENTER キーで開こう")
       }
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.chat_modal_open()
     },
@@ -48,7 +48,7 @@ export const mod_chat = {
       if (this.DeviseHelper.mouse_click_event_p(e)) {
         this.toast_primary("ENTER キーで閉じよう")
       }
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.chat_modal_close()
     },

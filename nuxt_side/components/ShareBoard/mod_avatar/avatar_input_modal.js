@@ -22,7 +22,7 @@ export const avatar_input_modal = {
     avatar_input_modal_open_handle() {
       if (!this.avatar_input_modal_instance) {
         this.sfx_click()
-        this.sidebar_close()
+        // this.sidebar_close()
         this.avatar_input_modal_open()
       }
     },

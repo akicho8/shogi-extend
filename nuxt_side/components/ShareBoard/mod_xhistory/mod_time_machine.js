@@ -33,13 +33,11 @@ export const mod_time_machine = {
     },
 
     time_machine_modal_open_handle(params) {
-      // this.sidebar_close()
       this.sfx_click()
       this.time_machine_modal_open(params)
     },
 
     time_machine_modal_close_handle() {
-      // this.sidebar_close()
       this.sfx_click()
       this.time_machine_modal_close()
     },

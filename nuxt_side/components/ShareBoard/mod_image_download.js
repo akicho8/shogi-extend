@@ -9,7 +9,7 @@ export const mod_image_download = {
   },
   methods: {
     image_download_modal_handle() {
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.modal_card_open({
         component: ImageDownloadModal,

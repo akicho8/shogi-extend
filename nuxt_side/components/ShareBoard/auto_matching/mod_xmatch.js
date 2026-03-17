@@ -45,7 +45,7 @@ export const mod_xmatch = {
 
     // 自動マッチングモーダル起動
     xmatch_modal_handle() {
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.xmatch_modal_core()
     },

@@ -11,14 +11,14 @@ export const mod_handle_name = {
         return
       }
 
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.handle_name_modal_open()
     },
 
     // 本当は対局設定してなければ問題ないけどややこしくなるので退室してもらう
     handle_name_alert() {
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.talk("入室後は名前を変更できません")
       this.dialog_confirm({

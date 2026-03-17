@@ -31,7 +31,7 @@ export const mod_kifu_read = {
     // 棋譜の読み込みタップ時の処理
     kifu_read_modal_open_handle(source = "") {
       if (!this.kifu_read_modal_instance) {
-        this.sidebar_close()
+        // this.sidebar_close()
         this.sfx_click()
         if (this.cc_play_p) {
           this.toast_primary("対局中は読み込めません")

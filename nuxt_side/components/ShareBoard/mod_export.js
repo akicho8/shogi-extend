@@ -28,7 +28,7 @@ export const mod_export = {
         success_message: this.kifu_copy_success_message,
       })
       if (success) {
-        this.sidebar_close()
+        // this.sidebar_close()
       }
     },
 

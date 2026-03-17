@@ -25,14 +25,12 @@ export const mod_urls = {
         return
       }
 
-      // this.sidebar_close()
       this.sfx_click()
       this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
     current_url_copy_handle() {
-      // this.sidebar_close()
       this.sfx_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
     },
@@ -46,7 +44,7 @@ export const mod_urls = {
     //      this.sfx_click()
     //      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
     //      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
-    //        this.sidebar_close()
+    //        // 成功した場合
     //      }
     //    }
     //  }
@@ -64,7 +62,7 @@ export const mod_urls = {
       // 1, 2回目
       const success = await this.clipboard_copy(simple_cache.read(key), {success_message: "棋譜再生用の短縮URLをコピーしました"})
       if (success) {
-        // this.sidebar_close()
+        // 成功した場合
       }
     },
     __short_url_fetch() {
@@ -79,7 +77,6 @@ export const mod_urls = {
     },
 
     other_app_click_handle(app_name) {
-      // this.sidebar_close()
       this.sfx_click()
       this.app_log({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 

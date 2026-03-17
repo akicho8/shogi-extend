@@ -12,14 +12,14 @@ export const appearance_modal = {
 
   methods: {
     appearance_modal_open_handle() {
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.appearance_modal_open()
       this.general_setting_modal_close()
     },
 
     appearance_modal_close_handle() {
-      this.sidebar_close()
+      // this.sidebar_close()
       this.sfx_click()
       this.appearance_modal_close()
     },
