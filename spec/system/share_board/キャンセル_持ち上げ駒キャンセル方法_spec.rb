@@ -9,6 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     find(".setting_tab_ui").click         # 「その他」タブ
     find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
+    sidebar_close
 
     board_place("77").click                     # 77を持って
     board_place("87").click                     # 87をクリック

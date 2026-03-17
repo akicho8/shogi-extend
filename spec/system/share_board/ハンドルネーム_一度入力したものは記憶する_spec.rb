@@ -15,6 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         find(".new_user_name").find(:fillable_field, with: :a) # 以前入力したニックネームが復元されている
         find(".gate_enter_handle").click                   # 入室
         # find(".close_handle").click                   # 閉じる
+        sidebar_close
         assert_room_created
       end
 

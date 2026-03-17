@@ -15,6 +15,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     os_switch_toggle
     order_modal_close
     order_modal_close_force
+    sidebar_close
     clock_open
     clock_play_button_click
     assert_text "先に対局設定で対局者を指定しよう"

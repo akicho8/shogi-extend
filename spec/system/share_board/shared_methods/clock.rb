@@ -70,6 +70,7 @@ module SharedMethods
     clock_open                                     # 時計を開いて
     clock_play_button_click                     # 開始
     cc_modal_close
+    sidebar_close
   end
 
   def clock_play_button_click
