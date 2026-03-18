@@ -266,7 +266,7 @@ export default {
 
     quiz_maker_handle() {
       this.sfx_click()
-      this.SB.order_modal_close()
+      // this.SB.order_modal_close()
       this.SB.quiz_maker_handle()
       this.SB.xhistory_action({label: "お題作成", message: "お題を作成しています"})
     },

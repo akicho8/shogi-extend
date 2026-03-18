@@ -79,13 +79,13 @@ export default {
 @import "../sass/support.sass"
 
 .QuizMakerModal
-  +modal_width(30rem)
+  +modal_max_width(30rem)
 
   .modal-card-body
-    padding: 20px
+    padding: 1.5rem
     display: flex
     flex-direction: column
-    gap: 0.5rem
+    gap: 0.75rem
     .field.is-grouped
       gap: 1rem
       .field
