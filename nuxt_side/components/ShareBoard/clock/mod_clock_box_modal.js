@@ -42,6 +42,8 @@ export const mod_clock_box_modal = {
 
     cc_modal_open_handle() {
       if (!this.cc_modal_instance) {
+        if (this.room_required_warn_message()) { return }
+
         // this.sidebar_close()
         this.sfx_click()
         this.cc_modal_open()

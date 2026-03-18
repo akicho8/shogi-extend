@@ -245,10 +245,10 @@ export const mod_room_channel = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    room_is_empty_p() {
+    room_required_warn_message() {
       if (!this.cable_p) {
         this.sfx_click()
-        this.toast_warn("まず部屋に入ろう")
+        this.toast_primary("まず部屋に入ろう")
         return true
       }
     },

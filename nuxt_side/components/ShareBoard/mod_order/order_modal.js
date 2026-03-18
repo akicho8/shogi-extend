@@ -34,7 +34,7 @@ export const order_modal = {
   methods: {
     order_modal_open_handle() {
       if (!this.order_modal_instance) {
-        if (this.room_is_empty_p()) { return }
+        if (this.room_required_warn_message()) { return }
 
         // this.sidebar_close()
         this.sfx_click()

@@ -15,15 +15,10 @@ export const mod_urls = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
     room_url_copy_handle() {
-      if (this.room_is_empty_p()) { return }
+      if (this.room_required_warn_message()) { return }
 
-      GX.assert(GX.present_p(this.room_key), "GX.present_p(this.room_key)")
-      if (GX.blank_p(this.room_key)) {
-        // ここは通らないはず
-        this.sfx_click()
-        this.toast_warn("まだ合言葉を設定してません")
-        return
-      }
+      GX.assert(this.cable_p)
+      GX.assert_present(this.room_key)
 
       this.sfx_click()
       this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
