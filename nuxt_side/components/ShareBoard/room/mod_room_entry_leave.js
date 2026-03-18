@@ -14,7 +14,9 @@ export const mod_room_entry_leave = {
         if (this.received_from_self(params)) {
           if (!this.url_room_key_exist_p) {      // 「入退室」から入室 (部屋のリンクから来ていない場合)
             if (this.member_infos.length <= 1) { // 自分だけなら
-              this.room_url_copy_modal_handle()
+              if (this.cable_p) {                // 入室後するに退室している場合があるため
+                this.room_url_copy_modal_handle()
+              }
             }
           }
         }
