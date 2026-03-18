@@ -99,6 +99,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
     b-field(custom-class="is-small" label="開発用")
       .button_elements
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.cable_p") 対局履歴(nuxt-link)
+        b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen, open: 'print'}}" @click.native="sfx_click()") 印刷
         b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.cable_p") 対局履歴(hrefで別タブ)
         b-button.handle_name_modal_open_handle(size="is-small" @click="SB.handle_name_modal_open_handle") ハンドルネーム変更
         b-button.avatar_input_modal_open_handle(size="is-small" @click="SB.avatar_input_modal_open_handle") アバター設定
