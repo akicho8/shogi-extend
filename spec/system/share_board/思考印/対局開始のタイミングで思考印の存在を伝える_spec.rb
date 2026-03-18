@@ -7,7 +7,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :FIXED_MEMBER                => "a,b",
         :FIXED_ORDER                 => "a",
         :think_mark_invite_feature_p => true,
-        :auto_close_p                => true,
       })
 
     browser_audio_wakeup

@@ -2,7 +2,7 @@ require "#{__dir__}/../shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
-    visit_app(auto_close_p: true) # 自動的に閉じるモード (production では true にしている)
+    visit_app
     clock_open                    # 時計を開いて
     clock_play_button_click       # 開始する (このとき自動的に閉じる。インスタンスを null に設定する)
     sidebar_open                  # 再度メニューから
