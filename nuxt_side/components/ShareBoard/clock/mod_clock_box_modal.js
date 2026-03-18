@@ -118,17 +118,11 @@ export const mod_clock_box_modal = {
       this.cc_params_apply()
       this.cc_play_handle()
       this.clock_box_share("cc_behavior_start")
-      if (this.auto_close_p) {
-        this.cc_modal_close()
-      }
     },
     cbm_pause_handle() {
       this.sfx_click()
       this.cc_pause_handle()
       this.clock_box_share("cc_behavior_pause")
-      // if (this.cable_p && this.order_enable_p) {
-      //   this.$GX.delay_block(2.5, () => this.toast_primary("続けて検討する場合は対局設定を切ろう"))
-      // }
     },
     cbm_stop_handle() {
       this.sfx_click()
@@ -143,9 +137,6 @@ export const mod_clock_box_modal = {
       this.sfx_click()
       this.cc_resume_handle()
       this.clock_box_share("cc_behavior_resume")
-      if (this.auto_close_p) {
-        this.cc_modal_close()
-      }
     },
     cbm_save_handle() {
       this.sfx_click()

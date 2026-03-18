@@ -139,10 +139,8 @@ export const order_modal = {
       }
 
       // 自分を含めて閉じる
-      if (this.auto_close_p) {
-        if (this.order_modal_update_ok) {
-          this.order_modal_close()
-        }
+      if (this.order_modal_update_ok) {
+        this.order_modal_close()
       }
 
       // 再送モーダルが出ている人はどうしてよいか迷っているため自動で閉じる

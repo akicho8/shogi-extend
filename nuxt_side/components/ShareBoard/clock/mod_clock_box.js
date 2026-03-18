@@ -354,7 +354,9 @@ export const mod_clock_box = {
         this.clock_share_dto_receive(params)
       }
 
-      if (cc_behavior_info.sidebar_close_run) {
+      if (cc_behavior_info.modal_all_close_p) {
+        this.order_modal_close()
+        this.cc_modal_close()
         this.sidebar_close()
       }
 

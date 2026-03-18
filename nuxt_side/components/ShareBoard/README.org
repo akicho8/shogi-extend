@@ -67,21 +67,20 @@
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
   | key                         | desc                                                    | Example                                                                          |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
-  | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=a                     |
+  | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_key=a&user_name=a                         |
   | FIXED_MEMBER                | 部屋にいるメンバーの名前たち                            |                                                                                  |
   | FIXED_ORDER                 | 対局設定した名前たち                                    |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
-  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=b               |
+  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_key=a&default_user_name=b                 |
   | ng_word_check_p             | false ならバリデーションを飛ばす                        |                                                                                  |
-  | RESEND_SUCCESS_DELAY            | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=a&RESEND_SUCCESS_DELAY=-1 |
-  | RESEND_DELAY             | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
+  | RESEND_SUCCESS_DELAY        | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_key=a&user_name=a&RESEND_SUCCESS_DELAY=-1 |
+  | RESEND_DELAY                | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                  |
   | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                  |
   | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                  |
   | clock_box.initial_extra_min | 考慮時間(分)                                            |                                                                                  |
   | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                  |
   | xmatch_auth_key             |                                                         |                                                                                  |
   | xmatch_wait_max             |                                                         |                                                                                  |
-  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                  |
   |-----------------------------+---------------------------------------------------------+----------------------------------------------------------------------------------|
 
 * 開発用URL
