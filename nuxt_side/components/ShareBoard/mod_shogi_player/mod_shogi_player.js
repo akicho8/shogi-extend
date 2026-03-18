@@ -152,7 +152,6 @@ export const mod_shogi_player = {
   computed: {
     play_mode_p() { return this.sp_mode === "play" },
     edit_mode_p() { return this.sp_mode === "edit" },
-    advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     current_sfen_and_turn() { return {sfen: this.current_sfen, turn: this.current_turn} }, // current_sfen_set に対応するゲッター
     sfen_sync_dto()         { return this.current_sfen_and_turn },
