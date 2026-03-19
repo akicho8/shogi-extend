@@ -31,7 +31,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "takeback",
         name: "待ったできる",
-        message: "勝手に負けてもらっちゃ困る相手と指す場合に用いる",
+        message: "指導対局や接待プレイ時に用いる",
         battle_start_message: "反則をしても待ったできる接待用ルールです",
         type: "is-warning",
         sp_illegal_validate: true,
