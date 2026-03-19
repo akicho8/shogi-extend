@@ -115,32 +115,32 @@ end
 # end
 
 # # https://stackoverflow.com/questions/56111529/cannot-call-non-w3c-standard-command-while-in-w3c-mode-seleniumwebdrivererr
-# Capybara.register_driver :headless_chrome do |app|
-#   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w[headless disable-gpu], w3c: false })
-#   Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w[headless disable-gpu], w3c: false })
+  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+end
+
+# Capybara.register_driver :my_chrome do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#   options.add_argument("--start-maximized") # 最大化
+#   # ヘッドレスの場合はこちらも併用すると確実です
+#   # options.add_argument("--window-size=1920,1080")
+#
+#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 # end
-
-Capybara.register_driver :my_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--start-maximized") # 最大化
-  # ヘッドレスの場合はこちらも併用すると確実です
-  # options.add_argument("--window-size=1920,1080")
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-Capybara.register_driver :my_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-
-  # ヘッドレス設定
-  options.add_argument("--headless")
-  options.add_argument("--disable-gpu") # Windows環境での安定化のためによく併用されます
-
-  # ここでサイズを指定
-  options.add_argument("--window-size=2560,1440")
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
+#
+# Capybara.register_driver :my_chrome_headless do |app|
+#   options = Selenium::WebDriver::Chrome::Options.new
+#
+#   # ヘッドレス設定
+#   options.add_argument("--headless")
+#   options.add_argument("--disable-gpu") # Windows環境での安定化のためによく併用されます
+#
+#   # ここでサイズを指定
+#   options.add_argument("--window-size=2560,1440")
+#
+#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+# end
 
 RSpec.configure do |config|
   # Chrome をヘッドレスモードで起動
@@ -174,13 +174,13 @@ RSpec.configure do |config|
     # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
     # これにしてテストが落ちなくなったところもある
     # 前の書き方だとサイズが効いていなかったと思われる
-    # driven_by :selenium, using: (BROWSER_DEBUG ? :chrome : :headless_chrome) # screen_size: [1400, 1400]
+    driven_by :selenium, using: (BROWSER_DEBUG ? :chrome : :headless_chrome) # screen_size: [1400, 1400]
 
-    if BROWSER_DEBUG
-      driven_by :my_chrome
-    else
-      driven_by :my_chrome_headless
-    end
+    # if BROWSER_DEBUG
+    #   driven_by :my_chrome
+    # else
+    #   driven_by :my_chrome_headless
+    # end
   end
 end
 
