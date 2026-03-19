@@ -2,7 +2,7 @@ require "#{__dir__}/../shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
-    visit_app(clock_speed: 60, autoexec: "cc_create,cc_modal_open_handle")
+    visit_room(user_name: :a, FIXED_ORDER: :a, clock_speed: 60, room_after_create: "cc_create,cc_modal_open_handle")
 
     # 対局開始から一時停止で経過時間を表示する
 
