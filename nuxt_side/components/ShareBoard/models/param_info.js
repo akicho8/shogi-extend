@@ -87,7 +87,8 @@ export class ParamInfo extends ParamBase {
 
       { key: "toast_key",                         type: "string",  name: "toast の表示位置",                       defaults: { development: null,       production: "is_toast_main_board_bottom",        }, permanent: false,  relation: "ToastInfo",             alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
       { key: "slider_reflector_notify_scope_key", type: "string",  name: "スライダーを動かしたときの通知スコープ", defaults: { development: null,       production: "rns_except_me",                     }, permanent: false,  relation: "ReflectorNotifyScopeInfo",       alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
-      { key: "export_group_visible_p",               type: "boolean", name: "エクスポートメニュー",                   defaults: { development: null,       production: false,                               }, permanent: true,   relation: null,                     alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
+      { key: "export_group_visible_p",            type: "boolean", name: "エクスポートメニュー",                   defaults: { development: null,       production: false,                               }, permanent: true,   relation: null,                     alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
+      { key: "cable_required_p",                   type: "boolean", name: "対局設定や対局時計は部屋を必須とするか？", defaults: { development: null,       production: true,                              }, permanent: false,  relation: null,                     alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
     ]
   }
 }

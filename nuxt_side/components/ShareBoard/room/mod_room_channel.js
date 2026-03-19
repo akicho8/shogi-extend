@@ -246,7 +246,7 @@ export const mod_room_channel = {
 
     ////////////////////////////////////////////////////////////////////////////////
     room_required_warn_message() {
-      if (!this.cable_p) {
+      if (this.cable_required_p && !this.cable_p) {
         this.sfx_click()
         this.toast_primary("まず部屋に入ろう")
         return true
