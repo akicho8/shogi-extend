@@ -2,12 +2,16 @@ require "#{__dir__}/../shared_methods"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
-    visit_room(user_name: :a, FIXED_ORDER: :a, clock_speed: 60, room_after_create: "cc_create,cc_modal_open_handle")
+    visit_app(cable_required_p: false, clock_speed: 60, autoexec: "cc_create,cc_modal_open_handle")
 
     # 対局開始から一時停止で経過時間を表示する
 
-    find(".play_button").click
-    assert_selector(".clock_box_human_status", text: "動作中", exact_text: true)
+    begin
+      find(".play_button").click
+      sidebar_open
+      cc_modal_open_handle
+      assert_selector(".clock_box_human_status", text: "動作中", exact_text: true)
+    end
 
     find(".pause_button").click
     assert_selector(".clock_box_human_status", text: "一時停止中", exact_text: true)
@@ -19,8 +23,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 再開から一時停止しても経過時間は0からカウントを始める
 
-    find(".resume_button").click
-    assert_selector(".clock_box_human_status", text: "動作中", exact_text: true)
+    begin
+      find(".resume_button").click
+      sidebar_open
+      cc_modal_open_handle
+      assert_selector(".clock_box_human_status", text: "動作中", exact_text: true)
+    end
 
     find(".pause_button").click
     assert_selector(".clock_box_human_status", text: "一時停止中", exact_text: true)
