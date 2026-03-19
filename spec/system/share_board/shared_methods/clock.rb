@@ -114,4 +114,10 @@ module SharedMethods
   def assert_timeout_modal_exist
     assert_selector(".TimeoutModal")
   end
+
+  def assert_modal_all_close
+    assert_no_selector(".OrderModal")
+    assert_no_selector(".ClockBoxModal")
+    assert_no_selector(".SbControlPanel")
+  end
 end
