@@ -138,7 +138,7 @@ export const order_modal = {
         this.order_modal_init()
       }
 
-      // 自分を含めて閉じる
+      // 自分を含め全員のモーダルを閉じる
       if (this.order_modal_update_ok) {
         this.order_modal_close()
       }
