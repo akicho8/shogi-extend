@@ -382,7 +382,7 @@ export const mod_clock_box = {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       let str = cc_behavior_info.receive_message
       if (GX.present_p(params.from_user_name)) {
-        str = [this.user_call_name(params.from_user_name), "が", str]
+        str = [this.user_call_name(params.from_user_name), "が", str].join("")
       }
       return str
     },
