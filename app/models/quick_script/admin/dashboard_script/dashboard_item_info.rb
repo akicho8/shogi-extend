@@ -74,6 +74,11 @@ module QuickScript
             href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "思考印" }),
             func: -> { AppLog.subject_like("思考印").where(created_at: 24.hours.ago..).count },
           },
+          {
+            name: "[共有] 棋譜メール",
+            href: UrlProxy.full_url_for(path: "/lab/admin/app_log_search".dasherize, query: { query: "棋譜メール" }),
+            func: -> { AppLog.subject_like("棋譜メール").where(created_at: 24.hours.ago..).count },
+          },
 
           ################################################################################
 
