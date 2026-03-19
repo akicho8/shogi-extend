@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       clock_box_form_set(:black, 0, @INITIAL_SEC, 0, 0) # aが時計を設定する
       find(:button, :class => "play_button").click      # 開始
-      cc_modal_close                                    # 閉じる (ヘッダーに置いている)
+      # cc_modal_close                                    # 閉じる (ヘッダーに置いている)
     end
     window_b do
       assert_white_read_sec(@INITIAL_SEC)               # b側は秒読みが満タン

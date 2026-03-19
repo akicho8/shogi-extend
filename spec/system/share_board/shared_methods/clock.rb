@@ -62,15 +62,15 @@ module SharedMethods
   def clock_start
     clock_open                            # 時計を開いて
     clock_play_button_click               # 開始
-    cc_modal_close
+    # cc_modal_close
   end
 
   # 対局設定をしよう状態で時計を設置してPLAY押して閉じる
   def clock_start_force
     clock_open                                     # 時計を開いて
     clock_play_button_click                     # 開始
-    cc_modal_close
-    sidebar_close
+    # cc_modal_close
+    # sidebar_close
   end
 
   def clock_play_button_click

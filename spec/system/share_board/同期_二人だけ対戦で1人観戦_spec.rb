@@ -11,7 +11,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       os_switch_toggle                              # 有効スイッチをクリック
       drag_to_watch("is_team_black", 1)                 # 黒の[1]にいる c を観戦に移動する
       os_submit_button_click                        # 適用クリック
-      order_modal_close                                # 閉じる (ヘッダーに置いている)
       sidebar_close
       clock_start                                   # 時計を開始する
     end

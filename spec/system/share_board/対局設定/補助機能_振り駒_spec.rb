@@ -19,7 +19,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_text("aさんが振り駒をした結果、歩が5枚でaさんの先手になりました")
     assert_order_team_one "ac", "bd"
     order_modal_force_submit
-    order_modal_close
     assert_text("歩歩歩歩歩")
   end
 
@@ -28,7 +27,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_text("aさんが振り駒をした結果、と金が5枚でbさんの先手になりました")
     assert_order_team_one "bd", "ac"
     order_modal_force_submit
-    order_modal_close
     assert_text("ととととと")
   end
 end
