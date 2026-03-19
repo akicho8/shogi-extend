@@ -34,7 +34,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "時計" do
-    visit_app
+    visit_room(user_name: :a)
     Capybara.current_session.active_element.send_keys("3")
     assert_selector(".ClockBoxModal")
   end
