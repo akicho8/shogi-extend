@@ -1,10 +1,6 @@
 #!/usr/local/rbenv/shims/ruby
 # -*- coding: utf-8; compile-command: "scp slack_notify i:/home/deploy; ssh i '/home/deploy/slack_notify sidekiq.service failed'" -*-
 
-# Ruby 4.0.2 をビルドするために openssl 1.1.1w を手動インストールしたが対応する証明書が入れられないので gem で入れて対応する
-require "certifi"
-ENV["SSL_CERT_FILE"] = Certifi.where
-
 require "slack-notifier"
 
 class App
