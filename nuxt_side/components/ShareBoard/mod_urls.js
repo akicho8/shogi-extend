@@ -21,7 +21,7 @@ export const mod_urls = {
       GX.assert_present(this.room_key)
 
       this.sfx_click()
-      this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
+      this.clipboard_copy(this.room_url, {success_message: "招待URLをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」

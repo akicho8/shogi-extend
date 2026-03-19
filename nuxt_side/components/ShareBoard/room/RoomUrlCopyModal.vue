@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 部屋のリンクをコピーしますか？
+      | 招待URLをコピーしますか？
   .modal-card-body
     p 対戦相手に伝えるとこの部屋に飛んでこれます
   .modal-card-foot
@@ -18,7 +18,7 @@ export default {
   mixins: [support_child],
   mounted() {
     this.sfx_play("se_notification")
-    this.SB.sb_talk("部屋のリンクをコピーしますか？")
+    this.SB.sb_talk("招待URLをコピーしますか？")
   },
   methods: {
     close_handle() {

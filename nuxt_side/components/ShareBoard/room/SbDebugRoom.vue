@@ -4,7 +4,7 @@
     .column.is-4
       .panel
         .panel-heading
-          | 部屋のリンクをコピーする
+          | 招待URLをコピーする
         a.panel-block(href="?room_url_copy_modal_p=true") 自動発動 ON
         a.panel-block(@click="SB.room_url_copy_modal_handle") 強制発動
     .column.is-4
@@ -19,7 +19,7 @@
       .panel
         .panel-heading
           | 環境切り替え
-        a.panel-block(href="?room_url_copy_modal_p=true") 「部屋のリンクをコピーする」自動発動有効化
+        a.panel-block(href="?room_url_copy_modal_p=true") 「招待URLをコピーする」自動発動有効化
 </template>
 
 <script>
