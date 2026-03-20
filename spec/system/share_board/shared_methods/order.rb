@@ -53,7 +53,7 @@ module SharedMethods
   def order_set_off
     sidebar_open
     order_modal_open_handle
-    order_switch_on                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
+    order_switch_off                    # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     order_modal_close_handle
     sidebar_close
     assert_history_text("順番 OFF")
