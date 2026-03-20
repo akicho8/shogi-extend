@@ -70,7 +70,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "u"),
-        call: c => c.current_url_copy_handle(),
+        call: c => c.current_long_url_copy_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "b"),

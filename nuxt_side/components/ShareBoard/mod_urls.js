@@ -25,7 +25,7 @@ export const mod_urls = {
     },
 
     // 「棋譜コピー (リンク)」
-    current_url_copy_handle() {
+    current_long_url_copy_handle() {
       this.sfx_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
     },

@@ -21,7 +21,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
           b-button.turn_change_to_zero_modal_open_handle(size="is-small" @click="SB.turn_change_to_zero_modal_open_handle" :class="SB.bold_if(SB.current_turn >= 1)") 初期配置に戻す
           b-button.turn_change_to_previous_modal_open_handle(size="is-small" @click="SB.turn_change_to_previous_modal_open_handle") 1手戻す
     p.help
-      | 初期配置に戻せば同じ部屋で何度でも対局できます。戻さなければ途中の局面から対局できます。
+      | 初期配置に戻せば同じ部屋で何度でも対局できます (戻さなければ途中から対局できます)
 
   .box
     b-field(custom-class="is-small" label="対局サポート")
@@ -42,8 +42,8 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
   .box
     b-field(custom-class="is-small" label="棋譜再生用URLのコピー")
       .button_elements
+        b-button.current_long_url_copy_handle(size="is-small" tag="a" :href="SB.current_url" @click.prevent="SB.current_long_url_copy_handle") 通常版
         b-button.current_short_url_copy_handle(size="is-small" @click.prevent="SB.current_short_url_copy_handle") 短縮版
-        b-button.current_url_copy_handle(size="is-small" tag="a" :href="SB.current_url" @click.prevent="SB.current_url_copy_handle") 通常版
     p.help
       | 他者に棋譜を送る場合はURLの共有をおすすめします
 

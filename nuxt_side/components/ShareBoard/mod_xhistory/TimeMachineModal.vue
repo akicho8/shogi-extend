@@ -26,7 +26,7 @@
       b-button.kifu_download_handle(tag="a" :href="kifu_download_url(current_format_type_info)" @click.prevent="kifu_download_handle(current_format_type_info)") 棋譜ダウンロード
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="SB.debug_mode_p")
-      b-button.current_url_copy_handle( tag="a" :href="current_url"                             @click.prevent="current_url_copy_handle") 棋譜再生用リンク
+      b-button.current_long_url_copy_handle( tag="a" :href="current_url"                             @click.prevent="current_long_url_copy_handle") 棋譜再生用リンク
       b-button.kifu_show_handle(        tag="a" :href="kifu_show_url(current_format_type_info)" @click.prevent="kifu_show_handle(current_format_type_info)") 棋譜表示
       b-button(tag="a" :href="current_url"      target="_blank") 別タブで開く
       b-button(tag="a" :href="json_debug_url"   target="_blank") json

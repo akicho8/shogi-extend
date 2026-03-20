@@ -19,7 +19,7 @@ export const time_machine_url_support = {
     },
 
     // 棋譜URLコピー
-    current_url_copy_handle() {
+    current_long_url_copy_handle() {
       this.sfx_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
       this.SB.xhistory_puts("棋譜URLコピー")

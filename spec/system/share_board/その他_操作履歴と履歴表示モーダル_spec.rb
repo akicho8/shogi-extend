@@ -26,7 +26,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     assert_history_text("ぴよ将棋起動")
 
-    find(".current_url_copy_handle").click # 「リンク」
+    find(".current_long_url_copy_handle").click # 「リンク」
     assert_history_text("棋譜URLコピー")
 
     find(".kifu_download_handle").click    # 「ダウンロード」
