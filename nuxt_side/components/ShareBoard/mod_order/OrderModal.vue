@@ -10,8 +10,8 @@
 
     b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
 
-    // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
-    a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
+    // footer の order_modal_close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
+    // a.mx-2.order_modal_close_handle2_for_capybara.delete(@click="order_modal_close_handle" v-if="development_p")
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="SB.order_enable_p" @input="main_switch_handle") 有効
 
@@ -75,11 +75,11 @@
         SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.order_draft.think_mark_receive_scope_key")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
+    b-button.order_modal_close_handle.has-text-weight-normal(@click="order_modal_close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
-      b-button.apply_button(@click="apply_handle" :type="apply_button_type") 確定
       template(v-if="SB.debug_mode_p")
-        b-button.order_modal_force_submit_button(@click="order_modal_force_submit_handle") 確定(force)
+        b-button.order_submit_handle_force(@click="order_submit_handle_force") 確定(force)
+      b-button.order_submit_handle(@click="order_submit_handle" :type="apply_button_type") 確定
 </template>
 
 <script>
@@ -131,7 +131,7 @@ export default {
       // }
     },
 
-    close_handle() {
+    order_modal_close_handle() {
       if (this.SB.order_modal_close_if_not_save_p) {
         this.SB.order_modal_close_confirm({
           onConfirm: () => {
@@ -234,7 +234,7 @@ export default {
     },
 
     // 確定
-    apply_handle() {
+    order_submit_handle() {
       this.os_before_apply()
       if (this.invalid_member_empty()) { return }
       if (this.invalid_team_empty()) { return }
@@ -250,7 +250,7 @@ export default {
     },
 
     // バリデーションなしで確定する
-    order_modal_force_submit_handle() {
+    order_submit_handle_force() {
       this.os_before_apply()
       if (this.invalid_options()) { return }
       this.SB.order_draft_publish("バリデーションなしで対局設定を確定しました")
