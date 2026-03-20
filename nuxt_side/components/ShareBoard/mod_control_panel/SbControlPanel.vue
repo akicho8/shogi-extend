@@ -85,6 +85,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
           b-button.image_download_modal_handle(size="is-small" @click="SB.image_download_modal_handle" v-text="`画像 #${SB.current_turn}`")
           b-button.video_new_handle(size="is-small" @click="SB.video_new_handle") 動画変換
           b-button.kifu_mail_handle(size="is-small" @click="SB.kifu_mail_handle") メール送信
+          b-button.kifu_print_handle(size="is-small" @click="SB.kifu_print_handle") 棋譜用紙
 
   .box
     b-field(custom-class="is-small" label="その他")
@@ -100,6 +101,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       .button_elements
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.cable_p") 対局履歴(nuxt-link)
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen, open: 'print'}}" @click.native="sfx_click()") 印刷
+        b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen}}" @click.native="sfx_click()") なんでも棋譜変換
         b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.cable_p") 対局履歴(hrefで別タブ)
         b-button.handle_name_modal_open_handle(size="is-small" @click="SB.handle_name_modal_open_handle") ハンドルネーム変更
         b-button.avatar_input_modal_open_handle(size="is-small" @click="SB.avatar_input_modal_open_handle") アバター設定

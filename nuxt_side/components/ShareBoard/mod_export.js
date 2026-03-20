@@ -11,6 +11,7 @@
 
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
+import QueryString from "query-string"
 
 export const mod_export = {
   methods: {
@@ -65,6 +66,31 @@ export const mod_export = {
       if (typeof window !== 'undefined') {
         window.location.href = this.kifu_download_url(e)
         this.xhistory_puts("棋譜ダウンロード")
+      }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 印刷
+
+    async kifu_print_handle() {
+      this.sfx_click()
+      const params = {
+        any_source: this.current_sfen,
+        to_format: "kif",
+        title: this.current_title, // 印刷時には反映されないので意味なし
+        ...this.player_names,      // 印刷時には反映されないので意味なし
+      }
+      const e = await this.$axios.$post("/api/general/any_source_to.json", params)
+      this.bs_error_message_dialog(e)
+      if (e.body) {
+        if (false) {
+          this.$router.push({name: "adapter", query: {body: e.body, open: "print"}})
+        } else {
+          const url = QueryString.stringifyUrl({
+            url: "/adapter",
+            query: {body: e.body, open: "print"},
+          })
+          this.window_popup(url)
+        }
       }
     },
   },
