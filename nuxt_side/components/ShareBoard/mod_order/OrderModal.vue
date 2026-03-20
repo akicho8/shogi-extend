@@ -19,7 +19,7 @@
     .start_message.has-text-centered.has-text-grey.my-6(v-if="!SB.order_enable_p")
       | 右上のスイッチで有効にしよう
 
-    template(v-if="SB.order_enable_p || development_p")
+    template(v-if="SB.order_enable_p")
       //- pre {{JSON.stringify(SB.order_draft.os_change.to_h)}}
 
       //- https://buefy.org/documentation/tabs
