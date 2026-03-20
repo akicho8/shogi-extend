@@ -39,7 +39,7 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
 
     it "使い方" do
       find("a", :class => "usage_dialog_show_handle").click
-      assert_selector(".modal-card-title", text: "使い方や注意点", exact_text: true)
+      assert_selector(".modal-card-title", text: "ヒント", exact_text: true)
       find(:button, text: "OK", exact_text: true).click
       assert_no_selector(".dialog.modal")
     end
