@@ -32,7 +32,7 @@ module SharedMethods
     sidebar_open
     order_modal_open_handle
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    os_submit_button_click                 # 明示的に適用する
+    order_submit_handle                 # 明示的に適用する
     # order_modal_close_handle
     sidebar_close
     assert_history_text("順番 ON")
@@ -45,10 +45,6 @@ module SharedMethods
     order_modal_close_handle
     sidebar_close
     assert_history_text("順番 OFF")
-  end
-
-  def os_submit_button_click
-    first(".os_submit_button_for_capybara").click
   end
 
   def order_submit_handle

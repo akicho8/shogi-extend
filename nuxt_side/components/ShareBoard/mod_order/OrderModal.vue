@@ -8,7 +8,7 @@
         span.ml-1.has-text-grey.has-text-weight-normal
           | 参加者{{SB.order_draft.order_flow.main_user_count}}人
 
-    b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
+    //- b-button.os_submit_button_for_capybara(@click="apply_handle" size="is-small" v-if="development_p") 確定
 
     // footer の order_modal_close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     // a.mx-2.order_modal_close_handle2_for_capybara.delete(@click="order_modal_close_handle" v-if="development_p")
