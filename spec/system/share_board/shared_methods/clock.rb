@@ -50,7 +50,7 @@ module SharedMethods
     sidebar_open
     cc_modal_open_handle             # 「時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
-    clock_switch_toggle          # 設置する
+    clock_switch_on          # 設置する
     assert_clock_on             # 時計が設置された
   end
 
@@ -93,7 +93,19 @@ module SharedMethods
   end
 
   def clock_switch_toggle
-    find("label", :class => "main_switch", text: "設置", exact_text: true).click
+    find(".ClockBoxModal .master_switch").click
+  end
+
+  def clock_switch_on
+    assert_no_selector(".ClockBoxModal .clock_box_p")
+    clock_switch_toggle
+    assert_selector(".ClockBoxModal .clock_box_p")
+  end
+
+  def clock_switch_off
+    assert_selector(".ClockBoxModal .clock_box_p")
+    clock_switch_toggle
+    assert_no_selector(".ClockBoxModal .clock_box_p")
   end
 
   def assert_white_read_sec(second)

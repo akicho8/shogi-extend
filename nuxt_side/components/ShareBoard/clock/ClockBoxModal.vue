@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card
+.modal-card(:class="{clock_box_p: clock_box_p}")
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
@@ -17,7 +17,7 @@
       b-switch.cbm_cc_unique_mode_sete_handle(:value="SB.cc_unique_p" @input="SB.cbm_cc_unique_mode_sete_handle" size="is-small") 個別
 
     template(v-if="!SB.clock_box || !SB.clock_box.pause_or_play_p")
-      b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="SB.cbm_main_switch_handle") 設置
+      b-switch.master_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="SB.cbm_main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body(@click="!SB.clock_box && SB.cbm_main_switch_handle(true)")

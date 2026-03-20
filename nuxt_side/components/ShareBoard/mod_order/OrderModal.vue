@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card
+.modal-card(:class="{order_enable_p: SB.order_enable_p}")
   .modal-card-head
     .modal-card-title
       | 対局設定
@@ -13,7 +13,7 @@
     // footer の order_modal_close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     // a.mx-2.order_modal_close_handle2_for_capybara.delete(@click="order_modal_close_handle" v-if="development_p")
     //- template(v-if="!instance")
-    b-switch.main_switch(size="is-small" type="is-primary" v-model="SB.order_enable_p" @input="main_switch_handle") 有効
+    b-switch.master_switch(size="is-small" type="is-primary" v-model="SB.order_enable_p" @input="main_switch_handle") 有効
 
   .modal-card-body(@click="!SB.order_enable_p && main_switch_handle(true)")
     .start_message.has-text-centered.has-text-grey.my-6(v-if="!SB.order_enable_p")
