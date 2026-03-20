@@ -131,6 +131,26 @@ export const vue_support = {
       }
     },
 
+    // 戻れるか？
+    //
+    // // 実際の使い方
+    // if (browser_can_go_back_p()) {
+    //   console.log("戻るボタンを表示します");
+    //   // ボタンを活性化したり表示したりする処理
+    // } else {
+    //   console.log("戻る場所がないので、トップへ戻るボタンにするなどの対策");
+    // }
+    browser_can_go_back_p() {
+      // 1. 最新の Navigation API が使える場合 (Chrome/Edgeなど)
+      if (window.navigation && typeof window.navigation.canGoBack === 'boolean') {
+        return window.navigation.canGoBack
+      }
+
+      // 2. 従来の history プロパティでの判定
+      // 履歴が2つ以上あり、かつ遷移元(referrer)が存在する場合に「戻れる」と判断
+      return window.history.length > 1 && document.referrer !== ""
+    },
+
     // #以降を除いた現在のパス
     // http://localhost:3000/xy?abc=1#1 ↓
     // http://localhost:3000/xy?abc=1

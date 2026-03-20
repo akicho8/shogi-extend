@@ -6,8 +6,9 @@
       symbol#svg_slash(preserveAspectRatio="none")
         line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
-  .position_fixed.is_screen_only
-    i.mdi.mdi-chevron-left.back_handle.is-clickable(@click.native="back_handle")
+  .position_fixed.is_screen_only(v-if="back_button_show_p || true")
+    a.back_handle(@click="back_handle")
+      i.mdi.mdi-chevron-left
 
   .position_fixed.is_top_right.is_screen_only
     b-button.printer_handle(icon-left="printer" size="is-medium" type="is-primary" @click="printer_handle")
@@ -203,7 +204,11 @@ export default {
       new_info: this.info,
       font_key: "mincho",
       font_size: 100,
+      back_button_show_p: false,
     }
+  },
+  mounted() {
+    this.back_button_show_p = this.browser_can_go_back_p()
   },
   watch: {
     font_key() {

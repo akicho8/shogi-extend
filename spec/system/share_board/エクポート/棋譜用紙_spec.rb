@@ -11,5 +11,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     switch_to_window(window)
     assert_text "記録係"
     assert_text "７六歩"
+    assert_selector "back_handle" # 戻るボタンがある
   end
 end
