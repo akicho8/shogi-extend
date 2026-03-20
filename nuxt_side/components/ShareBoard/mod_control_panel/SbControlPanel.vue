@@ -82,9 +82,9 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
 
       b-field(custom-class="is-small" label="他")
         .button_elements
+          b-button.kifu_mail_handle(size="is-small" @click="SB.kifu_mail_handle") メール送信
           b-button.image_download_modal_handle(size="is-small" @click="SB.image_download_modal_handle" v-text="`画像 #${SB.current_turn}`")
           b-button.video_new_handle(size="is-small" @click="SB.video_new_handle") 動画変換
-          b-button.kifu_mail_handle(size="is-small" @click="SB.kifu_mail_handle") メール送信
           b-button.kifu_print_handle(size="is-small" @click="SB.kifu_print_handle") 棋譜用紙
 
   .box
