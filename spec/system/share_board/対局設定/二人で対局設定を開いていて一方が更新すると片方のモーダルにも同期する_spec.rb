@@ -22,7 +22,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_a do
       find(".swap_handle").click     # a が先後反転した
-      os_submit_button_click         # a が確定を押した (ここで b の対局設定も閉じている)
+      order_submit_handle         # a が確定を押した (ここで b の対局設定も閉じている)
     end
     window_b do
       order_modal_open_handle        # b が再度、対局設定を開いた

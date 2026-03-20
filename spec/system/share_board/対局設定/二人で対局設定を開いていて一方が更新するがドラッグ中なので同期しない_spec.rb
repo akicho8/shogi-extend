@@ -21,7 +21,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_a do
       find(".swap_handle").click     # a が先後反転した
-      os_submit_button_click                  # a が確定を押した
+      order_submit_handle                  # a が確定を押した
     end
     window_b do
       assert_order_team_one "a", "b" # b に反映されていない

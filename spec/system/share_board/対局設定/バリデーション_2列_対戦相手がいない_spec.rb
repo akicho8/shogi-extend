@@ -11,12 +11,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     sidebar_open
     order_modal_open_handle
     os_switch_toggle
-    os_submit_button_click
+    order_submit_handle
     assert_text "各チームに最低1人入れてください"
 
     drag_to_watch("is_team_black", 0) # a を観戦に移動
 
-    os_submit_button_click
+    order_submit_handle
     assert_text "誰も参加していません"
   end
 end
