@@ -7,6 +7,8 @@ ENV["RAILS_SYSTEM_TESTING_SCREENSHOT_HTML"] = "1"
 # headありか？
 BROWSER_DEBUG = ENV["BROWSER_DEBUG"].to_s.in?(["1", "true"])
 
+ENV["BROWSER_TYPE"] ||= "1"
+
 if false
   chromedriver_pids = `pgrep -f chromedriver`.split
   if !chromedriver_pids.empty?
@@ -114,33 +116,37 @@ end
 #   Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: capabilities)
 # end
 
-# # https://stackoverflow.com/questions/56111529/cannot-call-non-w3c-standard-command-while-in-w3c-mode-seleniumwebdrivererr
-Capybara.register_driver :headless_chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w[headless disable-gpu], w3c: false })
-  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+if ENV["BROWSER_TYPE"] == "1"
+  # # https://stackoverflow.com/questions/56111529/cannot-call-non-w3c-standard-command-while-in-w3c-mode-seleniumwebdrivererr
+  Capybara.register_driver :headless_chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: { args: %w[headless disable-gpu], w3c: false })
+    Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
+  end
 end
 
-# Capybara.register_driver :my_chrome do |app|
-#   options = Selenium::WebDriver::Chrome::Options.new
-#   options.add_argument("--start-maximized") # 最大化
-#   # ヘッドレスの場合はこちらも併用すると確実です
-#   # options.add_argument("--window-size=1920,1080")
-#
-#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-# end
-#
-# Capybara.register_driver :my_chrome_headless do |app|
-#   options = Selenium::WebDriver::Chrome::Options.new
-#
-#   # ヘッドレス設定
-#   options.add_argument("--headless")
-#   options.add_argument("--disable-gpu") # Windows環境での安定化のためによく併用されます
-#
-#   # ここでサイズを指定
-#   options.add_argument("--window-size=2560,1440")
-#
-#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-# end
+if ENV["BROWSER_TYPE"] == "2"
+  Capybara.register_driver :my_chrome do |app|
+    options = Selenium::WebDriver::Chrome::Options.new
+    options.add_argument("--start-maximized") # 最大化
+    # ヘッドレスの場合はこちらも併用すると確実です
+    # options.add_argument("--window-size=1920,1080")
+
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+
+  Capybara.register_driver :my_chrome_headless do |app|
+    options = Selenium::WebDriver::Chrome::Options.new
+
+    # ヘッドレス設定
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu") # Windows環境での安定化のためによく併用されます
+
+    # ここでサイズを指定
+    options.add_argument("--window-size=2560,1440")
+
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+end
 
 RSpec.configure do |config|
   # Chrome をヘッドレスモードで起動
@@ -170,17 +176,21 @@ RSpec.configure do |config|
     # p height
     # Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
 
-    # 書き方が変わって現在はこれ
-    # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
-    # これにしてテストが落ちなくなったところもある
-    # 前の書き方だとサイズが効いていなかったと思われる
-    driven_by :selenium, using: (BROWSER_DEBUG ? :chrome : :headless_chrome) # screen_size: [1400, 1400]
+    if ENV["BROWSER_TYPE"] == "1"
+      # 書き方が変わって現在はこれ
+      # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
+      # これにしてテストが落ちなくなったところもある
+      # 前の書き方だとサイズが効いていなかったと思われる
+      driven_by :selenium, using: (BROWSER_DEBUG ? :chrome : :headless_chrome) # screen_size: [1400, 1400]
+    end
 
-    # if BROWSER_DEBUG
-    #   driven_by :my_chrome
-    # else
-    #   driven_by :my_chrome_headless
-    # end
+    if ENV["BROWSER_TYPE"] == "2"
+      if BROWSER_DEBUG
+        driven_by :my_chrome
+      else
+        driven_by :my_chrome_headless
+      end
+    end
   end
 end
 
