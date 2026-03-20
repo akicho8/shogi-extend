@@ -220,7 +220,7 @@ export default {
       this.sfx_click()
 
       this.dialog_alert({
-        title: "使い方や注意点",
+        title: "ヒント",
         message: `
         <div class="content">
           <ol class="mt-0">
@@ -229,8 +229,8 @@ export default {
               足りない情報があれば書き加えてください
             </li>
             <li class="mt-4">
-              印刷時の送信先を<b>PDFに保存</b>に設定しよう<br>
-              紙に印刷するのではなく、いったんPDF化をおすすめします
+              印刷時の送信先を<b>PDFに保存</b>に設定してください<br>
+              紙に印刷するのではなくPDF化をおすすめします
             </li>
           </ol>
         </div>`
