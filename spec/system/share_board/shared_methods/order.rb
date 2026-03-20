@@ -15,8 +15,8 @@ module SharedMethods
   #   order_modal_open_handle
   # end
 
-  def order_modal_close
-    find(".OrderModal .close_handle_for_capybara").click
+  def order_modal_close_handle
+    find(".order_modal_close_handle").click
   end
 
   def order_modal_close_force
@@ -33,7 +33,7 @@ module SharedMethods
     order_modal_open_handle
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     os_submit_button_click                 # 明示的に適用する
-    # order_modal_close
+    # order_modal_close_handle
     sidebar_close
     assert_history_text("順番 ON")
   end
@@ -42,7 +42,7 @@ module SharedMethods
     sidebar_open
     order_modal_open_handle
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    order_modal_close
+    order_modal_close_handle
     sidebar_close
     assert_history_text("順番 OFF")
   end
@@ -51,12 +51,12 @@ module SharedMethods
     first(".os_submit_button_for_capybara").click
   end
 
-  def apply_button
-    first(".apply_button").click
+  def order_submit_handle
+    first(".order_submit_handle").click
   end
 
   def order_modal_force_submit
-    first(".order_modal_force_submit_button").click
+    first(".order_submit_handle_force").click
   end
 
   # from_klass の上から row_index 番目のメンバーを観戦に移動する

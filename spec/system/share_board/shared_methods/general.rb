@@ -10,7 +10,7 @@ module SharedMethods
   def room_recreate_apply
     sidebar_open
     find(".room_recreate_modal_open_handle").click
-    apply_button  # 実行する
+    first(".apply_button").click
   end
 
   def buefy_dialog_button_click(type = "")

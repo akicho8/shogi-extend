@@ -55,7 +55,7 @@ module SharedMethods
   end
 
   def cc_modal_close
-    find(".ClockBoxModal .close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
+    find(".ClockBoxModal .cc_modal_close_handle").click # 閉じる (ヘッダーに置いている)
   end
 
   # 対局設定済みの状態で時計を設置してPLAY押して閉じる

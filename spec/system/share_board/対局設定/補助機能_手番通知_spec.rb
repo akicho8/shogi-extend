@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       order_modal_open_handle                                   # 「対局設定」モーダルを開く
       os_switch_toggle                                # 有効スイッチをクリック
       os_submit_button_click                          # 確定
-      # order_modal_close                                  # 閉じる (ヘッダーに置いている)
+      # order_modal_close_handle                                  # 閉じる (ヘッダーに置いている)
       sidebar_close
       assert_history(:a, "順番 ON")               # aが有効にしたことが(ActionCable経由で)自分に伝わった
       clock_start                                     # 時計も開始する(これは手番通知条件に時計が動いていることを含むため)
@@ -22,7 +22,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       sidebar_open
       order_modal_open_handle
       assert_selector(".TeamsContainer")              # 同期しているので b 側のモーダルも有効になっている
-      order_modal_close                                  # 閉じる (ヘッダーに置いている)
+      order_modal_close_handle                                  # 閉じる (ヘッダーに置いている)
       sidebar_close
       assert_member_status(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
       assert_member_status(:b, :is_battle_other_player)   # 2人目(b)は待機中

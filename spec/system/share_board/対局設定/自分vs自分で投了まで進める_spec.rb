@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     sidebar_open
     order_modal_open_handle
     assert_selector(".realtime_notice", text: "次は白チームを決めよう (この状態でもaさん同士で対局可)", exact_text: true)
-    order_modal_close
+    order_modal_close_handle
     sidebar_close
 
     clock_start
