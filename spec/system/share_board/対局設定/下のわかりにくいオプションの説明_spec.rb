@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     assert_room_created
     sidebar_open
     order_modal_open_handle      # 「対局設定」モーダルを開く
-    os_switch_toggle   # 右上の有効スイッチをクリック
+    order_switch_on   # 右上の有効スイッチをクリック
     find(".tabs .order_tab_rule").click
     find(".OrderModal span", text: "対局中に思考印が見える人", exact_text: false).find(:xpath, "..").find(".hint_icon").click
     assert_text("副ボタンまたは右上の鉛筆マークをONにすると盤の升目に印をつけることができます")

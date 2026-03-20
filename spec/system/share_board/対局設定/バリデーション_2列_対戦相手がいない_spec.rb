@@ -10,7 +10,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     sidebar_open
     order_modal_open_handle
-    os_switch_toggle
     order_submit_handle
     assert_text "各チームに最低1人入れてください"
 

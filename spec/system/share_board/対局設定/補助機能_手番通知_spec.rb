@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       order_modal_open_handle                                   # 「対局設定」モーダルを開く
-      os_switch_toggle                                # 有効スイッチをクリック
+      order_switch_on                                # 有効スイッチをクリック
       order_submit_handle                          # 確定
       # order_modal_close_handle                                  # 閉じる (ヘッダーに置いている)
       sidebar_close

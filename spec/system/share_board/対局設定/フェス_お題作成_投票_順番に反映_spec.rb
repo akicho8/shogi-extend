@@ -16,7 +16,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       order_modal_open_handle                                           # 「対局設定」モーダルを開く
-      os_switch_toggle                                        # 有効スイッチをクリック
+      order_switch_on                                        # 有効スイッチをクリック
       find(".tabs .order_tab_fes").click
       find(:button, text: "お題作成", exact_text: true).click # お題作成起動
       within(".quiz_subject") { find(:fillable_field).set("(quiz_subject)") } # 題名を記入

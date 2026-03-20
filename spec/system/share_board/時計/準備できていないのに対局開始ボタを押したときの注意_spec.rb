@@ -12,7 +12,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     room_setup_by_user(:a)
     sidebar_open
     order_modal_open_handle
-    os_switch_toggle
+    order_switch_on
     order_modal_close_handle
     order_modal_close_force
     sidebar_close

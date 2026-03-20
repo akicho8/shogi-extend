@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     sidebar_open
     order_modal_open_handle
-    os_switch_toggle
+    order_switch_on
     order_submit_handle
     assert_text "次は時計を設置しよう"
   end

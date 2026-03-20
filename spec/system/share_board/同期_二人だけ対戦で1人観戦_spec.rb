@@ -8,7 +8,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       order_modal_open_handle                                 # 「対局設定」モーダルを開く
-      os_switch_toggle                              # 有効スイッチをクリック
+      order_switch_on                              # 有効スイッチをクリック
       drag_to_watch("is_team_black", 1)                 # 黒の[1]にいる c を観戦に移動する
       order_submit_handle                        # 適用クリック
       sidebar_close
