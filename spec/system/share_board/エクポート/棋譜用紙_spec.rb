@@ -9,7 +9,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       find(".kifu_print_handle").click
     end
     switch_to_window(window)
-    assert_text "記録係"
+    assert_text "記録係", wait: 3 # 古い macbook mini では時間がかかるため
     assert_text "７六歩"
     assert_selector ".back_handle" # 戻るボタンがある
   end
