@@ -4,9 +4,9 @@
     .column.is-4
       .panel
         .panel-heading
-          | 部屋のURLをコピーする
-        a.panel-block(href="?room_url_copy_modal_p=true") 自動発動 ON
-        a.panel-block(@click="SB.room_url_copy_modal_handle") 強制発動
+          | 部屋のURLをコピーする関連
+        a.panel-block(href="?room_url_copy_modal_p=true") 自動発動モード ON
+        a.panel-block(@click="SB.room_url_copy_modal_open_handle") 部屋のURLをコピーする
     .column.is-4
       .panel
         .panel-heading
@@ -15,11 +15,6 @@
         a.panel-block(href="?room_restore_feature_p=false") [環境] リストアしない
         a.panel-block(href="?room_restore_feature_p=true&room_key=dev_room1&user_name=alice") 部屋のURLから入室する
         a.panel-block(@click="SB.room_restore_call") room_restore_call: 入室直前の盤面ロード
-    .column.is-4
-      .panel
-        .panel-heading
-          | 環境切り替え
-        a.panel-block(href="?room_url_copy_modal_p=true") 「部屋のURLをコピーする」自動発動有効化
 </template>
 
 <script>
