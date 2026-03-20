@@ -1,5 +1,6 @@
 <template lang="pug">
-FormalSheetShow(:info="info")
+client-only
+  FormalSheetShow(:info="info")
 </template>
 
 <script>
