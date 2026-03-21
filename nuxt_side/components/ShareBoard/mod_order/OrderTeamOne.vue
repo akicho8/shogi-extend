@@ -22,7 +22,7 @@
 
 <script>
 import VueDraggable from "vuedraggable"
-import { MemberStatusInfo } from "./member_status_info.js"
+import { MemberStageInfo } from "./member_stage_info.js"
 import { support_child } from "../support_child.js"
 import { GX } from "@/components/models/gx.js"
 
@@ -62,10 +62,10 @@ export default {
 
     // 名前。ここに印を入れる案もある
     name_emoji(item) {
-      return this.MemberStatusInfo.fetch(this.member_status_key_by(item)).emoji
+      return this.MemberStageInfo.fetch(this.member_stage_key_by(item)).emoji
     },
     name_class(item) {
-      return this.MemberStatusInfo.fetch(this.member_status_key_by(item)).css_class
+      return this.MemberStageInfo.fetch(this.member_stage_key_by(item)).css_class
     },
     // すべてのの名前のぷるぷる効果が同期していると変なのでずらす
     name_style(item) {
@@ -73,7 +73,7 @@ export default {
       return { "animation-delay": `${value}s` }
     },
 
-    member_status_key_by(item) {
+    member_stage_key_by(item) {
       // return "status_leave"
       // return "status_disconnet"
       // return "status_look_away"
@@ -92,7 +92,7 @@ export default {
     },
   },
   computed: {
-    MemberStatusInfo() { return MemberStatusInfo }
+    MemberStageInfo() { return MemberStageInfo }
   },
 }
 </script>

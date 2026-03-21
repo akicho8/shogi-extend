@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class MemberStatusInfo extends ApplicationMemoryRecord {
+export class MemberStageInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // 順不同

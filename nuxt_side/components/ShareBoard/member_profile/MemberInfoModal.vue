@@ -109,7 +109,7 @@ export default {
         {
           enabled: true,
           label: "役割",
-          value: this.SB.member_status_label(this.member_info),
+          value: this.SB.member_stage_label(this.member_info),
         },
         {
           enabled: true,

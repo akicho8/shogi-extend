@@ -23,7 +23,7 @@ export const mod_member_list = {
     member_is_battle_watcher(e)        { return this.order_enable_p && !this.order_lookup(e)                             }, // 観戦
     member_is_self(e)                  { return this.connection_id === e.from_connection_id                              }, // 自分
 
-    member_status_label(e) {
+    member_stage_label(e) {
       if (this.member_is_battle_current_player(e)) {
         return "手番"
       }

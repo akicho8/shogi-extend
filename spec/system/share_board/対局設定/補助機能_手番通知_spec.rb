@@ -24,13 +24,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_selector(".TeamsContainer")              # 同期しているので b 側のモーダルも有効になっている
       order_modal_close_handle                                  # 閉じる (ヘッダーに置いている)
       sidebar_close
-      assert_member_status(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
-      assert_member_status(:b, :is_battle_other_player)   # 2人目(b)は待機中
+      assert_member_stage(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
+      assert_member_stage(:b, :is_battle_other_player)   # 2人目(b)は待機中
       piece_move_x("77", "76", "☗7六歩")              # なので2番目の b は指せない
     end
     window_a do
-      assert_member_status(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
-      assert_member_status(:b, :is_battle_other_player)   # 2人目(b)は待機中
+      assert_member_stage(:a, :is_battle_current_player)  # 1人目(a)に丸がついている
+      assert_member_stage(:b, :is_battle_other_player)   # 2人目(b)は待機中
       piece_move_o("77", "76", "☗7六歩")              # aが1番目なので指せる
       assert_var(:next_turn_message, "次は、#{:b}さんの手番です")
     end
@@ -39,8 +39,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     end
     window_a do
       piece_move_x("33", "34", "☖3四歩")              # aもう指したので指せない
-      assert_member_status(:a, :is_battle_other_player) # 1人目(a)に丸がついていない
-      assert_member_status(:b, :is_battle_current_player)    # 2人目(b)は指せるので丸がついている
+      assert_member_stage(:a, :is_battle_other_player) # 1人目(a)に丸がついていない
+      assert_member_stage(:b, :is_battle_current_player)    # 2人目(b)は指せるので丸がついている
     end
     window_b do
       piece_move_o("33", "34", "☖3四歩")              # 2番目の b は指せる

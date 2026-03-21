@@ -15,9 +15,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       clock_start                                   # 時計を開始する
     end
     window_c do
-      assert_member_status(:a, :is_battle_current_player) # 1人目(a)に丸がついている
-      assert_member_status(:b, :is_battle_other_player)  # 2人目(b)は待機中
-      assert_member_status(:c, :is_battle_watcher)    # 3人目(c)は観戦中
+      assert_member_stage(:a, :is_battle_current_player) # 1人目(a)に丸がついている
+      assert_member_stage(:b, :is_battle_other_player)  # 2人目(b)は待機中
+      assert_member_stage(:c, :is_battle_watcher)    # 3人目(c)は観戦中
       piece_move_x("77", "76", "☗7六歩")           #  なので3番目のcarolは指せない
     end
     window_a do
