@@ -72,9 +72,8 @@
   .modal-card-foot
     b-button.order_modal_close_handle.has-text-weight-normal(@click="order_modal_close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
-      template(v-if="SB.debug_mode_p")
-        b-button.order_submit_handle_force(@click="order_submit_handle_force") 確定(force)
-      b-button.order_submit_handle(@click="order_submit_handle" :type="apply_button_type") 確定
+      b-button.order_submit_handle_force(@click="order_submit_handle_force" v-if="SB.debug_mode_p") 強制確定
+      b-button.order_submit_handle(@click="order_submit_handle" :type="order_submit_button_type") 確定
 </template>
 
 <script>
@@ -323,7 +322,7 @@ export default {
 
     self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
-    apply_button_type() {
+    order_submit_button_type() {
       if (this.SB.order_draft.os_change.has_changes_to_save_p) {
         return "is-primary"
       }

@@ -405,7 +405,6 @@ export const mod_clock_box = {
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (current_turn_user_name) {
         await this.toast_primary(`それでは${this.user_call_name(current_turn_user_name)}から指してください`)
-        this.think_mark_invite_trigger()                                // 思考印案内だけど邪魔だと言うので OFF にしている
       }
     },
 
