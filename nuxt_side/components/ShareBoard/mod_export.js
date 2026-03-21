@@ -25,7 +25,7 @@ export const mod_export = {
         to_format: e.format_key,
         turn: this.current_turn,
         ...this.player_names_with_title,
-        success_message: this.kifu_copy_success_message,
+        success_message: this.honpu_stage_info.kifu_copy_message,
       })
       if (success) {
         // this.sidebar_close()
@@ -96,21 +96,6 @@ export const mod_export = {
           this.window_popup(url, {width: 1200, height: 800})
         }
       }
-    },
-  },
-  computed: {
-    kifu_copy_success_message() {
-      let message = null
-      if (this.honpu_master) {
-        if (this.honpu_branch) {
-          message = "コピーしましたがこれは本譜ではありません"
-        } else {
-          message = "本譜をコピーしました"
-        }
-      } else {
-        message = "コピーしました"
-      }
-      return message
     },
   },
 }

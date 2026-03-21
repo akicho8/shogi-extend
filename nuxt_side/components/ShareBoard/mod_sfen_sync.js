@@ -238,7 +238,7 @@ export const mod_sfen_sync = {
     xhistory_record_add_and_branch_setup(params) {
       params = {...params}
 
-      if (this.honpu_branch_need_p) {
+      if (this.honpu_stage_info.key === "hs_honpu_only") {
         if (GX.blank_p(params.label)) {
           params.label = "変化"
           params.label_type = "is-primary"

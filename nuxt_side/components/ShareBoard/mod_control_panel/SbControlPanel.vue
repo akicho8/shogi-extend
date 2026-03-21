@@ -58,7 +58,12 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       b-switch.export_group_visible_toggle_handle(size="is-small" v-model="SB.export_group_visible_p" @input="v => sfx_play_toggle(v)") ON
 
     template(v-if="SB.export_group_visible_p")
-      hr
+      //- .block.help.has-text-danger(v-if="SB.honpu_stage_info.help_message")
+      //-   | {{SB.honpu_stage_info.help_message}}
+
+      .message.is-danger.is-small.mb-3(v-if="SB.honpu_stage_info.help_message")
+        .message-body
+          | {{SB.honpu_stage_info.help_message}}
 
       b-field(custom-class="is-small" label="コピー")
         .button_elements
@@ -77,8 +82,6 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
           template(v-for="e in SB.FormatTypeInfo.values")
             template(v-if="e.show")
               b-button(size="is-small" tag="a" :href="SB.kifu_show_url(e)" @click.prevent="SB.kifu_show_handle(e)" v-text="e.name_with_turn(SB.current_turn)" :class="['kifu_show_url', e.key]")
-
-      hr
 
       b-field(custom-class="is-small" label="他")
         .button_elements
