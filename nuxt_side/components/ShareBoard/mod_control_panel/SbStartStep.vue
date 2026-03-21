@@ -57,7 +57,7 @@ export default {
     line-height: 1.0        // ボタン内の上下のパディングの二重調整を避けるためこちらは0にしておく
 
   i
-    color: $success         // 番号
+    color: $grey            // 番号
     font-size: 0.8em        // 番号は少し小さくする
 
   .right_icon
