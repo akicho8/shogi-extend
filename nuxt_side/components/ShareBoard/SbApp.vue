@@ -6,6 +6,7 @@ client-only
     DebugBox.is-hidden-mobile(v-if="debug_mode_p")
       p 部屋状態: {{cable_p}}
       p 横板状態: {{sidebar_p}}
+      p 本譜状態: {{honpu_stage_info.name}}
     SbControlPanel
     SbTopNav
     SbBottomNav
@@ -110,8 +111,7 @@ import { mod_resign                } from "./mod_resign/mod_resign.js"
 import { mod_kifu_mailer           } from "./mod_resign/mod_kifu_mailer.js"
 import { mod_battle_archive        } from "./mod_resign/mod_battle_archive.js"
 
-import { mod_honpu_core            } from "./honpu/mod_honpu_core.js"
-import { mod_honpu_share           } from "./honpu/mod_honpu_share.js"
+import { mod_honpu                 } from "./mod_honpu/mod_honpu.js"
 
 import { mod_quiz_host             } from "./fes/mod_quiz_host.js"
 import { mod_quiz_client           } from "./fes/mod_quiz_client.js"
@@ -194,8 +194,7 @@ export default {
     mod_board_preset,
     mod_shortcut,
     mod_resign,
-    mod_honpu_core,
-    mod_honpu_share,
+    mod_honpu,
     mod_xprofile,
     mod_xprofile_console,
     mod_room_restore,

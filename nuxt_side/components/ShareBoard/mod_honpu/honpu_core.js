@@ -1,8 +1,9 @@
 // 本譜機能
 
 import { GX } from "@/components/models/gx.js"
+import { HonpuStageInfo } from "./honpu_stage_info.js"
 
-export const mod_honpu_core = {
+export const honpu_core = {
   data() {
     return {
       honpu_master: null,   // 投了したときに履歴と同じ形式のデータを1つだけ保持する
@@ -19,7 +20,9 @@ export const mod_honpu_core = {
     honpu_init() {
       this.tl_add("HONPU", "起動時に本譜登録する")
       if (!this.url_room_key_exist_p) {
-        if (GX.present_p(this.$route.query.body) || GX.present_p(this.$route.query.xbody)) {
+        const body  = GX.present_p(this.$route.query.body)
+        const xbody = GX.present_p(this.$route.query.xbody)
+        if (body || xbody) {
           this.honpu_master_setup()
         }
       }
@@ -45,7 +48,7 @@ export const mod_honpu_core = {
 
     honpu_branch_setup(params) {
       this.tl_add("HONPU", "ブランチを初回だけ設定する", params)
-      if (this.honpu_branch_need_p) {
+      if (this.honpu_stage_info.key === "hs_honpu_only") {
         this.honpu_branch = this.xhistory_create(params)
       }
     },
@@ -123,11 +126,20 @@ export const mod_honpu_core = {
     //   }
     // },
 
-    // 変化が発生するか？
-    honpu_branch_need_p(params) {
+    honpu_stage_key() {
       if (this.honpu_master) {
-        return this.honpu_branch == null
+        if (this.honpu_branch) {
+          return "hs_branching"
+        } else {
+          return "hs_honpu_only"
+        }
+      } else {
+        return "hs_honpu_none"
       }
     },
+
+    honpu_stage_info() {
+      return HonpuStageInfo.fetch(this.honpu_stage_key)
+    }
   },
 }

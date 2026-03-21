@@ -2,7 +2,7 @@
 
 import { GX } from "@/components/models/gx.js"
 
-export const mod_honpu_share = {
+export const honpu_share = {
   methods: {
     honpu_share() {
       this.tl_add("HONPU", "本譜の配布", this.honpu_share_dto)
