@@ -101,7 +101,9 @@ export const mod_resign = {
         this.ai_say_case_resign(params)
       }
 
-      this.honpu_announce()
+      if (this.debug_mode_p) {
+        this.honpu_announce()
+      }
 
       // 投了を押した本人が時計と順番を解除する
       // この処理は resign_direct_run で行う手もあるが「投了」→「時計停止」→「順番OFF」の順で

@@ -17,8 +17,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     sidebar_close
 
     clock_start
+    assert_text "これは自分対自分の練習モードです"
 
     piece_move_o("77", "76", "☗7六歩")
+    assert_var(:next_turn_message, "次も、aさんの手番です")
     piece_move_o("33", "34", "☖3四歩")
     resign_run
 

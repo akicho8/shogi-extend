@@ -35,6 +35,9 @@ export const mod_turn_notify = {
     // this.order_flow.order_operation.teams[0].length             // => 2
     // this.order_flow.order_operation.teams[1].length             // => 2
     __tn_message_prefix(params) {
+      if (this.self_vs_self_p) {
+        return "次も、"
+      }
       GX.assert(this.order_flow, "this.order_flow")
       const turn = params.last_move_info_attrs.next_turn_offset
       const location = this.turn_to_location(turn)                        // 渡ってきたこれから指す側のチームを求めて

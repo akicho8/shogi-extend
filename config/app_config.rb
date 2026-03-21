@@ -8,7 +8,7 @@ AppConfig.deep_merge!({
     :swars_show_crawl               => true, # swars/battles/:id のタイミングでクロールするか？
 
     ################################################################################ share-board
-    :share_board_api_version        => 124, # CLIENT_SIDE_API_VERSION
+    :share_board_api_version        => 125, # CLIENT_SIDE_API_VERSION
 
     ################################################################################ email
     :admin_email_name               => "SHOGI-EXTEND",
