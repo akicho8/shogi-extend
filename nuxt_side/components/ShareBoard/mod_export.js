@@ -71,38 +71,47 @@ export const mod_export = {
 
     //////////////////////////////////////////////////////////////////////////////// 印刷
 
+    // 現在のSFENを変換元としているのだけど本譜がある場合は本譜を作った時点の対局者名を渡している
+    // この仕様は混乱のもとかもしれない
+    // 本譜専用とすべきか？
+    // かといってそうすると、本譜を作らずに印刷できなくてはまる場合もある
     async kifu_print_handle() {
       this.sfx_click()
-      const params = {
+      let params = {
         any_source: this.current_sfen,
         to_format: "kif",
-        title: this.current_title, // 印刷時には反映されないので意味なし
-        ...this.player_names,      // 印刷時には反映されないので意味なし
       }
+
+      // 本譜がある場合は対局者名を埋める
+      if (this.honpu_master) {
+        params = {...params, ...this.honpu_master.player_names_with_title}
+      }
+
       const e = await this.$axios.$post("/api/general/any_source_to.json", params)
       this.bs_error_message_dialog(e)
       if (e.body) {
         if (false) {
           this.$router.push({name: "adapter", query: {body: e.body, open: "print"}})
         } else {
-          const url = QueryString.stringifyUrl({
-            url: "/adapter",
-            query: {body: e.body, open: "print"},
-          })
-          this.window_popup(url)
+          const url = QueryString.stringifyUrl({url: "/adapter", query: {body: e.body, open: "print"}})
+          this.window_popup(url, {width: 1200, height: 800})
         }
       }
     },
   },
   computed: {
     kifu_copy_success_message() {
-      if (this.honpu_return_button_active_p) {
-        return "変化した棋譜をコピーしました (本譜が必要ならヘッダーの本譜を開こう)"
+      let message = null
+      if (this.honpu_master) {
+        if (this.honpu_branch) {
+          message = "コピーしましたがこれは本譜ではありません"
+        } else {
+          message = "本譜をコピーしました"
+        }
+      } else {
+        message = "コピーしました"
       }
-      if (this.honpu_open_button_show_p) {
-        return "本譜をコピーしました"
-      }
-      return "コピーしました"
+      return message
     },
   },
 }
