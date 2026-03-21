@@ -69,7 +69,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       // },
       // {
       //   _if: (c, e) => e.code === "KeyV" && c.KeyboardHelper.shift_p(e),
-      //   call: (c, e) => c.kifu_read_from_clipboard(),
+      //   call: (c, e) => c.kifu_load_from_clipboard(),
       // },
       // {
       //   _if: (c, e) => c.KeyboardHelper.pure_key_p(e, ","),

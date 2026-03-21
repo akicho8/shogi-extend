@@ -10,7 +10,7 @@
     KifCopyButton(@click="SB.edit_mode_kifu_copy_handle") コピー
 
   .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-    b-button(@click="SB.kifu_read_modal_open_handle()") 棋譜の読み込み
+    b-button(@click="SB.kifu_loader_modal_open_handle()") 棋譜の読み込み
 
   .buttons.is-centered.mt-4(v-if="development_p && false")
     b-button.has-text-weight-bold(

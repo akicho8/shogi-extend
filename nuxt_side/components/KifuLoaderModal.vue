@@ -6,13 +6,13 @@
   .modal-card-body
     b-input(type="textarea" v-model.trim="mut_source" ref="mut_source" rows="6" :placeholder="SHARED_STRING.kifu_body_placeholder")
   .modal-card-foot
-    b-button.cancel_handle(@click="cancel_handle") キャンセル
+    b-button.cancel_handle(icon-left="chevron-left" @click="cancel_handle")
     b-button.submit_handle(@click="submit_handle" :type="submit_button_type") 読み込む
 </template>
 
 <script>
 export default {
-  name: "KifuReadModal",
+  name: "KifuLoaderModal",
   props: {
     source: { type: String, required: false, default: "", },
   },
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="sass">
-.KifuReadModal
+.KifuLoaderModal
   +modal_width(640px)
   textarea
     word-break: break-all

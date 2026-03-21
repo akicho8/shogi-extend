@@ -47,7 +47,7 @@ import { mod_handle_name           } from "./mod_handle_name/mod_handle_name.js"
 import { mod_urls                  } from "./mod_urls.js"
 import { mod_share_dto             } from "./mod_share_dto.js"
 import { mod_edit_mode             } from "./mod_edit/mod_edit_mode.js"
-import { mod_kifu_read             } from "./mod_kifu_read.js"
+import { mod_kifu_loader             } from "./mod_kifu_loader/mod_kifu_loader.js"
 import { mod_shogi_player          } from "./mod_shogi_player/mod_shogi_player.js"
 import { mod_warning               } from "./mod_warning.js"
 import { mod_perpetual             } from "./perpetual/mod_perpetual.js"
@@ -75,7 +75,7 @@ import { mod_look_away             } from "./look_away/mod_look_away.js"
 import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal               } from "./mod_illegal/mod_illegal.js"
 import { mod_board_preset          } from "./board_preset/mod_board_preset.js"
-import { mod_shortcut              } from "./shortcut/mod_shortcut.js"
+import { mod_shortcut              } from "./mod_shortcut/mod_shortcut.js"
 import { browser_slide_lock        } from "./browser_slide_lock.js"
 
 import { mod_room_channel          } from "./room/mod_room_channel.js"
@@ -159,7 +159,7 @@ export default {
     mod_urls,
     mod_share_dto,
     mod_edit_mode,
-    mod_kifu_read,
+    mod_kifu_loader,
     mod_shogi_player,
     mod_warning,
     mod_perpetual,

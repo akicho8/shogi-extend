@@ -19,8 +19,8 @@ module SharedMethods
 
   def kifu_read_run
     sidebar_open
-    find(".kifu_read_modal_open_handle").click
-    find(".KifuReadModal textarea").set("68S", clear: :backspace)
-    find(".KifuReadModal .submit_handle").click
+    find(".kifu_loader_modal_open_handle").click
+    find(".KifuLoaderModal textarea").set("68S", clear: :backspace)
+    find(".KifuLoaderModal .submit_handle").click
   end
 end

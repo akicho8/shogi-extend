@@ -50,7 +50,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
   .box
     b-field(custom-class="is-small" label="インポート")
       .button_elements
-        b-button.kifu_read_modal_open_handle(size="is-small" @click="SB.kifu_read_modal_open_handle('')") 棋譜の読み込み
+        b-button.kifu_loader_modal_open_handle(size="is-small" @click="SB.kifu_loader_modal_open_handle('')") 棋譜の読み込み
         b-button.edit_mode_set_handle(size="is-small" @click="SB.edit_mode_set_handle") 局面編集
 
   .box.export_box
