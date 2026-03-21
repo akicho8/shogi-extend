@@ -24,8 +24,7 @@ export const mod_export = {
       const success = await this.general_kifu_copy(this.current_sfen, {
         to_format: e.format_key,
         turn: this.current_turn,
-        title: this.current_title,
-        ...this.player_names,
+        ...this.player_names_with_title,
         success_message: this.kifu_copy_success_message,
       })
       if (success) {

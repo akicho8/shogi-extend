@@ -103,8 +103,7 @@ export const mod_edit_mode = {
         this.general_kifu_copy(this.edit_mode_sfen, {
           to_format: this.FormatTypeInfo.fetch("kif_utf8").format_key,
           turn: 0,
-          title: this.current_title,
-          ...this.player_names,
+          ...this.player_names_with_title,
         })
       }
     },

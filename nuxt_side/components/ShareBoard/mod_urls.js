@@ -113,10 +113,9 @@ export const mod_urls = {
       const params = {
         xbody: SafeSfen.encode(this.current_sfen),
         turn:  this.current_turn,
-        title: this.current_title,
         viewpoint: this.viewpoint,
         ...this.url_share_params,
-        ...this.player_names,
+        ...this.player_names_with_title,
       }
       return this.pc_url_params_clean(params)
     },

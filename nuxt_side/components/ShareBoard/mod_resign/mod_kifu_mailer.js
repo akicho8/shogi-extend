@@ -29,9 +29,8 @@ export const mod_kifu_mailer = {
       const params = {
         source: this.current_sfen,
         turn: this.current_turn,
-        title: this.current_title,
         viewpoint: this.viewpoint,
-        ...this.player_names,
+        ...this.player_names_with_title,
       }
       // そのまま KifuParser で作るURLとフロント側で作ったパラメータに差異がないか確認するためのもの
       if (this.debug_mode_p) {
