@@ -34,7 +34,7 @@
       //- pre {{SB.xmatch_rules_members}}
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") やめる
+    b-button.xmatch_modal_close_handle.has-text-weight-normal(@click="SB.xmatch_modal_close_handle" icon-left="chevron-left")
     b-button(size="is-small" @click="SB.xmatch_interval_counter_rest_n(3)" v-if="SB.current_xmatch_rule_key && development_p") 残3
     b-button.unselect_handle(@click="unselect_handle") 選択解除
 </template>
@@ -52,13 +52,6 @@ export default {
     this.SB.lobby_destroy()
   },
   methods: {
-    // やめる
-    close_handle() {
-      this.sfx_click()
-      this.SB.rule_unselect("${name}がやめました")
-      this.$emit("close")
-    },
-
     // 選択解除
     unselect_handle() {
       this.sfx_click()

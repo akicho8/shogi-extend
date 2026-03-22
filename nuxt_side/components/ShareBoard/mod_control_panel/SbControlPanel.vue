@@ -29,7 +29,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.board_preset_modal_open_handle(size="is-small" @click="SB.board_preset_modal_open_handle") 手合割
         b-button.room_url_copy_handle(size="is-small" @click="SB.room_url_copy_handle") 部屋のリンクのコピー
         template(v-if="SB.debug_mode_p")
-          b-button.xmatch_modal_handle(size="is-small" @click="SB.xmatch_modal_handle") 自動マッチング
+          b-button.xmatch_modal_open_handle(size="is-small" @click="SB.xmatch_modal_open_handle") 自動マッチング
           b-button.room_recreate_modal_open_handle(size="is-small" @click="SB.room_recreate_modal_open_handle") 通信不調
 
   .box

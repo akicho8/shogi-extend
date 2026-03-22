@@ -40,18 +40,24 @@ export const mod_xmatch = {
     // 自動マッチングモーダル起動(ショートカット)
     // http://localhost:4000/share-board?autoexec=vs
     vs() {
-      this.xmatch_modal_core()
+      this.xmatch_modal_open()
     },
 
     // 自動マッチングモーダル起動
-    xmatch_modal_handle() {
-      // this.sidebar_close()
+    xmatch_modal_open_handle() {
       this.sfx_click()
-      this.xmatch_modal_core()
+      this.xmatch_modal_open()
+    },
+
+    xmatch_modal_close_handle() {
+      this.sfx_click()
+      this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
+      this.rule_unselect("${name}がやめました")
+      this.xmatch_modal_close()
     },
 
     // 自動マッチングモーダル起動 (vsから呼ぶ用)
-    xmatch_modal_core() {
+    xmatch_modal_open() {
       // 部屋で相談している途中からもしれないので退室してはいけない
       if (false) {
         this.room_destroy()
@@ -68,10 +74,7 @@ export const mod_xmatch = {
       this.modal_card_open2("xmatch_modal_instance", {
         component: XmatchModal,
         onCancel: () => {
-          this.sfx_click()
-          this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
-          this.SB.rule_unselect("${name}がやめました")
-          this.xmatch_modal_close()
+          throw new Error("must not happen")
         },
       })
     },
