@@ -180,6 +180,29 @@ export const vue_dialog = {
       })
     },
 
+    modal_card_open2(instance_name, params, callback = () => {}) {
+      const instance = this[instance_name]
+      if (!instance) {
+        callback()
+        GX.assert_kind_of_integer(this.g_modal_instance_count)
+        this.g_modal_instance_count = this.g_modal_instance_count + 1
+        this[instance_name] = this.modal_card_open(params)
+      }
+    },
+    modal_card_close2(instance_name, callback = () => {}) {
+      const instance = this[instance_name]
+      if (instance) {
+        callback()
+        instance.close()
+        this[instance_name] = null
+        GX.assert_kind_of_integer(this.g_modal_instance_count)
+        this.g_modal_instance_count = this.g_modal_instance_count - 1
+        if (this.development_p) {
+          GX.assert(this.g_modal_instance_count >= 0, "this.g_modal_instance_count >= 0")
+        }
+      }
+    },
+
     dialog_prompt(params = {}) {
       return this.$buefy.dialog.prompt({
         title: null,

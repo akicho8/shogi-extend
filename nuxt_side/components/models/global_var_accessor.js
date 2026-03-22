@@ -12,6 +12,7 @@ export const global_var_accessor = {
       "__g_volume_talk_user_scale_set",
       "__g_volume_common_user_scale_set",
       "__g_toast_key_set",
+      "__g_modal_instance_count_set",
     ]),
   },
 
@@ -48,6 +49,12 @@ export const global_var_accessor = {
     g_toast_key: {
       get()      { return this.$store.state.global_var.g_toast_key },
       set(value) { this.__g_toast_key_set(value)                   },
+    },
+
+    // attr_accessor :g_modal_instance_count
+    g_modal_instance_count: {
+      get()      { return this.$store.state.global_var.g_modal_instance_count },
+      set(value) { this.__g_modal_instance_count_set(value)                   },
     },
   },
 }
