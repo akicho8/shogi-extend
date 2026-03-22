@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   def common_options
     {
-      :room_url_copy_modal_p     => true,
+      :room_url_copy_modal_feature_p     => true,
       :room_url_copy_modal_delay => 0.5, # a の存在を b に通知するまでの時間がかかるため 0 だと b にもモーダルが出てしまう
     }
   end
