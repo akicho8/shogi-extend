@@ -9,6 +9,7 @@ client-only
       p 本譜状態: {{honpu_stage_info.name}}
       p 面子人数: {{member_infos.length}}
       p 面子圧縮: {{uniq_member_infos.length}}
+      p モーダル: {{g_modal_instance_count}}
     SbControlPanel
     SbTopNav
     SbBottomNav
@@ -233,6 +234,8 @@ export default {
     this.$debug.trace("SbApp", "beforeMount")
   },
   mounted() {
+    // GX.delay_block(3, () => { this.g_modal_instance_count += 1 })
+
     // console.log(this.$route)
     this.$debug.trace("SbApp", "mounted")
 
@@ -260,6 +263,12 @@ export default {
 
     // this.autoexec({next_tick: false, sleep: 10})
     this.autoexec()
+  },
+
+  beforeDestroy() {
+    if (this.debug_mode_p) {
+      GX.assert(this.g_modal_instance_count === 0, "this.g_modal_instance_count === 0")
+    }
   },
 
   // http://localhost:4000/share-board?autoexec=general_setting_modal_open_handle

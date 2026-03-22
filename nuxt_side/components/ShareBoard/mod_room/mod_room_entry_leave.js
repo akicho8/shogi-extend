@@ -15,6 +15,7 @@ export const mod_room_entry_leave = {
         console.log("this.url_room_key_exist_p", this.url_room_key_exist_p)
         console.log("this.member_infos.length", this.member_infos.length)
         console.log("this.cable_p", this.cable_p)
+        console.log("this.room_url_copy_modal_instance", this.room_url_copy_modal_instance)
       }
 
       if (this.room_url_copy_modal_feature_p) {

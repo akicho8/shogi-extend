@@ -28,12 +28,11 @@ export const mod_room_url_copy = {
     room_url_copy_modal_open() {
       if (!this.room_url_copy_modal_instance) {
         this.sfx_play("se_notification")
-        this.sb_talk("部屋のリンクをコピーしますか？")
-        this.room_url_copy_modal_instance = this.modal_card_open({
+        this.sb_talk("部屋のURLをコピーしますか？")
+        this.modal_card_open2("room_url_copy_modal_instance", {
           component: RoomUrlCopyModal,
-          onCancel: () => {
-            this.sfx_click()
-            this.room_url_copy_modal_close()
+          events: {
+            close: () => this.room_url_copy_modal_close(),
           },
         })
       }
@@ -41,8 +40,7 @@ export const mod_room_url_copy = {
 
     room_url_copy_modal_close() {
       if (this.room_url_copy_modal_instance) {
-        this.room_url_copy_modal_instance.close()
-        this.room_url_copy_modal_instance = null
+        this.modal_card_close2("room_url_copy_modal_instance")
       }
     },
 
@@ -55,7 +53,7 @@ export const mod_room_url_copy = {
       GX.assert_present(this.room_key)
 
       this.sfx_click()
-      this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
+      this.clipboard_copy(this.room_url, {success_message: "部屋のURLをコピーしました"})
       this.room_url_copy_modal_close()
     },
   },
