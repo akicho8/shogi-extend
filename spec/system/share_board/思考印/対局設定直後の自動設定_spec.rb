@@ -20,7 +20,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       sidebar_open
       order_modal_open_handle
-      order_modal_force_submit
+      order_modal_force_submit  # FIXME: とる
     end
 
     window_a { assert_var :think_mark_mode_p, false }
