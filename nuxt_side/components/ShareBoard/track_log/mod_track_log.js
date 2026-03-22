@@ -35,7 +35,7 @@ export const mod_track_log = {
     tl_modal_open() {
       if (!this.tl_modal_instance) {
         // https://buefy.org/documentation/modal
-        this.tl_modal_instance = this.modal_card_open({
+        this.modal_card_open2("tl_modal_instance", {
           component: TrackLogModal,
           fullScreen: true,
           onCancel: () => {
@@ -53,8 +53,7 @@ export const mod_track_log = {
     },
     tl_modal_close() {
       if (this.tl_modal_instance) {
-        this.tl_modal_instance.close()
-        this.tl_modal_instance = null
+        this.modal_card_close2("tl_modal_instance")
       }
     },
 

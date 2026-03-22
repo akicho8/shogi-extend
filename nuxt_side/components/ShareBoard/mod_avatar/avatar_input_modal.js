@@ -35,7 +35,7 @@ export const avatar_input_modal = {
     avatar_input_modal_open() {
       if (!this.avatar_input_modal_instance) {
         this.toast_primary("アバターを入力するか選択しよう")
-        this.avatar_input_modal_instance = this.modal_card_open({
+        this.modal_card_open2("avatar_input_modal_instance", {
           component: AvatarInputModal,
           onCancel: () => this.avatar_input_modal_close(),
         })
@@ -43,8 +43,7 @@ export const avatar_input_modal = {
     },
     avatar_input_modal_close() {
       if (this.avatar_input_modal_instance) {
-        this.avatar_input_modal_instance.close()
-        this.avatar_input_modal_instance = null
+        this.modal_card_close2("avatar_input_modal_instance")
       }
     },
 

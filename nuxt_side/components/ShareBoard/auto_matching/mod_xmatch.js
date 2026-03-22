@@ -65,7 +65,7 @@ export const mod_xmatch = {
 
       // https://buefy.org/documentation/modal/
       this.xmatch_modal_close()
-      this.xmatch_modal_instance = this.modal_card_open({
+      this.modal_card_open2("xmatch_modal_instance", {
         component: XmatchModal,
         onCancel: () => {
           this.sfx_click()
@@ -79,8 +79,7 @@ export const mod_xmatch = {
     // 自動マッチングモーダルを外部から閉じる
     xmatch_modal_close() {
       if (this.xmatch_modal_instance) {
-        this.xmatch_modal_instance.close()
-        this.xmatch_modal_instance = null
+        this.modal_card_close2("xmatch_modal_instance")
       }
     },
 

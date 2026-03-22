@@ -41,7 +41,7 @@ export const resend_confirm_modal = {
       this.sfx_play("x")
       this.resend_failed_logging()
       this.resend_done()
-      this.resend_confirm_modal_instance = this.modal_card_open({
+      this.modal_card_open2("resend_confirm_modal_instance", {
         component: ResendConfirmModal,
         canCancel: [],
       })
@@ -49,8 +49,7 @@ export const resend_confirm_modal = {
 
     resend_confirm_modal_close() {
       if (this.resend_confirm_modal_instance) {
-        this.resend_confirm_modal_instance.close()
-        this.resend_confirm_modal_instance = null
+        this.modal_card_close2("resend_confirm_modal_instance")
       }
     },
 

@@ -18,7 +18,7 @@ export const mod_kb_shortcut_modal = {
       this.sfx_click()
       this.kb_shortcut_modal_close()
       if (this.kb_shortcut_modal_instance) { alert("this.kb_shortcut_modal_instance") }
-      this.kb_shortcut_modal_instance = this.modal_card_open({
+      this.modal_card_open2("kb_shortcut_modal_instance", {
         component: WkbkBookShowKbShortcutModal,
         props: { base: this.base },
         onCancel: () => { this.kb_shortcut_modal_close() },
@@ -32,8 +32,7 @@ export const mod_kb_shortcut_modal = {
     kb_shortcut_modal_close() {
       if (this.kb_shortcut_modal_instance) {
         this.sfx_click()
-        this.kb_shortcut_modal_instance.close()
-        this.kb_shortcut_modal_instance = null
+        this.modal_card_close2("kb_shortcut_modal_instance")
         this.kb_shortcut_modal_p = false
         // if (!this.sidebar_p) {
         //   this.interval_counter_pause(this.kb_shortcut_modal_instance)

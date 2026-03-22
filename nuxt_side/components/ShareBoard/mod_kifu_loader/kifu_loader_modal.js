@@ -38,7 +38,7 @@ export const kifu_loader_modal = {
 
     kifu_loader_modal_open(source = "") {
       if (!this.kifu_loader_modal_instance) {
-        this.kifu_loader_modal_instance = this.modal_card_open({
+        this.modal_card_open2("kifu_loader_modal_instance", {
           component: KifuLoaderModal,
           props: {
             source: source,
@@ -57,8 +57,7 @@ export const kifu_loader_modal = {
 
     kifu_loader_modal_close() {
       if (this.kifu_loader_modal_instance) {
-        this.kifu_loader_modal_instance.close()
-        this.kifu_loader_modal_instance = null
+        this.modal_card_close2("kifu_loader_modal_instance")
       }
     },
   },

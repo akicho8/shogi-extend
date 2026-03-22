@@ -43,7 +43,7 @@ export const order_modal = {
 
         GX.assert(!this.order_modal_instance, "!this.order_modal_instance")
         // this.gate_modal_close()
-        this.order_modal_instance = this.modal_card_open({
+        this.modal_card_open2("order_modal_instance", {
           component: OrderModal,
           props: { },
           canCancel: [],
@@ -83,8 +83,7 @@ export const order_modal = {
     // 別のところから強制的に閉じたいとき用
     order_modal_close() {
       if (this.order_modal_instance) {
-        this.order_modal_instance.close()
-        this.order_modal_instance = null
+        this.modal_card_close2("order_modal_instance")
         this.debug_alert("OrderModal close")
       }
     },

@@ -26,7 +26,7 @@ export const appearance_modal = {
 
     appearance_modal_open() {
       this.appearance_modal_close()
-      this.appearance_modal_instance = this.modal_card_open({
+      this.modal_card_open2("appearance_modal_instance", {
         component: AppearanceModal,
         onCancel: () => {
           this.sfx_click()
@@ -37,8 +37,7 @@ export const appearance_modal = {
 
     appearance_modal_close() {
       if (this.appearance_modal_instance) {
-        this.appearance_modal_instance.close()
-        this.appearance_modal_instance = null
+        this.modal_card_close2("appearance_modal_instance")
       }
     },
   },

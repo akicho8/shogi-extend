@@ -4,10 +4,6 @@ import IllegalTakebackModal from "./IllegalTakebackModal.vue"
 import { GX } from "@/components/models/gx.js"
 
 export const illegal_takeback_modal = {
-  data() {
-    return {
-    }
-  },
   beforeDestroy() {
     this.illegal_takeback_modal_close()
   },
@@ -16,7 +12,7 @@ export const illegal_takeback_modal = {
 
     illegal_takeback_modal_open() {
       this.illegal_takeback_modal_close()
-      this.illegal_takeback_modal_instance = this.modal_card_open({
+      this.modal_card_open2("illegal_takeback_modal_instance", {
         component: IllegalTakebackModal,
         canCancel: [],
         onCancel: () => { throw new Error("must not happen") },
@@ -25,8 +21,7 @@ export const illegal_takeback_modal = {
 
     illegal_takeback_modal_close() {
       if (this.illegal_takeback_modal_instance) {
-        this.illegal_takeback_modal_instance.close()
-        this.illegal_takeback_modal_instance = null
+        this.modal_card_close2("illegal_takeback_modal_instance")
         if (this.AppConfig.illegal_takeback.lifted_piece_cancel) {
           this.sp_lifted_piece_cancel()
         }

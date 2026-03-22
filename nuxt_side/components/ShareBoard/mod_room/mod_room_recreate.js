@@ -51,7 +51,7 @@ export const mod_room_recreate = {
     room_recreate_modal_open() {
       if (!this.room_recreate_modal_instance) {
         // https://buefy.org/documentation/modal
-        this.room_recreate_modal_instance = this.modal_card_open({
+        this.modal_card_open2("room_recreate_modal_instance", {
           component: RoomRecreateModal,
           canCancel: [],
           // onCancel: () => {
@@ -68,10 +68,7 @@ export const mod_room_recreate = {
       }
     },
     room_recreate_modal_close() {
-      if (this.room_recreate_modal_instance) {
-        this.room_recreate_modal_instance.close()
-        this.room_recreate_modal_instance = null
-      }
+      this.modal_card_close2("room_recreate_modal_instance")
     },
 
     ////////////////////////////////////////////////////////////////////////////////

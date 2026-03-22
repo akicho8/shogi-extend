@@ -13,7 +13,7 @@ export const mod_filter_modal = {
     filter_modal_handle() {
       this.sidebar_p = false
       this.filter_modal_close()
-      this.filter_modal_instance = this.modal_card_open({
+      this.modal_card_open2("filter_modal_instance", {
         component: SwarsCustomSearchModal,
         props: { override_user_key: this.$route.params.key },
         onCancel: () => this.filter_modal_p = false,
@@ -25,8 +25,7 @@ export const mod_filter_modal = {
     },
     filter_modal_close() {
       if (this.filter_modal_instance) {
-        this.filter_modal_instance.close()
-        this.filter_modal_instance = null
+        this.modal_card_close2("filter_modal_instance")
       }
     },
   },

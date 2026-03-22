@@ -59,7 +59,7 @@ export const mod_board_preset = {
     board_preset_modal_open() {
       if (!this.board_preset_modal_instance) {
         // https://buefy.org/documentation/modal
-        this.board_preset_modal_instance = this.modal_card_open({
+        this.modal_card_open2("board_preset_modal_instance", {
           component: BoardPresetModal,
           onCancel: () => this.board_preset_modal_close(),
         })
@@ -67,8 +67,7 @@ export const mod_board_preset = {
     },
     board_preset_modal_close() {
       if (this.board_preset_modal_instance) {
-        this.board_preset_modal_instance.close()
-        this.board_preset_modal_instance = null
+        this.modal_card_close2("board_preset_modal_instance")
       }
     },
 

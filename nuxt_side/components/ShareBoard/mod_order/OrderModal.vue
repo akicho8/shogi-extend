@@ -287,15 +287,14 @@ export default {
     },
     reform_conduct_modal_open() {
       if (!this.reform_conduct_modal_instance) {
-        this.reform_conduct_modal_instance = this.modal_card_open({
+        this.modal_card_open2("reform_conduct_modal_instance", {
           component: ReformConductModal,
         })
       }
     },
     reform_conduct_modal_close() {
       if (this.reform_conduct_modal_instance) {
-        this.reform_conduct_modal_instance.close()
-        this.reform_conduct_modal_instance = null
+        this.modal_card_close2("reform_conduct_modal_instance")
       }
     },
 

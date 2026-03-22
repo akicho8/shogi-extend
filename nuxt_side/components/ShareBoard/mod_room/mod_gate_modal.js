@@ -37,7 +37,7 @@ export const mod_gate_modal = {
         this.new_room_key = this.room_key
         this.new_user_name = this.user_name
 
-        this.gate_modal_instance = this.modal_card_open({
+        this.modal_card_open2("gate_modal_instance", {
           component: GateModal,
           onCancel: () => {
             this.sfx_click()
@@ -49,8 +49,7 @@ export const mod_gate_modal = {
 
     gate_modal_close() {
       if (this.gate_modal_instance) {
-        this.gate_modal_instance.close()
-        this.gate_modal_instance = null
+        this.modal_card_close2("gate_modal_instance")
         this.debug_alert("GateModal close")
       }
     },

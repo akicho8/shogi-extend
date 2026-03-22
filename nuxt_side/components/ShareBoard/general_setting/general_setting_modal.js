@@ -34,7 +34,7 @@ export const general_setting_modal = {
 
     general_setting_modal_open() {
       this.general_setting_modal_close()
-      this.general_setting_modal_instance = this.modal_card_open({
+      this.modal_card_open2("general_setting_modal_instance", {
         component: GeneralSettingModal,
         onCancel: () => {
           this.sfx_click()
@@ -45,8 +45,7 @@ export const general_setting_modal = {
 
     general_setting_modal_close() {
       if (this.general_setting_modal_instance) {
-        this.general_setting_modal_instance.close()
-        this.general_setting_modal_instance = null
+        this.modal_card_close2("general_setting_modal_instance")
       }
     },
   },

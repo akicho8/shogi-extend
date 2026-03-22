@@ -52,7 +52,7 @@ export const mod_clock_box_modal = {
 
     cc_modal_open() {
       if (!this.cc_modal_instance) {
-        this.cc_modal_instance = this.modal_card_open({
+        this.modal_card_open2("cc_modal_instance", {
           component: ClockBoxModal,
           onCancel: () => {
             this.sfx_click()
@@ -72,8 +72,7 @@ export const mod_clock_box_modal = {
 
     cc_modal_close() {
       if (this.cc_modal_instance) {
-        this.cc_modal_instance.close()
-        this.cc_modal_instance = null
+        this.modal_card_close2("cc_modal_instance")
         this.debug_alert("ClockBoxModal close")
       }
     },

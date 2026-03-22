@@ -34,7 +34,7 @@ export const sw_shortcut_modal = {
 
     shortcut_modal_open() {
       this.shortcut_modal_close()
-      this.shortcut_modal_instance = this.modal_card_open({
+      this.modal_card_open2("shortcut_modal_instance", {
         component: SwShortcutModal,
         onCancel: () => {
           this.sfx_click()
@@ -45,8 +45,7 @@ export const sw_shortcut_modal = {
 
     shortcut_modal_close() {
       if (this.shortcut_modal_instance) {
-        this.shortcut_modal_instance.close()
-        this.shortcut_modal_instance = null
+        this.modal_card_close2("shortcut_modal_instance")
       }
     },
   },

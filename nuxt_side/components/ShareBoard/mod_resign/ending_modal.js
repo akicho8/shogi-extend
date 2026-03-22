@@ -14,7 +14,7 @@ export const ending_modal = {
   methods: {
     ending_modal_open() {
       this.ending_modal_close()
-      this.ending_modal_instance = this.modal_card_open({
+      this.modal_card_open2("ending_modal_instance", {
         component: EndingModal,
         onCancel: () => this.ending_modal_close(),
       })
@@ -27,8 +27,7 @@ export const ending_modal = {
 
     ending_modal_close() {
       if (this.ending_modal_instance) {
-        this.ending_modal_instance.close()
-        this.ending_modal_instance = null
+        this.modal_card_close2("ending_modal_instance")
       }
     },
   },

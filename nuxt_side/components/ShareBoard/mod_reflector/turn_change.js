@@ -24,7 +24,7 @@ export const turn_change = {
       if (!this.turn_change_modal_instance) {
         // this.sidebar_close()
         this.sfx_click()
-        this.turn_change_modal_instance = this.modal_card_open({
+        this.modal_card_open2("turn_change_modal_instance", {
           component: TurnChangeModal,
           onCancel: () => this.turn_change_modal_close(),
           props: {
@@ -44,8 +44,7 @@ export const turn_change = {
 
     turn_change_modal_close() {
       if (this.turn_change_modal_instance) {
-        this.turn_change_modal_instance.close()
-        this.turn_change_modal_instance = null
+        this.modal_card_close2("turn_change_modal_instance")
         this.debug_alert("TurnChangeModal close")
       }
     },

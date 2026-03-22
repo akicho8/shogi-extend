@@ -89,7 +89,7 @@ export const mod_clock_box_timeout = {
       this.sfx_play("lose")         // ちーん
 
       this.cc_timeout_modal_close()
-      this.cc_timeout_modal_instance = this.modal_card_open({
+      this.modal_card_open2("cc_timeout_modal_instance", {
         component: TimeoutModal,
         props: { timeout_key: timeout_key },
       })
@@ -99,8 +99,7 @@ export const mod_clock_box_timeout = {
       this.cc_timeout_judge_delay_stop() // 重要
 
       if (this.cc_timeout_modal_instance) {
-        this.cc_timeout_modal_instance.close()
-        this.cc_timeout_modal_instance = null
+        this.modal_card_close2("cc_timeout_modal_instance")
       }
     },
   },

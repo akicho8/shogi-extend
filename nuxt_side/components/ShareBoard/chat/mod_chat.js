@@ -56,7 +56,7 @@ export const mod_chat = {
     chat_modal_open() {
       // https://buefy.org/documentation/modal
       this.chat_modal_close()
-      this.chat_modal_instance = this.modal_card_open({
+      this.modal_card_open2("chat_modal_instance", {
         component: ChatModal,
         fullScreen: this.chat_content_scale_info.full_screen_p,
         onCancel: () => {
@@ -68,8 +68,7 @@ export const mod_chat = {
 
     chat_modal_close() {
       if (this.chat_modal_instance) {
-        this.chat_modal_instance.close()
-        this.chat_modal_instance = null
+        this.modal_card_close2("chat_modal_instance")
       }
     },
 
