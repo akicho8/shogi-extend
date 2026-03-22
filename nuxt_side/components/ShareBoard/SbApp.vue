@@ -7,8 +7,8 @@ client-only
       p 部屋状態: {{cable_p}}
       p 横板状態: {{sidebar_p}}
       p 本譜状態: {{honpu_stage_info.name}}
-      p 構成員数: {{member_infos.length}}
-      p 構成員UQ: {{uniq_member_infos.length}}
+      p 面子人数: {{member_infos.length}}
+      p 面子圧縮: {{uniq_member_infos.length}}
     SbControlPanel
     SbTopNav
     SbBottomNav
