@@ -28,7 +28,7 @@ export const mod_room_url_copy = {
     room_url_copy_modal_open() {
       if (!this.room_url_copy_modal_instance) {
         this.sfx_play("se_notification")
-        this.sb_talk("部屋のURLをコピーしますか？")
+        this.sb_talk("部屋のリンクをコピーしますか？")
         this.modal_card_open2("room_url_copy_modal_instance", {
           component: RoomUrlCopyModal,
           events: {
@@ -53,7 +53,7 @@ export const mod_room_url_copy = {
       GX.assert_present(this.room_key)
 
       this.sfx_click()
-      this.clipboard_copy(this.room_url, {success_message: "部屋のURLをコピーしました"})
+      this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
       this.room_url_copy_modal_close()
     },
   },
