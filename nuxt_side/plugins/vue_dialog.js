@@ -71,7 +71,7 @@ export const vue_dialog = {
         if (this.development_p) {
           this.clog(message)
         }
-        const h = GX.hash_extract_self(params, "toast", "talk", "duration_sec", "toast_message_fn")
+        const h = GX.hash_extract_self(params, "toast", "talk", "duration_sec", "toast_message_fn", "toast_comma_delete")
         if (h.duration_sec) {
           GX.assert_kind_of_numeric(h.duration_sec)
           GX.assert(h.duration_sec < 1000)
@@ -82,6 +82,9 @@ export const vue_dialog = {
           let str = message
           if (h.toast_message_fn) {
             str = h.toast_message_fn(str)
+          }
+          if (h.toast_comma_delete) {
+            str = str.replace(/、/g, "")
           }
           this.$buefy.toast.open({...params, message: str})
         }

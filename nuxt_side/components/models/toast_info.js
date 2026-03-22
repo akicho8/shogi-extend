@@ -4,6 +4,7 @@ export class ToastInfo extends ApplicationMemoryRecord {
   static get default_params() {
     return {
       toast: true,
+      toast_comma_delete: true,
       talk: true,
       queue: false,
       position: "is-bottom",
