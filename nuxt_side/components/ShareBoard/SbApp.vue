@@ -7,6 +7,8 @@ client-only
       p 部屋状態: {{cable_p}}
       p 横板状態: {{sidebar_p}}
       p 本譜状態: {{honpu_stage_info.name}}
+      p 構成員数: {{member_infos.length}}
+      p 構成員UQ: {{uniq_member_infos.length}}
     SbControlPanel
     SbTopNav
     SbBottomNav
@@ -73,21 +75,13 @@ import { mod_color_theme           } from "./mod_color_theme.js"
 import { mod_sfen_sync             } from "./mod_sfen_sync.js"
 import { mod_resend                } from "./resend/mod_resend.js"
 import { mod_look_away             } from "./look_away/mod_look_away.js"
-import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
+import { mod_reflector             } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal               } from "./mod_illegal/mod_illegal.js"
 import { mod_board_preset          } from "./board_preset/mod_board_preset.js"
 import { mod_shortcut              } from "./mod_shortcut/mod_shortcut.js"
 import { browser_slide_lock        } from "./browser_slide_lock.js"
 
-import { mod_room_channel          } from "./room/mod_room_channel.js"
-import { mod_gate_modal            } from "./room/mod_gate_modal.js"
-import { mod_room_entry_leave      } from "./room/mod_room_entry_leave.js"
-import { mod_room_board_setup      } from "./room/mod_room_board_setup.js"
-import { mod_room_active_level     } from "./room/mod_room_active_level.js"
-import { mod_room_members          } from "./room/mod_room_members.js"
-import { mod_room_recreate         } from "./room/mod_room_recreate.js"
-import { mod_room_url_copy         } from "./room/mod_room_url_copy.js"
-import { mod_room_key_autocomplete } from "./room/mod_room_key_autocomplete.js"
+import { mod_room                  } from "./mod_room/mod_room.js"
 
 import { mod_member_list           } from "./member_profile/mod_member_list.js"
 import { mod_member_info_modal     } from "./member_profile/mod_member_info_modal.js"
@@ -118,8 +112,6 @@ import { mod_quiz_client           } from "./fes/mod_quiz_client.js"
 
 import { mod_xprofile              } from "./xprofile/mod_xprofile.js"
 import { mod_xprofile_console      } from "./xprofile/mod_xprofile_console.js"
-
-import { mod_room_restore          } from "./room/mod_room_restore.js"
 
 import { mod_appearance      } from "./mod_appearance/mod_appearance.js"
 
@@ -197,17 +189,7 @@ export default {
     mod_honpu,
     mod_xprofile,
     mod_xprofile_console,
-    mod_room_restore,
-
-    mod_room_recreate,
-    mod_room_url_copy,
-    mod_room_key_autocomplete,
-    mod_room_channel,
-    mod_gate_modal,
-    mod_room_entry_leave,
-    mod_room_board_setup,
-    mod_room_active_level,
-    mod_room_members,
+    mod_room,
 
     mod_quiz_host,
     mod_quiz_client,

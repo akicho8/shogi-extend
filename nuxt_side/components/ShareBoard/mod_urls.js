@@ -14,15 +14,6 @@ const simple_cache = new SimpleCache()
 export const mod_urls = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
-    room_url_copy_handle() {
-      if (this.room_required_warn_message()) { return }
-
-      GX.assert(this.cable_p)
-      GX.assert_present(this.room_key)
-
-      this.sfx_click()
-      this.clipboard_copy(this.room_url, {success_message: "部屋のURLをコピーしました"})
-    },
 
     // 「棋譜コピー (リンク)」
     current_long_url_copy_handle() {

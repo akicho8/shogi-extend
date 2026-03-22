@@ -9,7 +9,15 @@ export const mod_room_entry_leave = {
       await this.sfx_play("se_room_entry")
       await this.toast_primary(`${this.user_call_name(params.from_user_name)}が入室しました`)
 
-      if (this.room_url_copy_modal_p) {
+      if (this.debug_mode_p) {
+        console.log("this.room_url_copy_modal_feature_p", this.room_url_copy_modal_feature_p)
+        console.log("this.received_from_self(params)", this.received_from_self(params))
+        console.log("this.url_room_key_exist_p", this.url_room_key_exist_p)
+        console.log("this.member_infos.length", this.member_infos.length)
+        console.log("this.cable_p", this.cable_p)
+      }
+
+      if (this.room_url_copy_modal_feature_p) {
         await GX.sleep(this.room_url_copy_modal_delay)
         if (this.received_from_self(params)) {
           if (!this.url_room_key_exist_p) {      // 「入退室」から入室 (部屋のURLから来ていない場合)

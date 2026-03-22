@@ -4,7 +4,7 @@
     .modal-card-title
       | 入室
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="SB.cable_p && false") 入室中
-    b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.cable_p") 部屋のURL
+    b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.cable_p") 部屋のリンク
   .modal-card-body
     template(v-if="SB.room_key_autocomplete_use_p")
       // b-autocomplete の場合はモーダルの中に入ってしまって使いにくい
