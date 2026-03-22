@@ -169,8 +169,8 @@ export default {
       if (item) {
         who = this.user_call_name(item.user_name)
       }
-      const message = `振り駒をした結果、${furigoma_pack.message}で${who}の先手になりました`
-      this.SB.xhistory_action({label: furigoma_pack.piece_names, message: message})
+      const message = `${furigoma_pack.message}で${who}の先手になりました`
+      this.SB.xhistory_action({label: furigoma_pack.piece_names, full_message: message})
     },
 
     // 先後入替

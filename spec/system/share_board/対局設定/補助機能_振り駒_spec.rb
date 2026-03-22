@@ -16,17 +16,17 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "2回反転して元に戻る" do
     case1(2)
-    assert_text("aさんが振り駒をした結果、歩が5枚でaさんの先手になりました")
+    assert_text("歩が5枚でaさんの先手になりました")
     assert_order_team_one "ac", "bd"
-    order_modal_force_submit
+    order_submit_handle
     assert_text("歩歩歩歩歩")
   end
 
   it "3回反転して逆になる" do
     case1(3)
-    assert_text("aさんが振り駒をした結果、と金が5枚でbさんの先手になりました")
+    assert_text("と金が5枚でbさんの先手になりました")
     assert_order_team_one "bd", "ac"
-    order_modal_force_submit
+    order_submit_handle
     assert_text("ととととと")
   end
 end
