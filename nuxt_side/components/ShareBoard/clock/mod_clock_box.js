@@ -407,7 +407,7 @@ export const mod_clock_box = {
       await this.toast_primary(this.foul_mode_info.battle_start_message) // 反則モードについて伝える
       // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
       if (current_turn_user_name) {
-        await this.toast_primary(`それでは${this.user_call_name(current_turn_user_name)}から指してください`)
+        await this.toast_primary(`それでは、${this.user_call_name(current_turn_user_name)}から指してください`)
       }
     },
 

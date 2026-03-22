@@ -70,7 +70,7 @@ export const mod_warning = {
       if (message == null) {
         if (this.i_am_member_p) {
           message = [
-            `今は${this.user_call_name(this.current_turn_user_name)}の手番です`,
+            `今は、${this.user_call_name(this.current_turn_user_name)}の手番です`,
             `${this.my_call_name}は${this.my_about_next_turn_count}です`,
           ]
         }
