@@ -159,7 +159,6 @@ export const mod_sfen_sync = {
         this.sfen_synced_after_notice(params)           // 反則がないときだけ指し手と次の人を通知する
       }
 
-      this.ai_say_case_turn(params)
       this.xhistory_record_add_and_branch_setup(params)
     },
 

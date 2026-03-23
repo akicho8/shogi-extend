@@ -111,7 +111,6 @@ export const mod_room_members = {
       }
       if (params.alive_notice_count === 1) {
         this.room_entry_call(params)
-        this.ai_say_case_hello(params)
       }
       this.__member_add(params)
     },

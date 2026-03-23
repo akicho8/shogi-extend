@@ -376,8 +376,6 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.toast_p) {
         this.toast_primary(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
       }
-
-      this.ai_say_case_clock(params)
     },
     __cc_receive_message(params) {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)

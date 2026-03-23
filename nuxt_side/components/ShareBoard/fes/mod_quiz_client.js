@@ -47,7 +47,6 @@ export const mod_quiz_client = {
       this.quiz_received_p = true
       this.received_quiz = new_quiz
       this.quiz_vote_modal_handle()
-      this.ai_say_case_quiz(params, new_quiz)
     },
 
     // ホストからのお題と投票結果の削除命令を出す
