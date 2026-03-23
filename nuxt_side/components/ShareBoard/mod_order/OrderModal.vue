@@ -72,7 +72,6 @@
   .modal-card-foot
     b-button.order_modal_close_handle.has-text-weight-normal(@click="order_modal_close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
-      b-button.order_submit_handle_force(@click="order_submit_handle_force" v-if="SB.debug_mode_p") 強制確定
       b-button.order_submit_handle(@click="order_submit_handle" :type="order_submit_button_type") 確定
 </template>
 
@@ -241,13 +240,6 @@ export default {
       }
       this.SB.order_draft_publish("対局設定を反映しました")
       GX.delay_block(this.__SYSTEM_TEST_RUNNING__ ? 0 : 3.0, () => this.SB.cc_next_message())
-    },
-
-    // バリデーションなしで確定する
-    order_submit_handle_force() {
-      this.os_before_apply()
-      if (this.invalid_options()) { return }
-      this.SB.order_draft_publish("バリデーションなしで対局設定を確定しました")
     },
 
     hint_handle(model) {

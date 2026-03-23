@@ -63,10 +63,6 @@ module SharedMethods
     find(".order_submit_handle").click
   end
 
-  def order_modal_force_submit
-    find(".order_submit_handle_force").click
-  end
-
   # from_klass の上から row_index 番目のメンバーを観戦に移動する
   def drag_to_watch(from_klass, row_index)
     drag_a_to_b(from_klass, row_index, "is_team_watcher")
