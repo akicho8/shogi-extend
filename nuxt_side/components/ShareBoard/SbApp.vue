@@ -3,13 +3,7 @@ client-only
   .SbApp(:style="app_component_style" :class="app_component_class")
     div(is="style" v-text="app_component_raw_css" v-if="app_component_raw_css")
     | {{$debug.trace('SbApp', 'render')}}
-    DebugBox.is-hidden-mobile(v-if="debug_mode_p")
-      p 部屋状態: {{cable_p}}
-      p 横板状態: {{sidebar_p}}
-      p 本譜状態: {{honpu_stage_info.name}}
-      p 面子人数: {{member_infos.length}}
-      p 面子圧縮: {{uniq_member_infos.length}}
-      p モーダル: {{g_modal_instance_count}}
+    SbDebugVarPanel
     SbControlPanel
     SbTopNav
     SbBottomNav
