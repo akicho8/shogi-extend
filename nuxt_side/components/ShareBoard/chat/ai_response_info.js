@@ -121,15 +121,6 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
       //     content.ai_something_say({content: "", message_scope_key: message_record.message_scope_info.key})
       //   },
       // },
-      {
-        key: "チャット荒らしに怒る",
-        command_fn: (context, message_record) => {
-          return
-
-          const name = context.user_call_name(message_record.from_user_name)
-          return `チャットを荒らしている${name}に一言。`
-        },
-      },
     ]
   }
 }

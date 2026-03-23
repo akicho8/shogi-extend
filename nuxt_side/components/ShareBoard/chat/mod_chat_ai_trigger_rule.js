@@ -1,5 +1,3 @@
-const ARASHI_THRESHOLD = 3      // 荒らし判定閾値
-const ARASHI_RE_RATE   = 4      // 1/n の確率で反応する
 const AI_RESPONSE_MODE = false  // 状況に応じて発言するか？
 
 // AIが発動する条件を書く
@@ -13,7 +11,6 @@ import { GX } from "@/components/models/gx.js"
 export const mod_chat_ai_trigger_rule = {
   data() {
     return {
-      arashi_count: 0,           // 荒らし判定回数
     }
   },
   methods: {
@@ -114,19 +111,6 @@ export const mod_chat_ai_trigger_rule = {
       }
     },
 
-    ai_say_case_arashi(message_record) {
-      if (this.received_from_self(message_record)) {
-        if (message_record.content_invalid_p) {
-          this.arashi_count += 1
-          if (this.arashi_count >= this.ARASHI_THRESHOLD) {
-            if (GX.irand(this.ARASHI_RE_RATE) === 0) {
-              this.ai_say_for(0, "チャット荒らしに怒る", message_record)
-            }
-          }
-        }
-      }
-    },
-
     // private
 
     ai_say_turn_gteq(turn) {
@@ -137,9 +121,6 @@ export const mod_chat_ai_trigger_rule = {
   },
 
   computed: {
-    ARASHI_THRESHOLD() { return this.param_to_i("ARASHI_THRESHOLD", ARASHI_THRESHOLD) },
-    ARASHI_RE_RATE()   { return this.param_to_i("ARASHI_RE_RATE", ARASHI_RE_RATE) },
-
     ai_active() { return this.ai_mode_info.key === "ai_mode_on" && this.AppConfig.ai_active },
   },
 }

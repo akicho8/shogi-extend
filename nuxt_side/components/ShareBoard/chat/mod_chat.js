@@ -113,7 +113,6 @@ export const mod_chat = {
         }
       }
       this.ai_random_say(params)                            // AIに反応させる
-      this.ai_say_case_arashi(message_record)               // 荒らし判定
     },
 
     // ログ用の追加データとして data に名前を入れておく

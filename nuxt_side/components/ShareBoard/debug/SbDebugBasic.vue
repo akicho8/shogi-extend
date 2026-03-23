@@ -21,7 +21,6 @@
         .panel-block cc_params:{{SB.cc_params_inspect(SB.cc_params)}}
         .panel-block next_turn_message:{{SB.next_turn_message}}
         .panel-block viewpoint:{{SB.viewpoint}}
-        .panel-block arashi_count:{{SB.arashi_count}}
 </template>
 
 <script>
