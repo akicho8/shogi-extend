@@ -1,6 +1,5 @@
 const ARASHI_THRESHOLD = 3      // 荒らし判定閾値
 const ARASHI_RE_RATE   = 4      // 1/n の確率で反応する
-const NESSEN_BATTLE_TURN_GTEQ = 42 // 熱戦はN手以上
 const AI_RESPONSE_MODE = false  // 状況に応じて発言するか？
 
 // AIが発動する条件を書く
@@ -111,14 +110,6 @@ export const mod_chat_ai_trigger_rule = {
           //     this.ai_say_for(15, "時間切れで負けた人を励ます", params)
           //   }
           // }
-        }
-      }
-    },
-
-    ai_say_case_resign(params) {
-      if (this.received_from_self(params)) {
-        if (this.ai_say_turn_gteq(NESSEN_BATTLE_TURN_GTEQ)) {
-          this.ai_say_for(15, "見応えのある対局だったと褒める", params)
         }
       }
     },

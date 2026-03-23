@@ -96,11 +96,6 @@ export const mod_resign = {
         this.kifu_mail_run({silent: true})
       }
 
-      // 励ます
-      if (params.win_location_key) {
-        this.ai_say_case_resign(params)
-      }
-
       if (this.debug_mode_p) {
         this.honpu_announce()
       }
