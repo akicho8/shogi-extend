@@ -3,6 +3,7 @@
 
 import { GX } from "@/components/models/gx.js"
 import { TimeHelper } from "@/components/models/time_helper.js"
+import { RoleGroup } from "../mod_role/role_group.js"
 
 export class XhistoryRecord {
   static create(params) {
@@ -11,7 +12,9 @@ export class XhistoryRecord {
 
   constructor(params) {
     Object.assign(this, params)
+
     this.unique_key = this.unique_key_generate()
+
     Object.freeze(this)
   }
 
@@ -21,6 +24,10 @@ export class XhistoryRecord {
 
   get modal_title_or_default() {
     return this.modal_title ?? "局面"
+  }
+
+  get role_group() {
+    return RoleGroup.create(this.role_group_attributes)
   }
 
   // get sfen_and_turn() {

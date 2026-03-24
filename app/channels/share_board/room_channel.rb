@@ -92,7 +92,7 @@ module ShareBoard
         data["cc_behavior_key"],
         data["cc_behavior_name"],
         values,
-        data["member_data"],
+        data["role_group_debug_report"],
         data["current_url"],
       ].compact
       track(data, subject: "時計", body: message, emoji: ":時計:", level: data["log_level"])

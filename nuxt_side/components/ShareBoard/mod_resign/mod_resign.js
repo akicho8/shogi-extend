@@ -46,7 +46,7 @@ export const mod_resign = {
       const ending_context_default_params = {
         ending_route_key: "er_user_normal_resign",                        // 投了にいたった理由
         win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
-        teams_hash: this.player_names_from_member,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
+        teams_hash: this.room_role_group,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
       }
       options = { ...ending_context_default_params, ...options }
 

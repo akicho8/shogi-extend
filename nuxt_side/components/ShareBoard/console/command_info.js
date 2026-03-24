@@ -133,7 +133,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/header",
         preformat: true,
         command_fn: (context, args) => {
-          return context.player_names_with_title_as_human_text
+          return context.current_role_group.to_s_debug
         },
       },
       {

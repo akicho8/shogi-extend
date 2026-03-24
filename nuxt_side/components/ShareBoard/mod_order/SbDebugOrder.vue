@@ -7,7 +7,7 @@
       .panel-block
         | {{SB.member_infos.map(e => e.from_user_name).join(",")}}
       .panel-block
-        pre {{SB.player_names_with_title_as_human_text}}
+        pre {{SB.current_role_group.to_s_debug}}
   .column.is-4
     .panel
       .panel-heading

@@ -24,7 +24,8 @@ export const mod_export = {
       const success = await this.general_kifu_copy(this.current_sfen, {
         to_format: e.format_key,
         turn: this.current_turn,
-        ...this.player_names_with_title,
+        title: this.current_title,
+        ...this.current_role_group.to_url_hash,
         success_message: this.honpu_stage_info.kifu_copy_message,
       })
       if (success) {
@@ -83,7 +84,11 @@ export const mod_export = {
 
       // 本譜がある場合は対局者名を埋める
       if (this.honpu_master) {
-        params = {...params, ...this.honpu_master.player_names_with_title}
+        params = {
+          ...params,
+          title: this.honpu_master.title,
+          ...this.honpu_master.current_role_group.to_url_hash,
+        }
       }
 
       const e = await this.$axios.$post("/api/general/any_source_to.json", params)

@@ -33,9 +33,10 @@ export const mod_xhistory = {
       // その他
       attrs.from_user_name ??= this.user_name
       attrs.performed_at ??= this.$time.current_ms()
+      attrs.title ??= this.current_title
 
       // KIF に埋めたいものも合わせて保持しておく
-      attrs.player_names_with_title ??= this.player_names_with_title
+      attrs.role_group_attributes ??= this.current_role_group.attributes
 
       return XhistoryRecord.create(attrs)
     },

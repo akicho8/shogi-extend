@@ -332,8 +332,8 @@ export const mod_clock_box = {
       if (cc_behavior_info.with_url) {
         params.current_url = this.current_url // 棋譜再現URLをログに出すため
       }
-      if (cc_behavior_info.with_member_data) {
-        params.member_data = this.player_names_with_title_as_human_text
+      if (cc_behavior_info.with_role_group_debug_report) {
+        params.role_group_debug_report = this.current_role_group.to_s_debug
       }
       if (cc_behavior_info.log_level) {
         params.log_level = cc_behavior_info.log_level

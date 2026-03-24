@@ -13,7 +13,11 @@
         a.panel-block(@click="SB.battle_save_by_win_location('black')") ☗側を勝ちとする (DB → 全員)
         a.panel-block(@click="SB.battle_save_by_win_location('white')") ☖勝を勝ちとする (DB → 全員)
         a.panel-block(@click="SB.draw_call") 引き分け
-        a.panel-block(@click="SB.ending_call_test()") 結末表示 ☗勝ち (詰み)
+    .column.is-4
+      .panel
+        .panel-heading
+          | 表示テスト
+        a.panel-block(@click="SB.ending_call_test()") 詰み
     .column.is-4
       .panel.assert_var
         .panel-heading

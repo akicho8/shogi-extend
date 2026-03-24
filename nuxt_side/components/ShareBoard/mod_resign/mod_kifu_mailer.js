@@ -30,7 +30,8 @@ export const mod_kifu_mailer = {
         source: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.viewpoint,
-        ...this.player_names_with_title,
+        title: this.current_title,
+        ...this.current_role_group.to_url_hash,
       }
       // そのまま KifuParser で作るURLとフロント側で作ったパラメータに差異がないか確認するためのもの
       if (this.debug_mode_p) {

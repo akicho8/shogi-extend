@@ -162,14 +162,14 @@
       .panel-heading
         | 棋譜追加情報
       .panel-block.is-flex-direction-column
-        p player_names_from_member
-        pre {{JSON.stringify(SB.player_names_from_member, null, 4)}}
+        p room_role_group
+        pre {{JSON.stringify(SB.room_role_group, null, 4)}}
       .panel-block.is-flex-direction-column
-        p player_names_from_query
-        pre {{JSON.stringify(SB.player_names_from_query, null, 4)}}
+        p query_role_group
+        pre {{JSON.stringify(SB.query_role_group, null, 4)}}
       .panel-block.is-flex-direction-column
-        p player_names_with_title_as_human_text
-        pre {{SB.player_names_with_title_as_human_text}}
+        p current_role_group.to_s_debug
+        pre {{SB.current_role_group.to_s_debug}}
   .column.is-4
     .panel
       .panel-heading

@@ -105,8 +105,9 @@ export const mod_urls = {
         xbody: SafeSfen.encode(this.current_sfen),
         turn:  this.current_turn,
         viewpoint: this.viewpoint,
+        title: this.current_title,
+        ...this.current_role_group.to_url_hash,
         ...this.url_share_params,
-        ...this.player_names_with_title,
       }
       return this.pc_url_params_clean(params)
     },

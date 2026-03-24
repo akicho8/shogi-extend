@@ -79,13 +79,13 @@ class KifuParser
           # :body               => DotSfen.escape(core.to_sfen),
           :xbody     => SafeSfen.encode(core.to_sfen),
           :title     => params[:title],
-          :black     => params[:black],
-          :white     => params[:white],
-          :member    => params[:member],
-          :other     => params[:other],
+          :black     => names_to_str(params[:black]),
+          :white     => names_to_str(params[:white]),
+          :member    => names_to_str(params[:member]),
+          :other     => names_to_str(params[:other]),
           :turn      => params[:turn],
           :viewpoint => params[:viewpoint],
-        }.compact,
+        }.compact_blank,
       })
   end
 
@@ -241,5 +241,14 @@ class KifuParser
 
   def comma_included_str_normalize(str)
     str.to_s.split(/\s*,\s*/).join(", ")
+  end
+
+  def names_to_str(str)
+    if str.present?
+      if str.kind_of?(Array)
+        str = str.join(",")
+      end
+      str
+    end
   end
 end

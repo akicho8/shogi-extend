@@ -13,7 +13,8 @@ export const time_machine_url_support = {
       this.general_kifu_copy(this.master.sfen, {
         to_format: "kif",
         turn: this.master.turn,
-        ...this.xhistory_record.player_names_with_title,
+        title: this.xhistory_record.title,
+        ...this.xhistory_record.role_group.to_url_hash,
       })
       this.SB.xhistory_puts("棋譜コピー")
     },
@@ -71,7 +72,8 @@ export const time_machine_url_support = {
         turn: this.master.turn,                        // プレビュー盤の手数
         viewpoint: this.mut_viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
         ...this.SB.url_share_params,              // 共有するパラメータ
-        ...this.xhistory_record.player_names_with_title, // 面子情報
+        title: this.xhistory_record.title,
+        ...this.xhistory_record.role_group.to_url_hash, // 面子情報
       }
       return this.SB.pc_url_params_clean(params)
     },
