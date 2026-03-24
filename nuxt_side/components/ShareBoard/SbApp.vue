@@ -65,7 +65,7 @@ import { mod_help                  } from "./help/mod_help.js"
 import { mod_control_panel         } from "./mod_control_panel/mod_control_panel.js"
 import { mod_storage               } from "./mod_storage.js"
 import { mod_export                } from "./mod_export.js"
-import { mod_player_names          } from "./mod_player_names.js"
+import { mod_role            } from "./mod_role/mod_role.js"
 import { mod_color_theme           } from "./mod_color_theme.js"
 import { mod_sfen_sync             } from "./mod_sfen_sync.js"
 import { mod_resend                } from "./resend/mod_resend.js"
@@ -170,7 +170,7 @@ export default {
     mod_control_panel,
     mod_storage,
     mod_export,
-    mod_player_names,
+    mod_role,
     mod_color_theme,
     mod_appearance,
     mod_sfen_sync,
