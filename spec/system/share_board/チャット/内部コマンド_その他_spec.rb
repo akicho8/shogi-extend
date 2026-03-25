@@ -55,7 +55,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "/header" do
     chat_message_send("/header")
-    assert_message_received_o("棋戦: (title)\n☗側: a,c\n☖側: b,d")
+    assert_message_received_o %({"black":["a","c"],"white":["b","d"],"other":[],"member":[]})
   end
 
   it "/対局中" do

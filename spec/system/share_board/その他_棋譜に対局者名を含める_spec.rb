@@ -32,11 +32,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "操作履歴にも含んでいる" do
-    visit_app(black: :a)
+    black = SecureRandom.hex
+    visit_app(black: black)
     piece_move_o("77", "76", "☗7六歩")
     history_items_at(0).click
     Capybara.within(".TimeMachineModal") do
-      assert_text(%("black": "a")) # モーダル内のでデバッグプリントを見ている
+      assert_text "role_group_attributes"
+      assert_text black         # モーダル内のでデバッグプリントを見ている
     end
   end
 
