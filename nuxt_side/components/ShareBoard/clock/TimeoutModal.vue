@@ -3,14 +3,13 @@
   .modal-card-head
     .modal-card-title
       template(v-if="timeout_info.key === 'self_notify'")
-        | 時間切れで
+        | 時間切れ
       template(v-if="timeout_info.key === 'audo_judge'")
-        | 接続切れで
-      | {{snapshot_clock.current.location.flip.name}}の勝ち
+        | 接続切れ
   .modal-card-body
-    p 終局です
+    | {{snapshot_clock.current.location.flip.name}}の勝ちです
   .modal-card-foot
-    b-button.ok_handle(@click="ok_handle" type="is-primary") 閉じる
+    b-button.ok_handle(@click="ok_handle" type="is-primary") OK
 </template>
 
 <script>

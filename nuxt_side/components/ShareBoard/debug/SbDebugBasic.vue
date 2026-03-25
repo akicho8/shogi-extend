@@ -21,6 +21,16 @@
         .panel-block cc_params:{{SB.cc_params_inspect(SB.cc_params)}}
         .panel-block next_turn_message:{{SB.next_turn_message}}
         .panel-block viewpoint:{{SB.viewpoint}}
+
+        .panel-block current_role_group:{{SB.current_role_group}}
+        .panel-block room_role_group.black:{{SB.room_role_group.black}}
+        .panel-block room_role_group.white:{{SB.room_role_group.white}}
+        .panel-block room_role_group.other:{{SB.room_role_group.other}}
+        .panel-block room_role_group.member:{{SB.room_role_group.member}}
+        .panel-block query_role_group.black:{{SB.query_role_group.black}}
+        .panel-block query_role_group.white:{{SB.query_role_group.white}}
+        .panel-block query_role_group.other:{{SB.query_role_group.other}}
+        .panel-block query_role_group.member:{{SB.query_role_group.member}}
 </template>
 
 <script>

@@ -11,6 +11,9 @@ export class XhistoryRecord {
   }
 
   constructor(params) {
+    // params = {...params}
+    // delete params.role_group
+
     Object.assign(this, params)
 
     this.unique_key = this.unique_key_generate()

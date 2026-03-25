@@ -157,19 +157,6 @@
         | clock_share_dto
       .panel-block
         pre {{JSON.stringify(SB.clock_share_dto, null, 4)}}
-  .column.is-3
-    .panel
-      .panel-heading
-        | 棋譜追加情報
-      .panel-block.is-flex-direction-column
-        p room_role_group
-        pre {{JSON.stringify(SB.room_role_group, null, 4)}}
-      .panel-block.is-flex-direction-column
-        p query_role_group
-        pre {{JSON.stringify(SB.query_role_group, null, 4)}}
-      .panel-block.is-flex-direction-column
-        p current_role_group.to_s_debug
-        pre {{SB.current_role_group.to_s_debug}}
   .column.is-4
     .panel
       .panel-heading

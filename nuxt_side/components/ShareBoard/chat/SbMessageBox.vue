@@ -30,8 +30,11 @@ export default {
       word-break: break-all
       flex-shrink: 1          // 縮んでよしとする
       pre
+        // コマンドの実行結果
         padding: 0.5rem
         border-radius: 4px
+        white-space: pre-wrap
+        word-break: break-all
     .user_name
       color: $grey
     .XprofileShow
