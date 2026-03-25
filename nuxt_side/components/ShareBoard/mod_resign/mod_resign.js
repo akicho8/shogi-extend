@@ -10,6 +10,10 @@ import { ending_modal } from "./ending_modal.js"
 import { GX } from "@/components/models/gx.js"
 import { EndingContext } from "./ending_context.js"
 import { EndingRouteInfo } from "./ending_route_info.js"
+import { EndingRouteTestInfo } from "./ending_route_test_info.js"
+import { RoleGroup } from "../mod_role/role_group.js"
+import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
+
 
 export const mod_resign = {
   mixins: [
@@ -26,9 +30,9 @@ export const mod_resign = {
   methods: {
     // 最後の「投了する」ボタンを押した
     resign_call_handle() {
-      this.sfx_click()
+      // this.sfx_click()
       this.resign_confirm_modal_close()
-      this.resign_call()
+      this.resign_call({ending_route_key: "er_user_normal_resign", resigned_user_name: this.user_name})
     },
 
     // 最終投了ボタンを押したときの処理
@@ -46,7 +50,7 @@ export const mod_resign = {
       const ending_context_default_params = {
         ending_route_key: "er_user_normal_resign",                        // 投了にいたった理由
         win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
-        teams_hash: this.room_role_group,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
+        role_group: this.room_role_group,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
       }
       options = { ...ending_context_default_params, ...options }
 
@@ -58,7 +62,7 @@ export const mod_resign = {
       // }
 
       this.battle_save_by_win_location(options.win_location_key) // 対局設定がある状態で対局を保存する
-      this.resign_share(options)                                 // 最後に対局設定を解除する
+      this.resign_action(options)                                 // 最後に対局設定を解除する
     },
 
     // resign_messsage_post() {
@@ -68,14 +72,19 @@ export const mod_resign = {
     // },
 
     // 投了トリガーを配る
-    resign_share(params = {}) {
+    resign_action(params = {}) {
       params = {
-        __nullable_attributes__: ["win_location_key", "my_location_key"],
+        __nullable_attributes__: [
+          "win_location_key",
+          // "my_location_key",
+          // "finished_user_name",
+          // "resigned_user_name",
+        ],
         ...params,
       }
-      this.ac_room_perform("resign_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("resign_action", params) // --> app/channels/share_board/room_channel.rb
     },
-    resign_share_broadcasted(params) {
+    resign_action_broadcasted(params) {
       this.ending_context = EndingContext.create({my_location_key: this.my_location_key, ...params})
 
       this.xhistory_add({...params, label: this.ending_context.ending_route_info.name, label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
@@ -119,21 +128,21 @@ export const mod_resign = {
     // 引分
     draw_call() {
       this.battle_save_by_win_location(null)                // 対局設定がある状態で対局を保存する
-      this.resign_share({ending_route_key: "er_auto_draw"}) // 最後に対局設定を解除する
+      this.resign_action({ending_route_key: "er_auto_draw"}) // 最後に対局設定を解除する
     },
 
     ending_call() {
-      if (this.ending_context.ending_route_info.x_sfx_key) {
+      if (this.ending_context.ending_route_info.sfx_key) {
         this.sfx_stop_all()
-        this.sfx_play(this.ending_context.ending_route_info.x_sfx_key)
+        this.sfx_play(this.ending_context.ending_route_info.sfx_key)
       }
-      if (this.ending_context.t_message) {
-        this.toast_primary(this.ending_context.t_message, {talk: true})
+      if (this.ending_context.toast_content) {
+        this.toast_primary(this.ending_context.toast_content)
       }
-      if (this.ending_context.x_talk) {
-        this.talk(this.ending_context.x_talk)
+      if (this.ending_context.talk_content) {
+        this.talk(this.ending_context.talk_content)
       }
-      if (this.ending_context.m_subject) {
+      if (this.ending_context.ending_route_info.modal_show) {
         this.ending_modal_open()
       }
     },
@@ -142,12 +151,14 @@ export const mod_resign = {
       params = {
         win_location_key: "black",
         ending_route_key: "er_user_normal_resign",
-        teams_hash: {
-          black: "a,b",
-          white: "c,d",
-        },
-        my_location: this.Location.black,
-        illegal_hv_list: [],
+        role_group: RoleGroup.create({
+          black: ["b1", "b2"],
+          white: ["w1", "w2"],
+        }),
+        my_location_key: this.Location.black,
+        illegal_hv_list: [
+          { illegal_info: IllegalInfo.fetch("illegal_double_pawn") },
+        ],
         ...params,
       }
       this.ending_context = EndingContext.create(params)
@@ -157,6 +168,7 @@ export const mod_resign = {
 
   computed: {
     EndingRouteInfo() { return EndingRouteInfo },
+    EndingRouteTestInfo() { return EndingRouteTestInfo },
 
     // 投了ボタン表示条件
     // 反則ブロックモーダルを出しているとき時計は PAUSE なので PAUSE を含めること

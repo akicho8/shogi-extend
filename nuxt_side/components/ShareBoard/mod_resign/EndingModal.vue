@@ -1,12 +1,13 @@
 <template lang="pug">
 .modal-card
   .modal-card-head
-    .modal-card-title {{SB.ending_context.m_subject}}
+    .modal-card-title
+      | {{SB.ending_context.modal_subject}}
   .modal-card-body
-    .content
-      | {{SB.ending_context.m_body}}
+    .content.is_line_break_on
+      | {{SB.ending_context.modal_body}}
   .modal-card-foot
-    b-button.ending_modal_close_handle.has-text-weight-normal(@click="SB.ending_modal_close_handle" type="is-primary") 閉じる
+    b-button.ending_modal_close_handle.has-text-weight-normal(@click="SB.ending_modal_close_handle" type="is-primary") OK
 </template>
 
 <script>
