@@ -24,10 +24,8 @@ export const mod_role = {
     // | member | ["alice", "bob", "carol", "eve", "justin"] | メンバー | 対局設定してないとすべてここに入る |
     // |--------+--------------------------------------------+----------+------------------------------------|
     room_role_group() {
-      const av = {}
-      RoleGroup.attribute_keys.forEach(key => {
-        av[key] = []
-      })
+      const hv = {}
+      RoleGroup.attribute_keys.forEach(key => hv[key] = [])
       this.member_infos.forEach(e => {
         let name = e.from_user_name
         const location = this.user_name_to_initial_location(name)      // 先後。なければ観戦者
@@ -43,15 +41,15 @@ export const mod_role = {
             key = "member"
           }
         }
-        av[key].push({index: index, name: name}) // あとで index でソートする
+        hv[key].push({index: index, name: name}) // あとで index でソートする
       })
 
       // 既存パラメータがURLにあっても上書きしたいのですべてのキーを含める
-      const hv = _.reduce(av, (a, list, key) => {
-        a[key] = _.sortBy(list, "index").map(e => e.name)
-        return a
-      }, {})
-      return RoleGroup.create(hv)
+      const attributes = {}
+      _.each(hv, (list, key) => {
+        attributes[key] = _.sortBy(list, "index").map(e => e.name)
+      })
+      return RoleGroup.create(attributes)
     },
 
     // クエリから作成する。部屋を立ててないとき用

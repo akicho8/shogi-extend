@@ -110,9 +110,9 @@ export const mod_chat = {
           if (this.chat_talk_behavior_info.key === "is_chat_talk_behavior_on" || message_record.force_talk) {
             this.sb_talk(message_record.content)              // しゃべる
           }
+          this.ai_random_say(params)                         // AIに反応させる
         }
       }
-      this.ai_random_say(params)                            // AIに反応させる
     },
 
     // ログ用の追加データとして data に名前を入れておく

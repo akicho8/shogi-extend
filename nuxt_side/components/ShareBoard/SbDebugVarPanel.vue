@@ -6,6 +6,7 @@ DebugBox.SbDebugVarPanel.is-hidden-mobile(v-if="SB.debug_mode_p")
   p 面子人数: {{SB.member_infos.length}}
   p 面子圧縮: {{SB.uniq_member_infos.length}}
   p モーダル: {{SB.g_modal_instance_count}}
+  p 終了文脈: {{!!SB.ending_context}}
 </template>
 
 <script>

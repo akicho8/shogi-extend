@@ -36,7 +36,7 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       { key: "o",           name: "正解",           volume: 0.20, source: require("@/assets/sfx/oto_logic/Quiz-Correct_Answer02-1.mp3"),                     },
       { key: "x",           name: "不正解",         volume: 0.20, source: require("@/assets/sfx/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"),                       },
       { key: "start",       name: "開始",           volume: 0.15, source: require("@/assets/sfx/oto_logic/Quiz-Question03-1.mp3"),                           },
-      { key: "lose",        name: "負け",           volume: 0.40, source: require("@/assets/sfx/oto_logic/Onmtp-Ding05-1.mp3"),                              },
+      { key: "lose",        name: "負け",           volume: 0.50, source: require("@/assets/sfx/oto_logic/Onmtp-Ding05-1.mp3"),                              },
       { key: "win",         name: "勝ち",           volume: 0.20, source: require("@/assets/sfx/soundeffect_lab/kansei.mp3"),                                },
 
       { key: "se_pon",      name: "ポン(高)",       volume: 0.10, source: require("@/assets/sfx/oto_logic/Onmtp-Pop01-4.mp3"),                               },
