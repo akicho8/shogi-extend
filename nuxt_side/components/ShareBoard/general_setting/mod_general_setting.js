@@ -7,7 +7,6 @@ import { VolumePieceUserScaleInfo  } from "../models/volume_piece_user_scale_inf
 import { VolumeTalkUserScaleInfo   } from "../models/volume_talk_user_scale_info.js"
 import { VolumeCommonUserScaleInfo } from "../models/volume_common_user_scale_info.js"
 
-import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
 import { AiModeInfo           } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
 import { VibrationModeInfo    } from "../models/vibration_mode_info.js"
@@ -60,9 +59,6 @@ export const mod_general_setting = {
 
     SettingRootInfo()           { return SettingRootInfo                                              },
     setting_root_info()         { return this.SettingRootInfo.fetch(this.setting_category_key)        },
-
-    YomiageModeInfo()           { return YomiageModeInfo                                              },
-    yomiage_mode_info()         { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)            },
 
     AiModeInfo()                { return AiModeInfo                                                   },
     ai_mode_info()              { return this.AiModeInfo.fetch(this.ai_mode_key)                      },

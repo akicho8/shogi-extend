@@ -170,10 +170,6 @@ export const mod_sfen_sync = {
             await this.toast_primary("王手")
           }
         }
-        if (this.yomiagable_p) {
-          await this.sb_talk(this.user_call_name(params.from_user_name)) // 「aliceさん」
-          await this.sb_talk(params.last_move_info_attrs.yomiage)      // 「7 6 ふ」
-        }
         this.next_turn_call(params)                                      // 「次は〜」
       }
     },
@@ -255,11 +251,5 @@ export const mod_sfen_sync = {
 
     can_next_step_p(params)       { return this.illegal_none_p(params) && !this.knock_out_p(params) },
     next_is_self_p(params)    { return this.user_name === params.next_user_name                     },
-  },
-  computed: {
-    // どの状態のときに読み上げるか？
-    yomiagable_p() {
-      return this.order_enable_p && this.cc_play_p && this.yomiage_mode_info.key === "is_yomiage_mode_on"
-    },
   },
 }

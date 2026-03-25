@@ -6,7 +6,6 @@ export class SettingTabStreamer extends SettingTabBase {
       { key: "next_turn_call_key",     show: true, resetable: true, component_name: "SettingInput", },
       { key: "chat_talk_behavior_key", show: true, resetable: true, component_name: "SettingInput", },
       { key: "byoyomi_mode_key",       show: true, resetable: true, component_name: "SettingInput", },
-      { key: "yomiage_mode_key",       show: true, resetable: true, component_name: "SettingInput", },
     ]
   }
 }
