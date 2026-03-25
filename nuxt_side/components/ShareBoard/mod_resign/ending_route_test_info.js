@@ -5,6 +5,7 @@ import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { IllegalInfo } from "shogi-player/components/models/illegal_info.js"
 import { RoleGroup } from "../mod_role/role_group.js"
+import { EndingContext } from "./ending_context.js"
 
 export class EndingRouteTestInfo extends ApplicationMemoryRecord {
   static get define() {
@@ -46,5 +47,9 @@ export class EndingRouteTestInfo extends ApplicationMemoryRecord {
       // 各自で異なる
       my_location_key:       this.my_location_key,
     }
+  }
+
+  get ending_context() {
+    return EndingContext.create(this.ending_context_params)
   }
 }

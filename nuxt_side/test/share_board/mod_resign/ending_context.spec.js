@@ -19,16 +19,23 @@ describe("EndingContext", () => {
   })
 
   test("詰み(勝者)", () => {
-    const params = EndingRouteTestInfo.fetch("詰み(勝者)").ending_context_params
-    const ending_context = EndingContext.create(params)
+    const ending_context = EndingRouteTestInfo.fetch("詰み(勝者)").ending_context
     expect(ending_context.modal_subject).toEqual("勝ち")
     expect(ending_context.modal_body).toEqual("(b2)さんが詰まして(b1)チームの勝ちです")
   })
 
   test("反則からの投了1", () => {
-    const params = EndingRouteTestInfo.fetch("反則からの投了1").ending_context_params
-    const ending_context = EndingContext.create(params)
+    const ending_context = EndingRouteTestInfo.fetch("反則からの投了1").ending_context
     expect(ending_context.modal_subject).toEqual("勝ち")
     expect(ending_context.modal_body).toEqual("(w2)さんの二歩と打ち歩詰めからの(w1)さんの投了で(b1)チームの勝ちです")
+  })
+
+  test("すべてのパターンを試してとりあえずエラーにならないことを確認する", () => {
+    EndingRouteTestInfo.values.forEach(e => {
+      expect(() => e.ending_context.toast_content).not.toThrow()
+      expect(() => e.ending_context.talk_content).not.toThrow()
+      expect(() => e.ending_context.modal_subject).not.toThrow()
+      expect(() => e.ending_context.modal_body).not.toThrow()
+    })
   })
 })
