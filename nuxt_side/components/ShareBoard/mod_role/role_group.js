@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
+import { HandleNameParser } from "@/components/models/handle_name/handle_name_parser.js"
 
 // Value Object
 export class RoleGroup {
@@ -54,13 +55,26 @@ export class RoleGroup {
 
   get to_s_debug() {
     return JSON.stringify(this.attributes)
-    // let hv = {
-    //   "☗側": this.black.join(","),
-    //   "☖側": this.white.join(","),
-    //   "観戦": this.other.join(","),
-    //   "面子": this.member.join(","),
-    // }
-    // hv = GX.hash_compact_blank(hv)
-    // return _.map(hv, (v, k) => `${k}: ${v}\n`).join("")
+  }
+
+  // expect(RoleGroup.create({black: []}).team_name(Location.black)).toEqual("☗")
+  // expect(RoleGroup.create({black: ["a"]}).team_name(Location.black)).toEqual("aさん")
+  // expect(RoleGroup.create({black: ["a", "b"]}).team_name(Location.black)).toEqual("aさんチーム")
+  team_name(location) {
+    GX.assert(location)
+    const names = this[location.key]
+    if (names.length === 0) {
+      return location.name
+    } else if (names.length === 1) {
+      return this.call_name(names[0])
+    } else {
+      return [this.call_name(names[0]), "チーム"].join("")
+    }
+  }
+
+  call_name(name) {
+    if (name != null) {
+      return HandleNameParser.call_name(name)
+    }
   }
 }

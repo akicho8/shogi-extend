@@ -9,14 +9,14 @@ import { RoleGroup } from "../mod_role/role_group.js"
 export class EndingRouteTestInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { name: "詰み(勝者)",      ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: "black", finished_user_name: "(b2)", illegal_keys: [],                                                },
-      { name: "詰み(敗者)",      ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: "white", finished_user_name: "(b2)", illegal_keys: [],                                                },
-      { name: "詰み(観戦者)",    ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: null,    finished_user_name: "(b2)", illegal_keys: [],                                                },
-      { name: "投了1",           ending_route_key: "er_user_normal_resign",  win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", illegal_keys: [],                                                },
-      { name: "反則からの投了1", ending_route_key: "er_user_illegal_resign", win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn", "illegal_pawn_drop_mate"], },
-      { name: "反則1",           ending_route_key: "er_auto_illegal",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn"], },
-      { name: "時間切れ1",       ending_route_key: "er_self_timeout",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
-      { name: "引き分け1",       ending_route_key: "er_auto_draw",           win_location_key: null,    my_location_key: "black", },
+      { key: "詰み(勝者)",      ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: "black", finished_user_name: "(b2)", illegal_keys: [],                                                },
+      { key: "詰み(敗者)",      ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: "white", finished_user_name: "(b2)", illegal_keys: [],                                                },
+      { key: "詰み(観戦者)",    ending_route_key: "er_auto_checkmate",      win_location_key: "black", my_location_key: null,    finished_user_name: "(b2)", illegal_keys: [],                                                },
+      { key: "投了1",           ending_route_key: "er_user_normal_resign",  win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", illegal_keys: [],                                                },
+      { key: "反則からの投了1", ending_route_key: "er_user_illegal_resign", win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn", "illegal_pawn_drop_mate"], },
+      { key: "反則1",           ending_route_key: "er_auto_illegal",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn"], },
+      { key: "時間切れ1",       ending_route_key: "er_self_timeout",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
+      { key: "引き分け1",       ending_route_key: "er_auto_draw",           win_location_key: null,    my_location_key: "black", },
     ]
   }
 

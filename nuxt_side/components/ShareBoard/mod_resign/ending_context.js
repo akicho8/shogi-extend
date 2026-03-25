@@ -94,40 +94,16 @@ export class EndingContext {
     return EndingRouteInfo.fetch(this.ending_route_key)
   }
 
-  get finishing_call_name() { return this.call_name(this.finished_user_name) } // 詰ました人
-  get resigner_call_name()  { return this.call_name(this.resigned_user_name) } // 投了した人
-  get choker_call_name()    { return this.call_name(this.choker_user_name)   } // 反則した人
-
-  // 勝った側の呼名
-  get win_side_call_name() {
-    if (this.win_location) {
-      let name = null
-      if (false) {
-        name ??= this.finished_user_name   // 最後に詰ました人をMVPとして優先的に「○○」さんチームとする (詰ましていないときはいない)
-      }
-      name ??= this.win_team_leader_name // チームの最初にいる人をリーダーとみなして「○○」さんチームとする (必ずいるはず)
-      if (name) {
-        return [HandleNameParser.call_name(name), this.win_side_team_name].join("")
-      }
-      return this.win_location.name // ここにくることはない
-    }
-  }
-
-  get team_name()           { return "チーム" }
-  get win_member_many_p()   { return this.member_many_p(this.win_location) }
-  get lose_member_many_p()  { return this.member_many_p(this.lose_location) }
-  get win_side_team_name()  { return this.win_member_many_p ? this.team_name : "" }
-  get lose_side_team_name() { return this.lose_member_many_p ? this.team_name : "" }
+  // 呼名
+  get win_team_call_name()  { return this.win_location  ? this.role_group.team_name(this.win_location)  : "" } // 勝った側
+  get lose_team_call_name() { return this.lose_location ? this.role_group.team_name(this.lose_location) : "" } // 負けた側
+  get finishing_call_name() { return this.call_name(this.finished_user_name) }                                 // 詰ました人
+  get resigner_call_name()  { return this.call_name(this.resigned_user_name) }                                 // 投了した人
+  get choker_call_name()    { return this.call_name(this.choker_user_name)   }                                 // 反則した人
 
   // private
 
   get role_group() { return RoleGroup.create(this.role_group_attributes) }
-
-  member_many_p(location) {
-    if (location) {
-      return this.role_group[location.key].length > 1
-    }
-  }
 
   call_name(name) {
     if (name != null) {

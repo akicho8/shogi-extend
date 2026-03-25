@@ -18,7 +18,7 @@ export class EndingRouteInfo extends ApplicationMemoryRecord {
         toast_content: null,
         modal_show: true,
         modal_subject: c => c.subject_default,
-        modal_body: c => `${c.finishing_call_name}が詰まして${c.win_side_call_name}の勝ちです`,
+        modal_body: c => `${c.finishing_call_name}が詰まして${c.win_team_call_name}の勝ちです`,
         sfx_key: "se_notification",
       },
       {
@@ -28,7 +28,7 @@ export class EndingRouteInfo extends ApplicationMemoryRecord {
         toast_content: null,
         modal_show: true,
         modal_subject: c => c.subject_default,
-        modal_body: c => `${c.resigner_call_name}の投了で${c.win_side_call_name}の勝ちです`,
+        modal_body: c => `${c.resigner_call_name}の投了で${c.win_team_call_name}の勝ちです`,
         sfx_key: "se_notification",
       },
       {
@@ -38,7 +38,7 @@ export class EndingRouteInfo extends ApplicationMemoryRecord {
         toast_content: null,
         modal_show: true,
         modal_subject: c => c.subject_default,
-        modal_body: c => `${c.choker_call_name}の${c.illegal_names_str}からの${c.resigner_call_name}の投了で${c.win_side_call_name}の勝ちです`,
+        modal_body: c => `${c.choker_call_name}の${c.illegal_names_str}からの${c.resigner_call_name}の投了で${c.win_team_call_name}の勝ちです`,
         sfx_key: "se_notification",
       },
       {
@@ -48,7 +48,7 @@ export class EndingRouteInfo extends ApplicationMemoryRecord {
         toast_content: null,
         modal_show: true,
         modal_subject: c => c.illegal_names_str,
-        modal_body: c => `${c.choker_call_name}の反則で${c.win_side_call_name}の勝ちです`,
+        modal_body: c => `${c.choker_call_name}の反則で${c.win_team_call_name}の勝ちです`,
         sfx_key: "lose",
       },
       {
