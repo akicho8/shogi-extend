@@ -18,7 +18,6 @@ module SharedMethods
       :room_url_copy_modal_feature_p             => false,                        # 部屋のリンクのコピーモーダルを出さない
       :self_vs_self_enable_p             => false,                        # 自分vs自分禁止 (対局設定で対戦相手がいない場合はバリデーションする)
       :system_reserved_avatar_then_clear => false,                        # 起動時の絵文字検証
-      :is_yomiage_mode_on                => true,                         # 指し手を読み上げる (__SYSTEM_TEST_RUNNING__ 中なので音は聞こえない)
       :toast_key                         => :is_toast_screen_bottom_left, # toast の表示位置
       :slider_reflector_notify_scope_key           => :rns_except_me,                # スライダーを動かしたときの通知スコープを本番と同じにする
       :export_group_visible_p                         => true,                         # エクスポートメニュー

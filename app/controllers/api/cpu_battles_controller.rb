@@ -139,8 +139,6 @@ module Api
         Rails.logger.debug(@container)
       end
 
-      yomiage_process # 人間の手の読み上げ
-
       evaluation_value_generation
 
       if executor = @container.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
@@ -216,8 +214,6 @@ module Api
       @current_sfen = @container.to_history_sfen
       evaluation_value_generation
 
-      yomiage_process # CPUの手の読み上げる
-
       captured_soldier = @container.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
@@ -281,42 +277,6 @@ module Api
 
     def evaluation_value_generation
       @score_list << { x: @container.turn_info.turn_offset, y: @container.player_at(:black).evaluator.score }
-    end
-
-    # 最後の手があれば読み上げる
-    def yomiage_process
-      if params[:yomiage_mode]
-        if last = @container.hand_logs.last
-
-          # 方法1
-          if false
-            if last.tag_bundle
-              last.tag_bundle.each do |e|
-                e.each do |e|
-                  talk(e.name)
-                end
-              end
-            end
-          end
-
-          # 方法2
-          if false
-            if last.tag_bundle
-              names = last.tag_bundle.flat_map { |e| e.collect(&:name) }
-              names = names.reject { |e| e.in?(["居飛車", "振り飛車"]) }
-              if names.present?
-                # sfx_play(:shine) # このメソッドはない
-                talk(names.join("、"))
-                names.each { |e| toast_message(e) }
-              end
-            end
-          end
-
-          if Rails.env.development? && false
-            talk(last.yomiage, rate: TALK_PITCH)
-          end
-        end
-      end
     end
 
     def build_response
