@@ -48,9 +48,9 @@ export const mod_resign = {
 
       // あとで以下を EndingContext に渡す
       const ending_context_default_params = {
-        ending_route_key: "er_user_normal_resign",                        // 投了にいたった理由
-        win_location_key: this.resign_win_location_key, // 勝った側 (空の場合は引き分け)
-        role_group: this.room_role_group,      // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
+        ending_route_key: "er_user_normal_resign",              // 投了にいたった理由
+        win_location_key: this.resign_win_location_key,         // 勝った側 (空の場合は引き分け)
+        role_group_attributes: this.room_role_group.attributes, // この時点のメンバー情報を持っておく (あとでやると対局設定がOFFになっているか気にかけないといけない)
       }
       options = { ...ending_context_default_params, ...options }
 
@@ -151,10 +151,10 @@ export const mod_resign = {
       params = {
         win_location_key: "black",
         ending_route_key: "er_user_normal_resign",
-        role_group: RoleGroup.create({
+        role_group_attributes: {
           black: ["b1", "b2"],
           white: ["w1", "w2"],
-        }),
+        },
         my_location_key: this.Location.black,
         illegal_hv_list: [
           { illegal_info: IllegalInfo.fetch("illegal_double_pawn") },

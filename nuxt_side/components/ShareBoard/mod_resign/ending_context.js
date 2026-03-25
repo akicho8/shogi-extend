@@ -4,6 +4,7 @@ import { GX } from "@/components/models/gx.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { EndingRouteInfo } from "./ending_route_info.js"
 import { HandleNameParser } from "@/components/models/handle_name/handle_name_parser.js"
+import { RoleGroup } from "../mod_role/role_group.js"
 
 export class EndingContext {
   static create(...args) {
@@ -11,34 +12,26 @@ export class EndingContext {
   }
 
   constructor(params = {}) {
-    GX.assert(params.role_group)
+    GX.assert_kind_of_hash(params.role_group_attributes)
     GX.assert_kind_of_string(params.ending_route_key)
     GX.assert_null(params.win_location)
     GX.assert_null(params.my_location)
+    GX.assert_null(params.role_group)
 
     // 全員で共通
-    this.ending_route_key = params.ending_route_key    // 投了にいたった理由
-    this.win_location_key = params.win_location_key    // 勝った方
-    this.role_group       = params.role_group          // 対局者たち
-    this.illegal_hv_list  = params.illegal_hv_list     // 反則たち
-    this.finished_user_name     = params.finished_user_name       // 詰ました人
-    this.resigned_user_name         = params.resigned_user_name           // 投了した人
-    this.choker_user_name         = params.choker_user_name           // 反則した人
+    this.ending_route_key      = params.ending_route_key      // 投了にいたった理由
+    this.win_location_key      = params.win_location_key      // 勝った方
+    this.role_group_attributes = params.role_group_attributes // 対局者・観戦者
+    this.illegal_hv_list       = params.illegal_hv_list       // 反則たち
+    this.finished_user_name    = params.finished_user_name    // 詰ました人
+    this.resigned_user_name    = params.resigned_user_name    // 投了した人
+    this.choker_user_name      = params.choker_user_name      // 反則した人
 
     // それぞれ違う
-    this.my_location_key  = params.my_location_key      // 自分が所属するチーム
+    this.my_location_key = params.my_location_key // 自分が所属するチーム
 
     Object.freeze(this)
   }
-
-  // // Delegates
-  // get toast_notify_p() { return this.ending_route_info.toast_notify_p }
-  // get modal_notify_p() { return this.ending_route_info.modal_notify_p }
-  // get route_name()     { return this.ending_route_info.name           }
-
-  // get checkmate_p() {
-  //   return this.ending_route_info.key === "er_auto_checkmate"
-  // }
 
   //////////////////////////////////////////////////////////////////////////////// それぞれのルートに対応する文言を返す
 
@@ -127,6 +120,8 @@ export class EndingContext {
   get lose_side_team_name() { return this.lose_member_many_p ? this.team_name : "" }
 
   // private
+
+  get role_group() { return RoleGroup.create(this.role_group_attributes) }
 
   member_many_p(location) {
     if (location) {

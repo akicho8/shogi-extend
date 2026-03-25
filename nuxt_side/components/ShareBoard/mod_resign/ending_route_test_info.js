@@ -15,7 +15,7 @@ export class EndingRouteTestInfo extends ApplicationMemoryRecord {
       { name: "投了1",           ending_route_key: "er_user_normal_resign",  win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", illegal_keys: [],                                                },
       { name: "反則からの投了1", ending_route_key: "er_user_illegal_resign", win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn", "illegal_pawn_drop_mate"], },
       { name: "反則1",           ending_route_key: "er_auto_illegal",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn"], },
-      { name: "時間切れ1",       ending_route_key: "er_auto_timeout",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
+      { name: "時間切れ1",       ending_route_key: "er_self_timeout",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
       { name: "引き分け1",       ending_route_key: "er_auto_draw",           win_location_key: null,    my_location_key: "black", },
     ]
   }
@@ -26,25 +26,25 @@ export class EndingRouteTestInfo extends ApplicationMemoryRecord {
     })
   }
 
-  get role_group() {
-    return RoleGroup.create({
+  get role_group_attributes() {
+    return {
       black: ["(b1)", "(b2)"],
       white: ["(w1)", "(w2)"],
-    })
+    }
   }
 
   get ending_context_params() {
     return {
       // 共通
-      win_location_key: this.win_location_key,
-      ending_route_key: this.ending_route_key,
-      role_group:       this.role_group,
-      illegal_hv_list:  this.illegal_hv_list,
-      finished_user_name:     this.finished_user_name,
-      resigned_user_name:     this.resigned_user_name,
-      choker_user_name:     this.choker_user_name,
+      win_location_key:      this.win_location_key,
+      ending_route_key:      this.ending_route_key,
+      role_group_attributes: this.role_group_attributes,
+      illegal_hv_list:       this.illegal_hv_list,
+      finished_user_name:    this.finished_user_name,
+      resigned_user_name:    this.resigned_user_name,
+      choker_user_name:      this.choker_user_name,
       // 各自で異なる
-      my_location_key:  this.my_location_key,
+      my_location_key:       this.my_location_key,
     }
   }
 }
