@@ -2,7 +2,7 @@ import { EndingContext } from "@/components/ShareBoard/mod_resign/ending_context
 import { EndingRouteTestInfo } from "@/components/ShareBoard/mod_resign/ending_route_test_info.js"
 
 describe("EndingContext", () => {
-  test("#modal_body", () => {
+  test("基本", () => {
     const params = {
       my_location_key: "black",
       win_location_key: "black",
@@ -11,8 +11,24 @@ describe("EndingContext", () => {
       illegal_hv_list: [],
       resigned_user_name: "c",
     }
-    expect(EndingContext.create(params).modal_subject).toEqual("勝ち")
-    expect(EndingContext.create(params).modal_body).toEqual("cさんの投了でaさんチームの勝ちです")
-    expect(EndingContext.create(params).talk_content).toEqual("負けました")
+    const ending_context = EndingContext.create(params)
+    expect(ending_context.modal_subject).toEqual("勝ち")
+    expect(ending_context.modal_body).toEqual("cさんの投了でaさんチームの勝ちです")
+    expect(ending_context.talk_content).toEqual("負けました")
+    expect(ending_context.win_team_call_name).toEqual("aさんチーム")
+  })
+
+  test("詰み(勝者)", () => {
+    const params = EndingRouteTestInfo.fetch("詰み(勝者)").ending_context_params
+    const ending_context = EndingContext.create(params)
+    expect(ending_context.modal_subject).toEqual("勝ち")
+    expect(ending_context.modal_body).toEqual("(b2)さんが詰まして(b1)さんチームの勝ちです")
+  })
+
+  test("反則からの投了1", () => {
+    const params = EndingRouteTestInfo.fetch("反則からの投了1").ending_context_params
+    const ending_context = EndingContext.create(params)
+    expect(ending_context.modal_subject).toEqual("勝ち")
+    expect(ending_context.modal_body).toEqual("(w2)さんの二歩と打ち歩詰めからの(w1)さんの投了で(b1)さんチームの勝ちです")
   })
 })
