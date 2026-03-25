@@ -14,7 +14,12 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
 
           // 「投了」を押した人だけが投了する
           if (context.received_from_self(params)) {
-            context.resign_call({ending_route_key: "er_user_illegal_resign", illegal_hv_list: params.illegal_hv_list})
+            context.resign_call({
+              ending_route_key: "er_user_illegal_resign",
+              choker_user_name: context.illegal_params.from_user_name, // 戦犯者
+              resigned_user_name: context.user_name, // 投了者
+              illegal_hv_list: params.illegal_hv_list,
+            })
           }
         },
       },

@@ -201,7 +201,7 @@ export const mod_sfen_sync = {
     },
 
     // 勝利
-    // 詰みであればこれから指す人に投了させる
+    // 詰みであればこれから指す人に投了させる → それはやめて詰ました人が勝ちを宣言する
     checkmate_then_resign(params) {
       if (this.debug_mode_p && !this.__SYSTEM_TEST_RUNNING__) {
         if (params.checkmate_stat) {
@@ -225,7 +225,7 @@ export const mod_sfen_sync = {
         if (this.illegal_none_p(params)) {
           if (this.knock_out_p(params)) {
             if (this.cc_play_p) {
-              this.resign_call({ending_route_key: "er_auto_checkmate", win_location_key: this.my_location_key})
+              this.resign_call({ending_route_key: "er_auto_checkmate", win_location_key: this.my_location_key, finished_user_name: params.from_user_name})
             }
           }
         }

@@ -17,7 +17,8 @@
       .panel
         .panel-heading
           | 表示テスト
-        a.panel-block(@click="SB.ending_call_test()") 詰み
+        template(v-for="e in SB.EndingRouteTestInfo.values")
+          a.panel-block(@click="SB.ending_call_test(e.ending_context_params)") {{e.name}}
     .column.is-4
       .panel.assert_var
         .panel-heading
