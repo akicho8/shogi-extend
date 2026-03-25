@@ -1,5 +1,4 @@
 import SbTweetModal from "./SbTweetModal.vue"
-const TinyURL = require("tinyurl")
 
 export const mod_tweet = {
   methods: {
@@ -27,7 +26,7 @@ export const mod_tweet = {
         o += "#" + this.current_title
       }
       o += "\n"
-      o += await TinyURL.shorten(this.current_url)
+      o += await this.long_url_to_short_url(this.current_url)
       return o
     },
 

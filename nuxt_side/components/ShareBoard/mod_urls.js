@@ -3,11 +3,8 @@ import { SimpleCache } from "@/components/models/simple_cache.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
-const TinyURL = require("tinyurl")
 import _ from "lodash"
 import QueryString from "query-string"
-
-const OWN_SHORTENED_URL_FUNCTION = true // 自前の短縮URL機能を使うか？
 
 const simple_cache = new SimpleCache()
 
@@ -52,14 +49,9 @@ export const mod_urls = {
       }
     },
     __short_url_fetch() {
-      // this.debug_alert("APIアクセス発生")
-      if (OWN_SHORTENED_URL_FUNCTION) {
-        const body = {room_key: this.room_key, user_name: this.user_name, current_url: this.current_url}
-        this.app_log({emoji: ":短縮URL:", subject: `[短縮URL][作成希望](${this.user_name})`, body: body, mail_notify: false, table_format: false})
-        return this.long_url_to_short_url(this.current_url)
-      } else {
-        return TinyURL.shorten(this.current_url)
-      }
+      const body = {room_key: this.room_key, user_name: this.user_name, current_url: this.current_url}
+      this.app_log({emoji: ":短縮URL:", subject: `[短縮URL][作成希望](${this.user_name})`, body: body, mail_notify: false, table_format: false})
+      return this.long_url_to_short_url(this.current_url)
     },
 
     other_app_click_handle(app_name) {
