@@ -52,7 +52,7 @@ export class EndingRouteInfo extends ApplicationMemoryRecord {
         sfx_key: "lose",
       },
       {
-        key: "er_auto_timeout",
+        key: "er_self_timeout",
         name: "時間切れ",
         talk_content: null,
         toast_content: null,
