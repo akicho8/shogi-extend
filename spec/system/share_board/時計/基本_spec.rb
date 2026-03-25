@@ -31,11 +31,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b do
       assert_clock_active_white                         # b側も後手がアクティブになっている
       sleep(@INITIAL_SEC)                               # ここでは3秒ぐらいになってるけどさらに秒読みぶん待つ
-      assert_text("時間切れで☗の勝ち")                 # 時間切れのダイアログの表示(1回目)
+      assert_text("時間切れ")                           # 時間切れのダイアログの表示(1回目)
+      assert_text("☗の勝ちです")                       # 時間切れのダイアログの表示(1回目)
       cc_timeout_modal_close                            # それを閉じる
     end
     window_a do
-      assert_text("時間切れで☗の勝ち")                  # a側でも時間切れのダイアログが表示されている
+      assert_text("時間切れ")
+      assert_text("☗の勝ちです")                      # a側でも時間切れのダイアログが表示されている
       cc_timeout_modal_close                           # それを閉じる
     end
   end
