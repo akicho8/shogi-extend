@@ -59,17 +59,18 @@ export class RoleGroup {
 
   // expect(RoleGroup.create({black: []}).team_name(Location.black)).toEqual("☗")
   // expect(RoleGroup.create({black: ["a"]}).team_name(Location.black)).toEqual("aさん")
-  // expect(RoleGroup.create({black: ["a", "b"]}).team_name(Location.black)).toEqual("aさんチーム")
+  // expect(RoleGroup.create({black: ["a", "b"]}).team_name(Location.black)).toEqual("aチーム")
   team_name(location) {
     GX.assert(location)
     const names = this[location.key]
-    if (names.length === 0) {
-      return location.name
-    } else if (names.length === 1) {
-      return this.call_name(names[0])
-    } else {
-      return [this.call_name(names[0]), "チーム"].join("")
+    const name = names[0]
+    if (names.length > 1) {
+      return [name, "チーム"].join("") // 「aさんチーム」ではなく「aチーム」とする
     }
+    if (names.length === 1) {
+      return this.call_name(name) // 1人のときは「aさん」とする
+    }
+    return location.name        // これが呼ばれることは基本ない
   }
 
   call_name(name) {
