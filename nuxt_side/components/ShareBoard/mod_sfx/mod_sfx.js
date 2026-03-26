@@ -12,14 +12,14 @@ export const mod_sfx = {
   methods: {
     // 意図して持ち上げた
     ev_action_piece_lift() {
-      if (this.sp_mode === "play") {
+      if (this.play_mode_p) {
         this.sfx_play("se_piece_lift")
       }
     },
 
     // 意図してキャンセルした
     ev_action_piece_cancel() {
-      if (this.sp_mode === "play") {
+      if (this.play_mode_p) {
         this.sfx_play("se_piece_lift_cancel")
       }
     },
@@ -44,7 +44,7 @@ export const mod_sfx = {
 
     // ☗☖をタップして反転したときの音
     ev_action_viewpoint_flip() {
-      if (this.sp_mode === "play") {
+      if (this.play_mode_p) {
         this.sfx_click()
       }
     },

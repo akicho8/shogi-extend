@@ -61,7 +61,7 @@ export const mod_shogi_player = {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     ev_edit_mode_short_sfen_change(v) {
-      GX.assert(this.sp_mode === "edit", 'this.sp_mode === "edit"')
+      GX.assert(this.edit_mode_p)
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
       // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
