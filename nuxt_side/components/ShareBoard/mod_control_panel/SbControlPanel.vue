@@ -45,7 +45,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.current_long_url_copy_handle(size="is-small" tag="a" :href="SB.current_url" @click.prevent="SB.current_long_url_copy_handle") 通常版
         b-button.current_short_url_copy_handle(size="is-small" @click.prevent="SB.current_short_url_copy_handle") 短縮版
     p.help
-      | 他者に棋譜を送る場合はURLの共有をおすすめします
+      | 他者に棋譜を送る場合は短縮版URLの共有がお手軽です
 
   .box
     b-field(custom-class="is-small" label="インポート")
