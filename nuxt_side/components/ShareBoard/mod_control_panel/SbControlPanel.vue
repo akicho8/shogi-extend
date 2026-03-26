@@ -111,7 +111,6 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.title_edit_handle(size="is-small" @click="SB.title_edit_handle") タイトル変更
         b-button.appearance_modal_open_handle(size="is-small" @click="SB.appearance_modal_open_handle") スタイル設定
         b-button.tl_modal_open_handle(size="is-small" @click="SB.tl_modal_open_handle") デバッグ用ログ
-        b-button.reset_handle(size="is-small" @click="SB.reset_handle" :disabled="!SB.cable_p") URLを開いたときの局面に戻す
         b-button(size="is-small" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" @click.native="sfx_click()") 手番検証
         b-button.audio_unlock_all_with_rooster(size="is-small" @click="SB.audio_unlock_all_with_rooster") 音復活
 

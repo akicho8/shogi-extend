@@ -228,34 +228,7 @@ export default {
     this.$debug.trace("SbApp", "beforeMount")
   },
   mounted() {
-    // GX.delay_block(3, () => { this.g_modal_instance_count += 1 })
-
-    // console.log(this.$route)
     this.$debug.trace("SbApp", "mounted")
-
-    // this.$nuxt.error({statusCode: 500, message: "xxx"})
-    // return
-
-    if (this.AppConfig.WATCH_AND_URL_REPLACE) {
-      // どれかが変更されたらURLを更新
-      this.$watch(() => [
-        this.sp_mode,
-        this.current_sfen,
-        this.current_turn,
-        this.current_title,
-        this.viewpoint,
-        this.room_key,
-        this.color_theme_key,
-      ], () => {
-        // 両方エラーになってしまう
-        //   this.$router.replace({name: "share-board", query: this.current_url_params})
-        //   this.$router.replace({query: this.current_url_params})
-        // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
-        this.$router.replace({query: this.current_url_params}).catch(e => {})
-      })
-    }
-
-    // this.autoexec({next_tick: false, sleep: 10})
     this.autoexec()
   },
 
@@ -263,20 +236,6 @@ export default {
     if (this.debug_mode_p) {
       GX.assert(this.g_modal_instance_count === 0, "this.g_modal_instance_count === 0")
     }
-  },
-
-  // http://localhost:4000/share-board?autoexec=general_setting_modal_open_handle
-  // http://localhost:4000/share-board?autoexec=debug_mode_on,general_setting_modal_open_handle
-  methods: {
-    // 盤面のみ最初の状態に戻す
-    reset_handle() {
-      // this.sidebar_close()
-      this.sfx_click()
-      this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
-      this.current_turn = this.config.record.initial_turn     // 現在の手数
-      this.toast_primary("局面をいっちばん最初にここに来たときの状態に戻しました")
-    },
-
   },
 
   computed: {
