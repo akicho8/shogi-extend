@@ -81,7 +81,7 @@ module Swars
 
     # 両対局者名
     def user_keys
-      @cache[:user_keys] ||= parts.take(2).collect { |e| UserKey[e] }
+      @cache[:user_keys] ||= parts.take(Bioshogi::Location.size).collect { |e| UserKey[e] }
     end
 
     # 両対局者名を :black や :white で引く

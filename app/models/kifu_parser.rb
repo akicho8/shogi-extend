@@ -10,63 +10,63 @@ class KifuParser
     @params = params
   end
 
-  def to_kif(*args)
+  def to_kif(...)
     header_update
-    extra_header_part + core.to_kif(*args)
+    extra_header_part + core.to_kif(...)
   end
 
-  def to_ki2(*args)
+  def to_ki2(...)
     header_update
-    extra_header_part + core.to_ki2(*args)
+    extra_header_part + core.to_ki2(...)
   end
 
-  def to_bod(*args)
+  def to_bod(...)
     header_update
-    extra_header_part + core.to_bod(*args)
+    extra_header_part + core.to_bod(...)
   end
 
-  def to_csa(*args)
-    core.to_csa(*args)
+  def to_csa(...)
+    core.to_csa(...)
   end
 
-  def to_sfen(*args)
-    core.to_sfen(*args)
+  def to_sfen(...)
+    core.to_sfen(...)
   end
 
-  def to_png(*args)
-    core.to_png(*args)
+  def to_png(...)
+    core.to_png(...)
   end
 
-  # def to_gif(*args)
+  # def to_gif(...)
   #   if Rails.env.production?
   #     raise "いまのところproductionでのリアルタイムな動画作成はサーバーが死ぬので禁止"
   #   end
-  #   core.to_gif(*args)
+  #   core.to_gif(...)
   # end
 
-  def to_xxx(key = to_format, *args)
-    public_send("to_#{key}", *args)
+  def to_xxx(key = to_format, ...)
+    public_send("to_#{key}", ...)
   end
 
-  def to_s(*args)
-    to_xxx(*args)
+  def to_s(...)
+    to_xxx(...)
   end
 
-  def as_json(*args)
+  def as_json(...)
     { body: to_s, turn_max: turn_max }
   end
 
-  def to_all(*args)
-    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => to_xxx(e.key, *args)) }
+  def to_all(...)
+    KifuFormatWithBodInfo.inject({}) { |a, e| a.merge(e.key => to_xxx(e.key, ...)) }
   end
 
-  def all_kifs(*args)
-    to_all(*args)
+  def all_kifs(...)
+    to_all(...)
   end
 
-  def to_a(*args)
+  def to_a(...)
     KifuFormatWithBodInfo.collect do |e|
-      { key: e.key, name: e.name, value: to_xxx(e.key, *args) }
+      { key: e.key, name: e.name, value: to_xxx(e.key, ...) }
     end
   end
 
@@ -149,14 +149,13 @@ class KifuParser
 
   def extra_header
     {
-      "詳細URL"  => key_info&.inside_show_url,           # たくさん埋めなくてもこれ一つで済む
-      "ぴよ将棋" => key_info&.piyo_shogi_url,
-      "KENTO"    => key_info&.kento_url,
-      # "検索URL" => search_url,
-      # "KENTO"      => to_kento_url,
+      "詳細URL"    => key_info&.inside_show_url,           # たくさん埋めなくてもこれ一つで済む
+      "ぴよ将棋"   => key_info&.piyo_shogi_url,
+      "KENTO"      => key_info&.kento_url,
+      "対局URL"    => key_info&.official_url,
       # "共有将棋盤" => to_share_board_url,
-      # "対局URL"    => official_url,
-    }.reject { |k, v| v.blank? }
+      # "検索URL"  => key_info&.search_url,
+    }.compact_blank
   end
 
   # def search_url
@@ -240,7 +239,12 @@ class KifuParser
   end
 
   def comma_included_str_normalize(str)
-    str.to_s.split(/\s*,\s*/).join(", ")
+    case str
+    when Array
+      str.join(", ")
+    else
+      str.to_s.split(/\s*,\s*/).join(", ")
+    end
   end
 
   def names_to_str(str)
