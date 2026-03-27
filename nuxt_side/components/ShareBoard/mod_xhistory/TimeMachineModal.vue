@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{xhistory_record.modal_title_or_default}} \#{{master.turn}}
+      | {{xhistory_record.modal_title_or_default}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
