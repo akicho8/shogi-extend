@@ -40,7 +40,7 @@ export const mod_illegal = {
             this.ac_log({subject: "反則負け", body: {"種類": params.illegal_hv_list.map(e => e.illegal_info.name), "局面": this.current_url}})
           }
           // win_location_key: this.current_location.flip.key,
-          this.resign_call({ending_route_key: "er_auto_illegal", choker_user_name: params.from_user_name, illegal_hv_list: params.illegal_hv_list})
+          this.resign_action({ending_route_key: "er_auto_illegal", choker_user_name: params.from_user_name, illegal_hv_list: params.illegal_hv_list})
         }
       }
     },

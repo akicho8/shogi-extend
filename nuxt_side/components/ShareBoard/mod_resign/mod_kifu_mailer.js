@@ -17,6 +17,14 @@ export const mod_kifu_mailer = {
 
       this.kifu_mail_run()
     },
+
+    // ログインユーザーがいる前提で直接実行する
+    kifu_mail_run_safe() {
+      if (this.login_and_email_valid_p) {
+        this.kifu_mail_run({silent: true})
+      }
+    },
+
     // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
       GX.assert(this.login_and_email_valid_p, "this.login_and_email_valid_p")

@@ -106,8 +106,9 @@ export class EndingContext {
   get role_group() { return RoleGroup.create(this.role_group_attributes) }
 
   call_name(name) {
-    if (name != null) {
-      return HandleNameParser.call_name(name)
+    if (name == null) {
+      return "?"
     }
+    return HandleNameParser.call_name(name)
   }
 }

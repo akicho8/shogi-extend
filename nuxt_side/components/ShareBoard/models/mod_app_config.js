@@ -6,7 +6,6 @@ export const AppConfig = {
   ALIVE_SEC: 30 + 5,                          // N秒未満なら活発とみなす
   KILL_SEC: 30 + 30,                          // 通知がN秒前より古いユーザーは破棄
 
-  TORYO_THEN_CURRENT_LOCATION_IS_LOSE: false, // 誰が投了したかに関係なく現在の色のチームが負け(二歩の場合手番が進むため支障あり)
   TALK_MAKEMASHITA_MESSAGE: false,                 // 「負けました」と発言する？
   ENDING_MODAL_USE: false,                    // 最後のモーダルを表示する？
 

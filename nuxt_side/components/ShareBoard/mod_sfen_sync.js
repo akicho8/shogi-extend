@@ -221,7 +221,7 @@ export const mod_sfen_sync = {
         if (this.illegal_none_p(params)) {
           if (this.knock_out_p(params)) {
             if (this.cc_play_p) {
-              this.resign_call({ending_route_key: "er_auto_checkmate", win_location_key: this.my_location_key, finished_user_name: params.from_user_name})
+              this.resign_action({ending_route_key: "er_auto_checkmate", win_location_key: this.my_location_key, finished_user_name: params.from_user_name})
             }
           }
         }

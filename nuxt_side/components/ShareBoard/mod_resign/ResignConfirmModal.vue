@@ -6,11 +6,11 @@
   .modal-card-body
     .content
       p {{SB.resign_confirm_message}}
-      p.resign_warn_message.is-size-7.has-text-grey(v-if="SB.my_team_member_is_many_p")
+      p.resign_warn_message.is-size-7.has-text-grey.is_line_break_on(v-if="SB.my_team_member_is_many_p")
         | 自分本位の投了は仲間から反感を買う恐れがあります
   .modal-card-foot
-    b-button.resign_confirm_modal_close_handle.has-text-weight-normal(@click="SB.resign_confirm_modal_close_handle" icon-left="chevron-left") 諦めない
-    b-button.resign_call_handle(@click="SB.resign_call_handle" type="is-danger") 投了する
+    b-button.resign_confirm_modal_close_handle.has-text-weight-normal(@click="SB.resign_confirm_modal_close_handle" icon-left="chevron-left")
+    b-button.normal_resign_call_handle(@click="SB.normal_resign_call_handle" type="is-danger") 投了する
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
 @import "../sass/support.sass"
 
 .ResignConfirmModal
-  +modal_width(24rem)
+  // +modal_width(24rem)
 
   .modal-card-body
     padding: 1.5rem
