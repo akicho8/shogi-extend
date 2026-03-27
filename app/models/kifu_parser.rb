@@ -152,7 +152,7 @@ class KifuParser
       "詳細URL"    => key_info&.inside_show_url,           # たくさん埋めなくてもこれ一つで済む
       "ぴよ将棋"   => key_info&.piyo_shogi_url,
       "KENTO"      => key_info&.kento_url,
-      "対局URL"    => key_info&.official_url,
+      # "対局URL"    => key_info&.official_url,
       # "共有将棋盤" => to_share_board_url,
       # "検索URL"  => key_info&.search_url,
     }.compact_blank

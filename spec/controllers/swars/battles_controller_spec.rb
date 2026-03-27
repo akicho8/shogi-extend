@@ -230,7 +230,6 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 *詳細URL：http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401
 *ぴよ将棋：http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401/piyo_shogi
 *KENTO：http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401/kento
-*対局URL：https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
