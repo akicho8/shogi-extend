@@ -12,15 +12,17 @@ export const mod_kifu_loader = {
       const params = {
         any_source: any_source,
         to_format: "sfen",
+        __ERROR_THEN_STATUS_200__: true,
       }
       const e = await this.$axios.$post("/api/general/any_source_to.json", params)
-      this.bs_error_message_dialog(e)
+      this.bioshogi_error_modal_open(e)
       if (e.body) {
         this.kifu_loader_modal_close()
+        this.sidebar_close()               // サイドバーで何かすることはないので閉じる
         this.current_sfen_set({sfen: e.body, turn: e.turn_max})
+        this.viewpoint = "black"          // 視点を黒に戻す
         this.honpu_master_setup()           // 読み込んだ棋譜を本譜とする
         this.honpu_share()                // それを他の人に共有する
-        this.viewpoint = "black"          // 視点を黒に戻す
         this.reflector_call({message: `棋譜を読み込みました`, label: "棋譜読込"})
       }
     },

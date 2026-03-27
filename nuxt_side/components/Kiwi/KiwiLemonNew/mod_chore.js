@@ -16,7 +16,7 @@ export const mod_chore = {
           this.sfx_click()
           const params = { any_source: this.body || "平手" , to_format: "sfen" }
           this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
-            this.bs_error_message_dialog(e)
+            this.bioshogi_error_modal_open(e)
             if (e.body) {
               const params = {
                 xbody: SafeSfen.encode(e.body),

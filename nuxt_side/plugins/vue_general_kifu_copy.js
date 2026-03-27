@@ -28,10 +28,12 @@ export const vue_general_kifu_copy = {
       return this.clipboard_copy(simple_cache.read(key), options)
     },
     __general_kifu_copy_axios(options = {}) {
-      // this.clog("APIアクセス発生")
+      options = {
+        __ERROR_THEN_STATUS_200__: true,
+        ...options,
+      }
       return this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
-        // this.clog("APIアクセス結果")
-        this.bs_error_message_dialog(e)
+        this.bioshogi_error_modal_open(e)
         if (e.body) {
           return e.body
         }

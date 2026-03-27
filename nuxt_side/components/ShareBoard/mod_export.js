@@ -92,7 +92,7 @@ export const mod_export = {
       }
 
       const e = await this.$axios.$post("/api/general/any_source_to.json", params)
-      this.bs_error_message_dialog(e)
+      this.bioshogi_error_modal_open(e)
       if (e.body) {
         if (false) {
           this.$router.push({name: "adapter", query: {body: e.body, open: "print"}})

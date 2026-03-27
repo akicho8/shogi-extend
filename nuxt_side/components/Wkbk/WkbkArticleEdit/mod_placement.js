@@ -19,7 +19,7 @@ export const mod_placement = {
           "update:any_source": any_source => {
             this.sfx_click()
             this.$axios.$post("/api/general/any_source_to.json", { any_source: any_source, to_format: "sfen" }).then(e => {
-              this.bs_error_message_dialog(e)
+              this.bioshogi_error_modal_open(e)
               if (e.body) {
                 modal_instance.close()
                 if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN

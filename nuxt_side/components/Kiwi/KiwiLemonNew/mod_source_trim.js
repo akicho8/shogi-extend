@@ -10,7 +10,7 @@ export const mod_source_trim = {
         to_format: "sfen",
       }
       this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
-        this.bs_error_message_dialog(e)
+        this.bioshogi_error_modal_open(e)
         if (e.body) {
           if (this.sfen_parse(e.body).moves.length === 0 && false) {
             // moves なしなら確定

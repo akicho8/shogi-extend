@@ -43,10 +43,10 @@ module ShogiErrorRescueMethods
 
       case
       when request.format.json? && params[:__ERROR_THEN_STATUS_200__]
-        # 「なんでも棋譜変換」と「動画変換」
+        # 「なんでも棋譜変換」「動画変換」「共有将棋盤」
         render json: { bs_error: BioshogiErrorFormatter.new(error).to_h }, status: 200
       when request.format.json?
-        # 共有将棋盤など
+        # ここにはこない？
         render json: { primary_error_message: BioshogiErrorFormatter.new(error).to_s }, status: 400
       when request.format.png?
         send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422

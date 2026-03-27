@@ -307,7 +307,7 @@ export default {
     },
 
     error_show() {
-      this.bs_error_message_dialog(this)
+      this.bioshogi_error_modal_open(this)
     },
 
     app_runner() {

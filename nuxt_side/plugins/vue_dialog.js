@@ -1,5 +1,6 @@
 import { GX } from "@/components/models/gx.js"
 import { ToastInfo } from "@/components/models/toast_info.js"
+import BioshogiErrorModal from "@/components/BioshogiErrorModal.vue"
 
 export const vue_dialog = {
   methods: {
@@ -96,31 +97,25 @@ export const vue_dialog = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 未使用
     error_message_dialog(message, params = {}) {
       this.dialog_alert({
         message: message,
         title: "失敗",
         type: "is-danger",
-        canCancel: ["outside", "escape"],
+        canCancel: [],
         ...params,
       })
     },
 
-    bs_error_message_dialog(attrs) {
-      const { bs_error } = attrs
+    bioshogi_error_modal_open(attributes) {
+      const bs_error = attributes.bs_error
       if (bs_error) {
-        let message = ""
-        if (bs_error.message_prefix) {
-          message += `<div>${bs_error.message_prefix}</div>`
-        }
-        if (bs_error.message) {
-          message += `<div class="is_line_break_on">${bs_error.message}</div>`
-        }
-        if (bs_error.board) {
-          message += `<div class="mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
-        }
         this.sfx_play("x")
-        this.error_message_dialog(message)
+        this.modal_card_open({
+          props: { bs_error: bs_error },
+          component: BioshogiErrorModal,
+        })
       }
     },
 
