@@ -3,6 +3,8 @@
   .modal-card-head
     .modal-card-title
       | {{xhistory_record.modal_title_or_default}}
+    .master_turn(v-if="SB.debug_mode_p")
+      | \#{{master.turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -96,6 +98,9 @@ export default {
 @import "../sass/support.sass"
 .TimeMachineModal
   +modal_width(512px)
+
+  .modal-card-head
+    justify-content: space-between
 
   .modal-card-body
     padding: 1.25rem
