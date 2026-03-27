@@ -30,7 +30,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
 
     it "指し手がおかしいときにエラーを出す" do
       visit_to "/adapter", :body => "58金"
-      assert_text "失敗"
+      assert_text "不整合"
     end
 
     it "巨大なKIFを渡した場合にエラーを出す" do
