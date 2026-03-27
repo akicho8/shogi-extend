@@ -17,6 +17,7 @@ export class EndingRouteTestInfo extends ApplicationMemoryRecord {
       { key: "反則からの投了1", ending_route_key: "er_user_illegal_resign", win_location_key: "black", my_location_key: "black", resigned_user_name: "(w1)", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn", "illegal_pawn_drop_mate"], },
       { key: "反則1",           ending_route_key: "er_auto_illegal",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", illegal_keys: ["illegal_double_pawn"], },
       { key: "時間切れ1",       ending_route_key: "er_self_timeout",        win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
+      { key: "切断1",           ending_route_key: "er_disconnect",          win_location_key: "black", my_location_key: "black", choker_user_name: "(w2)", },
       { key: "引き分け1",       ending_route_key: "er_auto_draw",           win_location_key: null,    my_location_key: "black", },
     ]
   }
