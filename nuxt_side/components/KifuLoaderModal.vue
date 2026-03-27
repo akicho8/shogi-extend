@@ -25,7 +25,8 @@ export default {
   mounted() {
     if (this.development_p) {
       if (!this.mut_source) {
-        this.mut_source = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e"
+        // this.mut_source = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e"
+        this.mut_source = "58G"
       }
     }
     this.desktop_focus_to(this.$refs.mut_source.$refs.textarea)
