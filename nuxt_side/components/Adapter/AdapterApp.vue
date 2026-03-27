@@ -83,7 +83,7 @@ export default {
 
       // データ
       record:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
-      bs_error: null, //  エラー情報
+      bioshogi_error: null, //  エラー情報
 
       // その他
       change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
@@ -98,7 +98,7 @@ export default {
     input_text() {
       this.change_counter += 1
       this.record = null
-      this.bs_error = null
+      this.bioshogi_error = null
       this.swars_url_check()
     },
   },
@@ -255,7 +255,7 @@ export default {
 
     record_fetch(callback) {
       this.sfx_click()
-      if (this.bs_error) {
+      if (this.bioshogi_error) {
         this.error_show()
         return
       }
@@ -284,8 +284,8 @@ export default {
       this.$axios.$post("/api/adapter/record_create", params).then(e => {
         this.change_counter = 0
 
-        if (e.bs_error) {
-          this.bs_error = e.bs_error
+        if (e.bioshogi_error) {
+          this.bioshogi_error = e.bioshogi_error
           this.error_show()
         }
         if (e.record) {
@@ -296,9 +296,9 @@ export default {
           callback()
         }
       // }).catch(e => {
-      //   const bs_error = e.response.data.bs_error
-      //   if (bs_error) {
-      //     this.bs_error = bs_error
+      //   const bioshogi_error = e.response.data.bioshogi_error
+      //   if (bioshogi_error) {
+      //     this.bioshogi_error = bioshogi_error
       //     this.error_show()
       //   }
       }).finally(() => {
@@ -348,7 +348,7 @@ export default {
     disabled_p()       { return !this.record            },
 
     input_text_field_type() {
-      if (this.bs_error) {
+      if (this.bioshogi_error) {
         return "is-danger"
       }
       if (this.record) {

@@ -40,7 +40,7 @@ export const mod_form = {
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       posted_record: null, // POSTして変換待ちになっているレコード
-      bs_error:      null, // エラー情報
+      bioshogi_error:      null, // エラー情報
 
       //////////////////////////////////////////////////////////////////////////////// レイアウト
       form2_show_p: false,
@@ -70,7 +70,7 @@ export const mod_form = {
 
   watch: {
     body() {
-      this.bs_error = null
+      this.bioshogi_error = null
       this.posted_record = null
       this.done_record = null
     },
@@ -100,7 +100,7 @@ export const mod_form = {
 
       if (this.nuxt_login_required()) { return }
 
-      if (this.bs_error) {
+      if (this.bioshogi_error) {
         this.error_show()
         return
       }
@@ -120,8 +120,8 @@ export const mod_form = {
 
     success_proc(e) {
       // ../../../../app/controllers/api/kiwi/lemons_controller.rb
-      if (e.bs_error) {
-        this.bs_error = e.bs_error
+      if (e.bioshogi_error) {
+        this.bioshogi_error = e.bioshogi_error
         this.error_show()
       }
       if (e.error_message) {
@@ -340,7 +340,7 @@ export const mod_form = {
     // end_seconds() { return this.$GX.number_floor(this.page_duration * this.end_duration, 2) },
 
     body_field_type() {
-      if (this.bs_error) {
+      if (this.bioshogi_error) {
         return "is-danger"
       }
       if (this.posted_record) {

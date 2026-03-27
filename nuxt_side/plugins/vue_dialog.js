@@ -109,11 +109,11 @@ export const vue_dialog = {
     },
 
     bioshogi_error_modal_open(attributes) {
-      const bs_error = attributes.bs_error
-      if (bs_error) {
+      const bioshogi_error = attributes.bioshogi_error
+      if (bioshogi_error) {
         this.sfx_play("x")
         this.modal_card_open({
-          props: { bs_error: bs_error },
+          props: { bioshogi_error: bioshogi_error },
           component: BioshogiErrorModal,
         })
       }

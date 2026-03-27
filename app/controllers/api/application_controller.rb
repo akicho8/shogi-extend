@@ -1,6 +1,6 @@
 module Api
   class ApplicationController < ::ApplicationController
-    include ShogiErrorRescueMethods # for bs_error
+    include ShogiErrorRescueMethods # for bioshogi_error
 
     def api_login_required
       if !current_user
