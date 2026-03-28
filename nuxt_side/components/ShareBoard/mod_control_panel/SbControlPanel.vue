@@ -35,8 +35,8 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
   .box
     b-field(custom-class="is-small" label="検討")
       .button_elements
-        b-button(size="is-small" tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
-        b-button(size="is-small" tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
+        b-button.piyo_shogi_open_handle(size="is-small" tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
+        b-button.kento_open_handle(size="is-small" tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
         b-button.kifu_copy_handle_main(size="is-small" @click="SB.kifu_copy_handle('kif_utf8')") コピー
 
   .box
@@ -45,7 +45,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.current_long_url_copy_handle(size="is-small" tag="a" :href="SB.current_url" @click.prevent="SB.current_long_url_copy_handle") 通常版
         b-button.current_short_url_copy_handle(size="is-small" @click.prevent="SB.current_short_url_copy_handle") 短縮版
     p.help
-      | 棋譜を送る場合は短縮版URLがお手軽です
+      | 仲間と棋譜を共有したい場合は棋譜そのものより短縮版のURLがお手軽です
 
   .box
     b-field(custom-class="is-small" label="インポート")
