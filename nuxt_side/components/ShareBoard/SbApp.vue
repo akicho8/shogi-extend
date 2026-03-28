@@ -21,98 +21,86 @@ client-only
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-import { Location                  } from "shogi-player/components/models/location.js"
+import { Location                 } from "shogi-player/components/models/location.js"
 
-import { FormatTypeInfo            } from "@/components/models/format_type_info.js"
-import { autoexec_methods          } from "@/components/models/autoexec_methods.js"
+import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
+import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
 
-import { AppConfig                 } from "./models/mod_app_config.js"
+import { AppConfig                } from "./models/mod_app_config.js"
 
-import { support_parent            } from "./support_parent.js"
+import { support_parent           } from "./support_parent.js"
 
-import { mod_xtitle                } from "./mod_xtitle.js"
+import { mod_xtitle               } from "./mod_xtitle.js"
 
-import { mod_xhistory              } from "./mod_xhistory/mod_xhistory.js"
+import { mod_xhistory             } from "./mod_xhistory/mod_xhistory.js"
 
-import { mod_turn_notify           } from "./mod_turn_notify.js"
-import { mod_xstatus               } from "./mod_xstatus/mod_xstatus.js"
-import { mod_order_main            } from "./mod_order/mod_order_main.js"
-import { mod_migrate               } from "./mod_migrate/mod_migrate.js"
-import { mod_battle_session        } from "./mod_battle_session.js"
-import { mod_chore                 } from "./mod_chore.js"
-import { mod_avatar                } from "./mod_avatar/mod_avatar.js"
-import { mod_handle_name           } from "./mod_handle_name/mod_handle_name.js"
-import { mod_urls                  } from "./mod_urls.js"
-import { mod_share_dto             } from "./mod_share_dto.js"
-import { mod_edit_mode             } from "./mod_edit/mod_edit_mode.js"
-import { mod_kifu_loader           } from "./mod_kifu_loader/mod_kifu_loader.js"
-import { mod_shogi_player          } from "./mod_shogi_player/mod_shogi_player.js"
-import { mod_warning               } from "./mod_warning.js"
-import { mod_perpetual             } from "./mod_perpetual/mod_perpetual.js"
-import { mod_think_mark            } from "./mod_think_mark/mod_think_mark.js"
-import { mod_devise                } from "./mod_devise.js"
-import { mod_user_kick             } from "./mod_user_kick.js"
-import { mod_track_log             } from "./mod_track_log/mod_track_log.js"
-import { mod_xmatch                } from "./mod_matching/mod_xmatch.js"
-import { mod_member_bc             } from "./mod_member_bc.js"
-import { mod_image_download        } from "./mod_image_download.js"
-import { mod_app_update            } from "./mod_app_update.js"
-import { mod_sfx                   } from "./mod_sfx/mod_sfx.js"
-import { mod_general_setting       } from "./mod_general_setting/mod_general_setting.js"
-import { mod_global_var            } from "./mod_global_var.js"
-import { mod_debug                 } from "./mod_debug.js"
-import { mod_help                  } from "./mod_help/mod_help.js"
-import { mod_control_panel         } from "./mod_control_panel/mod_control_panel.js"
-import { mod_storage               } from "./mod_storage.js"
-import { mod_export                } from "./mod_export.js"
-import { mod_role            } from "./mod_role/mod_role.js"
-import { mod_color_theme           } from "./mod_color_theme.js"
-import { mod_sfen_sync             } from "./mod_sfen_sync.js"
-import { mod_resend                } from "./mod_resend/mod_resend.js"
-import { mod_look_away             } from "./mod_look_away/mod_look_away.js"
-import { mod_reflector             } from "./mod_reflector/mod_reflector.js"
-import { mod_illegal               } from "./mod_illegal/mod_illegal.js"
-import { mod_board_preset          } from "./mod_board_preset/mod_board_preset.js"
-import { mod_shortcut              } from "./mod_shortcut/mod_shortcut.js"
-import { browser_slide_lock        } from "./browser_slide_lock.js"
+import { mod_turn_notify          } from "./mod_turn_notify.js"
+import { mod_xstatus              } from "./mod_xstatus/mod_xstatus.js"
+import { mod_order_main           } from "./mod_order/mod_order_main.js"
+import { mod_migrate              } from "./mod_migrate/mod_migrate.js"
+import { mod_chore                } from "./mod_chore.js"
+import { mod_avatar               } from "./mod_avatar/mod_avatar.js"
+import { mod_handle_name          } from "./mod_handle_name/mod_handle_name.js"
+import { mod_urls                 } from "./mod_urls.js"
+import { mod_share_dto            } from "./mod_share_dto.js"
+import { mod_edit_mode            } from "./mod_edit/mod_edit_mode.js"
+import { mod_kifu_loader          } from "./mod_kifu_loader/mod_kifu_loader.js"
+import { mod_shogi_player         } from "./mod_shogi_player/mod_shogi_player.js"
+import { mod_warning              } from "./mod_warning.js"
+import { mod_perpetual            } from "./mod_perpetual/mod_perpetual.js"
+import { mod_think_mark           } from "./mod_think_mark/mod_think_mark.js"
+import { mod_devise               } from "./mod_devise.js"
+import { mod_user_kick            } from "./mod_user_kick.js"
+import { mod_track_log            } from "./mod_track_log/mod_track_log.js"
+import { mod_xmatch               } from "./mod_matching/mod_xmatch.js"
+import { mod_member_bc            } from "./mod_member_bc.js"
+import { mod_image_download       } from "./mod_image_download.js"
+import { mod_app_update           } from "./mod_app_update.js"
+import { mod_sfx                  } from "./mod_sfx/mod_sfx.js"
+import { mod_general_setting      } from "./mod_general_setting/mod_general_setting.js"
+import { mod_global_var           } from "./mod_global_var.js"
+import { mod_debug                } from "./mod_debug.js"
+import { mod_help                 } from "./mod_help/mod_help.js"
+import { mod_control_panel        } from "./mod_control_panel/mod_control_panel.js"
+import { mod_storage              } from "./mod_storage.js"
+import { mod_export               } from "./mod_export.js"
+import { mod_role                 } from "./mod_role/mod_role.js"
+import { mod_color_theme          } from "./mod_color_theme.js"
+import { mod_sfen_sync            } from "./mod_sfen_sync.js"
+import { mod_resend               } from "./mod_resend/mod_resend.js"
+import { mod_look_away            } from "./mod_look_away/mod_look_away.js"
+import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
+import { mod_illegal              } from "./mod_illegal/mod_illegal.js"
+import { mod_board_preset         } from "./mod_board_preset/mod_board_preset.js"
+import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
+import { mod_screen_flick_disable } from "./mod_screen_flick_disable.js"
 
-import { mod_room                  } from "./mod_room/mod_room.js"
+import { mod_room                 } from "./mod_room/mod_room.js"
 
-import { mod_member_list           } from "./mod_member_profile/mod_member_list.js"
-import { mod_member_info_modal     } from "./mod_member_profile/mod_member_info_modal.js"
-import { mod_ping                  } from "./mod_member_profile/mod_ping.js"
-import { mod_net_level             } from "./mod_member_profile/mod_net_level.js"
+import { mod_member_profile       } from "./mod_member_profile/mod_member_profile.js"
 
-import { mod_chat                  } from "./mod_chat/mod_chat.js"
-import { mod_chat_message_list     } from "./mod_chat/mod_chat_message_list.js"
-import { mod_chat_ai_trigger_rule  } from "./mod_chat/mod_chat_ai_trigger_rule.js"
-import { mod_chat_message_history  } from "./mod_chat/mod_chat_message_history.js"
+import { mod_chat                 } from "./mod_chat/mod_chat.js"
 
-import { mod_console               } from "./mod_console/mod_console.js"
+import { mod_console              } from "./mod_console/mod_console.js"
 
-import { mod_clock_box             } from "./mod_clock/mod_clock_box.js"
-import { mod_clock_box_timeout     } from "./mod_clock/mod_clock_box_timeout.js"
-import { mod_clock_decorator       } from "./mod_clock/mod_clock_decorator.js"
-import { mod_persistent_cc_params  } from "./mod_clock/mod_persistent_cc_params.js"
-import { mod_clock_box_modal       } from "./mod_clock/mod_clock_box_modal.js"
+import { mod_clock                } from "./mod_clock/mod_clock.js"
 
-import { mod_resign                } from "./mod_resign/mod_resign.js"
-import { mod_kifu_mailer           } from "./mod_resign/mod_kifu_mailer.js"
-import { mod_battle_archive        } from "./mod_resign/mod_battle_archive.js"
+import { mod_resign               } from "./mod_resign/mod_resign.js"
+import { mod_kifu_mailer          } from "./mod_resign/mod_kifu_mailer.js"
+import { mod_battle_archive       } from "./mod_resign/mod_battle_archive.js"
 
-import { mod_honpu                 } from "./mod_honpu/mod_honpu.js"
+import { mod_honpu                } from "./mod_honpu/mod_honpu.js"
 
-import { mod_quiz_host             } from "./mod_fes/mod_quiz_host.js"
-import { mod_quiz_client           } from "./mod_fes/mod_quiz_client.js"
+import { mod_fes                 } from "./mod_fes/mod_fes.js"
 
-import { mod_xprofile              } from "./mod_xprofile/mod_xprofile.js"
-import { mod_xprofile_console      } from "./mod_xprofile/mod_xprofile_console.js"
+import { mod_xprofile             } from "./mod_xprofile/mod_xprofile.js"
+import { mod_xprofile_console     } from "./mod_xprofile/mod_xprofile_console.js"
 
-import { mod_appearance      } from "./mod_appearance/mod_appearance.js"
+import { mod_appearance           } from "./mod_appearance/mod_appearance.js"
 
-import { mod_tweet                 } from "./mod_tweet/mod_tweet.js"
+import { mod_tweet                } from "./mod_tweet/mod_tweet.js"
 
-import { mod_dashboard             } from "./mod_dashboard/mod_dashboard.js"
+import { mod_dashboard            } from "./mod_dashboard/mod_dashboard.js"
 
 export default {
   name: "SbApp",
@@ -125,24 +113,17 @@ export default {
     mod_xhistory,
 
     mod_chat,
-    mod_chat_message_list,
-    mod_chat_ai_trigger_rule,
-    mod_chat_message_history,
 
     mod_console,
-    mod_persistent_cc_params,
     mod_turn_notify,
     mod_xstatus,
     mod_order_main,
     mod_migrate,
-    mod_member_list,
-    mod_battle_session,
     mod_chore,
     mod_kifu_mailer,
     mod_battle_archive,
     mod_avatar,
     mod_handle_name,
-    mod_member_info_modal,
     mod_urls,
     mod_share_dto,
     mod_edit_mode,
@@ -156,8 +137,6 @@ export default {
     mod_track_log,
     mod_xmatch,
     mod_member_bc,
-    mod_net_level,
-    mod_ping,
     mod_tweet,
     mod_dashboard,
     mod_image_download,
@@ -185,17 +164,10 @@ export default {
     mod_xprofile,
     mod_xprofile_console,
     mod_room,
-
-    mod_quiz_host,
-    mod_quiz_client,
-
-    browser_slide_lock,
-
-    // clock
-    mod_clock_box,
-    mod_clock_box_timeout,
-    mod_clock_decorator,
-    mod_clock_box_modal,
+    mod_member_profile,
+    mod_clock,
+    mod_fes,
+    mod_screen_flick_disable,
   ],
   props: {
     config: { type: Object, required: true },

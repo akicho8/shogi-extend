@@ -8,13 +8,8 @@ import { CcBehaviorInfo } from "./cc_behavior_info.js"
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-import { clock_box_form } from "./clock_box_form.js"
 
 export const mod_clock_box = {
-  mixins: [
-    clock_box_form,
-  ],
-
   data() {
     return {
       clock_box: null,

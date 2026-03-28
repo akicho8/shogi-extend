@@ -1,0 +1,170 @@
+// チャット発言送信
+
+import { GX } from "@/components/models/gx.js"
+import _ from "lodash"
+
+import { MessageScopeInfo     } from "./message_scope_info.js"
+import { SendTriggerInfo      } from "./send_trigger_info.js"
+import { ChatContentScaleInfo } from "./chat_content_scale_info.js"
+import { MessageRecord        } from "./message_record.js"
+
+import ChatModal from "./ChatModal.vue"
+
+export const mod_chat_base = {
+  data() {
+    return {
+      message_body: "",
+    }
+  },
+
+  beforeDestroy() {
+    this.chat_modal_close()
+  },
+
+  methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    chat_modal_shortcut_handle() {
+      if (!this.chat_modal_instance) {
+        // this.sidebar_close()
+        this.sfx_click()
+        this.chat_modal_open()
+        return true
+        // } else {
+        //   this.chat_modal_close()
+      }
+    },
+
+    chat_modal_open_handle(e = null) {
+      if (this.DeviseHelper.mouse_click_event_p(e)) {
+        this.toast_primary("ENTER キーで開こう")
+      }
+      // this.sidebar_close()
+      this.sfx_click()
+      this.chat_modal_open()
+    },
+
+    chat_modal_close_handle(e = null) {
+      if (this.DeviseHelper.mouse_click_event_p(e)) {
+        this.toast_primary("ENTER キーで閉じよう")
+      }
+      // this.sidebar_close()
+      this.sfx_click()
+      this.chat_modal_close()
+    },
+
+    chat_modal_open() {
+      // https://buefy.org/documentation/modal
+      this.chat_modal_close()
+      this.modal_card_open2("chat_modal_instance", {
+        component: ChatModal,
+        fullScreen: this.chat_content_scale_info.full_screen_p,
+        onCancel: () => {
+          this.sfx_click()
+          this.chat_modal_close()
+        },
+      })
+    },
+
+    chat_modal_close() {
+      if (this.chat_modal_instance) {
+        this.modal_card_close2("chat_modal_instance")
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 送信
+    message_share(params) {
+      if (this.console_command_run(params) === "break") {
+        return
+      }
+      params = {
+        message_scope_key: this.message_scope_info.key,
+        ...params,
+      }
+      if (!this.cable_p) {
+        this.message_share_broadcasted({
+          ...this.ac_room_perform_default_params(),
+          ...params,
+        })
+        return
+      }
+      this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
+    },
+
+    // 受信
+    message_share_broadcasted(params) {
+      const message_record = MessageRecord.create(params)
+      this.ml_push_record(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
+      if (this.ml_show_p(message_record)) {                 // 見てもいいなら
+        this.sfx_play("se_chat_message_receive")                           // 「パッ」
+
+        {
+          // https://buefy.org/documentation/toast
+          const toast_info = this.ToastInfo.fetch("is_toast_main_board_top")
+          this.$buefy.toast.open({...toast_info.default_params, ...message_record.toast_params, queue: false}) // 表示
+        }
+
+        if (message_record.content_valid_p) {               // 荒らし判定されていなければ
+          if (this.chat_talk_behavior_info.key === "is_chat_talk_behavior_on" || message_record.force_talk) {
+            this.sb_talk(message_record.content)              // しゃべる
+          }
+          this.ai_random_say(params)                         // AIに反応させる
+        }
+      }
+    },
+
+    // ログ用の追加データとして data に名前を入れておく
+    // 直接 talk を使うべからず
+    sb_talk(content, options = {}) {
+      return this.talk(content, {data: this.user_name, ...options})
+    },
+
+    send_trigger_p(e) {
+      if (this.send_trigger_info.key === "send_trigger_enter") {
+        return this.KeyboardHelper.pure_enter_p(e)
+      }
+      if (this.send_trigger_info.key === "send_trigger_meta_enter") {
+        return this.KeyboardHelper.pure_enter_p(e) && this.KeyboardHelper.modifier_p(e)
+      }
+    },
+
+    // 対局設定OFFになっていたら自動的にチャットの送信先スコープを「全体宛」に戻す
+    order_off_then_message_scope_key_set_public() {
+      if (!this.order_enable_p) {
+        this.message_scope_key = "ms_public"
+      }
+    },
+  },
+
+  computed: {
+    MessageScopeInfo()   { return MessageScopeInfo                                    },
+    message_scope_info() { return this.MessageScopeInfo.fetch(this.message_scope_key) },
+
+    SendTriggerInfo()   { return SendTriggerInfo                                    },
+    send_trigger_info() { return this.SendTriggerInfo.fetch(this.send_trigger_key) },
+
+    ChatContentScaleInfo()   { return ChatContentScaleInfo                                    },
+    chat_content_scale_info() { return this.ChatContentScaleInfo.fetch(this.chat_content_scale_key) },
+
+    // 観戦者宛送信ボタンを表示する？
+    message_scope_dropdown_show_p() {
+      // 常に表示するなら
+      if (false) {
+        return true
+      }
+
+      // 観戦者が1人以上いるなら
+      // しかし、これだと利用者はボタンが出る条件が予想つかないかもしれない
+      if (false) {
+        return this.watching_member_count >= 1
+      }
+
+      // 単に対局設定しているなら
+      if (true) {
+        return this.order_enable_p
+      }
+    },
+  },
+}
