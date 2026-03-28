@@ -73,7 +73,6 @@ import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal              } from "./mod_illegal/mod_illegal.js"
 import { mod_board_preset         } from "./mod_board_preset/mod_board_preset.js"
 import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
-import { mod_screen_flick_disable } from "./mod_screen_flick_disable.js"
 
 import { mod_room                 } from "./mod_room/mod_room.js"
 
@@ -167,7 +166,6 @@ export default {
     mod_member_profile,
     mod_clock,
     mod_fes,
-    mod_screen_flick_disable,
   ],
   props: {
     config: { type: Object, required: true },
