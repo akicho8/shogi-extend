@@ -35,9 +35,9 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
   .box
     b-field(custom-class="is-small" label="検討")
       .button_elements
-        PiyoShogiButton(size="is-small" tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
-        KentoButton(size="is-small" tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
-        KifCopyButton.kifu_copy_handle_main(size="is-small" @click="SB.kifu_copy_handle('kif_utf8')") コピー
+        b-button(size="is-small" tag="a" :href="SB.current_kifu_vo.piyo_url"  :target="target_default" @click="SB.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || SB.debug_mode_p") ぴよ将棋
+        b-button(size="is-small" tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
+        b-button.kifu_copy_handle_main(size="is-small" @click="SB.kifu_copy_handle('kif_utf8')") コピー
 
   .box
     b-field(custom-class="is-small" label="棋譜再生用URLのコピー")
