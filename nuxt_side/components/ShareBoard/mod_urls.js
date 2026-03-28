@@ -15,7 +15,7 @@ export const mod_urls = {
     // 「棋譜コピー (リンク)」
     current_long_url_copy_handle() {
       this.sfx_click()
-      this.clipboard_copy(this.current_url, {success_message: "棋譜再生用の通常URLをコピーしました"})
+      this.clipboard_copy(this.current_url, {success_message: "通常版の棋譜URLをコピーしました"})
     },
 
     // 「短縮URLのコピー」
@@ -26,7 +26,7 @@ export const mod_urls = {
     //    if (false) {
     //      this.sfx_click()
     //      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
-    //      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+    //      if (this.clipboard_copy(url, {success_message: "短縮版の棋譜URLをコピーしました"})) {
     //        // 成功した場合
     //      }
     //    }
@@ -43,7 +43,7 @@ export const mod_urls = {
       }
 
       // 1, 2回目
-      const success = await this.clipboard_copy(simple_cache.read(key), {success_message: "棋譜再生用の短縮URLをコピーしました"})
+      const success = await this.clipboard_copy(simple_cache.read(key), {success_message: "短縮版の棋譜URLをコピーしました"})
       if (success) {
         // 成功した場合
       }

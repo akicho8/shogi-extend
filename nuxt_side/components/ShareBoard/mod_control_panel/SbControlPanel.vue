@@ -40,12 +40,12 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.kifu_copy_handle_main(size="is-small" @click="SB.kifu_copy_handle('kif_utf8')") コピー
 
   .box
-    b-field(custom-class="is-small" label="棋譜再生用URLのコピー")
+    b-field(custom-class="is-small" label="棋譜URLのコピー")
       .button_elements
         b-button.current_long_url_copy_handle(size="is-small" tag="a" :href="SB.current_url" @click.prevent="SB.current_long_url_copy_handle") 通常版
         b-button.current_short_url_copy_handle(size="is-small" @click.prevent="SB.current_short_url_copy_handle") 短縮版
     p.help
-      | 仲間と棋譜を共有したい場合は棋譜そのものより短縮版のURLがお手軽です
+      | 仲間に棋譜を送りたい場合は棋譜そのものより短縮版のURLがお手軽です
 
   .box
     b-field(custom-class="is-small" label="インポート")

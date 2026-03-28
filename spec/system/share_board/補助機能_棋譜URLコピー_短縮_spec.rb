@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     sidebar_open
     Clipboard.write("")
     find(".current_short_url_copy_handle").click
-    assert_text("棋譜再生用の短縮URLをコピーしました")
+    assert_text("短縮版の棋譜URLをコピーしました")
     assert_clipboard("http://localhost:3000/u/")
   end
 end
