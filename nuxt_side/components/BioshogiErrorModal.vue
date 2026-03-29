@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{bioshogi_error.modal_subject}}
+      | {{bioshogi_error.modal_title}}
   .modal-card-body
     template(v-if="bioshogi_error.message_prefix")
       p {{bioshogi_error.message_prefix}}

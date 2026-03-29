@@ -11,14 +11,14 @@ class BioshogiErrorFormatter
     av << "「動画作成」のところなら「トリム」で0から最終手までを選択すればただのSFEN変換になります。"
     av << @error.message
     {
-      :modal_subject => "失敗",
+      :modal_title => "失敗",
       :message => av.join,
     }
   end
 
   def to_h
     {
-      :modal_subject  => "不整合",
+      :modal_title  => "不整合",
       :message_prefix => message_prefix_build,
       :message        => @error.message.lines.first.strip,
       :board          => @error.message.lines.drop(1).join,

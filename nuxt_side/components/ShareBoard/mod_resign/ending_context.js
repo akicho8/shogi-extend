@@ -37,7 +37,7 @@ export class EndingContext {
 
   get toast_content() { return this.ending_route_info.toast_content?.(this) }
   get talk_content()  { return this.ending_route_info.talk_content?.(this)  }
-  get modal_subject() { return this.ending_route_info.modal_subject?.(this) }
+  get modal_title() { return this.ending_route_info.modal_title?.(this) }
   get modal_body()    { return this.ending_route_info.modal_body?.(this)    }
 
   //////////////////////////////////////////////////////////////////////////////// 反則
@@ -73,7 +73,7 @@ export class EndingContext {
     }
   }
 
-  get subject_default() {
+  get default_title() {
     // 当事者
     if (this.i_am_win_p) {
       return `勝ち`

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{SB.ending_context.modal_subject}}
+      | {{SB.ending_context.modal_title}}
   .modal-card-body
     .content.is_line_break_on
       | {{SB.ending_context.modal_body}}
