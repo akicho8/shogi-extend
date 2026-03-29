@@ -6,7 +6,6 @@
 
   .modal-card-body
     CustomShogiPlayer.ModalInsideCustomShogiPlayer(
-      v-if="SB.debug_mode_p"
       sp_mode="view"
       :sp_body="SB.illegal_params.sfen"
       :sp_turn="SB.illegal_params.turn"
