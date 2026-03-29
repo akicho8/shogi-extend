@@ -29,6 +29,7 @@ export const mod_time_machine = {
       this.time_machine_modal_open_handle({
         xhistory_record,
         timeline_resolver_params,
+        sp_operation: false,
       })
     },
 
