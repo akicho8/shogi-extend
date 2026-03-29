@@ -76,7 +76,7 @@ import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
 
 import { mod_room                 } from "./mod_room/mod_room.js"
 
-import { mod_member_profile       } from "./mod_member_profile/mod_member_profile.js"
+import { mod_member       } from "./mod_member/mod_member.js"
 
 import { mod_chat                 } from "./mod_chat/mod_chat.js"
 
@@ -163,7 +163,7 @@ export default {
     mod_xprofile,
     mod_xprofile_console,
     mod_room,
-    mod_member_profile,
+    mod_member,
     mod_clock,
     mod_fes,
   ],
