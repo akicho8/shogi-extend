@@ -62,6 +62,12 @@ export const mod_time_machine = {
     },
 
     time_machine_modal_apply_handle(params) {
+      if (this.cc_play_p) {
+        this.sfx_click()
+        this.toast_warn("対局中は反映できません")
+        return
+      }
+
       this.time_machine_modal_close()
       this.time_machine_restore(params)
     },
