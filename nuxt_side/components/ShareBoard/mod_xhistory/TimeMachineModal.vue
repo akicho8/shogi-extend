@@ -14,7 +14,7 @@
         :sp_slider="sp_operation"
         :sp_controller="sp_operation"
         :sp_view_mode_piece_movable="false"
-        :sp_viewpoint.sync="mut_viewpoint"
+        :sp_viewpoint="xhistory_record.viewpoint"
         :sp_turn="xhistory_record.turn"
         :sp_body="timeline_resolver.to_sfen_and_turn.sfen"
         @ev_turn_offset_change="v => mut_turn = v"
@@ -44,11 +44,9 @@ export default {
   data() {
     return {
       mut_turn: this.xhistory_record.turn,
-      mut_viewpoint: this.xhistory_record.viewpoint,
     }
   },
   mounted() {
-    GX.assert(this.mut_viewpoint === "white" || this.mut_viewpoint === "black")
     GX.assert('sfen' in this.xhistory_record, "'sfen' in this.xhistory_record")
     GX.assert('turn' in this.xhistory_record, "'turn' in this.xhistory_record")
   },
