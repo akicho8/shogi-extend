@@ -1,12 +1,14 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
     visit_app
     piece_move_o("77", "76", "☗7六歩")
     piece_move_o("33", "34", "☖3四歩")
-    assert_turn(2)                                    # 現在2手目
-    history_items_at(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
+    assert_turn(2)
+    Capybara.current_session.active_element.send_keys("!")
+    assert_honpu_open_on
+    find(".honpu_modal_open_handle").click         # 「本譜」ボタンを押す
     Capybara.within(".TimeMachineModal") do
       assert_selector(".master_turn", text: "#2", exact_text: true) # 当然2手目になっている
       find(".button.previous").click                  # 「<」で1手目に進めると
