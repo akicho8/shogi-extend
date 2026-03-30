@@ -1,4 +1,4 @@
-require "#{__dir__}/shared_methods"
+require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
   it "works" do
@@ -14,7 +14,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     find(".SbColorThemeDropdown").click                            # 配色変更ドロップダウンを開く
     find(".is_color_theme_real").click                             # 配色確定
 
-    find(".download_handle").click                                 # ダウンロード実行
+    find(".download_handle", wait: 5).click                        # ダウンロード実行 (waitは遅いPCのフレーキー対策)
     find(".ImageDownloadModal").assert_text("画像ダウンロード(1)") # 正常にダウンロードが完了したことを確認する
 
     find(".close_handle").click                                    # 閉じる
