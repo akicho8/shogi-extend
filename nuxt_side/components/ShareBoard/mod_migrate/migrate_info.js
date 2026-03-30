@@ -12,6 +12,12 @@ export class MigrateInfo extends ApplicationMemoryRecord {
           context.volume_piece_user_scale = 10
         },
       },
+      {
+        version: 20260330185837,
+        up: context => {
+          context.image_size_key = "is_image_size_1600x1200"
+        },
+      },
     ]
   }
 }

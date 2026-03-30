@@ -142,8 +142,12 @@ class MediaBuilder
 
       ImageSizeInfo.each do |e|
         if v = opts[e.key].presence || e.default
-          opts[e.key] = v.to_i.clamp(-e.max, e.max)
+          opts[e.key] = v.to_i.clamp(0..e.max)
         end
+      end
+
+      if v = opts[:master_scale].presence
+        opts[:master_scale] = v.to_f.clamp(0..1.0)
       end
 
       [
