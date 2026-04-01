@@ -54,7 +54,6 @@ import { mod_user_kick            } from "./mod_user_kick.js"
 import { mod_track_log            } from "./mod_track_log/mod_track_log.js"
 import { mod_xmatch               } from "./mod_matching/mod_xmatch.js"
 import { mod_member_bc            } from "./mod_member_bc.js"
-import { mod_image_download       } from "./mod_image_download.js"
 import { mod_app_update           } from "./mod_app_update.js"
 import { mod_sfx                  } from "./mod_sfx/mod_sfx.js"
 import { mod_general_setting      } from "./mod_general_setting/mod_general_setting.js"
@@ -65,12 +64,12 @@ import { mod_control_panel        } from "./mod_control_panel/mod_control_panel.
 import { mod_storage              } from "./mod_storage.js"
 import { mod_export               } from "./mod_export.js"
 import { mod_role                 } from "./mod_role/mod_role.js"
-import { mod_color_theme          } from "./mod_color_theme.js"
 import { mod_sfen_sync            } from "./mod_sfen_sync.js"
 import { mod_resend               } from "./mod_resend/mod_resend.js"
 import { mod_look_away            } from "./mod_look_away/mod_look_away.js"
 import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal              } from "./mod_illegal/mod_illegal.js"
+import { mod_image_download       } from "./mod_image_download/mod_image_download.js"
 import { mod_board_preset         } from "./mod_board_preset/mod_board_preset.js"
 import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
 
@@ -149,7 +148,6 @@ export default {
     mod_storage,
     mod_export,
     mod_role,
-    mod_color_theme,
     mod_appearance,
     mod_sfen_sync,
     mod_resend,

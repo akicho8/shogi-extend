@@ -1,4 +1,4 @@
-import { ColorThemeInfo } from "../models/color_theme_info.js"
+import { ColorThemeInfo } from "@/components/models/color_theme_info.js"
 
 export const mod_color_theme = {
   data() {

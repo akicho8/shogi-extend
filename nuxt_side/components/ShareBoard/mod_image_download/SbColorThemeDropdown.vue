@@ -16,7 +16,7 @@ b-dropdown.SbColorThemeDropdown(v-model="SB.color_theme_key" @active-change="e =
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import { ScreenSizeDetector } from "@/components/models/screen_size_detector.js"
 
 export default {

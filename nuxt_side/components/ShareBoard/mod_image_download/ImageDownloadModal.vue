@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "ImageDownloadModal",
@@ -43,7 +43,7 @@ export default {
     },
     download_handle() {
       this.sfx_click()
-      this.SB.image_download_run()
+      this.SB.image_download_call()
     },
   },
   computed: {

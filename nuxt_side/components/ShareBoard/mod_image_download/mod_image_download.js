@@ -1,7 +1,11 @@
 import ImageDownloadModal from "./ImageDownloadModal.vue"
-import { ImageSizeInfo } from "./models/image_size_info.js"
+import { ImageSizeInfo } from "../models/image_size_info.js"
+import { mod_color_theme } from "./mod_color_theme.js"
 
 export const mod_image_download = {
+  mixins: [
+    mod_color_theme,
+  ],
   data() {
     return {
       image_download_success_count: 0,        // 正常にダウンロードができた場合にインクリメントしていく
@@ -9,7 +13,6 @@ export const mod_image_download = {
   },
   methods: {
     image_download_modal_handle() {
-      // this.sidebar_close()
       this.sfx_click()
       this.modal_card_open({
         component: ImageDownloadModal,
@@ -22,6 +25,9 @@ export const mod_image_download = {
     },
 
     image_size_item_click_handle(e) {
+      if (this.debug_mode_p) {
+        this.toast_primary(e.name)
+      }
     },
 
     image_download_preview_url(options = {}) {
@@ -34,10 +40,11 @@ export const mod_image_download = {
       })
     },
 
-    image_download_run() {
+    image_download_call() {
       window.location.href = this.image_download_preview_url({disposition: "attachment"})
       this.xhistory_puts("画像ダウンロード")
       this.image_download_success_count += 1
+      this.toast_primary("画像をダウンロードしました")
     },
   },
 
