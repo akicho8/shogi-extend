@@ -6,13 +6,10 @@ MainNavbar.SbTopNav(v-bind="component_attrs")
         b-icon(icon="home")
 
       b-navbar-item.has-text-weight-bold.title_navbar_item.is_truncate.is-hidden-mobile(@click="SB.title_edit_handle")
-        template(v-if="SB.edit_mode_p")
-          span 編集モード
         template(v-if="SB.play_mode_p")
-          span
-            | {{SB.current_title}}
-          span.mx-1
-            | \#{{SB.current_turn}}
+          | {{SB.current_title}}
+        template(v-if="SB.edit_mode_p")
+          | 編集モード
 
     template(v-if="SB.resign_can_p")
       b-navbar-item.has-text-weight-bold(tag="div")
