@@ -167,7 +167,7 @@ class AppEntryInfo
     },
 
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/encyclopedia" },
       title: "戦法ミニ事典",
@@ -183,7 +183,7 @@ class AppEntryInfo
     ################################################################################
 
     {
-      display_p: true,
+      display_p: false,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/pre-professional-league" },
       title: "奨励会三段リーグDB",
