@@ -21,7 +21,7 @@ export const mod_image_download = {
 
     image_size_key_change_handle() {
       this.sfx_click()
-      this.color_theme_loading_start()
+      this.preview_image_loading_open()
     },
 
     image_size_item_click_handle(e) {
