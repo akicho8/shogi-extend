@@ -13,7 +13,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.chat_modal_shortcut_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Escape"),
+        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Backspace"),
         call: c => c.think_mark_group_reject_action(),
       },
       {

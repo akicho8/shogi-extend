@@ -100,7 +100,7 @@
           .sc_item
             .sc_label 一括消去
             .sc_buttons
-              b-tag(type="is-primary") Escape
+              b-tag(type="is-primary") Backspace
       .column.is-half-desktop.is-half-tablet
         .sc_title その他
         .sc_table
