@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_turn(2)
       history_items_at(1).click                        # 上から2番目、つまり1手目の履歴を選択する
       find(".time_machine_modal_apply_handle").click   # 「X手目まで戻る」を押す
-      assert_text "対局中は反映できません"             # しかし、戻れない
+      assert_text "安全のため対局中の実行を制限しています"             # しかし、戻れない
       assert_turn(2)                                   # 2手目のまま
     end
   end

@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { assert_selector(".place_5_5 .ThinkMark .think_mark_user_name", text: "a", exact_text: true) }
 
     # a は escape を押して自分だけを消す
-    window_a { Capybara.current_session.active_element.send_keys(:escape) }
+    window_a { Capybara.current_session.active_element.send_keys(:backspace) }
     window_a { assert_no_selector(".place_5_5 .ThinkMark .think_mark_user_name", text: "a", exact_text: true) }
     window_b { assert_no_selector(".place_5_5 .ThinkMark .think_mark_user_name", text: "a", exact_text: true) }
   end
