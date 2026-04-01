@@ -46,6 +46,7 @@ export const mod_board_preset = {
 
     board_preset_modal_open_handle() {
       if (!this.board_preset_modal_instance) {
+        if (this.cc_play_then_warning()) { return }
         this.sfx_click()
         this.board_preset_modal_open()
       }

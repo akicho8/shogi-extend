@@ -22,8 +22,6 @@ export const mod_control_panel = {
     step3_todo_p() { return this.step2_done_p && !this.cc_play_p                                    },
     step3_done_p() { return this.step2_done_p && this.cc_play_p                                     },
 
-    start_steps() {
-      return StartStepInfo.values
-    }
+    start_steps() { return StartStepInfo.values },
   },
 }

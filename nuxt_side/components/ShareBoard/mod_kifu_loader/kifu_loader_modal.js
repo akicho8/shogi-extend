@@ -27,11 +27,8 @@ export const kifu_loader_modal = {
     // 棋譜の読み込みタップ時の処理
     kifu_loader_modal_open_handle(source = "") {
       if (!this.kifu_loader_modal_instance) {
+        if (this.cc_play_then_warning()) { return }
         this.sfx_click()
-        if (this.cc_play_p) {
-          this.toast_primary("対局中は読み込めません")
-          return
-        }
         this.kifu_loader_modal_open(source)
       }
     },

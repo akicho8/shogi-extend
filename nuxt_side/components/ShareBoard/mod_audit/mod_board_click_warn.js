@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 
-export const mod_warning = {
+export const mod_board_click_warn = {
   methods: {
     // 手番が違うのに操作しようとした
     // order_clock_both_ok でないときは sp_human_side に none を設定するため、その状態のとき盤駒を触られるとこれが呼ばれる

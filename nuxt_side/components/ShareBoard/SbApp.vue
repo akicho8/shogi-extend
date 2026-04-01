@@ -46,7 +46,6 @@ import { mod_share_dto            } from "./mod_share_dto.js"
 import { mod_edit_mode            } from "./mod_edit/mod_edit_mode.js"
 import { mod_kifu_loader          } from "./mod_kifu_loader/mod_kifu_loader.js"
 import { mod_shogi_player         } from "./mod_shogi_player/mod_shogi_player.js"
-import { mod_warning              } from "./mod_warning.js"
 import { mod_perpetual            } from "./mod_perpetual/mod_perpetual.js"
 import { mod_think_mark           } from "./mod_think_mark/mod_think_mark.js"
 import { mod_devise               } from "./mod_devise.js"
@@ -69,6 +68,7 @@ import { mod_resend               } from "./mod_resend/mod_resend.js"
 import { mod_look_away            } from "./mod_look_away/mod_look_away.js"
 import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
 import { mod_illegal              } from "./mod_illegal/mod_illegal.js"
+import { mod_audit                } from "./mod_audit/mod_audit.js"
 import { mod_image_download       } from "./mod_image_download/mod_image_download.js"
 import { mod_board_preset         } from "./mod_board_preset/mod_board_preset.js"
 import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
@@ -127,7 +127,7 @@ export default {
     mod_edit_mode,
     mod_kifu_loader,
     mod_shogi_player,
-    mod_warning,
+    mod_audit,
     mod_perpetual,
     mod_think_mark,
     mod_devise,

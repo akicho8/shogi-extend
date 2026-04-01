@@ -38,9 +38,7 @@ export const mod_reflector = {
     // },
 
     reflector_turn_change(params = {}) {
-      // if (params.sfx) {
-      //   this.sfx_click()
-      // }
+      if (this.cc_play_then_warning()) { return }
       const timeline_resolver = this.timeline_resolver_create(params)
       this.reflector_call({turn: timeline_resolver.new_turn, think_mark_clear_all: true})
     },

@@ -47,11 +47,8 @@ export const mod_edit_mode = {
       if (this.edit_warn_modal_instance) {
         return
       }
+      if (this.cc_play_then_warning()) { return }
       this.sfx_click()
-      if (this.cc_play_p) {
-        this.toast_primary("対局中は編集できません")
-        return
-      }
       if (this.cable_p) {
         this.edit_warn_modal_open()
         return
