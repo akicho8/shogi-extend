@@ -11,5 +11,6 @@
     margin: 0
 
 // 全体で overscroll-behavior: none すると Mac PC では左フリックが効かなくなるため共有将棋盤内でのみ左右も禁止する
-html:has(.SbApp), body:has(.SbApp)
+:root:has(.SbApp)
   overscroll-behavior: none
+
