@@ -79,19 +79,14 @@ export const honpu_core = {
     // 本譜ボタンの表示条件
     honpu_open_button_show_p() {
       if (this.honpu_button_show_share_condition) {
-        // 本譜は常に表示する場合
-        // スマホだとヘッダ内の表示が多すぎてずれる場合がある
-        return this.honpu_master
-
-        // 本譜に戻るがある場合は本譜は表示しない場合
-        // return this.honpu_master && this.honpu_branch == null
+        return this.honpu_stage_info.honpu_hyouji
       }
     },
 
     // 本譜に戻るボタンの表示条件
     honpu_return_button_active_p() {
       if (this.honpu_button_show_share_condition) {
-        return this.honpu_master && this.honpu_branch
+        return this.honpu_stage_info.honpuni_modoreru
       }
     },
 
