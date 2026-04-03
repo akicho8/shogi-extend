@@ -23,7 +23,7 @@ export const mod_room_members = {
       // const performed_at = this.$time.current_ms()
       names.forEach((name, index) => {
         const params = {
-          // ...this.ac_room_perform_default_params(),
+          ...this.ac_room_perform_default_params(), // これで ac_events_hash が入る
           client_token:    index,        //
           from_session_counter: 0,          //
           from_connection_id: index,        // 送信者識別子
