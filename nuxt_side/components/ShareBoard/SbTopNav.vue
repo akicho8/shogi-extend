@@ -23,7 +23,7 @@
   .navbar_item_list.right
     a.navbar_item.navbar_item_wide.honpu_button.honpu_modal_open_handle(v-if="SB.honpu_open_button_show_p" @click="SB.honpu_modal_open_handle")
       | 本譜
-    a.navbar_item.navbar_item_wide.honpu_button.honpu_return_button_active_p(v-if="SB.honpu_return_button_active_p" @click="SB.honpu_direct_return_handle")
+    a.navbar_item.navbar_item_wide.honpu_button.honpu_direct_return_handle(v-if="SB.honpu_return_button_active_p" @click="SB.honpu_direct_return_handle")
       .mdi.mdi-undo.is-size-3
 
     SbThinkMarkToggleButton

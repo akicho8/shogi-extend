@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     sidebar_open
     find(".edit_mode_set_handle").click
     piece_move("77", "76")
-    find(".button", text: "編集完了", exact_text: true)
+    find(".play_mode_set_handle").click
   end
 
   it "部屋を立てている場合は「理解した上で編集する」の警告ダイアログが出る" do
@@ -17,7 +17,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       find(".edit_mode_set_handle").click
       find(:button, "理解した上で編集する").click
       piece_move("77", "76")
-      find(".button", text: "編集完了", exact_text: true).click
+      find(".play_mode_set_handle").click
     end
   end
 end
