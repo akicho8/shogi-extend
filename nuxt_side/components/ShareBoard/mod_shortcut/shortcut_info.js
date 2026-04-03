@@ -9,7 +9,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.shortcut_modal_toggle_handle(),
       },
       {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Enter"),
+        _if: (c, e) => c.KeyboardHelper.pure_code_p(e, "Enter"),
         call: c => c.chat_modal_shortcut_handle(),
       },
       {
