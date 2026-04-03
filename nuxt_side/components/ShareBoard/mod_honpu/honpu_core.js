@@ -54,7 +54,6 @@ export const honpu_core = {
     },
 
     honpu_modal_open_handle() {
-      this.tl_add("HONPU", "本譜をクリックしたらダイアログを出す")
       if (this.honpu_master) {
         this.time_machine_modal_open_handle_for_honpu(this.honpu_master)
       }

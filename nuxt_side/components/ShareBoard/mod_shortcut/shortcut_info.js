@@ -45,6 +45,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.think_mark_toggle_shortcut_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "h"),
+        call: c => c.honpu_modal_open_handle(),
+      },
+      {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "z"),
         call: c => c.honpu_direct_return_handle(),
       },

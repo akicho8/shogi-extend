@@ -74,6 +74,10 @@
             .sc_buttons
               b-tag(type="is-primary") Enter
           .sc_item
+            .sc_label 本譜を開く
+            .sc_buttons
+              b-tag(type="is-primary") h
+          .sc_item
             .sc_label 本譜に戻る
             .sc_buttons
               b-tag(type="is-primary") z

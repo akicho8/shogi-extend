@@ -33,26 +33,35 @@ export const mod_time_machine = {
       })
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     time_machine_modal_open_handle(params) {
-      this.sfx_click()
-      this.time_machine_modal_open(params)
+      if (!this.time_machine_modal_instance) {
+        this.sfx_click()
+        this.time_machine_modal_open(params)
+      }
     },
 
     time_machine_modal_close_handle() {
-      this.sfx_click()
-      this.time_machine_modal_close()
+      if (this.time_machine_modal_instance) {
+        this.sfx_click()
+        this.time_machine_modal_close()
+      }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
     time_machine_modal_open(params) {
-      this.time_machine_modal_close()
-      this.modal_card_open2("time_machine_modal_instance", {
-        component: TimeMachineModal,
-        props: params,
-        onCancel: () => {
-          this.sfx_click()
-          this.time_machine_modal_close()
-        },
-      })
+      if (!this.time_machine_modal_instance) {
+        this.modal_card_open2("time_machine_modal_instance", {
+          component: TimeMachineModal,
+          props: params,
+          onCancel: () => {
+            this.sfx_click()
+            this.time_machine_modal_close()
+          },
+        })
+      }
     },
 
     time_machine_modal_close() {
