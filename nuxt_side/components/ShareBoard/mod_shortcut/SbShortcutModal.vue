@@ -107,7 +107,7 @@
           .sc_item
             .sc_label サイドバーのトグル
             .sc_buttons
-              b-tag(type="is-primary") /
+              b-tag(type="is-primary") Space
           .sc_item
             .sc_label 設定
             .sc_buttons
