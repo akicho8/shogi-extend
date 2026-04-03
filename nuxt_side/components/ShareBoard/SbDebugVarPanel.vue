@@ -8,6 +8,7 @@ DebugBox.SbDebugVarPanel.is-hidden-mobile(v-if="SB.debug_mode_p")
   p モーダル: {{SB.g_modal_instance_count}}
   p 終了文脈: {{!!SB.ending_context}}
   p 画像DL数: {{SB.image_download_success_count}}
+  p 千日手数: {{SB.perpetual_cop.count}}
 </template>
 
 <script>
