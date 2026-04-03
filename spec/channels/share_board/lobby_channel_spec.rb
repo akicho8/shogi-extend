@@ -25,11 +25,11 @@ RSpec.describe ShareBoard::LobbyChannel, type: :channel do
   # nuxt_side/components/ShareBoard/auto_matching/app_xmatch.js と合わせる
   def data_factory(params = {})
     {
-      "from_connection_id" => SecureRandom.hex,
-      "from_user_name"     => "alice",
-      "performed_at"       => (Time.current.to_f * 1000).to_i,
-      "xmatch_redis_ttl"   => 60 * 3,
-      "SERVER_SIDE_API_VERSION"        => AppConfig[:share_board_api_version], # サーバー側で生める
+      "from_connection_id"      => SecureRandom.hex,
+      "from_user_name"          => "alice",
+      "performed_at"            => (Time.current.to_f * 1000).to_i,
+      "xmatch_redis_ttl"        => 60 * 3,
+      "SERVER_SIDE_API_VERSION" => AppConfig[:share_board_api_version], # サーバー側で生める
     }.merge(params)
   end
 
