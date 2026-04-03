@@ -121,14 +121,14 @@ export const mod_room_channel = {
           }
           this.xprofile_load()
           this.ua_notify_once()                       // USER_AGENT を記録
-          this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
+          this.active_level_increment_timer_restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
           this.member_bc_restart()
         },
         disconnected: e => {
           this.ac_events_hash_inc("disconnected")
           this.tl_add("HOOK", "disconnected", e)
-          this.active_level_increment_timer.stop() // 切断後にアクティブレベルを上げないようにする
+          this.active_level_increment_timer_stop() // 切断後にアクティブレベルを上げないようにする
         },
         rejected: e => {
           this.ac_events_hash_inc("rejected")
@@ -167,7 +167,7 @@ export const mod_room_channel = {
         this.perpetual_cop.reset$()
         this.member_infos_leave()
         this.active_level_init()
-        this.active_level_increment_timer.stop()
+        this.active_level_increment_timer_stop()
         this.xprofile_leave()
         this.order_leave()
         this.cc_destroy()
