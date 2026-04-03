@@ -1,33 +1,26 @@
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
 export const general_setting_modal = {
-  data() {
-    return {
-    }
-  },
-
   beforeDestroy() {
     this.general_setting_modal_close()
   },
 
   methods: {
     general_setting_modal_shortcut_handle() {
-      if (!this.general_setting_modal_instance) {
-        this.general_setting_modal_open_handle()
-      } else {
+      if (this.general_setting_modal_instance) {
         this.general_setting_modal_close_handle()
+      } else {
+        this.general_setting_modal_open_handle()
       }
       return true
     },
 
     general_setting_modal_open_handle() {
-      // this.sidebar_close()
       this.sfx_click()
       this.general_setting_modal_open()
     },
 
     general_setting_modal_close_handle() {
-      // this.sidebar_close()
       this.sfx_click()
       this.general_setting_modal_close()
     },
