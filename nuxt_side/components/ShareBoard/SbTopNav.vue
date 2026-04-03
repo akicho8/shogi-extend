@@ -56,7 +56,7 @@ export default {
 .SbTopNav
   display: flex
   justify-content: space-between // 2つの navbar_item_list を左右に振る
-  height: 4rem
+  height: 3.25rem
 
   .navbar_item_list
     display: flex
