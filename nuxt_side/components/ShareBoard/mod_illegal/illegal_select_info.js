@@ -17,8 +17,8 @@ export class IllegalSelectInfo extends ApplicationMemoryRecord {
             context.resign_action({
               ending_route_key: "er_user_illegal_resign",
               choker_user_name: context.illegal_params.from_user_name, // 戦犯者
-              resigned_user_name: context.user_name, // 投了者
-              illegal_hv_list: params.illegal_hv_list,
+              resigned_user_name: context.user_name,                   // 投了者
+              illegal_hv_list: context.illegal_params.illegal_hv_list, // 反則
             })
           }
         },

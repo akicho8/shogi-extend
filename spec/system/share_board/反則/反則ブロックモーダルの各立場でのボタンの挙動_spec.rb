@@ -59,6 +59,21 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         window_a { assert_resign_success }
         window_b { assert_resign_success }
         window_c { assert_resign_success }
+
+        window_a do
+          assert_selector(".EndingModal .modal-card-head", text: "負け", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのaさんの投了でbさんの勝ちです", exact_text: true)
+        end
+
+        window_b do
+          assert_selector(".EndingModal .modal-card-head", text: "勝ち", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのaさんの投了でbさんの勝ちです", exact_text: true)
+        end
+
+        window_c do
+          assert_selector(".EndingModal .modal-card-head", text: "負け", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのaさんの投了でbさんの勝ちです", exact_text: true)
+        end
       end
     end
 
@@ -104,6 +119,21 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         window_a { assert_resign_success }
         window_b { assert_resign_success }
         window_c { assert_resign_success }
+
+        window_a do
+          assert_selector(".EndingModal .modal-card-head", text: "負け", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのcさんの投了でbさんの勝ちです", exact_text: true)
+        end
+
+        window_b do
+          assert_selector(".EndingModal .modal-card-head", text: "勝ち", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのcさんの投了でbさんの勝ちです", exact_text: true)
+        end
+
+        window_c do
+          assert_selector(".EndingModal .modal-card-head", text: "負け", exact_text: true)
+          assert_selector(".EndingModal .modal-card-body", text: "aさんの二歩からのcさんの投了でbさんの勝ちです", exact_text: true)
+        end
       end
     end
   end
