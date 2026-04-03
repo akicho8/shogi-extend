@@ -15,12 +15,13 @@ module SharedMethods
       :room_restore_feature_p            => false,                        # 盤面を復元しない
       :room_create_delay                 => room_create_delay,            # 部屋作成直前の待ち秒数 (assert_room_created の wait より小さくする)
       :ng_word_check_p                   => false,                        # ハンドルネームのチェックをしない
-      :room_url_copy_modal_feature_p             => false,                        # 部屋のリンクのコピーモーダルを出さない
+      :room_url_copy_modal_feature_p     => false,                        # 部屋のリンクのコピーモーダルを出さない
       :self_vs_self_enable_p             => false,                        # 自分vs自分禁止 (対局設定で対戦相手がいない場合はバリデーションする)
       :system_reserved_avatar_then_clear => false,                        # 起動時の絵文字検証
       :toast_key                         => :is_toast_screen_bottom_left, # toast の表示位置
-      :slider_reflector_notify_scope_key           => :rns_except_me,                # スライダーを動かしたときの通知スコープを本番と同じにする
-      :export_group_visible_p                         => true,                         # エクスポートメニュー
+      :slider_reflector_notify_scope_key => :rns_except_me,               # スライダーを動かしたときの通知スコープを本番と同じにする
+      :export_group_visible_p            => true,                         # エクスポートメニュー
+      :think_mark_switch_visibility_key  => :tmsv_visible,                # 思考印スイッチ表示
     }
   end
 

@@ -42,7 +42,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "m"),
-        call: c => c.think_mark_toggle_button_click_handle(),
+        call: c => c.think_mark_toggle_shortcut_handle(),
       },
       {
         _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "z"),

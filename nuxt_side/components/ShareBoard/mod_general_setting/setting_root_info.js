@@ -9,13 +9,13 @@ import { SettingTabUi       } from "./setting_root_info/setting_tab_ui.js"
 export class SettingRootInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "setting_tab_notify", name: "通知", tab_model: SettingTabStreamer, show: true,  },
-      { key: "setting_tab_volume",   name: "音量",           tab_model: SettingTabVolume,   show: true,  },
-      { key: "setting_tab_ui",       name: "UI",             tab_model: SettingTabUi,       show: true,  },
-      { key: "setting_tab_other",    name: "その他",         tab_model: SettingTabOther,    show: true,  },
+      { key: "setting_tab_notify",              name: "通知",    tab_model: SettingTabStreamer, show: true,  },
+      { key: "setting_tab_volume",              name: "音量",    tab_model: SettingTabVolume,   show: true,  },
+      { key: "setting_tab_ui",                  name: "UI / UX", tab_model: SettingTabUi,       show: true,  },
+      { key: "setting_tab_other",               name: "その他",  tab_model: SettingTabOther,    show: true,  },
       // 非表示は一番最後にすること
       // なぜならタブインデックスがずれて異なる name をしゃべってしまう
-      { key: "setting_tab_danger",   name: "危険",           tab_model: SettingTabDanger,   show: false, },
+      { key: "setting_tab_danger",              name: "危険",    tab_model: SettingTabDanger,   show: false, },
     ]
   }
 

@@ -1,6 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { ThinkMarkReceiveScopeInfo } from "./think_mark_receive_scope_info.js"
+import { ThinkMarkSwitchVisibilityInfo } from "./think_mark_switch_visibility_info.js"
 
 const SS_MARK_COLOR_COUNT   = 12    // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT    = "-"   // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意せよ。
@@ -65,22 +66,27 @@ export const mod_think_mark_support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     async think_mark_toggle_button_click_handle(e = null) {
-      // if (!this.think_mark_mode_global_p) {
-      //   return
-      // }
-      if (this.think_mark_mode_p) {
-        this.think_mark_mode_p = false
-      } else {
-        this.think_mark_mode_p = true
-      }
-      this.sfx_play_toggle(this.think_mark_mode_p)
-
+      this.think_mark_toggle()
       if (this.think_mark_mode_p) {
         if (this.DeviseHelper.mouse_click_event_p(e)) {
           await this.toast_primary("ここ押さんでも右クリックで書けるよ")
           await this.toast_primary("でもここを押しとると左クリックで書けるよ")
         }
       }
+    },
+
+    think_mark_toggle_shortcut_handle() {
+      this.think_mark_toggle()
+      this.toast_primary(`${this.think_mark_mode_p ? 'ON' : 'OFF'}`, {talk: false})
+    },
+
+    think_mark_toggle() {
+      if (this.think_mark_mode_p) {
+        this.think_mark_mode_p = false
+      } else {
+        this.think_mark_mode_p = true
+      }
+      this.sfx_play_toggle(this.think_mark_mode_p)
     },
 
     // 対局設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
@@ -106,6 +112,9 @@ export const mod_think_mark_support = {
     ThinkMarkReceiveScopeInfo()     { return ThinkMarkReceiveScopeInfo                                               },
     think_mark_receive_scope_info() { return this.ThinkMarkReceiveScopeInfo.fetch(this.think_mark_receive_scope_key) },
 
+    ThinkMarkSwitchVisibilityInfo()   { return ThinkMarkSwitchVisibilityInfo                                    },
+    think_mark_switch_visibility_info() { return this.ThinkMarkSwitchVisibilityInfo.fetch(this.think_mark_switch_visibility_key) },
+
     think_mark_watcher_then_always_enable_p() { return WATCHER_ALWAYS_ENABLE && this.i_am_watcher_p }, // 観戦者なら思考印を常に有効とするか？
 
     // 現在の利用者の名前に対応する色番号を得る
@@ -117,18 +126,24 @@ export const mod_think_mark_support = {
 
     // 思考マークモード有効/無効ボタンを表示するか？
     think_mark_button_show_p() {
+      // 編集モードのときは表示しない
+      if (this.edit_mode_p) {
+        return false
+      }
+
       // 観戦者なら常に有効なのでボタンは表示しない
       if (this.think_mark_watcher_then_always_enable_p) {
         return false
       }
 
-      if (this.play_mode_p) {
-        // if (!this.think_mark_mode_global_p) {
-        //   return false
-        // }
-        return true
+      // 対局者でかつ表示しないモードのときは表示しない
+      if (this.i_am_member_p) {
+        if (this.think_mark_switch_visibility_info.key === "tmsv_hidden") {
+          return false
+        }
       }
-      return false
+
+      return true
     },
   },
 }
