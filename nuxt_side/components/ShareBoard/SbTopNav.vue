@@ -56,6 +56,8 @@ export default {
 .SbTopNav
   display: flex
   justify-content: space-between // 2つの navbar_item_list を左右に振る
+  height: 4rem
+
   .navbar_item_list
     display: flex
   .navbar_item
@@ -66,14 +68,7 @@ export default {
     user-select: none
     font-weight: bold
 
-  //////////////////////////////////////////////////////////////////////////////// 縦幅
-  .navbar_item
-    height: 4rem
-
   //////////////////////////////////////////////////////////////////////////////// 横幅
-  .navbar_item
-    &.navbar_item_home
-    &.navbar_item_title
 
   .navbar_item
     &.navbar_item_small
