@@ -1,11 +1,10 @@
 <template lang="pug">
-b-navbar-item.SbChatOpenButton2.px_5_if_tablet.is-unselectable.chat_modal_open_handle(
-  tag="a"
+a.navbar_item.navbar_item_wide.SbChatOpenButton2.chat_modal_open_handle(
   @click="SB.chat_modal_open_handle"
-  v-if="SB.cable_p || true"
+  v-if="SB.play_mode_p"
   )
-  b-icon.account_icon(icon="account")
-  b-icon.message_icon(icon="chat-processing")
+  .mdi.mdi-account
+  .mdi.mdi-chat-processing
 </template>
 
 <script>
@@ -20,13 +19,13 @@ export default {
 <style lang="sass">
 @import "../sass/support.sass"
 .SbChatOpenButton2
-  // チャットアイコンは2つをずらして組み合わせる
-  .icon
+  font-size: 1.5rem
+  .mdi
     position: relative
-    &.account_icon
-      top: 5px
-      left: 3px
-    &.message_icon
-      top: -7px
-      left: -3px
+  .mdi-account
+    top: 5px
+    left: 3px
+  .mdi-chat-processing
+    top: -7px
+    left: -3px
 </style>

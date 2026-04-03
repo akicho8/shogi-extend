@@ -236,7 +236,7 @@ if true
     end
 
     def sidebar_open
-      find(".sidebar_toggle_navbar_item").click
+      find(".sidebar_toggle_handle").click
     end
 
     def sidebar_close

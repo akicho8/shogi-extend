@@ -62,7 +62,7 @@ export const honpu_core = {
 
     honpu_direct_return_handle() {
       this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
-      if (this.honpu_master && this.honpu_branch) {
+      if (this.honpu_stage_info.key === "hs_branching") {
         this.time_machine_restore({
           ...this.honpu_master,
           turn: this.honpu_branch.turn - 1,
@@ -73,25 +73,31 @@ export const honpu_core = {
         this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})
       }
     },
+
+    honpu_click_handle() {
+      if (this.honpu_return_button_active_p) {
+        this.honpu_direct_return_handle()
+        return
+      }
+      if (this.honpu_open_button_show_p) {
+        this.honpu_modal_open_handle()
+        return
+      }
+    },
   },
 
   computed: {
     // 本譜ボタンの表示条件
     honpu_open_button_show_p() {
       if (this.honpu_button_show_share_condition) {
-        // 本譜は常に表示する場合
-        // スマホだとヘッダ内の表示が多すぎてずれる場合がある
-        return this.honpu_master
-
-        // 本譜に戻るがある場合は本譜は表示しない場合
-        // return this.honpu_master && this.honpu_branch == null
+        return this.honpu_stage_info.honpu_visible_p
       }
     },
 
     // 本譜に戻るボタンの表示条件
     honpu_return_button_active_p() {
       if (this.honpu_button_show_share_condition) {
-        return this.honpu_master && this.honpu_branch
+        return this.honpu_stage_info.return_to_honpu_p
       }
     },
 

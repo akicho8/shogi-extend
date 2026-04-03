@@ -1,112 +1,51 @@
 <template lang="pug">
-MainNavbar.SbTopNav(v-bind="component_attrs")
-  template(slot="brand")
-    template(v-if="SB.home_display_p")
-      b-navbar-item(@click.native="SB.exit_handle" v-if="SB.home_display_p")
-        b-icon(icon="home")
+.SbTopNav
+  .navbar_item_list.left
+    a.navbar_item.navbar_item_wide.resign_confirm_modal_open_handle(@click="SB.resign_confirm_modal_open_handle" v-if="SB.resign_can_p")
+      | 投了
 
-      b-navbar-item.has-text-weight-bold.title_navbar_item.is_truncate.is-hidden-mobile(@click="SB.title_edit_handle")
-        template(v-if="SB.play_mode_p")
-          | {{SB.current_title}}
-        template(v-if="SB.edit_mode_p")
-          | 編集モード
+    a.navbar_item.navbar_item_small.navbar_item_home(@click="SB.exit_handle" v-if="SB.home_display_p")
+      b-icon(icon="home")
 
-    template(v-if="SB.resign_can_p")
-      b-navbar-item.has-text-weight-bold(tag="div")
-        .buttons
-          a.button.resign_confirm_modal_open_handle(@click="SB.resign_confirm_modal_open_handle" :class="SB.appearance_theme_info.toryo_button_color")
-            | 投了
+    a.navbar_item.navbar_item_small.navbar_item_title.is_truncate.is-hidden-mobile(@click="SB.title_edit_handle" v-if="SB.home_display_p")
+      | {{SB.current_title}}
 
-  template(slot="start")
-    template(v-if="SB.debug_mode_p")
-      b-navbar-item.is-hidden-mobile
-        b-tag.has-text-weight-bold(rounded)
-          .has-text-primary {{SB.perpetual_cop.count}}
+    a.navbar_item.navbar_item_small.is-hidden-mobile(@click="SB.tl_modal_open_handle" v-if="SB.debug_mode_p")
+      | L{{SB.track_logs.length}}
 
-      b-navbar-item.is-hidden-mobile(@click="SB.tl_modal_open_handle")
-        b-tag(rounded)
-          .has-text-primary {{SB.track_logs.length}}
+    .navbar_item.navbar_item_small.is-hidden-mobile(v-if="SB.cable_p && SB.debug_mode_p")
+      i.mdi.mdi-account
+      | {{SB.member_infos.length}}
 
-      b-navbar-item.is-hidden-mobile(tag="div" v-if="SB.cable_p && development_p")
-        b-icon(icon="account")
-        b-tag(rounded)
-          .has-text-primary {{SB.member_infos.length}}
+    .navbar_item.navbar_item_wide.xstatus_name.is-hidden-mobile(v-if="SB.xstatus_name")
+      | {{SB.xstatus_name}}
 
-    template(v-if="SB.xstatus_name")
-      b-navbar-item.has-text-weight-bold.xstatus_name.is-hidden-mobile(tag="div")
-        | {{SB.xstatus_name}}
-
-  template(slot="end")
-    SbHonpuButton
+  .navbar_item_list.right
+    a.navbar_item.navbar_item_wide.honpu_button.honpu_modal_open_handle(v-if="SB.honpu_open_button_show_p" @click="SB.honpu_modal_open_handle")
+      | 本譜
+    a.navbar_item.navbar_item_wide.honpu_button.honpu_return_button_active_p(v-if="SB.honpu_return_button_active_p" @click="SB.honpu_direct_return_handle")
+      .mdi.mdi-undo.is-size-3
 
     SbThinkMarkToggleButton
 
-    template(v-if="SB.tweet_button_show_p")
-      b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="SB.tweet_modal_handle")
-        b-icon(icon="twitter" type="is-white")
+    a.navbar_item.navbar_item_wide.tweet_modal_handle(@click="SB.tweet_modal_handle" v-if="SB.tweet_button_show_p")
+      .mdi.mdi-twitter
 
-    template(v-if="SB.edit_mode_p")
-      b-navbar-item.has-text-weight-bold(tag="div")
-        .buttons
-          a.button.is-primary(@click="SB.play_mode_set_handle")
-            | 編集完了
+    a.navbar_item.navbar_item_wide.play_mode_set_handle(@click="SB.play_mode_set_handle" v-if="SB.edit_mode_p")
+      | 編集完了
 
     SbChatOpenButton2
 
-    // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
-    template(v-if="SB.play_mode_p")
-      NavbarItemSidebarOpen(@click="SB.sidebar_toggle_handle")
+    a.navbar_item.navbar_item_wide.sidebar_toggle_handle(@click="SB.sidebar_toggle_handle" v-if="SB.play_mode_p")
+      .mdi.mdi-menu
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
-// import SbThinkMarkToggleButton from "./think_mark/SbThinkMarkToggleButton.vue"
 
 export default {
   name: "SbTopNav",
   mixins: [support_child],
-  computed: {
-    // https://buefy.org/documentation/navbar
-    component_attrs() {
-      const hv = {}
-
-      // hv.centered = true
-      // hv.shadow = true
-      // hv.transparent = true
-
-      hv.type = this.SB.appearance_theme_info.navbar_type
-      // hv["fixed-top"] = true
-      // hv.fixedTop = true
-
-      hv.spaced = false
-      hv["wrapper-class"] = "container is-fluid px-0"
-
-      if (this.SB.edit_mode_p) {
-        // hv.type = "is-dark"
-      } else {
-        if (this.SB.order_enable_p) {
-          // hv.transparent = true
-          // hv.type = ""
-        } else {
-        }
-        // hv.type = "is-primary"
-        // hv.type = "is-primary"
-        if (this.SB.AppConfig.NAVBAR_COLOR_CHANGE) {
-          if (this.SB.clock_box) {
-            if (this.SB.clock_box.play_p) {
-              const rest = this.SB.clock_box.current.rest
-              if (rest <= 10) {
-                hv.type = "is-danger"
-              } else if (rest <= 20) {
-                hv.type = "is-warning"
-              }
-            }
-          }
-        }
-      }
-      return hv
-    },
-  },
 }
 </script>
 
@@ -114,25 +53,65 @@ export default {
 @import "./sass/support.sass"
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
-// .SbApp
-//   &.is_appearance_theme_b
-//     &.play_mode_p
-//       .SbTopNav
-//         &.is-primary
-//           background-color: transparent
-//           .navbar-item, .navbar-link
-//             color: $grey
-
 .SbTopNav
-  .NavbarItemSidebarOpen
-    +tablet
-      padding-left:  2.5rem
-      padding-right: 2.5rem
+  display: flex
+  justify-content: space-between // 2つの navbar_item_list を左右に振る
+  .navbar_item_list
+    display: flex
+  .navbar_item
+    display: flex
+    align-items: center          // テキストだけなら不要だが .button などを入れる場合、軸中央に揃えるにはやっぱりこれがいる
+    justify-content: center
+    line-height: 1.0
+    user-select: none
+    font-weight: bold
 
-  // background-color: transparent
-  // +is_backdrop_filter(10px)
+  //////////////////////////////////////////////////////////////////////////////// 縦幅
+  .navbar_item
+    height: 4rem
 
-  .xstatus_name
-    +mobile
-      font-size: $size-7
+  //////////////////////////////////////////////////////////////////////////////// 横幅
+  .navbar_item
+    &.navbar_item_home
+    &.navbar_item_title
+
+  .navbar_item
+    &.navbar_item_small
+      +mobile
+        padding-inline: 0.5rem
+      +tablet
+        padding-inline: 1.0rem
+
+  .navbar_item
+    &.navbar_item_wide
+      +mobile
+        min-width: 4rem
+      +tablet
+        min-width: 5rem
+      +desktop
+        min-width: 8rem
+      +widescreen
+        min-width: 9rem
+      +fullhd
+        min-width: 10rem
+
+  //////////////////////////////////////////////////////////////////////////////// 色
+  background-color: $black
+  .navbar_item
+    color: $white
+  a.navbar_item:hover
+    background-color: $black-ter
+
+  //////////////////////////////////////////////////////////////////////////////// 個々の調整
+  .sidebar_toggle_handle
+    font-size: 2rem
+  .tweet_modal_handle
+    font-size: 1.5rem
+
+.STAGE-development
+  .SbTopNav
+    .navbar_item
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .navbar_item > *
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

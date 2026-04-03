@@ -130,11 +130,5 @@ export const mod_think_mark_support = {
       }
       return false
     },
-
-    // 当初は単に pencil と pencil-circle-outline を切り替えるのようにしていたが円付きになると
-    // 中のペンの大きさが変わって非常に違和感があったため、pencil は表示したままで自力で円を重ねる方法に変更した
-    think_mark_button_icon() {
-      return "pencil"
-    },
   },
 }

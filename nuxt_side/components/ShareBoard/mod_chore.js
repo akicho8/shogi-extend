@@ -98,10 +98,11 @@ export const mod_chore = {
 
     exit_warning_p() { return this.cable_p },                   // 退出時警告を出すか？
 
-    // Home 表示条件
+    // Home やタイトルの表示条件
     // ・対局メンバーではない
+    // ・編集モードでもない
     home_display_p() {
-      return !this.i_am_member_p
+      return !this.i_am_member_p && this.play_mode_p
     },
   },
 }

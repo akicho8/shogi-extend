@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item.NavbarItemSidebarOpen.px_5_if_tablet.sidebar_toggle_navbar_item(
+b-navbar-item.NavbarItemSidebarOpen.px_5_if_tablet.sidebar_toggle_handle(
   v-bind="$attrs"
   v-on="$listeners"
   )
