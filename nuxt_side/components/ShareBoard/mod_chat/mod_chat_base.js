@@ -6,6 +6,7 @@ import _ from "lodash"
 import { MessageScopeInfo     } from "./message_scope_info.js"
 import { SendTriggerInfo      } from "./send_trigger_info.js"
 import { ChatContentScaleInfo } from "./chat_content_scale_info.js"
+import { ChatButtonVisibilityInfo } from "./chat_button_visibility_info.js"
 import { MessageRecord        } from "./message_record.js"
 
 import ChatModal from "./ChatModal.vue"
@@ -147,6 +148,9 @@ export const mod_chat_base = {
 
     ChatContentScaleInfo()   { return ChatContentScaleInfo                                    },
     chat_content_scale_info() { return this.ChatContentScaleInfo.fetch(this.chat_content_scale_key) },
+
+    ChatButtonVisibilityInfo()   { return ChatButtonVisibilityInfo                                    },
+    chat_button_visibility_info() { return this.ChatButtonVisibilityInfo.fetch(this.chat_button_visibility_key) },
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {

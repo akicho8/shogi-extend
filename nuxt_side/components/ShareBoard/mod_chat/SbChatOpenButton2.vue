@@ -1,7 +1,7 @@
 <template lang="pug">
 a.navbar_item.navbar_item_wide.SbChatOpenButton2.chat_modal_open_handle(
   @click="SB.chat_modal_open_handle"
-  v-if="SB.play_mode_p"
+  v-if="SB.play_mode_p && SB.chat_button_visibility_info.show_p"
   )
   .mdi.mdi-account
   .mdi.mdi-chat-processing
