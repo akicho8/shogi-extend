@@ -97,7 +97,7 @@ export class HandleNameValidator {
       if (message == null) {
         // 全体が「半角数字」で構成されているものはダメ
         if (this.normalized_name.match(RegexpSet.COMMON_NUMBER)) {
-          message = `それは${this.options.name}ではなく整数です`
+          message = `それは${this.options.name}ではなく数字です`
         }
       }
 
