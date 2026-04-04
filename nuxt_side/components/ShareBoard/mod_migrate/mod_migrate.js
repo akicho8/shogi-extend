@@ -9,11 +9,12 @@ export const mod_migrate = {
   methods: {
     migrate_call() {
       this.MigrateInfo.values.forEach(e => {
-        console.log(`migrate ${e.version}`)
         if (e.version > this.migrate_version) {
-          console.log(`migrate 実行 ${e.version}`)
+          console.log(`[migrate] ${e.version} up`)
           e.up(this)
           this.migrate_version = e.version
+        } else {
+          console.log(`[migrate] ${e.version} skip`)
         }
       })
     },
