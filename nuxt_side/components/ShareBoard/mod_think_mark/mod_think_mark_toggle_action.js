@@ -4,7 +4,7 @@ export const mod_think_mark_toggle_action = {
   methods: {
     // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
     // ここでは直接操作せずにコマンドを作り (自分であっても) サーバーを介してから反映する
-    ev_action_click_for_think_mark(ev_params, event) {
+    ev_think_mark_click(ev_params, event) {
       if (this.i_can_mark_send_p(event)) { // このチェックをしなかったら駒を持つと同時に印を書ける
         this.think_mark_toggle_action(ev_params)
       }
@@ -15,7 +15,7 @@ export const mod_think_mark_toggle_action = {
     think_mark_toggle_action(ev_params) {
       const params = {
         __standalone_mode__: true,
-        think_mark_command: this.__think_mark_command_from(ev_params.mark_pos_key),
+        think_mark_command: this.__think_mark_command_from(ev_params.think_mark_pos_key),
       }
       this.ac_room_perform("think_mark_toggle_action", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -29,17 +29,17 @@ export const mod_think_mark_toggle_action = {
     },
 
     // コマンド発行のための引数を作る
-    __think_mark_attrs_from(mark_pos_key) {
+    __think_mark_attrs_from(think_mark_pos_key) {
       return {
-        mark_pos_key: mark_pos_key,              // 位置 (必須)
-        mark_user_name: this.user_name,          // 名前
-        mark_color_index: this.mark_color_index, // 色 (名前から自動的に決めている)
+        think_mark_pos_key: think_mark_pos_key,              // 位置 (必須)
+        think_mark_user_name: this.user_name,          // 名前
+        think_mark_color_index: this.think_mark_color_index, // 色 (名前から自動的に決めている)
       }
     },
 
     // コマンド発行
-    __think_mark_command_from(mark_pos_key) {
-      const think_mark_attrs = this.__think_mark_attrs_from(mark_pos_key)
+    __think_mark_command_from(think_mark_pos_key) {
+      const think_mark_attrs = this.__think_mark_attrs_from(think_mark_pos_key)
       return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
     },
 

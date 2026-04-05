@@ -118,7 +118,7 @@ export const mod_think_mark_support = {
     think_mark_watcher_then_always_enable_p() { return WATCHER_ALWAYS_ENABLE && this.i_am_watcher_p }, // 観戦者なら思考印を常に有効とするか？
 
     // 現在の利用者の名前に対応する色番号を得る
-    mark_color_index() {
+    think_mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
       const hash_number = GX.str_to_hash_number([pepper, this.user_name].join("-"))
       return GX.imodulo(hash_number, SS_MARK_COLOR_COUNT)

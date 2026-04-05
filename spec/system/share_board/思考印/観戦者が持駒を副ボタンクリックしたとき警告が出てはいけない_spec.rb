@@ -18,11 +18,11 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_c { case1(:c) }
     window_c do
       stand_piece(:black, :P).right_click                      # 観戦者がaさんの持駒を右クリックしたとき
-      assert_selector(".Membership.is_black .ThinkMark")       # 印が出る
+      assert_selector(".Membership.is_black .ThinkMarkLayer")       # 印が出る
       assert_no_text "cさんは観戦者なので触らんといてください" # そして警告は出ない
 
       board_place("76").right_click                            # 観戦者が盤を右クリックしたとき
-      assert_selector(".place_7_6 .ThinkMark")                 # 印が出る
+      assert_selector(".place_7_6 .ThinkMarkLayer")                 # 印が出る
       assert_no_text "cさんは観戦者なので触らんといてください" # そして警告は出ない
     end
   end

@@ -11,24 +11,24 @@ module SharedMethods
 
   def assert_click_then_mark
     click_try_at_76
-    assert_selector(".ThinkMark")
+    assert_selector(".ThinkMarkLayer")
   end
 
   def assert_abc_marks(expected)
     actual = [
-      window_a { has_selector?(".ThinkMark") } ? "o" : "x",
-      window_b { has_selector?(".ThinkMark") } ? "o" : "x",
-      window_c { has_selector?(".ThinkMark") } ? "o" : "x",
+      window_a { has_selector?(".ThinkMarkLayer") } ? "o" : "x",
+      window_b { has_selector?(".ThinkMarkLayer") } ? "o" : "x",
+      window_c { has_selector?(".ThinkMarkLayer") } ? "o" : "x",
     ].join
 
     assert { actual == expected }
   end
 
   def assert_mark_exist
-    assert_selector(".ThinkMark", wait: 1)
+    assert_selector(".ThinkMarkLayer", wait: 1)
   end
 
   def assert_mark_none
-    assert_no_selector(".ThinkMark", wait: 1)
+    assert_no_selector(".ThinkMarkLayer", wait: 1)
   end
 end

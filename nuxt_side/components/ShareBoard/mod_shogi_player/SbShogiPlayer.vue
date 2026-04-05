@@ -115,7 +115,7 @@ export default {
       hv["ev_illegal_illegal_accident"] = this.SB.ev_illegal_illegal_accident
 
       // マークできる箇所をタップした
-      hv["ev_action_click_for_think_mark"] = this.SB.ev_action_click_for_think_mark
+      hv["ev_think_mark_click"] = this.SB.ev_think_mark_click
 
       return hv
     },

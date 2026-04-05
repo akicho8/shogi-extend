@@ -130,7 +130,7 @@ module ShareBoard
     end
 
     def think_mark_group_reject_action(data)
-      track(data, subject: "思考印グループ消去", body: data["mark_user_name"], emoji: ":思考印:")
+      track(data, subject: "思考印グループ消去", body: data["think_mark_user_name"], emoji: ":思考印:")
       broadcast(:think_mark_group_reject_action_broadcasted, data)
     end
 
