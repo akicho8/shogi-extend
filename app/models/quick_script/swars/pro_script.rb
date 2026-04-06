@@ -3,6 +3,7 @@ module QuickScript
     class ProScript < Base
       self.title = "プロの棋力"
       self.description = "プロ棋士のウォーズの段位をまとめて表示する (棋力一覧に遷移する)"
+      self.qs_invisible = true
 
       def call
         query = { order_by: :grade, user_items_text: user_items_text.lines.shuffle.join }
