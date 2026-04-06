@@ -374,11 +374,6 @@ export default {
 
     response_process(e) {
       if (this.mode === "playing") {
-        // CPUの指し手を読み上げる
-        if (e["yomiage"]) {
-          this.talk(e["yomiage"])
-        }
-
         // 指した後の局面を反映
         if (e["current_sfen"]) {
           this.sp_body = e["current_sfen"]

@@ -53,7 +53,6 @@ export const mod_xhistory = {
           kif_without_from:    "☗00歩",
           next_turn_offset:    i,
           player_location_key: "black",
-          yomiage:             "ななろくふ",
         },
         sfen: "position startpos",
         turn: i,

@@ -90,7 +90,6 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
             "kif_without_from"    => "☗7六歩",
             "next_turn_offset"    => 1,
             "player_location_key" => "black",
-            "yomiage"             => "ななろくふ",
           },
         })
       expect {

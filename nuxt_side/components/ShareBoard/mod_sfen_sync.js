@@ -81,7 +81,6 @@ export const mod_sfen_sync = {
         kif_without_from:    last_move_info.to_kif_without_from, // "☗7六歩"
         next_turn_offset:    last_move_info.next_turn_offset,    // 1
         player_location_key: last_move_info.player_location.key, // "black"
-        yomiage:             last_move_info.to_yomiage,          // "ななろくふ"
         effect_key:          last_move_info.effect_key,          // 効果音キー
       }
     },
