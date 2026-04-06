@@ -77,4 +77,5 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "姿焼マン",         strike_plan: "穴熊の姿焼き",       n_times: 1,  },
   { expected_badge_key: "全駒マン",         strike_plan: "全駒",               n_times: 1,  },
   { expected_badge_key: "玉単騎マン",       strike_plan: "玉単騎",             n_times: 1,  },
+  { expected_badge_key: "道場出禁マン",     strike_plan: "道場出禁",           n_times: 1,  },
 ]
