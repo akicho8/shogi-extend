@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: c2f601a08a8e473a592891a847f1fd58eedfe261
+  revision: c2718152a5377065cf44f830c899dde4f051d5b1
   branch: master
   specs:
-    bioshogi (0.0.19)
+    bioshogi (0.0.21)
       actionview
       activesupport (>= 7.1.0)
       benchmark
@@ -137,7 +137,7 @@ GEM
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.2)
     benchmark (0.5.0)
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
@@ -357,7 +357,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.2)
+    minitest (6.0.3)
       drb (~> 2.0)
       prism (~> 1.5)
     minitest-power_assert (0.3.1)
@@ -537,7 +537,7 @@ GEM
     retriable (3.1.2)
     retryable (3.0.5)
     rexml (3.4.1)
-    rmagick (6.2.0)
+    rmagick (6.3.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)
