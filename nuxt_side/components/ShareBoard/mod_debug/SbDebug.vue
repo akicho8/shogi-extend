@@ -42,6 +42,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugOriginMark
   SbDebugResign
   SbDebugPerpetual
   SbDebugResend
@@ -60,7 +61,7 @@
       a.panel-block.cc_timeout_trigger(@click="SB.cc_timeout_trigger") 最初のコールバック
       a.panel-block(@click="SB.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC
       a.panel-block(@click="SB.cc_timeout_modal_show_later") 他者は数秒後発動
-      a.panel-block(@click="SB.cc_timeout_modal_open_if_not_exist") 受信
+      //- a.panel-block(@click="SB.cc_timeout_modal_open_if_not_exist") 受信
       a.panel-block(@click="SB.cc_timeout_judge_delay_stop") 数秒後発動キャンセル
       a.panel-block(@click="SB.cc_timeout_modal_open('self_notify')") モーダル(自首)
       a.panel-block(@click="SB.cc_timeout_modal_open('audo_judge')") モーダル(判定)

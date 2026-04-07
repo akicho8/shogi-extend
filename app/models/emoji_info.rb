@@ -49,6 +49,7 @@ class EmojiInfo
     { key: ":短縮URL:",      raw: "📦", },
     { key: ":REALTIME:",     raw: "💡", },
     { key: ":思考印:",       raw: "🧠", },
+    { key: ":移動元印:",     raw: "⬆️", },
     { key: ":入室:",         raw: "▶", },
   ]
 

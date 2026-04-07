@@ -124,9 +124,11 @@ module ShareBoard
       broadcast(:order_draft_publish_broadcasted, data)
     end
 
-    def think_mark_toggle_action(data)
+    ################################################################################
+
+    def think_mark_general_action(data)
       track(data, subject: "思考印", body: data["think_mark_command"], emoji: ":思考印:")
-      broadcast(:think_mark_toggle_action_broadcasted, data)
+      broadcast(:think_mark_general_action_broadcasted, data)
     end
 
     def think_mark_group_reject_action(data)
@@ -138,6 +140,25 @@ module ShareBoard
       track(data, subject: "思考印全消去", body: "", emoji: ":思考印:")
       broadcast(:think_mark_clear_all_action_broadcasted, data)
     end
+
+    ################################################################################
+
+    def origin_mark_general_action(data)
+      # track(data, subject: "移動元印", body: data["origin_mark_command"], emoji: ":移動元印:")
+      broadcast(:origin_mark_general_action_broadcasted, data)
+    end
+
+    def origin_mark_group_reject_action(data)
+      track(data, subject: "移動元印グループ消去", body: data["origin_mark_user_name"], emoji: ":移動元印:")
+      broadcast(:origin_mark_group_reject_action_broadcasted, data)
+    end
+
+    def origin_mark_clear_all_action(data)
+      track(data, subject: "移動元印全消去", body: "", emoji: ":移動元印:")
+      broadcast(:origin_mark_clear_all_action_broadcasted, data)
+    end
+
+    ################################################################################
 
     def message_share(data)
       if data["message_scope_key"] == "ms_public"

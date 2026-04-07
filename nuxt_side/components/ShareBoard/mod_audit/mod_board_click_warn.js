@@ -7,7 +7,7 @@ export const mod_board_click_warn = {
     // order_clock_both_ok でないときは sp_human_side に none を設定するため、その状態のとき盤駒を触られるとこれが呼ばれる
     async ev_illegal_click_but_self_is_not_turn(event) {
       // 思考印モードの場合は無視する
-      if (this.i_can_mark_send_p(event)) {
+      if (this.i_can_think_mark_send_p(event)) {
         return
       }
 

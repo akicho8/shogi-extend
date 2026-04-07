@@ -35,6 +35,7 @@ export default {
       hv.sp_player_info              = this.SB.sp_player_info
       hv.sp_human_side               = this.SB.sp_human_side
       hv.sp_think_mark_list          = this.SB.sp_think_mark_list
+      hv.sp_origin_mark_list         = this.SB.sp_origin_mark_list
       hv.sp_legal_move_only          = this.SB.legal_strict_p
       hv.sp_my_piece_only_move       = this.SB.legal_strict_p
       hv.sp_my_piece_kill_disabled   = this.SB.legal_strict_p
@@ -116,6 +117,10 @@ export default {
 
       // マークできる箇所をタップした
       hv["ev_think_mark_click"] = this.SB.ev_think_mark_click
+
+      // 移動元印
+      hv["ev_action_origin_mark_push"] = this.SB.ev_action_origin_mark_push
+      hv["ev_action_origin_mark_remove"] = this.SB.ev_action_origin_mark_remove
 
       return hv
     },

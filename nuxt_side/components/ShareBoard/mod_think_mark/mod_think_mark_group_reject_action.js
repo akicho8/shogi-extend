@@ -14,7 +14,7 @@ export const mod_think_mark_group_reject_action = {
       this.ac_room_perform("think_mark_group_reject_action", params) // --> app/channels/share_board/room_channel.rb
     },
     think_mark_group_reject_action_broadcasted(params) {
-      if (this.i_can_mark_receive_p(params)) {
+      if (this.i_can_think_mark_receive_p(params)) {
         this.sp_call(e => {
           if (e.mut_think_mark_list.group_exist_p(params.think_mark_user_name)) {
             e.mut_think_mark_list.group_reject$(params.think_mark_user_name)

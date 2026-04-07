@@ -10,11 +10,11 @@ const MOUSE_MAIN_BUTTON     = 0     // マウスの主ボタン
 
 export const mod_think_mark_support = {
   methods: {
-    //////////////////////////////////////////////////////////////////////////////// i_can_mark_send_p と i_can_mark_receive_p が重要
+    //////////////////////////////////////////////////////////////////////////////// i_can_think_mark_send_p と i_can_think_mark_receive_p が重要
 
     // 自分はマークできるか？ (送れるか？)
     // マーク自体は役割に関係なく think_mark_mode_p を有効にすれば送ることができる、とする
-    i_can_mark_send_p(event) {
+    i_can_think_mark_send_p(event) {
       // マークモードONならマークできる
       if (this.play_mode_p && this.think_mark_mode_p) {
         return true
@@ -34,7 +34,7 @@ export const mod_think_mark_support = {
     },
 
     // 自分は受信できる？
-    i_can_mark_receive_p(params) {
+    i_can_think_mark_receive_p(params) {
       // 自分から自分へは受信できる
       if (this.received_from_self(params)) {
         return true

@@ -96,6 +96,7 @@ export const mod_shogi_player = {
       this.debug_alert("sp_slider_leading_task")
       this.perpetual_cop.reset$()
       this.think_mark_clear_all_action({sfx: false})
+      this.onion_mark_clear_all_action({sfx: false})
     },
     sp_slider_trailing_task() {
       this.debug_alert("sp_slider_trailing_task")
