@@ -5,6 +5,8 @@ const ROOM_DESTROY_AFTER_DELAY_SEC = 2.0 // 切断後に接続するまで待つ
 
 const APP_RELOAD_IF_RECREATE = false // 再起動するときリロードする？
 
+const TOAST_OPTIONS = { talk: false } // オンライン直後に talk を呼ぶと Network Error になる場合があるためオンラインだとしても呼ばないようにする
+
 export const mod_room_recreate = {
   data() {
     return {
@@ -25,13 +27,13 @@ export const mod_room_recreate = {
   },
   methods: {
     internet_on_trigger() {
-      this.toast_primary("オンラインになりました")
+      this.debug_alert("オンラインになりました")
       if (this.cable_p) {
         this.room_recreate_handle()
       }
     },
     internet_off_trigger() {
-      this.toast_danger("オフラインになりました")
+      this.debug_alert("オフラインになりました")
       if (this.clock_box) {
         this.clock_box.pause_handle()
       }
@@ -44,7 +46,7 @@ export const mod_room_recreate = {
 
     room_recreate_modal_open_handle() {
       if (!this.room_recreate_modal_instance) {
-        this.sfx_click()
+        // this.sfx_click()
         this.room_recreate_modal_open()
       }
     },
@@ -63,7 +65,7 @@ export const mod_room_recreate = {
     },
     room_recreate_modal_close_handle() {
       if (this.room_recreate_modal_instance) {
-        this.sfx_click()
+        // this.sfx_click()
         this.room_recreate_modal_close()
       }
     },
@@ -83,7 +85,7 @@ export const mod_room_recreate = {
     async room_recreate() {
       if (this.cable_p && !this.room_recreate_now) {
         this.room_recreate_now = true
-        this.toast_primary("復帰中です", {talk: false})
+        this.toast_primary("復帰中です", TOAST_OPTIONS)
         this.room_destroy()
         const loading = this.$buefy.loading.open()
         await GX.sleep(this.ROOM_DESTROY_AFTER_DELAY_SEC)
@@ -94,7 +96,7 @@ export const mod_room_recreate = {
         await this.room_create()
         loading.close()
         this.ac_log({subject: "通信復旧", body: "入室→オフライン→オンライン→入室"})
-        this.xhistory_action({label: "通信復旧", label_type: "is-primary", message: `通信不調から復帰しました`})
+        this.xhistory_action({label: "通信復旧", label_type: "is-primary", message: `通信不調から復帰しました`, toast_options: TOAST_OPTIONS})
         this.room_recreate_now = false
       }
     },

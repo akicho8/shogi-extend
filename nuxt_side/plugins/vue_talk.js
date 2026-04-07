@@ -28,9 +28,14 @@ export const vue_talk = {
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
     async talk(message, options = {}) {
       message = String(message ?? "")
+
+      // オフラインであればAPIを呼ばないようにする
+      // しかし、これを入れてもオンラインになった直後に talk を呼ぶと Network Error になる場合がある
+      // したがってネット接続の有無に関する処理は talk を呼ばないようにするのよいかもしれない
       if (this.$nuxt.isOffline) {
         return
       }
+
       if (message === "") {
         return
       }

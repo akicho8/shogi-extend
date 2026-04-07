@@ -23,6 +23,7 @@ export const mod_xhistory_action = {
       }
       {
         const toast_options = {
+          ...params.toast_options,
           type: params.label_type ?? "is-primary",
           duration_sec: params.duration_sec,
         }
