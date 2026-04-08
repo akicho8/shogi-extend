@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     piece_move("33", "34")                                 # そこから続いて2手目を指す (本譜は変化せず1手目の状態で記録している)
     assert_turn(2)                                         # 盤上だけが2手目まで進んでいる
     assert_turn_max(2)                                     # 棋譜の長さも2になっている
-    Capybara.current_session.active_element.send_keys("h") # 「本譜」を開いて
+    shortcut_send("h") # 「本譜」を開いて
     find(".time_machine_modal_apply_handle").click         # 最後の局面に戻る
     assert_turn(1)                                         # すると1手目にもどる (ここまでは従来通り)
     assert_turn_max(1)                                     # 棋譜の長さも1手目に戻っているのが重要で、つまり2手目34歩の棋譜を持った状態で1手目を指さない

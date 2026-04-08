@@ -15,12 +15,12 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_b { case1("b") }
     window_a { board_place("55").click }
     window_b { board_place("55").click }
-    window_a { assert_selector(".place_5_5 .ThinkMarkLayer .think_mark_user_name", text: "a", exact_text: true) }
-    window_b { assert_selector(".place_5_5 .ThinkMarkLayer .think_mark_user_name", text: "a", exact_text: true) }
+    window_a { assert_selector(".place_5_5 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true) }
+    window_b { assert_selector(".place_5_5 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true) }
 
     # a は escape を押して自分だけを消す
-    window_a { Capybara.current_session.active_element.send_keys(:backspace) }
-    window_a { assert_no_selector(".place_5_5 .ThinkMarkLayer .think_mark_user_name", text: "a", exact_text: true) }
-    window_b { assert_no_selector(".place_5_5 .ThinkMarkLayer .think_mark_user_name", text: "a", exact_text: true) }
+    window_a { shortcut_send(:backspace) }
+    window_a { assert_no_selector(".place_5_5 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true) }
+    window_b { assert_no_selector(".place_5_5 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true) }
   end
 end

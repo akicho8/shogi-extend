@@ -252,18 +252,18 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel do
         subscription.origin_mark_general_action(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "origin_mark_general_action_broadcasted", bc_params: data)
     end
-    it "origin_mark_group_reject_action" do
-      data = data_factory({})
-      expect {
-        subscription.origin_mark_group_reject_action(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "origin_mark_group_reject_action_broadcasted", bc_params: data)
-    end
-    it "origin_mark_clear_all_action" do
-      data = data_factory({})
-      expect {
-        subscription.origin_mark_clear_all_action(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "origin_mark_clear_all_action_broadcasted", bc_params: data)
-    end
+    # it "origin_mark_group_reject_action" do
+    #   data = data_factory({})
+    #   expect {
+    #     subscription.origin_mark_group_reject_action(data)
+    #   }.to have_broadcasted_to(channel_key).with(bc_action: "origin_mark_group_reject_action_broadcasted", bc_params: data)
+    # end
+    # it "origin_mark_clear_all_action" do
+    #   data = data_factory({})
+    #   expect {
+    #     subscription.origin_mark_clear_all_action(data)
+    #   }.to have_broadcasted_to(channel_key).with(bc_action: "origin_mark_clear_all_action_broadcasted", bc_params: data)
+    # end
   end
 
   describe "メッセージ" do

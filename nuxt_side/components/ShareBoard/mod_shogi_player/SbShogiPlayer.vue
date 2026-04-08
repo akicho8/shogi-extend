@@ -119,8 +119,8 @@ export default {
       hv["ev_think_mark_click"] = this.SB.ev_think_mark_click
 
       // 移動元印
-      hv["ev_action_origin_mark_push"] = this.SB.ev_action_origin_mark_push
-      hv["ev_action_origin_mark_remove"] = this.SB.ev_action_origin_mark_remove
+      hv["ev_action_origin_mark_jump_invoke"] = this.SB.ev_action_origin_mark_jump_invoke
+      hv["ev_action_origin_mark_jump_cancel"] = this.SB.ev_action_origin_mark_jump_cancel
 
       return hv
     },

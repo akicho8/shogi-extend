@@ -440,7 +440,7 @@ export const mod_clock_box = {
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
         this.honpu_all_clear()  // 本譜を消す (消さなくても cc_play_p のときは非表示になるのでいらないかも)
-        this.think_mark_clear_all() // このタイミングで思考印を消すのは絶対あってる
+        this.general_mark_clear_all() // このタイミングで思考印を消すのは絶対あってる
         this.sfx_play("se_niwatori")
       }
     },

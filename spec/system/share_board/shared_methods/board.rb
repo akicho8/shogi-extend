@@ -28,4 +28,12 @@ module SharedMethods
     find(".turn_change_to_previous_modal_open_handle").click # 「1手戻す」モーダルを開く
     find(".turn_change_call_handle").click                   # 「N手目まで戻る」
   end
+
+  def assert_lift_exist
+    assert_selector(".lifted_from_p")
+  end
+
+  def assert_lift_none
+    assert_no_selector(".lifted_from_p")
+  end
 end

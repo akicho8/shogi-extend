@@ -12,16 +12,12 @@ export const mod_sfx = {
   methods: {
     // 意図して持ち上げた
     ev_action_piece_lift() {
-      if (this.play_mode_p) {
-        this.sfx_play("se_piece_lift")
-      }
+      this.origin_mark_se_call("push")
     },
 
     // 意図してキャンセルした
     ev_action_piece_cancel() {
-      if (this.play_mode_p) {
-        this.sfx_play("se_piece_lift_cancel")
-      }
+      this.origin_mark_se_call("remove")
     },
 
     // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす→やめ)

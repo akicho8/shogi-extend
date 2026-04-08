@@ -29,6 +29,9 @@ export const vue_sfx = {
 
     sfx_play(key, options = {}) {
       if (key) {
+        if (this.development_p) {
+          console.log(`[効果音] ${key}`)
+        }
         const e = SfxPresetInfo.fetch(key)
         options = {
           src: e.source,
@@ -85,7 +88,6 @@ export const vue_sfx = {
       let volume = options.volume
       volume = VolumeCop.volume_convert(volume, options.volume_local_user_scale)
       volume = VolumeCop.volume_convert(volume, this.g_volume_common_user_scale)
-      // this.sfx_log("sfx_play_now", options.src, options.volume)
 
       return new Promise((resolve, reject) => {
         const sound = new Howl({

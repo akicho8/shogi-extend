@@ -40,7 +40,7 @@ export const mod_reflector = {
     reflector_turn_change(params = {}) {
       if (this.cc_play_then_warning()) { return }
       const timeline_resolver = this.timeline_resolver_create(params)
-      this.reflector_call({turn: timeline_resolver.new_turn, think_mark_clear_all: true})
+      this.reflector_call({turn: timeline_resolver.new_turn, general_mark_clear_all: true})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ export const mod_reflector = {
         talk: true,                            // しゃべる
         sfx: true,                             // 設定音を出す
         set_except_me: false,                  // sfen, turn の更新: true→全員 false→自分自身に対してはしない
-        think_mark_clear_all: false,           // ブロードキャストのタイミングで思考印を消すか？
+        general_mark_clear_all: false,           // ブロードキャストのタイミングで思考印を消すか？
 
         // for timeline_resolver_create
         ...this.current_sfen_and_turn,
@@ -128,8 +128,8 @@ export const mod_reflector = {
       this.xhistory_add({...params, label})
     },
     reflector_chore({params}) {
-      if (params.think_mark_clear_all) {
-        this.think_mark_clear_all()
+      if (params.general_mark_clear_all) {
+        this.general_mark_clear_all()
       }
     },
 

@@ -6,7 +6,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     piece_move_o("77", "76", "☗7六歩")
     piece_move_o("33", "34", "☖3四歩")
     assert_turn(2)
-    Capybara.current_session.active_element.send_keys("!")
+    shortcut_send("!")
     assert_honpu_open_on
     find(".honpu_modal_open_handle").click         # 「本譜」ボタンを押す
     Capybara.within(".TimeMachineModal") do

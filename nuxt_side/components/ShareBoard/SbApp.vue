@@ -47,6 +47,7 @@ import { mod_edit_mode            } from "./mod_edit/mod_edit_mode.js"
 import { mod_kifu_loader          } from "./mod_kifu_loader/mod_kifu_loader.js"
 import { mod_shogi_player         } from "./mod_shogi_player/mod_shogi_player.js"
 import { mod_perpetual            } from "./mod_perpetual/mod_perpetual.js"
+import { mod_general_mark           } from "./mod_general_mark/mod_general_mark.js"
 import { mod_think_mark           } from "./mod_think_mark/mod_think_mark.js"
 import { mod_origin_mark           } from "./mod_origin_mark/mod_origin_mark.js"
 import { mod_devise               } from "./mod_devise.js"
@@ -130,6 +131,7 @@ export default {
     mod_shogi_player,
     mod_audit,
     mod_perpetual,
+    mod_general_mark,
     mod_think_mark,
     mod_origin_mark,
     mod_devise,

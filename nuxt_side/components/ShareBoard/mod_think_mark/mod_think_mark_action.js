@@ -15,32 +15,23 @@ export const mod_think_mark_action = {
     think_mark_general_action(ev_params) {
       const params = {
         __standalone_mode__: true,
-        think_mark_command: this.__think_mark_command_from(ev_params.think_mark_pos_key),
+        think_mark_command: this.__think_mark_command_from(ev_params.general_mark_pos_key),
       }
       this.ac_room_perform("think_mark_general_action", params) // --> app/channels/share_board/room_channel.rb
     },
     think_mark_general_action_broadcasted(params) {
       if (this.i_can_think_mark_receive_p(params)) {
         this.sp_call(e => {
-          e.mut_think_mark_list.toggle_command_apply(params.think_mark_command)
+          e.mut_think_mark_list.command_execute(params.think_mark_command)
           this.think_mark_se_call(params.think_mark_command)
         })
       }
     },
 
-    // コマンド発行のための引数を作る
-    __think_mark_attrs_from(think_mark_pos_key) {
-      return {
-        think_mark_pos_key: think_mark_pos_key,              // 位置 (必須)
-        think_mark_user_name: this.user_name,          // 名前
-        think_mark_color_index: this.think_mark_color_index, // 色 (名前から自動的に決めている)
-      }
-    },
-
     // コマンド発行
-    __think_mark_command_from(think_mark_pos_key) {
-      const think_mark_attrs = this.__think_mark_attrs_from(think_mark_pos_key)
-      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(think_mark_attrs))
+    __think_mark_command_from(general_mark_pos_key) {
+      const attrs = this.general_mark_attributes_create(general_mark_pos_key)
+      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(attrs))
     },
 
     // 効果音

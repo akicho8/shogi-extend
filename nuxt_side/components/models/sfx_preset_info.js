@@ -56,9 +56,9 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/assets/sfx/soundeffect_lab/shogi_piece_puton.mp3"),                               },
       // { key: "se_piece_put",                                                volume: 0.4,  source: require("@/assets/sfx/USF/IMPACTS/Stone/IMPACT_Stone_On_Stone_05_mono.wav"),                              },
       // { key: "se_piece_put",                                                volume: 0.8,  source: require("@/assets/sfx/USF/THUDS_THUMPS/THUD_Subtle_Tap_mono.wav"),                                        },
-      { key: "se_piece_lift",                name: "持ち上げる",               volume: 0.3,  source: require("@/assets/sfx/SND01_sine/tap_03.wav"),                                                            },
-      // { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/sfx/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
-      { key: "se_piece_lift_cancel",         name: "持ち上げキャンセル",       volume: 0.4,  source: require("@/assets/sfx/USF/ELEMENTS/Water/Drops/DROP_Designed_mono.wav"), },
+      { key: "se_piece_jump_invoke",                name: "持ち上げる",               volume: 0.3,  source: require("@/assets/sfx/SND01_sine/tap_03.wav"),                                                            },
+      // { key: "se_piece_jump_cancel",         name: "持ち上げキャンセル",       volume: 0.3,  source: require("@/assets/sfx/USF/USER_INTERFACES/Appear_Disappear/UI_Animate_Noise_Glide_Disappear_stereo.wav"), },
+      { key: "se_piece_jump_cancel",         name: "持ち上げキャンセル",       volume: 0.4,  source: require("@/assets/sfx/USF/ELEMENTS/Water/Drops/DROP_Designed_mono.wav"), },
       // { key: "se_piece_put",                 name: "置く",                     volume: 0.3,  source: require("@/assets/sfx/USF/BUTTONS/BUTTON_Light_Switch_03_stereo.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/ShareBoard/models/param_info.js と合わせる
       { key: "se_piece_put",                 name: "置く",                     volume: 0.5,  source: require("@/assets/sfx/audiostock/as1301271.wav"),                                    }, // ::SE_PIECE_PUT_VOLUME:: nuxt_side/components/ShareBoard/models/param_info.js と合わせる
 

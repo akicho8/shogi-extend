@@ -41,6 +41,10 @@ module ShogiPlayerMethods
     find(".Membership.is_#{location} .piece_#{piece}")
   end
 
+  def stand_of(location)
+    find(".Membership.is_#{location}")
+  end
+
   # place の位置の駒を持ち上げ中か？
   def lifted_from(place)
     assert_selector "#{place_class(place)}.lifted_from_p"

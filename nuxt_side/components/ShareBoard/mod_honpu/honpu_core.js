@@ -66,7 +66,7 @@ export const honpu_core = {
           ...this.honpu_master,
           turn: this.honpu_branch.turn - 1,
           fast_forward: false,
-          think_mark_clear_all: true,
+          general_mark_clear_all: true,
           message: "分岐前に戻しました",
         })
         this.xhistory_action({label: "本譜", label_type: "is-primary", __standalone_mode__: true})

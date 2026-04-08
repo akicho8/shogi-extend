@@ -131,7 +131,7 @@ export const mod_sfen_sync = {
 
       if (true) {
         this.resend_receive_success_send(params)            // 受信OKを指し手に通知する
-        this.think_mark_clear_all()                         // マークを消す (このタイミングが重要で、棋譜を受信したタイミングで消すことで全員が消される)
+        this.general_mark_clear_all()                         // マークを消す (このタイミングが重要で、棋譜を受信したタイミングで消すことで全員が消される)
 
         // 指したので時間切れ発動予約をキャンセルする
         // alice が残り1秒で指すが、bob 側の時計は0秒になっていた場合にこれが必要になる

@@ -52,7 +52,6 @@ export const turn_change = {
     turn_change_call_handle(turn) {
       this.turn_change_modal_close()
       this.think_mark_clear_all_action({sfx: false})
-      this.onion_mark_clear_all_action({sfx: false})
       this.reflector_call({turn})
     },
   },
