@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { OriginMarkReceiveScopeInfo } from "./origin_mark_receive_scope_info.js"
-import { OriginMarkSwitchVisibilityInfo } from "./origin_mark_switch_visibility_info.js"
+import { OriginMarkBehaviorInfo } from "./origin_mark_behavior_info.js"
 
 const SS_MARK_COLOR_COUNT   = 12    // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT    = "-"   // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意せよ。
@@ -74,56 +74,10 @@ export const mod_origin_mark_support = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    async origin_mark_toggle_button_click_handle(e = null) {
-      this.origin_mark_toggle()
-      if (this.origin_mark_mode_p) {
-        if (this.DeviseHelper.mouse_click_event_p(e)) {
-          await this.toast_primary("ここ押さんでも右クリックで書けるよ")
-          await this.toast_primary("でもここを押しとると左クリックで書けるよ")
-        }
-      }
-    },
-
-    origin_mark_toggle_shortcut_handle() {
-      this.origin_mark_toggle()
-      this.toast_primary(`${this.origin_mark_mode_p ? 'ON' : 'OFF'}`, {talk: false})
-    },
-
-    origin_mark_toggle() {
-      if (this.origin_mark_mode_p) {
-        this.origin_mark_mode_p = false
-      } else {
-        this.origin_mark_mode_p = true
-      }
-      this.sfx_play_toggle(this.origin_mark_mode_p)
-    },
-
-    // 対局設定反映後、自分の立場に応じてマークモードの初期値を自動で設定する
-    origin_mark_auto_set() {
-      const before_value = this.origin_mark_mode_p
-      // if (!this.origin_mark_mode_global_p) {
-      //   return
-      // }
-      // this.debug_alert("自動印設定")
-      // 対局者ならOFF
-      if (this.i_am_member_p) {
-        this.origin_mark_mode_p = false
-      }
-      // 観戦者ならON
-      if (this.i_am_watcher_p) {
-        this.origin_mark_mode_p = true
-      }
-      // alert(`origin_mark_auto_set: ${this.origin_mark_mode_p}`)
-      this.tl_add("移動元印", `(origin_mark_auto_set) origin_mark_mode_p: ${before_value} -> ${this.origin_mark_mode_p}`)
-    },
   },
   computed: {
-    OriginMarkReceiveScopeInfo()     { return OriginMarkReceiveScopeInfo                                               },
-    origin_mark_receive_scope_info() { return this.OriginMarkReceiveScopeInfo.fetch(this.origin_mark_receive_scope_key) },
-
-    OriginMarkSwitchVisibilityInfo()   { return OriginMarkSwitchVisibilityInfo                                    },
-    origin_mark_switch_visibility_info() { return this.OriginMarkSwitchVisibilityInfo.fetch(this.origin_mark_switch_visibility_key) },
+    OriginMarkBehaviorInfo()   { return OriginMarkBehaviorInfo                                    },
+    origin_mark_behavior_info() { return this.OriginMarkBehaviorInfo.fetch(this.origin_mark_behavior_key) },
 
     origin_mark_watcher_then_always_enable_p() { return WATCHER_ALWAYS_ENABLE && this.i_am_watcher_p }, // 観戦者なら移動元印を常に有効とするか？
 
@@ -132,28 +86,6 @@ export const mod_origin_mark_support = {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
       const hash_number = GX.str_to_hash_number([pepper, this.user_name].join("-"))
       return GX.imodulo(hash_number, SS_MARK_COLOR_COUNT)
-    },
-
-    // 思考マークモード有効/無効ボタンを表示するか？
-    origin_mark_button_show_p() {
-      // 編集モードのときは表示しない
-      if (this.edit_mode_p) {
-        return false
-      }
-
-      // 観戦者なら常に有効なのでボタンは表示しない
-      if (this.origin_mark_watcher_then_always_enable_p) {
-        return false
-      }
-
-      // 対局者でかつ表示しないモードのときは表示しない
-      if (this.i_am_member_p) {
-        if (this.origin_mark_switch_visibility_info.key === "tmsv_hidden") {
-          return false
-        }
-      }
-
-      return true
     },
   },
 }

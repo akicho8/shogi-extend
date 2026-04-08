@@ -11,9 +11,7 @@
   .panel.assert_var
     .panel-heading
       | [assert_var]
-    .panel-block origin_mark_mode_p:{{SB.origin_mark_mode_p}}
-    //- .panel-block origin_mark_mode_global_p:{{SB.origin_mark_mode_global_p}}
-    .panel-block origin_mark_receive_scope_key:{{SB.origin_mark_receive_scope_key}}
+    .panel-block origin_mark_behavior_info.key:{{SB.origin_mark_behavior_info.key}}
 </template>
 
 <script>

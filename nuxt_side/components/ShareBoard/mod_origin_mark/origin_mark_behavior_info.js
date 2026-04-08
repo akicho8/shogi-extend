@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class OriginMarkSwitchVisibilityInfo extends ApplicationMemoryRecord {
+export class OriginMarkBehaviorInfo extends ApplicationMemoryRecord {
   static field_label = "自分の対局中に移動元印の切り替えアイコンを表示"
   static field_message = ""
 
