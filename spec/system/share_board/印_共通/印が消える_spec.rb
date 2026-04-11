@@ -1,9 +1,13 @@
 require "#{__dir__}/setup"
 
 RSpec.describe __FILE__, type: :system, share_board_spec: true do
+  def case2(user_name)
+    visit_room(user_name: user_name, origin_mark_behavior_key: :omb_with_self)
+  end
+
   def case1
-    window_a { room_setup_by_user(:a, origin_mark_behavior_key: :omb_with_self) }
-    window_b { room_setup_by_user(:b, origin_mark_behavior_key: :omb_with_self) }
+    window_a { case2(:a) }
+    window_b { case2(:b) }
 
     # 本譜と変化を作る
     window_a { piece_move_o("77", "76", "☗7六歩") } # 1手目を指す
