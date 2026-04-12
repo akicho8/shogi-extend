@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 
-const SS_MARK_COLOR_COUNT = 12    // shogi-player 側で用意している色数。同名の定数と合わせる。
+const SP_GENERAL_MARK_PALETTE_COUNT = 12    // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT  = "-"   // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意せよ。
 
 export const mod_general_mark = {
@@ -54,7 +54,7 @@ export const mod_general_mark = {
     general_mark_color_index() {
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
       const hash_number = GX.str_to_hash_number([pepper, this.user_name].join("-"))
-      return GX.imodulo(hash_number, SS_MARK_COLOR_COUNT)
+      return GX.imodulo(hash_number, SP_GENERAL_MARK_PALETTE_COUNT)
     },
   },
 }

@@ -18,7 +18,7 @@ export const mod_think_mark_group_reject_action = {
         this.sp_call(e => {
           if (e.mut_think_mark_list.group_exist_p(params.general_mark_group_name)) {
             e.mut_think_mark_list.group_reject$(params.general_mark_group_name)
-            this.sfx_play("se_think_mark_at_cell_off")
+            this.sfx_play("se_think_mark_off")
           }
         })
       }

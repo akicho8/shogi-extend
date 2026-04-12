@@ -3,34 +3,19 @@ import { GX } from "@/components/models/gx.js"
 export const mod_origin_mark_action = {
   methods: {
     ev_action_origin_mark_jump_invoke(general_mark_pos_key, ev) {
-      // if (this.i_can_origin_mark_send_p(event)) {
       this.origin_mark_general_action("push", general_mark_pos_key)
-      // }
-      // const attributes = this.create_attributes(general_mark_pos_key)
-      // this.$refs.sp_object.mut_origin_mark_list.push(attributes)
     },
 
     ev_action_origin_mark_jump_cancel(general_mark_pos_key, ev) {
-      // if (this.i_can_origin_mark_send_p(event)) {
       this.origin_mark_general_action("remove", general_mark_pos_key)
-      // }
-      // const attributes = this.create_attributes(general_mark_pos_key)
-      // this.$refs.sp_object.mut_origin_mark_list.remove(attributes)
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // CustomShogiPlayer からマークできる場所がタップされたときに呼ばれる
-    // ここでは直接操作せずにコマンドを作り (自分であっても) サーバーを介してから反映する
-    // ev_origin_mark_click(ev_params, event) {
-    //   if (this.i_can_origin_mark_send_p(event)) { // このチェックをしなかったら駒を持つと同時に印を書ける
-    //     this.origin_mark_general_action(ev_params)
-    //   }
-    // },
 
     //////////////////////////////////////////////////////////////////////////////// 共有
 
     origin_mark_general_action(method, general_mark_pos_key) {
+      if (!this.origin_mark_feature_p) {
+        return
+      }
       const params = {
         __standalone_mode__: true,
         origin_mark_command: {
@@ -68,7 +53,5 @@ export const mod_origin_mark_action = {
         this.sfx_play(key)
       }
     },
-  },
-  computed: {
   },
 }

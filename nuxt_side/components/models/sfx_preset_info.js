@@ -69,17 +69,17 @@ export class SfxPresetInfo extends ApplicationMemoryRecord {
       // ▼思考印をセルに付ける / 外す
 
       // 8BIT
-      { key: "se_think_mark_at_cell_on",     name: "思考印描画",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
-      { key: "se_think_mark_at_cell_off",    name: "思考印消去",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
-      // { key: "se_think_mark_at_cell_on",                                    volume: 0.30, source: require("@/assets/sfx/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),      },
+      { key: "se_think_mark_on",     name: "思考印描画",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_mono.wav"),                              },
+      { key: "se_think_mark_off",    name: "思考印消去",               volume: 0.1, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Smooth_Sine_Deep_mono.wav"),                         },
+      // { key: "se_think_mark_on",                                    volume: 0.30, source: require("@/assets/sfx/USF/8BIT/Coin_Collect/8BIT_RETRO_Coin_Collect_Two_Note_Bright_Fast_mono.wav"),      },
 
       // Factoio 搬送ベルト風
-      // { key: "se_think_mark_at_cell_on",                                    volume: 0.30, source: require("@/assets/sfx/USF/IMPACTS/Snappy/IMPACT_Snappy_01_mono.wav"),                                     },
-      // { key: "se_think_mark_at_cell_off",                                   volume: 0.30, source: require("@/assets/sfx/USF/IMPACTS/Snappy/IMPACT_Snappy_02_mono.wav"),                                     },
+      // { key: "se_think_mark_on",                                    volume: 0.30, source: require("@/assets/sfx/USF/IMPACTS/Snappy/IMPACT_Snappy_01_mono.wav"),                                     },
+      // { key: "se_think_mark_off",                                   volume: 0.30, source: require("@/assets/sfx/USF/IMPACTS/Snappy/IMPACT_Snappy_02_mono.wav"),                                     },
 
       // バリエーション
-      // { key: "se_think_mark_at_cell_off",                                   volume: 0.10, source: require("@/assets/sfx/USF/8BIT/Hits_Bumps/8BIT_RETRO_Hit_Bump_Distorted_Tap_mono.wav"),                   },
-      // { key: "se_think_mark_at_cell_off",                                   volume: 0.30, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Zap_Fast_mono.wav"),                                 },
+      // { key: "se_think_mark_off",                                   volume: 0.10, source: require("@/assets/sfx/USF/8BIT/Hits_Bumps/8BIT_RETRO_Hit_Bump_Distorted_Tap_mono.wav"),                   },
+      // { key: "se_think_mark_off",                                   volume: 0.30, source: require("@/assets/sfx/USF/8BIT/Beeps/8BIT_RETRO_Beep_Zap_Fast_mono.wav"),                                 },
 
       // { key: "se_tebanjanainoni_sawanna", name: "手番違い",                 volume: 0.30, source: require("@/assets/sfx/USF/ALARMS/Digital/ALARM_Short_Distorted_loop_stereo.wav"),                         },
 

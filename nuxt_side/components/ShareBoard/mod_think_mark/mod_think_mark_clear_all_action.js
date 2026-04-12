@@ -16,7 +16,7 @@ export const mod_think_mark_clear_all_action = {
           if (e.mut_think_mark_list.size > 0) {
             e.mut_think_mark_list.clear()
             if (params.sfx) {
-              this.sfx_play("se_think_mark_at_cell_off")
+              this.sfx_play("se_think_mark_off")
             }
           }
         })

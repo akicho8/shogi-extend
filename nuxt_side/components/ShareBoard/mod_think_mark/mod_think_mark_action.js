@@ -39,9 +39,9 @@ export const mod_think_mark_action = {
       const push_trigger = (think_mark_command.method === "push")
       let se_key = null
       if (push_trigger) {
-        se_key = "se_think_mark_at_cell_on"
+        se_key = "se_think_mark_on"
       } else {
-        se_key = "se_think_mark_at_cell_off"
+        se_key = "se_think_mark_off"
       }
       this.sfx_play(se_key)
     },
