@@ -1,4 +1,4 @@
-import { Quiz } from "@/components/ShareBoard/fes/quiz.js"
+import { Quiz } from "@/components/ShareBoard/mod_fes/quiz.js"
 import _ from "lodash"
 
 describe("Quiz", () => {

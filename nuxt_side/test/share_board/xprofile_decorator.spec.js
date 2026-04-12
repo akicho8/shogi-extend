@@ -1,4 +1,4 @@
-import { XprofileDecorator } from "@/components/ShareBoard/xprofile/xprofile_decorator.js"
+import { XprofileDecorator } from "@/components/ShareBoard/mod_xprofile/xprofile_decorator.js"
 
 describe("XprofileDecorator", () => {
   test("works", () => {

@@ -1,4 +1,4 @@
-import { QuizVotedResult } from "@/components/ShareBoard/fes/quiz_voted_result.js"
+import { QuizVotedResult } from "@/components/ShareBoard/mod_fes/quiz_voted_result.js"
 import _ from "lodash"
 
 describe("QuizVotedResult", () => {

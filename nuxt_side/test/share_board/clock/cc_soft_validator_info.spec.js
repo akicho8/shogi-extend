@@ -1,4 +1,4 @@
-import { CcSoftValidatorInfo } from "@/components/ShareBoard/clock/cc_soft_validator_info.js"
+import { CcSoftValidatorInfo } from "@/components/ShareBoard/mod_clock/cc_soft_validator_info.js"
 
 describe("CcSoftValidatorInfo", () => {
   test("works", () => {

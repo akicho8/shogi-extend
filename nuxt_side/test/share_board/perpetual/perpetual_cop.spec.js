@@ -1,4 +1,4 @@
-import { PerpetualCop } from "@/components/ShareBoard/perpetual/perpetual_cop.js"
+import { PerpetualCop } from "@/components/ShareBoard/mod_perpetual/perpetual_cop.js"
 import _ from "lodash"
 
 describe("PerpetualCop", () => {
