@@ -22,7 +22,7 @@ export const mod_think_mark_action = {
     think_mark_general_action_broadcasted(params) {
       if (this.i_can_think_mark_receive_p(params)) {
         this.sp_call(e => {
-          e.mut_think_mark_list.command_execute(params.think_mark_command)
+          e.mut_think_mark_list.command_execute$(params.think_mark_command)
           this.think_mark_se_call(params.think_mark_command)
         })
       }
@@ -31,7 +31,7 @@ export const mod_think_mark_action = {
     // コマンド発行
     __think_mark_command_from(general_mark_pos_key) {
       const attrs = this.general_mark_attributes_create(general_mark_pos_key)
-      return this.sp_call(e => e.mut_think_mark_list.toggle_command_create(attrs))
+      return this.sp_call(e => e.mut_think_mark_list.command_for_toggle(attrs))
     },
 
     // 効果音

@@ -13,7 +13,7 @@ export const mod_origin_mark_support = {
     // 全部消す
     // ・単にローカルで全体を消すだけ
     origin_mark_clear_all() {
-      this.sp_call(e => e.mut_origin_mark_list.clear())
+      this.sp_call(e => e.mut_origin_mark_list.clear$())
     },
 
     ////////////////////////////////////////////////////////////////////////////////

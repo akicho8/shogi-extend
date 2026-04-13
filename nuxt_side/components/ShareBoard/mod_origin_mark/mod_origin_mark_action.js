@@ -1,4 +1,5 @@
 import { GX } from "@/components/models/gx.js"
+import { GeneralMarkList } from "shogi-player/components/mod_general_mark/general_mark_list.js"
 
 export const mod_origin_mark_action = {
   methods: {
@@ -18,10 +19,7 @@ export const mod_origin_mark_action = {
       }
       const params = {
         __standalone_mode__: true,
-        origin_mark_command: {
-          method: method,
-          params: this.general_mark_attributes_create(general_mark_pos_key),
-        },
+        origin_mark_command: GeneralMarkList.command_create(method, this.general_mark_attributes_create(general_mark_pos_key)),
       }
       this.ac_room_perform("origin_mark_general_action", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -30,7 +28,7 @@ export const mod_origin_mark_action = {
         return
       }
       this.sp_call(e => {
-        if (e.mut_origin_mark_list.command_execute(params.origin_mark_command)) {
+        if (e.mut_origin_mark_list.command_execute$(params.origin_mark_command)) {
           if (this.received_from_self(params)) {
             // 自分の音はリアルタイムに鳴らしているため
           } else {
