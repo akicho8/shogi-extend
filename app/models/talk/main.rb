@@ -55,7 +55,7 @@ module Talk
     end
 
     def voice_id
-      "Mizuki" # or Takumi
+      "Takumi" # Mizuki or Takumi
     end
   end
 end
