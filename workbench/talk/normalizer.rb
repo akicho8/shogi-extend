@@ -1,0 +1,5 @@
+require "./setup"
+Talk::Normalizer.normalize("http://www.example.com/?a=1") # => "example com"
+Talk::Normalizer.normalize("w")                           # => "わら"
+Talk::Normalizer.normalize("http:/")                      # => ""
+Talk::Normalizer.normalize("http://www.example.com/foo<br>") # => "example com"

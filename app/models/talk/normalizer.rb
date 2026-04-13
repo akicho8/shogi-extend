@@ -1,9 +1,9 @@
 # 読み上げやすい文字列に変換する
 #
-#   YomiageNormalizer.normalize("手番w") # => "てばんわら"
+#   Normalizer.normalize("手番w") # => "てばんわら"
 #
 module Talk
-  class YomiageNormalizer
+  class Normalizer
     class << self
       def normalize(...)
         new(...).to_s

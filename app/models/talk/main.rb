@@ -34,7 +34,7 @@ module Talk
     end
 
     def normalized_text
-      YomiageNormalizer.new(source_text).to_s
+      Normalizer.new(source_text).to_s
     end
 
     def disk_filename

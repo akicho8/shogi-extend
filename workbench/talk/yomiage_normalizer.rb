@@ -1,5 +1,0 @@
-require "./setup"
-Talk::YomiageNormalizer.normalize("http://www.example.com/?a=1") # => "example com"
-Talk::YomiageNormalizer.normalize("w")                           # => "わら"
-Talk::YomiageNormalizer.normalize("http:/")                      # => ""
-Talk::YomiageNormalizer.normalize("http://www.example.com/foo<br>") # => "example com"
