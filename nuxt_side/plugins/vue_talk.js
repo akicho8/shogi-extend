@@ -5,7 +5,7 @@ const MESSAGE_LENGTH_MAX = 64  // N文字を越えるとしゃべらない
 
 const TALK_DEFAULT_OPTIONS = {
   volume: 0.5,  // 音量
-  rate: 1.5,    // 速度
+  rate: 1.5,    // 速度 __TALK_PITCH__
 }
 
 export const vue_talk = {
@@ -28,6 +28,16 @@ export const vue_talk = {
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
     async talk(message, options = {}) {
       message = String(message ?? "")
+      if (message === "") {
+        return
+      }
+
+      if (options.validate_length === false) {
+      } else {
+        if (message.length > MESSAGE_LENGTH_MAX) {
+          return
+        }
+      }
 
       // オフラインであればAPIを呼ばないようにする
       // しかし、これを入れてもオンラインになった直後に talk を呼ぶと Network Error になる場合がある
@@ -36,17 +46,10 @@ export const vue_talk = {
         return
       }
 
-      if (message === "") {
-        return
-      }
-      if (options.validate_length !== false) {
-        if (message.length > MESSAGE_LENGTH_MAX) {
-          return
-        }
-      }
       if (this.__SYSTEM_TEST_RUNNING__) {
         return this.sfx_play_now({...options, rate: 2.0, volume: 0.0, volume_local_user_scale: 0})
       }
+
       const params = {
         source_text: message,
         data: options.data,     // ログに出すため

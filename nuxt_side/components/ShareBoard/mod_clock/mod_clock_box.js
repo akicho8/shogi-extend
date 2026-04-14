@@ -1,4 +1,4 @@
-const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
+const TALK_PITCH_BYOYOMI = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる __TALK_PITCH__
 const CC_KOREYORI_DELAY  = 1.0  // N秒の発声とかぶるためすこし間を空けてから発言する
 
 import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
@@ -202,7 +202,7 @@ export const mod_clock_box = {
     cc_notice(s, options = {}) {
       options = {
         type: "is-primary",
-        rate: BYOYOMI_TALK_PITCH,
+        rate: TALK_PITCH_BYOYOMI,
         volume_local_user_scale: this.volume_clock_user_scale,
         ...options,
       }
