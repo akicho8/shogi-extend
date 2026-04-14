@@ -1,7 +1,7 @@
 import { VolumeCop } from "@/components/models/volume_cop.js"
 import { GX } from "@/components/models/gx.js"
 
-const MESSAGE_LENGTH_MAX = 140  // N文字を越えるとしゃべらない
+const MESSAGE_LENGTH_MAX = 64  // N文字を越えるとしゃべらない
 
 const TALK_DEFAULT_OPTIONS = {
   volume: 0.5,  // 音量
