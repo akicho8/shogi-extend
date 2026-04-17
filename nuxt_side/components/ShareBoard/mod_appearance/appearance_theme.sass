@@ -13,8 +13,8 @@
   &.is_appearance_theme_a
     +setvar(sb_bg_color, $white)
     +setvar(sb_board_color, hsl(0 0% 0% / 0.2))
-    +setvar(sb_side_fg_color,      unset)
-    +setvar(sb_side_bg_color,      unset)
+    +setvar(sb_side_fg_color, unset)
+    +setvar(sb_side_bg_color, unset)
 
   // ダークとリアルで共通
   &.is_appearance_theme_b, &.is_appearance_theme_c
@@ -24,9 +24,9 @@
     +setvar(sb_bg_color,  change_color($black, $lightness: 30%)) // 全体の背景色
     +setvar(sp_touch_lifted_origin_bg_color, transparent)        // スマホ・持ち上げた駒・背景
     +setvar(sp_touch_lifted_origin_opacity, 0.4)                 // スマホ・持ち上げた駒・不透明度
+    +setvar(sp_stand_bg_color, var(--sb_board_color))    // 駒台の色
     .Membership
       // 盤だけ変更したい場合はこのスコープで指定する
 
   .SbShogiPlayer
     +setvar(sp_board_color,    var(--sb_board_color))    // 盤の色(基本)
-    +setvar(sp_stand_bg_color, var(--sb_board_color))    // 駒台の色

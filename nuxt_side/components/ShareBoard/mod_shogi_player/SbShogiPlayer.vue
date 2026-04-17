@@ -57,8 +57,9 @@ export default {
         hv.sp_device = "touch"
       }
 
-      hv.sp_piece_variant = this.SB.appearance_theme_info.sp_piece_variant
-      hv.sp_board_variant = this.SB.appearance_theme_info.sp_board_variant
+      hv.sp_piece_variant          = this.SB.appearance_theme_info.sp_piece_variant
+      hv.sp_board_variant          = this.SB.appearance_theme_info.sp_board_variant
+      hv.sp_board_variant_to_stand = true
 
       if (this.SB.order_enable_p || this.SB.cc_play_p) {
         // 反則時の挙動
