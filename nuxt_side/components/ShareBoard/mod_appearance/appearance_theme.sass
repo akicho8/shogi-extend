@@ -10,14 +10,14 @@
 // appearance_theme_info.js
 .SbApp
   // ライト
-  &.is_appearance_theme_a
+  &.is_appearance_theme_light
     +setvar(sb_bg_color, $white)
     +setvar(sb_board_color, hsl(0 0% 0% / 0.2))
     +setvar(sb_side_fg_color, unset)
     +setvar(sb_side_bg_color, unset)
 
-  // ダークとリアルで共通
-  &.is_appearance_theme_b, &.is_appearance_theme_c
+  // モダンとリアルで共通
+  &.is_appearance_theme_modern, &.is_appearance_theme_real
     +setvar(sb_board_color, $sbc_b)
     +setvar(sb_side_fg_color,      $grey-lighter)
     +setvar(sb_side_bg_color,      unset)
