@@ -6,9 +6,9 @@ export class AppearanceThemeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_appearance_theme_modern", name: "モダン", sp_board_variant: "none",        sp_piece_variant: "nureyon",  },
-      { key: "is_appearance_theme_real",   name: "リアル", sp_board_variant: "wood_normal", sp_piece_variant: "portella", },
-      { key: "is_appearance_theme_light",  name: "ライト", sp_board_variant: "none",        sp_piece_variant: "nureyon",  },
+      { key: "is_appearance_theme_modern", name: "モダン",       sp_board_variant: "none",        sp_piece_variant: "nureyon",  },
+      { key: "is_appearance_theme_real",   name: "リアル",       sp_board_variant: "wood_normal", sp_piece_variant: "portella", },
+      { key: "is_appearance_theme_hybrid", name: "ハイブリッド", sp_board_variant: "none",        sp_piece_variant: "portella", },
     ]
   }
 

@@ -9,24 +9,24 @@
 
 // appearance_theme_info.js
 .SbApp
-  // ライト
-  &.is_appearance_theme_light
-    +setvar(sb_bg_color, $white)
-    +setvar(sb_board_color, hsl(0 0% 0% / 0.2))
-    +setvar(sb_side_fg_color, unset)
-    +setvar(sb_side_bg_color, unset)
+  --sb_side_fg_color: #{$grey-lighter}
+  --sb_side_bg_color: unset
 
-  // モダンとリアルで共通
-  &.is_appearance_theme_modern, &.is_appearance_theme_real
-    +setvar(sb_board_color, $sbc_b)
-    +setvar(sb_side_fg_color,      $grey-lighter)
-    +setvar(sb_side_bg_color,      unset)
-    +setvar(sb_bg_color,  change_color($black, $lightness: 30%)) // 全体の背景色
-    +setvar(sp_touch_lifted_origin_bg_color, transparent)        // スマホ・持ち上げた駒・背景
-    +setvar(sp_touch_lifted_origin_opacity, 0.4)                 // スマホ・持ち上げた駒・不透明度
-    +setvar(sp_stand_bg_color, var(--sb_board_color))    // 駒台の色
-    .Membership
-      // 盤だけ変更したい場合はこのスコープで指定する
+  // $sbc_b = hsl(36.23,75.36%,58.63%) = oklch(0.768 0.1329 74.63)
+  &.is_appearance_theme_modern
+    --sb_bg_color: oklch(0.4184 0 0)
+  &.is_appearance_theme_real
+    --sb_bg_color: oklch(0.4184 0.0425 85.36)
+  &.is_appearance_theme_hybrid
+    --sb_bg_color: oklch(0.4184 0.0425 191.17)
 
   .SbShogiPlayer
-    +setvar(sp_board_color,    var(--sb_board_color))    // 盤の色(基本)
+    --sp_board_color: #{$sbc_b}
+    --sp_stand_bg_color: #{$sbc_b}
+    --sp_touch_lifted_origin_bg_color: transparent
+    --sp_touch_lifted_origin_opacity: 0.4
+
+  &.is_appearance_theme_real, &.is_appearance_theme_hybrid
+    .ShogiPlayer
+      .BoardTexture, .MembershipLocationMark, .MembershipLocationPlayerInfo, .MembershipStand
+        filter: drop-shadow(3px 3px 3px hsl(0 0% 0% / 0.5))
