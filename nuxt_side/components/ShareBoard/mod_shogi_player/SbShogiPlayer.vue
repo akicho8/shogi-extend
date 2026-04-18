@@ -162,31 +162,6 @@ export default {
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
 
-  //////////////////////////////////////////////////////////////////////////////// 長すぎる名前を切る
-  .CustomShogiPlayer
-    // 横並びなら3行で切る
-    +IF_HORIZONTAL
-      .MembershipLocationPlayerInfoName
-        // https://zenn.dev/itayuri/articles/51f0004a3bad64
-        overflow: hidden
-        display: -webkit-box
-        text-overflow: ellipsis
-        -webkit-box-orient: vertical
-        -webkit-line-clamp: 3
-
-    // 縦並びなら一行の3文字で切る
-    +IF_VERTICAL
-      .MembershipLocationPlayerInfoName
-        max-width: 3rem
-        white-space: nowrap
-        overflow: hidden
-        line-height: 1.0 // shogi-player の方で 140% にしているがアバター画像をいれると違和感があるので 1.0 に戻す
-
-  //////////////////////////////////////////////////////////////////////////////// 名前の大きさ
-  // .CustomShogiPlayer
-  //   .MembershipLocationPlayerInfoName
-  //     font-size: $size-7
-
 .SbApp.debug_mode_p
   .CustomShogiPlayer
     .MembershipLocationPlayerInfoName
