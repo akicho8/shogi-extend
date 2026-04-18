@@ -82,7 +82,6 @@ export const mod_avatar = {
             url: v,
             background_size: "cover",
             border_radius: "3px", // /Users/ikeda/src/shogi/shogi-player/components/Membership/MembershipLocationPlayerInfo.vue(99) に合わせている
-            flex_gap: "0.05",     // sp_board_horizontal_gap と合わせること
           }
         }
       }
@@ -103,7 +102,6 @@ export const mod_avatar = {
           url: record.url,
           background_size: "contain",
           border_radius: "unset",
-          flex_gap: "unset",
           __emoji__: record.text, // デバッグ用
         }
       }
@@ -119,7 +117,6 @@ export const mod_avatar = {
         acc[`--sb_${location.key}_avatar_background_image`] = `url(${record.url})`
         acc[`--sb_${location.key}_avatar_background_size`]  = record.background_size
         acc[`--sb_${location.key}_avatar_border_radius`]    = record.border_radius
-        acc[`--sb_${location.key}_avatar_flex_gap`]   = record.flex_gap
       }
       return acc
     },
