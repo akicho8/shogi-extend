@@ -7,8 +7,13 @@
 
 //////// タッチした直後に toast を出すと文言が自動選択されてしまう対策(青のIが出る)
 
-.toast
-  @extend .is-unselectable
+.notices
+  .toast
+    @extend .is-unselectable
+    // トーストが邪魔をして駒が持てない場合があるのをふせぐ
+    // 右クリックしたときトーストが下にあるとコンテキストメニューが出てしまうのもふせぐ
+    // デフォルトでは pointer-events: auto になっているため ! important が必要
+    pointer-events: none ! important
 
 //////// 棋譜入力の盤面入力の幅が狭くなるのを防ぐ
 
