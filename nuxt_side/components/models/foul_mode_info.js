@@ -42,7 +42,7 @@ export class FoulModeInfo extends ApplicationMemoryRecord {
       }, {
         key: "ignore",
         name: "審判不在モード",
-        message: "指し手の正当性を保証しないため通常の対局には向かない (リアル道場と同じ)",
+        message: "リアル道場と同じで反則に気づかないまま進行するかもしれない",
         battle_start_message: "審判はいないので反則は各自で判断してください",
         type: "is-danger",
         sp_illegal_validate: false,
