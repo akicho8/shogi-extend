@@ -44,6 +44,8 @@ export default {
   // リアル駒は小さめに作られているため100%にする
   &.is_piece_variant_portella
     +setvar(sp_board_piece_size, 1.0)
+    +setvar(sp_stand_piece_size, 1.0)
+    +setvar(sp_piece_box_piece_size, 1.0)
 
 // bulma の .table のなかにあると td の padding が影響してしまうのを防ぐ
 .table
