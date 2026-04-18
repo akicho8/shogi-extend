@@ -46,7 +46,7 @@ export default {
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
       hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
-      hv.sp_origin_mark_variant      = "omv_square_gray"
+      hv.sp_origin_mark_variant      = "omv_square_color"
 
       hv.sp_request_checkmate_stat = true // 詰み判定する
       hv.sp_request_position_hash  = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める

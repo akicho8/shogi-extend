@@ -1,7 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 
-const SP_GENERAL_MARK_PALETTE_COUNT = 8    // shogi-player 側で用意している色数。同名の定数と合わせる。
+const SP_GENERAL_MARK_PALETTE_COUNT = 9    // shogi-player 側で用意している色数。同名の定数と合わせる。
 const PEPPER_DATE_FORMAT  = "-"   // 色が変化するタイミング。毎日なら"YYYY-MM-DD"。空にすると秒単位の時間になるので注意せよ。
 
 export const mod_general_mark = {
