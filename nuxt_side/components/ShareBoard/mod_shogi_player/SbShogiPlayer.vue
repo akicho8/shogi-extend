@@ -137,7 +137,11 @@ export default {
 .SbShogiPlayer
   +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ
   +setvar(sp_location_mark_inactive_size, 1.0)          // 手番でない方の☗の大きさ
-  +setvar(sp_board_horizontal_gap, 0.05)                // 横配置の場合に隙間をいれる
+
+  +setvar(sp_board_horizontal_gap, 0.075)      // 盤の左右の隙間(全体横レイアウト時)
+  +setvar(sp_board_vertical_gap, 0.075)        // 盤の上下の隙間(全体縦レイアウト時)
+  +setvar(sp_membership_vertical_gap, 0.075)   // 盤の左右の隙間(全体横レイアウト時)
+  +setvar(sp_membership_horizontal_gap, 0.075) // 盤の上下の隙間(全体縦レイアウト時)
 
   +padding_lr(unset)
 
