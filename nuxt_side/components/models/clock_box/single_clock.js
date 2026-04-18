@@ -3,15 +3,28 @@ import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
 import { GX } from "@/components/models/gx.js"
 
-const SEC_PER_MIN = 60
+const SEC_PER_MIN  = 60
 const MIN_PER_HOUR = 60
+const ONE_HOUR     = MIN_PER_HOUR * SEC_PER_MIN
 
 export class SingleClock {
   static time_format(v) {
+    // const { h, m, s } = this.hms_from_sec(v)
+    // if (h >= 1) {
+    //   return `${h}H`
+    // }
+    //
+    // return [h, m, s].map(v => String(v).padStart(2, "0")).join(".")
+
+    // if (v > ONE_HOUR) {
+    //   const h = GX.idiv(v, ONE_HOUR)
+    //   format = `*:ss`
+    // }
+
     let format = null
     if (v < SEC_PER_MIN) {
       format = "s"
-    } else if (v < SEC_PER_MIN * MIN_PER_HOUR) {
+    } else if (v < ONE_HOUR) {
       format = "m:ss"
     } else {
       format = "h:mm:ss"
@@ -19,10 +32,15 @@ export class SingleClock {
     return dayjs().startOf("year").set("seconds", v).format(format)
   }
 
-  static time_format_human(sec) {
+  static hms_from_sec(sec) {
     GX.assert_kind_of_integer(sec)
-    const [h, rest] = GX.idivmod(sec, MIN_PER_HOUR * SEC_PER_MIN)
+    const [h, rest] = GX.idivmod(sec, ONE_HOUR)
     const [m, s] = GX.idivmod(rest, SEC_PER_MIN)
+    return { h, m, s }
+  }
+
+  static time_format_human(sec) {
+    const { h, m, s } = this.hms_from_sec(sec)
     return [
       [h, "時間"],
       [m, "分"],
