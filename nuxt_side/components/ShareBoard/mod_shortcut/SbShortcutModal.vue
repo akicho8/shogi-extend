@@ -117,6 +117,10 @@
             .sc_buttons
               b-tag(type="is-primary") ,
           .sc_item
+            .sc_label スタイル設定
+            .sc_buttons
+              b-tag(type="is-primary") %
+          .sc_item
             .sc_label これを開く
             .sc_buttons
               b-tag(type="is-primary") ?

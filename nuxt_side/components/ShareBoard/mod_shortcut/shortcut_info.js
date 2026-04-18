@@ -101,6 +101,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.general_setting_modal_shortcut_handle(),
       },
       {
+        _if: (c, e) => c.play_mode_p && e.key === "%",
+        call: c => c.appearance_modal_open_handle(),
+      },
+      {
         _if: (c, e) => c.debug_mode_p && e.code === "Backslash",
         call: c => c.tl_modal_open_handle(),
       },
