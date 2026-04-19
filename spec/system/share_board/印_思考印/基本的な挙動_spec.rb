@@ -31,7 +31,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     visit_app(user_name: "", think_mark_mode_p: true)
     board_place("76").click
     assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_effect_container") # 円はあるが名前はない
-    assert_no_selector(".place_7_6 .ThinkMarkLayer .general_mark_group_name")     # 名前が空ではなく名前欄自体がない
+    assert_no_selector(".place_7_6 .ThinkMarkLayer .general_mark_user_name")     # 名前が空ではなく名前欄自体がない
   end
 
   it "同じ場所を二度クリックすると印が消える" do
@@ -65,8 +65,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   end
 
   it "引数で印を設定する / 同じ箇所に複数の名前が出る" do
-    visit_app(think_mark_list_str: "7_6,a,0,7_6,b,1")
-    assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true)
-    assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_group_name", text: "b", exact_text: true)
+    visit_app(think_mark_collection_str: "7_6,a,0,7_6,b,1")
+    assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_user_name", text: "a", exact_text: true)
+    assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_user_name", text: "b", exact_text: true)
   end
 end

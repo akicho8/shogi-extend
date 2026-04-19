@@ -17,8 +17,8 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 検討中は think_mark_receive_scope_key に関係なく全員が受信する
     window_a do
-      assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_group_name", text: "a", exact_text: true)
-      assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_group_name", text: "b", exact_text: true)
+      assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_user_name", text: "a", exact_text: true)
+      assert_selector(".place_7_6 .ThinkMarkLayer .general_mark_user_name", text: "b", exact_text: true)
     end
   end
 end
