@@ -18,37 +18,37 @@ export const mod_general_mark = {
       GX.assert_kind_of_integer(this.general_mark_color_index)
 
       return {
-        general_mark_pos_key: general_mark_pos_key,              // 位置 (必須)
-        general_mark_group_name: this.user_name,                 // 名前
-        general_mark_color_index: this.general_mark_color_index, // 色 (名前から自動的に決めている)
+        gm_pos_key: general_mark_pos_key,              // 位置 (必須)
+        gm_user_name: this.user_name,                 // 名前
+        gm_color_index: this.general_mark_color_index, // 色 (名前から自動的に決めている)
       }
     },
-    // 現在の状態から general_mark_list_str を作る
-    // デバッグ用
-    sp_general_mark_list_serialize_display(ary) {
-      const str = ary.to_a.map(e => [
-        e.general_mark_pos_key,
-        e.general_mark_group_name,
-        e.general_mark_color_index,
-      ].join(",")).join(",")
-      console.log({str})
-    },
+    // // 現在の状態から general_mark_collection_str を作る
+    // // デバッグ用
+    // sp_general_mark_collection_serialize_display(ary) {
+    //   const str = ary.to_a.map(e => [
+    //     e.gm_pos_key,
+    //     e.gm_user_name,
+    //     e.gm_color_index,
+    //   ].join(",")).join(",")
+    //   console.log({str})
+    // },
   },
   computed: {
-    // 引数から印の配列を作る
-    // 動作確認やデモ用
-    // カンマで区切って3つずつ取り出す
-    // http://localhost:4000/share-board?general_mark_list_str=7_7,alice,0,7_6,bob,1
-    sp_general_mark_list() {
-      const ary = GX.str_split(this.general_mark_list_str ?? "", /,/)
-      return GX.ary_each_slice_to_a(ary, 3).map(([general_mark_pos_key, general_mark_group_name, general_mark_color_index]) => {
-        return {
-          general_mark_pos_key: general_mark_pos_key,
-          general_mark_group_name: general_mark_group_name,
-          general_mark_color_index: general_mark_color_index,
-        }
-      })
-    },
+    // // 引数から印の配列を作る
+    // // 動作確認やデモ用
+    // // カンマで区切って3つずつ取り出す
+    // // http://localhost:4000/share-board?general_mark_collection_str=7_7,alice,0,7_6,bob,1
+    // sp_general_mark_collection() {
+    //   const ary = GX.str_split(this.general_mark_collection_str ?? "", /,/)
+    //   return GX.ary_each_slice_to_a(ary, 3).map(([general_mark_pos_key, general_mark_user_name, general_mark_color_index]) => {
+    //     return {
+    //       general_mark_pos_key: general_mark_pos_key,
+    //       general_mark_user_name: general_mark_user_name,
+    //       general_mark_color_index: general_mark_color_index,
+    //     }
+    //   })
+    // },
 
     // 現在の利用者の名前に対応する色番号を得る
     general_mark_color_index() {

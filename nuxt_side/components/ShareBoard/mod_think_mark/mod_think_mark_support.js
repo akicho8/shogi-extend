@@ -58,7 +58,7 @@ export const mod_think_mark_support = {
     // 全部消す
     // ・単にローカルで全体を消すだけ
     think_mark_clear_all() {
-      this.sp_call(e => e.mut_think_mark_list.clear$())
+      this.sp_call(e => e.mut_think_mark_collection.clear$())
     },
 
     ////////////////////////////////////////////////////////////////////////////////
