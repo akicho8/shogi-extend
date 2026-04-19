@@ -126,30 +126,30 @@ module ShareBoard
 
     ################################################################################
 
-    def think_mark_general_action(data)
+    def think_mark_click_action(data)
       track(data, subject: "思考印", body: data["think_mark_command"], emoji: ":思考印:")
-      broadcast(:think_mark_general_action_broadcasted, data)
+      broadcast(:think_mark_click_action_broadcasted, data)
     end
 
-    def think_mark_group_reject_action(data)
-      track(data, subject: "思考印グループ消去", body: data["general_mark_group_name"], emoji: ":思考印:")
-      broadcast(:think_mark_group_reject_action_broadcasted, data)
+    def think_mark_reject_action(data)
+      track(data, subject: "思考印グループ消去", body: data["general_mark_user_name"], emoji: ":思考印:")
+      broadcast(:think_mark_reject_action_broadcasted, data)
     end
 
-    def think_mark_clear_all_action(data)
+    def think_mark_clear_action(data)
       track(data, subject: "思考印全消去", body: "", emoji: ":思考印:")
-      broadcast(:think_mark_clear_all_action_broadcasted, data)
+      broadcast(:think_mark_clear_action_broadcasted, data)
     end
 
     ################################################################################
 
-    def origin_mark_general_action(data)
+    def origin_mark_share(data)
       # track(data, subject: "移動元印", body: data["origin_mark_command"], emoji: ":移動元印:")
-      broadcast(:origin_mark_general_action_broadcasted, data)
+      broadcast(:origin_mark_share_broadcasted, data)
     end
 
     # def origin_mark_group_reject_action(data)
-    #   track(data, subject: "移動元印グループ消去", body: data["general_mark_group_name"], emoji: ":移動元印:")
+    #   track(data, subject: "移動元印グループ消去", body: data["general_mark_user_name"], emoji: ":移動元印:")
     #   broadcast(:origin_mark_group_reject_action_broadcasted, data)
     # end
 

@@ -29,24 +29,23 @@ export default {
       hv["class"]                    = this.SB.sp_component_class
 
       // ここ以降 hv.sp_* = でないとおかしいので注意
-      hv.sp_mode                     = this.SB.sp_mode
-      hv.sp_turn                     = this.SB.current_turn
-      hv.sp_body                     = this.SB.current_sfen
-      hv.sp_player_info              = this.SB.sp_player_info
-      hv.sp_human_side               = this.SB.sp_human_side
-      hv.sp_think_mark_list          = this.SB.sp_think_mark_list
-      hv.sp_origin_mark_list         = this.SB.sp_origin_mark_list
-      hv.sp_legal_move_only          = this.SB.legal_strict_p
-      hv.sp_my_piece_only_move       = this.SB.legal_strict_p
-      hv.sp_my_piece_kill_disabled   = this.SB.legal_strict_p
-      hv.sp_lift_cancel_action       = this.SB.lift_cancel_action_info.key
-      hv.sp_mobile_vertical          = this.SB.mobile_layout_info.sp_mobile_vertical
-      hv.sp_layout                   = this.SB.desktop_layout_info.sp_layout
-      hv.sp_layer                    = this.sp_layer
-      hv.sp_controller               = this.sp_controller
-      hv.sp_slider                   = this.sp_slider
-      hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
-      hv.sp_origin_mark_variant      = "omv_square_color"
+      hv.sp_mode                    = this.SB.sp_mode
+      hv.sp_turn                    = this.SB.current_turn
+      hv.sp_body                    = this.SB.current_sfen
+      hv.sp_player_info             = this.SB.sp_player_info
+      hv.sp_human_side              = this.SB.sp_human_side
+      hv.sp_think_mark_collection   = this.SB.sp_think_mark_collection
+      hv.sp_origin_mark_collection  = this.SB.sp_origin_mark_collection
+      hv.sp_legal_move_only         = this.SB.legal_strict_p
+      hv.sp_my_piece_only_move      = this.SB.legal_strict_p
+      hv.sp_my_piece_kill_disabled  = this.SB.legal_strict_p
+      hv.sp_lift_cancel_action      = this.SB.lift_cancel_action_info.key
+      hv.sp_mobile_vertical         = this.SB.mobile_layout_info.sp_mobile_vertical
+      hv.sp_layout                  = this.SB.desktop_layout_info.sp_layout
+      hv.sp_layer                   = this.development_p
+      hv.sp_controller              = this.SB.controller_show_p
+      hv.sp_slider                  = this.SB.controller_show_p
+      hv.sp_mounted_focus_to_slider = true // マウントしたらスライダーにフォーカスする
 
       hv.sp_request_checkmate_stat = true // 詰み判定する
       hv.sp_request_position_hash  = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める
@@ -76,21 +75,6 @@ export default {
       }
 
       return hv
-    },
-
-    // 開発時だけレイヤーON
-    sp_layer() {
-      return this.development_p
-    },
-
-    // 対局中にコントローラーは隠す
-    sp_controller() {
-      return this.SB.controller_show_p
-    },
-
-    // 対局中はスライダーも隠す
-    sp_slider() {
-      return this.SB.controller_show_p
     },
 
     // 動作を受け取るやつら
