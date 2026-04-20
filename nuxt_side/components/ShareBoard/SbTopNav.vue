@@ -91,11 +91,11 @@ export default {
         min-width: 10rem
 
   //////////////////////////////////////////////////////////////////////////////// 色
-  background-color: $black
+  background-color: var(--sb_top_nav_bg_color)
   .navbar_item
-    color: $white
+    color: var(--sb_top_nav_font_color)
   a.navbar_item:hover
-    background-color: $black-ter
+    background-color: var(--sb_top_nav_bg_hover_color)
 
   //////////////////////////////////////////////////////////////////////////////// 個々の調整
   .sidebar_toggle_handle
