@@ -28,7 +28,6 @@ export const HandleNameNgWordUserList = [
   "わかりません",
   "unn?ko",
   "zxc",
-  "端歩端歩",
 
   // 捨てハン2
   "段位者|級位者",
