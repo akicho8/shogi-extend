@@ -201,7 +201,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbDebug
   .xemoji
     height: 4rem

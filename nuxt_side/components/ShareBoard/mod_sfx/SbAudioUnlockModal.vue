@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbAudioUnlockModal
   .modal-background
     background-color: hsla(0, 0%, 0%, 0.75)

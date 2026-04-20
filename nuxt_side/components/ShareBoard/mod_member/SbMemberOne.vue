@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbMemberOne
   &.SbAvatarLine
     &.is_look_away

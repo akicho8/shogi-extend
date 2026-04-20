@@ -142,7 +142,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbShortcutModal
   +modal_max_width(512px)
 

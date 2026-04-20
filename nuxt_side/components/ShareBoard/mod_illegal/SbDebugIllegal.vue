@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbDebugIllegal
   __css_keep__: 0
 </style>

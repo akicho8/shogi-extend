@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 
 .SbAvatarLine
   line-height: 1.75  // 以下共通とする

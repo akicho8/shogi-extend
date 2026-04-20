@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbChatOpenButton2
   font-size: 1.5rem
   .mdi

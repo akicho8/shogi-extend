@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .ResendConfirmModal
   +modal_max_width(400px)
 

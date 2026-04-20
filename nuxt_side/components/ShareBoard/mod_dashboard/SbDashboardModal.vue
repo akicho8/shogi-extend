@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 .SbDashboardModal
   // +modal_width_auto
   +modal_max_width(640px)

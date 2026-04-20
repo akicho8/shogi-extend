@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../sass/support"
+@import "../../scss/support"
 .SbDashboard
   min-height: 100svh
   background-color: $white-ter

@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support"
+@import "../scss/support"
 
 .SbSidebar
   .sidebar-background
