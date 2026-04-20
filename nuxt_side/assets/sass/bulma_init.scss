@@ -16,7 +16,7 @@ $google  : rgb(221, 75,  57);
 $piyo    : #f29601;
 $gold    : hsl(38, 80%, 60%);
 
-$sbc_b   : hsl(36.23,75.36%,58.63%); // 盤の色(黄色)
+$board_orange_color   : hsl(36.23,75.36%,58.63%); // 盤の色(黄色)
 
 $twitter-invert : findColorInvert($twitter);
 $github-invert  : findColorInvert($github);
@@ -24,7 +24,7 @@ $google-invert  : findColorInvert($google);
 $gold-invert    : findColorInvert($gold);
 $piyo-invert    : findColorInvert($piyo);
 $orange-invert  : findColorInvert($orange);
-$sbc_b-invert   : findColorInvert($sbc_b);
+$board_orange_color-invert   : findColorInvert($board_orange_color);
 
 // $custom-colors に入れておくと下のクラスが定義される
 //   .has-text-twitter
@@ -39,7 +39,7 @@ $custom-colors: (
   "gold"    : ($gold    , $gold-invert    ),
   "piyo"    : ($piyo    , $piyo-invert    ),
   "orange"  : ($orange  , $orange-invert  ),
-  "sbc_b"   : ($sbc_b   , $sbc_b-invert   ),
+  "board_orange_color"   : ($board_orange_color   , $board_orange_color-invert   ),
 );
 
 // 主用カラー
