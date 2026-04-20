@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .RoomRecreateModal
   __css_keep__: 0
   //   +modal_width(26rem)

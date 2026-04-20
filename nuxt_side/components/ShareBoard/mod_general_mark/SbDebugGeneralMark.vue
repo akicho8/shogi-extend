@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .SbDebugGeneralMark
   __css_keep__: 0
 </style>

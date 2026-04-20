@@ -176,7 +176,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .MemberInfoModal
   +modal_width(480px)
   th:not([align])

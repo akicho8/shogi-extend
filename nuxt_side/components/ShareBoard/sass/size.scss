@@ -1,0 +1,18 @@
+.ModalInsideCustomShogiPlayer {
+  @include mobile {
+    // スマホは18remを越えると(コンテンツにもよるが)上下がスクロールしはじめる
+    max-width: 16rem;
+  }
+  @include tablet {
+    width: 16rem;
+  }
+  @include desktop {
+    width: 17rem;
+  }
+  @include widescreen {
+    width: 18rem;
+  }
+  @include fullhd {
+    width: 19rem;
+  }
+}

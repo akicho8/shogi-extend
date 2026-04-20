@@ -1,0 +1,40 @@
+// |--------------------------+------|
+// | SbMemberList.vue         | 左側 |
+// | XhistoryContainer.vue | 右側 |
+// |--------------------------+------|
+.SbApp {
+  .SideColumn {
+    @include desktop {
+      max-width: 12rem;
+    }
+    @include widescreen {
+      max-width: 16rem;
+    }
+
+    &.is_content_blank {
+      @include touch {
+        display: none;
+      }
+      @include desktop { // PCではカラムを必ず入れておかないと盤がずれるのでその中の SideColumnScroll を消す
+        .SideColumnScroll {
+          display: none;
+        }
+      }
+    }
+
+    .SideColumnScroll {
+      @include is_scroll_x;
+    }
+
+    .mini_title {
+      font-size: $size-7;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      .mini_title_desc {
+        font-weight: normal;
+        margin-left: 0.25rem;
+      }
+    }
+  }
+}

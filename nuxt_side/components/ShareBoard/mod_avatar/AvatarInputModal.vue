@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .AvatarInputModal
   +modal_width(480px)
   .modal-card-body

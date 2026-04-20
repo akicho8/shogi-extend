@@ -115,8 +115,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
-@import "shogi-player/components/support.sass"
+@import "../sass/support"
+@import "shogi-player/components/support"
 
 .SbShogiPlayer
   +setvar(sp_grid_inner_stroke, var(--sb_grid_stroke))  // グリッドの太さ

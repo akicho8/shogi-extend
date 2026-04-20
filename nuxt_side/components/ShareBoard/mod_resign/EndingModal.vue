@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 
 .EndingModal
   +modal_width_auto

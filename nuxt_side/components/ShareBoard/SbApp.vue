@@ -254,5 +254,5 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./sass/all.sass"
+@import "./sass/all"
 </style>

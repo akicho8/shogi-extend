@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 
 .QuizMakerModal
   +modal_max_width(30rem)

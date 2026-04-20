@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .XhistoryContainer.column
   +SideColumnScrollOn
   +touch

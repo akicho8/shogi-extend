@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .TurnChangeModal
   +modal_width(512px)
   .modal-card-body

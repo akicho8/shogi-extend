@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .HandleNameModal
   +modal_width(320px)
   .modal-card-body

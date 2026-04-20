@@ -1,0 +1,34 @@
+.SbApp {
+  .MainSection.section {
+    @include tablet {
+      padding: 0.75rem;
+    }
+    @include desktop {
+      padding: 1.5rem;
+    }
+  }
+
+  // タッチ端末では縦並びになるので上のマージンを調整する
+  @include touch {
+    .SideColumn {
+      margin-top: 1rem;
+      padding: 0 0.5rem;
+    }
+  }
+
+  .SbShogiPlayer {
+    // 盤の左右の隙間
+    // @include tablet {
+    //   @include margin_lr(0.75rem);
+    // }
+    @include desktop {
+      @include margin_lr(1.00rem);
+    }
+    @include widescreen {
+      @include margin_lr(1.25rem);
+    }
+    @include fullhd {
+      @include margin_lr(1.50rem);
+    }
+  }
+}

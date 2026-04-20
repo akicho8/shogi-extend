@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .BoardPresetModal
   .modal-card-body
     padding: 1.25rem

@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../sass/support.sass"
+@import "../../sass/support"
 .SbDashboardBody
   pre
     white-space: pre-wrap

@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../sass/support.sass"
+@import "../sass/support"
 .IllegalTakebackModal
   // +modal_max_width(512px)
   .modal-card-body
