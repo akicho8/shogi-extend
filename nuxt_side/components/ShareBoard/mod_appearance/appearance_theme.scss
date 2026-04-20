@@ -7,16 +7,16 @@
 // | sb_side_bg_color | 両サイドのカラムの背景色 |
 // |------------------+--------------------------|
 
-// appearance_theme_info.js
 .SbApp {
-  // 共有将棋盤の背景など
-  --sb_bg_color: oklch(0.33 0.03 303.91); // oklch(0.42 0 0);
+  // 背景
+  --sb_bg_color: oklch(0.42 0 0);
   --sb_side_bg_color: unset;
   --sb_side_font_color: #{$grey-lighter};
 
-  --sb_top_nav_bg_color: #{$black};
+  // ヘッダー
+  --sb_top_nav_bg_color:       #{$black};
   --sb_top_nav_bg_hover_color: #{$black-ter};
-  --sb_top_nav_font_color: white;
+  --sb_top_nav_font_color:     #{$white};
 
   // 将棋盤
   .SbShogiPlayer {
@@ -27,6 +27,7 @@
   }
 
   // 影
+  // appearance_theme_info.js
   &.is_appearance_theme_real,
   &.is_appearance_theme_hybrid {
     .ShogiPlayer {
