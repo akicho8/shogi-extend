@@ -1,6 +1,7 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 import { CcSoftValidatorInfo } from "./cc_soft_validator_info.js"
+import { ClockAttrInfo } from "./clock_attr_info.js"
 
 import ClockBoxModal from "./ClockBoxModal.vue"
 
@@ -152,6 +153,8 @@ export const mod_clock_box_modal = {
   },
 
   computed: {
+    ClockAttrInfo() { return ClockAttrInfo },
+
     cc_soft_validator_info() {
       let info = null
       if (this.cc_params) {

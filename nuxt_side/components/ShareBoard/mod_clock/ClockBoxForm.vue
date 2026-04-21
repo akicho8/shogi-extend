@@ -11,95 +11,18 @@ table.ClockBoxForm(:class="{cc_unique_p: SB.cc_unique_p}")
           template(v-for="e in SB.Location.values")
             span {{e.name}}
   tbody
-    tr
-      th
-        //- https://buefy.org/documentation/tooltip
-        b-tooltip(position="is-right" multilined type="is-light" dashed)
-          template(v-slot:content)
-            .is-flex.is-flex-direction-column
-              p 秒読みに入る前の持ち時間です
-          | 持ち時間(分)
-      td(v-for="e in SB.cc_params")
-        b-numberinput.initial_main_min(
-          v-bind="input_default_attrs"
-          v-model="e.initial_main_min"
-          :max="60"
-          @input="v => { e.initial_main_min = $GX.to_i(v); SB.cc_input_handle() }"
-          )
-    tr
-      th
-        //- https://buefy.org/documentation/tooltip
-        b-tooltip(position="is-right" multilined type="is-light" dashed)
-          template(v-slot:content)
-            .is-flex.is-flex-direction-column
-              p 毎回、全回復する持ち時間です
-          | 秒読み
-      td(v-for="e in SB.cc_params")
-        b-numberinput.initial_read_sec(
-          v-bind="input_default_attrs"
-          v-model="e.initial_read_sec"
-          :max="60*5"
-          @input="v => { e.initial_read_sec = $GX.to_i(v); SB.cc_input_handle() }"
-          )
-    tr
-      th
-        //- https://buefy.org/documentation/tooltip
-        b-tooltip(position="is-right" multilined type="is-light" dashed)
-          template(v-slot:content)
-            .is-flex.is-flex-direction-column
-              p 秒読みが切れた後の持ち時間です
-              p
-                | 勝負どころのための時間であり、切れ負け防止用の猶予ではありません
-              //- | （秒読み自体がすでに猶予のため、これを猶予とみなすと双方の意味がなくなってしまう）
-          | 考慮時間<b>(分)</b>
-      td(v-for="e in SB.cc_params")
-        b-numberinput.initial_extra_min(
-          v-bind="input_default_attrs"
-          v-model="e.initial_extra_min"
-          :max="60"
-          @input="v => { e.initial_extra_min = $GX.to_i(v); SB.cc_input_handle() }"
-          )
-    tr.is_separator
-      th
-      td(v-for="e in SB.cc_params")
-    tr
-      th
-        //- https://buefy.org/documentation/tooltip
-        b-tooltip(position="is-right" multilined type="is-light" dashed)
-          template(v-slot:content)
-            .is-flex.is-flex-direction-column
-              p フィッシャールール用で1手ごと持ち時間に加算します
-          | 1手毎加算(秒)
-      td(v-for="e in SB.cc_params")
-        b-numberinput.every_plus(
-          v-bind="input_default_attrs"
-          v-model="e.every_plus"
-          :max="60*60"
-          @input="v => { e.every_plus = $GX.to_i(v); SB.cc_input_handle() }"
-          )
+    template(v-for="e in SB.ClockAttrInfo.values")
+      ClockBoxFormAttr(:clock_attr_info="e" :key="e.key")
 </template>
 
 <script>
 import _ from "lodash"
 import { support_child } from "../support_child.js"
+import { GX } from "@/components/models/gx.js"
 
 export default {
   name: "ClockBoxForm",
   mixins: [support_child],
-  computed: {
-    // https://buefy.org/documentation/numberinput
-    input_default_attrs() {
-      return {
-        "min": 0,
-        "expanded": true,
-        "size": "is-small",
-        "controls-position": "compact",
-        "exponential": true,
-        "editable": true,
-      }
-    },
-  },
-
 }
 </script>
 
@@ -122,35 +45,9 @@ export default {
   thead
     th
       text-align: center
-  tbody
-    tr.is_separator
-      height: 0.75rem
-    th
-      width: 0%
-      text-align: right
-      padding: 0 0.5rem
-    td
-      width: 100%
-      padding: 0.25rem
 
   &.cc_unique_p
     tbody
       td
         width: 50%
-
-  // ツールチップ左寄せ
-  .b-tooltip.is-multiline
-    .tooltip-content
-      padding: 1rem
-      width: 15rem
-
-      text-align: left
-      line-height: 1.5
-
-      .is-flex
-        gap: 0.75rem
-
-      // .title
-      //   color: inherit
-      //   white-space: nowrap
 </style>
