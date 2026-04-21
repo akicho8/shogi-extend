@@ -8,7 +8,6 @@ import { CcBehaviorInfo } from "./cc_behavior_info.js"
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-
 export const mod_clock_box = {
   data() {
     return {
