@@ -29,7 +29,7 @@ export const mod_export = {
         success_message: this.honpu_stage_info.kifu_copy_message,
       })
       if (success) {
-        // this.sidebar_close()
+        this.debug_alert("棋譜コピー完了")
       }
     },
 

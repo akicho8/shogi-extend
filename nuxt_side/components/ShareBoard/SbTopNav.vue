@@ -34,7 +34,7 @@
     a.navbar_item.navbar_item_wide.play_mode_set_handle(@click="SB.play_mode_set_handle" v-if="SB.edit_mode_p")
       | 編集完了
 
-    SbChatOpenButton2
+    SbChatModalOpenButton
 
     a.navbar_item.navbar_item_wide.sidebar_toggle_handle(@click="SB.sidebar_toggle_handle" v-if="SB.play_mode_p")
       .mdi.mdi-menu

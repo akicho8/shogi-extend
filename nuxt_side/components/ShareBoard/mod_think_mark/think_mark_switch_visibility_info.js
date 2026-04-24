@@ -6,8 +6,8 @@ export class ThinkMarkSwitchVisibilityInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "tmsv_hidden",  name: "しない", type: "is-primary", message: "スマホまたは初心者向け (PCであれば表示しなくても右クリックで思考印は書けるしショートカットキーでも、切り替えることができる)", },
-      { key: "tmsv_visible", name: "する",   type: "is-primary", message: "玄人向け (注意: スマホではアイコンがないと思考印モードを有効にすることができない)", },
+      { key: "tmsv_hidden",  name: "しない", type: "is-primary", message: "", },
+      { key: "tmsv_visible", name: "する",   type: "is-primary", message: "", },
     ]
   }
 }

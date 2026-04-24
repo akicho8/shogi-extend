@@ -1,5 +1,5 @@
 <template lang="pug">
-a.navbar_item.navbar_item_wide.SbChatOpenButton2.chat_modal_open_handle(
+a.navbar_item.navbar_item_wide.SbChatModalOpenButton.chat_modal_open_handle(
   @click="SB.chat_modal_open_handle"
   v-if="SB.play_mode_p && SB.chat_button_visibility_info.show_p"
   )
@@ -11,14 +11,14 @@ a.navbar_item.navbar_item_wide.SbChatOpenButton2.chat_modal_open_handle(
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "SbChatOpenButton2",
+  name: "SbChatModalOpenButton",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../stylesheets/support"
-.SbChatOpenButton2
+.SbChatModalOpenButton
   font-size: 1.5rem
   .mdi
     position: relative
