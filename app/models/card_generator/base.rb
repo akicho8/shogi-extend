@@ -23,7 +23,7 @@ module CardGenerator
         :stroke_antialias => true,            # 縁取りのアンチエイリアス (効いてない。常にtrue)
         :stroke_opacity   => 1.0,             # 縁取りの不透明度 (効いてない。常にtrue)
 
-        :padding_lr       => 128 + 64 + 32,   # 左右のpadding
+        :padding_inline       => 128 + 64 + 32,   # 左右のpadding
       }
     end
 
@@ -114,7 +114,7 @@ module CardGenerator
         if v = params[:font_size]
           v
         else
-          (params[:width] - params[:padding_lr]) / body.toeuc.bytesize.fdiv(2).ceil
+          (params[:width] - params[:padding_inline]) / body.toeuc.bytesize.fdiv(2).ceil
         end
       end
     end

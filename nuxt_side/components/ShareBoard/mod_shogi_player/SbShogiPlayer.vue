@@ -127,11 +127,11 @@ export default {
   +setvar(sp_membership_vertical_gap, 0.075)   // 盤の左右の隙間(全体横レイアウト時)
   +setvar(sp_membership_horizontal_gap, 0.075) // 盤の上下の隙間(全体縦レイアウト時)
 
-  +padding_lr(unset)
+  padding-inline: unset
 
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
-    +padding_tb(unset)
+    padding-block: unset
     &.is_sb_mode_play
       max-width: calc(var(--sb_board_width) * 1.0dvmin)
     &.is_sb_mode_edit

@@ -19,16 +19,16 @@
   .SbShogiPlayer {
     // 盤の左右の隙間
     // @include tablet {
-    //   @include margin_lr(0.75rem);
+    //   margin-inilne: 0.75rem;
     // }
     @include desktop {
-      @include margin_lr(1.00rem);
+      margin-inilne: 1.00rem;
     }
     @include widescreen {
-      @include margin_lr(1.25rem);
+      margin-inilne: 1.25rem;
     }
     @include fullhd {
-      @include margin_lr(1.50rem);
+      margin-inilne: 1.50rem;
     }
   }
 }
