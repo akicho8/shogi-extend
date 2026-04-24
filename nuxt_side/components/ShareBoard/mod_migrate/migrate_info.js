@@ -24,6 +24,12 @@ export class MigrateInfo extends ApplicationMemoryRecord {
           context.image_size_key = "is_image_size_1080x810"
         },
       },
+      {
+        version: 20260424000000,
+        up: context => {
+          context.origin_mark_feature_p = true
+        },
+      },
     ]
   }
 }
