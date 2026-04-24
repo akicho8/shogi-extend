@@ -40,7 +40,7 @@ export default {
     justify-content: center
     flex-direction: column
   .CustomShogiPlayerWrap
-    width: stretch
+    width: 100%
     margin: $wkbk_share_gap 0
     +tablet
       padding-top: unset

@@ -95,7 +95,7 @@ export default {
       display: flex
       align-items: center
       justify-content: center
-      width: stretch // 両方を均等する。内容に比例する場合は flex-basis: content にする
+      width: 100% // 両方を均等する。内容に比例する場合は flex-basis: content にする
       padding: 1rem
       border-radius: 0.5rem
       +tablet

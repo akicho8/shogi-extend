@@ -118,5 +118,5 @@ export default {
 
 <style lang="sass">
 .FriendlyPie
-  width: stretch
+  width: 100%
 </style>

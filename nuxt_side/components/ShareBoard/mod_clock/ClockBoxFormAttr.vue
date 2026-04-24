@@ -60,7 +60,7 @@ export default {
     text-align: right
     padding: 0 0.5rem
   td
-    width: stretch
+    width: 100%
     padding: 0.25rem
 
   // ツールチップ左寄せ

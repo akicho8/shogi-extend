@@ -541,7 +541,7 @@ export default {
       margin-top: $xy_master_board_top_bottom_gap
 
   .CustomShogiPlayerWrap
-    width: stretch
+    width: 100%
 
     position: relative          // カウントダウン領域の基点にするため
 

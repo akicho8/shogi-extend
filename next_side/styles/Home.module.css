@@ -110,7 +110,7 @@
 
 @media (max-width: 600px) {
   .grid {
-    width: stretch;
+    width: 100%;
     flex-direction: column;
   }
 }

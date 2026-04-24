@@ -367,7 +367,7 @@ export default {
 
   .TeamsContainer
     // width: 12rem
-    // width: stretch
+    // width: 100%
     display: flex // OrderTeamOne を横並び化
     justify-content: center
     gap: 6px

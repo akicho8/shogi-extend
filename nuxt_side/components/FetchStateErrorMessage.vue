@@ -23,7 +23,7 @@ export default {
   overflow: auto
 
   .text-block
-    width: stretch
-    height: stretch
+    width: 100%
+    height: 100%
     margin: auto
 </style>

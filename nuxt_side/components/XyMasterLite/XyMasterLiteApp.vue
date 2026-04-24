@@ -298,7 +298,7 @@ export default {
         color: $grey-light
 
   .CustomShogiPlayerWrap
-    width: stretch
+    width: 100%
 
     position: relative          // カウントダウン領域の基点にするため
 

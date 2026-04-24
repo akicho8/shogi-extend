@@ -474,7 +474,7 @@ export default {
     align-items: center
     progress
       margin-left: 0.25rem
-      width: stretch
+      width: 100%
 
 .STAGE-development
   .CpuBattleApp

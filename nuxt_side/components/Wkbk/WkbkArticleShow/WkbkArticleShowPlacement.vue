@@ -100,7 +100,7 @@ export default {
       +tablet
         margin: $wkbk_share_gap 0
 
-      width: stretch
+      width: 100%
       +tablet
         max-width: 54dvmin
       .footer_buttons

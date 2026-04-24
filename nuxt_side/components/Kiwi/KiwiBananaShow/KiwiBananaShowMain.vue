@@ -82,9 +82,9 @@ export default {
     display: flex
     align-items: center
     justify-content: center
-    width: stretch
+    width: 100%
     .CustomShogiPlayerPosition
-      width: stretch
+      width: 100%
       +tablet
         width: 70%
       +desktop

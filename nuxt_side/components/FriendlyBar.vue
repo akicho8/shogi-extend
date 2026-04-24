@@ -271,7 +271,7 @@ export default {
 
 <style lang="sass">
 .FriendlyBar
-  width: stretch
+  width: 100%
   // .zoom_button_container
   //   position: absolute
   //   top: 0

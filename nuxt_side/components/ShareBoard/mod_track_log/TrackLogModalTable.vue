@@ -42,7 +42,7 @@ export default {
   .cell_section
     __css_keep__: 0
   .cell_message
-    width: stretch
+    width: 100%
     white-space: normal
     word-break: break-all
 </style>

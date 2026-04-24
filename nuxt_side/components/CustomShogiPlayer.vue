@@ -34,7 +34,7 @@ export default {
 
 <style lang="sass">
 .CustomShogiPlayer
-  width: stretch   // ←これいる？
+  width: 100%   // ←これいる？
 
   +mobile
     +setvar(sp_grid_outer_color, hsla(0, 0%, 0%, 0.4)) // スマホだと少し薄すくる

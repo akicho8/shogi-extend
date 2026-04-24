@@ -13,8 +13,8 @@
         // width: unset;           // 元は升目の同じ大きさなので縦幅だけを無効化し
         // aspect-ratio: 1;        // 比率を1:1にすることで縦も自動的に横と同じになる
         .MembershipLocationMarkTexture {
-          width: stretch;             // そのため内側は最大化すればよい
-          height: stretch;
+          width: 100%;             // そのため内側は最大化すればよい
+          height: 100%;
           background-size: cover;  // cover で完全に生める。contain だと元画像が長方形の場合に隙間ができてしまう
         }
       }

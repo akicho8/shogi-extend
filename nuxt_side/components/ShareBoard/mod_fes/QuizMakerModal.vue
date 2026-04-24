@@ -90,7 +90,7 @@ export default {
       gap: 1rem
       .field
         flex-shrink: 1
-        width: stretch
+        width: 100%
         margin: 0
 
   .modal-card-foot

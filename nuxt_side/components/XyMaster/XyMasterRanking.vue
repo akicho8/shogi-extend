@@ -78,7 +78,7 @@ export default {
   .table
     .index_td
       padding: 0
-      height: stretch
+      height: 100%
       .badge
         display: flex
         justify-content: center
