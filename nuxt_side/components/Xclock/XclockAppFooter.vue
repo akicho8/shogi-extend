@@ -53,7 +53,7 @@ export default {
   +desktop
     height: 64px
 
-  width: 100%
+  width: stretch
 
   padding: 0 8px
 
@@ -61,7 +61,7 @@ export default {
   align-items: center
 
   .dropdown, .dropdown-trigger
-    height: 100%
+    height: stretch
 
   +desktop
     justify-content: center

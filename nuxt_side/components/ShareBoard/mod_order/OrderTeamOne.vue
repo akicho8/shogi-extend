@@ -113,7 +113,7 @@ export default {
     flex-direction: column
 
     margin-top: 6px // ラベルとの隙間
-    height: 100%    // ← ulの下の空いた空間にdropできるようになる (超重要)
+    height: stretch    // ← ulの下の空いた空間にdropできるようになる (超重要)
 
     // &:hover
     //   border: 1px solid $grey-lighter

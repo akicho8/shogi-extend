@@ -45,7 +45,7 @@ export default {
     z-index: 39
     width: 50%
 
-    height: 100%
+    height: stretch
     max-height: 100%
     background-color: hsl(0, 0%, 96%)
     z-index: 39

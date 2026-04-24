@@ -360,12 +360,12 @@ export default {
 
     // 半分を囲むブロック(つまりフッターを含まない)
     .level
-      height: 100%
-      width: 100%
+      height: stretch
+      width: stretch
 
       // 半分
       .level-item
-        height: 100%
+        height: stretch
         width: 50%
 
         // 文字やフォームを中央縦並び配置
@@ -376,14 +376,14 @@ export default {
         // どちらがアクティブかを表すバー
         .active_current_bar, .inactive_current_bar
           height: 48px
-          width: 100%
+          width: stretch
         .active_current_bar
           background-color: $primary
 
         // 時間表示(フォームも含む)
         .wide_container
-          height: 100%
-          width: 100%
+          height: stretch
+          width: stretch
 
           // 中央縦並び
           flex-direction: column

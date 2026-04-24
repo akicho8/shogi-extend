@@ -878,7 +878,7 @@ export default {
     .ox_buttons
       margin-top: 1.5rem
       margin-bottom: 0.5rem
-      width: 100%
+      width: stretch
       .button
         width: 45%
 

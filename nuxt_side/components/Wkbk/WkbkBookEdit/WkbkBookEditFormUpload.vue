@@ -36,8 +36,8 @@ export default {
     .position_center
       position: absolute
       top: 0
-      width: 100%
-      height: 100%
+      width: stretch
+      height: stretch
 
       display: flex
       align-items: center

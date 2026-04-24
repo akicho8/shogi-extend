@@ -137,7 +137,7 @@ export default {
       .sidebar-content
         box-shadow: unset
     .right_block
-      width: 100%
+      width: stretch
       +mobile
         padding: 0.75rem 0.5rem
       +tablet

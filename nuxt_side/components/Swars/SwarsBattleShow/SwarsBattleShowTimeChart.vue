@@ -605,7 +605,7 @@ export default {
     justify-content: center
     align-items: center
     .canvas_wrap
-      width: 100%
+      width: stretch
       max-width: 640px
   .time_chart_variant
     label.radio

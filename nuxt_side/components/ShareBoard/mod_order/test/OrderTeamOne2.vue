@@ -70,7 +70,7 @@ export default {
     flex-direction: column
 
     // border: 1px dashed change_color(red, $alpha: 0.5)
-    height: 100% // ← 超重要。ulの下の空いた空間にdropできるようになる
+    height: stretch // ← 超重要。ulの下の空いた空間にdropできるようになる
     cursor: move
 
     // 名前の一つ

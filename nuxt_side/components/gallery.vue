@@ -44,7 +44,7 @@ export default {
 
   .cc_container
     .image
-      width: 100%
+      width: stretch
       +tablet
         max-width: 12rem
 

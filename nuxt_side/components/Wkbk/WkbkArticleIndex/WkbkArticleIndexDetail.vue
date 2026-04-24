@@ -28,7 +28,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleIndexDetail
-  width: 100%
+  width: stretch
 
   display: flex
   justify-content: center
@@ -36,7 +36,7 @@ export default {
   flex-direction: column
 
   .CustomShogiPlayerWrap
-    width: 100%
+    width: stretch
     +tablet
       padding-top: unset
       padding-bottom: unset

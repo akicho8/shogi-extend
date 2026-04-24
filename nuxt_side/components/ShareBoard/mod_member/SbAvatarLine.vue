@@ -50,7 +50,7 @@ export default {
 .SbAvatarLine
   line-height: 1.75  // 以下共通とする
 
-  // width: 100%
+  // width: stretch
   display: flex
   // align-items: flex-start
   align-items: center

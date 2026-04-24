@@ -35,7 +35,7 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ClockBoxForm
-  width: 100%
+  width: stretch
   th
     font-size: $size-7
     white-space: nowrap

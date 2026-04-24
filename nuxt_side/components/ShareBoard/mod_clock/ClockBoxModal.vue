@@ -104,7 +104,7 @@ export default {
   .active_bar
     margin-top: 1rem
     height: 6px
-    width: 100%
+    width: stretch
     border-radius: 4px
     &.is_active
       background-color: $primary

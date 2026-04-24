@@ -134,8 +134,8 @@ export default {
     .modal-card-body
       padding: 1.0rem
       .body_inner
-        width: 100%
-        height: 100%
+        width: stretch
+        height: stretch
 
         display: flex
         align-items: center
@@ -145,17 +145,17 @@ export default {
 
         .SbMessageLogWrapper
           flex-grow: 1          // 残りの領域にめいっぱい広げる
-          width: 100%
+          width: stretch
           position: relative
         .InputField
-          width: 100%
+          width: stretch
 
     .modal-card-foot
       .button
         min-width: 6rem
 
   .be_quiet_icon
-    height: 100%
+    height: stretch
     .xemoji
       height: 1.6em
       width: unset

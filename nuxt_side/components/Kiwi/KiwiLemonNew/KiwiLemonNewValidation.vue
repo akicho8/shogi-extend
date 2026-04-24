@@ -29,7 +29,7 @@ export default {
     padding: 0.25rem
     margin: 0
     border: 0
-    width: 100%
+    width: stretch
     &:hover
       background-color: $white-ter
 
