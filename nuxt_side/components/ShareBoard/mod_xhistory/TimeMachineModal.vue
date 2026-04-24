@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .TimeMachineModal
   +modal_width(512px)
 

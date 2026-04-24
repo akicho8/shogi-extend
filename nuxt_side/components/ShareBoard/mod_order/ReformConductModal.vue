@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .ReformConductModal
   +modal_width(400px)
 </style>

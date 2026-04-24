@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .SbStartStep
   .wide_button_group
     display: flex

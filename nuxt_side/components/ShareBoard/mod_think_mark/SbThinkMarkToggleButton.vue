@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .SbThinkMarkToggleButton
   font-size: 1.75rem
   .mdi

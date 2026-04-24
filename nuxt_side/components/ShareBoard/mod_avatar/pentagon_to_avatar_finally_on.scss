@@ -1,7 +1,7 @@
 // プロフィール画像のときだけ表示を丸くするには？
 //   border-radius のパラメータをCSS変数にしてプロフィール画像なら 100% にして絵文字なら 0 % にする
 
-@import "../scss/support";
+@import "../stylesheets/support";
 @import "shogi-player/components/support";
 
 .SbApp {

@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .AppearanceModal
   __css_keep__: 0
   .modal-card-body

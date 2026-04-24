@@ -360,7 +360,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .OrderModal
   +modal_width(480px)
   // +modal_width_auto

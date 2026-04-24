@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .SbDebugHowler
   __css_keep__: 0
 </style>

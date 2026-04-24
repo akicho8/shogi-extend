@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .RoomUrlCopyModal
   .modal-card-body
     display: flex

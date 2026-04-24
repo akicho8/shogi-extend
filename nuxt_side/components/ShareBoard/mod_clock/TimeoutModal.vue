@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 
 .TimeoutModal
   +modal_max_width(25rem)

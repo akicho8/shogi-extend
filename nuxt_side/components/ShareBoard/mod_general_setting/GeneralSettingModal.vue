@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .GeneralSettingModal
   .animation-content
     max-width: 60rem

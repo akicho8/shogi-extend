@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./scss/support"
+@import "./stylesheets/support"
 .SbBottomNav
   z-index: 30                   // b-navbar で fixed-bottom したときの初期値
   position: fixed

@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 
 // 大きさに関してのみの設定
 .ChatModal

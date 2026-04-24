@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .SbHelpModal
   +modal_max_width(80rem)
   .modal-card-body

@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 
 .ClockBoxModal
   +modal_width(24rem)

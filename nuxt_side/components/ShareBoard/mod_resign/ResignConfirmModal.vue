@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 
 .ResignConfirmModal
   // +modal_width(24rem)

@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../scss/support"
+@import "../stylesheets/support"
 .SbDebugHonpu
   __css_keep__: 0
 </style>
