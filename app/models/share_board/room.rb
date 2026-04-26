@@ -99,14 +99,18 @@ module ShareBoard
     end
 
     # 対局履歴用
-    # 最新10件の battles を JSON 用に整形して返す
-    def latest_battles
+    def latest_battles(per:, page:)
       s = battles
       s = s.order(created_at: :desc)
-      s = s.limit(latest_battles_max)
+      if false
+        s = s.offset(per * page.pred)
+        s = s.limit(per)
+      else
+        s = s.page(page).per(per)
+      end
       s = s.includes(win_location: nil, black: :user, white: :user)
       s.as_json({
-          only: [:sfen, :position, :created_at],
+          only: [:id, :sfen, :turn, :position, :created_at],
           include: {
             win_location: { only: [:key] },
             black: { only: [], include: { user: { only: [:name] } } },

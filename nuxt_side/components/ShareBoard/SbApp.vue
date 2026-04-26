@@ -101,6 +101,7 @@ import { mod_appearance           } from "./mod_appearance/mod_appearance.js"
 import { mod_tweet                } from "./mod_tweet/mod_tweet.js"
 
 import { mod_dashboard            } from "./mod_dashboard/mod_dashboard.js"
+import { mod_battle_list           } from "./mod_battle_list/mod_battle_list.js"
 
 export default {
   name: "SbApp",
@@ -141,6 +142,7 @@ export default {
     mod_member_bc,
     mod_tweet,
     mod_dashboard,
+    mod_battle_list,
     mod_image_download,
     mod_app_update,
     mod_sfx,

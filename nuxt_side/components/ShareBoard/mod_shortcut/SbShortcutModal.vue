@@ -89,6 +89,10 @@
             .sc_label 手合割
             .sc_buttons
               b-tag(type="is-primary") i
+          .sc_item
+            .sc_label 対局履歴
+            .sc_buttons
+              b-tag(type="is-primary") l
 
       .column.is-half-desktop.is-half-tablet
         .sc_title 思考印

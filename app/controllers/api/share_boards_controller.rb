@@ -12,6 +12,16 @@ module Api
       render json: ShareBoard::Dashboard.new(params_with_user).call
     end
 
+    # GET http://localhost:3000/api/share_board/battle_list.json?room_key=dev_room
+    def battle_list
+      render json: ShareBoard::BattleList.new(params_with_user).call
+    end
+
+    # GET http://localhost:3000/api/share_board/dashboard3.json?room_key=dev_room
+    def dashboard3
+      render json: ShareBoard::Dashboard3.new(params_with_user).call
+    end
+
     # GET http://localhost:3000/api/share_board/chat_message_loader.json?room_key=dev_room
     def chat_message_loader
       render json: room.as_json_for_chat_message_loader(params_with_user)
