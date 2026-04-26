@@ -72,4 +72,7 @@ export const HandleNameNgWordUserList = [
 
   // 無理矢理NGを抜けてくるやつ
   "あなぁる",
+
+  // 他者の名前
+  // "藤井聡太",
 ]
