@@ -8,13 +8,11 @@ client-only
     SbTopNav
     SbBottomNav
     MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
-      .container.is-fluid
-        //- .is-desktop でデスクトップ以上のときだけ横並びになる
-        .columns.MainColumns.is-centered.is-desktop.is-variable.is-0
-          SbShogiPlayer(ref="SbShogiPlayer")
-          SbMemberList
-          XhistoryContainer(ref="XhistoryContainer")
-        SbDebug(v-if="debug_mode_p")
+      .columns.MainColumns.is-centered.is-desktop.is-variable.is-0
+        SbShogiPlayer(ref="SbShogiPlayer")
+        SbMemberList
+        XhistoryContainer(ref="XhistoryContainer")
+    SbDebug(v-if="debug_mode_p")
 </template>
 
 <script>
