@@ -1,14 +1,89 @@
 .SbApp {
-  // タブレット以上では盤は中央に来る
-  @include tablet {
-    .SbMemberList {
-      order: 1;
+  // モダンモード風にするとHTMLタグの背景色が見えるため
+  min-height: 100dvh;
+
+  .MainContainer {
+    display: flex;
+    justify-content: center;    // 基本横並びだが
+
+    // スマホとタブレットの場合
+    @include touch {
+      flex-direction: column;   // 縦並び かつ順番を変更する
+      .SbShogiPlayer {
+        order: 1;
+      }
+      .SbMemberList {
+        order: 2;
+      }
+      .XhistoryContainer {
+        order: 3;
+      }
+      // また空の要素は隙間が不自然になるので全体を消す
+      .SideColumn {
+        &.is_content_blank {
+          display: none;
+        }
+      }
     }
+
+    @include touch {
+      padding: 0.75rem 0; // 外側の隙間
+      gap: 1rem;          // 駒台と履歴の隙間
+    }
+    @include tablet {
+      padding: 0.75rem;   // 外側の隙間
+    }
+    @include desktop {
+      padding: 1.5rem;    // 外側の隙間
+      gap: 0.5rem;        // 駒台と履歴の隙間
+    }
+    @include widescreen {
+      gap: 1rem;          // 駒台と履歴の隙間
+    }
+
     .SbShogiPlayer {
-      order: 2;
+      // 積極的に縮んでよいので flex-shrink: 0 は入れない
     }
+
+    .SideColumn {
+      @include desktop {
+        width: 14rem;
+      }
+      @include widescreen {
+        width: 18rem;           // flex なのでこれは仮。動的に縮む
+      }
+    }
+
+    // メンバー一覧はデスクトップのときだけスクロール対応
+    .SbMemberList {
+      @include desktop {
+        @include SideColumnScrollOn;
+      }
+    }
+
+    // 履歴は常にスクロール対応
     .XhistoryContainer {
-      order: 3;
+      @include SideColumnScrollOn;
+    }
+
+    // // 縦並びなので横を少し空ける
+    // .SideColumn {
+    //   @include touch {
+    //     padding: 0.5rem;
+    //   }
+    // }
+
+    // .SideColumn {
+    //   border-radius: 6px;
+    // }
+  }
+
+  &.debug_mode_p {
+    .MainContainer > * {
+      border: 1px solid oklch(1.0 0 0 / 0.2);
+    }
+    .ScrollBlock {
+      overflow: auto ! important;
     }
   }
 }

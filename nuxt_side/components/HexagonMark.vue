@@ -23,6 +23,7 @@ export default {
   &.black
     color: $black-ter
     -webkit-text-stroke: 1px $grey-dark
+    // -webkit-text-stroke: 2px oklch(from $black-ter calc(l * 2.0) c h)
   &.white
     color: $white-ter
     -webkit-text-stroke: 1px $grey-light

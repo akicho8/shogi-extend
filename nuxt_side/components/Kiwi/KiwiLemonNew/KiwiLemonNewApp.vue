@@ -139,10 +139,6 @@ export default {
     .tab-content
       padding: 0.75rem 0
 
-  // .MainColumn
-  //   // +tablet
-  //   //   max-width: 40rem
-
   // for KiwiLemonNewQueueAll, KiwiLemonNewQueueSelf
   .table_status_column
     width: 5rem // "成功" が "変換中" になったときガクッとさせないための幅

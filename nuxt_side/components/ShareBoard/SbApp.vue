@@ -7,11 +7,10 @@ client-only
     SbControlPanel
     SbTopNav
     SbBottomNav
-    MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
-      .columns.MainColumns.is-centered.is-desktop.is-variable.is-0
-        SbShogiPlayer(ref="SbShogiPlayer")
-        SbMemberList
-        XhistoryContainer(ref="XhistoryContainer")
+    .MainContainer(v-if="!room_recreate_now")
+      SbMemberList
+      SbShogiPlayer(ref="SbShogiPlayer")
+      XhistoryContainer(ref="XhistoryContainer")
     SbDebug(v-if="debug_mode_p")
 </template>
 

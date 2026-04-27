@@ -2,8 +2,8 @@
   background-color: var(--sb_bg_color);
 
   .SideColumn {
+    color: var(--sb_side_font_color);
     &.is_content_present {
-      color:            var(--sb_side_font_color);
       background-color: var(--sb_side_bg_color);
     }
   }

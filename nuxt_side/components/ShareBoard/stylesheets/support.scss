@@ -1,7 +1,8 @@
 @mixin SideColumnScrollOn {
   position: relative;
-  .SideColumnScroll {
+  .ScrollBlock {
     @include overlay;
     @include is_scroll_y;
+    overflow-x: hidden;
   }
 }

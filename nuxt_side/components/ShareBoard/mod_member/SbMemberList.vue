@@ -1,6 +1,6 @@
 <template lang="pug">
-.SbMemberList.SideColumn.column(:class="has_content_class(SB.visible_member_infos)")
-  .SideColumnScroll(ref="SideColumnScroll")
+.SbMemberList.SideColumn(:class="has_content_class(SB.visible_member_infos)")
+  .ScrollBlock
     .SbAvatarLinesWrap
       template(v-if="SB.order_enable_p")
         template(v-if="true")
@@ -44,9 +44,13 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/support"
-.SbMemberList.column
-  +desktop
-    +SideColumnScrollOn
+.SbMemberList
+  .HexagonMark
+    font-size: 1.5rem
+
+  // +touch
+  //   height: stretch
+  //   max-height: 4rem
 
   .SbAvatarLinesWrap
     display: flex

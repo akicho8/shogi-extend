@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbShogiPlayer.ToastMainBoard.MainColumn.column(:class="main_column_class")
+.SbShogiPlayer.ToastMainBoard(:class="main_column_class")
   CustomShogiPlayer(
     v-bind="sp_component_attributes"
     v-on="sp_component_events"
@@ -127,35 +127,30 @@ export default {
   +setvar(sp_membership_vertical_gap, 0.075)   // 盤の左右の隙間(全体横レイアウト時)
   +setvar(sp_membership_horizontal_gap, 0.075) // 盤の上下の隙間(全体縦レイアウト時)
 
-  padding-inline: unset
-
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
-    padding-block: unset
     &.is_sb_mode_play
-      max-width: calc(var(--sb_board_width) * 1.0dvmin)
+      width: calc(var(--sb_board_width) * 1.0dvmin)
     &.is_sb_mode_edit
-      max-width: calc(var(--sb_board_width) * 1.0dvmin * 0.75)
+      width: calc(var(--sb_board_width) * 1.0dvmin * 0.75)
 
   //////////////////////////////////////////////////////////////////////////////// 残り時間の少なさを背景色で伝える
-  .CustomShogiPlayer
-    .MembershipLocationPlayerInfo
-      &.read_sec_60, &.extra_sec_60
-        background-color: $white
-        color: $black !important
-      &.read_sec_20, &.extra_sec_20
-        background-color: change_color($yellow, $saturation: 50%, $lightness: 80%) !important
-        color: $black !important
-      &.read_sec_10, &.extra_sec_10
-        background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
-        color: $black !important
+  .MembershipLocationPlayerInfo
+    &.read_sec_60, &.extra_sec_60
+      background-color: $white
+      color: $black !important
+    &.read_sec_20, &.extra_sec_20
+      background-color: change_color($yellow, $saturation: 50%, $lightness: 80%) !important
+      color: $black !important
+    &.read_sec_10, &.extra_sec_10
+      background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
+      color: $black !important
 
 .SbApp.debug_mode_p
-  .CustomShogiPlayer
-    .MembershipLocationPlayerInfoName
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .MembershipLocationPlayerInfoTime
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .MembershipLocationMarkTexture
-      border: 1px dashed change_color($danger, $alpha: 0.5)
+  .MembershipLocationPlayerInfoName
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+  .MembershipLocationPlayerInfoTime
+    border: 1px dashed change_color($primary, $alpha: 0.5)
+  .MembershipLocationMarkTexture
+    border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>

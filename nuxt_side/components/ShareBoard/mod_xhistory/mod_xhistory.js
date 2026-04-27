@@ -61,11 +61,5 @@ export const mod_xhistory = {
         performed_at: this.$time.current_ms(),
       })
     },
-    xhistory_scroll_to_bottom() {
-      const e = this.$refs.XhistoryContainer
-      if (e) {
-        this.$nextTick(() => this.scroll_to_bottom(e.$refs.SideColumnScroll))
-      }
-    },
   },
 }

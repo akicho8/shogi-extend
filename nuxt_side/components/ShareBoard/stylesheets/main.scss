@@ -1,13 +1,3 @@
-.SbApp {
-  // モダンモード風にするとHTMLタグの背景色が見えるため
-  min-height: 100dvh;
-
-  // 上下にある負のマージンを取る
-  .columns {
-    margin: 0;
-  }
-}
-
 // 全体で overscroll-behavior: none すると Mac PC では左フリックが効かなくなるため共有将棋盤内でのみ左右も禁止する
 :root:has(.SbApp) {
   overscroll-behavior: none;

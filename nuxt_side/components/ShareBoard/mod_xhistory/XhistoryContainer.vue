@@ -1,9 +1,8 @@
 <template lang="pug">
-.XhistoryContainer.SideColumn.column.is-size-7(:class="has_content_class(SB.xhistory_records)")
-  .SideColumnScroll(ref="SideColumnScroll")
-    .XhistoryItems
-      template(v-for="(e, i) in SB.xhistory_records")
-        XhistoryItem(:e="e")
+.XhistoryContainer.SideColumn(:class="has_content_class(SB.xhistory_records)")
+  .ScrollBlock.XhistoryItems
+    template(v-for="(e, i) in SB.xhistory_records")
+      XhistoryItem(:e="e")
 </template>
 
 <script>
@@ -17,12 +16,12 @@ export default {
 
 <style lang="sass">
 @import "../stylesheets/support"
-.XhistoryContainer.column
-  +SideColumnScrollOn
+.XhistoryContainer
   +touch
     height: 16rem
   .XhistoryItems
     display: flex
     flex-direction: column
     gap: 1px // 上下の b-tag 同士が繋がってしまうのを避けるため必ず1pxあける
+  font-size: $size-7
 </style>
