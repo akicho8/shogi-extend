@@ -95,7 +95,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       .button_elements
         b-button.general_setting_modal_open_handle(size="is-small" @click="SB.general_setting_modal_open_handle") 設定
         b-button.general_help_modal_open_handle(size="is-small" @click="SB.general_help_modal_open_handle") 使い方
-        b-button.general_dashboard_modal_handle(size="is-small" @click="SB.general_dashboard_modal_handle" :disabled="!SB.cable_p") 対局履歴
+        b-button.battle_list_modal_open_handle(size="is-small" @click="SB.battle_list_modal_open_handle" :disabled="!SB.cable_p") 対局履歴
         b-button.tweet_modal_handle(size="is-small" @click="SB.tweet_modal_handle") ツイート
         b-button.is-hidden-mobile.shortcut_modal_open_handle(size="is-small" @click="SB.shortcut_modal_open_handle") ショートカット
 

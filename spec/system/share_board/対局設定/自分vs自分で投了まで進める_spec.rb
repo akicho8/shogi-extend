@@ -25,7 +25,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     resign_run
 
     sidebar_open
-    find(".general_dashboard_modal_handle").click
+    find(".battle_list_modal_open_handle").click
 
     assert_no_selector(".SbDashboardUserRanking")                                                      # ランキングは表示されていない
     assert_selector(".SbDashboardBattleIndex tr")                                                      # 対局履歴が1件ある
