@@ -10,7 +10,7 @@ client-only
     MainSection.is_mobile_padding_zero(v-if="!room_recreate_now")
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
-        .columns.is-centered.is-desktop.is-variable.is-0
+        .columns.MainColumns.is-centered.is-desktop.is-variable.is-0
           SbShogiPlayer(ref="SbShogiPlayer")
           SbMemberList
           XhistoryContainer(ref="XhistoryContainer")

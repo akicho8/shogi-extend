@@ -16,19 +16,7 @@
     }
   }
 
-  .SbShogiPlayer {
-    // 盤の左右の隙間
-    // @include tablet {
-    //   margin-inilne: 0.75rem;
-    // }
-    @include desktop {
-      margin-inilne: 1.00rem;
-    }
-    @include widescreen {
-      margin-inilne: 1.25rem;
-    }
-    @include fullhd {
-      margin-inilne: 1.50rem;
-    }
-  }
+  // .columns.MainColumns {
+  //   gap: 1rem;                  // 駒台と履歴の隙間 (touch以下では盤とメンバー一覧の隙間)
+  // }
 }
