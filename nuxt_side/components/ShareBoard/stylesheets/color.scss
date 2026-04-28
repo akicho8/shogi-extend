@@ -3,8 +3,6 @@
 
   .SideColumn {
     color: var(--sb_side_font_color);
-    &.is_content_present {
-      background-color: var(--sb_side_bg_color);
-    }
+    background-color: var(--sb_side_bg_color);
   }
 }

@@ -45,13 +45,6 @@ export default {
 <style lang="sass">
 @import "../stylesheets/support"
 .SbMemberList
-  .HexagonMark
-    font-size: 1.5rem
-
-  // +touch
-  //   height: stretch
-  //   max-height: 4rem
-
   .SbAvatarLinesWrap
     display: flex
     flex-direction: column

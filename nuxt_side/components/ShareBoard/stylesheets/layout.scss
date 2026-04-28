@@ -26,31 +26,35 @@
       }
     }
 
+    // 外側の隙間
     @include touch {
-      padding: 0.75rem 0; // 外側の隙間
-      gap: 1rem;          // 駒台と履歴の隙間
+      margin: 0.75rem 0;
     }
     @include tablet {
-      padding: 0.75rem;   // 外側の隙間
+      margin: 0.75rem;
     }
     @include desktop {
-      padding: 1.5rem;    // 外側の隙間
-      gap: 0.5rem;        // 駒台と履歴の隙間
+      margin: 1.5rem;
+    }
+
+    // 駒台と履歴の隙間
+    @include touch {
+      gap: 1rem;
+    }
+    @include desktop {
+      gap: 1rem;
     }
     @include widescreen {
-      gap: 1rem;          // 駒台と履歴の隙間
+      gap: 1rem;
     }
 
-    .SbShogiPlayer {
-      // 積極的に縮んでよいので flex-shrink: 0 は入れない
-    }
-
+    // 幅
     .SideColumn {
       @include desktop {
-        width: 14rem;
+        width: 12rem;
       }
       @include widescreen {
-        width: 18rem;           // flex なのでこれは仮。動的に縮む
+        width: 16rem;           // flex なのでこれは仮。動的に縮む
       }
     }
 
@@ -79,8 +83,12 @@
   }
 
   &.debug_mode_p {
+    .MainContainer {
+      border: 1px dashed oklch(1.0 0 0 / 0.5);
+    }
     .MainContainer > * {
-      border: 1px solid oklch(1.0 0 0 / 0.2);
+      border: 1px dashed oklch(1.0 0 0 / 0.5);
+      border-radius: 8px;
     }
     .ScrollBlock {
       overflow: auto ! important;

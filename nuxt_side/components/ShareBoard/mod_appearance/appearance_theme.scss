@@ -11,9 +11,6 @@
   // 背景
   --sb_bg_color: oklch(0.42 0 0);
   --sb_side_bg_color: unset;
-  &.debug_mode_p {
-    --sb_side_bg_color: oklch(0.46 0 0);
-  }
   --sb_side_font_color: #{$grey-lighter};
 
   // ヘッダー
