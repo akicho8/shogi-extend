@@ -4,7 +4,7 @@
     .modal-card-title
       | 部屋のリンクをコピーしますか？
   .modal-card-body
-    p フレンドに伝えるとこの部屋に誘導できます
+    p 共有するとこの部屋に誘導できます
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="SB.room_url_copy_modal_close_handle" icon-left="chevron-left")
     b-button.apply_button(@click="SB.room_url_copy_handle" type="is-primary") コピーする
