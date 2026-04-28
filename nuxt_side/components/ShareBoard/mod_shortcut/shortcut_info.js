@@ -4,114 +4,35 @@ import { GX } from "@/components/models/gx.js"
 export class ShortcutInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      {
-        _if: (c, e) => c.play_mode_p && e.key === "?",
-        call: c => c.shortcut_modal_toggle_handle(),
-      },
-      {
-        _if: (c, e) => c.KeyboardHelper.pure_code_p(e, "Enter"),
-        call: c => c.chat_modal_shortcut_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Backspace"),
-        call: c => c.think_mark_reject_action(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_code_p(e, "Space"),
-        call: c => c.sidebar_toggle_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "0"),
-        call: c => c.turn_change_to_zero_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "i"),
-        call: c => c.board_preset_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "1"),
-        call: c => c.gate_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && (c.KeyboardHelper.pure_key_p(e, "2") || c.KeyboardHelper.pure_key_p(e, "o")),
-        call: c => c.order_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && (c.KeyboardHelper.pure_key_p(e, "3") || c.KeyboardHelper.pure_key_p(e, "t")),
-        call: c => c.cc_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "m"),
-        call: c => c.think_mark_toggle_shortcut_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "h"),
-        call: c => c.honpu_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "z"),
-        call: c => c.honpu_direct_return_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && e.code === "KeyE" && c.KeyboardHelper.shift_p(e),
-        call: c => c.edit_mode_set_handle(),
-      },
-      {
-        _if: (c, e) => c.edit_mode_p && e.code === "KeyE" && c.KeyboardHelper.shift_p(e),
-        call: c => c.play_mode_set_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && e.key === "!",
-        call: c => c.honpu_master_setup(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "c"),
-        call: c => c.kifu_copy_handle("kif_utf8"),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "s"),
-        call: c => c.current_short_url_copy_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "u"),
-        call: c => c.current_long_url_copy_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "b"),
-        call: c => c.kifu_copy_handle(c.FormatTypeInfo.fetch("bod")),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "d"),
-        call: c => c.kifu_download_handle(c.FormatTypeInfo.fetch("kif_utf8")),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "p"),
-        call: c => c.cc_play_pause_resume_shortcut_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, "l"),
-        call: c => c.battle_list_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && e.code === "KeyV" && c.KeyboardHelper.shift_p(e),
-        call: c => c.kifu_load_from_clipboard(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && e.code === "KeyR" && c.KeyboardHelper.shift_p(e),
-        call: c => c.kifu_loader_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && c.KeyboardHelper.pure_key_p(e, ","),
-        call: c => c.general_setting_modal_shortcut_handle(),
-      },
-      {
-        _if: (c, e) => c.play_mode_p && e.key === "%",
-        call: c => c.appearance_modal_open_handle(),
-      },
-      {
-        _if: (c, e) => c.debug_mode_p && e.code === "Backslash",
-        call: c => c.tl_modal_open_handle(),
-      },
+      { key: "shortcut_modal_toggle_handle",          kb_key: "?",          if_mode: "play", if_debug: false, },
+      { key: "turn_change_to_zero_modal_open_handle", kb_key: "0",          if_mode: "play", if_debug: false, },
+      { key: "board_preset_modal_open_handle",        kb_key: "i",          if_mode: "play", if_debug: false, },
+      { key: "gate_modal_open_handle",                kb_key: "1",          if_mode: "play", if_debug: false, },
+      { key: "order_modal_open_handle",               kb_key: ["2", "o"],   if_mode: "play", if_debug: false, },
+      { key: "cc_modal_open_handle",                  kb_key: ["3", "t"],   if_mode: "play", if_debug: false, },
+      { key: "think_mark_toggle_shortcut_handle",     kb_key: "m",          if_mode: "play", if_debug: false, },
+      { key: "honpu_modal_open_handle",               kb_key: "h",          if_mode: "play", if_debug: false, },
+      { key: "honpu_direct_return_handle",            kb_key: "z",          if_mode: "play", if_debug: false, },
+      { key: "edit_mode_set_handle",                  kb_key: "E",          if_mode: "play", if_debug: false, },
+      { key: "play_mode_set_handle",                  kb_key: "E",          if_mode: "edit", if_debug: false, },
+      { key: "honpu_master_setup_for_shortcut",       kb_key: "W",          if_mode: "play", if_debug: false, },
+      { key: "kifu_copy_handle_kif_utf8",             kb_key: "c",          if_mode: "play", if_debug: false, },
+      { key: "current_short_url_copy_handle",         kb_key: "s",          if_mode: "play", if_debug: false, },
+      { key: "current_long_url_copy_handle",          kb_key: "u",          if_mode: "play", if_debug: false, },
+      { key: "kifu_copy_handle_bod",                  kb_key: "b",          if_mode: "play", if_debug: false, },
+      { key: "kifu_download_handle_kif_utf8",         kb_key: "d",          if_mode: "play", if_debug: false, },
+      { key: "cc_play_pause_resume_shortcut_handle",  kb_key: "p",          if_mode: "play", if_debug: false, },
+      { key: "battle_list_modal_open_handle",         kb_key: "l",          if_mode: "play", if_debug: false, },
+      { key: "battle_ranking_modal_open_handle",      kb_key: "r",          if_mode: "play", if_debug: false, },
+      { key: "avatar_input_modal_open_handle",        kb_key: "a",          if_mode: "play", if_debug: false, },
+      { key: "appearance_modal_open_handle",          kb_key: "g",          if_mode: "play", if_debug: false, },
+      { key: "kifu_load_from_clipboard",              kb_key: "V",          if_mode: "play", if_debug: false, },
+      { key: "kifu_loader_modal_open_handle",         kb_key: "R",          if_mode: "play", if_debug: false, },
+      { key: "general_setting_modal_shortcut_handle", kb_key: ",",          if_mode: "play", if_debug: false, },
+      { key: "chat_modal_shortcut_handle",            kb_code: "Enter",     if_mode: "all",  if_debug: false, },
+      { key: "tl_modal_open_handle",                  kb_code: "Backslash", if_mode: "play", if_debug: true,  },
+      { key: "think_mark_reject_action",              kb_code: "Backspace", if_mode: "play", if_debug: false, },
+      { key: "sidebar_toggle_handle",                 kb_code: "Space",     if_mode: "play", if_debug: false, },
     ]
   }
 }

@@ -9,6 +9,8 @@ export const mod_battle_list = {
     ////////////////////////////////////////////////////////////////////////////////
 
     battle_list_modal_open_handle() {
+      if (this.room_required_warn_message()) { return }
+
       if (!this.battle_list_modal_instance) {
         this.sfx_click()
         this.battle_list_modal_open()

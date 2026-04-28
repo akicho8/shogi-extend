@@ -38,6 +38,8 @@ export const AppConfig = {
     lifted_piece_cancel: false, // 反則ブロック時に持った駒を離すか？
     // anyone_block_can_p: true,   // 誰でも「なかったことにする」ことができるか？
   },
+
+  battle_list_per: 10, // 対局履歴の1ページあたりの件数
 }
 
 if (process.env.NODE_ENV === "development") {

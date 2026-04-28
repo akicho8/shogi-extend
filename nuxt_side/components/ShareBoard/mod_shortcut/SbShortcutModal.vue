@@ -1,5 +1,5 @@
 <template lang="pug">
-.SbShortcutModal.modal-card.has-text-left(@click="SB.shortcut_modal_close_handle" style="width:auto")
+.modal-card.has-text-left(@click="SB.shortcut_modal_close_handle" style="width:auto")
   .modal-card-head
     .modal-card-title ショートカット
   .modal-card-body
@@ -12,11 +12,11 @@
           .sc_item
             .sc_label 棋譜の張り付け
             .sc_buttons
-              b-tag(type="is-primary") ⇧ v
+              b-tag(type="is-primary") V
           .sc_item
             .sc_label 棋譜の読み込み
             .sc_buttons
-              b-tag(type="is-primary") ⇧ r
+              b-tag(type="is-primary") R
           .sc_item
             .sc_label 棋譜コピー (KIF)
             .sc_buttons
@@ -40,13 +40,21 @@
           .sc_item
             .sc_label 局面編集 / 完了
             .sc_buttons
-              b-tag(type="is-primary") ⇧ e
+              b-tag(type="is-primary") E
           .sc_item
             .sc_label 現局面を本譜とする
             .sc_buttons
-              b-tag(type="is-primary") !
+              b-tag(type="is-primary") W
+          .sc_item
+            .sc_label 本譜を開く
+            .sc_buttons
+              b-tag(type="is-primary") h
+          .sc_item
+            .sc_label 本譜に戻る
+            .sc_buttons
+              b-tag(type="is-primary") z
 
-      .column.is-half-desktop.is-half-tablet
+      .column.is-half-tablet.is-half-desktop
         .sc_title 対局
         .sc_table
           .sc_item
@@ -74,14 +82,6 @@
             .sc_buttons
               b-tag(type="is-primary") Enter
           .sc_item
-            .sc_label 本譜を開く
-            .sc_buttons
-              b-tag(type="is-primary") h
-          .sc_item
-            .sc_label 本譜に戻る
-            .sc_buttons
-              b-tag(type="is-primary") z
-          .sc_item
             .sc_label 初期配置に戻す
             .sc_buttons
               b-tag(type="is-primary") 0
@@ -93,8 +93,12 @@
             .sc_label 対局履歴
             .sc_buttons
               b-tag(type="is-primary") l
+          .sc_item
+            .sc_label ランキング
+            .sc_buttons
+              b-tag(type="is-primary") r
 
-      .column.is-half-desktop.is-half-tablet
+      .column.is-half-tablet.is-half-desktop
         .sc_title 思考印
         .sc_table
           .sc_item
@@ -109,7 +113,7 @@
             .sc_label 一括消去
             .sc_buttons
               b-tag(type="is-primary") Backspace
-      .column.is-half-desktop.is-half-tablet
+      .column.is-half-tablet.is-half-desktop
         .sc_title その他
         .sc_table
           .sc_item
@@ -123,7 +127,11 @@
           .sc_item
             .sc_label スタイル設定
             .sc_buttons
-              b-tag(type="is-primary") %
+              b-tag(type="is-primary") g
+          .sc_item
+            .sc_label アバター設定
+            .sc_buttons
+              b-tag(type="is-primary") a
           .sc_item
             .sc_label これを開く
             .sc_buttons

@@ -51,10 +51,10 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     assert_selector(".SbApp.play_mode_p")
 
-    shortcut_send([:shift, "e"])
+    shortcut_send("E")
     assert_selector(".SbApp.edit_mode_p")
 
-    shortcut_send([:shift, "e"])
+    shortcut_send("E")
     assert_selector(".SbApp.play_mode_p")
   end
 
@@ -62,6 +62,6 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
   xit "棋譜の読み込み" do
     visit_app
     Clipboard.write("68S")
-    shortcut_send([:shift, "v"])
+    shortcut_send("V")
   end
 end

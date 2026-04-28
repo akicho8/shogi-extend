@@ -26,6 +26,8 @@
 
 module ShareBoard
   class Roomship < ApplicationRecord
+    SCALING_FACTOR = 32767      # カラムが integer(4) のため
+
     belongs_to :user # 対局者
     belongs_to :room # 所属する部屋
 
@@ -34,19 +36,21 @@ module ShareBoard
     before_validation do
       self.win_count ||= 0
       self.lose_count ||= 0
-      self.battles_count = win_count + lose_count
+      self.draw_count ||= 0
+      self.battles_count = win_count + lose_count + draw_count
       if battles_count.zero?
         self.win_rate = 0
       else
         self.win_rate = win_count.fdiv(battles_count)
       end
-      self.score = win_count
+      self.score = (win_rate * SCALING_FACTOR).to_i
       self.rank ||= -1
     end
 
     with_options presence: true do
       validates :win_count
       validates :lose_count
+      validates :draw_count
       validates :win_rate
       validates :score
       validates :rank

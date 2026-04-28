@@ -23,7 +23,7 @@ import { Location                 } from "shogi-player/components/models/locatio
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
 import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
 
-import { AppConfig                } from "./models/mod_app_config.js"
+import { AppConfig                } from "./models/app_config.js"
 
 import { support_parent           } from "./support_parent.js"
 
@@ -97,8 +97,8 @@ import { mod_appearance           } from "./mod_appearance/mod_appearance.js"
 
 import { mod_tweet                } from "./mod_tweet/mod_tweet.js"
 
-import { mod_dashboard            } from "./mod_dashboard/mod_dashboard.js"
 import { mod_battle_list           } from "./mod_battle_list/mod_battle_list.js"
+import { mod_battle_ranking           } from "./mod_battle_ranking/mod_battle_ranking.js"
 
 export default {
   name: "SbApp",
@@ -138,7 +138,7 @@ export default {
     mod_xmatch,
     mod_member_bc,
     mod_tweet,
-    mod_dashboard,
+    mod_battle_ranking,
     mod_battle_list,
     mod_image_download,
     mod_app_update,

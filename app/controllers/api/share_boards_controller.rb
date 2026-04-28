@@ -7,19 +7,14 @@ module Api
       render json: ShareBoard::BattleCreate.new(params_with_user).call
     end
 
-    # GET http://localhost:3000/api/share_board/dashboard.json?room_key=dev_room
-    def dashboard
-      render json: ShareBoard::Dashboard.new(params_with_user).call
+    # GET http://localhost:3000/api/share_board/battle_ranking.json?room_key=dev_room
+    def battle_ranking
+      render json: ShareBoard::BattleRanking.new(params_with_user).call
     end
 
     # GET http://localhost:3000/api/share_board/battle_list.json?room_key=dev_room
     def battle_list
       render json: ShareBoard::BattleList.new(params_with_user).call
-    end
-
-    # GET http://localhost:3000/api/share_board/dashboard3.json?room_key=dev_room
-    def dashboard3
-      render json: ShareBoard::Dashboard3.new(params_with_user).call
     end
 
     # GET http://localhost:3000/api/share_board/chat_message_loader.json?room_key=dev_room

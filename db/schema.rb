@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_23_000003) do
+ActiveRecord::Schema[8.1].define(version: 2025_10_23_000009) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -480,6 +480,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_23_000003) do
   create_table "share_board_roomships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.integer "battles_count", null: false, comment: "対局数"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "draw_count", null: false, comment: "引分数"
     t.integer "lose_count", null: false, comment: "負数"
     t.integer "rank", null: false, comment: "順位"
     t.bigint "room_id", null: false, comment: "部屋"

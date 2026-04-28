@@ -1,11 +1,6 @@
 import SbShortcutModal from "./SbShortcutModal.vue"
 
 export const sb_shortcut_modal = {
-  data() {
-    return {
-    }
-  },
-
   beforeDestroy() {
     this.shortcut_modal_close()
   },
@@ -21,15 +16,17 @@ export const sb_shortcut_modal = {
     },
 
     shortcut_modal_open_handle() {
-      // this.sidebar_close()
-      this.sfx_click()
-      this.shortcut_modal_open()
+      if (!this.shortcut_modal_instance) {
+        this.sfx_click()
+        this.shortcut_modal_open()
+      }
     },
 
     shortcut_modal_close_handle() {
-      // this.sidebar_close()
-      this.sfx_click()
-      this.shortcut_modal_close()
+      if (this.shortcut_modal_instance) {
+        this.sfx_click()
+        this.shortcut_modal_close()
+      }
     },
 
     shortcut_modal_open() {

@@ -4,19 +4,19 @@ ShareBoard.setup(force: true)
 room_key = "dev_room"
 room = ShareBoard::Room.create!(key: "dev_room", name: "(room.name)")
 room.redis_clear
-2.times do
+25.times do |i|
   records = [
     { user_name: "alice", location_key: "black", judge_key: "win",  },
     { user_name: "bob",   location_key: "white", judge_key: "lose", },
     { user_name: "carol", location_key: "black", judge_key: "win",  },
   ]
-  room.battles.create!(win_location_key: "black") do |e|
+  room.battles.create!(win_location_key: "black", created_at: "2000-01-01".to_date + i) do |e|
     e.memberships.build(records)
   end
 end
 
-s { ShareBoard::BattleList.new(room_key: room_key).call }
-pp ShareBoard::BattleList.new(room_key: room_key).call
+# s { ShareBoard::BattleList.new(room_key: room_key).call }
+# pp ShareBoard::BattleList.new(room_key: room_key).call
 ShareBoard::Battle.count    # => 2
 
 # >>   ShareBoard::Room Load (0.3ms)  SELECT `share_board_rooms`.* FROM `share_board_rooms` WHERE `share_board_rooms`.`key` = 'dev_room' LIMIT 1 /*application='ShogiWeb'*/

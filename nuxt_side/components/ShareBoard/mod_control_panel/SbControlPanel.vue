@@ -51,6 +51,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
     b-field(custom-class="is-small" label="インポート")
       .button_elements
         b-button.kifu_loader_modal_open_handle(size="is-small" @click="SB.kifu_loader_modal_open_handle('')") 棋譜の読み込み
+        b-button.battle_list_modal_open_handle(size="is-small" @click="SB.battle_list_modal_open_handle") 対局履歴
         b-button.edit_mode_set_handle(size="is-small" @click="SB.edit_mode_set_handle") 局面編集
 
   .box.export_box
@@ -95,14 +96,13 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       .button_elements
         b-button.general_setting_modal_open_handle(size="is-small" @click="SB.general_setting_modal_open_handle") 設定
         b-button.general_help_modal_open_handle(size="is-small" @click="SB.general_help_modal_open_handle") 使い方
-        b-button.battle_list_modal_open_handle(size="is-small" @click="SB.battle_list_modal_open_handle" :disabled="!SB.cable_p") 対局履歴
+        b-button.battle_ranking_modal_open_handle(size="is-small" @click="SB.battle_ranking_modal_open_handle") ランキング
         b-button.tweet_modal_handle(size="is-small" @click="SB.tweet_modal_handle") ツイート
         b-button.is-hidden-mobile.shortcut_modal_open_handle(size="is-small" @click="SB.shortcut_modal_open_handle") ショートカット
 
   .box(v-if="SB.debug_mode_p")
     b-field(custom-class="is-small" label="開発用")
       .button_elements
-        b-button(size="is-small" tag="nuxt-link"  :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="sfx_click()" :disabled="!SB.cable_p") 対局履歴(nuxt-link)
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen, open: 'print'}}" @click.native="sfx_click()") 印刷
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen}}" @click.native="sfx_click()") なんでも棋譜変換
         b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.cable_p") 対局履歴(hrefで別タブ)

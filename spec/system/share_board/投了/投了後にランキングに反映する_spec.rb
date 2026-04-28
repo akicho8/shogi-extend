@@ -11,12 +11,17 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     resign_run
     sidebar_open
+
+    # 対局履歴
     find(".battle_list_modal_open_handle").click
-    within(".modal") do
-      assert_text(:a)
-      assert_text(:b)
-    end
-    find(".permalink").click
-    assert_text("順位")
+    assert_selector(".SbBattleListModal .user_name", text: "a", exact_text: true)
+    assert_selector(".SbBattleListModal .user_name", text: "b", exact_text: true)
+    find(".battle_list_modal_close_handle").click
+
+    # ランキング
+    find(".battle_ranking_modal_open_handle").click
+    assert_selector(".SbBattleRankingModal .user_name", text: "a", exact_text: true)
+    assert_selector(".SbBattleRankingModal .user_name", text: "b", exact_text: true)
+    find(".battle_ranking_modal_close_handle").click
   end
 end

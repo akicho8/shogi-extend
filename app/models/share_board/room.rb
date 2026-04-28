@@ -94,10 +94,6 @@ module ShareBoard
       hv
     end
 
-    def latest_battles_max
-      50
-    end
-
     # 対局履歴用
     def latest_battles(per:, page:)
       s = battles
@@ -110,7 +106,7 @@ module ShareBoard
       end
       s = s.includes(win_location: nil, black: :user, white: :user)
       s.as_json({
-          only: [:id, :sfen, :turn, :position, :created_at],
+          only: [:id, :sfen, :turn, :position, :created_at, :position],
           include: {
             win_location: { only: [:key] },
             black: { only: [], include: { user: { only: [:name] } } },

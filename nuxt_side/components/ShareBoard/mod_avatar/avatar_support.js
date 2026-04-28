@@ -10,7 +10,7 @@ import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
 import dayjs from "dayjs"
 import { parse as TwitterEmojiParser } from "@twemoji/parser"
-import { AppConfig } from "../models/mod_app_config.js"
+import { AppConfig } from "../models/app_config.js"
 import { ShowcaseDefaultString } from "./showcase_default_string.js"
 import { system_reserved_chars } from "./system_reserved_string.js"
 

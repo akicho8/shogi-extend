@@ -23,11 +23,34 @@ input::-webkit-calendar-picker-indicator
 //
 // ↑これを設定すると弊害がでる。スタイルエディタで背景が白くなってしまう
 
-//////// Chrome の input(type="search") で出現する × を消す
+//////// Chrome の input(type="search") で出現する × を消す https://x.com/alicalimli_dev/status/2049730027563225463
 
 ::-webkit-search-cancel-button
   -webkit-appearance: none
 
+//////// ボタンを押したとき四角が出るのを消す
+
+html
+  -webkit-tap-highlight-color: transparent
+  
+//////// スクロールバー改善
+
+// @media (hover: hover)
+//   ::-webkit-scrollbar
+//     width: 16px
+// 
+//   ::-webkit-scrollbar-track
+//     background: #111
+//     border-left: 1px solid #111
+// 
+//   ::-webkit-scrollbar-thumb
+//     border: 6px solid #111
+//     background: #333
+//     border-radius: 100vmax
+// 
+//   ::-webkit-scrollbar-thumb:hover
+//     background: #666
+  
 //////// ブラウザの方で定義しとけ
 
 details

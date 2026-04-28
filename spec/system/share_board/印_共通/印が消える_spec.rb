@@ -11,7 +11,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 本譜と変化を作る
     window_a { piece_move_o("77", "76", "☗7六歩") } # 1手目を指す
-    window_a { shortcut_send("!") }                 # 本譜を作る
+    window_a { shortcut_send("W") }                 # 本譜を作る
     window_b { piece_move_o("33", "34", "☖3四歩") } # 2手目を指す (変化する)
 
     # 思考印をつける

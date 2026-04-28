@@ -25,10 +25,16 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     resign_run
 
     sidebar_open
-    find(".battle_list_modal_open_handle").click
 
-    assert_no_selector(".SbDashboardUserRanking")                                                      # ランキングは表示されていない
-    assert_selector(".SbDashboardBattleIndex tr")                                                      # 対局履歴が1件ある
-    assert_selector(".SbDashboardBattleIndex .memberships_cell", text: "", exact_text: true, count: 2) # しかし両対者は空である
+    # ランキングは表示されていない
+    find(".battle_ranking_modal_open_handle").click
+    assert_no_selector(".SbBattleRankingModal table")
+    find(".battle_ranking_modal_close_handle").click
+
+    # 対局履歴
+    find(".battle_list_modal_open_handle").click
+    assert_selector(".SbBattleListModal tr")                                                      # 対局履歴が1件ある
+    assert_selector(".SbBattleListModal .memberships_cell", text: "", exact_text: true, count: 2) # しかし両対者は空である
+    find(".battle_list_modal_close_handle").click
   end
 end

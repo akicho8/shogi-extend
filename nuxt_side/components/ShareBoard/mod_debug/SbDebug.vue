@@ -42,6 +42,7 @@
       a.panel-block.internet_off_trigger(@click="SB.internet_off_trigger") OFF
       a.panel-block.internet_on_trigger(@click="SB.internet_on_trigger") ON
 
+  SbDebugBattleRanking
   SbDebugBattleList
   SbDebugGeneralMark
   SbDebugOriginMark
@@ -70,7 +71,6 @@
       a.panel-block(@click="SB.cc_timeout_modal_close") 閉じる
 
   SbDebugClock
-  SbDebugDashboard
 
   SbDebugBasic
   .column.is-12

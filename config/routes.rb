@@ -215,7 +215,7 @@ Rails.application.routes.draw do
       get :battle_create if Rails.env.development?
       get :dashboard
       get :battle_list
-      get :dashboard3
+      get :battle_ranking
       get :chat_message_loader
       get :room_restore
     end

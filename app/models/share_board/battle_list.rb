@@ -9,17 +9,25 @@ module ShareBoard
     def call
       room = Room.all
       room = room.find_or_initialize_by(key: params[:room_key])
-      hv = {}
-      hv[:key]      = room.key
-      hv[:total]    = room.battles_count
-      hv[:page]     = params[:page].to_i
-      hv[:per]      = params[:per].to_i
-      hv[:battles]  = room.latest_battles(page: params[:page].to_i, per: params[:per].to_i)
-      hv
+      {}.tap do |hv|
+        hv[:key]     = room.key
+        hv[:total]   = room.battles_count
+        hv[:page]    = page
+        hv[:per]     = per
+        hv[:battles] = room.latest_battles(page: page, per: per)
+      end
     end
 
     private
 
     attr_reader :params
+
+    def page
+      params.fetch(:page).to_i
+    end
+
+    def per
+      params.fetch(:per).to_i
+    end
   end
 end

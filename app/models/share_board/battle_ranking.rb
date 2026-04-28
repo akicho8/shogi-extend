@@ -1,12 +1,12 @@
 module ShareBoard
-  class Dashboard
+  class BattleRanking
     def initialize(params)
       @params = params
     end
 
-    # GET http://localhost:3000/api/share_board/dashboard?room_key=dev_room
-    # GET http://localhost:3000/api/share_board/dashboard?room_key=xxx
-    # GET https://www.shogi-extend.com/api/share_board/dashboard?room_key=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
+    # GET http://localhost:3000/api/share_board/battle_ranking?room_key=dev_room
+    # GET http://localhost:3000/api/share_board/battle_ranking?room_key=xxx
+    # GET https://www.shogi-extend.com/api/share_board/battle_ranking?room_key=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def call
       room = Room.all
       room = room.includes(roomships: :user) # やや奇妙ではあるが find_or_initialize_by の前に指定することで N+1 問題を解決できる
@@ -18,8 +18,10 @@ module ShareBoard
           include: {
             roomships: {
               only: [
+                :id,
                 :win_count,
                 :lose_count,
+                :draw_count,
                 :battles_count,
                 :win_rate,
                 :score,
@@ -34,7 +36,6 @@ module ShareBoard
               },
             }
           },
-          methods: [:latest_battles_max, :latest_battles],
         })
     end
 

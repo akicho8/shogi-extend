@@ -46,6 +46,11 @@ export const honpu_core = {
       this.honpu_branch_clear()
     },
 
+    honpu_master_setup_for_shortcut() {
+      this.honpu_master_setup()
+      this.toast_primary("現在の棋譜を本譜としました")
+    },
+
     honpu_branch_setup(params) {
       this.tl_add("HONPU", "ブランチを初回だけ設定する", params)
       if (this.honpu_stage_info.key === "hs_honpu_only") {

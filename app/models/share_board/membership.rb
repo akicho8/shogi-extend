@@ -51,6 +51,7 @@ module ShareBoard
       roomship = Roomship.find_or_initialize_by(room: room, user: user)
       roomship.win_count = room.ox_count_by_user(user, :win)
       roomship.lose_count = room.ox_count_by_user(user, :lose)
+      roomship.draw_count = room.ox_count_by_user(user, :draw)
       roomship.save!
     end
   end

@@ -33,6 +33,16 @@ export const mod_export = {
       }
     },
 
+    // for shortcut
+    kifu_copy_handle_kif_utf8() {
+      this.kifu_copy_handle("kif_utf8")
+    },
+
+    // for shortcut
+    kifu_copy_handle_bod() {
+      this.kifu_copy_handle("bod")
+    },
+
     //////////////////////////////////////////////////////////////////////////////// show
 
     // 指定の棋譜への直リンURL
@@ -54,7 +64,7 @@ export const mod_export = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
-      GX.assert("format_key" in e, '"format_key" in e')
+      e = this.FormatTypeInfo.fetch(e)
       return this.url_merge({
         ...e.to_h_format_and_encode,
         disposition: "attachment",
@@ -67,6 +77,11 @@ export const mod_export = {
         window.location.href = this.kifu_download_url(e)
         this.xhistory_puts("棋譜ダウンロード")
       }
+    },
+
+    // for shortcut
+    kifu_download_handle_kif_utf8() {
+      this.kifu_download_handle("kif_utf8")
     },
 
     //////////////////////////////////////////////////////////////////////////////// 印刷
