@@ -17,7 +17,7 @@
       i.mdi.mdi-account
       | {{SB.member_infos.length}}
 
-    .navbar_item.navbar_item_wide.xstatus_name.is-hidden-mobile(v-if="SB.xstatus_name")
+    .navbar_item.navbar_item_wide.xstatus_name.is-hidden-mobile(v-if="SB.play_mode_p && SB.xstatus_name")
       | {{SB.xstatus_name}}
 
   .navbar_item_list.right
