@@ -22,6 +22,7 @@ module SharedMethods
       :slider_reflector_notify_scope_key => :rns_except_me,               # スライダーを動かしたときの通知スコープを本番と同じにする
       :export_group_visible_p            => true,                         # エクスポートメニュー
       :think_mark_switch_visibility_key  => :tmsv_visible,                # 思考印スイッチ表示
+      :reform_conduct_feature_p          => true,                         # 反則ブロックモード警告表示
     }
   end
 
