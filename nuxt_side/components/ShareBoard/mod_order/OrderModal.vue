@@ -273,6 +273,9 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     foul_mode_key_updated(foul_mode_key) {
+      if (!this.SB.reform_conduct_feature_p) {
+        return
+      }
       if (foul_mode_key === this.SB.FoulModeInfo.fetch("takeback").key) {
         this.reform_conduct_modal_open()
       }
