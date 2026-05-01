@@ -28,4 +28,11 @@ describe("RoomKeyValidator", () => {
     expect(RoomKeyValidator.valid_p("ホーム")).toEqual(true)
     expect(RoomKeyValidator.valid_p("ホ〜ム")).toEqual(true)
   })
+
+  test("見えない文字はダメ", () => {
+    expect(RoomKeyValidator.valid_p(" ")).toEqual(false)
+    expect(RoomKeyValidator.valid_p("　")).toEqual(false)
+    expect(RoomKeyValidator.valid_p("\t")).toEqual(false)
+    expect(RoomKeyValidator.valid_p("ㅤ")).toEqual(false) // 特殊空白文字
+  })
 })
