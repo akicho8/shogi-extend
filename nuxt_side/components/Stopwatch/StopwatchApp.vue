@@ -198,7 +198,7 @@ export default {
 
     quest_text_reverse() {
       this.sfx_click()
-      this.quest_text = _.reverse(this.quest_list.slice()).join(" ")
+      this.quest_text = this.quest_list.toReversed().join(" ")
     },
 
     quest_generate() {
