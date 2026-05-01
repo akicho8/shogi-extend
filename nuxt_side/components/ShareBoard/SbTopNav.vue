@@ -94,8 +94,10 @@ export default {
   background-color: var(--sb_top_nav_bg_color)
   .navbar_item
     color: var(--sb_top_nav_font_color)
-  a.navbar_item:hover
-    background-color: var(--sb_top_nav_bg_hover_color)
+  a.navbar_item
+    @media (hover: hover)
+      &:hover
+        background-color: var(--sb_top_nav_bg_hover_color)
 
   //////////////////////////////////////////////////////////////////////////////// 個々の調整
   .sidebar_toggle_handle

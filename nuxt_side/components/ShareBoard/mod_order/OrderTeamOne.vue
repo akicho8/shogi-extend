@@ -115,9 +115,6 @@ export default {
     margin-top: 6px // ラベルとの隙間
     height: 100%    // ← ulの下の空いた空間にdropできるようになる (超重要)
 
-    // &:hover
-    //   border: 1px solid $grey-lighter
-
     // ドラッグ要素
     .draggable_item
       background-color: $white

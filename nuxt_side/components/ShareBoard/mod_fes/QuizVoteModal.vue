@@ -102,8 +102,9 @@ export default {
         font-size: 1.5rem
       &.is_inactive
         border: 3px solid transparent
-        &:hover
-          border: 3px solid $grey-lighter
+        @media (hover: hover)
+          &:hover
+            border: 3px solid $grey-lighter
       &.is_active
         border: 3px solid $primary
 
