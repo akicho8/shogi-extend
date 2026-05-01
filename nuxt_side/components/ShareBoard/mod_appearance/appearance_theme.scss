@@ -21,7 +21,7 @@
   // 将棋盤
   .SbShogiPlayer {
     --sp_board_color: #{$board_orange_color};
-    --sp_stand_bg_color: #{$board_orange_color};
+    --sp_stand_bg_color: transparent;
     --sp_touch_lifted_origin_bg_color: transparent;
     --sp_touch_lifted_origin_opacity: 0.4;
   }
