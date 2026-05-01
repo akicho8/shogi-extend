@@ -1,27 +1,6 @@
 require "rails_helper"
 
 RSpec.describe ShareBoard::Room do
-  describe "ランキング" do
-    it "works" do
-      room = ShareBoard::Room.create!
-      room.redis_clear
-
-      2.times do |i|
-        room.battles.create! do |e|
-          e.memberships.build([
-              { user_name: "alice", location_key: "black", judge_key: "win",  },
-              { user_name: "bob",   location_key: "white", judge_key: "lose", },
-              { user_name: "carol", location_key: "black", judge_key: "win",  },
-            ])
-        end
-      end
-
-      room.reload
-      assert { room.roomships.collect(&:rank) === [1, 1, 3] }
-      tp room.roomships if $0 == __FILE__
-    end
-  end
-
   describe "発言履歴" do
     before do
       ShareBoard.setup

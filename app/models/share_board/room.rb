@@ -33,7 +33,6 @@ module ShareBoard
           { user_name: "carol", location_key: "black", judge_key: "win",  },
         ]
         room = Room.create!(key: room_key, name: "(room.name)")
-        room.redis_clear
         room.battles.create!(sfen: sfen) do |e|
           e.memberships.build(records)
         end
@@ -79,6 +78,8 @@ module ShareBoard
     with_options presence: true do
       validates :key
     end
+
+    after_create :redis_clear
 
     ################################################################################ for API
 
@@ -238,9 +239,9 @@ module ShareBoard
         UrlProxy.full_url_for(path: "/share-board", query: { room_key: key })
       end
 
-      def to_share_board_dashboard_url
-        UrlProxy.full_url_for(path: "/share-board/dashboard", query: { room_key: key })
-      end
+      # def to_share_board_dashboard_url
+      #   UrlProxy.full_url_for(path: "/share-board/dashboard", query: { room_key: key })
+      # end
     end
   end
 end

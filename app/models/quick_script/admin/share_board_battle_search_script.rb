@@ -22,7 +22,7 @@ module QuickScript
               end
               row["日時"] = e.created_at.to_fs(:ymdhms)
               row["棋譜"] = { _link_to: "#{e.turn}手", _v_bind: { href: e.to_share_board_url, target: "_blank" }, }
-              row["履歴"] = { _link_to: "履歴", _v_bind: { href: e.room.to_share_board_dashboard_url, target: "_blank" }, }
+              # row["履歴"] = { _link_to: "履歴", _v_bind: { href: e.room.to_share_board_dashboard_url, target: "_blank" }, }
               row["入室"] = { _link_to: "入室", _v_bind: { href: e.room.to_share_board_url, target: "_blank" }, }
             end
           end

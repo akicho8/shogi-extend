@@ -16,7 +16,7 @@ module QuickScript
               row["発言数"] = { _nuxt_link: e.chat_messages_count, _v_bind: { to: qs_nuxt_link_to(qs_page_key: "share_board_chat_message_search", params: { room_id: e.id }), }, }
               row["作成"] = e.created_at.to_fs(:ymdhms)
               row["更新"] = e.updated_at.to_fs(:ymdhms)
-              row["ランキング"] = { _link_to: "ランキング", _v_bind: { href: e.to_share_board_dashboard_url, target: "_blank" }, }
+              # row["ランキング"] = { _link_to: "ランキング", _v_bind: { href: e.to_share_board_dashboard_url, target: "_blank" }, }
               row["入室"] = { _link_to: "入室", _v_bind: { href: e.to_share_board_url, target: "_blank" }, }
               row["面子"] = h_stack do
                 e.users.collect do |user|

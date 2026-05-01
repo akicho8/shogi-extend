@@ -4,7 +4,6 @@ RSpec.describe ShareBoard::BattleList do
   it "call" do
     room_key = "dev_room1"
     room = ShareBoard::Room.create!(key: room_key)
-    room.redis_clear
     room.battles.create!(win_location_key: "black") do |e|
       e.memberships.build([
           { user_name: "alice", location_key: "black", judge_key: "win",  },

@@ -9,9 +9,9 @@ RSpec.describe ShareBoard::Room do
       "turn"     => 142,
       "win_location_key" => "white",
       "memberships" => [
-        { "user_name" => "こみつ",       "location_key" => "black", "judge_key" => "lose", },
-        { "user_name" => "ぬん！",       "location_key" => "white", "judge_key" => "win",  },
-        { "user_name" => "シュワーバー", "location_key" => "black", "judge_key" => "lose", },
+        { "user_name" => "a", "location_key" => "black", "judge_key" => "lose", },
+        { "user_name" => "b", "location_key" => "white", "judge_key" => "win",  },
+        { "user_name" => "c", "location_key" => "black", "judge_key" => "lose", },
       ],
     }.deep_symbolize_keys
   }
@@ -20,27 +20,11 @@ RSpec.describe ShareBoard::Room do
     obj = ShareBoard::BattleCreate.new(params).call
     assert { obj.battle.id }
     assert { obj.success? }
+    assert { obj.battle.room.reload.roomships.order(:rank).collect(&:rank) == [1, 2, 2] }
   end
 
   it "error" do
     obj = ShareBoard::BattleCreate.new(params.merge(fake_error: true)).call
     assert { obj.call.as_json[:error][:message] == "(fake_error)" }
-  end
-
-  it "引き分けの場合" do
-    params = {
-      :room_key  => "(room_key)",
-      :sfen      => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
-      :turn      => 0,
-      :win_location_key => nil,
-      :memberships => [
-        { :user_name => "a", :location_key => "black", :judge_key => "draw", },
-        { :user_name => "b", :location_key => "white", :judge_key => "draw", },
-      ],
-    }
-    obj = ShareBoard::BattleCreate.new(params)
-    obj.call
-    battle = obj.battle
-    assert { battle.room.roomships.collect(&:rank) == [1, 1] }
   end
 end

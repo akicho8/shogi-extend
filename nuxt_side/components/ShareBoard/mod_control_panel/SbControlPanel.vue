@@ -105,7 +105,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       .button_elements
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen, open: 'print'}}" @click.native="sfx_click()") 印刷
         b-button(size="is-small" tag="nuxt-link"  :to="{name: 'adapter', query: {body: SB.current_sfen}}" @click.native="sfx_click()") なんでも棋譜変換
-        b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.cable_p") 対局履歴(hrefで別タブ)
+        // b-button(size="is-small" tag="a" :href="SB.dashboard_url" target="_blank" :disabled="!SB.cable_p") 対局履歴(hrefで別タブ)
         b-button.handle_name_modal_open_handle(size="is-small" @click="SB.handle_name_modal_open_handle") ハンドルネーム変更
         b-button.avatar_input_modal_open_handle(size="is-small" @click="SB.avatar_input_modal_open_handle") アバター設定
         b-button.title_edit_handle(size="is-small" @click="SB.title_edit_handle") タイトル変更

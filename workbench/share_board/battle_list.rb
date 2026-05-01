@@ -3,7 +3,6 @@ ShareBoard.setup(force: true)
 
 room_key = "dev_room"
 room = ShareBoard::Room.create!(key: "dev_room", name: "(room.name)")
-room.redis_clear
 25.times do |i|
   records = [
     { user_name: "alice", location_key: "black", judge_key: "win",  },
