@@ -24,6 +24,9 @@ export const mod_shortcut = {
       if (this.DomHelper.focus_on_input_tag_p()) {
         return
       }
+      if (this.focus_on_input_tag_p()) {
+        return
+      }
       const info = ShortcutInfo.values.find(e => e.match_p(this, event))
       if (!info) {
         return
@@ -31,6 +34,14 @@ export const mod_shortcut = {
       this[info.method]()
       event.preventDefault()
     },
+
+    focus_on_input_tag_p() {
+      const dom = document.activeElement
+      if (dom == null) {
+        return false
+      }
+      return (dom.tagName === "INPUT" && dom.type === "text") || dom.tagName === "TEXTAREA" || dom.tagName === "SELECT" || dom.isContentEditable
+    }
   },
 
   computed: {

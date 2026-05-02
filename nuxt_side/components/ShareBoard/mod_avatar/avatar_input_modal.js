@@ -4,10 +4,6 @@ import { GX } from "@/components/models/gx.js"
 import AvatarInputModal from "./AvatarInputModal.vue"
 
 export const avatar_input_modal = {
-  data() {
-    return {
-    }
-  },
   mounted() {
     if (this.system_reserved_avatar_then_clear) {
       this.__avatar_hard_validation_process()
@@ -19,10 +15,17 @@ export const avatar_input_modal = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
+    avatar_input_modal_toggle_handle() {
+      if (this.avatar_input_modal_instance) {
+        this.avatar_input_modal_close_handle()
+      } else {
+        this.avatar_input_modal_open_handle()
+      }
+    },
+
     avatar_input_modal_open_handle() {
       if (!this.avatar_input_modal_instance) {
         this.sfx_click()
-        // this.sidebar_close()
         this.avatar_input_modal_open()
       }
     },

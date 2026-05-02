@@ -58,6 +58,14 @@ export const honpu_core = {
       }
     },
 
+    honpu_modal_toggle_handle() {
+      if (this.time_machine_modal_instance) {
+        this.time_machine_modal_close_handle()
+      } else {
+        this.honpu_modal_open_handle()
+      }
+    },
+
     honpu_modal_open_handle() {
       if (this.honpu_master) {
         this.time_machine_modal_open_handle_for_honpu(this.honpu_master)

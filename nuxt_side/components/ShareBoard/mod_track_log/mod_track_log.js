@@ -26,6 +26,14 @@ export const mod_track_log = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
+    tl_modal_toggle_handle() {
+      if (this.tl_modal_instance) {
+        this.tl_modal_close_handle()
+      } else {
+        this.tl_modal_open_handle()
+      }
+    },
+
     tl_modal_open_handle() {
       if (!this.tl_modal_instance) {
         this.sfx_click()

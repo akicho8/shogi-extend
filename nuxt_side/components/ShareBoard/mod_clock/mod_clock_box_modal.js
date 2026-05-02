@@ -35,6 +35,14 @@ export const mod_clock_box_modal = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    cc_modal_toggle_handle() {
+      if (this.cc_modal_instance) {
+        this.cc_modal_close_handle()
+      } else {
+        this.cc_modal_open_handle()
+      }
+    },
+
     cc_modal_open_handle() {
       if (!this.cc_modal_instance) {
         if (this.room_required_warn_message()) { return }

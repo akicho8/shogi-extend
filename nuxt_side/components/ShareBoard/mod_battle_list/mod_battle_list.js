@@ -8,6 +8,14 @@ export const mod_battle_list = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
+    battle_list_modal_toggle_handle() {
+      if (this.battle_list_modal_instance) {
+        this.battle_list_modal_close_handle()
+      } else {
+        this.battle_list_modal_open_handle()
+      }
+    },
+
     battle_list_modal_open_handle() {
       if (this.room_required_warn_message()) { return }
 

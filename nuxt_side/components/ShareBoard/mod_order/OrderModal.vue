@@ -70,7 +70,7 @@
         SimpleRadioButton.think_mark_receive_scope(:base="SB" custom-class="is-small" element_size="is-small" model_name="ThinkMarkReceiveScopeInfo" :sync_value.sync="SB.order_draft.think_mark_receive_scope_key")
 
   .modal-card-foot
-    b-button.order_modal_close_handle.has-text-weight-normal(@click="order_modal_close_handle" icon-left="chevron-left")
+    b-button.order_modal_close_handle.has-text-weight-normal(@click="SB.order_modal_close_handle" icon-left="chevron-left")
     template(v-if="SB.order_enable_p")
       b-button.order_submit_handle(@click="order_submit_handle" :type="order_submit_button_type") 確定
 </template>
@@ -122,20 +122,6 @@ export default {
       //     this.SB.order_draft_publish("")
       //   }
       // }
-    },
-
-    order_modal_close_handle() {
-      if (this.SB.order_modal_close_if_not_save_p) {
-        this.SB.order_modal_close_confirm({
-          onConfirm: () => {
-            this.sfx_click()
-            this.SB.order_modal_close()
-          },
-        })
-        return
-      }
-      this.sfx_click()
-      this.SB.order_modal_close()
     },
 
     // 全体ｼｬｯﾌﾙ

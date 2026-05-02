@@ -32,6 +32,14 @@ export const order_modal = {
   },
 
   methods: {
+    order_modal_toggle_handle() {
+      if (this.order_modal_instance) {
+        this.order_modal_close_handle()
+      } else {
+        this.order_modal_open_handle()
+      }
+    },
+
     order_modal_open_handle() {
       if (!this.order_modal_instance) {
         if (this.room_required_warn_message()) { return }
@@ -79,20 +87,38 @@ export const order_modal = {
       to.change_per                   = from.change_per
     },
 
+    order_modal_close_handle() {
+      if (this.order_modal_instance) {
+        if (this.order_modal_close_if_not_save_p) {
+          this.order_modal_close_confirm_modal_open({
+            onConfirm: () => {
+              this.sfx_click()
+              this.order_modal_close()
+            },
+          })
+          return
+        }
+        this.sfx_click()
+        this.order_modal_close()
+      }
+    },
+
     // 対局設定モーダルを閉じる
     // 別のところから強制的に閉じたいとき用
     order_modal_close() {
       if (this.order_modal_instance) {
         this.modal_card_close2("order_modal_instance")
+        this.order_modal_close_confirm_modal_close()
         this.debug_alert("OrderModal close")
       }
     },
 
-    // 閉じる
-    order_modal_close_confirm(params = {}) {
+    // 閉じる確認
+    order_modal_close_confirm_modal_open(params = {}) {
+      this.order_modal_close_confirm_modal_close() // ショートカット連打で order_modal_close_confirm_modal_instance が増えないようにするため
       this.sfx_click()
       this.sb_talk("変更を適用せずに閉じようとしています")
-      this.dialog_confirm({
+      this.order_modal_close_confirm_modal_instance = this.dialog_confirm({
         title: "ちょっと待って",
         type: "is-warning",
         hasIcon: true,
@@ -101,6 +127,11 @@ export const order_modal = {
         focusOn: "cancel",
         ...params,
       })
+    },
+    order_modal_close_confirm_modal_close() {
+      if (this.order_modal_close_confirm_modal_instance) {
+        this.order_modal_close_confirm_modal_instance.close()
+      }
     },
 
     // 反映ボタンを押したときに呼ぶ

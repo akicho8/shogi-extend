@@ -220,6 +220,7 @@ export const vue_dialog = {
     // https://buefy.org/documentation/dialog
     // focusOn の初期値は "confirm"
     // buefy のドキュメントと実装に乖離があり width も customClass も効かない
+    // その上、events: { close: () => { alert(1) }, も効かない
     dialog_confirm(params = {}) {
       return this.$buefy.dialog.confirm({
         message: "本当によいですか？",

@@ -16,9 +16,16 @@ export const mod_gate_modal = {
     this.gate_modal_close()
   },
   methods: {
+    gate_modal_toggle_handle() {
+      if (this.gate_modal_instance) {
+        this.gate_modal_close_handle()
+      } else {
+        this.gate_modal_open_handle()
+      }
+    },
+
     gate_modal_open_handle() {
       if (!this.gate_modal_instance) {
-        // this.sidebar_close()
         this.sfx_click()
         this.gate_modal_open()
       }
@@ -26,7 +33,6 @@ export const mod_gate_modal = {
 
     gate_modal_close_handle() {
       if (this.gate_modal_instance) {
-        // this.sidebar_close()
         this.sfx_click()
         this.gate_modal_close()
       }

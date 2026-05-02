@@ -6,26 +6,38 @@ export const appearance_modal = {
   },
 
   methods: {
-    appearance_modal_open_handle() {
-      this.sfx_click()
-      this.appearance_modal_open()
-      this.general_setting_modal_close()
+    appearance_modal_toggle_handle() {
+      if (this.appearance_modal_instance) {
+        this.appearance_modal_close_handle()
+      } else {
+        this.appearance_modal_open_handle()
+      }
     },
 
-    appearance_modal_close_handle() {
-      this.sfx_click()
-      this.appearance_modal_close()
+    appearance_modal_open_handle() {
+      if (!this.appearance_modal_instance) {
+        this.sfx_click()
+        this.appearance_modal_open()
+      }
     },
 
     appearance_modal_open() {
-      this.appearance_modal_close()
-      this.modal_card_open2("appearance_modal_instance", {
-        component: AppearanceModal,
-        onCancel: () => {
-          this.sfx_click()
-          this.appearance_modal_close()
-        },
-      })
+      if (!this.appearance_modal_instance) {
+        this.modal_card_open2("appearance_modal_instance", {
+          component: AppearanceModal,
+          onCancel: () => {
+            this.sfx_click()
+            this.appearance_modal_close()
+          },
+        })
+      }
+    },
+
+    appearance_modal_close_handle() {
+      if (this.appearance_modal_instance) {
+        this.sfx_click()
+        this.appearance_modal_close()
+      }
     },
 
     appearance_modal_close() {

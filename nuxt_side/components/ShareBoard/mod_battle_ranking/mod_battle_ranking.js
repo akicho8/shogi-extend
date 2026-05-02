@@ -8,6 +8,14 @@ export const mod_battle_ranking = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
+    battle_ranking_modal_toggle_handle() {
+      if (this.battle_ranking_modal_instance) {
+        this.battle_ranking_modal_close_handle()
+      } else {
+        this.battle_ranking_modal_open_handle()
+      }
+    },
+
     battle_ranking_modal_open_handle() {
       if (this.room_required_warn_message()) { return }
 

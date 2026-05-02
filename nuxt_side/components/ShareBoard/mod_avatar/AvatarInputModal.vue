@@ -21,6 +21,8 @@
 import { GX } from "@/components/models/gx.js"
 import { support_child } from "../support_child.js"
 
+const INPUT_FOCUS = false       // false なのはショートカットキー2連打で閉じれるようにするためなのと、focusしても得に利点がないため。
+
 export default {
   name: "AvatarInputModal",
   mixins: [support_child],
@@ -30,7 +32,9 @@ export default {
     }
   },
   mounted() {
-    this.input_focus()
+    if (INPUT_FOCUS) {
+      this.input_focus()
+    }
   },
   methods: {
     input_focus() {
