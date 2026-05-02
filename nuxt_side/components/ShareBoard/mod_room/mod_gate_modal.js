@@ -87,7 +87,6 @@ export const mod_gate_modal = {
         return
       }
 
-      // this.sidebar_close()
       this.gate_modal_close()
 
       this.room_create_from_modal(this.new_room_key, this.new_user_name)

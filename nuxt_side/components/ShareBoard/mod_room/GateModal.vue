@@ -3,26 +3,33 @@
   .modal-card-head
     .modal-card-title
       | 入室
-      b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="SB.cable_p && false") 入室中
     b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.cable_p") 部屋のリンク
   .modal-card-body
     template(v-if="SB.room_key_autocomplete_use_p")
-      // b-autocomplete の場合はモーダルの中に入ってしまって使いにくい
+      // b-autocomplete の場合はモーダルの中に入ってしまって使いにくい → append-to-body で解決
       b-field(label="合言葉" label-position="on-border")
-        b-autocomplete(
-          max-height="4rem"
+        //- https://buefy.org/documentation/autocomplete
+        b-autocomplete.new_room_key(
+          append-to-body
           v-model.trim="SB.new_room_key"
           :data="SB.room_key_autocomplete_complement_list"
+          max-height="21em"
           type="search"
           placeholder=""
           :open-on-focus="true"
-          :clearable="false"
+          :clearable="true"
           expanded
           @select="SB.room_key_autocomplete_select_handle"
           @keydown.native.enter="SB.room_key_autocomplete_enter_handle"
           :disabled="SB.cable_p"
           ref="new_room_key"
           )
+        //- p.control
+        //-   b-dropdown(append-to-body)
+        //-     template(#trigger)
+        //-       b-button(label="選択" icon-right="menu-down")
+        //-     template(v-for="room_key in SB.complement_room_keys")
+        //-       b-dropdown-item(:value="room_key") {{room_key}}
     template(v-else)
       // HTML5のdatalistを使った方がモーダルの上に表示できる
       b-field(label="合言葉" label-position="on-border")
@@ -62,7 +69,7 @@ export default {
 
 <style lang="sass">
 .GateModal
-  +modal_width(320px)
+  +modal_width(372px)
 
   .modal-card-body
     padding: 1.5rem

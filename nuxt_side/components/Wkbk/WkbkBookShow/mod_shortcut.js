@@ -11,7 +11,7 @@ export const mod_shortcut = {
     keydown_handle(e) {
       if (this.is_running_p || this.development_p) {
         this.clog(e)
-        if (this.DomHelper.focus_on_input_tag_p()) {
+        if (this.DomHelper.input_focused_p()) {
           return
         }
         let processed = false
