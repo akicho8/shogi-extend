@@ -29,13 +29,13 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
   it "入退室" do
     visit_app
-    shortcut_send("1")
+    shortcut_send("e")
     assert_selector(".GateModal")
   end
 
   it "時計" do
     visit_room(user_name: :a)
-    shortcut_send("3")
+    shortcut_send("t")
     assert_selector(".ClockBoxModal")
   end
 
