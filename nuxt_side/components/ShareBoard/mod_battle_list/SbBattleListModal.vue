@@ -10,7 +10,6 @@
       b-table(
         :data="room.battles"
         :mobile-cards="false"
-        hoverable
         paginated
         pagination-simple
         backend-pagination

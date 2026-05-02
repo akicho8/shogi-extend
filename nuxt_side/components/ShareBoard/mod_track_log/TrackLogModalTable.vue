@@ -4,7 +4,6 @@ b-table.TrackLogModalTable(
   :mobile-cards="false"
   :show-header="false"
   narrowed
-  hoverable
   detailed
   detail-key="id"
   )

@@ -10,7 +10,6 @@
       b-table(
         :data="room.roomships"
         :mobile-cards="false"
-        hoverable
         )
 
         b-table-column(v-slot="{row}" field="id" label="ID" centered :visible="SB.debug_mode_p")
