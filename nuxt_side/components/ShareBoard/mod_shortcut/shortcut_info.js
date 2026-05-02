@@ -4,35 +4,72 @@ import { GX } from "@/components/models/gx.js"
 export class ShortcutInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "shortcut_modal_toggle_handle",          kb_key: "?",          if_mode: "play", if_debug: false, },
-      { key: "turn_change_to_zero_modal_open_handle", kb_key: "0",          if_mode: "play", if_debug: false, },
-      { key: "board_preset_modal_open_handle",        kb_key: "i",          if_mode: "play", if_debug: false, },
-      { key: "gate_modal_open_handle",                kb_key: "1",          if_mode: "play", if_debug: false, },
-      { key: "order_modal_open_handle",               kb_key: ["2", "o"],   if_mode: "play", if_debug: false, },
-      { key: "cc_modal_open_handle",                  kb_key: ["3", "t"],   if_mode: "play", if_debug: false, },
-      { key: "think_mark_toggle_shortcut_handle",     kb_key: "m",          if_mode: "play", if_debug: false, },
-      { key: "honpu_modal_open_handle",               kb_key: "h",          if_mode: "play", if_debug: false, },
-      { key: "honpu_direct_return_handle",            kb_key: "z",          if_mode: "play", if_debug: false, },
-      { key: "edit_mode_set_handle",                  kb_key: "E",          if_mode: "play", if_debug: false, },
-      { key: "play_mode_set_handle",                  kb_key: "E",          if_mode: "edit", if_debug: false, },
-      { key: "honpu_master_setup_for_shortcut",       kb_key: "W",          if_mode: "play", if_debug: false, },
-      { key: "kifu_copy_handle_kif_utf8",             kb_key: "c",          if_mode: "play", if_debug: false, },
-      { key: "current_short_url_copy_handle",         kb_key: "s",          if_mode: "play", if_debug: false, },
-      { key: "current_long_url_copy_handle",          kb_key: "u",          if_mode: "play", if_debug: false, },
-      { key: "kifu_copy_handle_bod",                  kb_key: "b",          if_mode: "play", if_debug: false, },
-      { key: "kifu_download_handle_kif_utf8",         kb_key: "d",          if_mode: "play", if_debug: false, },
-      { key: "cc_play_pause_resume_shortcut_handle",  kb_key: "p",          if_mode: "play", if_debug: false, },
-      { key: "battle_list_modal_open_handle",         kb_key: "l",          if_mode: "play", if_debug: false, },
-      { key: "battle_ranking_modal_open_handle",      kb_key: "r",          if_mode: "play", if_debug: false, },
-      { key: "avatar_input_modal_open_handle",        kb_key: "a",          if_mode: "play", if_debug: false, },
-      { key: "appearance_modal_open_handle",          kb_key: "g",          if_mode: "play", if_debug: false, },
-      { key: "kifu_load_from_clipboard",              kb_key: "V",          if_mode: "play", if_debug: false, },
-      { key: "kifu_loader_modal_open_handle",         kb_key: "R",          if_mode: "play", if_debug: false, },
-      { key: "general_setting_modal_shortcut_handle", kb_key: ",",          if_mode: "play", if_debug: false, },
-      { key: "chat_modal_shortcut_handle",            kb_code: "Enter",     if_mode: "all",  if_debug: false, },
-      { key: "tl_modal_open_handle",                  kb_code: "Backslash", if_mode: "play", if_debug: true,  },
-      { key: "think_mark_reject_action",              kb_code: "Backspace", if_mode: "play", if_debug: false, },
-      { key: "sidebar_toggle_handle",                 kb_code: "Space",     if_mode: "play", if_debug: false, },
+      { category_key: "基本",   name: "棋譜の張り付け",          trigger_type: "key",  trigger_key: "V",         if_mode: "play", if_debug: false, method: "kifu_load_from_clipboard",              },
+      { category_key: "基本",   name: "棋譜の読み込み",          trigger_type: "key",  trigger_key: "R",         if_mode: "play", if_debug: false, method: "kifu_loader_modal_open_handle",         },
+      { category_key: "基本",   name: "棋譜コピー (KIF)",        trigger_type: "key",  trigger_key: "c",         if_mode: "play", if_debug: false, method: "kifu_copy_handle_kif_utf8",             },
+      { category_key: "基本",   name: "局面コピー (BOD)",        trigger_type: "key",  trigger_key: "b",         if_mode: "play", if_debug: false, method: "kifu_copy_handle_bod",                  },
+      { category_key: "基本",   name: "棋譜ダウンロード (KIF)",  trigger_type: "key",  trigger_key: "d",         if_mode: "play", if_debug: false, method: "kifu_download_handle_kif_utf8",         },
+      { category_key: "基本",   name: "棋譜URLコピー",           trigger_type: "key",  trigger_key: "u",         if_mode: "play", if_debug: false, method: "current_long_url_copy_handle",          },
+      { category_key: "基本",   name: "棋譜URLコピー (短縮)",    trigger_type: "key",  trigger_key: "s",         if_mode: "play", if_debug: false, method: "current_short_url_copy_handle",         },
+      { category_key: "基本",   name: "局面編集 / 完了",         trigger_type: "key",  trigger_key: "E",         if_mode: null,   if_debug: false, method: "play_edit_mode_toggle_handle",          },
+      { category_key: "基本",   name: "現局面を本譜とする",      trigger_type: "key",  trigger_key: "W",         if_mode: "play", if_debug: false, method: "honpu_master_setup_for_shortcut",       },
+      { category_key: "基本",   name: "本譜を開く",              trigger_type: "key",  trigger_key: "h",         if_mode: "play", if_debug: false, method: "honpu_modal_open_handle",               },
+      { category_key: "基本",   name: "本譜に戻る",              trigger_type: "key",  trigger_key: "z",         if_mode: "play", if_debug: false, method: "honpu_direct_return_handle",            },
+
+      { category_key: "対局",   name: "入室 (退室)",             trigger_type: "key",  trigger_key: "1",         if_mode: "play", if_debug: false, method: "gate_modal_open_handle",                },
+      { category_key: "対局",   name: "対局設定",                trigger_type: "key",  trigger_key: ["2", "o"],  if_mode: "play", if_debug: false, method: "order_modal_open_handle",               },
+      { category_key: "対局",   name: "時計",                    trigger_type: "key",  trigger_key: ["3", "t"],  if_mode: "play", if_debug: false, method: "cc_modal_open_handle",                  },
+      { category_key: "対局",   name: "一時停止 / 再開",         trigger_type: "key",  trigger_key: "p",         if_mode: "play", if_debug: false, method: "cc_play_pause_resume_shortcut_handle",  },
+      { category_key: "対局",   name: "チャットを開く / 閉じる", trigger_type: "code", trigger_key: "Enter",     if_mode: null,   if_debug: false, method: "chat_modal_shortcut_handle",            },
+      { category_key: "対局",   name: "初期配置に戻す",          trigger_type: "key",  trigger_key: "0",         if_mode: "play", if_debug: false, method: "turn_change_to_zero_modal_open_handle", },
+      { category_key: "対局",   name: "手合割",                  trigger_type: "key",  trigger_key: "i",         if_mode: "play", if_debug: false, method: "board_preset_modal_open_handle",        },
+      { category_key: "対局",   name: "対局履歴",                trigger_type: "key",  trigger_key: "l",         if_mode: "play", if_debug: false, method: "battle_list_modal_open_handle",         },
+      { category_key: "対局",   name: "ランキング",              trigger_type: "key",  trigger_key: "r",         if_mode: "play", if_debug: false, method: "battle_ranking_modal_open_handle",      },
+
+      { category_key: "思考印", name: "モードのトグル",          trigger_type: "key",  trigger_key: "m",         if_mode: "play", if_debug: false, method: "think_mark_toggle_shortcut_handle",     },
+      { category_key: "思考印", name: "一括消去",                trigger_type: "code", trigger_key: "Backspace", if_mode: "play", if_debug: false, method: "think_mark_reject_action",              },
+
+      { category_key: "その他", name: "サイドバーのトグル",      trigger_type: "code", trigger_key: "Space",     if_mode: "play", if_debug: false, method: "sidebar_toggle_handle",                 },
+      { category_key: "その他", name: "設定",                    trigger_type: "key",  trigger_key: ",",         if_mode: "play", if_debug: false, method: "general_setting_modal_shortcut_handle", },
+      { category_key: "その他", name: "スタイル設定",            trigger_type: "key",  trigger_key: "g",         if_mode: "play", if_debug: false, method: "appearance_modal_open_handle",          },
+      { category_key: "その他", name: "アバター設定",            trigger_type: "key",  trigger_key: "a",         if_mode: "play", if_debug: false, method: "avatar_input_modal_open_handle",        },
+      { category_key: "その他", name: "ショートカット一覧",      trigger_type: "key",  trigger_key: "?",         if_mode: "play", if_debug: false, method: "shortcut_modal_toggle_handle",          },
+      { category_key: "その他", name: "ログ",                    trigger_type: "code", trigger_key: "Backslash", if_mode: "play", if_debug: true,  method: "tl_modal_open_handle",                  },
     ]
+  }
+
+  get trigger_keys() {
+    return GX.ary_wrap(this.trigger_key)
+  }
+
+  showable_p(context) {
+    if (this.if_debug) {
+      return context.debug_mode_p
+    } else {
+      return true
+    }
+  }
+
+  match_p(context, event) {
+    if (this.if_mode === "play" && !context.play_mode_p) {
+      return
+    }
+    if (this.if_mode === "edit" && !context.edit_mode_p) {
+      return
+    }
+    if (this.if_debug && !context.debug_mode_p) {
+      return
+    }
+    if (this.trigger_type === "key") {
+      if (!this.trigger_keys.some(key => context.KeyboardHelper.soft_pure_key_p(event, key))) {
+        return
+      }
+    }
+    if (this.trigger_type === "code") {
+      if (!this.trigger_keys.some(code => context.KeyboardHelper.pure_code_p(event, code))) {
+        return
+      }
+    }
+    return true
   }
 }

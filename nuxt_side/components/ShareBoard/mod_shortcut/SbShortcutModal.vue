@@ -6,140 +6,16 @@
     .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
       //- https://bulma.io/documentation/columns/responsiveness/
       //- .is-one-third-widescreen
-      .column.is-half-tablet.is-half-desktop
-        .sc_title 基本
-        .sc_table
-          .sc_item
-            .sc_label 棋譜の張り付け
-            .sc_buttons
-              b-tag(type="is-primary") V
-          .sc_item
-            .sc_label 棋譜の読み込み
-            .sc_buttons
-              b-tag(type="is-primary") R
-          .sc_item
-            .sc_label 棋譜コピー (KIF)
-            .sc_buttons
-              b-tag(type="is-primary") c
-          .sc_item
-            .sc_label 局面コピー (BOD)
-            .sc_buttons
-              b-tag(type="is-primary") b
-          .sc_item
-            .sc_label 棋譜ダウンロード (KIF)
-            .sc_buttons
-              b-tag(type="is-primary") d
-          .sc_item
-            .sc_label 棋譜URLコピー
-            .sc_buttons
-              b-tag(type="is-primary") u
-          .sc_item
-            .sc_label 棋譜URLコピー (短縮)
-            .sc_buttons
-              b-tag(type="is-primary") s
-          .sc_item
-            .sc_label 局面編集 / 完了
-            .sc_buttons
-              b-tag(type="is-primary") E
-          .sc_item
-            .sc_label 現局面を本譜とする
-            .sc_buttons
-              b-tag(type="is-primary") W
-          .sc_item
-            .sc_label 本譜を開く
-            .sc_buttons
-              b-tag(type="is-primary") h
-          .sc_item
-            .sc_label 本譜に戻る
-            .sc_buttons
-              b-tag(type="is-primary") z
-
-      .column.is-half-tablet.is-half-desktop
-        .sc_title 対局
-        .sc_table
-          .sc_item
-            .sc_label 入室 (退室)
-            .sc_buttons
-              b-tag(type="is-primary") 1
-          .sc_item
-            .sc_label 対局設定
-            .sc_buttons
-              b-tag(type="is-primary") o
-              | or
-              b-tag(type="is-primary") 2
-          .sc_item
-            .sc_label 時計 起動
-            .sc_buttons
-              b-tag(type="is-primary") t
-              | or
-              b-tag(type="is-primary") 3
-          .sc_item
-            .sc_label 一時停止 / 再開
-            .sc_buttons
-              b-tag(type="is-primary") p
-          .sc_item
-            .sc_label チャットを開く / 閉じる
-            .sc_buttons
-              b-tag(type="is-primary") Enter
-          .sc_item
-            .sc_label 初期配置に戻す
-            .sc_buttons
-              b-tag(type="is-primary") 0
-          .sc_item
-            .sc_label 手合割
-            .sc_buttons
-              b-tag(type="is-primary") i
-          .sc_item
-            .sc_label 対局履歴
-            .sc_buttons
-              b-tag(type="is-primary") l
-          .sc_item
-            .sc_label ランキング
-            .sc_buttons
-              b-tag(type="is-primary") r
-
-      .column.is-half-tablet.is-half-desktop
-        .sc_title 思考印
-        .sc_table
-          .sc_item
-            .sc_label 書く / 消す
-            .sc_buttons
-              b-tag(type="is-primary") 副ボタン
-          .sc_item
-            .sc_label モードのトグル
-            .sc_buttons
-              b-tag(type="is-primary") m
-          .sc_item
-            .sc_label 一括消去
-            .sc_buttons
-              b-tag(type="is-primary") Backspace
-      .column.is-half-tablet.is-half-desktop
-        .sc_title その他
-        .sc_table
-          .sc_item
-            .sc_label サイドバーのトグル
-            .sc_buttons
-              b-tag(type="is-primary") Space
-          .sc_item
-            .sc_label 設定
-            .sc_buttons
-              b-tag(type="is-primary") ,
-          .sc_item
-            .sc_label スタイル設定
-            .sc_buttons
-              b-tag(type="is-primary") g
-          .sc_item
-            .sc_label アバター設定
-            .sc_buttons
-              b-tag(type="is-primary") a
-          .sc_item
-            .sc_label これを開く
-            .sc_buttons
-              b-tag(type="is-primary") ?
-          .sc_item(v-if="SB.debug_mode_p")
-            .sc_label ログ
-            .sc_buttons
-              b-tag(type="is-primary") \
+      template(v-for="shortcut_category_info in SB.ShortcutCategoryInfo.values")
+        .column.is-half-tablet.is-half-desktop(v-if="shortcut_category_info.showable_p(SB)")
+          .sc_title {{shortcut_category_info.name}}
+          .sc_table
+            template(v-for="shortcut_info in shortcut_category_info.shortcut_infos")
+              .sc_item(v-if="shortcut_info.showable_p(SB)")
+                .sc_label {{shortcut_info.name}}
+                .sc_buttons
+                  template(v-for="value in shortcut_info.trigger_keys")
+                    b-tag(type="is-primary") {{value}}
   .modal-card-foot
     b-button.shortcut_modal_close_handle(@click="SB.shortcut_modal_close_handle" icon-left="chevron-left")
 </template>

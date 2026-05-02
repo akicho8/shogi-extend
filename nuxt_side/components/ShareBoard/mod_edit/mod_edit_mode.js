@@ -78,6 +78,14 @@ export const mod_edit_mode = {
       this.reflector_call({message: `局面を編集しました`, label: "局面編集"})
     },
 
+    play_edit_mode_toggle_handle() {
+      if (this.play_mode_p) {
+        this.edit_mode_set_handle()
+      } else {
+        this.play_mode_set_handle()
+      }
+    },
+
     // 玉配置/玉回収
     king_formation_auto_set$(v) {
       this.sfx_click()
