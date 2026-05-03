@@ -44,7 +44,7 @@
 
         // 操作
         b-table-column(v-slot="{row}" header-class="controller_header")
-          button.button.is-small(@click="load_handle(row)") 読み込み
+          button.button.is-small(@click="load_handle(row)") LOAD
 
     pre.pre-wrap(v-if="SB.debug_mode_p && false") {{room}}
 
