@@ -1,6 +1,7 @@
 import RoomRecreateModal from "./RoomRecreateModal.vue"
 import { GX } from "@/components/models/gx.js"
 
+const TRIGGER_BEFORE_DELAY_SEC     = 2.0 // ブラウザのオンライン/オフライン判定直後に axios すると Networkerror になる対策
 const ROOM_DESTROY_AFTER_DELAY_SEC = 2.0 // 切断後に接続するまで待つ秒数(0にすると切断が終わる前に切断を開始して失敗する)
 
 const APP_RELOAD_IF_RECREATE = false // 再起動するときリロードする？
@@ -15,11 +16,13 @@ export const mod_room_recreate = {
   },
   watch: {
     "$nuxt.isOnline"(online_p) {
-      if (online_p) {
-        this.internet_on_trigger()
-      } else {
-        this.internet_off_trigger()
-      }
+      GX.delay_block(TRIGGER_BEFORE_DELAY_SEC, () => {
+        if (online_p) {
+          this.internet_on_trigger()
+        } else {
+          this.internet_off_trigger()
+        }
+      })
     },
   },
   beforeDestroy() {
