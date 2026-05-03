@@ -125,6 +125,11 @@ class XmatchRuleInfo
     # HKEYS はキーの配列を返す
     keys = redis.call("HKEYS", redis_key).take(members_count_max) # キーたちを members_count_max 件に絞る
 
+    # keys が空のとき HMGET がエラーになるため
+    if keys.empty?
+      return []
+    end
+
     # HMGET key field1 field2 ...
     # 引数は展開して渡す
     values = redis.call("HMGET", redis_key, *keys)
