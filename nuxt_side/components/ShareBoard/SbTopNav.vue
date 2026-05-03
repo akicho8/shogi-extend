@@ -91,10 +91,13 @@ export default {
         min-width: 10rem
 
   //////////////////////////////////////////////////////////////////////////////// 色
-  background-color: var(--sb_top_nav_bg_color)
   .navbar_item
     color: var(--sb_top_nav_font_color)
   a.navbar_item
+    border: 1px solid black
+    border-radius: 20px
+    background-color: var(--sb_top_nav_bg_hover_color)
+
     @media (hover: hover)
       &:hover
         background-color: var(--sb_top_nav_bg_hover_color)
@@ -105,10 +108,4 @@ export default {
   .tweet_modal_handle
     font-size: 1.5rem
 
-.STAGE-development
-  .SbTopNav
-    .navbar_item
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .navbar_item > *
-      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
