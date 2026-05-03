@@ -28,7 +28,7 @@ RSpec.describe XyMaster::TimeRecord, type: :model do
   before do
     XyMaster.destroy_all
     XyMaster::Rule.setup
-    XyMaster::RuleInfo.redis.flushdb
+    XyMaster::RuleInfo.redis.call("FLUSHDB")
   end
 
   it "記録と順位が正しい" do
@@ -43,7 +43,7 @@ RSpec.describe XyMaster::TimeRecord, type: :model do
       XyMaster::TimeRecord.create!(rule_key: "rule100", entry_name: "b", spent_sec: 2, x_count: 0)
       XyMaster::TimeRecord.create!(rule_key: "rule100", entry_name: "b", spent_sec: 3, x_count: 0)
 
-      XyMaster::RuleInfo.redis.flushdb
+      XyMaster::RuleInfo.redis.call("FLUSHDB")
       XyMaster::RuleInfo[:rule100].aggregate
 
       assert { build(scope_key: "scope_all",   entry_name_uniq_p: "false") == [1, 1, 2, 2, 3, 3] }

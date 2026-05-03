@@ -60,7 +60,7 @@ FileUtils.chdir APP_ROOT do
 
   puts "== time_record redis clear =="
   system! "bin/rails r XyMaster::TimeRecord.delete_all"
-  system! "bin/rails r XyMaster::RuleInfo.redis.flushdb"
+  system! "bin/rails r XyMaster::RuleInfo.redis.call("FLUSHDB")"
 
   puts "== Restarting application server =="
   system! "bin/rails restart"

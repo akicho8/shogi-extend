@@ -1,7 +1,7 @@
 require "./setup"
 
 TimeRecord.destroy_all
-RuleInfo.redis.flushdb
+RuleInfo.redis.call("FLUSHDB")
 
 Timecop.freeze("2000-01-01") do
   10.times do

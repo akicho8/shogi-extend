@@ -107,7 +107,7 @@ RAILS_ENV=test rails assets:precompile
 ```bash
 # タイムレコードクリア
 bin/rails r "XyMaster::TimeRecord.delete_all"
-bin/rails r "XyMaster::RuleInfo.redis.flushdb"
+bin/rails r "XyMaster::RuleInfo.redis.call("FLUSHDB")"
 ```
 
 ## アーキテクチャ

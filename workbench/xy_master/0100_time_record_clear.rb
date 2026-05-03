@@ -1,4 +1,4 @@
 require "./setup"
 
 TimeRecord.destroy_all
-RuleInfo.redis.flushdb
+RuleInfo.redis.call("FLUSHDB")

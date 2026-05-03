@@ -7,7 +7,7 @@
 #
 #   key = SecureRandom.hex
 #   obj = ExclusiveAccess.new(key)
-#   obj.redis.flushdb
+#   obj.redis.call("FLUSHDB")
 #
 #   thread = Thread.start do
 #     obj.call do
@@ -39,8 +39,8 @@ class ExclusiveAccess
       :expires_in => 3,         # Aws Polly のほとんどは1秒以内にレスポンスがある
     }.merge(options)
 
-    unless @options[:expires_in].kind_of? Integer
-      raise ArgumentError
+    unless @options[:expires_in].kind_of?(Integer)
+      raise ArgumentError, "expires_in must be an Integer"
     end
   end
 
@@ -56,7 +56,7 @@ class ExclusiveAccess
   end
 
   def redis
-    @redis ||= Redis.new(db: AppConfig[:redis_db_for_exclusive_access])
+    @redis ||= RedisPool.client(AppConfig[:redis_db_for_exclusive_access])
   end
 
   private
@@ -87,7 +87,7 @@ class ExclusiveAccess
   end
 
   # def api_start
-  #   redis.setex(key, @options[:timeout], "true")
+  #   redis.call("SETEX", key, @options[:timeout], "true")
   # end
 
   def api_done
@@ -95,11 +95,12 @@ class ExclusiveAccess
   end
 
   def clear
-    redis.del(key)
+    redis.call("DEL", key)
   end
 
   def process_now?
-    redis.exists?(key)
+    # EXISTS は存在するキーの数(Integer)を返す
+    redis.call("EXISTS", key) > 0
   end
 
   def process_none?
@@ -114,10 +115,12 @@ class ExclusiveAccess
   # 一回の処理で排他制御すること
   # キーがあるかどうかの確認とキーの作成の間を設けてはいけない
   def count_next
-    redis.multi { |e|
-      e.incr(key)
-      e.expire(key, expires_in)
-    }.first
+    responses = redis.multi do |e|
+      e.call("INCR", key)
+      e.call("EXPIRE", key, expires_in)
+    end
+    # responses は [incrの結果, expireの結果] の配列
+    responses.first
   end
 
   def expires_in

@@ -6,7 +6,7 @@ RSpec.describe ExclusiveAccess do
     process2 = false
 
     obj = ExclusiveAccess.new("key1")
-    obj.redis.flushdb
+    obj.redis.call("FLUSHDB")
 
     thread = Thread.start do
       obj.call do

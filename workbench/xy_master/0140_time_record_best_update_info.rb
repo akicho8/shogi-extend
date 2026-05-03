@@ -1,7 +1,7 @@
 require "./setup"
 
 TimeRecord.destroy_all
-RuleInfo.redis.flushdb
+RuleInfo.redis.call("FLUSHDB")
 
 TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 0.005, x_count: 0).best_update_info # => nil
 TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 0.006, x_count: 0).best_update_info # => nil

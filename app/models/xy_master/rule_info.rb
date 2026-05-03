@@ -51,7 +51,7 @@ module XyMaster
 
       # rails r 'XyMaster::RuleInfo.rebuild'
       def rebuild
-        redis.flushdb
+        redis.call("FLUSHDB")
         each(&:aggregate)
       end
 
@@ -81,7 +81,7 @@ module XyMaster
       end
 
       def redis
-        @redis ||= Redis.new(db: AppConfig[:redis_db_for_xy_master])
+        @redis ||= RedisPool.client(AppConfig[:redis_db_for_xy_master])
       end
     end
 
@@ -91,7 +91,9 @@ module XyMaster
       # aggregate
       records = []
       if params[:entry_name_uniq_p].to_s == "true"
-        entry_names = redis.zrevrange(key_select(params), 0, rank_max - 1)
+
+        # ZREVRANGE key start stop
+        entry_names = redis.call("ZREVRANGE", key_select(params), 0, rank_max - 1)
         if entry_names.present?
           scope = TimeRecord.where(rule: Rule.fetch(key)).order(:spent_sec)
 
@@ -101,7 +103,7 @@ module XyMaster
           records = entry_names.collect { |e| scope.where(entry_name: e).take }
         end
       else
-        ids = redis.zrevrange(table_key_for(params), 0, rank_max - 1)
+        ids = redis.call("ZREVRANGE", table_key_for(params), 0, rank_max - 1)
         if ids.present?
           records = TimeRecord.where(id: ids).order(Arel.sql("FIELD(#{TimeRecord.primary_key}, #{ids.join(', ')})"))
         end
@@ -112,9 +114,8 @@ module XyMaster
 
     # 今日のトップ
     def top_time_records
-      redis.zrevrange(table_key_for_today, 0, 0).collect do |id|
-        TimeRecord.find(id)
-      end
+      ids = redis.call("ZREVRANGE", table_key_for_today, 0, 0)
+      ids.collect { |id| TimeRecord.find(id) }
     rescue ActiveRecord::RecordNotFound => error
       if Rails.env.production? || Rails.env.staging?
         raise error
@@ -123,11 +124,14 @@ module XyMaster
     end
 
     def rank_by_score(params, score)
-      redis.zcount(key_select(params), score + 1, "+inf") + 1
+      # ZCOUNT key min max
+      # "+inf" はそのまま文字列で渡す
+      redis.call("ZCOUNT", key_select(params), score + 1, "+inf") + 1
     end
 
     def ranking_page(params, id)
-      if index = redis.zrevrank(key_select(params), id)
+      # ZREVRANK は 0-based のインデックス(Integer)か nil を返す
+      if index = redis.call("ZREVRANK", key_select(params), id)
         index.div(per_page).next
       end
     end
@@ -135,16 +139,18 @@ module XyMaster
     def ranking_add(record)
       ScopeInfo.each do |e|
         key = e.table_key_for[record, self]
-        redis.zadd(key, record.score, record.id)
+
+        # ZADD key score member
+        redis.call("ZADD", key, record.score, record.id)
 
         # キー(entry_name) がユニークではないためスコアが大きいときだけ更新する処理を自力で書く必要がある
         # そうしないと後から設定した値で更新されてしまう。後の値の方が大きいとタイムがおかしくなる。
         update_p = true
-        if max = redis.zscore(as_unique_key(key), record.entry_name)
+        if max = redis.call("ZSCORE", as_unique_key(key), record.entry_name)
           update_p = record.score > max
         end
         if update_p
-          redis.zadd(as_unique_key(key), record.score, record.entry_name)
+          redis.call("ZADD", as_unique_key(key), record.score, record.entry_name)
         end
       end
     end
@@ -152,13 +158,14 @@ module XyMaster
     def ranking_remove(record)
       ScopeInfo.each do |e|
         key = e.table_key_for[record, self]
-        redis.zrem(key, record.id)
-        redis.zrem(as_unique_key(key), record.entry_name)
+        # ZREM key member
+        redis.call("ZREM", key, record.id)
+        redis.call("ZREM", as_unique_key(key), record.entry_name)
       end
     end
 
     def current_clean
-      redis.del(table_key_for_all)
+      redis.call("DEL", table_key_for_all)
     end
 
     def aggregate
@@ -218,8 +225,6 @@ module XyMaster
       "#{key}/unique"
     end
 
-    def redis
-      self.class.redis
-    end
+    delegate :redis, to: :class
   end
 end

@@ -13,7 +13,7 @@ Timecop.freeze("2000-01-02") do
   TimeRecord.create!(rule_key: "rule100t", entry_name: "b", spent_sec: 0.2, x_count: 0)
   TimeRecord.create!(rule_key: "rule100t", entry_name: "b", spent_sec: 0.3, x_count: 0)
 
-  RuleInfo.redis.flushdb
+  RuleInfo.redis.call("FLUSHDB")
   RuleInfo[:rule100t].aggregate
 
   tp RuleInfo[:rule100t].time_records(scope_key: "scope_all", entry_name_uniq_p: "false")

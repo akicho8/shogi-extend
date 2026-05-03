@@ -1,3 +1,9 @@
+# 使い方
+#
+# def redis
+#   @redis ||= RedisPool.client(AppConfig.fetch(:redis_db_for_share_board_ai))
+# end
+
 class RedisRegistry
   def initialize
     @pools = {}

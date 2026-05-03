@@ -32,23 +32,29 @@ module ShareBoard
         push(object)
       end
 
-      def push(*object)
-        object.each do |object|
+      def push(*objects) # 引数名を複数形に合わせました
+        objects.each do |object|
           redis.multi do |e|
+            json_data = object.to_json
+
             if @options[:latest_order]
-              e.lpush(key, object.to_json)         # ary.unshift(object)
-              e.ltrim(key, 0, @options[:size] - 1) # ary = ary.take(size)
+              e.call("LPUSH", key, json_data) # ary.unshift(object)
+              e.call("LTRIM", key, 0, @options[:size] - 1) # ary = ary.take(size)
             else
-              e.rpush(key, object.to_json)         # ary << object
-              e.ltrim(key, -@options[:size], -1)   # ary = ary[-size..-1]
+              e.call("RPUSH", key, json_data) # ary << object
+              e.call("LTRIM", key, -@options[:size], -1) # ary = ary[-size..-1]
             end
-            e.expire(key, @options[:expires_in])   # ary の寿命 = expires_in
+
+            # 寿命を設定（ActiveSupport::Duration を考慮して .to_i）
+            e.call("EXPIRE", key, @options[:expires_in].to_i)
           end
         end
       end
 
       def to_a
-        redis.lrange(key, 0, -1).collect { |e| JSON.parse(e, symbolize_names: true) }
+        # LRANGE は配列を返す
+        rows = redis.call("LRANGE", key, 0, -1)
+        rows.collect { |e| JSON.parse(e, symbolize_names: true) }
       end
 
       def to_topic
@@ -57,15 +63,15 @@ module ShareBoard
       end
 
       def clear
-        redis.del(key)
+        redis.call("DEL", key)
       end
 
       def clear_all
-        redis.flushdb
+        redis.call("FLUSHDB")
       end
 
       def redis
-        @redis ||= Redis.new(db: AppConfig.fetch(:redis_db_for_share_board_ai))
+        @redis ||= RedisPool.client(AppConfig.fetch(:redis_db_for_share_board_ai))
       end
 
       def key

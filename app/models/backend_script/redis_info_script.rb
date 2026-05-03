@@ -4,7 +4,7 @@ module BackendScript
     self.script_name = "Redis Info"
 
     def script_body
-      Redis.new.info
+      RedisClient.new.call("INFO")
     end
   end
 end

@@ -45,7 +45,9 @@ class Throttle
 
     if @options[:delayed_again]
       if throttled?
-        redis.pexpire(key, expires_in_ms, xx: true)
+        # PEXPIRE key milliseconds XX
+        # XX: キーがすでに存在する場合のみ有効期限を設定する
+        redis.call("PEXPIRE", key, expires_in_ms, "XX")
       end
     end
 
@@ -57,22 +59,24 @@ class Throttle
   end
 
   def allowed?
-    !redis.exists?(key)
+    !throttled?
   end
 
   def throttled?
-    redis.exists?(key)
+    # EXISTS は存在するキーの数を返すので、0より大きいかどうかで判定
+    redis.call("EXISTS", key) > 0
   end
 
   def stop!
-    # nx -> true: すでにあれば書き込まない
-    # px -> TTL を ms の整数で指定する
-    # 書き込めたら true で書き込まなかったら false を返す
-    redis.set(key, true, nx: true, px: expires_in_ms)
+    # RedisClient の set オプション指定
+    # nx: true -> "NX"
+    # px: ms   -> "PX", ms
+    # 成功すると "OK"、NX条件により書き込めなかったら nil が返る
+    redis.call("SET", key, "true", "NX", "PX", expires_in_ms) == "OK"
   end
 
   def reset
-    redis.del(key)
+    redis.call("DEL", key)
   end
 
   def ttl_sec
@@ -82,7 +86,8 @@ class Throttle
   end
 
   def ttl_ms
-    ttl = redis.pttl(key)
+    # PTTL は残り時間を ms で返す。キーがない場合は -2、期限がない場合は -1
+    ttl = redis.call("PTTL", key)
     if ttl > 0
       ttl
     end
@@ -94,6 +99,6 @@ class Throttle
 
   # test 環境でも使いたいので Rails.cache 経由しない
   def redis
-    @redis ||= Redis.new(db: AppConfig[:redis_db_for_rails_cache])
+    @redis ||= RedisPool.client(AppConfig[:redis_db_for_rails_cache])
   end
 end

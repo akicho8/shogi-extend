@@ -7,7 +7,7 @@ process2 = false
 
 key = SecureRandom.hex
 obj = ExclusiveAccess.new(key)
-obj.redis.flushdb
+obj.redis.call("FLUSHDB")
 
 thread = Thread.start do
   obj.call do
@@ -23,8 +23,9 @@ process2                        # => false
 
 # >> [ExclusiveAccess][talk_mp3][1][権利を獲得したのでAPIを実行する]
 # >> [ExclusiveAccess][talk_mp3][2][権利がないためAPI実行完了待ち]
-# >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][0][none:false]
-# >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][1][none:false]
-# >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][2][none:false]
-# >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][3][none:false]
-# >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][4][none:true]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][0][none:false]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][1][none:false]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][2][none:false]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][3][none:false]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][4][none:false]
+# >> [ExclusiveAccess][talk_mp3][14c298f6fbb82f30c4685ccbe3c423b1][5][none:true]

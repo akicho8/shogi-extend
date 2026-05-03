@@ -8,11 +8,11 @@ module ApplicationCable
       end
 
       def redis
-        @redis ||= Redis.new(db: redis_db_index)
+        @redis ||= RedisPool.client(redis_db_index)
       end
 
       def redis_clear
-        redis.flushdb
+        redis.call("FLUSHDB")
       end
 
       # if Xxx::BaseChannel.once_run("shared key", expires_in: 1.minute)
@@ -27,18 +27,18 @@ module ApplicationCable
         end
 
         options = {
-          expires_in: 1.hours,
+          expires_in: 1.hours.to_i,
         }.merge(options)
 
         # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528
         values = redis.multi do |e|
-          e.incr(key)
-          e.expire(key, options[:expires_in])
+          e.call("INCR", key)
+          e.call("EXPIRE", key, options[:expires_in])
         end
 
         counter = values.first
 
-        Rails.logger.debug([__method__, { key: key, counter: counter, expires_in: redis.ttl(key) }])
+        Rails.logger.debug([__method__, { key: key, counter: counter, expires_in: redis.call("TTL", key) }])
 
         counter == 1
       end
