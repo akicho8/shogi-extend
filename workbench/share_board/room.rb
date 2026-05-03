@@ -4,6 +4,7 @@ ShareBoard.setup(force: true)
 tp ShareBoard::Room.mock
 tp ShareBoard::Room.create!
 tp ShareBoard::Room.create!
+
 # >> |---------------------+---------------------------|
 # >> |                  id | 1                         |
 # >> |                 key | dev_room1                 |

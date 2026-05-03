@@ -149,7 +149,7 @@ module ShareBoard
       end
 
       def redis
-        @redis ||= RedisClient.new(db: AppConfig[:redis_db_for_share_board_room])
+        @redis ||= RedisPool.client(AppConfig[:redis_db_for_share_board_room])
       end
     end
 

@@ -1,38 +1,61 @@
 require "#{__dir__}/setup"
-tp ShareBoard::Membership.order(:id).reverse_order
-# >> |----+-----------+---------+----------+-------------+----------+---------------------------+---------------------------|
-# >> | id | battle_id | user_id | judge_id | location_id | position | created_at                | updated_at                |
-# >> |----+-----------+---------+----------+-------------+----------+---------------------------+---------------------------|
-# >> | 32 |        23 |       4 |        2 |           1 |        0 | 2025-10-21 20:03:55 +0900 | 2025-10-21 20:03:55 +0900 |
-# >> | 31 |        19 |       4 |        2 |           1 |        0 | 2025-10-21 19:03:01 +0900 | 2025-10-21 19:03:01 +0900 |
-# >> | 30 |        17 |       5 |        1 |           2 |        1 | 2025-10-21 16:22:14 +0900 | 2025-10-21 16:22:14 +0900 |
-# >> | 29 |        17 |       4 |        2 |           1 |        0 | 2025-10-21 16:22:14 +0900 | 2025-10-21 16:22:14 +0900 |
-# >> | 28 |        16 |       5 |        2 |           2 |        1 | 2025-10-21 16:12:04 +0900 | 2025-10-21 16:12:04 +0900 |
-# >> | 27 |        16 |       4 |        1 |           1 |        0 | 2025-10-21 16:12:04 +0900 | 2025-10-21 16:12:04 +0900 |
-# >> | 26 |        15 |       4 |        2 |           1 |        0 | 2025-10-20 23:05:38 +0900 | 2025-10-20 23:05:38 +0900 |
-# >> | 25 |        14 |       4 |        2 |           1 |        0 | 2025-10-20 21:37:48 +0900 | 2025-10-20 21:37:48 +0900 |
-# >> | 24 |        13 |       4 |        2 |           1 |        0 | 2025-10-20 21:37:13 +0900 | 2025-10-20 21:37:13 +0900 |
-# >> | 23 |        12 |       5 |        1 |           2 |        1 | 2025-10-19 15:26:59 +0900 | 2025-10-19 15:26:59 +0900 |
-# >> | 22 |        12 |       4 |        2 |           1 |        0 | 2025-10-19 15:26:59 +0900 | 2025-10-19 15:26:59 +0900 |
-# >> | 21 |        11 |       4 |        2 |           1 |        0 | 2025-10-19 09:51:47 +0900 | 2025-10-19 09:51:47 +0900 |
-# >> | 20 |        10 |       4 |        2 |           2 |        0 | 2025-10-18 14:15:01 +0900 | 2025-10-18 14:15:01 +0900 |
-# >> | 19 |         9 |       5 |        1 |           2 |        1 | 2025-10-18 13:26:05 +0900 | 2025-10-18 13:26:05 +0900 |
-# >> | 18 |         9 |       4 |        2 |           1 |        0 | 2025-10-18 13:26:05 +0900 | 2025-10-18 13:26:05 +0900 |
-# >> | 17 |         8 |       5 |        1 |           2 |        1 | 2025-10-18 11:04:53 +0900 | 2025-10-18 11:04:53 +0900 |
-# >> | 16 |         8 |       4 |        2 |           1 |        0 | 2025-10-18 11:04:53 +0900 | 2025-10-18 11:04:53 +0900 |
-# >> | 15 |         7 |       5 |        1 |           2 |        1 | 2025-10-18 10:54:47 +0900 | 2025-10-18 10:54:47 +0900 |
-# >> | 14 |         7 |       4 |        2 |           1 |        0 | 2025-10-18 10:54:47 +0900 | 2025-10-18 10:54:47 +0900 |
-# >> | 13 |         6 |       5 |        1 |           2 |        1 | 2025-10-18 10:53:49 +0900 | 2025-10-18 10:53:49 +0900 |
-# >> | 12 |         6 |       4 |        2 |           1 |        0 | 2025-10-18 10:53:49 +0900 | 2025-10-18 10:53:49 +0900 |
-# >> | 11 |         5 |       5 |        1 |           2 |        1 | 2025-10-18 10:53:30 +0900 | 2025-10-18 10:53:30 +0900 |
-# >> | 10 |         5 |       4 |        2 |           1 |        0 | 2025-10-18 10:53:30 +0900 | 2025-10-18 10:53:30 +0900 |
-# >> |  9 |         4 |       5 |        1 |           2 |        1 | 2025-10-18 10:50:30 +0900 | 2025-10-18 10:50:30 +0900 |
-# >> |  8 |         4 |       4 |        2 |           1 |        0 | 2025-10-18 10:50:30 +0900 | 2025-10-18 10:50:30 +0900 |
-# >> |  7 |         3 |       5 |        1 |           2 |        1 | 2025-10-18 10:44:30 +0900 | 2025-10-18 10:44:30 +0900 |
-# >> |  6 |         3 |       4 |        2 |           1 |        0 | 2025-10-18 10:44:30 +0900 | 2025-10-18 10:44:30 +0900 |
-# >> |  5 |         2 |       5 |        1 |           2 |        1 | 2025-10-18 10:44:24 +0900 | 2025-10-18 10:44:24 +0900 |
-# >> |  4 |         2 |       4 |        2 |           1 |        0 | 2025-10-18 10:44:24 +0900 | 2025-10-18 10:44:24 +0900 |
-# >> |  3 |         1 |       3 |        1 |           1 |        2 | 2025-10-14 21:10:33 +0900 | 2025-10-14 21:10:33 +0900 |
-# >> |  2 |         1 |       2 |        2 |           2 |        1 | 2025-10-14 21:10:33 +0900 | 2025-10-14 21:10:33 +0900 |
-# >> |  1 |         1 |       1 |        1 |           1 |        0 | 2025-10-14 21:10:33 +0900 | 2025-10-14 21:10:33 +0900 |
-# >> |----+-----------+---------+----------+-------------+----------+---------------------------+---------------------------|
+ShareBoard::Room.mock
+room = ShareBoard::Room.first               # => #<ShareBoard::Room id: 1, key: "dev_room1", battles_count: 1, created_at: "2026-05-02 07:57:34.000000000 +0900", updated_at: "2026-05-02 07:57:34.000000000 +0900", chat_messages_count: 0, name: "共有将棋盤">
+user = ShareBoard::Roomship.first.user             # => #<ShareBoard::User id: 1, name: "a", memberships_count: 3, created_at: "2026-05-02 07:57:34.000000000 +0900", updated_at: "2026-05-02 23:58:48.000000000 +0900", chat_messages_count: 0>
+
+s = room.memberships
+s = s.joins(:judge)
+s = s.where(user: user)
+s = s.group("judges.key")
+s.count                         # => 
+
+# ~> /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/trilogy/database_statements.rb:27:in 'Trilogy#query': Trilogy::ProtocolError: 1055: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'shogi_web_development.share_board_memberships.position' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by (trilogy_query_recv) (ActiveRecord::StatementInvalid)
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/trilogy/database_statements.rb:27:in 'ActiveRecord::ConnectionAdapters::Trilogy::DatabaseStatements#perform_query'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:571:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1086:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activesupport-8.1.2/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1055:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:570:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activesupport-8.1.2/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1206:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:569:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:613:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_exec_query'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:708:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#select'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:76:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#select_all'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/query_cache.rb:278:in 'ActiveRecord::ConnectionAdapters::QueryCache#select_all'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:570:in 'block (2 levels) in ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation.rb:1494:in 'ActiveRecord::Relation#skip_query_cache_if_necessary'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:569:in 'block in ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:457:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_handling.rb:313:in 'ActiveRecord::ConnectionHandling#with_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:540:in 'ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:459:in 'ActiveRecord::Calculations#perform_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:244:in 'ActiveRecord::Calculations#calculate'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:102:in 'ActiveRecord::Calculations#count'
+# ~> 	from -:10:in '<main>'
+# ~> /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/trilogy/database_statements.rb:27:in 'Trilogy#query': 1055: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'shogi_web_development.share_board_memberships.position' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by (trilogy_query_recv) (Trilogy::ProtocolError)
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/trilogy/database_statements.rb:27:in 'ActiveRecord::ConnectionAdapters::Trilogy::DatabaseStatements#perform_query'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:571:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1086:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activesupport-8.1.2/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1055:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:570:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activesupport-8.1.2/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract_adapter.rb:1206:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:569:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:613:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_exec_query'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:708:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#select'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/database_statements.rb:76:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#select_all'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/query_cache.rb:278:in 'ActiveRecord::ConnectionAdapters::QueryCache#select_all'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:570:in 'block (2 levels) in ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation.rb:1494:in 'ActiveRecord::Relation#skip_query_cache_if_necessary'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:569:in 'block in ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_adapters/abstract/connection_pool.rb:457:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/connection_handling.rb:313:in 'ActiveRecord::ConnectionHandling#with_connection'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:540:in 'ActiveRecord::Calculations#execute_grouped_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:459:in 'ActiveRecord::Calculations#perform_calculation'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:244:in 'ActiveRecord::Calculations#calculate'
+# ~> 	from /opt/rbenv/versions/4.0.2/lib/ruby/gems/4.0.0/gems/activerecord-8.1.2/lib/active_record/relation/calculations.rb:102:in 'ActiveRecord::Calculations#count'
+# ~> 	from -:10:in '<main>'
