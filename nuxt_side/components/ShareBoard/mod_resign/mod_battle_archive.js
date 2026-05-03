@@ -1,9 +1,9 @@
 import { GX } from "@/components/models/gx.js"
 import _ from "lodash"
 
-const SELF_VS_SELF_THEN_SKIP        = false  // 自分vs自分のときは保存しない？
-const SELF_VS_SELF_THEN_FORCE_LOSE  = true   // 自分vs自分のときは必ず自分は負けとして保存する？
-const SELF_VS_SELF_THEN_MEMBER_ZERO = true   // 自分vs自分のときはメンバーが空とする
+const SELF_VS_SELF_THEN_SKIP = false  // 自分vs自分のときは保存しない？
+const SELF_VS_SELF_THEN_DRAW = true   // 自分vs自分は引き分けとする？
+const SELF_VS_SELF_THEN_MEMBER_ZERO = false // 自分vs自分のときはメンバーが空とする
 
 export const mod_battle_archive = {
   methods: {
@@ -16,18 +16,13 @@ export const mod_battle_archive = {
     // win_location_key 側を勝ちとする
     // win_location_key が null なら引分とする
     async battle_save_by_win_location(win_location_key) {
-      // if (win_location_key == null) {
-      //   this.toast_danger("勝者不明")
-      //   return
-      // }
-      //
-      // GX.assert(win_location_key)
       if (SELF_VS_SELF_THEN_SKIP) {
         if (this.self_vs_self_p) {
           this.debug_alert("自分vs自分のため棋譜保存しない")
           return
         }
       }
+
       const params = {
         room_key:         this.room_key,
         title:            this.current_title,
@@ -36,6 +31,21 @@ export const mod_battle_archive = {
         memberships:      this.__battle_memberships(win_location_key),
         win_location_key: win_location_key,
       }
+
+      if (SELF_VS_SELF_THEN_DRAW) {
+        if (this.self_vs_self_p) {
+          params.win_location_key = null
+          if (SELF_VS_SELF_THEN_MEMBER_ZERO) {
+            params.memberships = []
+          } else {
+            params.memberships = [
+              { user_name: this.user_name, location_key: "black", judge_key: "draw", },
+              { user_name: this.user_name, location_key: "white", judge_key: "draw", },
+            ]
+          }
+        }
+      }
+
       // app/models/share_board/battle_create.rb
       const e = await this.$axios.$post("/api/share_board/battle_create.json", params, {progress: false})
       if (e.error) {
@@ -46,11 +56,6 @@ export const mod_battle_archive = {
     __battle_memberships(win_location_key) {
       if (!this.order_enable_p) {
         return []
-      }
-      if (SELF_VS_SELF_THEN_MEMBER_ZERO) {
-        if (this.self_vs_self_p) {
-          return []
-        }
       }
       return this.vs_member_names_uniq_and_ordered.map(name => {
         const location = this.user_name_to_initial_location(name)
@@ -67,11 +72,6 @@ export const mod_battle_archive = {
     __battle_memberships_judge_key(location, win_location_key) {
       if (win_location_key == null) {
         return "draw"
-      }
-      if (SELF_VS_SELF_THEN_FORCE_LOSE) {
-        if (this.self_vs_self_p) {
-          return "lose"
-        }
       }
       if (location.key === win_location_key) {
         return "win"

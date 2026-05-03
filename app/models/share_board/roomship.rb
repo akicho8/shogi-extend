@@ -37,11 +37,11 @@ module ShareBoard
       self.win_count ||= 0
       self.lose_count ||= 0
       self.draw_count ||= 0
-      self.battles_count = win_count + lose_count + draw_count
-      if battles_count.zero?
+      self.win_rate_denominator = win_count + lose_count # 引き分けは分母にしないこと
+      if win_rate_denominator.zero?
         self.win_rate = 0
       else
-        self.win_rate = win_count.fdiv(battles_count)
+        self.win_rate = win_count.fdiv(win_rate_denominator)
       end
       self.score = (win_rate * SCALING_FACTOR).to_i
       self.rank ||= -1

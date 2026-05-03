@@ -31,7 +31,7 @@ class CreateShareBoard1 < ActiveRecord::Migration[5.1]
       t.belongs_to :user,       null: false, comment: "対局者"
       t.integer :win_count,     null: false, index: true, comment: "勝数"
       t.integer :lose_count,    null: false, index: true, comment: "敗数"
-      t.integer :battles_count, null: false, index: false, comment: "対局数"
+      t.integer :win_rate_denominator, null: false, index: false, comment: "対局数"
       t.float :win_rate,        null: false, index: true, comment: "勝率"
       t.integer :score,         null: false, index: true, comment: "スコア"
       t.integer :rank,          null: false, index: true, comment: "順位"

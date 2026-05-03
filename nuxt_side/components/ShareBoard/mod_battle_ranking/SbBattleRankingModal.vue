@@ -34,8 +34,8 @@
         b-table-column(v-slot="{row}" field="draw_count" label="分" sortable numeric centered)
           | {{row.draw_count}}
 
-        b-table-column(v-slot="{row}" field="battles_count" label="対局数" sortable numeric centered :visible="SB.debug_mode_p")
-          | {{row.battles_count}}
+        b-table-column(v-slot="{row}" field="win_rate_denominator" label="対局数" sortable numeric centered :visible="SB.debug_mode_p")
+          | {{row.win_rate_denominator}}
 
         b-table-column(v-slot="{row}" field="score" label="点数" sortable numeric centered :visible="SB.debug_mode_p")
           | {{row.score}}

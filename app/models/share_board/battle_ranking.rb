@@ -22,7 +22,7 @@ module ShareBoard
                 :win_count,
                 :lose_count,
                 :draw_count,
-                :battles_count,
+                :win_rate_denominator,
                 :win_rate,
                 :score,
                 :rank,
