@@ -25,6 +25,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       { category_key: "対局",   name: "手合割",                  trigger_type: "key",  trigger_key: "=",         if_mode: "play", if_debug: false, method: "board_preset_modal_open_handle",        },
       { category_key: "対局",   name: "対局履歴 / 閉じる",       trigger_type: "key",  trigger_key: "l",         if_mode: "play", if_debug: false, method: "battle_list_modal_toggle_handle",       },
       { category_key: "対局",   name: "ランキング / 閉じる",     trigger_type: "key",  trigger_key: "r",         if_mode: "play", if_debug: false, method: "battle_ranking_modal_toggle_handle",    },
+      { category_key: "対局",   name: "退室",                    trigger_type: "key",  trigger_key: "Q",         if_mode: "play", if_debug: false, method: "gate_leave_handle",                     },
 
       { category_key: "思考印", name: "モードのトグル",          trigger_type: "key",  trigger_key: "m",         if_mode: "play", if_debug: false, method: "think_mark_toggle_shortcut_handle",     },
       { category_key: "思考印", name: "一括消去",                trigger_type: "code", trigger_key: "Backspace", if_mode: "play", if_debug: false, method: "think_mark_reject_action",              },
