@@ -33,8 +33,9 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
 
     # 対局履歴
     find(".battle_list_modal_open_handle").click
-    assert_selector(".SbBattleListModal tr")                                                      # 対局履歴が1件ある
-    assert_selector(".SbBattleListModal .memberships_cell", text: "", exact_text: true, count: 2) # しかし両対者は空である
+    assert_selector(".SbBattleListModal tr")                                                       # 対局履歴が1件ある
+    assert_selector(".SbBattleListModal .memberships_cell", text: "a", exact_text: true, count: 2) # 両方とも自分になっている
+    assert_selector(".SbBattleListModal .memberships.is_draw", count: 2)                           # 両方とも引き分けになっている
     find(".battle_list_modal_close_handle").click
   end
 end

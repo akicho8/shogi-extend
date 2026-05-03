@@ -54,9 +54,9 @@ module SharedMethods
 
   # 指定のスコープに変更する
   def message_scope_key_set(message_scope_key)
-    find(".ChatModal .message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
-    find(".ChatModal .dropdown .#{message_scope_key}").click  # スコープ選択
-    assert_message_scope_key(message_scope_key)    # 指定のスコープになっている
+    find(".ChatModal .message_scope_dropdown").click  # スコープ選択ドロップダウンを開く
+    find(".dropdown .#{message_scope_key}").click     # スコープ選択
+    assert_message_scope_key(message_scope_key)       # 指定のスコープになっている
   end
 
   # 指定のスコープにしてからメッセージ送信
