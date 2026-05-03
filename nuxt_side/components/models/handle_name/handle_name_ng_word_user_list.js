@@ -16,7 +16,9 @@ export const HandleNameNgWordUserList = [
 
   // 捨てハン
   "test|てすと",
-  "nanashi|nanasi|noname|unknown|名無し|ななし|通りすがり|荒らし|匿名|無名|見学|観戦|観る将|みる将",
+  "nanashi|nanasi|noname|unknown|名無し|ななし|通りすがり|荒らし|匿名|無名",
+  "見学|観戦|視察",
+  "観る将|みる将|みるしょう",
   "^asdf",
   "^hoge",
   "^fuga",
