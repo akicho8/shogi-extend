@@ -30,7 +30,7 @@ module ShareBoard
 
     custom_belongs_to :win_location, class_name: "Location", ar_model: Location, st_model: LocationInfo, default: nil, optional: true
 
-    has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle do
+    has_many :memberships, dependent: :destroy, inverse_of: :battle do # -> { order(:position) } をつけると group が使えなくなる
       def location_of(location_key)
         where(location: Location.fetch(location_key))
       end

@@ -1,8 +1,7 @@
 require "#{__dir__}/setup"
 ShareBoard.setup(force: true)
 
-room_key = "dev_room"
-room = ShareBoard::Room.create!(key: "dev_room", name: "(room.name)")
+room = ShareBoard::Room.create!(key: "dev_room")
 25.times do |i|
   records = [
     { user_name: "alice", location_key: "black", judge_key: "win",  },
@@ -14,10 +13,6 @@ room = ShareBoard::Room.create!(key: "dev_room", name: "(room.name)")
   end
 end
 
-# s { ShareBoard::BattleList.new(room_key: room_key).call }
-# pp ShareBoard::BattleList.new(room_key: room_key).call
-ShareBoard::Battle.count    # => 25
-
 ShareBoard::Roomship.find_each(&:save!)
 ShareBoard::Room.find_each(&:redis_rebuild)
 
@@ -25,7 +20,7 @@ tp ShareBoard::Roomship
 # >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------+------------|
 # >> | id | room_id | user_id | win_count | lose_count | battles_count | win_rate | score | rank | created_at                | updated_at                | draw_count |
 # >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------+------------|
-# >> |  1 |       1 |       1 |        25 |          0 |            25 |      1.0 | 32767 |    1 | 2026-05-03 13:50:06 +0900 | 2026-05-03 13:50:07 +0900 |          0 |
-# >> |  3 |       1 |       3 |        25 |          0 |            25 |      1.0 | 32767 |    1 | 2026-05-03 13:50:06 +0900 | 2026-05-03 13:50:07 +0900 |          0 |
-# >> |  2 |       1 |       2 |         0 |         25 |            25 |      0.0 |     0 |    3 | 2026-05-03 13:50:06 +0900 | 2026-05-03 13:50:07 +0900 |          0 |
+# >> |  1 |       1 |       1 |        25 |          0 |            25 |      1.0 | 32767 |    1 | 2026-05-03 14:27:59 +0900 | 2026-05-03 14:28:00 +0900 |          0 |
+# >> |  3 |       1 |       3 |        25 |          0 |            25 |      1.0 | 32767 |    1 | 2026-05-03 14:27:59 +0900 | 2026-05-03 14:28:00 +0900 |          0 |
+# >> |  2 |       1 |       2 |         0 |         25 |            25 |      0.0 |     0 |    3 | 2026-05-03 14:27:59 +0900 | 2026-05-03 14:28:00 +0900 |          0 |
 # >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------+------------|

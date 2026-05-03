@@ -40,7 +40,8 @@ module ShareBoard
       end
     end
 
-    has_many :battles, -> { order(created_at: :desc) }, dependent: :destroy, inverse_of: :room # この部屋の対局履歴たち
+    has_many :battles, dependent: :destroy, inverse_of: :room # この部屋の対局履歴たち  -> { order(created_at: :desc) } をつけるな
+
     has_many :memberships, through: :battles                                                   # この部屋のユーザー対局履歴たち
 
     has_many :roomships, dependent: :destroy, inverse_of: :room # この部屋の対局者の情報(ランキングとしてそのまま使える)
@@ -119,12 +120,9 @@ module ShareBoard
     ################################################################################
 
     concerning :RankingMethods do
-      def score_by_user(user)
-        memberships.where(user: user, judge: Judge.fetch(:win)).count
-      end
-
-      def ox_count_by_user(user, judge)
-        memberships.where(user: user, judge: Judge.fetch(judge)).count
+      # user に対応する「勝・敗・分」の件数をまとめて得る
+      def user_every_judges_count(user)
+        memberships.joins(:judge).where(user: user).group(Judge.arel_table[:key]).count
       end
 
       def rank_by_score(score)

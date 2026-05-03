@@ -32,7 +32,7 @@ module ShareBoard
     belongs_to :user, touch: true, counter_cache: true # 対局者
     has_one :room, through: :battle                    # 部屋
 
-    scope :position_order, -> { order(:position) }
+    scope :position_order, -> { order(:position) } # 不要
 
     acts_as_list top_of_list: 0, scope: :battle
 
@@ -49,9 +49,11 @@ module ShareBoard
 
     def zadd_call
       roomship = Roomship.find_or_initialize_by(room: room, user: user)
-      roomship.win_count = room.ox_count_by_user(user, :win)
-      roomship.lose_count = room.ox_count_by_user(user, :lose)
-      roomship.draw_count = room.ox_count_by_user(user, :draw)
+      room.user_every_judges_count(user).tap do |hv|
+        roomship.win_count  = hv["win"]
+        roomship.lose_count = hv["lose"]
+        roomship.draw_count = hv["draw"]
+      end
       roomship.save!
     end
   end

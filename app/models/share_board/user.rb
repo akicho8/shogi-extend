@@ -68,10 +68,5 @@ module ShareBoard
     with_options allow_blank: true do
       validates :name, uniqueness: { case_sensitive: true }
     end
-
-    def score_by_room(room)
-      room.score_by_user(self)
-      # room.memberships.where(user: self, judge: Judge.fetch(:win)).count
-    end
   end
 end
