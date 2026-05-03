@@ -35,7 +35,8 @@ gem "sass-rails", ">= 6"
 # gem 'turbolinks', '~> 5'
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", ">= 4.0.1"
+gem "redis", ">= 5.4.1"         # 最近の redis gem は redis-client gem を内部で使うようになっている
+gem "hiredis-client"            # C実装。速くなる。なくても動くが遅い。redis-client gem はこれを見つけるとこれを使う
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

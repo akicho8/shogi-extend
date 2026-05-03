@@ -19,6 +19,7 @@ class RedisRegistry
     unless db_number.kind_of? Integer
       raise ArgumentError, db_number.inspect
     end
+    # host を 127.0.0.1 とすれば必ず IPv4 だけに繋がる
     config = RedisClient.config(host: "127.0.0.1", db: db_number, reconnect_attempts: 3)
     config.new_pool(size: Integer(ENV.fetch("RAILS_MAX_THREADS", 3))) # ../../config/puma.rb の RAILS_MAX_THREADS の初期値と合わせる
   end
