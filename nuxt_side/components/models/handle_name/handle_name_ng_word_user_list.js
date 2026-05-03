@@ -41,6 +41,9 @@ export const HandleNameNgWordUserList = [
   // エロサイト名
   "xvideo|pornhub",
 
+  // 他者サイト名
+  "将棋うぉーず",
+
   // システム予約
   "^GPT$",
   "shogi.*extend",

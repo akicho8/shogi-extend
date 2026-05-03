@@ -113,6 +113,7 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("初狩り")).toEqual(false)
     expect(HandleNameValidator.valid_p("shogi-extend")).toEqual(false)
     expect(HandleNameValidator.valid_p("SHOGIEXTEND")).toEqual(false)
+    expect(HandleNameValidator.valid_p("将棋ウォーズ")).toEqual(false)
   })
 
   test("文字を連続してNGワードを突破しようとしてもダメ", () => {
