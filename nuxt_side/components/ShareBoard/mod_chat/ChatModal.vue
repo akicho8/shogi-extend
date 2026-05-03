@@ -16,7 +16,15 @@
       b-button.mh_head_observe( size="is-small" @click="SB.mh_head_observe" ) 監視
       b-button.ml_test(         size="is-small" @click="SB.ml_test"         ) 追加
     b-field(v-if="SB.message_scope_dropdown_show_p")
-      b-dropdown(animation="" position="is-bottom-left" v-model="SB.message_scope_key" @active-change="e => e && sfx_click()" @change="change_handle")
+      b-dropdown(
+        append-to-body
+        animation=""
+        position="is-bottom-left"
+        v-model="SB.message_scope_key"
+        @active-change="e => e && sfx_click()"
+        @change="change_handle"
+        )
+
         template(#trigger)
           b-button.message_scope_dropdown(icon-right="dots-vertical" size="is-small")
         template(v-for="e in SB.MessageScopeInfo.values")
