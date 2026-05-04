@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     row_click_handle(info) {
-      this.SB.member_info_modal_handle(info)
+      this.SB.member_info_modal_open_handle(info)
     },
     time_format(info) {
       return dayjs(info.performed_at).format("HH:mm:ss")
