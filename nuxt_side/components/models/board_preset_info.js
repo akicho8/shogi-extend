@@ -21,6 +21,7 @@ export class BoardPresetInfo extends ApplicationMemoryRecord {
       { key: "飛vs角",       icon: "🆚", handicap_desc:    "+21", description: "互角",         sfen: "position sfen lnsgkgsnl/1b5b1/ppppppppp/9/9/9/PPPPPPPPP/1R5R1/LNSGKGSNL b - 1",         },
       { key: "穴熊対決",     icon: "🆚", handicap_desc:    "+92", description: "ほぼ互角",     sfen: "position sfen lns3gnk/1r3bgsl/ppppppppp/9/9/9/PPPPPPPPP/LSGB3R1/KNG3SNL b - 1",         },
       { key: "矢倉対決",     icon: "🆚", handicap_desc:    "+71", description: "ほぼ互角",     sfen: "position sfen lns4nl/1r3bgk1/pppppgspp/5pp2/9/2PP5/PPSGPPPPP/1KGB3R1/LN4SNL b - 1",     },
+      { key: "無敵囲い対決", icon: "🆚", handicap_desc:   "+117", description: "ほぼ互角",     sfen: "position sfen ln1gkg1nl/3srs1b1/ppppppppp/9/9/9/PPPPPPPPP/1B1SRS3/LN1GKG1NL b - 1",     },
       { key: "石田流対決",   icon: "🆚", handicap_desc:   "+143", description: "先手有利",     sfen: "position sfen ln6l/1skgg4/1pppp1npb/p3spr1p/2P3p2/P1RPS3P/BPN1PPPP1/4GGKS1/L6NL b - 1", },
     ]
   }
