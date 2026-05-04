@@ -257,7 +257,7 @@ export const mod_room_channel = {
   },
   computed: {
     connection_id()   { return this.config.record.connection_id   }, // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
-    client_token()      { return this.config.record.client_token      }, // 同じタブから再度入ったとき同じになる
+    client_token()    { return this.config.record.client_token    }, // 同じタブから再度入ったとき同じになる
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
     // 合言葉と名前が入力済みなので共有可能か？ (未使用)

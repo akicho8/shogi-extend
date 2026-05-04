@@ -10,6 +10,9 @@ DebugBox.SbDebugVarPanel.is-hidden-mobile(v-if="SB.debug_mode_p")
   p 画像DL数: {{SB.image_download_success_count}}
   p 千日手数: {{SB.perpetual_cop.count}}
   p 先輩度数: {{SB.active_level}}
+  p connection_id: {{SB.connection_id}}
+  p client_token: {{SB.client_token}}
+  p session_counter: {{SB.session_counter}}
 </template>
 
 <script>
