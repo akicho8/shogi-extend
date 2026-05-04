@@ -42,7 +42,7 @@
       b-input.new_user_name(v-model.trim="SB.new_user_name" :disabled="SB.cable_p" autocomplete="on")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="SB.gate_modal_close_handle" icon-left="chevron-left")
+    b-button.gate_modal_close_handle.has-text-weight-normal(@click="SB.gate_modal_close_handle" icon-left="chevron-left")
     template(v-if="!SB.cable_p")
       b-button.gate_enter_handle(@click="SB.gate_enter_handle" type="is-primary") 入室
     template(v-else)
