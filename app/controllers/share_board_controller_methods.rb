@@ -172,10 +172,10 @@ module ShareBoardControllerMethods
     # リアルタイム共有
     attrs = attrs.merge({
         # :room_key => params[:room_key] || "",
-        :connection_id   => StringSupport.secure_random_urlsafe_base64_token,
-        :client_token      => sb_client_token,
-        :session_counter => sb_session_counter,
-        :CLIENT_SIDE_API_VERSION     => AppConfig[:share_board_api_version], # これとActionCableで返すバージョンを比較する
+        :connection_id           => StringSupport.secure_random_urlsafe_base64_token, # アクセス毎に変化する
+        :client_token            => sb_client_token,                                  # ブラウザ毎に変化する (何度アクセスしても同じ)
+        :session_counter         => sb_session_counter,
+        :CLIENT_SIDE_API_VERSION => AppConfig[:share_board_api_version],              # これとActionCableで返すバージョンを比較する
       })
 
     attrs
