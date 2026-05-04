@@ -13,14 +13,15 @@ module SharedMethods
   end
 
   def board_preset_select(preset_key)
-    find(".BoardPresetModal .board_preset_key").select(preset_key)
+    find(".board_preset_dropdown button").click
+    find(".board_preset_dropdown .dropdown-item", text: preset_key, exact_text: true).click
   end
 
   def assert_board_preset_selected(preset_key)
-    find(".BoardPresetModal .board_preset_key").assert_selector(:select, selected: preset_key)
+    assert_selector(".board_preset_dropdown button", text: preset_key, exact_text: true)
   end
 
   def board_preset_arrow_button_click(direction)
-    find(".board_preset_step_handle.#{direction}").click
+    find(".board_preset_arrow_handle .#{direction}").click
   end
 end

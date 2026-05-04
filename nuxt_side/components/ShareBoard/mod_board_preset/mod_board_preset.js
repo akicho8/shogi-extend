@@ -27,6 +27,11 @@ export const mod_board_preset = {
       }
     },
 
+    board_preset_change_handle(key) {
+      this.sfx_click()
+      this.sb_talk(key)
+    },
+
     // 適用ボタンを押したとき
     board_preset_apply_handle() {
       this.board_preset_modal_close()
@@ -34,7 +39,7 @@ export const mod_board_preset = {
     },
 
     // select UI や ←→ ボタンを押したとき
-    board_preset_step_handle(v) {
+    board_preset_arrow_handle(v) {
       this.sfx_click()
       const index = this.board_preset_info.code + v
       const new_index = GX.imodulo(index, this.BoardPresetInfo.values.length)
