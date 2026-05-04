@@ -70,7 +70,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     chat_modal_open { assert_message_received_o("(content:0)") }          # そこでチャットを開くとそのタイミングで読み込まれる
     assert_var("ml_count", 2)                                 # 念のため個数を確認する (2件用意していて1ページあたり10件のため2件ある)
 
-    gate_leave_handle                                                            # 退室する
+    gate_leave_process                                                            # 退室する
     assert_var("ml_count", 0)                                 # このタイミングでも履歴消去しているので 0 になっている
   end
 end

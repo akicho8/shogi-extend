@@ -103,11 +103,11 @@ module SharedMethods
   end
 
   # 退室
-  def gate_leave_handle
+  def gate_leave_process
     sidebar_open
     gate_modal_open_handle        # 「入退室」を自分でクリックする
     first(".gate_leave_handle").click   # 退室ボタンをクリックする
-    first(".close_handle").click   # 閉じる
+    first(".gate_modal_close_handle").click   # 閉じる
     sidebar_close
   end
 

@@ -24,7 +24,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       room_setup_by_user(:a)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      gate_leave_handle
+      gate_leave_process
       assert_var("perpetual_cop.count", 0)
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       room_setup_by_user(:a)
       king_move_up_down
       assert_var("perpetual_cop.count", 4)
-      gate_leave_handle
+      gate_leave_process
       assert_var("perpetual_cop.count", 0)
     end
   end

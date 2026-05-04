@@ -19,7 +19,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       assert_turn(0)
     end
     window_a do
-      gate_leave_handle                  # 軽く退室
+      gate_leave_process                  # 軽く退室
       room_setup_by_fillin_params        # 再度入室(部屋と名前はすでに入力済みになっている)
       assert_turn(0)                     # bから0手目をもらった
       assert_member_index(:b, 1)       # 並びは後輩だったbが先輩に

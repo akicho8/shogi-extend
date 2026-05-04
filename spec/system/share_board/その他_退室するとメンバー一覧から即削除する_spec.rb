@@ -13,7 +13,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
     window_a do
       assert_member_exist(:a)   # a の部屋にも a と
       assert_member_exist(:b)     # b がいる
-      gate_leave_handle                     # 退室
+      gate_leave_process                     # 退室
     end
     window_b do
       assert_member_missing(:a) # b 側の a が即座に消えた

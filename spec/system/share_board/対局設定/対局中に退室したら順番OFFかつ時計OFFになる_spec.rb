@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
       })
     assert_order_on
     assert_clock_on
-    gate_leave_handle
+    gate_leave_process
     assert_order_off
     assert_clock_off
   end
