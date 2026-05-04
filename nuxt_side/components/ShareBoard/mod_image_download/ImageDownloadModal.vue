@@ -8,7 +8,13 @@
 
     SbColorThemeDropdown
 
-    b-dropdown.image_size_key_dropdown(v-model="SB.image_size_key" @active-change="e => e && sfx_click()" position="is-bottom-left" @change="SB.image_size_key_change_handle")
+    b-dropdown.image_size_key_dropdown(
+      append-to-body
+      v-model="SB.image_size_key"
+      @active-change="e => e && sfx_click()"
+      position="is-bottom-left"
+      @change="SB.image_size_key_change_handle"
+      )
       template(#trigger)
         b-button(:label="SB.image_size_info.name" icon-right="menu-down" size="is-small")
       template(v-for="e in SB.ImageSizeInfo.values")
