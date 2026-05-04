@@ -110,9 +110,9 @@ export class CcSoftValidatorInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        icon_code: "mdi-check-bold",
-        icon_type: "has-text-success",
-        message: "フィッシャールールでは<b>秒読み</b>と<b>考慮時間</b>を 0 にしたほうがよいでしょう",
+        icon_code: "mdi-alert-circle-outline",
+        icon_type: "has-text-danger",
+        message: "フィッシャールールでは<b>秒読み</b>と<b>考慮時間</b>を0にしたほうがよいでしょう",
         cond_if: context => {
           return [
             context.initial_main_min >= 1,

@@ -23,6 +23,7 @@ module SharedMethods
       :export_group_visible_p            => true,                         # エクスポートメニュー
       :think_mark_switch_visibility_key  => :tmsv_visible,                # 思考印スイッチ表示
       :reform_conduct_feature_p          => true,                         # 反則ブロックモード警告表示
+      :clock_editable_p                  => true,                         # 時計の値の直接入力を許可するか？
     }
   end
 

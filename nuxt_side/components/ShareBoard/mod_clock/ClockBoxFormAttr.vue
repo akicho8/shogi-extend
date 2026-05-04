@@ -27,8 +27,9 @@ export default {
     input_handle(e, str) {
       let v = GX.to_i(str)
       if (false) {
-        v = GX.iclamp(v, 0, this.clock_attr_info.max)
+        v = GX.iclamp(v, 0, this.clock_attr_info.max) // ここで変更しても b-numberinput 側が前の値を保持してしまっている
       }
+      this.clog(this.clock_attr_info.key, v)
       e[this.clock_attr_info.key] = v
       this.SB.cc_input_handle()
     },
@@ -44,7 +45,8 @@ export default {
         "size": "is-small",
         "controls-position": "compact",
         "exponential": true,
-        "editable": this.development_p || true,
+        "editable": this.SB.clock_editable_p,
+        "use-html5-validation": false,
       }
     },
   },

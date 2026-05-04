@@ -160,20 +160,31 @@ export const mod_clock_box_modal = {
     cc_soft_validator_info() {
       let info = null
       if (this.cc_params) {
-        this.cc_params.forEach(params => {
+        for (const params of this.cc_params) {
           if (info == null) {
             const matched = CcSoftValidatorInfo.match(params)
             if (matched) {
               info = matched
-              // 本当はここで break したいがクソ言語はできない
+              break
             }
           }
-        })
+        }
       }
       return info
     },
 
     cc_play_validate_message() {
+      if (this.cc_params) {
+        for (const params of this.cc_params) {
+          for (const e of ClockAttrInfo.values) {
+            const validate_message = e.validate_message(params)
+            if (validate_message) {
+              return validate_message
+            }
+          }
+        }
+      }
+
       if (this.cable_p) {
         if (!this.order_enable_p) {
           return "先に対局設定をしよう"
