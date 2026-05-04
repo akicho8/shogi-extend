@@ -3,17 +3,12 @@
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 export const mod_member_bc = {
-  data() {
-    return {
-      member_bc_interval_runner: null, // 定期実行用
-    }
-  },
   beforeDestroy() {
     this.member_bc_destroy()
   },
   methods: {
     member_bc_create() {
-      if (this.member_bc_interval_runner == null) {
+      if (!this.member_bc_interval_runner) {
         if (this.ALIVE_NOTIFY_INTERVAL > 0) {
           this.member_bc_interval_runner = new IntervalRunner(this.member_bc_callback, {
             name: "メンバー情報通知",
