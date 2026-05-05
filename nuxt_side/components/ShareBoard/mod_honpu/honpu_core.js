@@ -47,8 +47,10 @@ export const honpu_core = {
     },
 
     honpu_master_setup_for_shortcut() {
-      this.honpu_master_setup()
-      this.toast_primary("現在の棋譜を本譜としました")
+      if (this.honpu_ui_enable_p) {
+        this.honpu_master_setup()
+        this.toast_primary("現在の棋譜を本譜としました")
+      }
     },
 
     honpu_branch_setup(params) {
@@ -73,8 +75,9 @@ export const honpu_core = {
     },
 
     honpu_direct_return_handle() {
-      this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
       if (this.honpu_stage_info.key === "hs_branching") {
+        if (this.cc_play_then_warning()) { return }
+        this.tl_add("HONPU", "本譜に戻るをクリックしたときはダイアログを出さずに即戻る (戻ったときに音がでるためクリック音は不要)")
         this.time_machine_restore({
           ...this.honpu_master,
           turn: this.honpu_branch.turn - 1,
@@ -86,12 +89,13 @@ export const honpu_core = {
       }
     },
 
-    honpu_click_handle() {
+    // 未使用
+    honpu_open_or_return_handle() {
       if (this.honpu_return_button_active_p) {
         this.honpu_direct_return_handle()
         return
       }
-      if (this.honpu_open_button_show_p) {
+      if (this.honpu_open_button_active_p) {
         this.honpu_modal_open_handle()
         return
       }
@@ -100,15 +104,15 @@ export const honpu_core = {
 
   computed: {
     // 本譜ボタンの表示条件
-    honpu_open_button_show_p() {
-      if (this.honpu_button_show_share_condition) {
+    honpu_open_button_active_p() {
+      if (this.honpu_ui_enable_p) {
         return this.honpu_stage_info.honpu_visible_p
       }
     },
 
     // 本譜に戻るボタンの表示条件
     honpu_return_button_active_p() {
-      if (this.honpu_button_show_share_condition) {
+      if (this.honpu_ui_enable_p) {
         return this.honpu_stage_info.return_to_honpu_p
       }
     },
@@ -116,7 +120,7 @@ export const honpu_core = {
     // 本譜系ボタンの共通表示条件
     // ・操作モード
     // ・時計の秒針が動いていない
-    honpu_button_show_share_condition() {
+    honpu_ui_enable_p() {
       return this.play_mode_p && !this.cc_play_p
     },
 
