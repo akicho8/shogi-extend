@@ -75,6 +75,8 @@ export default {
             gap: 0.25rem
             .tag
               font-weight: bold
+              font-family: 'Consolas', 'Monaco', 'Courier New', monospace // 数字の判別を優先する設定
+              font-feature-settings: "zero"                               // フォントが対応していればスラッシュゼロを強制
 
   ////////////////////////////////////////////////////////////////////////////////
 
