@@ -1,4 +1,5 @@
 import { mod_gate_modal            } from "./mod_gate_modal.js"
+import { tab_dup_validator         } from "./tab_dup_validator.js"
 import { mod_room_active_level     } from "./mod_room_active_level.js"
 import { mod_room_board_setup      } from "./mod_room_board_setup.js"
 import { mod_room_channel          } from "./mod_room_channel.js"
@@ -12,6 +13,7 @@ import { mod_room_url_copy         } from "./mod_room_url_copy.js"
 export const mod_room = {
   mixins: [
     mod_gate_modal,
+    tab_dup_validator,
     mod_room_active_level,
     mod_room_board_setup,
     mod_room_channel,

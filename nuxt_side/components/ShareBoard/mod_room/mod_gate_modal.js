@@ -71,25 +71,35 @@ export const mod_gate_modal = {
 
     gate_enter_handle() {
       this.sfx_click()
-
       this.new_room_key = _.trim(this.new_room_key)
       this.new_user_name = HandleNameNormalizer.normalize(this.new_user_name)
-
-      {
-        const message = RoomKeyValidator.valid_message(this.new_room_key)
-        if (message) {
-          this.toast_warn(message)
-          return
-        }
-      }
-
-      if (this.handle_name_invalid_then_show(this.new_user_name)) {
+      if (this.gate_validate(this.new_room_key, this.new_user_name)) {
         return
       }
-
       this.gate_modal_close()
-
       this.room_create_from_modal(this.new_room_key, this.new_user_name)
+    },
+
+    gate_validate(room_key, user_name) {
+      {
+        const message = RoomKeyValidator.valid_message(room_key)
+        if (message) {
+          this.toast_warn(message)
+          return true
+        }
+      }
+      if (this.handle_name_invalid_then_show(user_name)) {
+        return true
+      }
+    },
+
+    gate_direct_enter_handle() {
+      this.sfx_click()
+      if (this.gate_validate(this.room_key, this.user_name)) {
+        return
+      }
+      this.gate_modal_close()
+      this.room_create_from_modal(this.room_key, this.user_name)
     },
   },
 }

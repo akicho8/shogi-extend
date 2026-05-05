@@ -117,6 +117,9 @@ export const mod_room_members = {
 
     __member_add(params) {
       this.tl_p(`--> __member_add: ${params.from_user_name}`, params)
+
+      this.tab_dup_validate_call(params)
+
       const original_size = this.member_infos.length
       const original_names = this.member_infos.map(e => e.from_user_name)
 
