@@ -19,7 +19,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       { category_key: "対局",   name: "入退室 / 閉じる",         trigger_type: "key",  trigger_key: "e",         if_mode: "play", if_debug: false, method: "gate_modal_toggle_handle",              },
       { category_key: "対局",   name: "対局設定 / 閉じる",       trigger_type: "key",  trigger_key: "o",         if_mode: "play", if_debug: false, method: "order_modal_toggle_handle",             },
       { category_key: "対局",   name: "時計 / 閉じる",           trigger_type: "key",  trigger_key: "t",         if_mode: "play", if_debug: false, method: "cc_modal_toggle_handle",                },
-      { category_key: "対局",   name: "一時停止 / 再開",         trigger_type: "key",  trigger_key: "p",         if_mode: "play", if_debug: false, method: "cc_play_pause_resume_shortcut_handle",  },
+      { category_key: "対局",   name: "一時停止 / 再開",         trigger_type: "key",  trigger_key: "P",         if_mode: "play", if_debug: false, method: "cc_play_pause_resume_shortcut_handle",  },
       { category_key: "対局",   name: "チャット / 閉じる",       trigger_type: "code", trigger_key: "Enter",     if_mode: null,   if_debug: false, method: "chat_modal_shortcut_handle",            },
       { category_key: "対局",   name: "初期配置に戻す",          trigger_type: "key",  trigger_key: "0",         if_mode: "play", if_debug: false, method: "turn_change_to_zero_modal_open_handle", },
       { category_key: "対局",   name: "手合割",                  trigger_type: "key",  trigger_key: "=",         if_mode: "play", if_debug: false, method: "board_preset_modal_open_handle",        },
