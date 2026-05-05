@@ -14,7 +14,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       { category_key: "基本",   name: "局面編集 / 完了",         trigger_type: "key",  trigger_key: "E",         if_mode: null,   if_debug: false, method: "play_edit_mode_toggle_handle",          },
       { category_key: "基本",   name: "現局面を本譜とする",      trigger_type: "key",  trigger_key: "W",         if_mode: "play", if_debug: false, method: "honpu_master_setup_for_shortcut",       },
       { category_key: "基本",   name: "本譜を開く",              trigger_type: "key",  trigger_key: "h",         if_mode: "play", if_debug: false, method: "honpu_modal_toggle_handle",             },
-      { category_key: "基本",   name: "本譜に戻る",              trigger_type: "key",  trigger_key: "z",         if_mode: "play", if_debug: false, method: "honpu_direct_return_handle",            },
+      { category_key: "基本",   name: "本譜に戻る",              trigger_type: "key",  trigger_key: "Z",         if_mode: "play", if_debug: false, method: "honpu_direct_return_handle",            },
 
       { category_key: "対局",   name: "入退室 / 閉じる",         trigger_type: "key",  trigger_key: "e",         if_mode: "play", if_debug: false, method: "gate_modal_toggle_handle",              },
       { category_key: "対局",   name: "対局設定 / 閉じる",       trigger_type: "key",  trigger_key: "o",         if_mode: "play", if_debug: false, method: "order_modal_toggle_handle",             },
