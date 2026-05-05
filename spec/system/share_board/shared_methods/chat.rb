@@ -8,7 +8,7 @@ module SharedMethods
   end
 
   def chat_modal_close
-    find(".ChatModal .close_handle").click
+    find(".chat_modal_close_handle").click
   end
 
   # message を送信する

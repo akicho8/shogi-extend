@@ -39,7 +39,7 @@
       b-field.InputField
         b-input(v-model="SB.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
+    b-button.chat_modal_close_handle.has-text-weight-normal(@click="SB.chat_modal_close_handle" icon-left="chevron-left")
     b-button.send_handle(:class="[SB.message_scope_info.class, SB.message_scope_info.key]" :key="SB.message_scope_info.key" @click="send_handle" :icon-left="SB.message_scope_info.icon" :type="SB.message_scope_info.type")
       // {{SB.message_scope_info.label}}
 </template>
@@ -71,9 +71,6 @@ export default {
     this.SB.mh_chat_close()
   },
   methods: {
-    close_handle(e) {
-      this.SB.chat_modal_close_handle(e)
-    },
     change_handle(key) {
       this.sfx_click()
       this.SB.sb_talk(this.SB.MessageScopeInfo.fetch(key).name)
