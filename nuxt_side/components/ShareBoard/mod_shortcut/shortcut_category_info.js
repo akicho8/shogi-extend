@@ -5,10 +5,12 @@ import { ShortcutInfo } from "./shortcut_info.js"
 export class ShortcutCategoryInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "基本",   if_debug: false, },
-      { key: "対局",   if_debug: false, },
-      { key: "思考印", if_debug: false, },
-      { key: "その他", if_debug: false, },
+      { key: "対局",         if_debug: false, },
+      { key: "検討",         if_debug: false, },
+      { key: "インポート",   if_debug: false, },
+      { key: "エクスポート", if_debug: false, },
+      { key: "思考印",       if_debug: false, },
+      { key: "その他",       if_debug: false, },
     ]
   }
 

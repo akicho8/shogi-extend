@@ -7,7 +7,7 @@
       //- https://bulma.io/documentation/columns/responsiveness/
       //- .is-one-third-widescreen
       template(v-for="shortcut_category_info in SB.ShortcutCategoryInfo.values")
-        .column.is-half-tablet.is-half-desktop(v-if="shortcut_category_info.showable_p(SB)")
+        .column.is-half-tablet.is-one-third-desktop(v-if="shortcut_category_info.showable_p(SB)")
           .sc_title {{shortcut_category_info.name}}
           .sc_table
             template(v-for="shortcut_info in shortcut_category_info.shortcut_infos")
@@ -32,7 +32,7 @@ export default {
 <style lang="sass">
 @import "../stylesheets/support"
 .SbShortcutModal
-  +modal_max_width(512px)
+  +modal_max_width(800px)
 
   ////////////////////////////////////////////////////////////////////////////////
 
