@@ -1,10 +1,10 @@
 import _ from "lodash"
 import { GX } from "@/components/models/gx.js"
-import { SfenSyncParamsWrapper } from "./models/sfen_sync_params_wrapper.js"
+import { SfenSyncParamsWrapper } from "../models/sfen_sync_params_wrapper.js"
 
 const SELF_VS_SELF_MODE = false
 
-export const mod_sfen_sync = {
+export const mod_core = {
   data() {
     return {
       sfen_sync_params: null, // リトライするとき用に送るパラメータを保持しておく
@@ -15,7 +15,7 @@ export const mod_sfen_sync = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // あとで再送するかもしれないのでいったん送るパラメータを作って保持しておく
-    sfen_sync_params_set(e) {
+    sfen_sync_params_setup(e) {
       this.tl_add("SP", e.last_move_info.to_kif_without_from, e.last_move_info)
       GX.assert(this.current_sfen, "this.current_sfen")
       if (this.development_p) {

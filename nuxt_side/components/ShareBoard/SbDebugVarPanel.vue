@@ -15,6 +15,7 @@ DebugBox.SbDebugVarPanel.is-hidden-mobile(v-if="SB.debug_mode_p")
   p 接続ID: {{SB.connection_id}}
   p カウンタ: {{SB.session_counter}}
   p tab_dup_key: {{SB.tab_dup_key}}
+  p 連続指手: {{SB.misuse_detector.count}} {{SB.misuse_detector.location_key}} {{SB.misuse_detector.first_turn}}-{{SB.misuse_detector.last_turn}}
 </template>
 
 <script>

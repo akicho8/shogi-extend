@@ -121,7 +121,9 @@ export const mod_reflector = {
         this.clock_box.location_to(this.current_location)
       }
 
-      this.perpetual_cop.reset$() // ここでいいのか？？？
+      // 他者をリセットする
+      this.perpetual_cop.reset$()
+      this.misuse_detector.reset()
     },
     reflector_label({params, timeline_resolver}) {
       const label = params.label ?? timeline_resolver.label

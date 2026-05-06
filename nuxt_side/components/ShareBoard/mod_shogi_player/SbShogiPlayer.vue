@@ -36,9 +36,6 @@ export default {
       hv.sp_human_side              = this.SB.sp_human_side
       hv.sp_think_mark_collection   = this.SB.sp_think_mark_collection
       hv.sp_origin_mark_collection  = this.SB.sp_origin_mark_collection
-      hv.sp_legal_move_only         = this.SB.legal_strict_p
-      hv.sp_my_piece_only_move      = this.SB.legal_strict_p
-      hv.sp_my_piece_kill_disabled  = this.SB.legal_strict_p
       hv.sp_lift_cancel_action      = this.SB.lift_cancel_action_info.key
       hv.sp_mobile_vertical         = this.SB.mobile_layout_info.sp_mobile_vertical
       hv.sp_layout                  = this.SB.desktop_layout_info.sp_layout
@@ -46,6 +43,10 @@ export default {
       hv.sp_controller              = this.SB.controller_show_p
       hv.sp_slider                  = this.SB.controller_show_p
       hv.sp_mounted_focus_to_slider = true // マウントしたらスライダーにフォーカスする
+
+      hv.sp_legal_move_only         = this.SB.legal_strict_p
+      hv.sp_my_piece_only_move      = this.SB.legal_strict_p
+      hv.sp_my_piece_kill_disabled  = this.SB.legal_strict_p
 
       hv.sp_request_checkmate_stat = true // 詰み判定する
       hv.sp_request_position_hash  = true // 操作モードで千日手判定用に現局面のSFENをイベントに含める
@@ -61,13 +62,23 @@ export default {
       hv.sp_board_variant_to_stand = false
 
       if (this.SB.order_enable_p || this.SB.cc_play_p) {
+
         // 反則時の挙動
         hv.sp_illegal_validate = this.SB.foul_mode_info.sp_illegal_validate
         hv.sp_illegal_cancel   = this.SB.foul_mode_info.sp_illegal_cancel
       } else {
         // 検討中
-        hv.sp_illegal_validate = true // 反則を検知する
-        hv.sp_illegal_cancel   = true // が、キャンセルする
+        if (true) {
+          hv.sp_illegal_validate       = true // 反則を検知する
+          hv.sp_illegal_cancel         = true // が、キャンセルする
+        } else {
+          hv.sp_illegal_validate       = true  // 反則を検知する
+          hv.sp_illegal_cancel         = false // キャンセルしない
+
+          hv.sp_legal_move_only        = false // 効きを無視する
+          hv.sp_my_piece_only_move     = true  // 自分の手番のときは自分の駒だけを動かせる
+          hv.sp_my_piece_kill_disabled = true  // 自分の手番で自分の駒を取れないようにする
+        }
       }
 
       if (false) {

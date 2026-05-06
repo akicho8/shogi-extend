@@ -38,6 +38,7 @@ export const honpu_core = {
       this.tl_add("HONPU", "ブランチ消去(time_machine_restore の中で呼んでいる)")
       this.honpu_branch = null
       this.perpetual_cop.reset$() // これがないと元に戻して同じ手を指すと千日手になる
+      this.misuse_detector.reset()
     },
 
     honpu_master_setup() {

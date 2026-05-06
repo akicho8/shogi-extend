@@ -62,7 +62,6 @@ import { mod_control_panel        } from "./mod_control_panel/mod_control_panel.
 import { mod_storage              } from "./mod_storage.js"
 import { mod_export               } from "./mod_export.js"
 import { mod_role                 } from "./mod_role/mod_role.js"
-import { mod_sfen_sync            } from "./mod_sfen_sync.js"
 import { mod_resend               } from "./mod_resend/mod_resend.js"
 import { mod_look_away            } from "./mod_look_away/mod_look_away.js"
 import { mod_reflector            } from "./mod_reflector/mod_reflector.js"
@@ -73,6 +72,7 @@ import { mod_board_preset         } from "./mod_board_preset/mod_board_preset.js
 import { mod_shortcut             } from "./mod_shortcut/mod_shortcut.js"
 
 import { mod_room                 } from "./mod_room/mod_room.js"
+import { mod_move_sync                 } from "./mod_move_sync/mod_move_sync.js"
 
 import { mod_member       } from "./mod_member/mod_member.js"
 
@@ -152,7 +152,6 @@ export default {
     mod_export,
     mod_role,
     mod_appearance,
-    mod_sfen_sync,
     mod_resend,
     mod_look_away,
     mod_reflector,
@@ -164,6 +163,7 @@ export default {
     mod_xprofile,
     mod_xprofile_console,
     mod_room,
+    mod_move_sync,
     mod_member,
     mod_clock,
     mod_fes,

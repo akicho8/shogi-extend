@@ -99,6 +99,8 @@ export const mod_room_channel = {
       this.member_info_init()
       this.active_level_init()
       this.perpetual_cop.reset$()
+      this.misuse_detector.reset()
+
       this.mh_room_entry()
       this.xprofile_entry()
 

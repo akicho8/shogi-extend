@@ -92,6 +92,7 @@ export class ParamInfo extends ParamBase {
       { key: "export_group_visible_p",            type: "boolean", name: "エクスポートメニュー",                     defaults: { development: null,       production: false,                               }, permanent: true,  relation: null,                            alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
       { key: "cable_required_p",                  type: "boolean", name: "対局設定や対局時計は部屋を必須とするか？", defaults: { development: null,       production: true,                                }, permanent: false, relation: null,                            alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
       { key: "ai_auto_response_ratio",            type: "float",   name: "GPTの反応確率",                            defaults: { development: 1.0,        production: 0.05,                                }, permanent: false, relation: null,                            alias: null,          input_attrs: null,                        desc: null, after_set: null,                                      },
+      { key: "misuse_detector_feature_p",         type: "boolean", name: "感想戦モードでの対局者監視",               defaults: { development: null,       production: false,                               }, permanent: false, relation: null,                            alias: null,          input_attrs: null,                        desc: null, after_set: null,                 },
     ]
   }
 }

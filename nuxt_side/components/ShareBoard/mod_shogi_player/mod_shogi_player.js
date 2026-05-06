@@ -35,8 +35,11 @@ export const mod_shogi_player = {
         this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
-      this.sfen_sync_params_set(e) // 再送可能なパラメータ作成
+      this.sfen_sync_params_setup(e) // 再送可能なパラメータ作成
       this.sfen_sync()             // 指し手と時計状態の配信
+
+      // 感想戦モードで対局している人がいないか調べる
+      this.misuse_detector_call(e)
 
       // 次の人の視点にする
       if (false) {
@@ -69,7 +72,7 @@ export const mod_shogi_player = {
 
       // 意図せず共有してしまうのを防ぐため共有しない
       // if (false) {
-      //   this.sfen_sync_params_set()
+      //   this.sfen_sync_params_setup()
       // }
       // }
     },
@@ -95,6 +98,7 @@ export const mod_shogi_player = {
     sp_slider_leading_task() {
       this.debug_alert("sp_slider_leading_task")
       this.perpetual_cop.reset$()
+      this.misuse_detector.reset()
       this.think_mark_clear_action({sfx: false})
     },
     sp_slider_trailing_task() {
