@@ -15,7 +15,7 @@ export class HonpuStageInfo extends ApplicationMemoryRecord {
         key: "hs_branching",
         name: "本譜分岐",
         kifu_copy_message: "コピーしましたがこれは本譜ではありません",
-        help_message: "棋譜が本譜から分岐しています (本譜が必要であれば本譜に戻してください)",
+        help_message: "本譜から分岐しています (本譜が必要であれば本譜に戻してください)",
         honpu_visible_p: false,
         return_to_honpu_p: true,
       },
