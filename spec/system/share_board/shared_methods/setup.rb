@@ -25,6 +25,7 @@ module SharedMethods
       :reform_conduct_feature_p          => true,                         # 反則ブロックモード警告表示
       :clock_editable_p                  => true,                         # 時計の値の直接入力を許可するか？
       :misuse_detector_feature_p         => false,                        # 感想戦モードで対局している人がいないか調べる
+      :ranking_auto_open_p               => false,                        # 対局終了後にランキングを表示する
     }
   end
 

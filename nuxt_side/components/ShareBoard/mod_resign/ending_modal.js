@@ -28,6 +28,9 @@ export const ending_modal = {
     ending_modal_close() {
       if (this.ending_modal_instance) {
         this.modal_card_close2("ending_modal_instance")
+        if (this.ranking_auto_open_p) {
+          this.battle_ranking_modal_open()
+        }
       }
     },
   },

@@ -8,7 +8,7 @@ module SharedMethods
   # 投了
   def resign_run
     resign_confirm_modal_open_handle
-    find(:button, "投了する").click # モーダルが表示されるので本当に投了する
+    find(".normal_resign_call_handle").click
     ending_modal_close_handle
   end
 
