@@ -39,6 +39,8 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.kento_open_handle(size="is-small" tag="a" :href="SB.current_kifu_vo.kento_url" target="_blank" @click="SB.other_app_click_handle('KENTO')") KENTO
         b-button.kifu_copy_handle_main(size="is-small" @click="SB.kifu_copy_handle('kif_utf8')") コピー
 
+    BranchingWarn.mt-2
+
   .box
     b-field(custom-class="is-small" label="棋譜URLのコピー")
       .button_elements
@@ -46,6 +48,8 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
         b-button.current_short_url_copy_handle(size="is-small" @click.prevent="SB.current_short_url_copy_handle") 短縮版
     p.help
       | 棋譜を共有したい場合は棋譜そのものより短縮版のURLがお手軽です
+
+    BranchingWarn.mt-2
 
   .box
     b-field(custom-class="is-small" label="インポート")
@@ -62,9 +66,7 @@ SbSidebar.SbControlPanel(v-model="SB.sidebar_p")
       //- .block.help.has-text-danger(v-if="SB.honpu_stage_info.help_message")
       //-   | {{SB.honpu_stage_info.help_message}}
 
-      .message.is-danger.is-small.mb-3(v-if="SB.honpu_stage_info.help_message")
-        .message-body
-          | {{SB.honpu_stage_info.help_message}}
+      BranchingWarn.my-3
 
       b-field(custom-class="is-small" label="コピー")
         .button_elements
