@@ -39,4 +39,41 @@
       }
     }
   }
+
+  .stripe_bg {
+    /* ストライプ背景のコンテナ */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%; /* アニメーションの余白のために広く設定 */
+    height: 100%;
+
+    /* 斜めストライプの作成 */
+    background: linear-gradient(
+      45deg,
+      #333 25%,
+      #444 25%,
+      #444 50%,
+      #333 50%,
+      #333 75%,
+      #444 75%,
+      #444 100%
+    );
+    background-size: 100px 100px; /* ストライプの太さ/密度 */
+
+    /* アニメーションの設定 */
+    animation: scroll-stripe 2s linear infinite;
+    // z-index: -1;
+
+    /* ループアニメーション */
+    @keyframes scroll-stripe {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        /* background-sizeの数値と合わせるとスムーズにループします */
+        transform: translateX(-100px);
+      }
+    }
+  }
 }
