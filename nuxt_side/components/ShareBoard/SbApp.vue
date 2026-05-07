@@ -3,7 +3,6 @@ client-only
   .SbApp(:style="app_component_style" :class="app_component_class")
     div(is="style" v-text="app_component_raw_css" v-if="app_component_raw_css")
     | {{$debug.trace('SbApp', 'render')}}
-    .stripe_bg
     SbDebugVarPanel
     SbControlPanel
     SbTopNav
