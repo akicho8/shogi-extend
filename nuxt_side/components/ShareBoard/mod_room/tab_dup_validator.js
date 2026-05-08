@@ -62,7 +62,7 @@ export const tab_dup_validator = {
       if (!this.tab_dup_modal_instance) {
         this.tab_dup_key = tab_dup_key
         this.sfx_play("x")
-        this.sb_talk(this.tab_dup_info.talk_body)
+        this.sb_talk(this.tab_dup_info.talk_body, {validate_length: false})
         this.ac_log({subject: "接続重複", body: this.tab_dup_info.name})
         this.modal_card_open2("tab_dup_modal_instance", {
           component: TabDupModal,
