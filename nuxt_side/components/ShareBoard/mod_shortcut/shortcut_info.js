@@ -11,7 +11,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
 
       { category_key: "エクスポート", name: "棋譜コピー (KIF)",       trigger_type: "key",  trigger_key: "c",         if_mode: "play", if_debug: false, method: "kifu_copy_handle_kif_utf8",             },
       { category_key: "エクスポート", name: "局面コピー (BOD)",       trigger_type: "key",  trigger_key: "b",         if_mode: "play", if_debug: false, method: "kifu_copy_handle_bod",                  },
-      { category_key: "エクスポート", name: "棋譜ダウンロード (KIF)", trigger_type: "key",  trigger_key: "d",         if_mode: "play", if_debug: false, method: "kifu_download_handle_kif_utf8",         },
+      { category_key: "エクスポート", name: "棋譜ダウンロード (KIF)", trigger_type: "key",  trigger_key: "f",         if_mode: "play", if_debug: false, method: "kifu_download_handle_kif_utf8",         },
       { category_key: "エクスポート", name: "棋譜URLコピー",          trigger_type: "key",  trigger_key: "u",         if_mode: "play", if_debug: false, method: "current_long_url_copy_handle",          },
       { category_key: "エクスポート", name: "棋譜URLコピー (短縮)",   trigger_type: "key",  trigger_key: "s",         if_mode: "play", if_debug: false, method: "current_short_url_copy_handle",         },
 
