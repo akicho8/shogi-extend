@@ -40,8 +40,10 @@ export class MisuseDetector {
 
     if (this.options.count_max != null) {
       if (this.count >= this.options.count_max) {
-        this.reset()
-        this.options.callback()
+        if (this.first_turn === 1) {
+          this.reset()
+          this.options.callback()
+        }
       }
     }
   }
