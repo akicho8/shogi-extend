@@ -40,7 +40,7 @@ export class MisuseDetector {
 
     if (this.options.count_max != null) {
       if (this.count >= this.options.count_max) {
-        if (this.first_turn === 1) {
+        if (this.first_turn === 1 || this.first_turn === 2) { // 先手であれば初手で、後手であれ2手目だから 1 or 2
           this.reset()
           this.options.callback()
         }
