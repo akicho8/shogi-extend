@@ -1,2 +1,11 @@
-#!/usr/bin/env ruby
-exec "./bin/rails", "server", *ARGV
+#!/usr/bin/env sh
+
+# export NODE_OPTIONS="--max-old-space-size=2048"
+# export NODE_OPTIONS="--max-old-space-size=8192"
+rm log/*.log >/dev/null
+sudo kill -9 $(sudo lsof -t -i:3000) >/dev/null 2>&1
+sudo kill -9 $(sudo lsof -t -i:4000) >/dev/null 2>&1
+while true; do
+    foreman s -f Procfile.cafe
+    # foreman s -f Procfile.home
+done
