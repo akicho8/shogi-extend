@@ -38,6 +38,7 @@ module Swars
           :import_enable_p        => import_enable?,
           :current_swars_user_key => current_swars_user&.key,
           :viewpoint              => current_viewpoint,
+          :swars_feature          => AppConfig[:swars_feature],
         }
         if Rails.env.local?
           if params[:stat]

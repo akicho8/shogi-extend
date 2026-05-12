@@ -113,8 +113,22 @@ export default {
     "$route.query": "$fetch",
   },
 
+  mounted() {
+    if (this.swars_feature === false) {
+      const primary_error_message = `
+将棋ウォーズ棋譜検索はサービスを終了しました<br>
+今はもう公式の棋神アナリティクスから棋譜が取れるようになっているので今後はそちらをどうぞ
+`
+      this.$nuxt.error({statusCode: 410, __RESPONSE_DATA__: {primary_error_message}})
+    }
+  },
+
   fetchOnServer: false,
   fetch() {
+    if (this.swars_feature === false) {
+      return
+    }
+
     this.$debug.trace("SwarsBattleIndexApp", "fetch begin")
 
     let params = {...this.$route.query}
@@ -227,6 +241,8 @@ export default {
   },
 
   computed: {
+    swars_feature() { return true },
+
     ExternalAppInfo() { return ExternalAppInfo },
     TacticInfo()      { return TacticInfo },
     ParamInfo()       { return ParamInfo },

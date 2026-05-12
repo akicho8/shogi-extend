@@ -24,6 +24,11 @@ module Swars
           return mock_html(type)
         end
 
+        if AppConfig[:swars_feature]
+        else
+          return
+        end
+
         resp = agent.get(url)
         sleep_on
         if !resp.success?    # 200 ではないならすべて取得できなかったとする

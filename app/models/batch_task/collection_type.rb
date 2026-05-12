@@ -35,7 +35,9 @@ module BatchTask
       begin
         Retryable.retryable(on: ActiveRecord::Deadlocked, tries: 10, sleep: 1) do
           if execute?
-            record.destroy!
+            if AppConfig[:swars_feature]
+              record.destroy!
+            end
           end
           if verbose?
             puts "#{record.class.name} #{record.id} destroyed"

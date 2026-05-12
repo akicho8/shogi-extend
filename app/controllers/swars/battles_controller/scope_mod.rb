@@ -20,7 +20,13 @@ module Swars
       end
 
       def current_index_scope
-        @current_index_scope ||= current_scope
+        @current_index_scope ||= yield_self do
+          if AppConfig[:swars_feature]
+            current_scope
+          else
+            current_scope.none
+          end
+        end
       end
 
       ################################################################################

@@ -87,6 +87,11 @@ module Swars
     scope :user_only,   -> user_keys {     where(user: User.user_only(user_keys)) }
     scope :user_except, -> user_keys { where.not(user: User.user_only(user_keys)) }
 
+    if AppConfig[:swars_feature]
+    else
+      default_scope { limit(0) }
+    end
+
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.local?

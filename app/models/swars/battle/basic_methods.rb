@@ -47,6 +47,11 @@ module Swars
 
         # attr_accessor :csa_seq2
 
+        if AppConfig[:swars_feature]
+        else
+          default_scope { limit(0) }
+        end
+
         before_validation on: :create do
           if Rails.env.local?
             # Bioshogi::Parser.parse(Bioshogi::Analysis::TagIndex.lookup(strike_plan).static_kif_file.read).to_csa

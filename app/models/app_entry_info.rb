@@ -114,7 +114,7 @@ class AppEntryInfo
     ################################################################################
 
     {
-      display_p: true,
+      display_p: AppConfig[:swars_feature],
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/standard-score" },
       title: "将棋ウォーズ偏差値",
@@ -127,7 +127,7 @@ class AppEntryInfo
     },
 
     {
-      display_p: true,
+      display_p: AppConfig[:swars_feature],
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/tactic-list" },
       title: "戦法一覧",
@@ -139,7 +139,7 @@ class AppEntryInfo
     },
 
     {
-      display_p: true,
+      display_p: AppConfig[:swars_feature],
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/tactic-stat" },
       title: "将棋ウォーズ戦法勝率ランキング",
@@ -153,7 +153,7 @@ class AppEntryInfo
     },
 
     {
-      display_p: true,
+      display_p: AppConfig[:swars_feature],
       experiment_p: false,
       nuxt_link_to: { path: "/lab/swars/cross-search" },
       title: "横断棋譜検索",
@@ -183,7 +183,7 @@ class AppEntryInfo
     ################################################################################
 
     {
-      display_p: false,
+      display_p: true,
       experiment_p: false,
       nuxt_link_to: { path: "/lab/general/pre-professional-league" },
       title: "奨励会三段リーグDB",
