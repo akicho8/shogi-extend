@@ -117,7 +117,7 @@ export default {
     if (this.swars_feature === false) {
       const primary_error_message = `
 将棋ウォーズ棋譜検索はサービスを終了しました<br>
-公式の棋神アナリティクスでも棋譜の取得が可能ですので今後はそちらをご利用ください
+今後の棋譜の取得については公式の棋神アナリティクスをご活用ください<br>
 `
       this.$nuxt.error({statusCode: 410, __RESPONSE_DATA__: {primary_error_message}})
     }
