@@ -241,7 +241,7 @@ export default {
   },
 
   computed: {
-    swars_feature() { return true },
+    swars_feature() { return false },
 
     ExternalAppInfo() { return ExternalAppInfo },
     TacticInfo()      { return TacticInfo },
