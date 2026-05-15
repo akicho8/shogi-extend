@@ -124,7 +124,7 @@ Rails.application.configure do
         :email_pw_login      => true,
         :encyclopedia_link   => false, # 判定局面を公開する → しない
 
-        :swars_feature       => false, # 将棋ウォーズ関連機能 ~/src/shogi/shogi-extend/nuxt_side/components/Swars/SwarsBattleIndex/SwarsBattleIndexApp.vue も合わせて変更する
+        # :swars_feature       => false, # 将棋ウォーズ関連機能 ~/src/shogi/shogi-extend/nuxt_side/components/Swars/SwarsBattleIndex/SwarsBattleIndexApp.vue も合わせて変更する
       })
   end
 end

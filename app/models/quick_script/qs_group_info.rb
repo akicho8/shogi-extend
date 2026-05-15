@@ -4,7 +4,7 @@ module QuickScript
     memory_record [
       # ここの情報が先。
       # グループはディレクトリを作るだけでなく先にここに登録する。
-      { key: :"swars",   name: "将棋ウォーズ", admin_only: true,  sitemap: false, },
+      { key: :"swars",   name: "将棋ウォーズ", admin_only: false, sitemap: true,  },
       { key: :"general", name: "一般",         admin_only: false, sitemap: true,  },
       { key: :"tool",    name: "ツール",       admin_only: false, sitemap: true,  },
       { key: :"chore",   name: "雑用",         admin_only: false, sitemap: true,  },
