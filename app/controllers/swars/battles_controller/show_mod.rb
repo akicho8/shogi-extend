@@ -11,6 +11,11 @@ module Swars
       # http://localhost:4000/swars/battles/shikacha-tampopochan-20250720_192850/?viewpoint=black&__prepare_destroy__=1
       # http://localhost:3000/w/shikacha-tampopochan-20250720_192850.json?basic_and_time_chart_fetch=true&viewpoint=black&__prepare_destroy__=1
       def current_record
+        if AppConfig[:swars_feature]
+        else
+          raise ActiveRecord::RecordNotFound
+        end
+
         @current_record ||= yield_self do
           if key = params[:id].presence
             key = BattleKey.create(key) # 不正なIDはここで例外になるので本家にアクセスはいかない
