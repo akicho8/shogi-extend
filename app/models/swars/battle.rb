@@ -43,6 +43,7 @@ module Swars
     include ViewHelperMethods
     include PresetMethods
     include ImportMethods
+    include ExportMethods
     include CleanerMethods
     include CoreMethods
     include BasicMethods
