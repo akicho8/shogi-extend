@@ -100,7 +100,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "annotate_models"
+  gem "aam" # , github: "akicho8/aam", branch: "master"
+  gem "foreman"
 end
 
 group :test do
@@ -124,7 +125,6 @@ gem "html_format", github: "akicho8/html_format", branch: "master"
 gem "acts_as_list"
 
 group :development do
-  gem "aam" # , github: "akicho8/aam", branch: "master"
 end
 
 # gem "bioshogi", ">= 0.0.3"
