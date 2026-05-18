@@ -5,41 +5,20 @@ ruby file: ".ruby-version"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-# gem "propshaft"
+gem "propshaft"
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3"
 gem "trilogy"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 6"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-# gem "importmap-rails"
+gem "importmap-rails"
 # # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-# gem "turbo-rails"
+gem "turbo-rails"
 # # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-# gem "stimulus-rails"
+gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.0"
-
-# Use SCSS for stylesheets
-gem "sass-rails", ">= 6"
-
-# # Use Uglifier as compressor for JavaScript assets
-# # gem "uglifier", ">= 1.3.0"
-# # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# gem 'webpacker', '~> 5.0'
-
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-# gem 'turbolinks', '~> 5'
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", ">= 5.4.1"         # 最近の redis gem は redis-client gem を内部で使うようになっている
-gem "hiredis-client"            # C実装。速くなる。なくても動くが遅い。redis-client gem はこれを見つけるとこれを使う
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -47,7 +26,11 @@ gem "hiredis-client"            # C実装。速くなる。なくても動くが
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# Use Redis adapter to run Action Cable in production
+gem "redis", ">= 5.4.1"         # 最近の redis gem は redis-client gem を内部で使うようになっている
+gem "hiredis-client"            # C実装。速くなる。なくても動くが遅い。redis-client gem はこれを見つけるとこれを使う
+
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 # gem "solid_cache"
 # gem "solid_queue"
 # gem "solid_cable"
@@ -55,11 +38,11 @@ gem "hiredis-client"            # C実装。速くなる。なくても動くが
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-# gem "kamal", require: false
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem "kamal", require: false
 
-# # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-# gem "thruster", require: false
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem "thruster", require: false
 
 # Use ActiveStorage variant
 gem "image_processing", "~> 1.2"
@@ -67,6 +50,9 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
+  gem "bundler-audit", require: false
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -78,26 +64,17 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling "console" anywhere in the code.
   gem "web-console"
-  # Display performance information such as SQL time and flame graphs for each request in your browser.
-  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem "rack-mini-profiler"
-  # gem "listen", "~> 3.3"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  # gem "spring", ">= 4" # https://qiita.com/kanon_ayuayu/items/e5d330d1bbda68a3c82a
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara", ">= 3.40"
-  gem "selenium-webdriver", ">= 4.11" # 4.11 以上であれば webdrivers gem が不要になる
+  gem "capybara"
+  gem "selenium-webdriver"
 end
 
 # ################################################################################
 
 group :development, :test do
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  # gem "spring-commands-rspec"
-
   gem "capistrano"
   gem "capistrano-rails"        # capistrano + capistrano-bundler
   gem "capistrano-rbenv"
@@ -116,7 +93,6 @@ group :development, :test do
   gem "rspec-expectations"
   gem "rspec-mocks"
   gem "rspec-support"
-  # gem "rspec-power_assert"
   gem "minitest-power_assert"
   ################################################################################
 
@@ -124,7 +100,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "foreman", require: false
   gem "annotate_models"
 end
 
@@ -144,7 +119,7 @@ gem "kaminari"
 gem "memory_record"
 gem "tree_support"
 gem "table_format"
-gem "html_format"
+gem "html_format", github: "akicho8/html_format", branch: "master"
 
 gem "acts_as_list"
 

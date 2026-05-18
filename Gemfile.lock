@@ -20,6 +20,15 @@ GIT
       zeitwerk
 
 GIT
+  remote: https://github.com/akicho8/html_format.git
+  revision: 008c7927b3967bb6a3927c23912a400530128cbb
+  branch: master
+  specs:
+    html_format (0.0.11)
+      actionpack
+      activesupport
+
+GIT
   remote: https://github.com/mbleigh/acts-as-taggable-on.git
   revision: f18679a73fbea042e0ce2f1929e16a5e1abbcb64
   branch: master
@@ -144,6 +153,9 @@ GEM
     brakeman (7.0.2)
       racc
     builder (3.3.0)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
     capistrano (3.19.2)
       airbrussh (>= 1.0.0)
       i18n
@@ -203,6 +215,7 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.6.2)
     docile (1.4.1)
+    dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
     erubi (1.13.1)
@@ -294,9 +307,6 @@ GEM
     hiredis-client (0.28.0)
       redis-client (= 0.28.0)
     holiday_jp (0.8.1)
-    html_format (0.0.11)
-      actionpack
-      activesupport
     httpclient (2.9.0)
       mutex_m
     i18n (1.14.8)
@@ -304,6 +314,10 @@ GEM
     image_processing (1.14.0)
       mini_magick (>= 4.9.5, < 6)
       ruby-vips (>= 2.0.17, < 3)
+    importmap-rails (2.2.3)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.8.1)
     irb (1.15.3)
       pp (>= 0.6.0)
@@ -318,6 +332,17 @@ GEM
     json (2.19.3)
     jwt (2.10.1)
       base64
+    kamal (2.11.0)
+      activesupport (>= 7.0)
+      base64 (~> 0.2)
+      bcrypt_pbkdf (~> 1.0)
+      concurrent-ruby (~> 1.2)
+      dotenv (~> 3.1)
+      ed25519 (~> 1.4)
+      net-ssh (~> 7.3)
+      sshkit (>= 1.23.0, < 2.0)
+      thor (~> 1.3)
+      zeitwerk (>= 2.6.18, < 3.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -358,7 +383,6 @@ GEM
       benchmark
       logger
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     minitest (6.0.3)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -387,9 +411,6 @@ GEM
     net-ssh (7.3.0)
     nio4r (2.7.5)
     nkf (0.2.0)
-    nokogiri (1.19.2)
-      mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
     nokogiri (1.19.2-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.2-aarch64-linux-musl)
@@ -448,6 +469,10 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
+    propshaft (1.3.2)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
     psych (3.3.4)
     public_suffix (6.0.1)
     puma (7.0.3)
@@ -460,14 +485,10 @@ GEM
     rack (3.2.4)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
-    rack-mini-profiler (3.3.1)
-      rack (>= 1.2.0)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
-    rack-proxy (0.7.7)
-      rack
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -598,16 +619,6 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     securerandom (0.4.1)
     selenium-webdriver (4.31.0)
       base64 (~> 0.2)
@@ -615,7 +626,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_range (3.1.0)
     sidekiq (7.3.9)
       base64
       connection_pool (>= 2.3.0)
@@ -650,13 +660,6 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sprockets (4.2.1)
-      concurrent-ruby (~> 1.0)
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     sshkit (1.24.0)
       base64
       logger
@@ -666,12 +669,19 @@ GEM
       ostruct
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     systemu (2.6.5)
     table_format (0.0.17)
       activesupport
       nkf
     temple (0.10.3)
     thor (1.5.0)
+    thruster (0.1.21)
+    thruster (0.1.21-aarch64-linux)
+    thruster (0.1.21-arm64-darwin)
+    thruster (0.1.21-x86_64-darwin)
+    thruster (0.1.21-x86_64-linux)
     tilt (2.6.0)
     timecop (0.9.10)
     timeout (0.4.4)
@@ -680,6 +690,9 @@ GEM
       activesupport
     trilogy (2.9.0)
     tsort (0.2.0)
+    turbo-rails (2.0.23)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -696,11 +709,6 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.4.4)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket (1.2.11)
     websocket-driver (0.8.0)
       base64
@@ -719,7 +727,6 @@ PLATFORMS
   arm-linux-gnu
   arm-linux-musl
   arm64-darwin
-  ruby
   x86_64-darwin
   x86_64-linux-gnu
   x86_64-linux-musl
@@ -735,6 +742,7 @@ DEPENDENCIES
   bioshogi!
   bootsnap
   brakeman
+  bundler-audit
   capistrano
   capistrano-maintenance
   capistrano-rails
@@ -761,9 +769,11 @@ DEPENDENCIES
   google-api-client
   hiredis-client
   holiday_jp
-  html_format
+  html_format!
   image_processing (~> 1.2)
+  importmap-rails
   jbuilder
+  kamal
   kaminari
   maintenance_tasks
   matrix
@@ -776,11 +786,11 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth-twitter2
   pp
+  propshaft
   psych (~> 3)
   puma (>= 6)
   puma_worker_killer
   rack-cors
-  rack-mini-profiler
   rack-user_agent
   rails (~> 8.1.2)
   rails-controller-testing
@@ -797,19 +807,20 @@ DEPENDENCIES
   rubocop-rails-omakase
   ruby-openai
   rubyzip (~> 2.3.0)
-  sass-rails (>= 6)
   selenium-webdriver (>= 4.11)
   sidekiq (~> 7)
   slack-notifier
   slack-ruby-client
   slim-rails
+  stimulus-rails
   systemu
   table_format
+  thruster
   timecop
   tree_support
   trilogy
+  turbo-rails
   web-console
-  webpacker (~> 5.0)
   whenever
 
 RUBY VERSION

@@ -1,0 +1,50 @@
+/* Please use it when not using bootstrap */
+.html_format {
+  overflow-x: auto;
+  margin: 0px;
+}
+
+.html_format.html_format_depth_0 {
+  margin: 0.5em 0px;
+}
+
+.html_format caption,
+.html_format .title {
+  text-align: left;
+  font-size: 80%;
+}
+
+.html_format table {
+  font-size: xx-small;
+  margin: 0px;
+  padding: 0px;
+  background: #dddddd;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+
+.html_format table tr:nth-child(odd) {
+  background: #eeeeee;
+}
+
+.html_format table tr:nth-child(even) {
+  background: #ffffff;
+}
+
+.html_format table th,
+.html_format table td {
+  font-size: 10px;
+  font-weight: bold;
+  color: #555;
+  padding: 3px;
+  white-space: nowrap;
+}
+
+.html_format table a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.html_format table a:hover {
+  text-decoration: underline;
+}

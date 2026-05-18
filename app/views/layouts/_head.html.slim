@@ -9,6 +9,7 @@ meta(name="rails_env" content="#{Rails.env}")
 = action_cable_meta_tag
 = favicon_link_tag
 = csrf_meta_tag
+= csp_meta_tag
 
 link(rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css")
 link(rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css")
@@ -19,13 +20,9 @@ link(rel="apple-touch-icon" href=path_to_image(@apple_touch_icon || "apple-touch
 
 title= html_title
 
-/ sprockets
-= stylesheet_link_tag "application", media: "all"
-= javascript_include_tag "application"
-
-/ webpack
-= stylesheet_pack_tag "application", media: "all"
-= javascript_pack_tag "application"
+/ Includes all stylesheet files in app/assets/stylesheets
+= stylesheet_link_tag :app, "data-turbo-track": "reload"
+= javascript_importmap_tags
 
 - @ogp_params ||= { description: "将棋に関連するツールを提供するサイトです", image: "ogp/swars-search.png" }
 == OgpCop.as_meta_tags(self, @ogp_params)

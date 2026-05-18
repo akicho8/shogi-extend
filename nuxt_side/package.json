@@ -2,6 +2,7 @@
   "name": "SHOGI-EXTEND",
   "version": "1.0.0",
   "description": "将棋に関連するツールを提供するサイトです",
+  "packageManager": "pnpm@8.15.9",
   "author": "akicho8",
   "private": true,
   "browserslist": [

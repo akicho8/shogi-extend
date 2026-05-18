@@ -1,0 +1,24 @@
+.html_format {
+  /* Horizontal scroll bar display */
+  overflow-x: auto;
+  /* No line break */
+  white-space: nowrap;
+}
+
+/* But the line inside the tool tip breaks */
+.html_format .tooltip {
+  white-space: normal;
+}
+
+/* When hash is displayed (type with key in the left column), right key the key */
+table.html_format_type_hash > tbody > tr > th {
+  text-align: right;
+}
+table.html_format_type_hash > tbody > tr > td {
+  text-align: left;
+}
+
+/* If th in the header is tight, gaps are increased so header can be changed to a new line */
+table.html_format_type_array_of_hash thead {
+  white-space: normal;
+}
