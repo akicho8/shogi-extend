@@ -74,6 +74,9 @@ RSpec.configure do |config|
   # ChatGPT 関連のテストを除外する
   config.filter_run_excluding ai_active: true # !AppConfig[:ai_active] と合わせるのが望ましい
 
+  # remote_run: true がついているテストをデフォルトで実行対象から外す
+  config.filter_run_excluding remote_run: true
+
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   # These two settings work together to allow you to limit a spec run

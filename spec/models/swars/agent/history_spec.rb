@@ -12,7 +12,7 @@ RSpec.describe Swars::Agent::History, type: :model, swars_spec: true do
       assert { result.all_keys.uniq == result.all_keys }
     end
   end
-  it "production" do
+  it "production", remote_run: true do
     result = Swars::Agent::History.new(user_key: "abacus10", remote_run: true).fetch
     assert { result.all_keys.present? }
     assert { result.all_keys.all? { |e| e.user_keys.include?(Swars::UserKey["abacus10"]) } }

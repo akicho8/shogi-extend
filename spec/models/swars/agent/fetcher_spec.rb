@@ -7,7 +7,7 @@ RSpec.describe Swars::Agent::Fetcher, type: :model, swars_spec: true do
     assert { Swars::Agent::Fetcher.new.fetch(:history, url).include?("YamadaTaro 対局履歴") }
   end
 
-  it "production" do
+  it "production", remote_run: true do
     assert { Swars::Agent::Fetcher.new(remote_run: true).fetch(:record, url).include?("kinakom0chi 対局履歴") }
   end
 end
