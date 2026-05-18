@@ -101,7 +101,6 @@ end
 
 group :development do
   gem "aam" # , github: "akicho8/aam", branch: "master"
-  gem "foreman"
 end
 
 group :test do
