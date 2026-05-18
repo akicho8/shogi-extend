@@ -1,7 +1,10 @@
-diff --git a/node_modules/hard-source-webpack-plugin/lib/TransformNormalModulePlugin.js b/node_modules/hard-source-webpack-plugin/lib/TransformNormalModulePlugin.js
-index 5b2a53d..e91a7a5 100644
---- a/node_modules/hard-source-webpack-plugin/lib/TransformNormalModulePlugin.js
-+++ b/node_modules/hard-source-webpack-plugin/lib/TransformNormalModulePlugin.js
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index fcfb93e3cb47696bd28f4af7a16bba11d523afaf..0000000000000000000000000000000000000000
+diff --git a/lib/TransformNormalModulePlugin.js b/lib/TransformNormalModulePlugin.js
+index 5b2a53dcb559071d33ba9bfd93da191801a13c43..e91a7a580cb717944892e2f755ff2a0fa3dd6a01 100644
+--- a/lib/TransformNormalModulePlugin.js
++++ b/lib/TransformNormalModulePlugin.js
 @@ -598,7 +598,7 @@ class TransformNormalModulePlugin {
            module.request &&
            (cacheable(module) || !module.built) &&

@@ -11,7 +11,6 @@
     "node": "16.x"
   },
   "scripts": {
-    "postinstall": "patch-package",
     "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
@@ -45,7 +44,6 @@
     "nuxt": "2.18.1",
     "nuxt-basic-auth-module": "1.4.1",
     "nuxt-buefy": "0.4.29",
-    "patch-package": "^8.0.0",
     "pattern.css": "1.0.0",
     "pug": "2.0.4",
     "pug-loader": "2.4.0",
@@ -61,5 +59,10 @@
     "util": "0.12.5",
     "vue-scrollto": "2.20.0",
     "vuedraggable": "2.24.3"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "hard-source-webpack-plugin@0.13.1": "patches/hard-source-webpack-plugin@0.13.1.patch"
+    }
   }
 }

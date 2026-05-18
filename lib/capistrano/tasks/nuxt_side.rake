@@ -13,8 +13,7 @@ namespace :nuxt_side do
         execute :env, "| grep PATH"
         execute :node, "-v"
         execute :nodenv, "versions"
-        # execute :pnpm, "--version"
-        execute :npm, "--version"
+        execute :pnpm, "--version"
         execute :which, "npx"
       end
     end
@@ -23,18 +22,18 @@ namespace :nuxt_side do
   # cap staging nuxt_side:deploy
   # cap production nuxt_side:deploy
   desc "Nuxt側のデプロイ"
-  task :deploy => [:npm_install, :build_upload, :static_upload]
+  task :deploy => [:pnpm_install, :build_upload, :static_upload]
 
-  # cap staging nuxt_side:npm_install
-  # cap production nuxt_side:npm_install
-  desc "npm install を実行する"
-  task :npm_install do
+  # cap staging nuxt_side:pnpm_install
+  # cap production nuxt_side:pnpm_install
+  desc "pnpm install を実行する"
+  task :pnpm_install do
     if dry_run?
     else
       # 先に確認する
       on roles(:web) do |host|
         within "#{release_path}/nuxt_side" do
-          execute :npm, "install"
+          execute :pnpm, "install"
         end
         execute :ls, "-al #{release_path}/nuxt_side"
       end
