@@ -30,7 +30,7 @@ if ENV["REMOTE_BUILD"] != "1"
 
         # ないとは思うけどもし NODE_ENV=production な環境でビルドするときは
         # devDependencies が対象にならないので --production=false の引数をつけとくといい
-        execute :yarn
+        # execute :yarn
 
         # sh -c で実行しているのはデプロイ先の rbenv 関連プレフィクスをつけたくないため
         # このあたりちょっとややこしい
@@ -40,10 +40,10 @@ if ENV["REMOTE_BUILD"] != "1"
       # public/{assets,packs} をデプロイ先に転送
       within "#{tmpdir}/public" do
         roles(:web).each do |e|
-          execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete assets packs #{e.user}@#{e.hostname}:#{release_path}/public"
+          execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete assets #{e.user}@#{e.hostname}:#{release_path}/public"
         end
       end
-      execute :rm, "-fr #{tmpdir}"
+      # execute :rm, "-fr #{tmpdir}"
     end
   end
 end
