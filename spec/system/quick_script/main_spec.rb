@@ -7,13 +7,13 @@ RSpec.describe "基本", type: :system do
   end
 
   it "グループ直下であればそのグループ内ページの一覧を出す" do
-    visit_to "/lab/swars"
-    assert_title(/将棋ウォーズ/)
+    visit_to "/lab/about"
+    assert_title(/About/)
   end
 
-  it "Swars::UserGroupScript" do
-    visit_to "/lab/swars/user-group"
-    assert_title(/将棋ウォーズプレイヤー情報一覧/)
+  it "About::CreditScript" do
+    visit_to "/lab/about/credit"
+    assert_title(/クレジット/)
   end
 
   describe "非表示スクリプト" do
