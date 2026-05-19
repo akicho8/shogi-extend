@@ -825,7 +825,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-  ruby 4.0.2
+  ruby 4.0.4
 
 BUNDLED WITH
   4.0.8

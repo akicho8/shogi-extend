@@ -1,6 +1,6 @@
 server "shogi-extend.com", user: "deploy", roles: %w[app db web]
 
-set :rbenv_ruby, "4.0.2"
+set :rbenv_ruby, "4.0.4"
 
 set :keep_releases, 5
 
