@@ -10,6 +10,16 @@ console.log(process.env.BASIC_AUTH_USERNAME)
 console.log("BASIC_AUTH_PASSWORD")
 console.log(process.env.BASIC_AUTH_PASSWORD)
 
+////////////////////////////////////////////////////////////////////////////////
+
+const basic_auth_paths = ["dev", "admin", "secret", "private", "group1"] // [REFS] BASIC_AUTH_MATCH
+if (PRODUCTION_P) {
+  basic_auth_paths.push("swars")     // [REFS] swars_feature
+}
+const basic_auth_match = new RegExp(`^\\/lab\\/(${basic_auth_paths.join('|')})(\\/.*)?$`)
+
+////////////////////////////////////////////////////////////////////////////////
+
 const SITE_DESC = "将棋のいろんなツールを提供するサイト。" + [
   "将棋ウォーズ棋譜検索・統計",
   "リレー将棋・ネット対戦・詰将棋作成",
@@ -349,7 +359,7 @@ const config = {
     name: process.env.BASIC_AUTH_USERNAME,
     pass: process.env.BASIC_AUTH_PASSWORD,
     enabled: true, // PRODUCTION_P,
-    match: /^\/lab\/(swars|dev|admin|secret|private|group1)(\/.*)?$/, // [REFS] BASIC_AUTH_MATCH
+    match: basic_auth_match,
     // match: (req) => req.originalUrl === '/lab/dev',
   },
 

@@ -71,11 +71,12 @@ RSpec.configure do |config|
     config.filter_run_excluding :share_board_spec => true
   end
 
-  # ChatGPT 関連のテストを除外する
-  config.filter_run_excluding ai_active: true # !AppConfig[:ai_active] と合わせるのが望ましい
-
-  # remote_run: true がついているテストをデフォルトで実行対象から外す
-  config.filter_run_excluding remote_run: true
+  # 除外
+  if true
+    config.filter_run_excluding ai_active: true # !AppConfig[:ai_active] と合わせるのが望ましい
+    config.filter_run_excluding remote_run: true
+    config.filter_run_excluding production_access: true # 本番にアクセスしてもBASIC認証ではじくため
+  end
 
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
