@@ -41,7 +41,7 @@
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
-    "qs": "^6.11.0",
+    "qs": "^6.14.1",
     "query-string": "^7.1.1",
     "raw-loader": "^4.0.2",
     "sass-loader": "^10.4.1",
