@@ -13,7 +13,8 @@ module Swars
           output_dir = Pathname(options[:output_dir]).expand_path
           all_count = Swars::Battle.count
           Swars::Battle.limit(options[:limit]).find_each.with_index do |battle, i|
-            battle.to_all.each do |ext, body|
+            begin
+              battle.to_all.each do |ext, body|
               prefix = Digest::MD5.hexdigest(battle.key.to_s).slice(...2)
               path = output_dir.join(prefix, battle.key, "#{battle.key}.#{ext}")
               if path.exist?
@@ -29,6 +30,9 @@ module Swars
               if options[:verbose]
                 puts "[#{i}/#{all_count}][#{ratio.round(2)}]: #{path.basename}"
               end
+            end
+            rescue Bioshogi::BioshogiError => error
+              output_dir.join("error_files.txt").write("#{battle.key} #{error}\n" mode: "a")
             end
           end
         end
