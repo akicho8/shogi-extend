@@ -19,6 +19,7 @@ set :rails_env, "staging"    # 必要
 # 超重要
 set :bundle_config, { deployment: true, force_ruby_platform: true } # 「force_ruby_platform: true」をつけないと bigdecimal, nokogiri 等が install できない
 set :bundle_flags, ""                                               # --quiet を外して動作状況を確認するの重要。必要なら --redownload を指定する。
+set :bundle_jobs, 1                                                 # 4 だとメモリ不足で落ちるため
 
 # append :linked_files, 'config/database.yml'
 
