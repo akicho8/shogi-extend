@@ -8,31 +8,34 @@ module Swars
             output_dir: "~/src/shogi/bioshogi/swars_battles",
             verbose: true,
             limit: nil,
+            block_size: 1000,
           }.merge(options)
 
           output_dir = Pathname(options[:output_dir]).expand_path
-          all_count = Swars::Battle.count
-          Swars::Battle.limit(options[:limit]).find_each.with_index do |battle, i|
-            begin
-              battle.to_all.each do |ext, body|
-                prefix = Digest::MD5.hexdigest(battle.key.to_s).slice(...2)
-                path = output_dir.join(prefix, battle.key, "#{battle.key}.#{ext}")
-                if path.exist?
-                  if options[:verbose]
-                    print "."
-                    STDOUT.flush
-                  end
-                  next
+          block_count = Swars::Battle.count.ceildiv(options[:block_size])
+          Swars::Battle.in_batches(of: options[:block_size]).each.with_index do |battles, i|
+            battles.each do |battle|
+              begin
+                battle.to_all.each do |ext, body|
+                  prefix = Digest::MD5.hexdigest(battle.key.to_s).slice(...2)
+                  path = output_dir.join(prefix, battle.key, "#{battle.key}.#{ext}")
+                  # if path.exist?
+                  #   if options[:verbose]
+                  #     print "."
+                  #     STDOUT.flush
+                  #   end
+                  #   next
+                  # end
+                  path.dirname.mkpath
+                  path.write(body)
                 end
-                path.dirname.mkpath
-                path.write(body)
-                ratio = i.fdiv(all_count) * 100
-                if options[:verbose]
-                  puts "[#{i}/#{all_count}][#{ratio.round(2)}]: #{path.basename}"
-                end
+              rescue Bioshogi::BioshogiError => error
+                output_dir.join("error_files.txt").write("#{battle.key} #{error}\n", mode: "a")
               end
-            rescue Bioshogi::BioshogiError => error
-              output_dir.join("error_files.txt").write("#{battle.key} #{error}\n", mode: "a")
+            end
+            ratio = i.fdiv(block_count) * 100.0
+            if options[:verbose]
+              puts "[#{i}/#{block_count}][#{ratio.round(2)}]"
             end
           end
         end
