@@ -25,10 +25,10 @@ module ShareBoard
 
     def models
       [
+        Room,
         Battle,
         User,
         Roomship,
-        Room,
         Membership,
         MessageScope,
         ChatMessage,
