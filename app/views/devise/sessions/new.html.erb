@@ -1,0 +1,45 @@
+<% if AppConfig[:email_pw_login] %>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="title is-5">
+            面倒なログイン
+          </div>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f| %>
+            <div class="field">
+              <div class="control">
+                <%= f.email_field(:email, class: 'input', placeholder: "メールアドレス") %>
+
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <%= f.password_field :password, class: 'input', placeholder: "パスワード" %>
+
+              </div>
+            </div>
+            <% if devise_mapping.rememberable? %>
+              <div class="field">
+                <div class="control">
+                  <div class="checkbox">
+                    <%= f.label :remember_me do %>
+                      <%= f.check_box :remember_me %>
+                      <%= t('.remember_me', default: 'Remember me') %>
+
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="mt-4">
+              <%= f.submit t('.sign_in', default: 'Sign in'), class: 'button is-primary' %>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= render 'devise/shared/links' %>

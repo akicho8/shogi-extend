@@ -1,4 +1,0 @@
-- if Rails.env.development?
-  = Rails.cache.read(:before_post_params)&.to_html(title: "POST/PUT/DELETEしたときのparams")
-  = current_record.attributes.to_h.to_html(title: "オブジェクトの内容")
-  = session[current_single_key].to_h.to_html(title: "セッションに保存したフォーム内容")

@@ -1,0 +1,7 @@
+<li>
+  <% if page.current? %>
+    <%= content_tag :a, page, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: ['pagination-link', "is-current"] %>
+  <% else %>
+    <%= link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'pagination-link' %>
+  <% end %>
+</li>

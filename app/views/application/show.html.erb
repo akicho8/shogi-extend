@@ -1,0 +1,23 @@
+<% if controller.page_header_show_title.present? %>
+  <div class="page-header">
+    <h2><%= controller.page_header_show_title %></h2>
+
+  </div>
+<% end %>
+<div id="show_partial_div_for_ajax">
+  <%= render partial: params[:show_partial] || "show" %>
+
+</div>
+<p>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <%= link_to("一覧", [ns_prefix, current_plural_key], class: "button") %>
+      <% if controller.respond_to?(:edit) %>
+        <%= link_to("編集", [:edit, ns_prefix, current_record], class: "button button-success") %>
+      <% end %>
+      <% if controller.respond_to_destroy? %>
+        <%= link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "button is-danger") %>
+      <% end %>
+    </div>
+  </div>
+</p>

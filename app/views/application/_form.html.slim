@@ -1,9 +1,0 @@
-- form.object.class.columns.each do |column|
-  - next if column.name.in?(["id", "created_at", "updated_at"])
-  .field
-    = form.label(column.name, class: "label")
-    .col-md-10
-      - if column.type == :text
-        = form.text_area(column.name, class: "textarea", rows: 8)
-      - else
-        = form.text_field(column.name, class: "input")

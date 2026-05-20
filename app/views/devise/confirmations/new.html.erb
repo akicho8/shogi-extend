@@ -1,0 +1,23 @@
+<%= bulma_devise_error_messages! %>
+<div class="columns">
+  <div class="column">
+    <div class="card">
+      <div class="card-content">
+        <div class="title is-5">
+          <%= t('.resend_confirmation_instructions', default: 'Resend confirmation instructions') %>
+        </div>
+        <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, role: 'form' }) do |f| %>
+          <div class="field">
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, class: "input" %>
+          </div>
+          <div class="mt-5">
+            <%= f.submit t('.resend_confirmation_instructions', default: 'Resend confirmation instructions'), class: 'button is-primary' %>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'devise/shared/links' %>

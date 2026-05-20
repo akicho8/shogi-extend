@@ -1,0 +1,36 @@
+<div class="field">
+  <%= form.label(:name, class: "label") %>
+  <div class="control">
+    <%= form.text_field(:name, class: "input", required: true) %>
+  </div>
+</div>
+<div class="field">
+  <%= form.label(:email, class: "label") %>
+  <div class="control">
+    <%= form.email_field(:email, class: "input", required: true) %>
+
+  </div>
+</div>
+<%# = form.fields_for(:profile) do |form| %>
+<%# .field %>
+<%# = form.label(:twitter_key, class: "label") %>
+<%# .control %>
+<%# = form.text_field(:twitter_key, class: "input") %>
+<%# .field %>
+<%# = form.label(:description, class: "label") %>
+<%# .control %>
+<%# = form.text_area(:description, class: "textarea", rows: [form.object.description.to_s.lines.count, 4].max) %>
+
+<div class="field">
+  <%= form.label(:avatar, class: "label") %>
+  <div class="control">
+    <div class="content">
+      <p>
+        <%= form.file_field(:avatar) %>
+      </p>
+      <p>
+        <%= image_tag(form.object.avatar_path, size: "128") %>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<% if Rails.env.production? || Rails.env.staging? %>
+<% else %>
+  <div class="field">
+    <%= link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary") %>
+  </div>
+  <div class="field">
+    <%= render partial: "index_header" %>
+  </div>
+  <div class="field">
+    <%= paginate current_records %>
+  </div>
+  <div class="field">
+    <%= page_entries_info current_records %>
+  </div>
+  <%= render partial: "index_rows" %>
+  <%= render partial: "index_footer" %>
+<% end %>

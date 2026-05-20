@@ -1,0 +1,5 @@
+<div id="messages" data-battle_id="<%= @battle.id %>">
+  <%= render @messages %>
+
+</div>
+<%= text_field_tag(:body, nil, data: { behavior: 'battle_speaker' }) %>

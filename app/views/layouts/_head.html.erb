@@ -1,0 +1,31 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<% if params[:formal_sheet] %>
+  <meta name="viewport" content="width=device-width, initial-scale=0.75">
+<% else %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<% end %>
+<meta name="rails_env" content="<%= Rails.env %>">
+<%= action_cable_meta_tag %>
+<%= favicon_link_tag %>
+<%= csrf_meta_tag %>
+<%= csp_meta_tag %>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+<link rel="apple-touch-icon" href="<%= path_to_image(@apple_touch_icon || "apple-touch-icon.png") %>">
+
+<title><%= html_title %></title>
+
+<%# Includes all stylesheet files in app/assets/stylesheets %>
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+<%= javascript_importmap_tags %>
+
+<% @ogp_params ||= { description: "将棋に関連するツールを提供するサイトです", image: "ogp/swars-search.png" } %>
+<%== OgpCop.as_meta_tags(self, @ogp_params) %>
+
+<%= yield :head %>

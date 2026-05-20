@@ -1,0 +1,16 @@
+<doctype>5</doctype>
+<html lang="ja" class="<%= ([Rails.env]) %>">
+  <head>
+    <%= render partial: "layouts/head" %>
+  </head>
+  <body>
+    <%= render partial: "layouts/main_navbar" %>
+    <div class="section MainSection">
+      <div class="container is-fluid">
+        <%= flash_notify_tag %>
+        <%= yield %>
+        <%= ToolBelt::Basic.new(view_context: self).to_html %>
+      </div>
+    </div>
+  </body>
+</html>

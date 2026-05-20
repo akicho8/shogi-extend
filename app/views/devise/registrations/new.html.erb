@@ -1,0 +1,40 @@
+<%= bulma_devise_error_messages! %>
+
+<% if AppConfig[:email_pw_login] %>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-content">
+          <div class="title is-5">
+            <%= t(".sign_up", default: "Sign up") %>
+          </div>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { role: "form" }) do |f| %>
+            <div class="field">
+              <%= f.label :email %>
+              <div class="control">
+                <%= f.email_field :email, autofocus: true, class: "input" %>
+              </div>
+            </div>
+            <div class="field">
+              <%= f.label :password %>
+              <div class="control">
+                <%= f.password_field :password, class: "input" %>
+              </div>
+            </div>
+            <div class="field">
+              <%= f.label :password_confirmation %>
+              <div class="control">
+                <%= f.password_field :password_confirmation, class: "input" %>
+              </div>
+            </div>
+            <div class="mt-5">
+              <%= f.submit t(".sign_up", default: "Sign up"), class: "button is-primary" %>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= render 'devise/shared/links' %>

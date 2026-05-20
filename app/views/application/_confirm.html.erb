@@ -1,0 +1,12 @@
+<% if false %>
+  <%= current_record.attributes.to_html %>
+<% else %>
+  <% (current_record.attribute_names - ["id", "created_at", "updated_at"]).each do |key| %>
+    <div class="field">
+      <%= form.label(key, class: "label") %>
+      <div class="control">
+        <p class="input-static"><%= current_record.public_send(key) %></p>
+      </div>
+    </div>
+  <% end %>
+<% end %>

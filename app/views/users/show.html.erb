@@ -1,0 +1,21 @@
+<div class="title is-4">
+  <%= "#{current_record.name}さんのプロフィール" %>
+</div>
+<hr>
+
+<div class="columns">
+  <div class="column is-one-quarter">
+    <%= image_tag(current_record.avatar_path, size: "100%") %>
+    <% if current_user == current_record %>
+      <div class="content">
+        <p>
+          <%= link_to("編集", [:edit, current_record], class: "button is-primary is-outlined") %>
+          <% if Rails.env.development? %>
+            <%= link_to("一覧", [current_plural_key]) %>
+            <%= link_to("削除", [current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}) %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>

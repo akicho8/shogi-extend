@@ -1,8 +1,0 @@
-- if false
-  = current_record.attributes.to_html
-- else
-  - (current_record.attribute_names - ["id", "created_at", "updated_at"]).each do |key|
-    .field
-      = form.label(key, class: "label")
-      .control
-        p.input-static= current_record.public_send(key)
