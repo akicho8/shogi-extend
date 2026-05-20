@@ -1,12 +1,12 @@
 <% form.object.class.columns.each do |column| %>
   <% next if column.name.in?(["id", "created_at", "updated_at"]) %>
-  <div class="field">
-    <%= form.label(column.name, class: "label") %>
-    <div class="col-md-10">
+  <div class="mb-4">
+    <%= form.label(column.name, class: "mb-1 block text-sm font-medium text-gray-700") %>
+    <div class="max-w-3xl">
       <% if column.type == :text %>
-        <%= form.text_area(column.name, class: "textarea", rows: 8) %>
+        <%= form.text_area(column.name, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30", rows: 8) %>
       <% else %>
-        <%= form.text_field(column.name, class: "input") %>
+        <%= form.text_field(column.name, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30") %>
       <% end %>
     </div>
   </div>

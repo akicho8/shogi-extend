@@ -26,10 +26,10 @@ module ApplicationHelper
     messages = resource.errors.full_messages.map { |e| content_tag(:li, e) }.join.html_safe
     sentence = I18n.t("errors.messages.not_saved", count: resource.errors.count, resource: resource.class.model_name.human.downcase)
 
-    tag.div(:class => ["notification", "is-warning"]) { |;out|
+    tag.div(:class => "rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900") { |;out|
       out = []
-      out << tag.h5(sentence)
-      out << tag.div(:class => "content") do
+      out << tag.h5(sentence, :class => "font-semibold")
+      out << tag.div(:class => "mt-2") do
         tag.ul(messages)
       end
       out.join.html_safe

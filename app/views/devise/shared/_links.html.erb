@@ -1,15 +1,15 @@
-<div class="columns">
-  <div class="column">
-    <div class="card">
-      <div class="card-content">
-        <div class="title is-5 has-text-centered">
+<div class="grid gap-4">
+  <div class="min-w-0">
+    <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div class="p-6">
+        <div class="mb-4 text-center text-lg font-semibold text-gray-900">
           簡単なログイン
         </div>
         <% if devise_mapping.omniauthable? %>
-          <div class="content">
+          <div class="space-y-3 text-sm text-gray-700">
             <% if v = session[:provider_remember] %>
               <% s = SocialMediaInfo[v["provider"]] %>
-              <p class="has-text-grey is-size-7 has-text-centered">
+              <p class="text-center text-xs text-gray-500">
                 <%= v["user_name"] %>
                 <%= "さんは以前" %>
                 <strong class="mx-1"><%= s.name %></strong>
@@ -20,11 +20,7 @@
             <% SocialMediaInfo.each do |e| %>
               <% if AppConfig[:available_providers].include?(e.key) %>
                 <p>
-                  <%= link_to(omniauth_authorize_path(resource_name, e.key), method: :post, class: ["button", "is-primary", "is-fullwidth", "is-rounded", "has-background-#{e.key}", "has-text-weight-bold"]) do %>
-                    <span class="icon is-medium">
-                      <i class="fab fa-<%= e.key %>">
-                      </i>
-                    </span>
+                  <%= link_to(omniauth_authorize_path(resource_name, e.key), method: :post, class: "flex w-full items-center justify-center gap-2 rounded-full border border-transparent bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-blue-700") do %>
                     <span>
                       <%= t('.sign_in_with_provider', provider: e.name, default: "Sign in with #{e.name}") %>
                       <% if session.dig(:provider_remember, "provider") == e.key.to_s && false %>
@@ -37,7 +33,7 @@
             <% end %>
             <% if AppConfig[:nanasi_login] %>
               <p>
-                <%= link_to([:direct_session], method: :post, class: "button has-text-weight-bold is-rounded is-success is-fullwidth nanashi_login_button") do %>
+                <%= link_to([:direct_session], method: :post, class: "nanashi_login_button flex w-full items-center justify-center rounded-full border border-transparent bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-emerald-700") do %>
                   <span>
                     適当にアカウントを作成してログイン
 
@@ -52,25 +48,25 @@
   </div>
 </div>
 <% if AppConfig[:email_pw_login] %>
-  <div class="columns">
-    <div class="column">
-      <div class="card">
-        <div class="card-content">
-          <div class="buttons is-centered are-small">
+  <div class="mt-4 grid gap-4">
+    <div class="min-w-0">
+      <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
+        <div class="p-6">
+          <div class="flex flex-wrap justify-center gap-2">
             <% if controller_name != 'sessions' %>
-              <%= link_to t('.sign_in', default: 'Sign in'), new_session_path(resource_name), :class => "button" %>
+              <%= link_to t('.sign_in', default: 'Sign in'), new_session_path(resource_name), :class => "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
             <% end %>
             <% if devise_mapping.registerable? && controller_name != 'registrations' %>
-              <%= link_to t('.sign_up', default: 'Sign up'), new_registration_path(resource_name), :class => "button" %>
+              <%= link_to t('.sign_up', default: 'Sign up'), new_registration_path(resource_name), :class => "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
             <% end %>
             <% if devise_mapping.recoverable? && controller_name != 'passwords' %>
-              <%= link_to t('.forgot_your_password', default: 'Forgot your password?'), new_password_path(resource_name), :class => "button" %>
+              <%= link_to t('.forgot_your_password', default: 'Forgot your password?'), new_password_path(resource_name), :class => "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
             <% end %>
             <% if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-              <%= link_to t('.didn_t_receive_confirmation_instructions', default: "Didn't receive confirmation instructions?"), new_confirmation_path(resource_name), :class => "button" %>
+              <%= link_to t('.didn_t_receive_confirmation_instructions', default: "Didn't receive confirmation instructions?"), new_confirmation_path(resource_name), :class => "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
             <% end %>
             <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-              <%= link_to t('.didn_t_receive_unlock_instructions', default: "Didn't receive unlock instructions?"), new_unlock_path(resource_name), :class => "button" %>
+              <%= link_to t('.didn_t_receive_unlock_instructions', default: "Didn't receive unlock instructions?"), new_unlock_path(resource_name), :class => "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50" %>
 
             <% end %>
           </div>

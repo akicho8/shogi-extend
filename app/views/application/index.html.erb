@@ -1,11 +1,11 @@
-<div class="page-header">
-  <h2><%= params[:page_title] || "#{current_model.model_name.human}一覧" %></h2>
+<div class="mb-4 border-b border-gray-200 pb-2">
+  <h2 class="text-2xl font-semibold text-gray-900"><%= params[:page_title] || "#{current_model.model_name.human}一覧" %></h2>
 
 </div>
 <%= render partial: "index_header" %>
 
 <% if controller.respond_to?(:new) %>
-  <p><%= link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary") %></p>
+  <p><%= link_to("新規", [:new, ns_prefix, current_single_key], class: "inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700") %></p>
 
 <% end %>
 <% if current_records.respond_to?(:total_pages) && false %>

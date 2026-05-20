@@ -22,9 +22,9 @@ module AtomicScript
           active = h.params[:controller].match?(options[:controller]) && h.params[:id] == e.key
 
           klass = []
-          klass << "navbar-item"
+          klass << "block px-4 py-2 text-sm hover:bg-gray-100"
           if active
-            klass << "is-active"
+            klass << "bg-gray-100 font-semibold text-gray-900"
           end
           h.link_to(e.script_name, e.script_link_path, :class => klass)
         end

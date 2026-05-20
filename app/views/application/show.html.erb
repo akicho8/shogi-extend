@@ -1,6 +1,6 @@
 <% if controller.page_header_show_title.present? %>
-  <div class="page-header">
-    <h2><%= controller.page_header_show_title %></h2>
+  <div class="mb-4 border-b border-gray-200 pb-2">
+    <h2 class="text-2xl font-semibold text-gray-900"><%= controller.page_header_show_title %></h2>
 
   </div>
 <% end %>
@@ -9,14 +9,14 @@
 
 </div>
 <p>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <%= link_to("一覧", [ns_prefix, current_plural_key], class: "button") %>
+  <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-wrap gap-2 p-4">
+      <%= link_to("一覧", [ns_prefix, current_plural_key], class: "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50") %>
       <% if controller.respond_to?(:edit) %>
-        <%= link_to("編集", [:edit, ns_prefix, current_record], class: "button button-success") %>
+        <%= link_to("編集", [:edit, ns_prefix, current_record], class: "inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-emerald-700") %>
       <% end %>
       <% if controller.respond_to_destroy? %>
-        <%= link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "button is-danger") %>
+        <%= link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700") %>
       <% end %>
     </div>
   </div>

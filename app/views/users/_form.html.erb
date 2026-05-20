@@ -1,30 +1,26 @@
-<div class="field">
-  <%= form.label(:name, class: "label") %>
-  <div class="control">
-    <%= form.text_field(:name, class: "input", required: true) %>
+<div class="mb-4">
+  <%= form.label(:name, class: "mb-1 block text-sm font-medium text-gray-700") %>
+  <div>
+    <%= form.text_field(:name, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30", required: true) %>
   </div>
 </div>
-<div class="field">
-  <%= form.label(:email, class: "label") %>
-  <div class="control">
-    <%= form.email_field(:email, class: "input", required: true) %>
+<div class="mb-4">
+  <%= form.label(:email, class: "mb-1 block text-sm font-medium text-gray-700") %>
+  <div>
+    <%= form.email_field(:email, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30", required: true) %>
 
   </div>
 </div>
 <%# = form.fields_for(:profile) do |form| %>
-<%# .field %>
-<%# = form.label(:twitter_key, class: "label") %>
-<%# .control %>
-<%# = form.text_field(:twitter_key, class: "input") %>
-<%# .field %>
-<%# = form.label(:description, class: "label") %>
-<%# .control %>
-<%# = form.text_area(:description, class: "textarea", rows: [form.object.description.to_s.lines.count, 4].max) %>
+<%# = form.label(:twitter_key, class: "mb-1 block text-sm font-medium text-gray-700") %>
+<%# = form.text_field(:twitter_key, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30") %>
+<%# = form.label(:description, class: "mb-1 block text-sm font-medium text-gray-700") %>
+<%# = form.text_area(:description, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30", rows: [form.object.description.to_s.lines.count, 4].max) %>
 
-<div class="field">
-  <%= form.label(:avatar, class: "label") %>
-  <div class="control">
-    <div class="content">
+<div class="mb-4">
+  <%= form.label(:avatar, class: "mb-1 block text-sm font-medium text-gray-700") %>
+  <div>
+    <div class="space-y-3 text-sm text-gray-700">
       <p>
         <%= form.file_field(:avatar) %>
       </p>

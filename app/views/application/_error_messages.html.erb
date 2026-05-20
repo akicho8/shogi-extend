@@ -1,23 +1,23 @@
 <% if form.object.errors.full_messages.present? %>
-  <div class="field">
-    <div class="col-sm-offset-2 control">
+  <div class="mb-4">
+    <div>
       <%# エラーがあったときJavaScriptでここまでスクロールさせる %>
       <%= content_tag(:a, "&nbsp;".html_safe, name: "form_errors") %>
       <% if false %>
-        <div class="alert alert-danger">
-          <ul class="list-unstyled">
+        <div class="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+          <ul class="list-none">
             <% form.object.errors.full_messages.each do |full_message| %>
               <li><%= full_message %></li>
             <% end %>
           </ul>
         </div>
       <% else %>
-        <div class="panel panel-danger">
-          <div class="panel-heading">
+        <div class="overflow-hidden rounded-md border border-red-200 bg-red-50 text-sm text-red-800">
+          <div class="border-b border-red-200 bg-red-100 px-4 py-2 font-semibold">
             <%= "入力内容を見直してください" %>
           </div>
-          <div class="panel-body">
-            <ul class="list-unstyled">
+          <div class="px-4 py-3">
+            <ul class="list-none">
               <% form.object.errors.full_messages.each do |full_message| %>
                 <li><%= full_message %></li>
               <% end %>

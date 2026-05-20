@@ -4,8 +4,8 @@
   </head>
   <body>
     <%= render partial: "layouts/main_navbar" %>
-    <div class="section MainSection">
-      <div class="container is-fluid">
+    <div class="MainSection px-3 py-4 sm:px-4 sm:py-6">
+      <div class="mx-auto max-w-none">
         <%= flash_notify_tag %>
         <%= yield %>
         <%= ToolBelt::Basic.new(view_context: self).to_html %>

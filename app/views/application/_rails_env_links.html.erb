@@ -1,12 +1,12 @@
 <% if Rails.env.development? %>
-  <div class="navbar-item has-dropdown is-hoverable">
-    <div class="navbar-link">
+  <div class="group relative">
+    <div class="block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white">
       stage
     </div>
-    <div class="navbar-dropdown is-boxed is-right">
-      <%= link_to("development", "http://localhost:3000/", class: ["navbar-item", Rails.env.development? ? "is-active" : '']) %>
-      <%= link_to("staging", staging_app_url, class: ["navbar-item", Rails.env.staging? ? "is-active" : '']) %>
-      <%= link_to("production", production_app_url, class: ["navbar-item", Rails.env.production? ? "is-active" : '']) %>
+    <div class="absolute right-0 z-20 hidden min-w-48 rounded-md border border-gray-200 bg-white py-1 text-gray-700 shadow-lg group-hover:block">
+      <%= link_to("development", "http://localhost:3000/", class: ["block px-4 py-2 text-sm hover:bg-gray-100", Rails.env.development? ? "bg-gray-100 font-semibold text-gray-900" : '']) %>
+      <%= link_to("staging", staging_app_url, class: ["block px-4 py-2 text-sm hover:bg-gray-100", Rails.env.staging? ? "bg-gray-100 font-semibold text-gray-900" : '']) %>
+      <%= link_to("production", production_app_url, class: ["block px-4 py-2 text-sm hover:bg-gray-100", Rails.env.production? ? "bg-gray-100 font-semibold text-gray-900" : '']) %>
     </div>
   </div>
 <% end %>

@@ -2,10 +2,10 @@
   <%= current_record.attributes.to_html %>
 <% else %>
   <% (current_record.attribute_names - ["id", "created_at", "updated_at"]).each do |key| %>
-    <div class="field">
-      <%= form.label(key, class: "label") %>
-      <div class="control">
-        <p class="input-static"><%= current_record.public_send(key) %></p>
+    <div class="mb-4">
+      <%= form.label(key, class: "mb-1 block text-sm font-medium text-gray-700") %>
+      <div>
+        <p class="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700"><%= current_record.public_send(key) %></p>
       </div>
     </div>
   <% end %>

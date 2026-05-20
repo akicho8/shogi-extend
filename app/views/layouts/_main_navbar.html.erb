@@ -1,8 +1,8 @@
-<nav id="main_nav" class="navbar is-primary">
-  <div class="container is-fluid">
-    <div class="navbar-brand">
-      <%= link_to(AppConfig[:app_name], :root, :class => "navbar-item has-text-weight-bold") %>
-      <div class="navbar-burger burger" data-target="main_navar">
+<nav id="main_nav" class="bg-blue-600 text-white shadow">
+  <div class="mx-auto flex max-w-none flex-wrap items-center px-4">
+    <div class="flex h-14 items-center">
+      <%= link_to(AppConfig[:app_name], :root, :class => "block px-3 py-2 text-sm font-bold text-white hover:bg-blue-700") %>
+      <div class="hidden" data-target="main_navar">
         <span>
         </span>
         <span>
@@ -11,44 +11,43 @@
         </span>
       </div>
     </div>
-    <div id="main_navar" class="navbar-menu">
-      <div class="navbar-start">
+    <div id="main_navar" class="flex flex-1 flex-wrap items-center justify-between">
+      <div class="flex flex-wrap items-center">
         <% if Rails.env.development? %>
-          <%= link_to("nuxt_side", UrlProxy.url_for("/"), class: "navbar-item") %>
-          <%= link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))]) %>
+          <%= link_to("nuxt_side", UrlProxy.url_for("/"), class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
+          <%= link_to("管理画面", [:admin, :root], class: ["block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white", ("bg-blue-700 text-white" if params[:controller].start_with?("admin/"))]) %>
 
         <% end %>
         <% if session[:admin_user] %>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <%= link_to("管理", [:admin, :script, id: :index], class: "navbar-link") %>
-            <div class="navbar-dropdown is-boxed">
+          <div class="group relative">
+            <%= link_to("管理", [:admin, :script, id: :index], class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
+            <div class="absolute left-0 z-20 hidden min-w-48 rounded-md border border-gray-200 bg-white py-1 text-gray-700 shadow-lg group-hover:block">
               <%= BackendScript.to_navbar_items(self, controller: "admin/scripts") %>
 
             </div>
           </div>
         <% end %>
         <% if Rails.env.development? %>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <span class="navbar-link">
+          <div class="group relative">
+            <span class="block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white">
               テスト
             </span>
-            <div class="navbar-dropdown is-boxed">
+            <div class="absolute left-0 z-20 hidden min-w-48 rounded-md border border-gray-200 bg-white py-1 text-gray-700 shadow-lg group-hover:block">
               <%= AtomicScript::ExampleScript.to_navbar_items(self, controller: "admin/example_scripts") %>
 
             </div>
           </div>
         <% end %>
       </div>
-      <div class="navbar-end">
+      <div class="flex flex-wrap items-center">
         <%= render partial: "rails_env_links" %>
 
         <%# - if !current_user %>
-        <%# = link_to("アカウント作成", [:new, :session], class: "navbar-item") %>
+        <%# = link_to("アカウント作成", [:new, :session], class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
         <%#  %>
         <%# - if current_user %>
-        <%# .navbar-item %>
         <%# b-dropdown(hoverable) %>
-        <%# = link_to([current_user], class: "navbar-link", slot: "trigger") do %>
+        <%# = link_to([current_user], class: "flex items-center px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white", slot: "trigger") do %>
         <%# = image_tag(current_user.avatar_path, class: "header_avatar_image") %>
         <%# span.my_name %>
         <%# = current_user.name %>
@@ -59,36 +58,35 @@
         <%# - if !current_user %>
         <%# b-dropdown-item(:separator="true") %>
         <%# b-dropdown-item(:has-link="true" :paddingless="true") %>
-        <%# = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item") %>
+        <%# = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
         <%# b-dropdown-item(:separator="true") %>
         <%# b-dropdown-item(:has-link="true" :paddingless="true") %>
         <%# = link_to("ログアウト", [:session], method: :delete) %>
 
         <% if Rails.env.development? %>
           <% if current_user %>
-            <div class="navbar-item has-dropdown is-hoverable">
-              <%= link_to([current_user], class: "navbar-link", slot: "trigger") do %>
-                <%= image_tag(current_user.avatar_path, class: "header_avatar_image") %>
+            <div class="group relative">
+              <%= link_to([current_user], class: "flex items-center px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white", slot: "trigger") do %>
+                <%= image_tag(current_user.avatar_path, class: "inline-block size-8 rounded-full align-middle") %>
                 <% if Rails.env.local? %>
                   <span class="ml-2">
                     <b><%= current_user.name %></b>
                   </span>
                 <% end %>
               <% end %>
-              <div class="navbar-dropdown is-boxed is-right">
-                <%= link_to("プロフィール", [current_user], class: "navbar-item") %>
-                <%= link_to("設定", [:edit, current_user], class: "navbar-item") %>
-                <div class="navbar-divider">
+              <div class="absolute right-0 z-20 hidden min-w-48 rounded-md border border-gray-200 bg-white py-1 text-gray-700 shadow-lg group-hover:block">
+                <%= link_to("プロフィール", [current_user], class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
+                <%= link_to("設定", [:edit, current_user], class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
+                <div class="my-1 border-t border-gray-200">
                 </div>
-                <%= link_to("ログアウト", [:direct_session], method: :delete, class: "navbar-item") %>
+                <%= link_to("ログアウト", [:direct_session], method: :delete, class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
                 <%# = link_to "ログアウト", destroy_xuser_session_path, method: :delete %>
 
               </div>
             </div>
             <%# こっちを使うと縦幅が大きくなってしまう %>
-            <%# span.navbar-item %>
             <%# b-dropdown(hoverable) %>
-            <%# = link_to([current_user], class: "navbar-link", slot: "trigger") do %>
+            <%# = link_to([current_user], class: "flex items-center px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white", slot: "trigger") do %>
             <%# = image_tag(current_user.avatar_path, class: "header_avatar_image") %>
             <%# span.my_name %>
             <%# = current_user.name %>
@@ -103,13 +101,10 @@
 
           <% end %>
           <% if !current_user %>
-            <%= link_to("ログイン", :new_xuser_session, class: "navbar-item") %>
-            <%= link_to("面倒なアカウント登録", :new_xuser_registration, class: "navbar-item") if Rails.env.local? %>
-            <%# .navbar-item.has-dropdown.is-hoverable %>
-            <%# span.navbar-link ログイン %>
-            <%# .navbar-dropdown.is-boxed %>
-            <%# = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item") %>
-            <%# = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item") %>
+            <%= link_to("ログイン", :new_xuser_session, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
+            <%= link_to("面倒なアカウント登録", :new_xuser_registration, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") if Rails.env.local? %>
+            <%# = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
+            <%# = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
           <% end %>
         <% end %>
       </div>

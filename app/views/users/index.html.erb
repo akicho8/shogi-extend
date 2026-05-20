@@ -1,15 +1,15 @@
 <% if Rails.env.production? || Rails.env.staging? %>
 <% else %>
-  <div class="field">
-    <%= link_to("新規", [:new, ns_prefix, current_single_key], class: "button is-primary") %>
+  <div class="mb-4">
+    <%= link_to("新規", [:new, ns_prefix, current_single_key], class: "inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700") %>
   </div>
-  <div class="field">
+  <div class="mb-4">
     <%= render partial: "index_header" %>
   </div>
-  <div class="field">
+  <div class="mb-4">
     <%= paginate current_records %>
   </div>
-  <div class="field">
+  <div class="mb-4">
     <%= page_entries_info current_records %>
   </div>
   <%= render partial: "index_rows" %>

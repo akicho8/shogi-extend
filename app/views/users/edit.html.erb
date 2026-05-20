@@ -3,14 +3,14 @@
 
 <% if params[:social_connect_only] %>
 <% else %>
-  <div class="block">
-    <div class="box">
+  <div class="mb-6">
+    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
       <%= form_with(model: current_record) do |form| %>
         <%= render partial: "error_messages", locals: {form: form} %>
         <%= render partial: "form", locals: {form: form} %>
-        <div class="field">
-          <div class="control">
-            <%= form.submit(name: :_submit, class: "button is-primary has-text-weight-bold") %>
+        <div class="mb-4">
+          <div>
+            <%= form.submit(name: :_submit, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-bold text-white shadow-sm hover:bg-blue-700") %>
 
           </div>
         </div>
@@ -19,12 +19,12 @@
   </div>
 <% end %>
 <% if current_record.persisted? %>
-  <div class="block">
-    <div class="box">
-      <div class="title is-6">
+  <div class="mb-6">
+    <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <div class="mb-3 text-base font-semibold text-gray-900">
         アカウント連携
       </div>
-      <div class="content">
+      <div class="space-y-3 text-sm text-gray-700">
         <% SocialMediaInfo.each do |e| %>
           <p>
             <% if auth_info = current_record.auth_infos.find_by(provider: e.key) %>
@@ -32,11 +32,7 @@
               <%= " - " %>
               <%= link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put) %>
             <% else %>
-              <%= link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: "button") do %>
-                <span class="icon is-medium">
-                  <i class="fab fa-<%= e.key %>">
-                  </i>
-                </span>
+              <%= link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: "inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50") do %>
                 <span>
                   <%= "#{e.name} アカウントと連携する" %>
                 </span>
@@ -50,5 +46,5 @@
 <% end %>
 <% if false %>
   <hr>
-  <%= link_to("ロビーに戻る", [:colosseum, :battles], class: "button") %>
+  <%= link_to("ロビーに戻る", [:colosseum, :battles], class: "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50") %>
 <% end %>

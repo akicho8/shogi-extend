@@ -1,6 +1,6 @@
 <%= paginator.render do %>
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <ul class="pagination-list">
+  <nav class="my-4" role="navigation" aria-label="pagination">
+    <ul class="flex flex-wrap gap-2">
       <%== first_page_tag if !current_page.first? %>
       <%== prev_page_tag if !current_page.first? %>
       <% each_page do |page| %>
