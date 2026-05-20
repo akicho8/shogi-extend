@@ -111,8 +111,6 @@ group :development, :test do
   gem "timecop"
 end
 
-gem "slim-rails"
-
 gem "rails_autolink"
 gem "kaminari"
 

@@ -652,13 +652,6 @@ GEM
       gli
       hashie
       websocket-driver
-    slim (5.2.1)
-      temple (~> 0.10.0)
-      tilt (>= 2.1.0)
-    slim-rails (3.7.0)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
-      slim (>= 3.0, < 6.0, != 5.0.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -677,14 +670,12 @@ GEM
     table_format (0.0.17)
       activesupport
       nkf
-    temple (0.10.3)
     thor (1.5.0)
     thruster (0.1.21)
     thruster (0.1.21-aarch64-linux)
     thruster (0.1.21-arm64-darwin)
     thruster (0.1.21-x86_64-darwin)
     thruster (0.1.21-x86_64-linux)
-    tilt (2.6.0)
     timecop (0.9.10)
     timeout (0.4.4)
     trailblazer-option (0.1.2)
@@ -812,7 +803,6 @@ DEPENDENCIES
   sidekiq (~> 7)
   slack-notifier
   slack-ruby-client
-  slim-rails
   stimulus-rails
   systemu
   table_format
