@@ -30,9 +30,9 @@
             <% if auth_info = current_record.auth_infos.find_by(provider: e.key) %>
               <%= "#{e.name} アカウントと連携済み" %>
               <%= " - " %>
-              <%= link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put) %>
+              <%= button_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put) %>
             <% else %>
-              <%= link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: "inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50") do %>
+              <%= button_to([current_record, command: :social_connect, provider: e.key], method: :put, class: "inline-flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50") do %>
                 <span>
                   <%= "#{e.name} アカウントと連携する" %>
                 </span>

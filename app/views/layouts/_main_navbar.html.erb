@@ -61,7 +61,7 @@
         <%# = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "block px-3 py-2 text-sm font-medium text-white/90 hover:bg-blue-700 hover:text-white") %>
         <%# b-dropdown-item(:separator="true") %>
         <%# b-dropdown-item(:has-link="true" :paddingless="true") %>
-        <%# = link_to("ログアウト", [:session], method: :delete) %>
+        <%# = button_to("ログアウト", [:session], method: :delete) %>
 
         <% if Rails.env.development? %>
           <% if current_user %>
@@ -79,8 +79,8 @@
                 <%= link_to("設定", [:edit, current_user], class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
                 <div class="my-1 border-t border-gray-200">
                 </div>
-                <%= link_to("ログアウト", [:direct_session], method: :delete, class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
-                <%# = link_to "ログアウト", destroy_xuser_session_path, method: :delete %>
+                <%= button_to("ログアウト", [:direct_session], method: :delete, class: "block px-4 py-2 text-sm hover:bg-gray-100") %>
+                <%# = button_to "ログアウト", destroy_xuser_session_path, method: :delete %>
 
               </div>
             </div>
@@ -96,8 +96,8 @@
             <%# = link_to("設定", [:edit, current_user]) %>
             <%# b-dropdown-item(:separator="true") %>
             <%# b-dropdown-item(:has-link="true" :paddingless="true") %>
-            <%# = link_to("ログアウト", [:session], method: :delete) %>
-            <%# / = link_to "ログアウト", destroy_xuser_session_path, method: :delete %>
+            <%# = button_to("ログアウト", [:session], method: :delete) %>
+            <%# / = button_to "ログアウト", destroy_xuser_session_path, method: :delete %>
 
           <% end %>
           <% if !current_user %>

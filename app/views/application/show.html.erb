@@ -16,7 +16,7 @@
         <%= link_to("編集", [:edit, ns_prefix, current_record], class: "inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-emerald-700") %>
       <% end %>
       <% if controller.respond_to_destroy? %>
-        <%= link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700") %>
+        <%= button_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700") %>
       <% end %>
     </div>
   </div>

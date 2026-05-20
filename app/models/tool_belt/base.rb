@@ -24,7 +24,7 @@ module ToolBelt
         if options[:redirect_to]
           options[:redirect_to] = h.url_for(options[:redirect_to])
         end
-        h.link_to(name, h.eval_path(options), method: :put, :class => "button is-small")
+        h.button_to(name, h.eval_path(options), method: :put, :class => "button is-small")
       end
     end
 
