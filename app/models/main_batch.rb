@@ -54,7 +54,6 @@ class MainBatch
 
   def step3_ActiveRecord関連をGeneralCleanerで削除するシリーズ
     FreeBattle.destroyable.old_only(30.days).cleaner(subject: "FreeBattle", execute: true).call
-    Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
     GoogleApi::ExpirationTracker.old_only(50.days).cleaner(subject: "スプレッドシート", execute: true).call
     AppLog.old_only(1.weeks).cleaner(subject: "アプリログ", execute: true).call
     ShareBoard::ChatMessage.old_only(30.days).cleaner(subject: "共有将棋盤チャット発言", execute: true).call
@@ -62,37 +61,46 @@ class MainBatch
     # Swars::Battle.destroyable_n.cleaner(subject: "一般", execute: true).call  # 30分かかる
     # Swars::Battle.destroyable_s.cleaner(subject: "特別", execute: true).call
 
-    Swars::NormalDestroyBatch.call(name: "棋譜削除一般", execute: true)
-    Swars::SpecialDestroyBatch.call(name: "棋譜削除特別", execute: true)
+    if AppConfig[:swars_feature]
+      Swars::SearchLog.old_only(100.days).cleaner(subject: "棋譜検索ログ", execute: true).call
+      Swars::NormalDestroyBatch.call(name: "棋譜削除一般", execute: true)
+      Swars::SpecialDestroyBatch.call(name: "棋譜削除特別", execute: true)
+    end
 
     # Swars::User.find_each { Swars::User.reset_counters(it.id, :search_logs) } # 修復
   end
 
   def step3_将棋ウォーズ棋譜検索クロール
     if Rails.env.production?
-      Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
-      Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
-      Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
+      if AppConfig[:swars_feature]
+        Swars::Crawler::ReserveUserCrawler.call    # 棋譜取得の予約者
+        Swars::Crawler::MainActiveUserCrawler.call # 活動的なプレイヤー
+        Swars::Crawler::SemiActiveUserCrawler.call # 直近数日で注目されているユーザー
+      end
     end
   end
 
   def step5_集計
-    # 自動的に cache_write があるクラスを集めるのも考えたがそれはやりすぎなので絶対やるなよ
-    QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
-    QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
+    if AppConfig[:swars_feature]
+      # 自動的に cache_write があるクラスを集めるのも考えたがそれはやりすぎなので絶対やるなよ
+      QuickScript::Swars::RuleWiseWinRateScript.new.cache_write  # 統計
+      QuickScript::Swars::SprintWinRateScript.new.cache_write    # 棋力毎のスプリント先後勝率
 
-    QuickScript::Swars::UserDistScript.new.cache_write         # 棋力分布
-    QuickScript::Swars::HourlyActiveUserScript.new.cache_write # 時間帯別対局者情報
-    QuickScript::Swars::TacticStatScript.new.cache_write       # 戦法一覧・戦法勝率ランキング
-    QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
-    QuickScript::Swars::TacticCrossScript.new.cache_write      # 将棋ウォーズ戦法人気ランキング (棋力別)
+      QuickScript::Swars::UserDistScript.new.cache_write         # 棋力分布
+      QuickScript::Swars::HourlyActiveUserScript.new.cache_write # 時間帯別対局者情報
+      QuickScript::Swars::TacticStatScript.new.cache_write       # 戦法一覧・戦法勝率ランキング
+      QuickScript::Swars::GradeSegmentScript.new.cache_write     # 棋力別の情報
+      QuickScript::Swars::TacticCrossScript.new.cache_write      # 将棋ウォーズ戦法人気ランキング (棋力別)
+    end
   end
 
   def step6_戦法発掘
-    QuickScript::Swars::TacticBattleMiningScript.new.cache_write # 戦法
-    QuickScript::Swars::GradeBattleMiningScript.new.cache_write  # 棋力
-    QuickScript::Swars::PresetBattleMiningScript.new.cache_write # 手合
-    QuickScript::Swars::StyleBattleMiningScript.new.cache_write  # スタイル
+    if AppConfig[:swars_feature]
+      QuickScript::Swars::TacticBattleMiningScript.new.cache_write # 戦法
+      QuickScript::Swars::GradeBattleMiningScript.new.cache_write  # 棋力
+      QuickScript::Swars::PresetBattleMiningScript.new.cache_write # 手合
+      QuickScript::Swars::StyleBattleMiningScript.new.cache_write  # スタイル
+    end
   end
 
   def step7_検証
