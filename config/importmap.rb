@@ -2,4 +2,4 @@
 
 pin "application"
 pin "bulma_burger"
-pin "@hotwired/turbo-rails", to: "turbo.min.js"
+# pin "@hotwired/turbo-rails", to: "turbo.min.js"
