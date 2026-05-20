@@ -54,3 +54,6 @@ yarn-debug.log*
 /nuxt_side/static/lab/**/*_files
 /nuxt_side/static/lab/**/*.html
 /Rplots.pdf
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

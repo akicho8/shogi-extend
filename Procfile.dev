@@ -1,3 +1,4 @@
 web: bundle exec bin/rails s -p $PORT
+css: bin/rails tailwindcss:watch
 sidekiq: bundle exec sidekiq
 nuxt_side: (cd nuxt_side && nuxt dev -p 4000 --dotenv .env.cafe)
