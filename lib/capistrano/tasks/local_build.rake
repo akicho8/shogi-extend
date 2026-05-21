@@ -43,6 +43,14 @@ if ENV["REMOTE_BUILD"] != "1"
           execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete assets #{e.user}@#{e.hostname}:#{release_path}/public"
         end
       end
+
+      # app/assets をデプロイ先に転送
+      within "#{tmpdir}/app" do
+        roles(:web).each do |e|
+          execute :rsync, "-azh #{dry_run? ? '--dry-run' : ''} --delete assets #{e.user}@#{e.hostname}:#{release_path}/app"
+        end
+      end
+
       # execute :rm, "-fr #{tmpdir}"
     end
   end
