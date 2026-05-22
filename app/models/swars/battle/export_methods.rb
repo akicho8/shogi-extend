@@ -20,13 +20,13 @@ module Swars
                 battle.to_all.each do |ext, body|
                   prefix = Digest::MD5.hexdigest(battle.key.to_s).slice(...2)
                   path = output_dir.join(prefix, battle.key, "#{battle.key}.#{ext}")
-                  # if path.exist?
-                  #   if options[:verbose]
-                  #     print "."
-                  #     STDOUT.flush
-                  #   end
-                  #   next
-                  # end
+                  if path.exist?
+                    if options[:verbose]
+                      print "."
+                      STDOUT.flush
+                    end
+                    next
+                  end
                   path.dirname.mkpath
                   path.write(body)
                 end
