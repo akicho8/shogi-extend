@@ -30,7 +30,7 @@ bin/setup-nuxt.sh
 
 ```bash
 # Foreman で全サービスを起動（Rails、Webpack、Sidekiq、Nuxt.js）
-foreman start -f Procfile.home
+foreman start -f Procfile.mobile
 
 # または個別に起動
 bundle exec rails server -p 3000
@@ -180,7 +180,7 @@ rspec spec/models/swars/battle_spec.rb:42
 ### 開発時の注意点
 
 - `bin/setup` は初回セットアップ用で、データベースを完全にリセットし、全テストを実行する（時間がかかる）
-- `Procfile.home` の IP アドレスは `ifconfig | grep inet` で調べた IP に変更すること
+- `Procfile.mobile` の IP アドレスは `ifconfig | grep inet` で調べた IP に変更すること
 - Nuxt.js の環境設定は `nuxt_side/.env.home` に記述
 - システムテストがダウンしている場合は `SYSTEM_TEST_DOWN.org` を参照
 
