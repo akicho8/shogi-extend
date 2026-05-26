@@ -29,7 +29,7 @@ tmux send-keys -t shogi.1 'cd ~/src/shogi/shogi-player' C-m
 tmux send-keys -t shogi.1 'nuxt dev -p 3800' C-m
 
 tmux send-keys -t shogi.2 'cd ~/src/shogi/shogi-extend' C-m
-tmux send-keys -t shogi.2 'start' C-m
+tmux send-keys -t shogi.2 'dev' C-m
 
 tmux send-keys -t shogi.3 'cd ~/src/shogi/shogi-extend' C-m
 # tmux send-keys -t shogi.3 'cd nuxt_side' C-m
