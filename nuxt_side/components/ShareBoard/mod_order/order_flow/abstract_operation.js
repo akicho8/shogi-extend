@@ -103,7 +103,7 @@ export class AbstractOperation {
   }
 
   get empty_p()        { return this.main_user_count === 0 } // 対戦者がいない？
-  get self_vs_self_p() { return this.main_user_count === 1 } // 自分vs自分で対戦している？ (または相手がいない)
+  get dual_role_context_p() { return this.main_user_count === 1 } // 自分vs自分で対戦している？ (または相手がいない)
   get one_vs_one_p()   { return this.main_user_count === 2 } // 1vs1で対戦している？
   get many_vs_many_p() { return this.main_user_count >= 3  } // 3人以上で対戦している？
 

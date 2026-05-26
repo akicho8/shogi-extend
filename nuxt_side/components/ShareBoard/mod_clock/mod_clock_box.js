@@ -387,7 +387,7 @@ export const mod_clock_box = {
       const current_turn_user_name = this.current_turn_user_name
 
       await this.toast_primary(this.__cc_receive_message(params))        // 誰が設定したか伝える
-      if (this.self_vs_self_p) {
+      if (this.dual_role_context_p) {
         await this.toast_primary("これは自分対自分の練習モードです")
       }
       if (this.clock_box) {

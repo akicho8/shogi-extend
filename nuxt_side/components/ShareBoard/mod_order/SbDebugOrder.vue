@@ -48,7 +48,7 @@
       .panel-heading
         | 順番情報(computed)
       .panel-block 0手目の色 {{SB.start_color}}
-      .panel-block 自分vs自分で対戦している？ {{SB.self_vs_self_p}}
+      .panel-block 自分vs自分で対戦している？ {{SB.dual_role_context_p}}
       .panel-block 1vs1で対戦している？ {{SB.one_vs_one_p}}
       .panel-block 3人以上で対戦している？ {{SB.many_vs_many_p}}
       .panel-block 対局者数 {{SB.order_flow.main_user_count}}
