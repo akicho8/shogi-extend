@@ -10,7 +10,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
           :FIXED_MEMBER          => "a",
           :FIXED_ORDER           => "a",
           :room_after_create     => :cc_auto_start_10m,
-          :match_mode_key        => :dual_role,
+          :self_vs_self_enable_p => true,
         })
     end
 

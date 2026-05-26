@@ -300,7 +300,7 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    self_vs_self_mode_p() { return this.SB.match_mode_key && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
+    self_vs_self_mode_p() { return this.SB.self_vs_self_enable_p && this.SB.order_draft.order_flow.main_user_count === 1 }, // 面子が1人で自分vs自分が可能な状態か？
 
     order_submit_button_type() {
       if (this.SB.order_draft.os_change.has_changes_to_save_p) {
