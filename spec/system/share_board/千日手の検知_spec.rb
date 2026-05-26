@@ -17,7 +17,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
           :user_name             => "a",
           :FIXED_MEMBER          => "a",
           :FIXED_ORDER           => "a",
-          :self_vs_self_enable_p => true,
+          :match_mode_key        => :dual_role,
           :room_after_create     => :cc_auto_start_10m,
           :RESEND_FEATURE        => false,
         })

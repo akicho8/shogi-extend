@@ -7,5 +7,9 @@ export const mod_order_rule = {
 
     FoulModeInfo()   { return FoulModeInfo                           },
     foul_mode_info() { return FoulModeInfo.fetch(this.foul_mode_key) },
+    
+    self_vs_self_mode_p() { return this.SB.match_mode_key  },
+    
+
   },
 }
