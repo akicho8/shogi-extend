@@ -89,7 +89,7 @@ module Swars
 
     if AppConfig[:swars_feature]
     else
-      default_scope { none }
+      # default_scope { none }
     end
 
     before_validation do
