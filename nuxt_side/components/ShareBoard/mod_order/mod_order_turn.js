@@ -26,7 +26,7 @@ export const mod_order_turn = {
       GX.assert_kind_of_integer(turn)
       if (this.order_enable_p) {
         let e = this.order_flow.turn_to_item(turn, this.change_per, this.start_color)
-        if (this.dual_role_enabled_p) {
+        if (this.dual_role_feature_p) {
           if (!e) {
             e = this.order_flow.flat_uniq_users[0]
           }
@@ -55,7 +55,7 @@ export const mod_order_turn = {
         GX.assert_kind_of_string(user_name)
         const turns = this.name_to_turns_hash[user_name]
         if (turns) {
-          if (this.dual_role_enabled_p && this.dual_role_available_p) {
+          if (this.dual_role_feature_p && this.dual_role_available_p) {
             return 0
           }
           return turns[0]
