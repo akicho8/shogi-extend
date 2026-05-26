@@ -7,7 +7,7 @@ RSpec.describe __FILE__, type: :system, share_board_spec: true do
         :user_name             => "a",
         :FIXED_MEMBER          => "a",
         :FIXED_ORDER           => "a",
-        :dual_role_feature_p => true,
+        :dual_role_enabled_p => true,
       })
 
     sidebar_open

@@ -193,7 +193,7 @@ export const mod_order_main = {
 
     order_ok() { return this.order_enable_p && this.order_flow }, // 対局設定ONかつ、順番情報が入っている状態か？
 
-    dual_role_context_p() { return this.order_enable_p && this.order_flow.dual_role_context_p }, // 自分vs自分で対戦している？
+    dual_role_available_p() { return this.order_enable_p && this.order_flow.dual_role_available_p }, // 自分vs自分で対戦している？
     one_vs_one_p()   { return this.order_enable_p && this.order_flow.one_vs_one_p   }, // 1vs1で対戦している？
     many_vs_many_p() { return this.order_enable_p && this.order_flow.many_vs_many_p }, // 3人以上で対戦している？
 

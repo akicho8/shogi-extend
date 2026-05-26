@@ -35,7 +35,7 @@ export const mod_turn_notify = {
     // this.order_flow.order_operation.teams[0].length             // => 2
     // this.order_flow.order_operation.teams[1].length             // => 2
     __tn_message_prefix(params) {
-      if (this.dual_role_context_p) {
+      if (this.dual_role_available_p) {
         return "次も、"
       }
       GX.assert(this.order_flow, "this.order_flow")

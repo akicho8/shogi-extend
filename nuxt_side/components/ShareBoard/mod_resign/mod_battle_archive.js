@@ -17,7 +17,7 @@ export const mod_battle_archive = {
     // win_location_key が null なら引分とする
     async battle_save_by_win_location(win_location_key) {
       if (SELF_VS_SELF_THEN_SKIP) {
-        if (this.dual_role_context_p) {
+        if (this.dual_role_available_p) {
           this.debug_alert("自分vs自分のため棋譜保存しない")
           return
         }
@@ -33,7 +33,7 @@ export const mod_battle_archive = {
       }
 
       if (SELF_VS_SELF_THEN_DRAW) {
-        if (this.dual_role_context_p) {
+        if (this.dual_role_available_p) {
           params.win_location_key = null
           if (SELF_VS_SELF_THEN_MEMBER_ZERO) {
             params.memberships = []

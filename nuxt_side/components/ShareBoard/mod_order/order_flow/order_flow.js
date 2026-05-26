@@ -26,7 +26,7 @@ export class OrderFlow {
 
   get main_user_count()                     { return this.order_operation.main_user_count                           }
   get empty_p()                             { return this.order_operation.empty_p                                   }
-  get dual_role_context_p()                      { return this.order_operation.dual_role_context_p                            }
+  get dual_role_available_p()                      { return this.order_operation.dual_role_available_p                            }
   get one_vs_one_p()                        { return this.order_operation.one_vs_one_p                              }
   get many_vs_many_p()                      { return this.order_operation.many_vs_many_p                            }
 
