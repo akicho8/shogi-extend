@@ -145,3 +145,14 @@ task :open_urls do
   end
 end
 after "deploy:finished", :open_urls
+
+desc "slack-notifier gem をインストールする"
+task :slack_notifier_install do
+  on roles(:all) do
+    within current_path do
+      execute "ruby -v"
+      execute "gem install --verbose slack-notifier"
+    end
+  end
+end
+after "deploy:updated", "slack_notifier_install"
