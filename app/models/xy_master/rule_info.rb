@@ -169,7 +169,7 @@ module XyMaster
     end
 
     def aggregate
-      TimeRecord.where(rule: Rule.fetch(key)).each do |e|
+      TimeRecord.where(rule: Rule.fetch(key)).each do |e| # FIXME: find_each にするべき
         ranking_add(e)
       end
     end
