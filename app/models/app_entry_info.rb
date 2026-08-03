@@ -2,7 +2,7 @@ class AppEntryInfo
   include ApplicationMemoryRecord
   memory_record [
     {
-      display_p: true,
+      display_p: AppConfig[:swars_feature],
       experiment_p: false,
       nuxt_link_to: { name: "swars-search" },
       title: "将棋ウォーズ棋譜検索",
