@@ -744,6 +744,7 @@ DEPENDENCIES
   aws-sdk-polly
   bcrypt
   bcrypt_pbkdf
+  benchmark
   bioshogi!
   bootsnap
   brakeman
