@@ -182,7 +182,7 @@ gem "rack-user_agent"
 gem "holiday_jp"
 
 # DiffCop
-gem "diff-lcs"
+gem "diff-lcs", "< 2"           # v2 に上げてしまうと → rspec-expectations との関係がおかしくなる →  rspec が10年前のバージョンになる → rails spec タスクが消える
 
 # ActiveJob
 gem "sidekiq", "~> 7" # Redis 6.2.0 以上が必要
@@ -203,6 +203,7 @@ gem "matrix"
 
 # Google Sheet / Google Drive
 gem "google-api-client"
+gem "multi_json" # require "google/apis/sheets_v4" のときに要求されるため
 
 # 統計
 gem "geom_craft"
